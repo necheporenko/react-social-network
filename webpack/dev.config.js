@@ -178,8 +178,8 @@ var webpackConfig = module.exports = {
         query: {
           modules: true,
           importLoaders: 3,
-          sourceMap: true,
-          localIdentName: '[local]___[hash:base64:5]'
+          sourceMap: true
+          //localIdentName: '[local]___[hash:base64:5]'
         }
       }, {
         loader: 'autoprefixer-loader',

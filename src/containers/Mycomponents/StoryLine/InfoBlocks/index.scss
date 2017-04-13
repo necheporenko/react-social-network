@@ -1,0 +1,234 @@
+/* === Import Variables === */
+@import "../../../styles/vars";
+@import "../../../styles/mixins";
+
+/* -- InfoBloks Start -- */
+.infobloks {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 320px;
+}
+/* -- InfoBloks End -- */
+
+/* === Title Start === */
+.title-infoblocks {
+  padding: 15px 12px;
+  a {
+    text-decoration: none;
+    color: $default-color;
+    font-size: 16px;
+    span  {
+      color: #999;
+      font-size: 12px;
+    }
+  }
+}
+
+.cutaway-icon, .token-icon, .photos-icon, .peoples-icon {
+  content: '';
+  display: inline-block;
+  position: relative;
+}
+
+.cutaway-icon {
+  background: url('http://devianmbanks.validbook.org/images/info-icon.png') no-repeat;
+  height: 20px;
+  width: 22px;
+  content: '';
+  display: inline-block;
+  margin-right: 10px;
+  top: 3px;
+}
+
+.token-icon {
+  background: $sprite;
+  background-position: 0 -197px;
+  height: 12px;
+  width: 20px;
+  margin-right: 10px;
+  top: 2px;
+}
+
+.photos-icon {
+  background: $sprite;
+  background-position: -46px -366px;
+  height: 13px;
+  width: 17px;
+  margin-right: 12px;
+}
+
+.peoples-icon {
+  background: $sprite;
+  background-position: -55px -501px;
+  height: 14px;
+  width: 21px;
+  margin-right: 5px;
+}
+
+/* === Title End === */
+
+
+/* === Common Tokensa Start === */
+.infoblocks-cutaway, .infoblocks-peoples, .infoblocks-photos, .infoblocks-tokens {
+  background: #fff;
+  border: 1px solid $border-color;
+  min-height: 200px;
+  font-size: 14px;
+  color: $default-color;
+  margin-bottom: 20px;;
+  // flex: auto;
+  // display: flex;
+  @include material;
+}
+/* === Common End === */
+
+/* === Tokens Start === */
+.infoblocks-tokens {
+  min-height: 175px;
+  padding-bottom: 5px;
+}
+
+.tokens-mnu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+  a {
+    text-decoration: none;
+    color: $default-color;
+    display: block;
+    &:hover {
+      background: $bg-hover;
+    }
+  }
+}
+
+.tokens-list {
+  padding: 5px 0;
+}
+
+.infoblocks-token, .tokens-mnu-exchange, .tokens-mnu-sash, .tokens-mnu-public, .tokens-mnu-private {
+  padding-left: 12px;
+  &:before {
+    background: $sprite;
+    content: '';
+    display: inline-block;
+    position: relative;
+    margin-right: 5px;
+  }
+}
+
+
+.tokens-mnu-exchange {
+  &:before {
+    background-position: 2px -72px;
+    background-size: 150px;
+    height: 16px;
+    width: 16px;
+    top: 2px;
+    margin-right: 8px;
+  }
+}
+
+.tokens-mnu-sash {
+  &:before {
+    background-position: -79px -88px;;
+    height: 16px;
+    width: 16px;
+    top: 9px;
+    margin-right: 10px;
+  }
+}
+
+.tokens-mnu-public {
+  &:before {
+    background-position: 0 -210px;
+    height: 14px;
+    width: 21px;
+    top: 3px;
+  }
+}
+
+.tokens-mnu-private {
+  &:before {
+    background-position: -93px -311px;
+    height: 14px;
+    width: 19px;
+    top: 3px;
+  }
+}
+/* === Tokens End === */
+
+
+/* === Photos Start === */
+.photos-gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+.photos-image {
+  padding-left: 5px;
+  img {
+    width: 100px;
+    height: 100px;
+    padding-bottom: 5px;
+  }
+}
+/* === Photos End === */
+
+/* === Peoples Start === */
+.infoblocks-peoples {
+  min-height: 147px;
+}
+
+.people-gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+.people-avatar {
+  position: relative;
+  padding-left: 5px;
+  img {
+    width: 100px;
+    height: 100px;
+    padding-bottom: 5px;
+  }
+}
+.people-avatar-user-name {
+  position: absolute;
+  bottom: 5px;
+  width: 92px;
+  font-size: 12px;
+  padding: 4px;
+  padding-top: 10px;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0, 0, 0, .7));
+}
+/* === Peoples End === */
+
+
+@media (max-width: 1200px) {
+  .infobloks {
+    flex: 0 0 290px;
+  }
+
+  .photos-image {
+    img {
+      width: 90px;
+      height: 90px;
+      padding-bottom: 5px;
+    }
+  }
+
+  .people-avatar {
+    img {
+    width: 90px;
+    height: 90px;
+    padding-bottom: 5px;
+    }
+  }
+
+  .people-avatar-user-name {
+    width: 82px;
+  }
+
+}

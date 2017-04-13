@@ -1,0 +1,56 @@
+@import "../../../styles/vars";
+
+.registration-xs {
+  width: 360px;
+  padding-top: 70px;
+  margin: 0 auto;
+
+  .information-footer {
+    margin-top: 10px;
+    margin-left: 30px;
+  }
+
+  .form-control {
+    box-sizing: border-box;
+    height: 44px;
+  }
+
+  .has-feedback .form-control-feedback {
+    right: 10px !important;
+    top: 5px;
+  }
+
+  .registration-wrap-form{
+    margin-bottom: 15px;
+  }
+}
+
+.easy {
+
+  .registration-btn-fb {
+    margin-top: 30px;
+  }
+
+  .registration-btn-sign-up {
+    margin-top: 20px;
+  }
+}
+
+.easy-divider {
+  margin: 25px 0 40px;
+  text-align: center;
+  padding-left: 0;
+  width: 100%;
+  border-bottom: 1px solid $border-color;
+  line-height: .1em;
+
+  span {
+    background: $default-bg;
+    padding: 0 15px;
+  }
+}
+
+.registration-xs-title {
+  padding-bottom: 7px;
+  font-size: 22px;
+}

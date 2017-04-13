@@ -1,0 +1,57 @@
+@import '../../../styles/vars';
+
+// .mainPage-leftPanelMenu {
+//   width: 250px;
+// }
+
+.nav-ul {
+  font-size: 14px;
+}
+
+.nav-li {
+  padding: 10px 0;
+  padding-left: 26px;
+  border-left: 4px solid transparent;
+  &:hover {
+    border-color: #8F8F8F;
+    background-color: #E1E1E1;
+  }
+}
+
+.nav-a {
+  color: $default-color;
+}
+
+.nav-storyline {
+  img {
+    width: 16px;
+    height: 16px;
+    padding-right: 16px;
+    position: relative;
+  }
+}
+
+.nav-books, .nav-tokens {
+  &::before {
+    background: $sprite;
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    padding-right: 32px;
+    width: 16px;
+  }
+}
+
+.nav-books {
+  &::before {
+    background-position: -86px -515px;
+    height: 16px;
+  }
+}
+
+.nav-tokens {
+  &::before {
+    background-position: 0 -197px;
+    height: 11px;
+  }
+}

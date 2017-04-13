@@ -1,0 +1,318 @@
+@import "../../styles/vars";
+
+.registration-bg {
+  //background: url('../../img/login-page/login-background1920x950.jpg');
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  position: absolute;
+  font-family: $font-Hind;
+}
+
+
+.login-popup {
+  position: relative;
+  width: 760px;
+  border-radius: 2px;
+  box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.3);
+  padding: 15px 50px 30px;
+  background: #fff;
+  border: 2px solid #979798;
+  margin: auto;
+  display: block;
+  top: 23%;
+}
+
+.title-cart {
+  text-align: center;
+  margin-top: 3px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.registration-logo {
+  color: $brand;
+  font-family: $font-Montserrat;
+  text-decoration: none;
+  font-size: 55px;
+  letter-spacing: -2px;
+  display: block;
+  margin-bottom: -9px;
+  margin-top: 6px;
+  cursor: default;
+}
+
+.registration-desc-logo {
+  color: #000;
+  font-weight: 500;
+  font-size: 17px;
+  cursor: default;
+  display: block;
+  margin-left: 4px;
+  margin-top: 15px;
+}
+
+.registration-line-desc {
+  width: 100%;
+  height: 1px;
+  background: $default-bg;
+  position: absolute;
+  right: 0;
+  margin: 0;
+  border: 0;
+}
+
+.registration-content {
+  display: inline-block;
+  margin-top: 40px;
+}
+
+.disabled-label {
+  display: none;
+}
+
+.registration-desc-site {
+  width: 47%;
+  margin-left: 20px;
+  float: left;
+  border-right: 1px solid #e2e2e2;
+  ul {
+    list-style: none;
+  }
+  li {
+    list-style: none;
+    padding: 0px 30px 0 20px;
+    padding-bottom: 38px;
+    font-size: 17px;
+    color: #000;
+    line-height: 19px;
+    &::before {
+      background: $sprite;
+      content: '';
+      display: block;
+      position: absolute;
+    }
+    &:nth-child(1):before {
+      background-position: -77px -443px;
+      height: 28px;
+      width: 33px;
+      margin-top: 4px;
+      margin-left: -46px;
+    }
+    &:nth-child(2):before {
+      background-position: 1px -462px;
+      width: 35px;
+      height: 36px;
+      margin-left: -48px;
+      margin-top: -1px;
+    }
+    &:nth-child(3):before {
+      background-position: -117px -383px;
+      width: 31px;
+      height: 35px;
+      margin-top: -10px;
+      margin-left: -46px;
+    }
+  }
+}
+
+.registration-forms {
+  float: right;
+  width: 44%;
+}
+
+.registration-forms input {
+  border-radius: 0;
+  border: 0;
+  box-sizing: border-box;
+  padding: 0 5px 0 10px;
+  font-size: 15px;
+}
+
+.registration-forms input[type='email'],
+.registration-forms input[type='password'],
+.registration-forms input[type='text']  {
+    width: 100%;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    color: #333;
+    height: 43px;
+    line-height: 46px;
+}
+
+             /* === Buttons Start === */
+
+.registration-btn {
+  cursor: pointer;
+  background: $brand;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 2px;
+  border: 0;
+  height: 43px;
+  width: 100%;
+  padding: 0;
+  &:hover {
+    background: $brand-hover;
+  }
+}
+
+.registration-forgot {
+  float: left;
+  color: #787878;
+  font-size: 14px;
+}
+
+.registration-btn-sign-up {
+  margin-top: 8px;
+}
+
+.registration-btn-sign-in {
+  width: 100px;
+  height: 32px;
+  float: right;
+  margin-bottom: 10px;
+}
+
+.registration-link {
+  color: $link-color;
+  cursor: pointer;
+}
+
+.registration-cancel{
+  float: right;
+  //margin-top: 9px;
+  margin-top: 5px;
+  margin-right: 15px;
+}
+
+.registration-btn-fb, .registration-log-in {
+    margin: 0 auto 10px;
+    //padding: 14px 11px 11px;
+}
+.registration-btn-fb {
+  font-size: 14px;
+  background: #507CC0;
+}
+.registration-btn-log-in {
+  background: $brand;
+  font-size: 16px;
+}
+
+        /* === Buttons End === */
+
+
+.registration-wrap-info {
+  color: #999;
+  font-size: 13px;
+  line-height: 1.4;
+  a {
+    text-decoration: none;
+    color: #666;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.registration-link-sign-up {
+  color: $link-color;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+
+
+.registration-validbook-explanation {
+  font-size: 15px;
+  border-top: 1px solid #e2e2e2;
+  padding: 0 5px;
+  padding-top: 22px;
+  line-height: 22px;
+  color: #333;
+  p {
+    display: inline;
+  }
+  a {
+    color: #333;
+    text-decoration: underline;
+  }
+}
+
+
+//Validation
+.required-symbol {
+  display: none;
+}
+
+.validation-message {    //error text
+  font-size: 14px;
+  display: block;
+  color: #f32a2a;
+  margin-bottom: 8px;
+}
+
+
+
+@media screen and (min-width: 1920px){
+  .registration-bg {
+      background: url('../../img/login-page/login-background1920.jpg') no-repeat center center fixed;
+      background-size: cover;
+  }
+  .login-popup {
+    top: 25%;
+  }
+}
+@media screen and (max-width: 1600px) {
+  .registration-bg {
+      //background: url('../../img/login-page/login-background1600.jpg');
+      background: url('../../img/login-page/login-background1440x900.jpg') no-repeat center center;
+
+      background-size: cover;
+  }
+}
+
+@media all and (max-width: 1440px) {
+  .registration-bg {
+      background: url('../../img/login-page/login-background1366x768.jpg') no-repeat center center;
+      background-size: cover;
+  }
+}
+
+@media screen and (max-width: 1366px) {
+  .registration-bg {
+      //background: url('../../img/login-page/login-background1366x768.jpg');
+      background: url('../../img/login-page/login-background1280.jpg') no-repeat center center ;
+      background-size: cover;
+  }
+  .login-popup {
+    top: 16%;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .registration-bg {
+      background: url('../../img/login-page/login-background1024x648.jpg') no-repeat center center;
+      background-size: cover;
+  }
+  .login-popup {
+    top: 17%;
+  }
+}
+@media all and (max-width: 1024px) {
+  .registration-bg {
+    background: url('../../img/login-page/login-background780x740.jpg') no-repeat; //768*1024
+      background-size: cover;
+  }
+}
+// @media all and (max-width: 768px) {
+//   .registration-bg {
+//     background: url('../../img/login-page/login-background768x680.jpg');
+//     background-size: cover;
+//   }
+//}
+// @media all and (max-width: 425px) {
+//   .registration-bg {
+//     background: #fff;
+//     background-size: cover;
+//   }
+// }

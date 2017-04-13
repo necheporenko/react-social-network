@@ -1,4 +1,4 @@
-@import '../../theme/vars';
+@import '../../../styles/vars';
 
 .notification {
   width: 600px;
@@ -8,17 +8,14 @@
   border-radius: 3px;
   box-shadow: 0px 1px 5px 1px $border-color;
 
-  .additionalTitle {
+  .additional-title {
     margin: 0 -10px;
     border-bottom: 0;
     padding: 8px 20px;
     padding-bottom: 0px;
   }
 
-  .notificationBox {
+  .notification-box {
     padding-bottom: 5px;
-    ul {
-      list-style: none;
-    }
   }
 }

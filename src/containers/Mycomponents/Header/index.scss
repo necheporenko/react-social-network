@@ -1,0 +1,420 @@
+@import "../../styles/vars";
+
+.header {
+  background: #fff;
+  //box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+  padding: 6px 20px 5px;
+  border-bottom: 1px solid rgba(0,0,0,0.15);
+  width: 100%;
+  display: flex;
+  position: fixed;
+  height: 52px;
+  box-sizing: border-box;
+  z-index: 11;
+  top: 0;
+
+/* -- Logo Start  -- */
+  .logo {
+    img {
+      width: 135px;
+      height: 35px;
+    }
+  }
+}
+/* -- Logo End  -- */
+
+/* -- SearchField Start  -- */
+.search-field {
+  margin-left: 65px;
+  margin-top: 1px;
+  width: 35%;
+
+  input {
+    border: none;
+    background: #f5f5f5;
+    padding-left: 30px;
+    height: 35px;
+    font-size: 15px;
+    //width: 625px;
+    width: 100%;
+  }
+
+  input:focus {
+    outline-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.24);
+    background: #fff;
+  }
+
+  span {
+    display: block;
+    background: $sprite;
+    background-position: -78px -19px;
+    height: 15px;
+    width: 15px;
+    position: relative;
+    left: 8px;
+    top: -26px;
+    width: 15px;
+  }
+}
+/* -- SearchField End  -- */
+
+/* -- UserButtons Start  -- */
+.header-navigation {
+  display: flex;
+  right: 15px;
+  position: absolute;
+
+  .bootstrap-pure-btn {
+    &:hover,
+    &:focus,
+    &:active {                      //attention
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.extension {
+  margin-right: 45px;
+  margin-top: 6px;
+
+  button {
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 4px 10px;
+    border: 1px solid #b7b4b4;
+    background: 0 0;
+    color: #736f6f;
+    box-shadow: 0 0 2px #bebebe;
+  }
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.wrap-icon-search {
+
+  .iconSearch {
+    background: $sprite;
+    background-position: -78px -19px;
+		height: 15px;
+		width: 15px;
+    display: none;
+  }
+}
+
+.wrap-icon-mail {
+  margin-right: 12px;
+
+  .icon-mail {
+    background: $sprite;
+    background-position: -129px -466px;
+		height: 13px;
+		width: 17px;
+
+    &:hover {
+      background-position: -112px -466px;
+    }
+  }
+}
+
+.wrap-icon-bell {
+  margin-right: 30px;
+
+  button {
+    background: 0;
+    border: 0;
+    padding: 0;
+    margin-top: 2px;
+    padding-left: 5px;
+    background: $sprite;
+    background-position: -32px -486px;
+    height: 15px;
+    width: 10px;
+
+    &:hover {
+      background-position: -46px -486px;
+    }
+
+    &::after {
+      content: '';
+      cursor: default;
+      border-left: 1px solid #ddd;
+      height: 16px;
+      position: relative;
+      left: 15px;
+      float: right;
+    }
+  }
+
+  .btn-default:active,
+  .btn-default.active,
+  .open > .btn-default.dropdown-toggle {
+    background: $sprite;
+    background-position: -32px -486px;
+    box-shadow: none;
+
+    &:hover {
+      background-position: -46px -486px;
+    }
+  }
+
+  .dropdown-menu-right {
+    left: -190px;
+  }
+
+  .dropdown-menu {
+    top: 32px;
+    width: 330px;
+    box-shadow: none;
+  }
+}
+
+.notification-box {
+  padding: 5px 10px 2px;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+
+    a {
+      color: $link-color;
+
+      &:hover {
+        color: $link-color;
+        text-decoration: underline;
+      }
+    }
+
+    h4 {
+      font-family: $font-medium;
+    }
+  }
+
+  hr {
+    margin: 0 -10px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+  }
+
+  li {
+    padding: 10px 20px;
+    margin: 0 -10px;
+    cursor: pointer;
+    position: relative;
+    border-bottom: 1px solid $default-bg;
+
+    &:hover {
+      background: $bg-hover;
+    }
+
+    a {
+      display: flex;
+    }
+
+    img {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+    }
+
+    h6 {
+      margin-top: 5px;
+      margin-left: 10px;
+      display: flex;
+
+      b {
+        font-family: $font-bold;
+        padding-right: 5px;
+      }
+
+      a {
+        color: $link-color;
+        display: block;
+        padding-left: 5px;
+
+        &:hover {
+          color: $link-color;
+        }
+      }
+    }
+
+    p {
+      position: absolute;
+      color: $gray-light-hover;
+      font-size: 12px;
+      top: 40px;
+      left: 80px;
+    }
+  }
+}
+
+
+.infouser {
+
+  a {
+    text-decoration: none;
+    color: #333;
+    font-family: $font-bold;
+  }
+
+  span {
+    vertical-align: -4px;
+    margin-right: 10px;
+    font-size: 14px;
+  }
+
+  img {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    margin-top: 3px;
+  }
+}
+
+.profile-menu {
+
+  button {
+    background: 0;
+    border: 0;
+    padding: 0;
+    height: 20px;
+    width: 15px;
+    cursor: pointer;
+    position: relative;
+    margin-top: 10px;
+    margin-left: 20px !important;
+    padding-left: 5px;
+
+    &::before {
+      //background: $sprite;
+      //background-position: -62px -221px;
+      //width: 15px;
+      //height: 19px;
+      background: url('../../img/Icons/gear.png');
+      width: 20px;
+      height: 20px;
+      display: block;
+      content: '';
+    }
+  }
+
+  a {
+    padding: 5px 8px !important;
+    display: block;
+  }
+}
+
+
+
+/* -- UserButtons End  -- */
+
+
+
+/* -- MinHeader  -- */
+.header-sign-btn {
+  position: absolute;
+  right: 20px;
+  top: 13px;
+
+  button {
+    cursor: pointer;
+    background: $brand;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 2px;
+    border: 0;
+    height: 20px;
+    width: 75px;
+    padding: 3px 1px;
+
+    &:hover {
+      background: $brand-hover;
+    }
+  }
+}
+
+.header-sign-in {
+  margin-left: 10px;
+}
+
+/* -- MinHeader End  -- */
+
+
+/* -- Header-Channel -- */
+.name-channel {
+  font-size: 18px;
+  color: $gray;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 190px;
+  align-self: center;
+  position: relative;
+  top: 2px;
+
+  &:before {
+    content: '';
+    height: 26px;
+    display: inline-block;
+    vertical-align: middle;
+    border-left: 1px solid $border-color;
+    margin-left: 15px;
+    margin-right: 20px;
+    margin-bottom: 8px;
+  }
+}
+/* -- Header-Channel  -- */
+
+
+
+.left-arrow {
+  background: url('../../img/Icons/left.png');
+  width: 32px;
+  height: 32px;
+  position: relative;
+  top: 10px;
+  left: 13px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.right-arrow {
+  background: url('../../img/Icons/right.png');
+  width: 32px;
+  height: 32px;
+  position: relative;
+  top: 10px;
+  right: 5px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.test-sidebar {
+
+}
+
+
+
+
+@media only screen and (max-width: 992px) {
+  .extension {
+    display: none;
+  }
+
+  .header-navigation {
+    right: 45px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .search-field input {
+    //width: 325px;
+  }
+}

@@ -1,0 +1,29 @@
+@import "../../styles/vars";
+
+.photos {
+
+  .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 10;
+    position: relative;
+  }
+}
+
+
+.photos-img {
+  height: 205px;
+  margin: 0 10px 20px 10px;
+  img {
+    width: 205px;
+    height: 205px;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    //margin: 3px;
+  }
+}
+
+// .photos-lists {
+//   margin: 0 auto;
+//   max-width: 900px;
+// }

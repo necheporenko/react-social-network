@@ -1,0 +1,68 @@
+@import "../../styles/vars";
+
+.navigation {
+  width: 100%;
+  height: 50px;
+  margin: 0;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+  position: relative;
+  display: flex;
+  background: #fafafa;
+  z-index: 9;
+}
+// TODO: improve style
+.navigation-fixed {
+  position: fixed;
+  top: 52px;
+  z-index: 11;
+}
+
+.navigation-wrap {
+  position: absolute;
+  left: calc(50% - 160px);
+  top: 15px;
+  a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 0 5px;
+    margin-right: 4px;
+    color: #555;
+    font-size: 16px;
+    height: 35px;
+    box-sizing: border-box;
+
+    &:hover, &.active {
+      text-decoration: none;
+      border-bottom: 3px solid $brand;
+    }
+  }
+}
+
+/* === NavigationInfoUser Start === */
+.navigation-infouser {
+  position: absolute;
+  z-index: 10;
+  left: 15px;
+  top: 3px;
+  a {
+    display: flex;
+  }
+  img {
+    margin: 6px 5px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    border-radius: 2px;
+  }
+  span {
+    font-size: 18px;
+    color: #444;
+    align-self: center;
+    margin-left: 7px;
+  }
+}
+
+.navigation-infouser-none {
+  display: none;
+}
+/* === NavigationInfoUser End === */

@@ -1,0 +1,62 @@
+@import "../../../styles/vars";
+@import "../../../styles/mixins";
+
+.follow-block {
+  width: 220px;
+  align-self: baseline;
+  background: #fff;
+  border: 1px solid $border-color;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+
+  .wrapper {
+    padding: 10px;
+    padding-bottom: 12px;
+  }
+
+  .title {
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 10px;
+    @include title-medium-default();
+  }
+}
+
+.follow-people {
+  display: flex;
+  margin-top: 15px;
+}
+
+.follow-people-link-img {
+  cursor: pointer;
+  border: 1px solid $border-color;
+  height: 100%;
+  img {
+    width: 32px;
+    height: 32px;
+    display: block;
+  }
+}
+
+.follow-people-text {
+  padding-left: 10px;
+}
+
+.follow-people-text-user {
+  a {
+    width: 138px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $default-color;
+    font-family: $font-medium;
+    font-weight: normal;
+    font-size: 14px;
+    display: block;
+  }
+}
+
+.follow-people-text-btn {
+  a {
+    font-size: 12px;
+    color: $default-color;
+  }
+}

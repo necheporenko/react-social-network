@@ -1,0 +1,205 @@
+/* === Import Variables === */
+@import "../../styles/vars";
+
+.book-nav {
+  // align-self: center;
+  // position: absolute;
+  // left: calc(50% - 260px);
+  // top: 15px;
+  a {
+    &:hover, &.active {
+      text-decoration: none;
+      border-bottom: 0;
+    }
+  }
+  ul {
+    list-style: none;
+  }
+  li {
+    display: inline-block;
+    vertical-align: top;
+  }
+}
+
+.infobloks-book {
+  background: #fff;
+  border: 1px solid $border-color;
+  min-height: 160px;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 20px;
+  padding: 10px 15px 8px;
+}
+
+.title-infoblocks-book {
+  padding-bottom: 12px;
+  display: flex;
+  h5 {
+    font-size: 16px;
+    font-family: $font-medium;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 155px;
+    display: inline-block;
+    line-height: 30px;
+  }
+  .btn-following {
+    margin: 0;
+    margin-left: 27px;
+    width: 105px;
+    height: 25px;
+    span {
+      left: 12px;
+    }
+  }
+}
+
+.book-info {
+  //margin: 0 15px;
+  //border-bottom: 1px solid $default-bg;
+  hr {
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+}
+
+.book-info-list {
+  list-style: none;
+  li {
+    background: $gray;
+    color: #fff;
+    display: inline-block;
+    padding: 3px 3px 0 3px;
+    margin-right: 5px;
+  }
+}
+
+.book-icon-visibility,
+.book-icon-stories,
+.book-icon-subbooks,
+.book-icon-followers {
+  &::before {
+    content: "";
+    display: inline-block;
+    background: $sprite;
+    margin-right: 3px;
+  }
+}
+.book-icon-visibility {
+  &::before {
+    background-position: 0px -257px;
+    width: 16px;
+    height: 16px;
+    margin-left: 2px;
+    position: relative;
+    top: 2px;
+  }
+}
+.book-icon-stories {
+  &::before {
+    background-position: -16px -239px;
+    width: 14px;
+    height: 16px;
+    margin-right: 5px;
+  }
+}
+.book-icon-subbooks {
+  &::before {
+    background-position: -30px -135px;
+    width: 16px;
+    height: 16px;
+  }
+}
+.book-icon-followers {
+  &::before {
+    background-position: -61px -97px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+
+.book-quantity {
+  font-family: $font-bold;
+  text-transform: uppercase;
+  color: $gray;
+  margin: 10px 0;
+}
+
+
+.book-settings {
+  display: flex;
+  position: relative;
+}
+
+.book-settings-access,
+.book-settings-edit {
+  i {
+    background: $sprite;
+    content: '';
+    display: inline-block;
+    margin-right: 8px;
+  }
+}
+.book-settings-access {
+  display: flex;
+  i {
+    height: 13px;
+    vertical-align: middle;
+    background-position: -74px -377px;
+    width: 11px;
+  }
+  .open > .dropdown-menu {
+    display: block;
+    position: static;
+    margin-top: 25px;
+    margin-left: -18px;
+    float: none;
+    border: none;
+    box-shadow: none;
+  }
+  .btn {
+    padding: 0;
+    border: 0;
+  }
+}
+.book-settings-edit {
+  position: absolute;
+  right: 0;
+
+  a {
+    color: $gray;
+  }
+  i {
+    width: 12px;
+    height: 12px;
+    background-position: -160px -226px;
+  }
+}
+
+.book-subbooks {
+  margin: 8px 0;
+}
+
+
+.book-list-label {
+  padding-top: 0 !important;
+  strong {
+    font-weight: normal;
+  }
+}
+
+.book-element-wrapper {
+  padding-bottom: 10px;
+  .radio {
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .infobloks-book {
+    padding: 10px 7px 8px;
+  }
+}

@@ -80,6 +80,7 @@ export default store => {
       <Route path="chat" getComponent={() => System.import('./containers/Chat/Chat')} />
 
       <Route path="users" getComponent={() => System.import('./containers/Users')} />
+
       {/* <Route path="notification" component={Notification} /> */}
       <Route path="notification" getComponent={() => System.import('./containers/Notification')} />
 

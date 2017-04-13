@@ -1,0 +1,62 @@
+@import '../../styles/vars';
+
+.additional-wrap {
+    padding: 20px 0;
+    display: flex;
+    margin: 0 auto;
+    width: 800px;
+}
+
+ // Additional Menu
+.additional-mnu {
+  width: 250px;
+  background: #fff;
+  border: 1px solid $border-color;
+  align-self: baseline;
+  margin-right: 20px;
+}
+
+.additional-title {
+  font-size: 20px;
+  font-family: $font-bold;
+  padding: 12px 20px;
+  border: 0 none;
+  border-bottom: 1px solid $border-color;
+}
+
+.additional-mnu-ul {
+  list-style: none;
+  padding: 10px 0;
+}
+
+.additional-mnu-link {
+  &:hover {
+    color: $default-color;
+  }
+  li {
+    padding: 10px 20px;
+    &:hover {
+      background: $bg-hover;
+    }
+  }
+}
+
+.additional-mnu-link-active {
+  font-family: $font-bold;
+  font-size: 15px;
+}
+ // Additional Menu
+
+
+// Additional content
+ .additional-content {
+    background: #fff;
+    border: 1px solid $border-color;
+    width: 528px;
+}
+
+.additional-hr {
+  height: 1px;
+  border: 0;
+  background: $border-color;
+}
