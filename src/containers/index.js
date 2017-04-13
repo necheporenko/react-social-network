@@ -9,3 +9,4 @@ export NotFound from './NotFound/NotFound';
 // export Register from './Register/Register';
 // export Survey from './Survey/Survey';
 // export Widgets from './Widgets/Widgets';
+export PhotosContainer from './PhotosContainer';

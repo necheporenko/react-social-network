@@ -1,0 +1,171 @@
+@import "./fonts.scss";
+@import "./vars";
+
+/* Styles */
+body {
+ margin: 0;
+ font-family: "Roboto", Arial, sans-serif;
+ background: $default-bg;
+}
+
+h1,h2,h3,h4,h5,h6,p,ul, button {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: $default-color;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+* {
+  box-sizing: content-box;
+}
+
+label {
+  font-weight: normal;
+}
+
+b {
+  font-family: $font-bold;
+}
+
+.btn-brand {
+  cursor: pointer;
+  background: $brand;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 2px;
+  padding: 5px 12px;
+  border: 0;
+
+  &:hover {
+    background: $brand-hover;
+    color: #fff;
+  }
+}
+
+.btn-following {
+  font-size: 13px;
+  font-family: $font-medium;
+  border-radius: 2px;
+  border: 1px solid #D9D9D9;
+  box-shadow: 0 1px 0 rgba(0,0,0,.05);
+  cursor: pointer;
+  text-align: center;
+  line-height: 25px;
+  width: 120px;
+  margin: 15px auto 0;
+
+  &:hover {
+    border-color: #b8b8b8;
+    box-shadow: 0 1px 0 rgba(0,0,0,.1);
+  }
+
+  span {
+    content: '';
+    display: inline-block;
+    background: $sprite;
+    background-position: -153px -529px;
+    height: 14px;
+    width: 10px;
+    position: relative;
+    top: 3px;
+    left: 18px;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      border-left: 1px solid #D9D9D9;
+      height: 25px;
+      position: absolute;
+      top: -6px;
+      left: -7px;
+    }
+  }
+}
+
+.btn-cancel {
+  background: $gray-light;
+}
+
+.sidebar {
+  width: 160px;
+
+  ul {
+    list-style: none;
+
+    > a {
+      &:hover {
+        color: $default-color;
+      }
+
+      &.active {
+        > li {
+          font-family: $font-medium;
+          border-left: 4px solid #8F8F8F;
+          background-color: #E1E1E1;
+        }
+      }
+    }
+
+    li {
+      cursor: pointer;
+      padding: 10px;
+      padding-left: 30px;
+
+      &:hover {
+        border-color: #8F8F8F;
+        background-color: #E1E1E1;
+      }
+    }
+  }
+}
+
+.common-lists {
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  width: 900px;
+  z-index: 1;
+}
+
+.create-new-item {
+  font-size: 10px;
+  text-decoration: none;
+  cursor: pointer;
+
+  a {
+    color: $gray;
+  }
+}
+
+.contents {
+  padding: 25px 0;
+  min-height: 900px; //900
+  display: flex;
+  align-items: flex-start;
+}
+
+
+
+@media (max-width: 1200px) {
+  .common-lists {
+    width: 675px;
+  }
+
+}
+
+@media (max-width: 991px) {
+  .common-lists {
+    width: 450px;
+  }
+
+}

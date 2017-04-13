@@ -17,6 +17,7 @@ import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import getRoutes from './routes';
 import isOnline from './utils/isOnline';
+import './theme/styles.scss'; // add common style
 
 const offlinePersistConfig = {
   storage: localForage,

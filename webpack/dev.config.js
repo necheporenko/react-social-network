@@ -150,7 +150,7 @@ var webpackConfig = module.exports = {
       }, {
         loader: 'css-loader',
         query: {
-          modules: true,
+          //modules: true,
           importLoaders: 3,
           sourceMap: true,
           localIdentName: '[local]___[hash:base64:5]'
@@ -176,10 +176,10 @@ var webpackConfig = module.exports = {
       }, {
         loader: 'css-loader',
         query: {
-          modules: true,
+          //modules: true,
           importLoaders: 3,
-          sourceMap: true
-          //localIdentName: '[local]___[hash:base64:5]'
+          sourceMap: true,
+          localIdentName: '[local]___[hash:base64:5]'
         }
       }, {
         loader: 'autoprefixer-loader',
@@ -192,7 +192,8 @@ var webpackConfig = module.exports = {
         loader: 'sass-loader',
         query: {
           outputStyle: 'expanded',
-          sourceMap: true
+          sourceMap: true,
+          //includePaths: [path.resolve(__dirname, '..src')]
         }
       }
     ])

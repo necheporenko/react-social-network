@@ -3,6 +3,12 @@ import { IndexRoute, Route } from 'react-router';
 import { routerActions } from 'react-router-redux';
 import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { App, Home, NotFound } from 'containers';
+import Auth from 'components/Registration/Auth';
+import PhotosContainer from 'containers/PhotosContainer';
+import PhotosCovers from 'components/Photos/PhotosCovers';
+import PhotosExternal from 'components/Photos/PhotosExternal';
+import PhotosProfile from 'components/Photos/PhotosProfile';
+import Photos from 'components/Photos';
 import getRoutesUtils from 'utils/routes';
 
 // eslint-disable-next-line import/no-dynamic-require
@@ -22,14 +28,6 @@ export default store => {
     wrapperDisplayName: 'UserIsAuthenticated'
   });
 
-  const isNotAuthenticated = UserAuthWrapper({
-    authSelector: state => state.auth.user,
-    redirectAction: routerActions.replace,
-    wrapperDisplayName: 'UserIsNotAuthenticated',
-    predicate: user => !user,
-    failureRedirectPath: '/',
-    allowRedirectBack: false
-  });
 
   /**
    * Please keep routes in alphabetical order
@@ -39,13 +37,9 @@ export default store => {
       {/* Home (main) route */}
       <IndexRoute component={Home} />
 
-      {/* Routes requiring login */}
-      {/*
-        You can also protect a route like this:
-        <Route path="protected-route" {...permissionsComponent(isAuthenticated)(Component)}>
-      */}
+
+      {/* need delete this */}
       <Route {...permissionsComponent(isAuthenticated)()}>
-        <Route path="loginSuccess" getComponent={() => System.import('./containers/LoginSuccess/LoginSuccess')} />
         <Route
           path="chatFeathers"
           getComponent={() => injectReducerAndRender(
@@ -55,34 +49,22 @@ export default store => {
         />
       </Route>
 
-      {/* Routes disallow login */}
-      <Route {...permissionsComponent(isNotAuthenticated)()}>
-        <Route path="register" getComponent={() => System.import('./containers/Register/Register')} />
-      </Route>
 
-      {/* Routes */}
-      <Route path="login" getComponent={() => System.import('./containers/Login/Login')} />
-      <Route path="about" getComponent={() => System.import('./containers/About/About')} />
-      <Route
-        path="survey"
-        getComponent={() => injectReducerAndRender(
-          { survey: System.import('./redux/modules/survey') },
-          System.import('./containers/Survey/Survey')
-        )}
-      />
-      <Route
-        path="widgets"
-        getComponent={() => injectReducerAndRender(
-          { widgets: System.import('./redux/modules/widgets') },
-          System.import('./containers/Widgets/Widgets')
-        )}
-      />
       <Route path="chat" getComponent={() => System.import('./containers/Chat/Chat')} />
 
       <Route path="users" getComponent={() => System.import('./containers/Users')} />
 
       {/* <Route path="notification" component={Notification} /> */}
       <Route path="notification" getComponent={() => System.import('./containers/Notification')} />
+
+      <Route path="/auth" component={Auth} />
+
+      <Route path="/photos" component={PhotosContainer}>
+        <IndexRoute component={Photos} />
+        <Route path="external" component={PhotosExternal} />
+        <Route path="covers" component={PhotosCovers} />
+        <Route path="profile" component={PhotosProfile} />
+      </Route>
 
       {/* Catch all route */}
       <Route path="*" component={NotFound} status={404} />
