@@ -7,7 +7,6 @@ class Photos extends Component {
   render() {
     return (
       <div className="photos contents">
-
         <PhotosMenu />
 
         <div className="common-lists photos-lists">

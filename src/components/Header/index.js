@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import Logo from './Logo';
 import SearchField from './SearchField';
 import UserButtons from './UserButtons';
-import Sidebar from 'react-sidebar';
-import LeftMenu from '../MainPage/LeftMenu';
-import Channels from '../MainPage/Channels';
+
+//import Sidebar from 'react-sidebar';
+//import LeftMenu from '../MainPage/LeftMenu';
+//import Channels from '../MainPage/Channels';
 
 import './index.scss';
 
@@ -92,7 +93,6 @@ class Header extends Component {
         <Logo />
         <SearchField />
         <UserButtons
-          onSignIn={this.props.onSignIn}
           onSignOut={this.props.onSignOut}
           user={this.props.user}
         />
@@ -165,7 +165,7 @@ class Header extends Component {
 
 Header.propTypes = {
   children: PropTypes.element,
-  onSignIn: PropTypes.func,
+  // onSignIn: PropTypes.func,
   onSignOut: PropTypes.func,
   user: PropTypes.object
 };

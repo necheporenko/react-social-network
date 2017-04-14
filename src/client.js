@@ -17,6 +17,8 @@ import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import getRoutes from './routes';
 import isOnline from './utils/isOnline';
+// import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+// add bootstrap style, (don't work - 'You may need an appropriate loader to handle this file type.')
 import './theme/styles.scss'; // add common style
 
 const offlinePersistConfig = {

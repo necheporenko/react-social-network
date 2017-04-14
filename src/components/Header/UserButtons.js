@@ -24,7 +24,7 @@ const UserButtons = (props) => {
         </div>
         <div className="wrap-icon-bell">
           <ButtonToolbar>
-            <DropdownButton className="bootstrap-pure-btn" bsStyle="default"  noCaret pullRight >
+            <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title={''} id={1} noCaret pullRight >
               <div className="notification-box">
                 <div>
                   <h4>Notifications</h4>
@@ -54,7 +54,7 @@ const UserButtons = (props) => {
                     <p>21 Mar 2017</p>
                   </li>
                 </ul>
-                <div style={{'padding-top': '7px'}}>
+                <div style={{ paddingTop: '7px' }}>
                   <Link to="/notifications">See all</Link>
                   <Link to="/settings/notifications">Settings</Link>
                 </div>
@@ -73,7 +73,7 @@ const UserButtons = (props) => {
 
       <div className="profile-menu">
         <ButtonToolbar>
-          <DropdownButton className="bootstrap-pure-btn" bsStyle="default"  noCaret pullRight >
+          <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title={''} id={2} noCaret pullRight >
             <Link to="/settings">Settings</Link>
             <Link to="/settings/privacy">Privacy Control Center</Link>
             <a onClick={onSignOut}>Sign out</a>
@@ -88,6 +88,13 @@ const UserButtons = (props) => {
 UserButtons.propTypes = {
   user: PropTypes.object,
   onSignOut: PropTypes.func
+};
+
+UserButtons.defaultProps = {
+  user: {
+    first_name: 'Neo',
+    last_name: 'Surname'
+  }
 };
 
 export default UserButtons;

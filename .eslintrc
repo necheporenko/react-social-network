@@ -21,8 +21,10 @@
     "react/no-find-dom-node": "warn",
     "react/forbid-prop-types": "off",
     "react/no-unescaped-entities": "off",
+    "react/require-default-props": "off", //add
     "jsx-a11y/href-no-hash": "off", //add
     "jsx-a11y/img-has-alt": "off", //add
+    "jsx-a11y/no-static-element-interactions": "off", //add
     "import/default": "off",
     "import/extensions": ["off"],
     "import/no-duplicates": "off",
@@ -42,6 +44,7 @@
     "no-case-declarations": "off",
     "no-underscore-dangle": "off",
     "arrow-parens": "off",
+    "arrow-body-style": "off", //add
     "class-methods-use-this": "off",
     "no-bitwise": "off",
     "no-plusplus": "off",
@@ -51,6 +54,7 @@
     "indent": ["error", 2, {"SwitchCase": 1}],
     "linebreak-style": "off",
     "spaced-comment": "off", //add
+    "camelcase": "off", //add
   },
   "plugins": [
     "react",

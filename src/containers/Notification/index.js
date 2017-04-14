@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import './index.scss';   //  T_T
+import './index.scss';
 
 class Notification extends Component {
   render() {
-    // const styles = require('./index.scss');
     return (
-      // <div className={styles.notification}>
-      //   <div className={styles.notificationBox}>
-      //     <div className={styles.additionalTitle}>Notifications</div>
       <div className="notification">
         <div className="notificationBox">
           <div className="additionalTitle">Notifications</div>
