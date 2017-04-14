@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import NavigationInfoUser from './NavigationUserInfo';
 import './index.scss';
@@ -17,23 +17,23 @@ class Navigation extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll);
     this.saveScroll();
   }
 
   componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
 
   handleScroll(e) {
     const scrollTop = e.srcElement.body.scrollTop;
     savePositionTop = scrollTop;
-    this.setState({ "scrollTop": scrollTop });
+    this.setState({ scrollTop });
   }
 
   saveScroll() {
-    this.setState({ "scrollTop": savePositionTop });
+    this.setState({ scrollTop: savePositionTop });
   }
 
   render() {
@@ -42,20 +42,20 @@ class Navigation extends Component {
     const { scrollTop } = this.state;
 
     const chooseNav = () => {
-      let chooseNav;
+      let Nav;
       let displayUser;
 
-      if(scrollTop <= 275 || !scrollTop) {
-          chooseNav = "navigation";
-          displayUser = "navigation-infouser-none";
-        } else {
-          chooseNav = "navigation navigation-fixed";
-          displayUser = "navigation-infouser";
-        }
-      let result = {posTop: chooseNav, show: displayUser};
+      if (scrollTop <= 275 || !scrollTop) {
+        Nav = 'navigation';
+        displayUser = 'navigation-infouser-none';
+      } else {
+        Nav = 'navigation navigation-fixed';
+        displayUser = 'navigation-infouser';
+      }
+      const result = { posTop: Nav, show: displayUser };
       return result;
     };
-    
+
     const navigation = chooseNav();
 
     return (
@@ -69,28 +69,28 @@ class Navigation extends Component {
             Storyline
           </Link>
           <Link
-            to={link + '/books'}
+            to={`${link}/books`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
             Books
           </Link>
           <Link
-            to={link + '/tokens'}
+            to={`${link}/tokens`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
             Tokens
           </Link>
           <Link
-            to={link + '/people'}
+            to={`${link}/people`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
             People
           </Link>
           <Link
-            to={link + '/photos'}
+            to={`${link}/photos`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
@@ -106,7 +106,7 @@ class Navigation extends Component {
         } */}
         <NavigationInfoUser
           userName={`${first_name} ${last_name}`}
-          link={link}
+          // link={link}
           displayUser={navigation.show}
         />
       </div>
@@ -116,9 +116,9 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-  children: PropTypes.element,
+  // children: PropTypes.element,
   userInfo: PropTypes.object,
-  routing: PropTypes.object
+  // routing: PropTypes.object
 };
 
 function mapStateToProps(state) {

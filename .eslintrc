@@ -43,6 +43,7 @@
     "global-require": "off",
     "no-case-declarations": "off",
     "no-underscore-dangle": "off",
+    "no-shadow": "off", //add
     "arrow-parens": "off",
     "arrow-body-style": "off", //add
     "class-methods-use-this": "off",
@@ -55,6 +56,7 @@
     "linebreak-style": "off",
     "spaced-comment": "off", //add
     "camelcase": "off", //add
+    "object-shorthand": "off", //add
   },
   "plugins": [
     "react",

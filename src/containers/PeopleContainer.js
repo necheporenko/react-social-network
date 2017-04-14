@@ -3,22 +3,22 @@ import { connect } from 'react-redux';
 // import Navigation from '../components/Navigation';
 // import SubHeader from '../components/StoryLine/SubHeader';
 
-class PhotosContainer extends Component {
+class PeopleContainer extends Component {
 
   render() {
     return (
       <div>
         {/* <SubHeader
           user={this.props.userInfo}
-        />
-        <Navigation /> */}
+        /> */}
+        {/* <Navigation /> */}
         {this.props.children}
       </div>
     );
   }
 }
 
-PhotosContainer.propTypes = {
+PeopleContainer.propTypes = {
   children: PropTypes.element,
   // userInfo: PropTypes.object
 };
@@ -29,4 +29,4 @@ function mapStateToProps() {
   };
 }
 
-export default connect(mapStateToProps, null)(PhotosContainer);
+export default connect(mapStateToProps, null)(PeopleContainer);

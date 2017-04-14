@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 const NavigationInfoUser = ({ link, userName, displayUser }) => {
@@ -10,6 +10,12 @@ const NavigationInfoUser = ({ link, userName, displayUser }) => {
       </Link>
     </div>
   );
+};
+
+NavigationInfoUser.propTypes = {
+  link: PropTypes.string,
+  userName: PropTypes.string,
+  displayUser: PropTypes.string,
 };
 
 export default NavigationInfoUser;

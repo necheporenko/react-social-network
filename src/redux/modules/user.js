@@ -87,7 +87,7 @@ export function userLoginRequest(email, password) {
       })
       .end((err, res) => {
         if (err || !res.ok) {
-          console.log('User authentification error:', err);               // eslint-disable-line no-console
+          console.log('User authentification error:', err);         // eslint-disable-line no-console
         } else {
           const resp = res.body;
 
@@ -95,17 +95,17 @@ export function userLoginRequest(email, password) {
             .get(`${apiURL}/users/${resp.id}`)
             .end((err, response) => {
               if (err || !res.ok) {
-                console.log('Error in getting user info', err);                                 // eslint-disable-line no-console
+                console.log('Error in getting user info', err);    // eslint-disable-line no-console
               } else {
                 const { first_name, last_name } = response.body;
                 Cookies.set('_u', {
-                    'id': resp.id,
-                    'email': resp.email,
-                    'token': resp.token,
-                    'first_name': first_name,
-                    'last_name': last_name
-                  },
-                  { expires: 30 });
+                  id: resp.id,
+                  email: resp.email,
+                  token: resp.token,
+                  first_name: first_name,
+                  last_name: last_name
+                },
+                { expires: 30 });
                 dispatch(userLogin(resp.id, resp.email, resp.token, first_name, last_name));
               }
             });
@@ -120,7 +120,7 @@ export function userInfoRequest(id) {
       .get(`${apiURL}/users/${id}`)
       .end((err, res) => {
         if (err || !res.ok) {
-          console.log('Error in getting user info', err);                                 // eslint-disable-line no-console
+          console.log('Error in getting user info', err);          // eslint-disable-line no-console
         } else {
           dispatch(userInfo(res.body));
         }
@@ -141,9 +141,9 @@ export function userRegisterRequest(firstName, lastName, email, password) {
       })
       .end((err, res) => {
         if (err || !res.ok) {
-          console.log('Error in registration:', err);                                 // eslint-disable-line no-console
+          console.log('Error in registration:', err);               // eslint-disable-line no-console
         } else {
-          console.log('yay got ' + JSON.stringify(res.body));          // eslint-disable-line no-console
+          console.log('yay got ' + JSON.stringify(res.body));       // eslint-disable-line no-console
           dispatch(addUser(res.body));
         }
       });
@@ -158,7 +158,7 @@ export function userRegisterRequest(firstName, lastName, email, password) {
       .get(`${apiURL}/users`)
       .end((err, res) => {
         if (err || !res.ok) {
-          console.log('Oh no! error in fetchUsers');                                 // eslint-disable-line no-console
+          console.log('Oh no! error in fetchUsers');                   // eslint-disable-line no-console
         } else {
           console.log('yay got ' + JSON.stringify(res.body));          // eslint-disable-line no-console
           dispatch(saveUserList(res.body));
@@ -199,67 +199,64 @@ export function userRegisterRequest(firstName, lastName, email, password) {
 }*/
 
 
-
-
-
-
 /* ============
    | REDUCER  |
    ============ */
 
- const initialState = {
-   usersArr: [],
-   newUser: {},
-   isAuthenticated: false,
-   userInfo: {
-     id: null,
-     token: null,
-     email: null,
-     first_name: '',
-     last_name: ''
-   }
- };
+const initialState = {
+  usersArr: [],
+  newUser: {},
+  isAuthenticated: false,
+  userInfo: {
+    id: null,
+    token: null,
+    email: null,
+    first_name: '',
+    last_name: ''
+  }
+};
 
- export default function usersReducer(state = initialState, action) {
-   switch (action.type) {
-     case FETCH_USERS: {
-       const { users } = action;
-       const newUsers = [...state.usersArr, ...users];
+export default function usersReducer(state = initialState, action) {
+  switch (action.type) {
+    case FETCH_USERS: {
+      const { users } = action;
+      const newUsers = [...state.usersArr, ...users];
 
-       return {
-         ...state,
-         usersArr: newUsers
-       };
-     }
-     case LOGIN_REQUEST: {
-       const userInfo = {
-         id: action.id,
-         token: action.token,
-         email: action.email,
-         first_name: action.first_name,
-         last_name: action.last_name ? action.last_name : 'surname'
-       };
+      return {
+        ...state,
+        usersArr: newUsers
+      };
+    }
+    case LOGIN_REQUEST: {
+      const userInfo = {
+        id: action.id,
+        token: action.token,
+        email: action.email,
+        first_name: action.first_name,
+        last_name: action.last_name ? action.last_name : 'surname'
+      };
 
-       return {
-         ...state,
-         userInfo,
-         isAuthenticated: !!action.token
-       };
-     }
-     case USER_LOGOUT: {
-       return {
-         ...state,
-         userInfo: {},
-         isAuthenticated: false
-       };
-     }
-     // case ADD_NEW_USER: {
-     //   // Add user to usersArr
-     // }
-     // case DELETE_USER: {
-     //   // Delete user from usersArr
-     // }
-     default:
-       return state;
-   }
- }
+      return {
+        ...state,
+        userInfo,
+        isAuthenticated: !!action.token
+      };
+    }
+
+    case USER_LOGOUT: {
+      return {
+        ...state,
+        userInfo: {},
+        isAuthenticated: false
+      };
+    }
+   // case ADD_NEW_USER: {
+   //   // Add user to usersArr
+   // }
+   // case DELETE_USER: {
+   //   // Delete user from usersArr
+   // }
+    default:
+      return state;
+  }
+}
