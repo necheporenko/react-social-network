@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
-import Helmet from 'react-helmet';
-import config from 'config';
-import { userLogin, userSignOut } from '../../redux/modules/user';
+// import Helmet from 'react-helmet';
+// import config from 'config';
 import Header from '../../components/Header';
+import { userLogin, userSignOut } from '../../redux/modules/user';
 
 class App extends Component {
 
@@ -16,7 +16,7 @@ class App extends Component {
   }
 
   componentWillReceiveProps() {
-    //const path = this.props.children.props.router.location.pathname;
+    // const path = this.props.children.props.router.location.pathname;
     // const { first_name, last_name } = this.props.userInfo;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
   }
@@ -26,12 +26,12 @@ class App extends Component {
 
     return (
       <div>
-        <Helmet {...config.app.head} />
+        {/*<Helmet {...config.app.head} />*/}
         <div style={{ marginTop: '52px' }}>
           <Header
             user={this.props.userInfo}
             onSignOut={this.props.userSignOut}
-            />
+          />
         </div>
         {children}
       </div>

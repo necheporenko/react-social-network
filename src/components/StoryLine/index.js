@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BooksTree from '../BooksTree';
-import Stream from './Stream';
-import InfoBloks from './InfoBlocks';
+import Stream from './Stream/index';
+import InfoBloks from './InfoBlocks/index';
 
 import './index.scss';
 
@@ -15,17 +15,17 @@ class StoryLine extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   handleScroll(e) {
     const scrollTop = e.srcElement.body.scrollTop;
     //console.log(scrollTop);
-    this.setState({ "scrollTop": scrollTop });
+    this.setState({ 'scrollTop': scrollTop });
   }
 
   render() {
@@ -34,13 +34,13 @@ class StoryLine extends Component {
       let booksTreeTop;
       let infoBlocksTop;
 
-      if(scrollTop <= 275) {
-          booksTreeTop = "wrapper";
-          infoBlocksTop = "navigation-infouser-none";
-        } else {
-          booksTreeTop = "wrapper wrapper-fixed";
-          infoBlocksTop = "navigation-infouser";
-        }
+      if (scrollTop <= 275) {
+        booksTreeTop = "wrapper";
+        infoBlocksTop = "navigation-infouser-none";
+      } else {
+        booksTreeTop = "wrapper wrapper-fixed";
+        infoBlocksTop = "navigation-infouser";
+      }
       let result = {booksTree: booksTreeTop, infoBloks: infoBlocksTop};
       return result;
     };

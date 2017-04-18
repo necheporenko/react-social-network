@@ -28,8 +28,8 @@ export function createChannelRequest(name, description) {
         } else {
           dispatch(createChannel(res.body.data.name, res.body.data.id));
           console.log('Yeah! ' + JSON.stringify(res.body));
-      }
-    });
+        }
+      });
   };
 }
 
@@ -52,7 +52,7 @@ export default function channelReducer(state = initialState, action) {
   switch (action.type) {
     case CREATE_CHANNEL: {
       const { name, description } = action;
-      const newChannels = [...state.channelsArr, ...[{name: name}, {description: description}]];
+      const newChannels = [...state.channelsArr, ...[{ name: name }, { description: description }]];
 
       return {
         ...state,

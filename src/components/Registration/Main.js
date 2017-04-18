@@ -22,18 +22,9 @@ class New extends Component {
     this.responseFacebook = this.responseFacebook.bind(this);
   }
 
-  responseFacebook(response) {
-    console.log('Facebook API login', response); // eslint-disable-line no-console
-  }
-
   onFormShow(formName) {
     console.log(formName);      // eslint-disable-line no-console
     this.props.showActiveForm(formName);
-  }
-
-  handleAuth(data) {
-    console.log(data);          // eslint-disable-line no-console
-    this.setState({authEmail: data.email, authPass: data.password});
   }
 
   onSubmitSignInForm(data) {
@@ -45,35 +36,45 @@ class New extends Component {
     this.props.userRegisterRequest(firstName, lastName, email, password);
   }
 
+  handleAuth(data) {
+    console.log(data);          // eslint-disable-line no-console
+    this.setState({ authEmail: data.email, authPass: data.password });
+  }
+
+  responseFacebook(response) {
+    console.log('Facebook API login', response); // eslint-disable-line no-console
+  }
+
   invalid() {
     console.log('error');       // eslint-disable-line no-console
   }
 
   render() {
     return (
-        <div>
-          <div className="registration-bg">
+      <div>
+        <div className="registration-bg">
 
           <div className="login-popup">
             <div className="title-cart">
-            <span className="registration-logo">Validbook</span>
-            <span className="registration-desc-logo">A tool to organize information, learn about something or someone, send and collect tokens</span>
-          </div>
-
-          <hr className="registration-line-desc"/>
-
-          <div className="registration-content">
-            <div className="registration-desc-site">
-              <ul>
-                <li>Organize information about your interests, hobbies, work or anything else.</li>
-                <li>Create your universal digital identity to communicate with friends and other interesting people</li>
-                <li>Write, send and collect <span className="asterix"> tokens</span>.</li>
-              </ul>
+              <span className="registration-logo">Validbook</span>
+              <span className="registration-desc-logo">A tool to organize information,
+                learn about something or someone, send and collect tokens</span>
             </div>
 
-            <div className="registration-forms">
+            <hr className="registration-line-desc"/>
 
-              {this.props.activeForm === 'default' &&
+            <div className="registration-content">
+              <div className="registration-desc-site">
+                <ul>
+                  <li>Organize information about your interests, hobbies, work or anything else.</li>
+                  <li>Create your universal digital identity to communicate with friends and other interesting people</li>
+                  <li>Write, send and collect <span className="asterix"> tokens</span>.</li>
+                </ul>
+              </div>
+
+              <div className="registration-forms">
+
+                {this.props.activeForm === 'default' &&
                 <div className="registration-form_default">
                   <FacebookLogin
                     class="registration-btn registration-btn-fb"
@@ -93,39 +94,39 @@ class New extends Component {
                     <Link to="/terms-of-service">Terms of Service.</Link>
                   </div>
                 </div>
-              }
+                }
 
-              {this.props.activeForm === 'sign-in' &&
+                {this.props.activeForm === 'sign-in' &&
                 <div className="registration-form-sign-in">
                   <Form
                     onValidSubmit={this.onSubmitSignInForm}
                     onInvalidSubmit={this.invalid}
                     onChange={this.handleAuth}
-                    rowClassName = {[{'form-group': false}, {row: false}, 'registration-wrap-form']}
+                    rowClassName={[{'form-group': false}, {row: false}, 'registration-wrap-form']}
                   >
                     <FormSignIn
                       email_value={this.email_value}
                       password_value={this.password_value}
                       userLoginRequest={this.props.userLoginRequest}
                     />
-                  {/* <Link to="/engagement">   */}
+                    {/* <Link to="/engagement">   */}
                     <input className="registration-btn registration-btn-sign-in" type="submit" value="Login"/>
-                  {/* </Link> */}
+                    {/* </Link> */}
                     <span className="registration-link registration-cancel" onClick={() => this.onFormShow('default')}>Cancel</span>
                     <Link to="/account/password-recovery/" className="registration-forgot">Forgot password?</Link>
                     <button className="registration-btn registration-btn-fb" type="submit">Sign In With Facebook</button>
 
                   </Form>
                 </div>
-              }
+                }
 
-              {this.props.activeForm === 'sign-up' &&
+                {this.props.activeForm === 'sign-up' &&
                 <div className="registration-form_sign_up">
                   <Form
                     onValidSubmit={this.onSubmitRegisterForm}
                     onInvalidSubmit={this.invalid}
-                    rowClassName = {[{'form-group': false}, {row: false}, 'registration-wrap-form']}
-                    >
+                    rowClassName={[{'form-group': false}, {row: false}, 'registration-wrap-form']}
+                  >
                     <FormSignUp
                       firstName_value={this.firstName_value}
                       lastName_value={this.lastName_value}
@@ -137,27 +138,27 @@ class New extends Component {
                       <Link to="/terms-of-service" className="hidden-link">Terms of Service.</Link>
 
                     </div>
-                    <input  className="registration-btn registration-btn-sign-up" type="submit" defaultValue="Sign Up"/>
+                    <input className="registration-btn registration-btn-sign-up" type="submit" defaultValue="Sign Up"/>
                     <span className="registration-link registration-cancel" onClick={() => this.onFormShow('default')}>Cancel</span>
                   </Form>
                 </div>
-              }
+                }
+              </div>
             </div>
-          </div>
 
             <hr className="registration-line-desc"/>
 
             <div className="registration-validbook-explanation">
               <p>Validbook is a universal platform for cooperation. It is a public utility controlled by the people
-              of the Earth.
-              Validbook is built on open source and open governance principles. Read more about the idea of
-              Validbook in this </p>
+                of the Earth.
+                Validbook is built on open source and open governance principles. Read more about the idea of
+                Validbook in this </p>
               <Link to="http://www.slideshare.net/bohdanandriyiv/validbook-presentation-explainer">presentation</Link>.
             </div>
           </div>
         </div>
       </div>
-      );
+    );
   }
 }
 

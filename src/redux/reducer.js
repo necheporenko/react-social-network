@@ -1,15 +1,19 @@
 import multireducer from 'multireducer';
 import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
-import { reducer as form } from 'redux-form';
+// import { reducer as form } from 'redux-form';
 import auth from './modules/auth';
 import notifs from './modules/notifs';
 import counter from './modules/counter';
 import info from './modules/info';
-import users from './modules/users';
+// import users from './modules/users';
 // import widgets from './modules/widgets';
 // import survey from './modules/survey';
 // import chat from './modules/chat';
+import user from './modules/user';
+import form from './modules/form';
+import channel from './modules/channel';
+
 
 export default function createReducers(asyncReducers) {
   return {
@@ -25,10 +29,13 @@ export default function createReducers(asyncReducers) {
       counter3: counter
     }),
     info,
-    users,
+    // users,
     // widgets,
     // survey,
     // chat,
+    forms: form,
+    users: user,
+    channel: channel,
     ...asyncReducers
   };
 }

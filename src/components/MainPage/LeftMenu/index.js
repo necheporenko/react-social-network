@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link, IndexLink } from 'react-router';
 import './index.scss';
 
@@ -31,5 +31,10 @@ class LeftMenu extends Component {
     );
   }
 }
+
+LeftMenu.propTypes = {
+  first_name: PropTypes.string,
+  last_name: PropTypes.string,
+};
 
 export default LeftMenu;

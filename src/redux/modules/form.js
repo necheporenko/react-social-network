@@ -20,26 +20,26 @@ export function showActiveFormSteps(formSteps) {
    | REDUCER  |
    ============ */
 
- const initialState = {
-   activeForm: 'default',
-   activeFormSteps: 'step-1'
- };
+const initialState = {
+  activeForm: 'default',
+  activeFormSteps: 'step-1'
+};
 
- export default function formsReducer(state = initialState, action) {
-   switch (action.type) {
-     case SHOW_FORM: {
-       return {
-         ...state,
-         activeForm: action.formName
-       };
-     }
-     case SHOW_FORM_STEPS: {
-       return {
-         ...state,
-         activeFormSteps: action.formSteps
-       };
-     }
-     default:
-       return state;
-   }
- }
+export default function formsReducer(state = initialState, action) {
+  switch (action.type) {
+    case SHOW_FORM: {
+      return {
+        ...state,
+        activeForm: action.formName
+      };
+    }
+    case SHOW_FORM_STEPS: {
+      return {
+        ...state,
+        activeFormSteps: action.formSteps
+      };
+    }
+    default:
+      return state;
+  }
+}

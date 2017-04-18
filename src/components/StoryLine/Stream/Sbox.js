@@ -1,34 +1,30 @@
-import React, { Component, PropTypes } from 'react';
-//import ReactQuill from 'react-quill';
-//import '../../../../node_modules/quill/dist/quill.snow.css';
-//import './quill.snow.css';
+import React, { Component } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import uploadImageCallBack from './uploadImageCallBack';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import BooksTree from '../../BooksTree';
-
+import uploadImageCallBack from './uploadImageCallBack';
+// import BooksTree from '../../BooksTree';
+import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 //import bold from '../../../img/SBox/bold.svg';
 
 import './index.scss';
 
-let list = ['15px', '55px'];
+const list = ['15px', '55px'];
 let index;
 let step = 0;
 
 class Sbox extends Component {
-  constructor (props) {
-     super(props);
-     this.state = {
-       editorText: '',
-       editorState: '',
-       toolbarHidden: true,
-       jump: '15px'
-     };
-     this.onTextChange = this.onTextChange.bind(this);
-     this.onEditorStateChange = this.onEditorStateChange.bind(this);
-     this.showToolbar = this.showToolbar.bind(this);
-   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorText: '',
+      editorState: '',
+      toolbarHidden: true,
+      jump: '15px'
+    };
+    this.onTextChange = this.onTextChange.bind(this);
+    this.onEditorStateChange = this.onEditorStateChange.bind(this);
+    this.showToolbar = this.showToolbar.bind(this);
+  }
 
   onTextChange(text) {
     this.setState({ editorText: text });
@@ -46,7 +42,7 @@ class Sbox extends Component {
     this.setState({
       toolbarHidden: !this.state.toolbarHidden,
       jump: list[index]
-     });
+    });
   }
 
   render() {
@@ -55,31 +51,31 @@ class Sbox extends Component {
     return (
       <div className="sbox">
         <Editor
-           toolbarHidden={this.state.toolbarHidden}
-           wrapperClassName="wrapper-sbox"
-           editorClassName="editor-sbox"
-           toolbarClassName="toolbar-sbox"
-           editorState={editorState}
-           onEditorStateChange={this.onEditorStateChange}
-           placeholder="Log something..."
-           toolbar={{
-             options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'link', 'image'],
-              inline: {
-                options: ['bold', 'italic', 'underline', 'strikethrough']
-              },
-              list: {
-                inDropdown: true
-              },
-              textAlign: {
-                inDropdown: true
-              },
-              link: {
-                inDropdown: true
-              },
-              image: {
-                uploadCallback: uploadImageCallBack
-              }
-           }}
+          toolbarHidden={this.state.toolbarHidden}
+          wrapperClassName="wrapper-sbox"
+          editorClassName="editor-sbox"
+          toolbarClassName="toolbar-sbox"
+          editorState={editorState}
+          onEditorStateChange={this.onEditorStateChange}
+          placeholder="Log something..."
+          toolbar={{
+            options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'link', 'image'],
+            inline: {
+              options: ['bold', 'italic', 'underline', 'strikethrough']
+            },
+            list: {
+              inDropdown: true
+            },
+            textAlign: {
+              inDropdown: true
+            },
+            link: {
+              inDropdown: true
+            },
+            image: {
+              uploadCallback: uploadImageCallBack
+            }
+          }}
         />
 
         <div className="sbox-user-avatar" style={{top: this.state.jump}}>
@@ -91,7 +87,7 @@ class Sbox extends Component {
             <button className="btn-brand">Log</button>
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" pullRight >
-                <BooksTree />
+                {/*<BooksTree />*/}
               </DropdownButton>
             </ButtonToolbar>
           </div>
@@ -100,30 +96,6 @@ class Sbox extends Component {
             <i></i>
           </div>
         </div>
-
-
-
-        {/* <ReactQuill
-           theme={'snow'}
-           onChange={this.onTextChange}
-           value={this.state.editorText}
-           modules={Sbox.modules}
-           formats={Sbox.formats}
-           placeholder={this.props.placeholder}
-         /> */}
-
-        {/* <div className="sbox-main-area">
-          <div className="sbox-avatar">
-            <a href="#">
-              <img src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1486723970" />
-            </a>
-          </div>
-          <div className="sbox-input">
-            <input type="text" placeholder="Log something..." />
-          </div>
-        </div> */}
-        {/* <div className="sbox-contols"></div>  */}
-        {/* {this.props.children} */}
       </div>
     );
   }

@@ -82,6 +82,10 @@ var webpackConfig = module.exports = {
         test: /\.scss$/,
         loader: 'happypack/loader?id=sass',
         include: [path.resolve(__dirname, '../src')]
+      },{
+        test: /\.css$/,
+        loader: 'happypack/loader?id=css',
+        include: [path.resolve(__dirname, '../src')]
       }, {
         test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',
@@ -194,6 +198,17 @@ var webpackConfig = module.exports = {
           outputStyle: 'expanded',
           sourceMap: true,
           //includePaths: [path.resolve(__dirname, '..src')]
+        }
+      }
+    ]),
+    helpers.createHappyPlugin('css', [
+      {
+        loader: 'style-loader'
+      }, {
+        loader: 'css-loader',
+        query: {
+          sourceMap: true,
+          localIdentName: '[local]___[hash:base64:5]'
         }
       }
     ])

@@ -51,12 +51,13 @@
     "no-plusplus": "off",
     "no-console": "off",
     "no-alert": "off",
-    "max-len": ["error", 120],
+    "max-len": "off", //["error", 120]
     "indent": ["error", 2, {"SwitchCase": 1}],
     "linebreak-style": "off",
     "spaced-comment": "off", //add
     "camelcase": "off", //add
     "object-shorthand": "off", //add
+    "object-curly-spacing": "off", //add
   },
   "plugins": [
     "react",

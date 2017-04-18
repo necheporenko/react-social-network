@@ -36,8 +36,8 @@ class IndexContainer extends Component {
 }
 
 IndexContainer.propTypes = {
-  users: PropTypes.array,
-  fetchUsers: PropTypes.func,
+  // users: PropTypes.array,
+  // fetchUsers: PropTypes.func,
   isAuthenticated: PropTypes.bool,
   userInfo: PropTypes.object,
 
