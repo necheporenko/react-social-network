@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Navigation from '../components/Navigation';
 import SubHeader from '../components/StoryLine/SubHeader';
 
-class PeopleContainer extends Component {
+class TokensContainer extends Component {
 
   render() {
     return (
@@ -18,7 +18,7 @@ class PeopleContainer extends Component {
   }
 }
 
-PeopleContainer.propTypes = {
+TokensContainer.propTypes = {
   children: PropTypes.element,
   userInfo: PropTypes.object
 };
@@ -29,4 +29,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(PeopleContainer);
+export default connect(mapStateToProps, null)(TokensContainer);

@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
-// import Helmet from 'react-helmet';
-// import config from 'config';
+import Helmet from 'react-helmet';
+import config from 'config';
 import Header from '../../components/Header';
 import { userLogin, userSignOut } from '../../redux/modules/user';
 
@@ -26,13 +26,15 @@ class App extends Component {
 
     return (
       <div>
-        {/*<Helmet {...config.app.head} />*/}
-        <div style={{ marginTop: '52px' }}>
-          <Header
-            user={this.props.userInfo}
-            onSignOut={this.props.userSignOut}
-          />
-        </div>
+        <Helmet {...config.app.head} />
+        {this.props.isAuthenticated &&
+          <div style={{ marginTop: '52px' }}>
+            <Header
+              user={this.props.userInfo}
+              onSignOut={this.props.userSignOut}
+            />
+          </div>
+        }
         {children}
       </div>
     );
@@ -41,7 +43,7 @@ class App extends Component {
 
 App.propTypes = {
   children: PropTypes.element,
-  //isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
   userInfo: PropTypes.object,
   userLogin: PropTypes.func,
   userSignOut: PropTypes.func
@@ -49,7 +51,7 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    //isAuthenticated: state.users.isAuthenticated,
+    isAuthenticated: state.users.isAuthenticated,
     userInfo: state.users.userInfo
   };
 }

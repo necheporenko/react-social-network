@@ -90,11 +90,11 @@ UserButtons.propTypes = {
   onSignOut: PropTypes.func
 };
 
-UserButtons.defaultProps = {
-  user: {
-    first_name: 'Neo',
-    last_name: 'Surname'
-  }
-};
+// UserButtons.defaultProps = {
+//   user: {
+//     first_name: 'Neo',
+//     last_name: 'Surname'
+//   }
+// };
 
 export default UserButtons;

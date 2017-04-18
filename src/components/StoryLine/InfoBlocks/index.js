@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Сutaway from './Сutaway';
+import Cutaway from './Сutaway';
 import Tokens from './Tokens';
 import Photos from './Photos';
 import Peoples from './Peoples';
@@ -11,7 +11,7 @@ class InfoBloks extends Component {
     return (
       <div className="infobloks">
         <div className="wrapper">
-          <Сutaway />
+          <Cutaway />
           <Tokens />
           <Photos />
           <Peoples />

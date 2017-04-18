@@ -3,21 +3,21 @@ import { Link } from 'react-router';
 import './index.scss';
 
 class SubHeader extends Component {
-  constructor (props) {
-     super(props);
-     this.state = {
-       file: '',
-       imageAvatar: 'http://devianmbanks.validbook.org/cdn/460/avatar/230x230.jpg?t=1486723970',
-       imageCover: 'http://devianmbanks.validbook.org/images/default-cover-img.jpg'
-     };
-     this.handleAvatarChange = this.handleAvatarChange.bind(this);
-     this.handleCoverChange = this.handleCoverChange.bind(this);
-   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      file: '',
+      imageAvatar: 'http://devianmbanks.validbook.org/cdn/460/avatar/230x230.jpg?t=1486723970',
+      imageCover: 'http://devianmbanks.validbook.org/images/default-cover-img.jpg'
+    };
+    this.handleAvatarChange = this.handleAvatarChange.bind(this);
+    this.handleCoverChange = this.handleCoverChange.bind(this);
+  }
 
   handleAvatarChange(e) {
     e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
+    const reader = new FileReader();
+    const file = e.target.files[0];
 
     reader.onloadend = () => {
       this.setState({
@@ -25,13 +25,13 @@ class SubHeader extends Component {
         imageAvatar: reader.result
       });
     };
-    reader.readAsDataURL(file); 
+    reader.readAsDataURL(file);
   }
 
   handleCoverChange(e) {
     e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
+    const reader = new FileReader();
+    const file = e.target.files[0];
 
     reader.onloadend = () => {
       this.setState({
@@ -57,7 +57,7 @@ class SubHeader extends Component {
               <img src={imageAvatar} />
             </Link>
             <div className="subHeader-add">
-              <input type="file" onChange={(e)=>this.handleAvatarChange(e)}/>
+              <input type="file" onChange={(e) => this.handleAvatarChange(e)}/>
               <a href="#">
                 <i></i>
                 Update Profile Picture
@@ -67,7 +67,7 @@ class SubHeader extends Component {
           <div className="subHeader-cover">
             <i></i>
             <div className="cover-btn">
-              <input type="file" onChange={(e)=>this.handleCoverChange(e)}/>
+              <input type="file" onChange={(e) => this.handleCoverChange(e)}/>
               <a>
                 <i></i>
                 Update Cover Photo
@@ -85,8 +85,10 @@ class SubHeader extends Component {
 }
 
 SubHeader.propTypes = {
-  first_name: PropTypes.string,
-  last_name: PropTypes.string
+  user: PropTypes.objectOf(PropTypes.shape({
+    first_name: PropTypes.string,
+    last_name: PropTypes.string
+  }))
 };
 
 export default SubHeader;

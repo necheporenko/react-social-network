@@ -3,9 +3,7 @@ import { Link } from 'react-router';
 import './index.scss';
 
 class NavigationSearch extends Component {
-
   render() {
-
     return (
       <div className="navigation search">
         <div className="wrapper">

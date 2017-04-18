@@ -1,0 +1,287 @@
+@import "../../theme/vars";
+@import "../../theme/mixins";
+
+.tokens-nav {
+
+  .create-new-item {
+    padding-left: 30px;
+    padding-top: 10px;
+  }
+
+  .title {
+    @include title-nav;
+    padding-left: 30px;
+    padding-bottom: 10px;
+  }
+}
+
+// .tokens-lists {
+//   margin: 0 auto;
+//   display: flex;
+//   flex-wrap: wrap;
+//   //max-width: 780px;
+//   width: 900px;
+// }
+
+.token {
+  > a {
+    overflow: hidden;
+    border: 1px dashed $border-hover-color;
+    border-radius: 50%;
+    padding: 7px;
+    float: left;
+    background: #fff;
+    -moz-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
+    //margin-right: 25px;
+    //margin-bottom: 25px;
+    margin: 0px 20px 30px 20px;
+
+    &:hover {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    &:focus {
+      text-decoration: none;
+    }
+  }
+
+  span {
+    text-align: center;
+    color: $gray;
+    font-size: 15px;
+    display: inline-block;
+    padding-left: 32px;
+    padding-top: 5px;
+    font-family: $font-bold;
+    font-style: normal;
+  }
+
+  i {
+    display: block;
+    background: $default-bg;
+    border: 1px dashed $border-hover-color;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 0 2px #fff inset;
+    box-shadow: 0 0 2px #fff inset;
+    height: 135px;
+    width: 135px;
+    overflow: hidden;
+  }
+}
+
+.add-token {
+  i {
+    &::before {
+      content: '+';
+      color: $gray;
+      display: block;
+      font-size: 40px;
+      line-height: 32px;
+      font-style: normal;
+      text-align: center;
+      margin-top: 25px;
+    }
+  }
+}
+
+
+/* === TokensExchange ===*/
+
+.exchange {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+
+  .input,
+  .output {
+    width: 50%;
+    position: relative;
+
+    h3 {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 30px;
+      font-family: $font-medium;
+    }
+
+    .wrapper {
+      padding: 0 20px;
+    }
+  }
+
+  .input:after {
+    display: inline-block;
+    width: 1px;
+    border-left: 1px solid $border-color;
+    height: 300%;
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20px;
+  }
+}
+
+/* === TokensExchange End ===*/
+
+/* === AddToken ===*/
+
+
+
+.modal-token {
+  .token {
+    i {
+      width: 84px;
+      height: 84px;
+    }
+
+    span {
+      padding-left: 5px;
+      font-size: 13px;
+      padding-top: 22px;
+    }
+  }
+
+  .modal-content {
+    background: $border-color;
+  }
+}
+
+.modal {
+  z-index: 1040 !important;
+}
+
+.popup-body {
+  background: #fff;
+  margin: 20px;
+  padding: 15px;
+  height: 450px;
+
+  .sbox {
+    margin-top: 70px;
+  }
+
+  .btn-default {
+    border: none;
+    font-family: $font-bold;
+  }
+
+  .dropdown-menu {
+    position: static;
+    margin-top: 25px;
+    margin-left: 20px;
+    float: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.token-form {
+  display: flex;
+
+  .token-form-select {
+    height: 24px;
+    width: 250px;
+    margin-top: 25px;
+    margin-left: 15px;
+  }
+
+  .token-label {
+    font-size: 23px;
+  }
+}
+
+.token-import {
+  i {
+    background: $sprite;
+    display: inline-block;
+    width: 16px;
+    height: 15px;
+    background-position: -61px -426px;
+    margin-top: 10px;
+  }
+  a {
+    font-size: 12px;
+  }
+}
+
+
+.modal-small-token {
+  .modal-content {
+    height: 215px;
+  }
+
+  .wrapper {
+    padding: 15px;
+  }
+
+  .btn-brand {
+    float: right;
+    margin-top: 20px;
+  }
+
+  .btn-cancel {
+    margin-right: 20px;
+  }
+
+  .token-small-element-wrapper {
+    width: calc(100% - 15px);
+
+    .form-control {
+      height: 25px;
+      width: 96%;
+      padding: 4px 12px;
+    }
+  }
+
+  p {
+    padding-top: 10px;
+  }
+}
+
+.token-creators {
+  display: flex;
+  justify-content: space-between;
+
+  .owner,
+  .creator {
+    display: flex;
+  }
+
+  .creator {
+    flex-direction: row-reverse;
+
+    h6 {
+      float: right;
+    }
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+  }
+
+  h5 {
+    font-family: $font-medium;
+  }
+
+  h6 {
+    margin-top: -14px;
+  }
+}
+
+
+/* === AddToken End ===*/
+
+
+
+@media only screen and (max-width: 1200px) {
+  .token > a {
+    margin: 0px 35px 30px 35px;
+  }
+}

@@ -25,7 +25,7 @@ class StoryLine extends Component {
   handleScroll(e) {
     const scrollTop = e.srcElement.body.scrollTop;
     //console.log(scrollTop);
-    this.setState({ 'scrollTop': scrollTop });
+    this.setState({ scrollTop: scrollTop });
   }
 
   render() {
@@ -35,16 +35,16 @@ class StoryLine extends Component {
       let infoBlocksTop;
 
       if (scrollTop <= 275) {
-        booksTreeTop = "wrapper";
-        infoBlocksTop = "navigation-infouser-none";
+        booksTreeTop = 'wrapper';
+        infoBlocksTop = 'navigation-infouser-none';
       } else {
-        booksTreeTop = "wrapper wrapper-fixed";
-        infoBlocksTop = "navigation-infouser";
+        booksTreeTop = 'wrapper wrapper-fixed';
+        infoBlocksTop = 'navigation-infouser';
       }
-      let result = {booksTree: booksTreeTop, infoBloks: infoBlocksTop};
+      const result = {booksTree: booksTreeTop, infoBloks: infoBlocksTop};
       return result;
     };
-    let chooseScroll = scroll();
+    const chooseScroll = scroll();
 
     return (
       <div className="storyLine">

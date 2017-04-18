@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Logo from './Logo';
 import SearchField from './SearchField';
-// import UserButtons from './UserButtons';
+import UserButtons from './UserButtons';
 //import Sidebar from 'react-sidebar';
 //import LeftMenu from '../MainPage/LeftMenu';
 //import Channels from '../MainPage/Channels';
@@ -91,11 +91,11 @@ class Header extends Component {
 
         <Logo />
         <SearchField />
-        {/* <UserButtons
+        <UserButtons
           onSignIn={this.props.onSignIn}
           onSignOut={this.props.onSignOut}
           user={this.props.user}
-        /> */}
+        />
 
         {/* {this.state.isMob &&
           <div className="mobile-sidebar">
@@ -165,9 +165,9 @@ class Header extends Component {
 
 Header.propTypes = {
   children: PropTypes.element,
-  // onSignIn: PropTypes.func,
-  // onSignOut: PropTypes.func,
-  // user: PropTypes.object
+  onSignIn: PropTypes.func,
+  onSignOut: PropTypes.func,
+  user: PropTypes.object
 };
 
 export default Header;

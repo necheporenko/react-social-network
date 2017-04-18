@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Navigation from '../components/Navigation';
+import Books from '../components/Books';
 import SubHeader from '../components/StoryLine/SubHeader';
 
-class PeopleContainer extends Component {
-
+class BooksContainer extends Component {
   render() {
     return (
       <div>
@@ -12,14 +12,13 @@ class PeopleContainer extends Component {
           user={this.props.userInfo}
         />
         <Navigation />
-        {this.props.children}
+        <Books />
       </div>
     );
   }
 }
 
-PeopleContainer.propTypes = {
-  children: PropTypes.element,
+BooksContainer.propTypes = {
   userInfo: PropTypes.object
 };
 
@@ -29,4 +28,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(PeopleContainer);
+export default connect(mapStateToProps, null)(BooksContainer);

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import uploadImageCallBack from './uploadImageCallBack';
+// todo import lib
 // import BooksTree from '../../BooksTree';
-import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-//import bold from '../../../img/SBox/bold.svg';
+// import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import './index.scss';
 

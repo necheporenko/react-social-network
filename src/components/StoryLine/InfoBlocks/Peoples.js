@@ -6,7 +6,6 @@ const Peoples = () => {
       <div className="title-infoblocks">
         <a href="#"><span className="peoples-icon"></span> People · <span>10</span></a>
       </div>
-
       <div className="people-gallery">
         <div className="people-avatar">
           <a href="#">
@@ -14,9 +13,6 @@ const Peoples = () => {
             <div className="people-avatar-user-name">Name Surname</div>
           </a>
         </div>
-        
-
-
       </div>
     </div>
   );
