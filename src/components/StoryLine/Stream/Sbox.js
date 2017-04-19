@@ -86,12 +86,12 @@ class Sbox extends Component {
           <div style={{display: 'flex'}}>
             <button className="btn-brand">Log</button>
             <ButtonToolbar>
-              <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" pullRight >
+              <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} pullRight >
                 {/*<BooksTree />*/}
               </DropdownButton>
             </ButtonToolbar>
           </div>
-          <div style={{height: '20px', 'margin-top': '3px'}} onClick={this.showToolbar}>
+          <div style={{height: '20px', marginTop: '3px'}} onClick={this.showToolbar}>
             <span>More Options</span>
             <i></i>
           </div>

@@ -37,6 +37,7 @@ class Channels extends Component {
 
 Channels.propTypes = {
   createChannelRequest: PropTypes.func,
+  channelsArr: PropTypes.array
 };
 
 export default Channels;

@@ -14,6 +14,12 @@ class AddChannel extends Component {
     this.onSubmitChannel = this.onSubmitChannel.bind(this);
   }
 
+  onSubmitChannel(data) {
+    console.log(data);
+    //this.props.createChannel(data.name, data.description);
+    this.props.createChannelRequest(data.name, data.description);
+  }
+
   Close() {
     this.setState({ showModal: false });
   }
@@ -21,66 +27,60 @@ class AddChannel extends Component {
     this.setState({ showModal: true });
   }
 
-  onSubmitChannel(data) {
-    console.log(data);
-    //this.props.createChannel(data.name, data.description);
-    this.props.createChannelRequest(data.name, data.description);
-  }
-
   render() {
     const { channel_name, channel_description } = this.props;
 
     return (
-        <div className="create-new-item" onClick={this.Open}>
-          <a href="#">+ Create new channel</a>
+      <div className="create-new-item" onClick={this.Open}>
+        <a href="#">+ Create new channel</a>
 
-          <Modal show={this.state.showModal} onHide={this.Close} className="modal-channel">
-            <Modal.Header closeButton>
-              <Modal.Title>Create channel</Modal.Title>
-            </Modal.Header>
+        <Modal show={this.state.showModal} onHide={this.Close} className="modal-channel">
+          <Modal.Header closeButton>
+            <Modal.Title>Create channel</Modal.Title>
+          </Modal.Header>
 
-            <Form
-              rowClassName = {[{'form-group': false}, {row: false}, 'channel-form']}
-              onSubmit={this.onSubmitChannel}
-            >
-              <Modal.Body>
-                <Input
-                  name="name"
-                  value={channel_name}
-                  labelClassName={[{'col-sm-3': false}, 'channel-label']}
-                  label="Channel name"
-                  elementWrapperClassName = {[{'col-sm-9': false}, 'channel-element-wrapper']}
-                  placeholder="Give name to your new channel"
-                  type="text"
-                />
-                <Input
-                  name="description"
-                  value={channel_description}
-                  labelClassName={[{'col-sm-3': false}, 'channel-label']}
-                  label="Description"
-                  elementWrapperClassName = {[{'col-sm-9': false}, 'channel-element-wrapper']}
-                  placeholder="(Optional)"
-                  type="text"
-                />
-                <Input
-                  name="content"
-                  value=""
-                  labelClassName={[{'col-sm-3': false}, 'channel-label']}
-                  label="Channel`s Content"
-                  elementWrapperClassName = {[{'col-sm-9': false}, 'channel-element-wrapper']}
-                  placeholder="Type name of person, book or thing that you want to follow in this channel"
-                  type="text"
-                />
-              </Modal.Body>
+          <Form
+            rowClassName={[{'form-group': false}, {row: false}, 'channel-form']}
+            onSubmit={this.onSubmitChannel}
+          >
+            <Modal.Body>
+              <Input
+                name="name"
+                value={channel_name}
+                labelClassName={[{'col-sm-3': false}, 'channel-label']}
+                label="Channel name"
+                elementWrapperClassName={[{'col-sm-9': false}, 'channel-element-wrapper']}
+                placeholder="Give name to your new channel"
+                type="text"
+              />
+              <Input
+                name="description"
+                value={channel_description}
+                labelClassName={[{'col-sm-3': false}, 'channel-label']}
+                label="Description"
+                elementWrapperClassName={[{'col-sm-9': false}, 'channel-element-wrapper']}
+                placeholder="(Optional)"
+                type="text"
+              />
+              <Input
+                name="content"
+                value=""
+                labelClassName={[{'col-sm-3': false}, 'channel-label']}
+                label="Channel`s Content"
+                elementWrapperClassName={[{'col-sm-9': false}, 'channel-element-wrapper']}
+                placeholder="Type name of person, book or thing that you want to follow in this channel"
+                type="text"
+              />
+            </Modal.Body>
 
-              <Modal.Footer>
-                <Button onClick={this.Close}>Close</Button>
-                <Button bsStyle="primary" type="submit">Create channel</Button>
-              </Modal.Footer>
-            </Form>
+            <Modal.Footer>
+              <Button onClick={this.Close}>Close</Button>
+              <Button bsStyle="primary" type="submit">Create channel</Button>
+            </Modal.Footer>
+          </Form>
 
-          </Modal>
-        </div>
+        </Modal>
+      </div>
     );
   }
 }

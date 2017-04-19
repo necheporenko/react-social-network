@@ -1,4 +1,6 @@
 import request from 'superagent';
+import Cookies from 'js-cookie';
+
 export const CREATE_CHANNEL = 'CREATE_CHANNEL';
 
 const apiURL = 'http://api.validbook.org/v1/channel';
@@ -8,16 +10,17 @@ export function createChannel(name, description) {
     dispatch({
       type: CREATE_CHANNEL,
       name,
-      description
+      description,
     });
   };
 }
 
-//need add token?
 export function createChannelRequest(name, description) {
   return (dispatch) => {
+    const cookie = JSON.parse(Cookies.get('_u'));
+    const { token } = cookie;
     return request
-      .post(apiURL)
+      .post(`${apiURL}?access-token=${token}`)
       .send({
         name,
         description
