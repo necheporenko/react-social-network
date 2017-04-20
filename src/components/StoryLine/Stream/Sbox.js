@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import draftToHtml from 'draftjs-to-html';
+import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import uploadImageCallBack from './uploadImageCallBack';
 // todo import lib
-// import BooksTree from '../../BooksTree';
+import BooksTree from '../../BooksTree';
 // import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import './index.scss';
@@ -16,24 +18,25 @@ class Sbox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorText: '',
-      editorState: '',
+      editorContent: '',
+      data: '',
       toolbarHidden: true,
       jump: '15px'
     };
-    this.onTextChange = this.onTextChange.bind(this);
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
     this.showToolbar = this.showToolbar.bind(this);
+    this.onSubmitPost = this.onSubmitPost.bind(this);
   }
 
-  onTextChange(text) {
-    this.setState({ editorText: text });
-  }
-
-  onEditorStateChange(editorState) {
+  onEditorStateChange = (editorContent) => {
     this.setState({
-      editorState
+      editorContent,
+      data: draftToHtml(convertToRaw(editorContent.getCurrentContent()))
     });
+  }
+
+  onSubmitPost() {
+    console.log(this.state.data);
   }
 
   showToolbar() {
@@ -46,7 +49,7 @@ class Sbox extends Component {
   }
 
   render() {
-    const { editorState } = this.state;
+    const { editorContent } = this.state;
 
     return (
       <div className="sbox">
@@ -55,7 +58,7 @@ class Sbox extends Component {
           wrapperClassName="wrapper-sbox"
           editorClassName="editor-sbox"
           toolbarClassName="toolbar-sbox"
-          editorState={editorState}
+          editorState={editorContent}
           onEditorStateChange={this.onEditorStateChange}
           placeholder="Log something..."
           toolbar={{
@@ -84,10 +87,10 @@ class Sbox extends Component {
 
         <div className="sbox-footer">
           <div style={{display: 'flex'}}>
-            <button className="btn-brand">Log</button>
+            <button className="btn-brand" type="submit" onClick={this.onSubmitPost}>Log</button>
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} pullRight >
-                {/*<BooksTree />*/}
+                <BooksTree />
               </DropdownButton>
             </ButtonToolbar>
           </div>

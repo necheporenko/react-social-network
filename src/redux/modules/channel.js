@@ -10,7 +10,7 @@ export function createChannel(name, description) {
     dispatch({
       type: CREATE_CHANNEL,
       name,
-      description,
+      description
     });
   };
 }
@@ -26,7 +26,7 @@ export function createChannelRequest(name, description) {
         description
       })
       .end((err, res) => {
-        if (err || !res.ok) {
+        if (err || res.body.status === 'error') {
           console.log('createChannelRequest error:', err); // eslint-disable-line no-console
         } else {
           dispatch(createChannel(res.body.data.name, res.body.data.id));
@@ -55,7 +55,7 @@ export default function channelReducer(state = initialState, action) {
   switch (action.type) {
     case CREATE_CHANNEL: {
       const { name, description } = action;
-      const newChannels = [...state.channelsArr, ...[{ name: name }, { description: description }]];
+      const newChannels = [...state.channelsArr, ...[{ name: name, description: description }]];
 
       return {
         ...state,

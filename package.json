@@ -114,6 +114,7 @@
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
     "draft-js": "^0.10.0",
+    "draftjs-to-html": "^0.7.1",
     "draggable-react-tree-component": "^1.0.15",
     "express": "^4.14.1",
     "express-session": "^1.15.1",

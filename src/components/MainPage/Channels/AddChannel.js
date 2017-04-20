@@ -16,7 +16,6 @@ class AddChannel extends Component {
 
   onSubmitChannel(data) {
     console.log(data);
-    //this.props.createChannel(data.name, data.description);
     this.props.createChannelRequest(data.name, data.description);
   }
 
