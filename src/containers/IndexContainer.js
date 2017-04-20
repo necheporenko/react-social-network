@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { userRegisterRequest, userLoginRequest, userLogin } from '../redux/modules/user';
 import { showActiveForm } from '../redux/modules/form';
 import { createChannelRequest } from '../redux/modules/channel';
+import { createStoryRequest } from '../redux/modules/story';
 import NewUser from '../components/Registration/Main';
 import MainPage from '../components/MainPage';
 
@@ -17,6 +18,8 @@ class IndexContainer extends Component {
               userInfo={this.props.userInfo}
               channelsArr={this.props.channelsArr}
               createChannelRequest={this.props.createChannelRequest}
+              storiesArr={this.props.storiesArr}
+              createStoryRequest={this.props.createStoryRequest}
             />
           </div>
         }
@@ -48,7 +51,10 @@ IndexContainer.propTypes = {
   userRegisterRequest: PropTypes.func,
 
   createChannelRequest: PropTypes.func,
-  channelsArr: PropTypes.array
+  channelsArr: PropTypes.array,
+
+  createStoryRequest: PropTypes.func,
+  storiesArr: PropTypes.array
 };
 
 function mapStateToProps(state) {
@@ -61,7 +67,9 @@ function mapStateToProps(state) {
     authEmail: state.users.authEmail,
     authPass: state.users.authPass,
 
-    channelsArr: state.channel.channelsArr
+    channelsArr: state.channel.channelsArr,
+
+    storiesArr: state.story.storiesArr
   };
 }
 
@@ -70,5 +78,6 @@ export default connect(mapStateToProps, {
   showActiveForm,
   userLoginRequest,
   userLogin,
-  createChannelRequest
+  createChannelRequest,
+  createStoryRequest
 })(IndexContainer);

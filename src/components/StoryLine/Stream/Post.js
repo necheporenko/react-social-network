@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { MenuItem, ButtonToolbar, DropdownButton } from 'react-bootstrap';
+import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 
 class Post extends Component {
   render() {
@@ -32,10 +32,9 @@ class Post extends Component {
                 {/* <i className="caret"></i> */}
                 <ButtonToolbar>
                   <DropdownButton className="profileMenu-btn" title={''} id={3} >
-                    <MenuItem eventKey="1"><Link>Pin story</Link></MenuItem>
-                    <MenuItem divider />
-                    <MenuItem eventKey="2"><Link>Story Details</Link></MenuItem>
-                    <MenuItem eventKey="3"><Link>Delete Story</Link></MenuItem>
+                    <Link>Pin story</Link>
+                    <Link>Story Details</Link>
+                    <Link>Delete Story</Link>
                   </DropdownButton>
                 </ButtonToolbar>
               </div>
@@ -48,10 +47,13 @@ class Post extends Component {
           <div className="wrap-post-story-dropdown">
             <ButtonToolbar>
               <DropdownButton className="profileMenu-btn" title={''} id={4} noCaret pullRight >
-                <MenuItem eventKey="1"><Link>Pin story</Link></MenuItem>
-                <MenuItem divider />
-                <MenuItem eventKey="2"><Link>Story Details</Link></MenuItem>
-                <MenuItem eventKey="3"><Link>Delete Story</Link></MenuItem>
+                <Link>Pin story</Link>
+                <Link>Story Details</Link>
+                <Link>Delete Story</Link>
+                {/*<MenuItem eventKey="1"><Link>Pin story</Link></MenuItem>*/}
+                {/*<MenuItem divider />*/}
+                {/*<MenuItem eventKey="2"><Link>Story Details</Link></MenuItem>*/}
+                {/*<MenuItem eventKey="3"><Link>Delete Story</Link></MenuItem>*/}
               </DropdownButton>
             </ButtonToolbar>
           </div>
@@ -63,7 +65,13 @@ class Post extends Component {
         <div className="post_content">
           <div className="wrap_post_content">
 
-            <div className="post_content_type_text">
+            <div
+              className="post_content_type_text"
+              dangerouslySetInnerHTML={{__html: this.props.post}}
+            />
+
+
+            {/*<div className="post_content_type_text">
               <p>Математический горизонт, в первом приближении, вызывает перигей. Движение, несмотря на внешние воздействия, последовательно. В связи с этим нужно подчеркнуть, что высота вращает первоначальный популяционный индекс. Это можно записать следующим образом: V = 29.8 * sqrt(2/r – 1/a) км/сек, где юлианская дата многопланово колеблет ионный хвост. Конечно, нельзя не принять во внимание тот факт, что натуральный логарифм прекрасно притягивает межпланетный Южный Треугольник.</p>
               <p>Космогоническая гипотеза Шмидта позволяет достаточно просто объяснить эту нестыковку, однако соединение выслеживает вращательный большой круг небесной сферы. Часовой угол иллюстрирует натуральный логарифм, при этом плотность Вселенной в 3 * 10 в 18-й степени раз меньше, с учетом некоторой неизвестной добавки скрытой массы. Звезда оценивает далекий Млечный Путь, а время ожидания ответа составило бы 80 миллиардов лет.</p>
             </div>
@@ -116,7 +124,7 @@ class Post extends Component {
               <div className="content_gallery_image">
                 <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/FYZBN8FDKT.jpg" alt/>
               </div>
-            </div>
+            </div>*/}
 
           </div>
         </div>
@@ -156,5 +164,8 @@ class Post extends Component {
   }
 }
 
+Post.propTypes = {
+  post: PropTypes.string
+};
 
 export default Post;

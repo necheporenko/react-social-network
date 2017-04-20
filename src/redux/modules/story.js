@@ -1,35 +1,35 @@
 import request from 'superagent';
 import Cookies from 'js-cookie';
 
-export const CREATE_CHANNEL = 'CREATE_CHANNEL';
+export const CREATE_STORY = 'CREATE_STORY';
 
-const apiURL = 'http://api.validbook.org/v1/channel';
+const apiURL = 'http://api.validbook.org/v1/story';
 
-export function createChannel(name, description) {
+export function createStory(description) {
   return (dispatch) => {
     dispatch({
-      type: CREATE_CHANNEL,
-      name,
-      description
+      type: CREATE_STORY,
+      description,
+      book_ids: [1]
     });
   };
 }
 
-export function createChannelRequest(name, description) {
+export function createStoryRequest(description) {
   return (dispatch) => {
     const cookie = JSON.parse(Cookies.get('_u'));
     const { token } = cookie;
     return request
       .post(`${apiURL}?access-token=${token}`)
       .send({
-        name,
-        description
+        description,
+        book_ids: [1]
       })
       .end((err, res) => {
         if (err || res.body.status === 'error') {
           console.log('createChannelRequest error:', err); // eslint-disable-line no-console
         } else {
-          dispatch(createChannel(res.body.data.name, res.body.data.id));
+          dispatch(createStory(res.body.data.description));
           console.log(`Yeah! ${JSON.stringify(res.body)}`);
         }
       });
@@ -39,27 +39,27 @@ export function createChannelRequest(name, description) {
 //REDUCER
 
 const initialState = {
-  channelsArr: [
+  storiesArr: [
     {
-      name: 'First',
+      book_ids: [1],
       description: 'Desc'
     },
     {
-      name: 'Second',
-      description: ''
+      book_ids: [2],
+      description: 'Test Test Test'
     }
   ]
 };
 
-export default function channelReducer(state = initialState, action) {
+export default function storyReducer(state = initialState, action) {
   switch (action.type) {
-    case CREATE_CHANNEL: {
-      const { name, description } = action;
-      const newChannels = [...state.channelsArr, ...[{ name: name, description: description }]];
+    case CREATE_STORY: {
+      const { book_ids, description } = action;
+      const newStories = [...[{ book_ids: book_ids, description: description }], ...state.storiesArr];
 
       return {
         ...state,
-        channelsArr: newChannels
+        storiesArr: newStories
       };
     }
     default:

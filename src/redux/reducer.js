@@ -6,13 +6,10 @@ import auth from './modules/auth';
 import notifs from './modules/notifs';
 import counter from './modules/counter';
 import info from './modules/info';
-// import users from './modules/users';
-// import widgets from './modules/widgets';
-// import survey from './modules/survey';
-// import chat from './modules/chat';
 import user from './modules/user';
 import form from './modules/form';
 import channel from './modules/channel';
+import story from './modules/story';
 
 
 export default function createReducers(asyncReducers) {
@@ -35,7 +32,8 @@ export default function createReducers(asyncReducers) {
     // chat,
     forms: form,
     users: user,
-    channel: channel,
+    channel,
+    story,
     ...asyncReducers
   };
 }

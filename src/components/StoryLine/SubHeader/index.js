@@ -85,10 +85,11 @@ class SubHeader extends Component {
 }
 
 SubHeader.propTypes = {
-  user: PropTypes.objectOf(PropTypes.shape({
+  user: PropTypes.shape({
     first_name: PropTypes.string,
-    last_name: PropTypes.string
-  }))
+    last_name: PropTypes.string,
+    id: PropTypes.number
+  })
 };
 
 export default SubHeader;

@@ -179,7 +179,7 @@
 .notification-box {
   padding: 5px 10px 2px;
 
-  div {
+  > div {
     display: flex;
     justify-content: space-between;
 
@@ -214,7 +214,7 @@
       background: $bg-hover;
     }
 
-    a {
+    div {
       display: flex;
     }
 

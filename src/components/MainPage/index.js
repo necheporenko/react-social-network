@@ -21,7 +21,10 @@ class MainPage extends Component {
           </div>
 
           <div className="mid-column">
-            <Stream />
+            <Stream
+              storiesArr={this.props.storiesArr}
+              createStoryRequest={this.props.createStoryRequest}
+            />
             <FollowBlock />
           </div>
         </div>
@@ -33,7 +36,9 @@ class MainPage extends Component {
 MainPage.propTypes = {
   userInfo: PropTypes.object,
   createChannelRequest: PropTypes.func,
-  channelsArr: PropTypes.array
+  channelsArr: PropTypes.array,
+  createStoryRequest: PropTypes.func,
+  storiesArr: PropTypes.array
 };
 
 export default MainPage;
