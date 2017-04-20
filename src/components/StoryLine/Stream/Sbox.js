@@ -6,7 +6,7 @@ import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import uploadImageCallBack from './uploadImageCallBack';
 // todo import lib
 import BooksTree from '../../BooksTree';
-// import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import './index.scss';
 
