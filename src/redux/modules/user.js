@@ -92,7 +92,7 @@ export function userLoginRequest(email, password) {
           const resp = res.body;
 
           return request
-            .get(`${apiURL}/users/${resp.id}`)
+            .get(`${apiURL}/user?id=${resp.id}`)
             .end((err, response) => {
               if (err || !res.ok) {
                 console.log('Error in getting user info', err);    // eslint-disable-line no-console
@@ -117,7 +117,7 @@ export function userLoginRequest(email, password) {
 export function userInfoRequest(id) {
   return (dispatch) => {
     return request
-      .get(`${apiURL}/users/${id}`)
+      .get(`${apiURL}/user?id=${id}`)
       .end((err, res) => {
         if (err || !res.ok) {
           console.log('Error in getting user info', err);          // eslint-disable-line no-console
@@ -227,12 +227,13 @@ export default function usersReducer(state = initialState, action) {
         usersArr: newUsers
       };
     }
+    //todo: FIX firtsName & lastName
     case LOGIN_REQUEST: {
       const userInfo = {
         id: action.id,
         token: action.token,
         email: action.email,
-        first_name: action.first_name,
+        first_name: action.first_name ? action.last_name : 'name',
         last_name: action.last_name ? action.last_name : 'surname'
       };
 
