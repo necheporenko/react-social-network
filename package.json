@@ -24,7 +24,7 @@
   ],
   "main": "bin/server.js",
   "scripts": {
-    "start": "concurrently --kill-others \"npm run start-prod\" \"npm run start-prod-api\"",
+    "start": "concurrently --kill-others \"npm run start-prod\" ",
     "start-prod": "better-npm-run start-prod",
     "start-prod-api": "better-npm-run start-prod-api",
     "dev": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev\" \"npm run start-dev-api\"",

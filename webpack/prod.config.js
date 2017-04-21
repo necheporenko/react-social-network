@@ -86,7 +86,7 @@ module.exports = {
             {
               loader: 'css-loader',
               query: {
-                modules: true,
+                // modules: true,
                 importLoaders: 3,
                 sourceMap: true
               }
