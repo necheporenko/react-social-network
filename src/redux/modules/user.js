@@ -97,7 +97,8 @@ export function userLoginRequest(email, password) {
               if (err || !res.ok) {
                 console.log('Error in getting user info', err);    // eslint-disable-line no-console
               } else {
-                const { first_name, last_name } = response.body;
+                const { first_name, last_name } = response.body.data;
+                console.log(response.body.data.first_name);
                 Cookies.set('_u', {
                   id: resp.id,
                   email: resp.email,
@@ -150,7 +151,7 @@ export function userRegisterRequest(firstName, lastName, email, password) {
   };
 }
 
-//todo:
+
 /*export function fetchUsers() {
 
   return (dispatch) => {
@@ -166,7 +167,7 @@ export function userRegisterRequest(firstName, lastName, email, password) {
       });
   };
 }*/
-//todo:
+
 /*export function updateUserRequest(id, user) {
   return (dispatch) => {
     return request
@@ -182,7 +183,7 @@ export function userRegisterRequest(firstName, lastName, email, password) {
       });
   };
 }*/
-//todo:
+
 /*export function deleteUserRequest(id) {
   return (dispatch) => {
     return request
@@ -233,7 +234,7 @@ export default function usersReducer(state = initialState, action) {
         id: action.id,
         token: action.token,
         email: action.email,
-        first_name: action.first_name ? action.last_name : 'name',
+        first_name: action.first_name,
         last_name: action.last_name ? action.last_name : 'surname'
       };
 
