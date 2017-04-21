@@ -27,7 +27,7 @@
     "start": "concurrently --kill-others \"npm run start-prod\" ",
     "start-prod": "better-npm-run start-prod",
     "start-prod-api": "better-npm-run start-prod-api",
-    "dev": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev\" \"npm run start-dev-api\"",
+    "dev": "concurrently --kill-others \"npm run watch-client\" \"npm run start-dev\" ",
     "start-dev": "better-npm-run start-dev",
     "start-dev-api": "better-npm-run start-dev-api",
     "watch-client": "better-npm-run watch-client",
