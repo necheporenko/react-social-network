@@ -14,7 +14,7 @@ import middleware from './middleware';
 import services from './services';
 import * as actions from './actions';
 import { mapUrl } from './utils/url.js';
-import auth, { socketAuth } from './services/authentication';
+import auth from './services/authentication';
 
 process.on('unhandledRejection', error => console.error(error));
 
@@ -91,30 +91,30 @@ if (publicConfig.apiPort) {
   console.error('==>     ERROR: No APIPORT environment variable has been specified');
 }
 
-const bufferSize = 100;
-const messageBuffer = new Array(bufferSize);
-let messageIndex = 0;
+// const bufferSize = 100;
+// const messageBuffer = new Array(bufferSize);
+// let messageIndex = 0;
 
-app.io.use(socketAuth(app));
+// app.io.use(socketAuth(app));
 
-app.io.on('connection', socket => {
-  const user = socket.feathers.user ? { ...socket.feathers.user, password: undefined } : undefined;
-  socket.emit('news', { msg: '\'Hello World!\' from server', user });
-
-  socket.on('history', () => {
-    for (let index = 0; index < bufferSize; index++) {
-      const msgNo = (messageIndex + index) % bufferSize;
-      const msg = messageBuffer[msgNo];
-      if (msg) {
-        socket.emit('msg', msg);
-      }
-    }
-  });
-
-  socket.on('msg', data => {
-    const message = { ...data, id: messageIndex };
-    messageBuffer[messageIndex % bufferSize] = message;
-    messageIndex++;
-    app.io.emit('msg', message);
-  });
-});
+// app.io.on('connection', socket => {
+//   const user = socket.feathers.user ? { ...socket.feathers.user, password: undefined } : undefined;
+//   socket.emit('news', { msg: '\'Hello World!\' from server', user });
+//
+//   socket.on('history', () => {
+//     for (let index = 0; index < bufferSize; index++) {
+//       const msgNo = (messageIndex + index) % bufferSize;
+//       const msg = messageBuffer[msgNo];
+//       if (msg) {
+//         socket.emit('msg', msg);
+//       }
+//     }
+//   });
+//
+//   socket.on('msg', data => {
+//     const message = { ...data, id: messageIndex };
+//     messageBuffer[messageIndex % bufferSize] = message;
+//     messageIndex++;
+//     app.io.emit('msg', message);
+//   });
+// });
