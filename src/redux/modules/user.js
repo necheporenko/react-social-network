@@ -98,7 +98,6 @@ export function userLoginRequest(email, password) {
                 console.log('Error in getting user info', err);    // eslint-disable-line no-console
               } else {
                 const { first_name, last_name } = response.body.data;
-                console.log(response.body.data.first_name);
                 Cookies.set('_u', {
                   id: resp.id,
                   email: resp.email,
@@ -235,7 +234,7 @@ export default function usersReducer(state = initialState, action) {
         token: action.token,
         email: action.email,
         first_name: action.first_name,
-        last_name: action.last_name ? action.last_name : 'surname'
+        last_name: action.last_name
       };
 
       return {
