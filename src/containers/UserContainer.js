@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { createStoryRequest } from '../redux/modules/story';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 import StoryLine from '../components/StoryLine';
@@ -13,7 +14,10 @@ class UserContainer extends Component {
         />
         <Navigation />
         {this.props.isAuthenticated &&
-        <StoryLine />
+        <StoryLine
+          storiesArr={this.props.storiesArr}
+          createStoryRequest={this.props.createStoryRequest}
+        />
         }
       </div>
     );
@@ -22,14 +26,21 @@ class UserContainer extends Component {
 
 UserContainer.propTypes = {
   isAuthenticated: PropTypes.bool,
-  userInfo: PropTypes.object
+  userInfo: PropTypes.object,
+
+  createStoryRequest: PropTypes.func,
+  storiesArr: PropTypes.array
 };
 
 function mapStateToProps(state) {
   return {
     isAuthenticated: state.users.isAuthenticated,
-    userInfo: state.users.userInfo
+    userInfo: state.users.userInfo,
+
+    storiesArr: state.story.storiesArr
   };
 }
 
-export default connect(mapStateToProps, null)(UserContainer);
+export default connect(mapStateToProps, {
+  createStoryRequest
+})(UserContainer);

@@ -14,7 +14,6 @@ import story from './modules/story';
 
 export default function createReducers(asyncReducers) {
   return {
-    routing: routerReducer,
     reduxAsyncConnect,
     online: (v = true) => v,
     form,
@@ -30,6 +29,7 @@ export default function createReducers(asyncReducers) {
     // widgets,
     // survey,
     // chat,
+    routing: routerReducer,
     forms: form,
     users: user,
     channel,

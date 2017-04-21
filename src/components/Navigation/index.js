@@ -33,6 +33,7 @@ class Navigation extends Component {
   }
 
   saveScroll() {
+    console.log(`saveScroll:${savePositionTop}`);
     this.setState({ scrollTop: savePositionTop });
   }
 
@@ -106,7 +107,7 @@ class Navigation extends Component {
         } */}
         <NavigationInfoUser
           userName={`${first_name} ${last_name}`}
-          // link={link}
+          link={link}
           displayUser={navigation.show}
         />
       </div>
@@ -124,7 +125,7 @@ Navigation.propTypes = {
 function mapStateToProps(state) {
   return {
     userInfo: state.users.userInfo,
-    routing: state.routing.locationBeforeTransitions
+    // routing: state.routing.locationBeforeTransitions
   };
 }
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import BooksTree from '../BooksTree';
 import Stream from './Stream/index';
 import InfoBloks from './InfoBlocks/index';
@@ -52,12 +52,20 @@ class StoryLine extends Component {
           <BooksTree
             infoBlocksTop={chooseScroll.booksTree}
           />
-          <Stream />
+          <Stream
+            storiesArr={this.props.storiesArr}
+            createStoryRequest={this.props.createStoryRequest}
+          />
           <InfoBloks />
         </div>
       </div>
     );
   }
 }
+
+StoryLine.propTypes = {
+  createStoryRequest: PropTypes.func,
+  storiesArr: PropTypes.array
+};
 
 export default StoryLine;

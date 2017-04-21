@@ -39,100 +39,96 @@ class AddToken extends Component {
 
   render() {
     return (
-        <div className="token add-token" onClick={this.Open}>
-          <a href="#">
-            <i><span>Create <br/> New Token</span></i>
-          </a>
+      <div className="token add-token" onClick={this.Open}>
+        <a href="#">
+          <i><span>Create <br/> New Token</span></i>
+        </a>
 
-          <Modal show={this.state.showModal} onHide={this.Close} className="modal-token">
-            <div className="popup-body">
-              <div className="token">
-                <a href="">
-                  <i><span>Upload <br/> Cover Image</span></i>
+        <Modal show={this.state.showModal} onHide={this.Close} className="modal-token">
+          <div className="popup-body">
+            <div className="token">
+              <a href="">
+                <i><span>Upload <br/> Cover Image</span></i>
+              </a>
+            </div>
+
+            <Form
+              rowClassName={[{'form-group': false}, {row: false}, 'token-form']}
+            >
+              <Select
+                name="token"
+                value
+                label="Token of "
+                labelClassName={[{'col-sm-3': false}, 'token-label']}
+                elementWrapperClassName={[{'col-sm-9': false}]}
+                className={'form-control token-form-select'}
+                options={typeToken}
+              />
+
+              <SBox />
+
+              <div className="token-import">
+                <a href="#">
+                  <i></i>
                 </a>
+
+                <a onClick={this.smOpen} href="#" style={{'padding-left': '10px'}}>Import existing story as content for this token</a>
+                <Modal show={this.state.showSmallModal} onHide={this.smClose} className="modal-small-token">
+                  <Modal.Header closeButton>
+                    <Modal.Title>Paste existing story into the text of token</Modal.Title>
+                  </Modal.Header>
+                  <div className="wrapper">
+                    <Input
+                      name="token_link"
+                      value={this.smToken}
+                      labelClassName={[{'col-sm-3': false}, 'disabled-label']}
+                      elementWrapperClassName={[{'col-sm-9': false}, 'token-small-element-wrapper']}
+                      placeholder="Paste here link of the story"
+                      type="text"
+                    />
+
+                    <p>To find direct link to the story. Click on the arrow in the right upper corner of the story, then click on 'Story Details', and then copy the link from the browser address bar.</p>
+
+                    <button className="btn-brand">Paste story</button>
+                    <button className="btn-brand btn-cancel" onClick={this.smClose}>Cancel</button>
+                  </div>
+                </Modal>
               </div>
 
-                <Form
-                  rowClassName = {[{'form-group': false}, {row: false}, 'token-form']}
-                >
-                  <Select
-                    name="token"
-                    value
-                    label="Token of "
-                    labelClassName={[{'col-sm-3': false}, 'token-label']}
-                    elementWrapperClassName = {[{'col-sm-9': false}]}
-                    className = {'form-control token-form-select'}
-                    options={typeToken}
-                  />
+              <hr/>
 
-                  <SBox />
+              <ButtonToolbar>
+                <DropdownButton className="bootstrap-pure-btn" title="Standard Terms and Conditions" pullRight >
 
-                  <div className="token-import">
-                    <a href="#">
-                      <i></i>
-                    </a>
+                </DropdownButton>
+              </ButtonToolbar>
+              <ButtonToolbar>
+                <DropdownButton className="bootstrap-pure-btn" title="Automatic Conditions" pullRight >
+                </DropdownButton>
+              </ButtonToolbar>
 
-                    <a onClick={this.smOpen} href="#" style={{'padding-left': '10px'}}>Import existing story as content for this token</a>
-                      <Modal show={this.state.showSmallModal} onHide={this.smClose} className="modal-small-token">
-                        <Modal.Header closeButton>
-                          <Modal.Title>Paste existing story into the text of token</Modal.Title>
-                        </Modal.Header>
-                        <div className="wrapper">
-                          <Input
-                            name="token_link"
-                            value={this.smToken}
-                            labelClassName={[{'col-sm-3': false}, 'disabled-label']}
-                            elementWrapperClassName = {[{'col-sm-9': false}, 'token-small-element-wrapper']}
-                            placeholder="Paste here link of the story"
-                            type="text"
-                          />
-
-                          <p>To find direct link to the story. Click on the arrow in the right upper corner of the story, then click on 'Story Details', and then copy the link from the browser address bar.</p>
-
-                          <button className="btn-brand">Paste story</button>
-                          <button className="btn-brand btn-cancel" onClick={this.smClose}>Cancel</button>
-                        </div>
-
-                      </Modal>
+              <hr/>
+              <div className="token-creators">
+                <div className="owner">
+                  <img src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1490082285" alt=""/>
+                  <div style={{'margin-left': '10px'}}>
+                    <h5>Name Surname</h5> <br/>
+                    <h6>first owner</h6>
                   </div>
-
-                  <hr/>
-
-                  <ButtonToolbar>
-                    <DropdownButton className="bootstrap-pure-btn" title="Standard Terms and Conditions" pullRight >
-
-                    </DropdownButton>
-                  </ButtonToolbar>
-                  <ButtonToolbar>
-                    <DropdownButton className="bootstrap-pure-btn" title="Automatic Conditions" pullRight >
-
-                    </DropdownButton>
-                  </ButtonToolbar>
-
-                  <hr/>
-
-                  <div className="token-creators">
-                    <div className="owner">
-                      <img src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1490082285" alt=""/>
-                      <div style={{'margin-left': '10px'}}>
-                        <h5>Name Surname</h5> <br/>
-                        <h6>first owner</h6>
-                      </div>
-
-                    </div>
-                    <div className="creator">
-                      <img src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1490082285" alt=""/>
-                      <div style={{'margin-right': '10px'}}>
-                        <h5>Name Surname</h5> <br/>
-                        <h6>token creator</h6>
-                      </div>
-                    </div>
+                </div>
+                <div className="creator">
+                  <img src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1490082285" alt=""/>
+                  <div style={{'margin-right': '10px'}}>
+                    <h5>Name Surname</h5> <br/>
+                    <h6>token creator</h6>
                   </div>
-                  <button className="btn-brand" style={{float: 'right', 'margin-top': '15px'}}>Create Token</button>
-                </Form>
-            </div>
-          </Modal>
-        </div>
+                </div>
+              </div>
+              <button className="btn-brand" style={{float: 'right', 'margin-top': '15px'}}>Create Token</button>
+            </Form>
+          </div>
+        </Modal>
+      </div>
     );
   }
 }

@@ -1,10 +1,8 @@
-import React, { Component, PropTypes  } from 'react';
+import React, { Component, PropTypes } from 'react';
 import EngagementFormStep1 from './EngagementFormStep1';
 import EngagementFormStep2 from './EngagementFormStep2';
 
 import './index.scss';
-
-
 
 
 class Engagement extends Component {
@@ -79,11 +77,9 @@ class Engagement extends Component {
             {this.props.activeFormSteps === 'step-2' &&
               <div className="engagement-content engagement-content-2">
                 <div className="engagement-content-title">Set your profile picture to help people find you</div>
-
-                  <EngagementFormStep2
-                    avatar_value={this.avatar_value}
-                  />
-
+                <EngagementFormStep2
+                  avatar_value={this.avatar_value}
+                />
               </div>
             }
 
@@ -98,22 +94,22 @@ Engagement.propTypes = {
   activeFormSteps: PropTypes.string,
   showActiveFormSteps: PropTypes.func,
 
-  bio_value:PropTypes.string,
-  occ_value: PropTypes.string,
-  company_value: PropTypes.string,
-  country_value: PropTypes.string,
-  location_value: PropTypes.string,
-  birthDate_value: PropTypes.string,
-  birthMonth_value: PropTypes.string,
-  birthDateVisibility_value: PropTypes.string,
-  birthYear_value: PropTypes.string,
-  birthYearVisibility_value: PropTypes.string,
-  twitter_value: PropTypes.string,
-  facebook_value: PropTypes.string,
-  linkedin_value: PropTypes.string,
-  websites_value: PropTypes.string,
-  telephone_value: PropTypes.string,
-  skype_value: PropTypes.string
+  // bio_value: PropTypes.string,
+  // occ_value: PropTypes.string,
+  // company_value: PropTypes.string,
+  // country_value: PropTypes.string,
+  // location_value: PropTypes.string,
+  // birthDate_value: PropTypes.string,
+  // birthMonth_value: PropTypes.string,
+  // birthDateVisibility_value: PropTypes.string,
+  // birthYear_value: PropTypes.string,
+  // birthYearVisibility_value: PropTypes.string,
+  // twitter_value: PropTypes.string,
+  // facebook_value: PropTypes.string,
+  // linkedin_value: PropTypes.string,
+  // websites_value: PropTypes.string,
+  // telephone_value: PropTypes.string,
+  // skype_value: PropTypes.string
 };
 
 export default Engagement;
