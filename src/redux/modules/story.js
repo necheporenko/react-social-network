@@ -1,9 +1,8 @@
 import request from 'superagent';
 import Cookies from 'js-cookie';
+import { apiURL } from '../../constants/apiURL';
 
 export const CREATE_STORY = 'CREATE_STORY';
-
-const apiURL = 'http://api.validbook.org/v1/story';
 
 export function createStory(description) {
   return (dispatch) => {
@@ -20,7 +19,7 @@ export function createStoryRequest(description) {
     const cookie = JSON.parse(Cookies.get('_u'));
     const { token } = cookie;
     return request
-      .post(`${apiURL}?access-token=${token}`)
+      .post(`${apiURL}/story?access-token=${token}`)
       .send({
         description,
         book_ids: [1]

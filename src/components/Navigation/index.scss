@@ -10,7 +10,7 @@
   background: #fafafa;
   z-index: 9;
 }
-// TODO: improve style
+
 .navigation-fixed {
   position: fixed;
   top: 52px;
@@ -19,7 +19,7 @@
 
 .navigation-wrap {
   position: absolute;
-  left: calc(50% - 160px);
+  left: calc(50% - 250px);
   top: 15px;
   a {
     display: inline-block;

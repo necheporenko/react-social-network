@@ -254,7 +254,7 @@
 
 
 
-@media screen and (min-width: 1920px){
+@media screen and (max-width: 1920px){
   .registration-bg {
       background: url('../../img/login-page/login-background1920.jpg') no-repeat center center fixed;
       background-size: cover;

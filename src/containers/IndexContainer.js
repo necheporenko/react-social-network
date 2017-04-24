@@ -23,7 +23,7 @@ class IndexContainer extends Component {
             />
           </div>
         }
-        {this.props.isAuthenticated === false &&
+        {!this.props.isAuthenticated &&
           <div>
             <NewUser
               activeForm={this.props.activeForm}

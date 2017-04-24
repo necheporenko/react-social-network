@@ -1,6 +1,6 @@
 import React from 'react';
 import { IndexRoute, Route } from 'react-router';
-import { App, NotFound } from 'containers';
+import App from 'containers/App/App';
 
 import IndexContainer from 'containers/IndexContainer';
 
@@ -23,6 +23,7 @@ import TokensExchange from 'components/Tokens/TokensExchange';
 import MessagesContainer from 'containers/MessagesContainer';
 import Messages from 'components/Messages';
 import NewMessage from 'components/Messages/NewMessage';
+import Notification from 'components/Notification';
 import ProfileContainer from 'containers/ProfileContainer';
 import Profile from 'components/Information&Profile/Profile';
 import Password from 'components/Information&Profile/Profile/Password';
@@ -47,6 +48,7 @@ import SearchPhotos from 'components/Search/SearchPhotos';
 import SearchThings from 'components/Search/SearchThings';
 import SearchTokens from 'components/Search/SearchTokens';
 import SearchStories from 'components/Search/SearchStories';
+import NotFoundPage from 'components/NotFoundPage';
 
 // eslint-disable-next-line import/no-dynamic-require
 if (typeof System.import === 'undefined') System.import = module => Promise.resolve(require(module));
@@ -57,8 +59,7 @@ export default () => {
 
       <Route path="users" getComponent={() => System.import('./containers/Users')} />
 
-      {/* <Route path="notification" component={Notification} /> */}
-      <Route path="notification" getComponent={() => System.import('./containers/Notification')} />
+      <Route path="notification" getComponent={Notification} />
 
       <Route path="/auth" component={Auth} />
 
@@ -97,6 +98,8 @@ export default () => {
         <Route path="things" component={SearchThings} />
       </Route>
 
+      <IndexRoute component={IndexContainer} />
+
       <Route path="/:userName" component={UserContainer} />
 
       <Route path="/:userName/books" component={BooksContainer}>
@@ -124,10 +127,8 @@ export default () => {
         <Route path="profile" component={PhotosProfile} />
       </Route>
 
-      <IndexRoute component={IndexContainer} />
-
       {/* Catch all route */}
-      <Route path="*" component={NotFound} status={404} />
+      <Route path="*" component={NotFoundPage} status={404} />
     </Route>
   );
 };

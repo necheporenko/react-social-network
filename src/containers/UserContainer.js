@@ -13,19 +13,18 @@ class UserContainer extends Component {
           user={this.props.userInfo}
         />
         <Navigation />
-        {this.props.isAuthenticated &&
+        {/*{this.props.isAuthenticated && }*/}
         <StoryLine
           storiesArr={this.props.storiesArr}
           createStoryRequest={this.props.createStoryRequest}
         />
-        }
       </div>
     );
   }
 }
 
 UserContainer.propTypes = {
-  isAuthenticated: PropTypes.bool,
+  // isAuthenticated: PropTypes.bool,
   userInfo: PropTypes.object,
 
   createStoryRequest: PropTypes.func,

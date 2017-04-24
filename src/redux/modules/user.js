@@ -1,5 +1,6 @@
 import request from 'superagent';
 import Cookies from 'js-cookie';
+import { apiURL } from '../../constants/apiURL';
 
 export const FETCH_USERS = 'GET_USERS';
 export const ADD_NEW_USER = 'ADD_NEW_USER';
@@ -9,7 +10,6 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_INFO_REQUEST = 'USER_INFO_REQUEST';
 
-const apiURL = 'http://api.validbook.org/v1';
 
 export function saveUserList(users) {
   return {
@@ -227,7 +227,7 @@ export default function usersReducer(state = initialState, action) {
         usersArr: newUsers
       };
     }
-    //todo: FIX firtsName & lastName
+
     case LOGIN_REQUEST: {
       const userInfo = {
         id: action.id,
