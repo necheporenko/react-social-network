@@ -4,7 +4,6 @@ import EngagementFormStep2 from './EngagementFormStep2';
 
 import './index.scss';
 
-
 class Engagement extends Component {
   constructor(props) {
     super(props);
@@ -45,13 +44,12 @@ class Engagement extends Component {
                 </div>
               </div>
             </div>
-
             {this.props.activeFormSteps === 'step-1' &&
               <div className="engagement-content engagement-content-1">
                 <div className="engagement-content-title">Add more details about yourself. This information will help people find you.</div>
 
                 <EngagementFormStep1
-                  onSubmit={this.submitForm}
+                  onSubmit={this.submitForm}      /* todo check onSubmit & onInvalidSubmit */
                   onInvalidSubmit={this.invalid}
                   bio_value={this.bio_value}
                   occ_value={this.occ_value}
@@ -70,7 +68,6 @@ class Engagement extends Component {
                   telephone_value={this.telephone_value}
                   skype_value={this.skype_value}
                 />
-
               </div>
             }
 

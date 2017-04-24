@@ -53,170 +53,169 @@ const EngagementFormStep1 = ({
                                 skype_value
                             }) => {
   return (
-      <Form
-        onSubmit={onSubmit}
-        onInvalidSubmit={onInvalidSubmit}
-        rowClassName = {[{'form-group': false}, {row: false}, 'engagement-form']}
-      >
+    <Form
+      onSubmit={onSubmit}
+      onInvalidSubmit={onInvalidSubmit}
+      rowClassName={[{'form-group': false}, {row: false}, 'engagement-form']}
+    >
 
-        <div className="engagement-wrap-form">
-          <Textarea
-            rows={5}
-            cols={40}
-            name="bio"
-            label="Bio"
-            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            value={bio_value}
-          />
-          <Input
-            name="occupation"
-            value={occ_value}
-            label="Occupation"
-            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            type="text"
-          />
-          <Input
-            name="company"
-            value={company_value}
-            label="Company"
-            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            type="text"
-          />
+      <div className="engagement-wrap-form">
+        <Textarea
+          rows={5}
+          cols={40}
+          name="bio"
+          label="Bio"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          value={bio_value}
+        />
+        <Input
+          name="occupation"
+          value={occ_value}
+          label="Occupation"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          type="text"
+        />
+        <Input
+          name="company"
+          value={company_value}
+          label="Company"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          type="text"
+        />
+        <Select
+          name="country"
+          value={country_value}
+          label="Country"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          className={'form-control engagement-form-select'}
+          placeholder="Select your country"
+          options={selectCountry}
+        />
+        <Input
+          name="location"
+          value={location_value}
+          label="Location"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          type="text"
+        />
+        <div className="engagement-form-birth-date">
           <Select
-            name="country"
-            value={country_value}
-            label="Country"
+            name="birth-date"
+            value={birthDate_value}
+            label="Birth Date"
             labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            className = {'form-control engagement-form-select'}
-            placeholder="Select your country"
-            options={selectCountry}
-          />
-          <Input
-            name="location"
-            value={location_value}
-            label="Location"
-            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            type="text"
-          />
-          <div className="engagement-form-birth-date">
-            <Select
-              name="birth-date"
-              value={birthDate_value}
-              label="Birth Date"
-              labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-              elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
-              className = {'form-control engagement-form-select engagement-form-select-small'}
-              style = {{left: '140px'}}
-              options={selectDay}
-            />
-
-            <Select
-              name="birth-month"
-              value={birthMonth_value}
-              labelClassName={[{'col-sm-3': false}, 'disabled-label']}
-              className = {'form-control engagement-form-select engagement-form-select-small'}
-              elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
-              style = {{left: '250px'}}
-              options={selectMonth}
-            />
-
-            <Select
-              name="birth-date-visibility"
-              value={birthDateVisibility_value}
-              labelClassName={[{'col-sm-3': false}, 'disabled-label']}
-              className = {'form-control engagement-form-select engagement-form-select-small'}
-              elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small birth-visibility']}
-              style = {{left: '360px'}}
-              options={selectVisibility}
-            />
-          </div>
-          <div className="engagement-form-birth-date engagement-form-birth-year">
-            <Select
-              name="birth-year"
-              value={birthYear_value}
-              label="Birth Year"
-              labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-              elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
-              className = {'form-control engagement-form-select engagement-form-select-small'}
-              style = {{left: '140px'}}
-              options={selectYear}
-            />
-
-            <Select
-              name="birth-date-visibility"
-              value={birthYearVisibility_value}
-              labelClassName={[{'col-sm-3': false}, 'disabled-label']}
-              className = {'form-control engagement-form-select engagement-form-select-small'}
-              elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
-              style = {{left: '250px'}}
-              options={selectVisibility}
-            />
-          </div>
-
-          <Input
-            name="twitter"
-            value={twitter_value}
-            label="Twitter"
-            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            type="url"
-          />
-          <Input
-            name="facebook"
-            value={facebook_value}
-            label="Facebook"
-            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            type="url"
-          />
-          <Input
-            name="linkedin"
-            value={linkedin_value}
-            label="Linkedin"
-            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            type="url"
-          />
-          <Input
-            name="websites"
-            value={websites_value}
-            label="Websites"
-            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            type="url"
-          />
-          <Input
-            name="telephone"
-            value={telephone_value}
-            label="Telephone"
-            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            type="text"
-          />
-          <Input
-            name="skype"
-            value={skype_value}
-            label="Skype"
-            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
-            elementWrapperClassName = {[{'col-sm-9': false}, 'engagement-element-wrapper']}
-            type="text"
+            elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
+            className={'form-control engagement-form-select engagement-form-select-small'}
+            style={{left: '140px'}}
+            options={selectDay}
           />
 
-          <div className="engagement-wrap-btn">
-            <div>
-              <button className="engagement-btn" type="submit">Save and Continue</button> <br/>
-              <button className="engagement-btn engagement-btn-skip">Skip</button>
-            </div>
-          </div>
+          <Select
+            name="birth-month"
+            value={birthMonth_value}
+            labelClassName={[{'col-sm-3': false}, 'disabled-label']}
+            className={'form-control engagement-form-select engagement-form-select-small'}
+            elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
+            style={{left: '250px'}}
+            options={selectMonth}
+          />
 
+          <Select
+            name="birth-date-visibility"
+            value={birthDateVisibility_value}
+            labelClassName={[{'col-sm-3': false}, 'disabled-label']}
+            className={'form-control engagement-form-select engagement-form-select-small'}
+            elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small birth-visibility']}
+            style={{left: '360px'}}
+            options={selectVisibility}
+          />
         </div>
-      </Form>
+        <div className="engagement-form-birth-date engagement-form-birth-year">
+          <Select
+            name="birth-year"
+            value={birthYear_value}
+            label="Birth Year"
+            labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+            elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
+            className={'form-control engagement-form-select engagement-form-select-small'}
+            style={{left: '140px'}}
+            options={selectYear}
+          />
 
+          <Select
+            name="birth-date-visibility"
+            value={birthYearVisibility_value}
+            labelClassName={[{'col-sm-3': false}, 'disabled-label']}
+            className={'form-control engagement-form-select engagement-form-select-small'}
+            elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
+            style={{left: '250px'}}
+            options={selectVisibility}
+          />
+        </div>
+
+        <Input
+          name="twitter"
+          value={twitter_value}
+          label="Twitter"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          type="url"
+        />
+        <Input
+          name="facebook"
+          value={facebook_value}
+          label="Facebook"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          type="url"
+        />
+        <Input
+          name="linkedin"
+          value={linkedin_value}
+          label="Linkedin"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          type="url"
+        />
+        <Input
+          name="websites"
+          value={websites_value}
+          label="Websites"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          type="url"
+        />
+        <Input
+          name="telephone"
+          value={telephone_value}
+          label="Telephone"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          type="text"
+        />
+        <Input
+          name="skype"
+          value={skype_value}
+          label="Skype"
+          labelClassName={[{'col-sm-3': false}, 'engagement-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
+          type="text"
+        />
+
+        <div className="engagement-wrap-btn">
+          <div>
+            <button className="engagement-btn" type="submit">Save and Continue</button> <br/>
+            <button className="engagement-btn engagement-btn-skip">Skip</button>
+          </div>
+        </div>
+
+      </div>
+    </Form>
   );
 };
 
@@ -224,7 +223,7 @@ EngagementFormStep1.propTypes = {
   onSubmit: PropTypes.func,
   onInvalidSubmit: PropTypes.func,
 
-  bio_value:PropTypes.string,
+  bio_value: PropTypes.string,
   occ_value: PropTypes.string,
   company_value: PropTypes.string,
   country_value: PropTypes.string,

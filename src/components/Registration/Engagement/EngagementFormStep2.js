@@ -6,7 +6,7 @@ import './index.scss';
 const EngagementFormStep2 = ({avatar_value}) => {
   return (
     <Form
-      rowClassName = {[{'form-group': false}, {row: false}, 'engagement-form']}
+      rowClassName={[{'form-group': false}, {row: false}, 'engagement-form']}
     >
       <div className="engagement-wrap-form">
         <div className="engagement-wrap-user-img">

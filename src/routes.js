@@ -48,7 +48,8 @@ import SearchPhotos from 'components/Search/SearchPhotos';
 import SearchThings from 'components/Search/SearchThings';
 import SearchTokens from 'components/Search/SearchTokens';
 import SearchStories from 'components/Search/SearchStories';
-import NotFoundPage from 'components/NotFoundPage';
+import EngagementContainer from 'components/Registration/Engagement';
+import NotFoundPage from 'components/NotFoundPage/NotFoundPage';
 
 // eslint-disable-next-line import/no-dynamic-require
 if (typeof System.import === 'undefined') System.import = module => Promise.resolve(require(module));
@@ -59,9 +60,8 @@ export default () => {
 
       <Route path="users" getComponent={() => System.import('./containers/Users')} />
 
-      <Route path="notification" getComponent={Notification} />
-
-      <Route path="/auth" component={Auth} />
+      <Route path="/notification" component={Notification} />
+      <Route path="/engagement" component={EngagementContainer} />
 
       <Route path="/messages" component={MessagesContainer}>
         <IndexRoute component={Messages} />
