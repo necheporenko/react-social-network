@@ -3,6 +3,8 @@ import Cookies from 'js-cookie';
 import { apiURL } from '../../constants/apiURL';
 
 export const CREATE_STORY = 'CREATE_STORY';
+export const SHOW_USER_STORIES = 'SHOW_USER_STORIES';
+
 
 export function createStory(description) {
   return (dispatch) => {
@@ -28,12 +30,41 @@ export function createStoryRequest(description) {
         if (err || res.body.status === 'error') {
           console.log('createChannelRequest error:', err); // eslint-disable-line no-console
         } else {
-          dispatch(createStory(res.body.data.description));
+          dispatch(createStory(res.body.data));
           console.log(`Yeah! ${JSON.stringify(res.body)}`);
         }
       });
   };
 }
+
+
+export function showUserStories(stories) {
+  return (dispatch) => {
+    dispatch({
+      type: SHOW_USER_STORIES,
+      stories
+    });
+  };
+}
+
+export function showUserStoriesRequest() {
+  return (dispatch) => {
+    const cookie = JSON.parse(Cookies.get('_u'));
+    const { token, id } = cookie;
+    return request
+      .get(`${apiURL}/user/stories?access-token=${token}`)
+      .query({ user_id: id })
+      .end((err, res) => {
+        if (err || res.body.status === 'error') {
+          console.log('createChannelRequest error:', err); // eslint-disable-line no-console
+        } else {
+          dispatch(showUserStories(res.body.data));
+          console.log(`Yeah! ${JSON.stringify(res.body)}`);
+        }
+      });
+  };
+}
+
 
 //REDUCER
 
@@ -61,6 +92,26 @@ export default function storyReducer(state = initialState, action) {
         storiesArr: newStories
       };
     }
+
+    case SHOW_USER_STORIES: {
+      const { stories } = action;
+      // const newStories = [...[{ stories: stories }], ...state.storiesArr];
+
+      const newStories = [...state.storiesArr, ...stories];
+
+      // let newStories = state.storiesArr((story) => {    // eslint-disable-line
+      //   return {
+      //     ...story,
+      //     description: [...story.description, stories]
+      //   };
+      // });
+
+      return {
+        ...state,
+        storiesArr: newStories
+      };
+    }
+
     default:
       return state;
   }

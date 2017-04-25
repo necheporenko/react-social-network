@@ -49,6 +49,7 @@ import SearchThings from 'components/Search/SearchThings';
 import SearchTokens from 'components/Search/SearchTokens';
 import SearchStories from 'components/Search/SearchStories';
 import EngagementContainer from 'components/Registration/Engagement';
+import BookPage from 'components/BookPage';
 import NotFoundPage from 'components/NotFoundPage/NotFoundPage';
 
 // eslint-disable-next-line import/no-dynamic-require
@@ -57,8 +58,11 @@ if (typeof System.import === 'undefined') System.import = module => Promise.reso
 export default () => {
   return (
     <Route path="/" component={App}>
+      <IndexRoute component={IndexContainer} />
 
       <Route path="users" getComponent={() => System.import('./containers/Users')} />
+
+      <Route path="/bookpage" component={BookPage} />
 
       <Route path="/notification" component={Notification} />
       <Route path="/engagement" component={EngagementContainer} />
@@ -97,8 +101,6 @@ export default () => {
         <Route path="stories" component={SearchStories} />
         <Route path="things" component={SearchThings} />
       </Route>
-
-      <IndexRoute component={IndexContainer} />
 
       <Route path="/:userName" component={UserContainer} />
 

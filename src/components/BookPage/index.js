@@ -3,7 +3,7 @@ import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router';
 import {connect} from 'react-redux';
 import { Form, RadioGroup } from 'formsy-react-components';
-import BooksTree from '../../../components/BooksTree';
+import BooksTree from '../BooksTree';
 import Stream from '../StoryLine/Stream/index';
 //import InfoBloks from '../StoryLine/InfoBlocks';
 import Photos from '../StoryLine/InfoBlocks/Photos';
@@ -14,7 +14,7 @@ const radioOptions = [
        {value: 'a', label: 'only you'},
        {value: 'b', label: 'anyone'},
        {value: 'c', label: 'specific people'}
-   ];
+];
 
 class BookPage extends Component {
   render() {
@@ -82,33 +82,33 @@ class BookPage extends Component {
                   <div className="book-settings">
                     <div className="book-settings-access">
 
-                        <i></i>
-                        <ButtonToolbar>
-                          <DropdownButton className="bootstrap-pure-btn" title="Access settings" >
+                      <i></i>
+                      <ButtonToolbar>
+                        <DropdownButton className="bootstrap-pure-btn" title="Access settings" >
 
-                              <Form
-                                rowClassName = {[{'form-group': false}, {row: false}]}
+                          <Form
+                            rowClassName={[{'form-group': false}, {row: false}]}
                               >
-                                <RadioGroup
-                                   name="radioGrp1"
-                                   value="b"
-                                   label="Who can see that book exists?"
-                                   labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                                   elementWrapperClassName = {[{'col-sm-9': false}, 'book-element-wrapper']}
-                                   options={radioOptions}
+                            <RadioGroup
+                              name="radioGrp1"
+                              value="b"
+                              label="Who can see that book exists?"
+                              labelClassName={[{'col-sm-3': false}, 'book-list-label']}
+                              elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
+                              options={radioOptions}
                                 />
-                                <RadioGroup
-                                   name="radioGrp1"
-                                   value="b"
-                                   label="Who can see that book exists?"
-                                   labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                                   elementWrapperClassName = {[{'col-sm-9': false}, 'book-element-wrapper']}
-                                   options={radioOptions}
+                            <RadioGroup
+                              name="radioGrp1"
+                              value="b"
+                              label="Who can see that book exists?"
+                              labelClassName={[{'col-sm-3': false}, 'book-list-label']}
+                              elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
+                              options={radioOptions}
                                 />
-                           </Form>
+                          </Form>
 
-                          </DropdownButton>
-                        </ButtonToolbar>
+                        </DropdownButton>
+                      </ButtonToolbar>
 
                     </div>
                     <div className="book-settings-edit">

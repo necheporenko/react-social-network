@@ -1,9 +1,26 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { showUserStories } from '../../../redux/modules/story';
 import Sbox from './Sbox';
 import Post from './Post';
 import './index.scss';
 
 class Stream extends Component {
+  constructor(props) {
+    super(props);
+
+    this.showStories = this.showStories.bind(this);
+  }
+
+  componentWillMount() {
+    // this.showStories();
+  }
+
+  showStories() {
+    this.props.showUserStoriesRequest();
+  }
+
   render() {
     const { storiesArr } = this.props;
     return (
@@ -11,6 +28,7 @@ class Stream extends Component {
         <Sbox
           createStoryRequest={this.props.createStoryRequest}
         />
+        <button onClick={this.showStories}>click me</button>
         {storiesArr.map((story, index) => (
           <Post
             key={index}
@@ -27,8 +45,22 @@ class Stream extends Component {
 
 Stream.propTypes = {
   children: PropTypes.element,
+  showUserStoriesRequest: PropTypes.func,
   createStoryRequest: PropTypes.func,
   storiesArr: PropTypes.array
 };
 
-export default Stream;
+function mapDispatchToProps(dispatch) {
+  return {
+    showUserStoriesRequest: bindActionCreators(showUserStories, dispatch)
+  };
+}
+
+// function mapStateToProps(state) {
+//   return {
+//     storiesArr: state.story.storiesArr
+//   };
+// }
+
+export default connect(null, mapDispatchToProps)(Stream);
+// export default Stream;
