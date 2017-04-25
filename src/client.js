@@ -5,11 +5,10 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyRouterMiddleware, Router, browserHistory, match } from 'react-router';
+import { Router, browserHistory, match } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { ReduxAsyncConnect } from 'redux-connect';
 import { AppContainer as HotEnabler } from 'react-hot-loader';
-import { useScroll } from 'react-router-scroll';
 import { getStoredState } from 'redux-persist';
 import localForage from 'localforage';
 import { socket } from 'app';
@@ -58,7 +57,6 @@ Promise.all([window.__data ? true : isOnline(), getStoredState(offlinePersistCon
       {...props}
       helpers={{ client }}
       filter={item => !item.deferred}
-      render={applyRouterMiddleware(useScroll())}
     />;
 
     const render = routes => {
