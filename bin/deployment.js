@@ -8,7 +8,7 @@
 
 // requires
 var args = require('optimist').argv;
-var deployment = require('../lib/deployment.js');
+var deployment = require('../node_modules/deployment/lib/deployment.js');
 
 // init
 if(args.help || args.h)
