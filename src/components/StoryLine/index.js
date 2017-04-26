@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import BooksTree from '../BooksTree';
 import Stream from './Stream/index';
 import InfoBloks from './InfoBlocks/index';
-
 import './index.scss';
 
 class StoryLine extends Component {

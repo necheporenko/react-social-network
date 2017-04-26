@@ -4,7 +4,7 @@ import './index.scss';
 
 class LeftMenu extends Component {
   render() {
-    const { first_name, last_name } = this.props.userInfo;
+    const { first_name, last_name } = this.props.userInfo; //eslint-disable-line
     const url = `${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
 
     return (

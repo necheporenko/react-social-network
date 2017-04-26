@@ -30,7 +30,7 @@ export function createStoryRequest(description) {
         if (err || res.body.status === 'error') {
           console.log('createChannelRequest error:', err); // eslint-disable-line no-console
         } else {
-          dispatch(createStory(res.body.data));
+          dispatch(createStory(res.body.data.description));
           console.log(`Yeah! ${JSON.stringify(res.body)}`);
         }
       });
@@ -56,7 +56,7 @@ export function showUserStoriesRequest() {
       .query({ user_id: id })
       .end((err, res) => {
         if (err || res.body.status === 'error') {
-          console.log('createChannelRequest error:', err); // eslint-disable-line no-console
+          console.log('showUserStoriesRequest error:', err); // eslint-disable-line no-console
         } else {
           dispatch(showUserStories(res.body.data));
           console.log(`Yeah! ${JSON.stringify(res.body)}`);
@@ -94,17 +94,7 @@ export default function storyReducer(state = initialState, action) {
     }
 
     case SHOW_USER_STORIES: {
-      const { stories } = action;
-      // const newStories = [...[{ stories: stories }], ...state.storiesArr];
-
-      const newStories = [...state.storiesArr, ...stories];
-
-      // let newStories = state.storiesArr((story) => {    // eslint-disable-line
-      //   return {
-      //     ...story,
-      //     description: [...story.description, stories]
-      //   };
-      // });
+      const newStories = [...action.stories, ...state.storiesArr];
 
       return {
         ...state,

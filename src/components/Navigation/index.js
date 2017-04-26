@@ -33,7 +33,7 @@ class Navigation extends Component {
   }
 
   saveScroll() {
-    console.log(`saveScroll:${savePositionTop}`);
+    // console.log(`saveScroll:${savePositionTop}`);
     this.setState({ scrollTop: savePositionTop });
   }
 

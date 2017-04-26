@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { showUserStories } from '../../../redux/modules/story';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { showUserStories } from '../../../redux/modules/story';
 import Sbox from './Sbox';
 import Post from './Post';
 import './index.scss';
@@ -14,7 +14,7 @@ class Stream extends Component {
   }
 
   componentWillMount() {
-    // this.showStories();
+    this.showStories();
   }
 
   showStories() {
@@ -29,9 +29,9 @@ class Stream extends Component {
           createStoryRequest={this.props.createStoryRequest}
         />
         <button onClick={this.showStories}>click me</button>
-        {storiesArr.map((story, index) => (
+        {storiesArr.map((story) => (
           <Post
-            key={index}
+            key={story.id}
             post={story.description}
           />
         ))}
@@ -50,11 +50,11 @@ Stream.propTypes = {
   storiesArr: PropTypes.array
 };
 
-function mapDispatchToProps(dispatch) {
-  return {
-    showUserStoriesRequest: bindActionCreators(showUserStories, dispatch)
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     showUserStoriesRequest: bindActionCreators(showUserStories, dispatch)
+//   };
+// }
 
 // function mapStateToProps(state) {
 //   return {
@@ -62,5 +62,5 @@ function mapDispatchToProps(dispatch) {
 //   };
 // }
 
-export default connect(null, mapDispatchToProps)(Stream);
-// export default Stream;
+// export default connect(null, mapDispatchToProps)(Stream);
+export default Stream;

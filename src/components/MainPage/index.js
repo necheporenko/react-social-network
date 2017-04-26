@@ -24,6 +24,7 @@ class MainPage extends Component {
             <Stream
               storiesArr={this.props.storiesArr}
               createStoryRequest={this.props.createStoryRequest}
+              showUserStoriesRequest={this.props.showUserStoriesRequest}
             />
             <FollowBlock />
           </div>
@@ -38,6 +39,7 @@ MainPage.propTypes = {
   createChannelRequest: PropTypes.func,
   channelsArr: PropTypes.array,
   createStoryRequest: PropTypes.func,
+  showUserStoriesRequest: PropTypes.func,
   storiesArr: PropTypes.array
 };
 
