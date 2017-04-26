@@ -35,8 +35,6 @@ class Stream extends Component {
             post={story.description}
           />
         ))}
-        {/*<Post />*/}
-        {/*<Post />*/}
         {this.props.children}
       </div>
     );
