@@ -49,7 +49,7 @@ export function showUserStories(stories) {
 
 export function showUserStoriesRequest() {
   return (dispatch) => {
-    const cookie = JSON.parse(Cookies.get('_u'));
+    const cookie = Cookies.get('_u') ? JSON.parse(Cookies.get('_u')) : '';
     const { token, id } = cookie;
     return request
       .get(`${apiURL}/user/stories?access-token=${token}`)
@@ -72,11 +72,7 @@ const initialState = {
   storiesArr: [
     {
       book_ids: [1],
-      description: 'Desc'
-    },
-    {
-      book_ids: [2],
-      description: 'Test Test Test'
+      description: 'Welcome to the Validbook'
     }
   ]
 };
