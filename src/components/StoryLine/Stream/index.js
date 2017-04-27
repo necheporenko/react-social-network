@@ -2,30 +2,9 @@ import React, { Component, PropTypes } from 'react';
 // import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 // import { showUserStories } from '../../../redux/modules/story';
-import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
-import { isLoaded as isStoriesLoaded, load as loadStories } from 'redux/modules/users';
 import Sbox from './Sbox';
 import Post from './Post';
 import './index.scss';
-
-@asyncConnect([{
-  promise: ({store: {dispatch, getState}}) => {
-    const promises = [];
-
-    if (!isStoriesLoaded(getState())) {
-      promises.push(dispatch(loadStories()));
-    }
-
-    return Promise.all(promises);
-  }
-}])
-
-@connect(
-  state => ({
-    storiesArr: state.story.storiesArr
-  })
-)
 
 class Stream extends Component {
   // constructor(props) {

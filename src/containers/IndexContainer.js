@@ -1,14 +1,28 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
 import { userRegisterRequest, userLoginRequest, userLogin } from '../redux/modules/user';
 import { showActiveForm } from '../redux/modules/form';
 import { createChannelRequest } from '../redux/modules/channel';
-import { createStoryRequest, showUserStoriesRequest } from '../redux/modules/story';
+import { createStoryRequest, showUserStoriesRequest,
+  isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
 import NewUser from '../components/Registration/Main';
 import MainPage from '../components/MainPage';
 
-class IndexContainer extends Component {
+@asyncConnect([{
+  promise: ({store: { dispatch, getState }}) => {
+  //   const promises = [];
+  //   if (!isStoriesLoaded(getState())) {
+  //     promises.push(dispatch(loadStories()));
+  //   }
+  //   return Promise.all(promises);
+    if (!isStoriesLoaded(getState())) {
+      return dispatch(loadStories());
+    }
+  }
+}])
 
+class IndexContainer extends Component {
   render() {
     return (
       <div>
