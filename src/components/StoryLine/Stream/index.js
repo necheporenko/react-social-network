@@ -2,24 +2,45 @@ import React, { Component, PropTypes } from 'react';
 // import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 // import { showUserStories } from '../../../redux/modules/story';
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
+import { isLoaded as isStoriesLoaded, load as loadStories } from 'redux/modules/users';
 import Sbox from './Sbox';
 import Post from './Post';
 import './index.scss';
 
+@asyncConnect([{
+  promise: ({store: {dispatch, getState}}) => {
+    const promises = [];
+
+    if (!isStoriesLoaded(getState())) {
+      promises.push(dispatch(loadStories()));
+    }
+
+    return Promise.all(promises);
+  }
+}])
+
+@connect(
+  state => ({
+    storiesArr: state.story.storiesArr
+  })
+)
+
 class Stream extends Component {
-  constructor(props) {
-    super(props);
-
-    this.showStories = this.showStories.bind(this);
-  }
-
-  componentWillMount() {
-    this.showStories();
-  }
-
-  showStories() {
-    this.props.showUserStoriesRequest();
-  }
+  // constructor(props) {
+  //   super(props);
+  //
+  //   this.showStories = this.showStories.bind(this);
+  // }
+  //
+  // componentWillMount() {
+  //   this.showStories();
+  // }
+  //
+  // showStories() {
+  //   this.props.showUserStoriesRequest();
+  // }
 
   render() {
     const { storiesArr } = this.props;
@@ -28,7 +49,7 @@ class Stream extends Component {
         <Sbox
           createStoryRequest={this.props.createStoryRequest}
         />
-        <button onClick={this.showStories}>click me</button>
+        {/*<button onClick={this.showStories}>click me</button>*/}
         {storiesArr.map((story) => (
           <Post
             key={story.id}
@@ -43,7 +64,7 @@ class Stream extends Component {
 
 Stream.propTypes = {
   children: PropTypes.element,
-  showUserStoriesRequest: PropTypes.func,
+  // showUserStoriesRequest: PropTypes.func,
   createStoryRequest: PropTypes.func,
   storiesArr: PropTypes.array
 };

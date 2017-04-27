@@ -3,6 +3,11 @@ import Cookies from 'js-cookie';
 import { apiURL } from '../../constants/apiURL';
 
 export const CREATE_STORY = 'CREATE_STORY';
+
+export const LOAD_SHOW_USER_STORIES = 'LOAD_SHOW_USER_STORIES';
+export const LOAD_SUCCESS_SHOW_USER_STORIES = 'LOAD_SUCCESS_SHOW_USER_STORIES';
+export const LOAD_FAIL_SHOW_USER_STORIES = 'LOAD_FAIL_SHOW_USER_STORIES';
+
 export const SHOW_USER_STORIES = 'SHOW_USER_STORIES';
 
 
@@ -74,7 +79,8 @@ const initialState = {
       book_ids: [1],
       description: 'Welcome to the Validbook'
     }
-  ]
+  ],
+  loaded: false
 };
 
 export default function storyReducer(state = initialState, action) {
@@ -98,7 +104,40 @@ export default function storyReducer(state = initialState, action) {
       };
     }
 
+
+    case LOAD_SHOW_USER_STORIES:
+      return {
+        ...state,
+        loading: true
+      };
+    case LOAD_SUCCESS_SHOW_USER_STORIES:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        // users: action.result,
+        storiesArr: [...action.stories, ...state.storiesArr]
+      };
+    case LOAD_FAIL_SHOW_USER_STORIES:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.error
+      };
+
     default:
       return state;
   }
+}
+
+export function isLoaded(globalState) {
+  return globalState.storiesArr && globalState.storiesArr.loaded;
+}
+
+export function load() {
+  return {
+    types: [LOAD_SHOW_USER_STORIES, LOAD_SUCCESS_SHOW_USER_STORIES, LOAD_FAIL_SHOW_USER_STORIES],
+    promise: (client) => client.get('/users') //api?? user/stories?access-token=
+  };
 }

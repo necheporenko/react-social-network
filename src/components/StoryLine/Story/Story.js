@@ -6,7 +6,7 @@ class Story extends Component {
   render() {
     return (
       <div className="stream">
-          <Post />
+        <Post />
       </div>
     );
   }
