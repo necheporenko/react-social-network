@@ -14,7 +14,6 @@
 
 .sbox {
   background: #FFF;
-  border: 1px solid $border-color;
   //flex: auto;
   position: relative;
   @include material;
@@ -74,6 +73,7 @@
   border-top: 1px solid $border-color;
   display: flex;
   justify-content: space-between;
+  margin: 0 -1px;
 
   .btn-brand {
     width: 45px;

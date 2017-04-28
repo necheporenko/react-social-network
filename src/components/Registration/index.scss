@@ -303,13 +303,39 @@
     background: url('../../img/login-page/login-background780x740.jpg') no-repeat; //768*1024
       background-size: cover;
   }
+
+  .login-popup {
+    width: 660px;
+  }
 }
-// @media all and (max-width: 768px) {
-//   .registration-bg {
-//     background: url('../../img/login-page/login-background768x680.jpg');
-//     background-size: cover;
-//   }
-//}
+ @media all and (max-width: 768px) {
+   //.registration-bg {
+   //  background: url('../../img/login-page/login-background768x680.jpg');
+   //  background-size: cover;
+   //}
+   .login-popup {
+     width: auto;
+   }
+
+   .registration-content {
+     display: flex;
+     flex-direction: column;
+   }
+
+   .registration-desc-site {
+     width: 100%;
+     order: 1;
+     float: none;
+     border: none;
+     margin-left: 25px;
+   }
+
+   .registration-forms {
+     float: none;
+     width: 100%;
+     margin-bottom: 30px;
+   }
+}
 // @media all and (max-width: 425px) {
 //   .registration-bg {
 //     background: #fff;

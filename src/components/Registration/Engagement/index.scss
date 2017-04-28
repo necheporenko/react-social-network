@@ -96,6 +96,7 @@
   font-size: 14px;
   font-family: $font-medium;
 }
+
 .control-label {
   text-align: left !important;
   margin-bottom: 0;
@@ -158,6 +159,7 @@
   flex-direction: column;
   position: relative;
 }
+
 .engagement-btn {
   cursor: pointer;
   background: $link-color;
@@ -170,6 +172,7 @@
   position: absolute;
   right: 0;
 }
+
 .engagement-btn-skip {
   margin-top: 25px;
 }

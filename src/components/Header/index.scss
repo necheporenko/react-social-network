@@ -77,18 +77,19 @@
 
 .extension {
   margin-right: 45px;
-  margin-top: 6px;
+  margin-top: 8px;
 
   button {
     text-decoration: none;
     cursor: pointer;
     font-size: 13px;
     font-weight: 400;
-    padding: 4px 10px;
+    padding: 2px 10px;
     border: 1px solid #b7b4b4;
     background: 0 0;
-    color: #736f6f;
     box-shadow: 0 0 2px #bebebe;
+    color: #736f6f;
+    line-height: 18px;
   }
 }
 
@@ -171,7 +172,7 @@
 
   .dropdown-menu {
     top: 32px;
-    width: 330px;
+    width: 350px;
     box-shadow: none;
   }
 }
@@ -204,11 +205,12 @@
   }
 
   li {
-    padding: 10px 20px;
+    padding: 10px 15px;
     margin: 0 -10px;
     cursor: pointer;
     position: relative;
     border-bottom: 1px solid $default-bg;
+    display: flex;
 
     &:hover {
       background: $bg-hover;
@@ -228,6 +230,7 @@
       margin-top: 5px;
       margin-left: 10px;
       display: flex;
+      font-size: 13px;
 
       b {
         font-family: $font-bold;
@@ -250,7 +253,7 @@
       color: $gray-light-hover;
       font-size: 12px;
       top: 40px;
-      left: 80px;
+      left: 75px;
     }
   }
 }
@@ -298,16 +301,26 @@
       //width: 15px;
       //height: 19px;
       background: url('../../img/Icons/gear.png');
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       display: block;
       content: '';
     }
   }
 
+  .dropdown-menu-right {
+    top: 43px;
+  }
+
   a {
-    padding: 5px 8px !important;
+    padding: 10px 30px !important;
     display: block;
+    cursor: pointer;
+
+    &:hover {
+      background: $default-bg;
+      color: $default-color;
+    }
   }
 }
 

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import draftToHtml from 'draftjs-to-html';
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -50,6 +51,8 @@ class Sbox extends Component {
 
   render() {
     const { editorContent } = this.state;
+    const { first_name, last_name } = this.props.userInfo;
+    const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
 
     return (
       <div className="sbox">
@@ -82,7 +85,7 @@ class Sbox extends Component {
         />
 
         <div className="sbox-user-avatar" style={{top: this.state.jump}}>
-          <a href="#"><img src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1486723970" /></a>
+          <Link to={link}><img src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1486723970" /></Link>
         </div>
 
         <div className="sbox-footer">
@@ -107,6 +110,7 @@ class Sbox extends Component {
 Sbox.propTypes = {
  //placeholder: PropTypes.string
   createStoryRequest: PropTypes.func,
+  userInfo: PropTypes.object
 };
 
 export default Sbox;

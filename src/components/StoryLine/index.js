@@ -56,6 +56,7 @@ class StoryLine extends Component {
             storiesArr={this.props.storiesArr}
             createStoryRequest={this.props.createStoryRequest}
             showUserStoriesRequest={this.props.showUserStoriesRequest}
+            userInfo={this.props.userInfo}
           />
           <InfoBloks />
         </div>
