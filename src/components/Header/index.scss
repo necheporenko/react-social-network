@@ -2,7 +2,7 @@
 
 .header {
   background: #fff;
-  //box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
   padding: 6px 20px 5px;
   border-bottom: 1px solid rgba(0,0,0,0.15);
   width: 100%;
@@ -313,10 +313,6 @@
   }
 
   a {
-    padding: 10px 30px !important;
-    display: block;
-    cursor: pointer;
-
     &:hover {
       background: $default-bg;
       color: $default-color;
@@ -408,12 +404,6 @@
   cursor: pointer;
   z-index: 0;
 }
-
-.test-sidebar {
-
-}
-
-
 
 
 @media only screen and (max-width: 992px) {

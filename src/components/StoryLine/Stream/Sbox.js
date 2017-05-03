@@ -110,7 +110,10 @@ class Sbox extends Component {
 Sbox.propTypes = {
  //placeholder: PropTypes.string
   createStoryRequest: PropTypes.func,
-  userInfo: PropTypes.object
+  userInfo: PropTypes.shape({
+    first_name: PropTypes.string,
+    last_name: PropTypes.string
+  })
 };
 
 export default Sbox;

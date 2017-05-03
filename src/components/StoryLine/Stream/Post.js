@@ -21,23 +21,29 @@ class Post extends Component {
               <a href="#">Bob Surname</a>
             </div>
             <div className="post-details">
-              <div className="post_details_date">30 Jan 2017</div>
+              <div className="post-details-date">30 Jan 2017</div>
               <div className="post-delimiter"><span> · </span></div>
-              <div className="post-details-icon-loud"><span></span></div>
+              <div className="post-details-loud-icon"><span></span></div>
               <div className="post-delimiter"><span> · </span></div>
-              <div className="post-details-icon-visibility">
-                <span></span>
+              <div className="post-details-visibility">
+                <div className="post-details-visibility-icon">
+                  <span></span>
+                </div>
+                <div className="post-details-visibility-menu">
+                  {/* <i className="caret"></i> */}
+                  <ButtonToolbar>
+                    <DropdownButton className="profileMenu-btn" title={''} id={3} pullRight>
+                      <Link>Public</Link>
+                      <Link>Only me</Link>
+                      <Link>Custom</Link>
+                      <Link>Reset as per visibility of books</Link>
+                      <span className="divider"></span>
+                      <Link>History of Story Visibility</Link>
+                    </DropdownButton>
+                  </ButtonToolbar>
+                </div>
               </div>
-              <div className="post-details-visibility-dropdown">
-                {/* <i className="caret"></i> */}
-                <ButtonToolbar>
-                  <DropdownButton className="profileMenu-btn" title={''} id={3} >
-                    <Link>Pin story</Link>
-                    <Link>Story Details</Link>
-                    <Link>Delete Story</Link>
-                  </DropdownButton>
-                </ButtonToolbar>
-              </div>
+
 
               <div className="post-delimiter"><span> · </span></div>
               <div className="post-details-location">Wallbook</div>
@@ -50,10 +56,6 @@ class Post extends Component {
                 <Link>Pin story</Link>
                 <Link>Story Details</Link>
                 <Link>Delete Story</Link>
-                {/*<MenuItem eventKey="1"><Link>Pin story</Link></MenuItem>*/}
-                {/*<MenuItem divider />*/}
-                {/*<MenuItem eventKey="2"><Link>Story Details</Link></MenuItem>*/}
-                {/*<MenuItem eventKey="3"><Link>Delete Story</Link></MenuItem>*/}
               </DropdownButton>
             </ButtonToolbar>
           </div>

@@ -1,9 +1,7 @@
 import React from 'react';
 import { IndexRoute, Route } from 'react-router';
 import App from 'containers/App/App';
-
 import IndexContainer from 'containers/IndexContainer';
-
 import UserContainer from 'containers/UserContainer';
 import BooksContainer from 'containers/BooksContainer';
 import PhotosContainer from 'containers/PhotosContainer';

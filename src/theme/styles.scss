@@ -154,9 +154,46 @@ b {
   align-items: flex-start;
 }
 
+/*
+  Override Bootstrap styles
+*/
+  //dropdown
+.btn-default,
+.btn-default:hover,
+.btn-default:focus,
+.btn-default.focus,
+.btn-default:active:hover,
+.btn-default:active:focus,
+.btn-default:active.focus,
+.btn-default.active:hover,
+.btn-default.active:focus,
+.btn-default.active.focus,
+.open > .btn-default.dropdown-toggle,
+.open > .btn-default.dropdown-toggle:hover,
+.open > .btn-default.dropdown-toggle:focus,
+.open > .btn-default.dropdown-toggle.focus,
+.btn-group.open .dropdown-toggle {
+  background-color: transparent;
+  box-shadow: none;
+}
+
 .dropdown-menu {
   min-width: 190px;
   font-size: 13px;
+  border-radius: 2px;
+
+  a {
+    padding: 10px 25px !important;
+    display: block;
+    cursor: pointer;
+  }
+
+  .divider {
+    display: block;
+  }
+}
+
+.modal-content {
   border-radius: 2px;
 }
 

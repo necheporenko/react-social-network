@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Logo from './Logo';
-
 import './index.scss';
 
 class MinHeader extends Component {
