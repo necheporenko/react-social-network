@@ -111,14 +111,16 @@ export default function storyReducer(state = initialState, action) {
         loading: true
       };
     case LOAD_SUCCESS_SHOW_USER_STORIES:
+      console.log('LOAD_SUCCESS_SHOW_USER_STORIES', action)
       return {
         ...state,
         loading: false,
         loaded: true,
         // users: action.result,
-        storiesArr: [...action.stories, ...state.storiesArr]
+        storiesArr: action.result.data
       };
     case LOAD_FAIL_SHOW_USER_STORIES:
+      console.log('LOAD_FAIL_SHOW_USER_STORIES', action)
       return {
         ...state,
         loading: false,
@@ -135,9 +137,15 @@ export function isLoaded(globalState) {
   return globalState.storiesArr && globalState.storiesArr.loaded;
 }
 
-export function load() {
+export function load(id) {
   return {
     types: [LOAD_SHOW_USER_STORIES, LOAD_SUCCESS_SHOW_USER_STORIES, LOAD_FAIL_SHOW_USER_STORIES],
-    promise: (client) => client.get('/users') //api?? user/stories?access-token=
+    promise: (client) => client.get(
+      '/user/stories',
+      {
+        params: {
+          user_id: id
+        }
+      }) //api?? user/stories?access-token=
   };
 }

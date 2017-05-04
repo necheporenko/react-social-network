@@ -25,10 +25,10 @@ const ListMessage = () => {
         <li>No conversations yet.</li>
         <Link to="/messages">
           <li>
-            <a href="#">
+            {/*<a href="#">*/}
               <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
               <h5>Name Surname</h5>
-            </a>
+            {/*</a>*/}
             <p>Message text...</p>
           </li>
         </Link>

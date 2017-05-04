@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Form, Input, Select } from 'formsy-react-components';
+import AvatarEditor from 'react-avatar-editor';
 import { Modal } from 'react-bootstrap';
 import './index.scss';
 import coverBook from '../../img/Default/cover-book.png';
@@ -20,12 +21,21 @@ class AddBook extends Component {
     this.state = {
       showModal: false,
       file: '',
-      coverBook: coverBook
+      coverBook: coverBook,
+      scale: 1.2,
+      rotate: 0,
+      border: 0,
+      preview: null,
+      width: 460,
+      height: 200,
+      picture: 'http://devianmbanks.validbook.org/cdn/stories_images/713/original.jpg'
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
     // this.onSubmitChannel = this.onSubmitChannel.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleScale = this.handleScale.bind(this);
   }
 
   // onSubmitChannel(data) {
@@ -53,6 +63,36 @@ class AddBook extends Component {
       });
     };
     reader.readAsDataURL(file);
+  }
+
+  handleSave = () => {
+    const img = this.editor.getImageScaledToCanvas().toDataURL();
+    const rect = this.editor.getCroppingRect();
+    const canvas = this.editor.getImage();
+    console.log(img);
+    console.log(rect);
+    console.log(canvas);
+
+    this.setState({
+      picture: canvas,
+      preview: {
+        img,
+        rect,
+        scale: this.state.scale,
+        width: this.state.width,
+        height: this.state.height,
+        borderRadius: this.state.borderRadius
+      }
+    });
+  }
+
+  setEditorRef = (editor) => {
+    if (editor) this.editor = editor;
+  }
+
+  handleScale = (e) => {
+    const scale = parseFloat(e.target.value);
+    this.setState({ scale });
   }
 
   render() {
@@ -109,6 +149,39 @@ class AddBook extends Component {
                 placeholder="(Optional)"
                 type="text"
               />
+
+              <AvatarEditor
+                ref={this.setEditorRef}
+                image={this.state.picture}
+                width={525}
+                height={200}
+                border={0}
+                color={[255, 255, 255, 0.6]} // RGBA
+                scale={parseFloat(this.state.scale)}
+                rotate={0}
+                onSave={this.handleSave}
+              />
+              Zoom:
+              <br />
+              <input
+                name="scale"
+                type="range"
+                onChange={this.handleScale}
+                min="1"
+                max="2"
+                step="0.01"
+                defaultValue="1"
+              />
+              <br />
+              <input type="button" onClick={this.handleSave} value="Preview" />
+              <br />
+              { !!this.state.preview &&
+              <img
+                crossOrigin="anonymous"
+                src={this.state.preview.img}
+                style={{ borderRadius: `${(Math.min(this.state.preview.height, this.state.preview.width) + 10) * ((this.state.preview.borderRadius / 2) / 100)}px` }}
+              />
+              }
 
             </Modal.Body>
 

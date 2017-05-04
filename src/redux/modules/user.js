@@ -44,6 +44,7 @@ export function updateUser(id, user) {
 }
 
 export function userLogin(id, email, token, first_name, last_name) {
+  console.log('userLogin', id, email, token, first_name, last_name)
   return {
     type: LOGIN_REQUEST,
     id,

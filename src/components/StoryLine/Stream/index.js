@@ -30,7 +30,7 @@ class Stream extends Component {
           userInfo={this.props.userInfo}
         />
         {/*<button onClick={this.showStories}>click me</button>*/}
-        {storiesArr.map((story) => (
+        {storiesArr && storiesArr.map((story) => (
           <Post
             key={story.id}
             post={story.description}

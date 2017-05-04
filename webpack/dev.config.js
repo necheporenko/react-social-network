@@ -143,9 +143,10 @@ var webpackConfig = module.exports = {
       }, {
         loader: 'babel-loader',
         query: babelLoaderQuery
-      }, {
-        loader: 'eslint-loader'
       }
+      // , {
+      //   loader: 'eslint-loader'
+      // }
     ]),
     helpers.createHappyPlugin('less', [
       {

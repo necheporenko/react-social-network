@@ -3,17 +3,32 @@ import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import Helmet from 'react-helmet';
 import config from 'config';
+import { asyncConnect } from 'redux-connect';
 import Header from '../../components/Header';
 import { userLogin, userSignOut } from '../../redux/modules/user';
 
+@asyncConnect([{
+  promise: ({store: { dispatch, getState }}) => {
+    //   const promises = [];
+    //   if (!isStoriesLoaded(getState())) {
+    //     promises.push(dispatch(loadStories()));
+    //   }
+    //   return Promise.all(promises);
+    // isStoriesLoaded(getState()) {
+      return dispatch(userLogin(5, "ne4eporenko.v+1@gmail.com", "7BrEtFPoc2JGx04tgpKPLsqV9AfRIXfV", "Sonic", "Sega"));
+    // }
+  }
+}])
+
 class App extends Component {
 
-  componentWillMount() {
+  /*componentWillMount() {
     const user = Cookies.get('_u') ? JSON.parse(Cookies.get('_u')) : null; // let
     if (user) {
+      console.log(user.id, user.email, user.token, user.first_name, user.last_name);
       this.props.userLogin(user.id, user.email, user.token, user.first_name, user.last_name);
     }
-  }
+  }*/
 
   componentWillReceiveProps() {
     // const path = this.props.children.props.router.location.pathname;

@@ -5,14 +5,16 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? `/${path}` : path;
-  if (__SERVER__) {
+  // if (__SERVER__) {
     // Prepend host and port of the API server to the path.
     //return `http://${config.apiHost}:${config.apiPort + adjustedPath}`;
-    return 'http://' + config.apiHost + adjustedPath;
-  }
+    // return 'http://' + config.apiHost + adjustedPath;
+  // }
   // Prepend `/api` to relative URL, to proxy to API server.
   //return `/api${adjustedPath}`;
-    return '/api' + adjustedPath;
+  const apiURL = 'http://api.validbook.org/v1';
+  console.log('apiURL', apiURL + adjustedPath)
+    return apiURL + adjustedPath;
 }
 
 export default class ApiClient {
@@ -20,8 +22,9 @@ export default class ApiClient {
     methods.forEach(method => {
       this[method] = (path, { params, data, headers, files, fields } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
-
+        console.log('before params')
         if (params) {
+          console.log('params', params)
           request.query(params);
         }
 

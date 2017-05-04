@@ -16,11 +16,16 @@ import MainPage from '../components/MainPage';
   //     promises.push(dispatch(loadStories()));
   //   }
   //   return Promise.all(promises);
-    if (!isStoriesLoaded(getState())) {
-      return dispatch(loadStories());
-    }
+  //   if (!isStoriesLoaded(getState())) {
+  //     return dispatch(loadStories(getState().userInfo.id));
+      return dispatch(loadStories(5));
+    // }
   }
 }])
+
+@connect((state)=>({
+  stories: state.story.storiesArr
+}), {loadStories})
 
 class IndexContainer extends Component {
   render() {
@@ -38,6 +43,10 @@ class IndexContainer extends Component {
             />
           </div>
         }
+        <div>
+          asdd
+          <button onClick={()=>this.props.loadStories(this.props.userInfo.id)}>load</button>
+        </div>
         {!this.props.isAuthenticated &&
           <div>
             <NewUser
