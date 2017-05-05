@@ -1,31 +1,41 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { userRegisterRequest, userLoginRequest, userLogin } from '../redux/modules/user';
+import { userRegisterRequest, userLoginRequest, userLogin, login as loginUser, isLoaded as isAuthLoaded, load as loadAuth } from '../redux/modules/user';
 import { showActiveForm } from '../redux/modules/form';
 import { createChannelRequest } from '../redux/modules/channel';
-import { createStoryRequest, showUserStoriesRequest,
-  isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
+// import { createStoryRequest, showUserStoriesRequest,
+//   isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
 import NewUser from '../components/Registration/Main';
 import MainPage from '../components/MainPage';
 
 @asyncConnect([{
   promise: ({store: { dispatch, getState }}) => {
-  //   const promises = [];
-  //   if (!isStoriesLoaded(getState())) {
-  //     promises.push(dispatch(loadStories()));
-  //   }
-  //   return Promise.all(promises);
-  //   if (!isStoriesLoaded(getState())) {
-  //     return dispatch(loadStories(getState().userInfo.id));
-      return dispatch(loadStories(5));
+    // if (!isStoriesLoaded(getState())) {
+    //   return dispatch(loadStories(getState().userInfo.id));
+    //   return dispatch(loadStories(2));
     // }
   }
+
+  // const promises = []
+  // const getCurrentUser = !isAuthLoaded(getState())
+  //   ? dispatch(loadAuth()).then(() => getState().auth.user).catch(() => null)
+  //   : Promise.resolve(getState().auth.user)
+  //
+  // promises.push(getCurrentUser.then((currentUser) => {
+  // const listsPromises = []
+  //
+  // if (currentUser && !isAppsLoaded(getState())) {
+  //   listsPromises.push(dispatch(loadApps(currentUser)))
+  // }
+  //
+  // return Promise.all(listsPromises)
 }])
 
-@connect((state)=>({
-  stories: state.story.storiesArr
-}), {loadStories})
+@connect((state) => ({
+  stories: state.story.storiesArr,
+  userInfo: state.users.userInfo,
+}), { loginUser, loadAuth})
 
 class IndexContainer extends Component {
   render() {
@@ -45,7 +55,7 @@ class IndexContainer extends Component {
         }
         <div>
           asdd
-          <button onClick={()=>this.props.loadStories(this.props.userInfo.id)}>load</button>
+          <button onClick={() => this.props.loadStories(this.props.userInfo.id)}>load</button>
         </div>
         {!this.props.isAuthenticated &&
           <div>
@@ -54,6 +64,8 @@ class IndexContainer extends Component {
               showActiveForm={this.props.showActiveForm}
               userLoginRequest={this.props.userLoginRequest}
               userRegisterRequest={this.props.userRegisterRequest}
+              loginUser={this.props.loginUser}
+              loadAuth={this.props.loadAuth}
             />
           </div>
         }
@@ -104,6 +116,7 @@ export default connect(mapStateToProps, {
   userLoginRequest,
   userLogin,
   createChannelRequest,
-  createStoryRequest,
-  showUserStoriesRequest
+  // createStoryRequest,
+  // showUserStoriesRequest,
+  // loginUser
 })(IndexContainer);

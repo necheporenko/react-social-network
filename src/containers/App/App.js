@@ -5,20 +5,35 @@ import Helmet from 'react-helmet';
 import config from 'config';
 import { asyncConnect } from 'redux-connect';
 import Header from '../../components/Header';
-import { userLogin, userSignOut } from '../../redux/modules/user';
+import { userLogin, userSignOut, isLoaded as isAuthLoaded, load as loadAuth, } from '../../redux/modules/user';
 
-@asyncConnect([{
-  promise: ({store: { dispatch, getState }}) => {
-    //   const promises = [];
-    //   if (!isStoriesLoaded(getState())) {
-    //     promises.push(dispatch(loadStories()));
-    //   }
-    //   return Promise.all(promises);
-    // isStoriesLoaded(getState()) {
-      return dispatch(userLogin(5, "ne4eporenko.v+1@gmail.com", "7BrEtFPoc2JGx04tgpKPLsqV9AfRIXfV", "Sonic", "Sega"));
-    // }
-  }
-}])
+// @asyncConnect([{
+//   promise: ({store: { dispatch, getState }}) => {
+//     // const promises = [];
+//     // const getCurrentUser = !isAuthLoaded(getState())
+//     // ? dispatch(loadAuth()).then(() => getState().auth.userInfo).catch(() => null)
+//     // : Promise.resolve(getState().auth.userInfo);
+//
+//     // promises.push(getCurrentUser.then((currentUser) => {
+//     //   const listsPromises = [];
+//     //
+//     //   if (currentUser && !isAppsLoaded(getState())) {
+//     //     listsPromises.push(dispatch(loadApps(currentUser)));
+//     //   }
+//
+//     //   return Promise.all(listsPromises);
+//     // }));
+//
+//     // if (!isAuthLoaded(getState())) {
+//     //   promises.push(dispatch(loadAuth(getState().userInfo.id)));
+//     // }
+//     // return Promise.all(promises);
+//
+//     // isStoriesLoaded(getState()) {
+//     //   return dispatch(userLogin(5, "ne4eporenko.v+1@gmail.com", "7BrEtFPoc2JGx04tgpKPLsqV9AfRIXfV", "Sonic", "Sega"));
+//     // }
+//   }
+// }])
 
 class App extends Component {
 

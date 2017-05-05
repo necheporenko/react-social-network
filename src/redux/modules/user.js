@@ -10,6 +10,13 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_INFO_REQUEST = 'USER_INFO_REQUEST';
 
+export const LOAD = 'LOAD';
+export const USER_LOAD_SUCCESS = 'USER_LOAD_SUCCESS';
+export const USER_LOAD_FAIL = 'USER_LOAD_FAIL';
+export const LOGIN = 'LOGIN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+
 
 export function saveUserList(users) {
   return {
@@ -44,7 +51,7 @@ export function updateUser(id, user) {
 }
 
 export function userLogin(id, email, token, first_name, last_name) {
-  console.log('userLogin', id, email, token, first_name, last_name)
+  console.log('userLogin', id, email, token, first_name, last_name);
   return {
     type: LOGIN_REQUEST,
     id,
@@ -214,51 +221,120 @@ const initialState = {
     email: null,
     first_name: '',
     last_name: ''
-  }
+  },
+  loaded: false
 };
 
 export default function usersReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_USERS: {
-      const { users } = action;
-      const newUsers = [...state.usersArr, ...users];
+    // case FETCH_USERS: {
+    //   const { users } = action;
+    //   const newUsers = [...state.usersArr, ...users];
+    //
+    //   return {
+    //     ...state,
+    //     usersArr: newUsers
+    //   };
+    // }
+    //
+    // case LOGIN_REQUEST: {
+    //   const userInfo = {
+    //     id: action.id,
+    //     token: action.token,
+    //     email: action.email,
+    //     first_name: action.first_name,
+    //     last_name: action.last_name
+    //   };
+    //
+    //   return {
+    //     ...state,
+    //     userInfo,
+    //     isAuthenticated: !!action.token
+    //   };
+    // }
+    //
+    // case USER_LOGOUT: {
+    //   return {
+    //     ...state,
+    //     userInfo: {},
+    //     isAuthenticated: false
+    //   };
+    // }
 
-      return {
-        ...state,
-        usersArr: newUsers
-      };
-    }
 
-    case LOGIN_REQUEST: {
-      const userInfo = {
-        id: action.id,
-        token: action.token,
-        email: action.email,
-        first_name: action.first_name,
-        last_name: action.last_name
-      };
-
-      return {
-        ...state,
-        userInfo,
-        isAuthenticated: !!action.token
-      };
-    }
-
-    case USER_LOGOUT: {
-      return {
-        ...state,
-        userInfo: {},
-        isAuthenticated: false
-      };
-    }
    // case ADD_NEW_USER: {
    //   // Add user to usersArr
    // }
    // case DELETE_USER: {
    //   // Delete user from usersArr
    // }
+    case LOGIN:
+      console.log('LOGIN:', action);
+      return {
+        ...state,
+        loggingIn: true,
+        loaded: false
+      };
+    case LOGIN_SUCCESS:
+      console.log('LOGIN_SUCCESS:', action.result);
+      return {
+        ...state,
+        loggingIn: false,
+        userInfo: action.result
+      };
+    case LOGIN_FAIL:
+      console.log('LOGIN_FAIL:', action.result);
+      return {
+        ...state,
+        loggingIn: false,
+        userInfo: null,
+        loginError: action.error
+      };
+    case LOAD:
+      console.log('LOAD1', action);
+      return {
+        ...state,
+        loading: true
+      };
+    case USER_LOAD_SUCCESS:
+      console.log('LOAD_SUCCESS1', action);
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        // userInfo: action.result.data,
+        // isAuthenticated: !!action.result.token
+      };
+    case USER_LOAD_FAIL:
+      console.log('LOAD_FAIL1', action);
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.error,
+        userInfo: null
+      };
+
     default:
       return state;
   }
+}
+
+
+export function isLoaded(globalState) {
+  return globalState.user && globalState.user.loaded;
+}
+
+export function load(id) {
+  return {
+    types: [LOAD, USER_LOAD_SUCCESS, USER_LOAD_FAIL],
+    promise: (client) => client.get('/user', { params: { id }})
+  };
+}
+
+export function login(email, password) {
+  return {
+    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
+    promise: (client) => client.post('/auth/login', { data: { email, password }})
+  };
 }

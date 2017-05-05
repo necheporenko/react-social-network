@@ -111,16 +111,15 @@ export default function storyReducer(state = initialState, action) {
         loading: true
       };
     case LOAD_SUCCESS_SHOW_USER_STORIES:
-      console.log('LOAD_SUCCESS_SHOW_USER_STORIES', action)
+      console.log('LOAD_SUCCESS_SHOW_USER_STORIES', action);
       return {
         ...state,
         loading: false,
         loaded: true,
-        // users: action.result,
         storiesArr: action.result.data
       };
     case LOAD_FAIL_SHOW_USER_STORIES:
-      console.log('LOAD_FAIL_SHOW_USER_STORIES', action)
+      console.log('LOAD_FAIL_SHOW_USER_STORIES', action);
       return {
         ...state,
         loading: false,
@@ -134,7 +133,7 @@ export default function storyReducer(state = initialState, action) {
 }
 
 export function isLoaded(globalState) {
-  return globalState.storiesArr && globalState.storiesArr.loaded;
+  return globalState.story && globalState.story.loaded;
 }
 
 export function load(id) {
