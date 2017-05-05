@@ -36,7 +36,7 @@ export default class ApiClient {
     methods.forEach(method => {
       this[method] = (path, { params, data, headers, files, fields } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
-        console.log('before params')
+        console.log('=== REQUEST ===');
 
         if (params) {
           console.log('params', params)

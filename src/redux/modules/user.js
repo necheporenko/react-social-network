@@ -1,14 +1,14 @@
-import request from 'superagent';
-import Cookies from 'js-cookie';
-import { apiURL } from '../../constants/apiURL';
+// import request from 'superagent';
+// import Cookies from 'js-cookie';
+// import { apiURL } from '../../constants/apiURL';
 
-export const FETCH_USERS = 'GET_USERS';
-export const ADD_NEW_USER = 'ADD_NEW_USER';
-export const DELETE_USER = 'DELETE_USER';
-export const UPDATE_USER = 'UPDATE_USER';
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const USER_LOGOUT = 'USER_LOGOUT';
-export const USER_INFO_REQUEST = 'USER_INFO_REQUEST';
+// export const FETCH_USERS = 'GET_USERS';
+// export const ADD_NEW_USER = 'ADD_NEW_USER';
+// export const DELETE_USER = 'DELETE_USER';
+// export const UPDATE_USER = 'UPDATE_USER';
+// export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+// export const USER_LOGOUT = 'USER_LOGOUT';
+// export const USER_INFO_REQUEST = 'USER_INFO_REQUEST';
 
 export const LOAD = 'LOAD';
 export const USER_LOAD_SUCCESS = 'USER_LOAD_SUCCESS';
@@ -18,145 +18,145 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 
 
-export function saveUserList(users) {
-  return {
-    type: FETCH_USERS,
-    users
-  };
-}
-
-export function addUser(firstName, lastName, email, password) {
-  return {
-    type: ADD_NEW_USER,
-    firstName,
-    lastName,
-    email,
-    password
-  };
-}
-
-export function deleteUser(id) {
-  return {
-    type: DELETE_USER,
-    id
-  };
-}
-
-export function updateUser(id, user) {
-  return {
-    type: UPDATE_USER,
-    id,
-    user
-  };
-}
-
-export function userLogin(id, email, token, first_name, last_name) {
-  console.log('userLogin', id, email, token, first_name, last_name);
-  return {
-    type: LOGIN_REQUEST,
-    id,
-    email,
-    token,
-    first_name,
-    last_name
-  };
-}
-
-export function userSignOut() {
-  window.location.pathname = '/';
-  Cookies.remove('_u');
-  return {
-    type: USER_LOGOUT
-  };
-}
-
-export function userInfo(info) {
-  return {
-    type: USER_INFO_REQUEST,
-    info
-  };
-}
-
-export function userLoginRequest(email, password) {
-  return (dispatch) => {
-    const user = Cookies.get('_u') ? JSON.parse(Cookies.get('_u')) : null;
-    if (user) {
-      const { id, email, token, first_name, last_name } = user;
-      dispatch(userLogin(id, email, token, first_name, last_name));
-      return;
-    }
-
-    return request
-      .post(`${apiURL}/auth/login`)
-      .type('form')
-      .send({
-        email,
-        password
-      })
-      .end((err, res) => {
-        if (err || !res.ok) {
-          console.log('User authentification error:', err);         // eslint-disable-line no-console
-        } else {
-          const resp = res.body;
-
-          return request
-            .get(`${apiURL}/user?id=${resp.id}`)
-            .end((err, response) => {
-              if (err || !res.ok) {
-                console.log('Error in getting user info', err);    // eslint-disable-line no-console
-              } else {
-                const { first_name, last_name } = response.body.data;
-                Cookies.set('_u', {
-                  id: resp.id,
-                  email: resp.email,
-                  token: resp.token,
-                  first_name: first_name,
-                  last_name: last_name
-                },
-                { expires: 30 });
-                dispatch(userLogin(resp.id, resp.email, resp.token, first_name, last_name));
-              }
-            });
-        }
-      });
-  };
-}
-
-export function userInfoRequest(id) {
-  return (dispatch) => {
-    return request
-      .get(`${apiURL}/user?id=${id}`)
-      .end((err, res) => {
-        if (err || !res.ok) {
-          console.log('Error in getting user info', err);          // eslint-disable-line no-console
-        } else {
-          dispatch(userInfo(res.body));
-        }
-      });
-  };
-}
-
-export function userRegisterRequest(firstName, lastName, email, password) {
-  return (dispatch) => {
-    return request
-      .post(`${apiURL}/registration`)
-      .type('form')
-      .send({
-        first_name: firstName,
-        last_name: lastName,
-        email,
-        password
-      })
-      .end((err, res) => {
-        if (err || !res.ok) {
-          console.log('Error in registration:', err);               // eslint-disable-line no-console
-        } else {
-          console.log('yay got ' + JSON.stringify(res.body));       // eslint-disable-line no-console
-          dispatch(addUser(res.body));
-        }
-      });
-  };
-}
+// export function saveUserList(users) {
+//   return {
+//     type: FETCH_USERS,
+//     users
+//   };
+// }
+//
+// export function addUser(firstName, lastName, email, password) {
+//   return {
+//     type: ADD_NEW_USER,
+//     firstName,
+//     lastName,
+//     email,
+//     password
+//   };
+// }
+//
+// export function deleteUser(id) {
+//   return {
+//     type: DELETE_USER,
+//     id
+//   };
+// }
+//
+// export function updateUser(id, user) {
+//   return {
+//     type: UPDATE_USER,
+//     id,
+//     user
+//   };
+// }
+//
+// export function userLogin(id, email, token, first_name, last_name) {
+//   console.log('userLogin', id, email, token, first_name, last_name);
+//   return {
+//     type: LOGIN_REQUEST,
+//     id,
+//     email,
+//     token,
+//     first_name,
+//     last_name
+//   };
+// }
+//
+// export function userSignOut() {
+//   window.location.pathname = '/';
+//   Cookies.remove('_u');
+//   return {
+//     type: USER_LOGOUT
+//   };
+// }
+//
+// export function userInfo(info) {
+//   return {
+//     type: USER_INFO_REQUEST,
+//     info
+//   };
+// }
+//
+// export function userLoginRequest(email, password) {
+//   return (dispatch) => {
+//     const user = Cookies.get('_u') ? JSON.parse(Cookies.get('_u')) : null;
+//     if (user) {
+//       const { id, email, token, first_name, last_name } = user;
+//       dispatch(userLogin(id, email, token, first_name, last_name));
+//       return;
+//     }
+//
+//     return request
+//       .post(`${apiURL}/auth/login`)
+//       .type('form')
+//       .send({
+//         email,
+//         password
+//       })
+//       .end((err, res) => {
+//         if (err || !res.ok) {
+//           console.log('User authentification error:', err);         // eslint-disable-line no-console
+//         } else {
+//           const resp = res.body;
+//
+//           return request
+//             .get(`${apiURL}/user?id=${resp.id}`)
+//             .end((err, response) => {
+//               if (err || !res.ok) {
+//                 console.log('Error in getting user info', err);    // eslint-disable-line no-console
+//               } else {
+//                 const { first_name, last_name } = response.body.data;
+//                 Cookies.set('_u', {
+//                   id: resp.id,
+//                   email: resp.email,
+//                   token: resp.token,
+//                   first_name: first_name,
+//                   last_name: last_name
+//                 },
+//                 { expires: 30 });
+//                 dispatch(userLogin(resp.id, resp.email, resp.token, first_name, last_name));
+//               }
+//             });
+//         }
+//       });
+//   };
+// }
+//
+// export function userInfoRequest(id) {
+//   return (dispatch) => {
+//     return request
+//       .get(`${apiURL}/user?id=${id}`)
+//       .end((err, res) => {
+//         if (err || !res.ok) {
+//           console.log('Error in getting user info', err);          // eslint-disable-line no-console
+//         } else {
+//           dispatch(userInfo(res.body));
+//         }
+//       });
+//   };
+// }
+//
+// export function userRegisterRequest(firstName, lastName, email, password) {
+//   return (dispatch) => {
+//     return request
+//       .post(`${apiURL}/registration`)
+//       .type('form')
+//       .send({
+//         first_name: firstName,
+//         last_name: lastName,
+//         email,
+//         password
+//       })
+//       .end((err, res) => {
+//         if (err || !res.ok) {
+//           console.log('Error in registration:', err);               // eslint-disable-line no-console
+//         } else {
+//           console.log('yay got ' + JSON.stringify(res.body));       // eslint-disable-line no-console
+//           dispatch(addUser(res.body));
+//         }
+//       });
+//   };
+// }
 
 
 /*export function fetchUsers() {
@@ -302,8 +302,8 @@ export default function usersReducer(state = initialState, action) {
         ...state,
         loading: false,
         loaded: true,
-        // userInfo: action.result.data,
-        // isAuthenticated: !!action.result.token
+        userInfo: action.result.data,
+        isAuthenticated: !!action.result.token
       };
     case USER_LOAD_FAIL:
       console.log('LOAD_FAIL1', action);
