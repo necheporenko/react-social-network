@@ -12,7 +12,7 @@ class MainPage extends Component {
         <div className="wrapper">
           <div className="left-column">
             <LeftMenu
-              userInfo={this.props.userInfo}
+              user={this.props.user}
             />
             <Channels
               channelsArr={this.props.channelsArr}
@@ -25,7 +25,7 @@ class MainPage extends Component {
               storiesArr={this.props.storiesArr}
               createStoryRequest={this.props.createStoryRequest}
               showUserStoriesRequest={this.props.showUserStoriesRequest}
-              userInfo={this.props.userInfo}
+              user={this.props.user}
             />
             <FollowBlock />
           </div>
@@ -36,7 +36,7 @@ class MainPage extends Component {
 }
 
 MainPage.propTypes = {
-  userInfo: PropTypes.object,
+  user: PropTypes.object,
   createChannelRequest: PropTypes.func,
   channelsArr: PropTypes.array,
   createStoryRequest: PropTypes.func,

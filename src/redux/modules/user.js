@@ -1,3 +1,6 @@
+//todo: Delete this later
+
+
 // import request from 'superagent';
 // import Cookies from 'js-cookie';
 // import { apiURL } from '../../constants/apiURL';
@@ -10,12 +13,12 @@
 // export const USER_LOGOUT = 'USER_LOGOUT';
 // export const USER_INFO_REQUEST = 'USER_INFO_REQUEST';
 
-export const LOAD = 'LOAD';
-export const USER_LOAD_SUCCESS = 'USER_LOAD_SUCCESS';
-export const USER_LOAD_FAIL = 'USER_LOAD_FAIL';
-export const LOGIN = 'LOGIN';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAIL = 'LOGIN_FAIL';
+// export const LOAD = 'LOAD';
+// export const USER_LOAD_SUCCESS = 'USER_LOAD_SUCCESS';
+// export const USER_LOAD_FAIL = 'USER_LOAD_FAIL';
+// export const LOGIN = 'LOGIN';
+// export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+// export const LOGIN_FAIL = 'LOGIN_FAIL';
 
 
 // export function saveUserList(users) {
@@ -70,7 +73,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 //   };
 // }
 //
-// export function userInfo(info) {
+// export function user(info) {
 //   return {
 //     type: USER_INFO_REQUEST,
 //     info
@@ -122,7 +125,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 //   };
 // }
 //
-// export function userInfoRequest(id) {
+// export function userRequest(id) {
 //   return (dispatch) => {
 //     return request
 //       .get(`${apiURL}/user?id=${id}`)
@@ -130,7 +133,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 //         if (err || !res.ok) {
 //           console.log('Error in getting user info', err);          // eslint-disable-line no-console
 //         } else {
-//           dispatch(userInfo(res.body));
+//           dispatch(user(res.body));
 //         }
 //       });
 //   };
@@ -211,22 +214,22 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
    | REDUCER  |
    ============ */
 
-const initialState = {
-  usersArr: [],
-  newUser: {},
-  isAuthenticated: false,
-  userInfo: {
-    id: null,
-    token: null,
-    email: null,
-    first_name: '',
-    last_name: ''
-  },
-  loaded: false
-};
+// const initialState = {
+//   usersArr: [],
+//   newUser: {},
+//   isAuthenticated: false,
+//   user: {
+//     id: null,
+//     token: null,
+//     email: null,
+//     first_name: '',
+//     last_name: ''
+//   },
+//   loaded: false
+// };
 
-export default function usersReducer(state = initialState, action) {
-  switch (action.type) {
+// export default function usersReducer(state = initialState, action) {
+//   switch (action.type) {
     // case FETCH_USERS: {
     //   const { users } = action;
     //   const newUsers = [...state.usersArr, ...users];
@@ -238,7 +241,7 @@ export default function usersReducer(state = initialState, action) {
     // }
     //
     // case LOGIN_REQUEST: {
-    //   const userInfo = {
+    //   const user = {
     //     id: action.id,
     //     token: action.token,
     //     email: action.email,
@@ -248,7 +251,7 @@ export default function usersReducer(state = initialState, action) {
     //
     //   return {
     //     ...state,
-    //     userInfo,
+    //     user,
     //     isAuthenticated: !!action.token
     //   };
     // }
@@ -256,7 +259,7 @@ export default function usersReducer(state = initialState, action) {
     // case USER_LOGOUT: {
     //   return {
     //     ...state,
-    //     userInfo: {},
+    //     user: {},
     //     isAuthenticated: false
     //   };
     // }
@@ -268,73 +271,73 @@ export default function usersReducer(state = initialState, action) {
    // case DELETE_USER: {
    //   // Delete user from usersArr
    // }
-    case LOGIN:
-      console.log('LOGIN:', action);
-      return {
-        ...state,
-        loggingIn: true,
-        loaded: false
-      };
-    case LOGIN_SUCCESS:
-      console.log('LOGIN_SUCCESS:', action.result);
-      return {
-        ...state,
-        loggingIn: false,
-        userInfo: action.result
-      };
-    case LOGIN_FAIL:
-      console.log('LOGIN_FAIL:', action.result);
-      return {
-        ...state,
-        loggingIn: false,
-        userInfo: null,
-        loginError: action.error
-      };
-    case LOAD:
-      console.log('LOAD1', action);
-      return {
-        ...state,
-        loading: true
-      };
-    case USER_LOAD_SUCCESS:
-      console.log('LOAD_SUCCESS1', action);
-      return {
-        ...state,
-        loading: false,
-        loaded: true,
-        userInfo: action.result.data,
-        isAuthenticated: !!action.result.token
-      };
-    case USER_LOAD_FAIL:
-      console.log('LOAD_FAIL1', action);
-      return {
-        ...state,
-        loading: false,
-        loaded: false,
-        error: action.error,
-        userInfo: null
-      };
-
-    default:
-      return state;
-  }
-}
-
-
-export function isLoaded(globalState) {
-  return globalState.user && globalState.user.loaded;
-}
-
-export function load(id) {
-  return {
-    types: [LOAD, USER_LOAD_SUCCESS, USER_LOAD_FAIL],
-    promise: (client) => client.get('/user', { params: { id }})
-  };
-}
-
-export function login(email, password) {
-  return {
-    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.post('/auth/login', { data: { email, password }})
-  };
-}
+//     case LOGIN:
+//       console.log('LOGIN:', action);
+//       return {
+//         ...state,
+//         loggingIn: true,
+//         loaded: false
+//       };
+//     case LOGIN_SUCCESS:
+//       console.log('LOGIN_SUCCESS:', action.result);
+//       return {
+//         ...state,
+//         loggingIn: false,
+//         user: action.result
+//       };
+//     case LOGIN_FAIL:
+//       console.log('LOGIN_FAIL:', action.result);
+//       return {
+//         ...state,
+//         loggingIn: false,
+//         user: null,
+//         loginError: action.error
+//       };
+//     case LOAD:
+//       console.log('LOAD1', action);
+//       return {
+//         ...state,
+//         loading: true
+//       };
+//     case USER_LOAD_SUCCESS:
+//       console.log('LOAD_SUCCESS1', action);
+//       return {
+//         ...state,
+//         loading: false,
+//         loaded: true,
+//         user: action.result,
+//         isAuthenticated: !!action.result.token
+//       };
+//     case USER_LOAD_FAIL:
+//       console.log('LOAD_FAIL1', action);
+//       return {
+//         ...state,
+//         loading: false,
+//         loaded: false,
+//         error: action.error,
+//         user: null
+//       };
+//
+//     default:
+//       return state;
+//   }
+// }
+//
+//
+// export function isLoaded(globalState) {
+//   return globalState.user && globalState.user.loaded;
+// }
+//
+// export function load(id) {
+//   return {
+//     types: [LOAD, USER_LOAD_SUCCESS, USER_LOAD_FAIL],
+//     promise: (client) => client.get('/user', { params: { id }})
+//   };
+// }
+//
+// export function login(email, password) {
+//   return {
+//     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
+//     promise: (client) => client.post('/auth/login', { data: { email, password }})
+//   };
+// }

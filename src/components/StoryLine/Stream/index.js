@@ -27,7 +27,7 @@ class Stream extends Component {
       <div className="stream">
         <Sbox
           createStoryRequest={this.props.createStoryRequest}
-          userInfo={this.props.userInfo}
+          user={this.props.user}
         />
         {/*<button onClick={this.showStories}>click me</button>*/}
         {storiesArr && storiesArr.map((story) => (
@@ -47,7 +47,7 @@ Stream.propTypes = {
   // showUserStoriesRequest: PropTypes.func,
   createStoryRequest: PropTypes.func,
   storiesArr: PropTypes.array,
-  userInfo: PropTypes.object
+  user: PropTypes.object
 };
 
 // function mapDispatchToProps(dispatch) {

@@ -5,15 +5,28 @@ import config from '../config';
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 function saveAuthCookie(value) {
-  console.log('saveAuthCookie', value);
-  Cookies.set('_u', {
-    token: value,
-  }, { expires: 30 });
-  console.log(Cookies.get());
+  Cookies.set('_u', value
+  , { expires: 30 });
+  // console.info('saveCookie:', value);
+  // console.log(Cookies.get());
+}
+
+function readAuthCookie(req) {
+  if (req && req.session && req.session.token) {
+    return req.session.token;
+  }
+
+  const cookie = __CLIENT__ ? document.cookie : req.headers['cookie'];
+
+  if (cookie) {
+    const matches = cookie.match(new RegExp('(?:^|; )_u=([^;]*)'));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+
+  return '';
 }
 
 function deleteAuthCookie() {
-  console.log('deleteAuthCookie');
   Cookies.remove('_u');
 }
 
@@ -34,13 +47,23 @@ function formatUrl(path) {
 export default class ApiClient {
   constructor(req) {
     methods.forEach(method => {
-      this[method] = (path, { params, data, headers, files, fields } = {}) => new Promise((resolve, reject) => {
+      this[method] = (path, { params = {}, data, headers, files, fields } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
         console.log('=== REQUEST ===');
 
-        if (params) {
-          console.log('params', params)
+        console.log('Paramsssssss:', params);
+        const apiKey = readAuthCookie(req);
+        if (apiKey) {
+          params['access_token'] = apiKey;
+        }
+
+        if (params) {                     // for get request
+          console.log('==Params:', params);
           request.query(params);
+        }
+
+        if (data) {                       // for post request
+          request.send(data);
         }
 
         if (__SERVER__ && req.get('cookie')) {
@@ -63,24 +86,24 @@ export default class ApiClient {
           fields.forEach(item => request.field(item.key, item.value));
         }
 
-        if (data) {
-          request.send(data);
-        }
-
         request.end((err, { body } = {}) => {
           if (err) {
             return reject(body || err);
           }
 
-          console.log('Method:', method);
-          console.log('Path:', path);
-          console.log('Body:', body);
+          console.info('==Method:', method);
+          console.info('==Path:', path);
+          console.info('==Body:', body);
 
-          if (method === 'post' && path === '/auth/login' && body && body.token) {
-            saveAuthCookie(body.token);
-
-            return resolve(body);
+          if (method === 'post' && path === '/auth/login' && body && body.data.access_token) {
+            saveAuthCookie(body.data.access_token);
           }
+
+          if (path === '/auth/logout') {
+            deleteAuthCookie();
+          }
+
+          return resolve(body);
         });
       });
     });

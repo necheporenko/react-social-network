@@ -9,7 +9,7 @@ class BooksContainer extends Component {
     return (
       <div>
         <SubHeader
-          user={this.props.userInfo}
+          user={this.props.user}
         />
         <Navigation />
         <Books />
@@ -19,12 +19,12 @@ class BooksContainer extends Component {
 }
 
 BooksContainer.propTypes = {
-  userInfo: PropTypes.object
+  user: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
-    userInfo: state.users.userInfo
+    user: state.users.user
   };
 }
 

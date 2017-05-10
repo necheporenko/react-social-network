@@ -5,14 +5,15 @@ import Helmet from 'react-helmet';
 import config from 'config';
 import { asyncConnect } from 'redux-connect';
 import Header from '../../components/Header';
-import { userLogin, userSignOut, isLoaded as isAuthLoaded, load as loadAuth, } from '../../redux/modules/user';
+// import { userLogin, userSignOut, isLoaded as isAuthLoaded, load as loadAuth, } from '../../redux/modules/user';
+import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from '../../redux/modules/sign';
 
 // @asyncConnect([{
 //   promise: ({store: { dispatch, getState }}) => {
 //     // const promises = [];
 //     // const getCurrentUser = !isAuthLoaded(getState())
-//     // ? dispatch(loadAuth()).then(() => getState().auth.userInfo).catch(() => null)
-//     // : Promise.resolve(getState().auth.userInfo);
+//     // ? dispatch(loadAuth()).then(() => getState().auth.user).catch(() => null)
+//     // : Promise.resolve(getState().auth.user);
 //
 //     // promises.push(getCurrentUser.then((currentUser) => {
 //     //   const listsPromises = [];
@@ -25,7 +26,7 @@ import { userLogin, userSignOut, isLoaded as isAuthLoaded, load as loadAuth, } f
 //     // }));
 //
 //     // if (!isAuthLoaded(getState())) {
-//     //   promises.push(dispatch(loadAuth(getState().userInfo.id)));
+//     //   promises.push(dispatch(loadAuth(getState().user.id)));
 //     // }
 //     // return Promise.all(promises);
 //
@@ -34,6 +35,24 @@ import { userLogin, userSignOut, isLoaded as isAuthLoaded, load as loadAuth, } f
 //     // }
 //   }
 // }])
+
+@asyncConnect([{
+  promise: ({ store: { dispatch, getState } }) => {
+    const promises = [];
+
+    if (!isAuthLoaded(getState())) {
+      promises.push(dispatch(loadAuth()));
+    }
+    return Promise.all(promises);
+  }
+}])
+
+@connect((state) => ({
+  isAuthenticated: state.sign.isAuthenticated,
+  user: state.sign.user
+}), {
+  logoutUser
+})
 
 class App extends Component {
 
@@ -47,7 +66,7 @@ class App extends Component {
 
   componentWillReceiveProps() {
     // const path = this.props.children.props.router.location.pathname;
-    // const { first_name, last_name } = this.props.userInfo;
+    // const { first_name, last_name } = this.props.user;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
   }
 
@@ -60,8 +79,9 @@ class App extends Component {
         {this.props.isAuthenticated &&
           <div style={{ marginTop: '52px' }}>
             <Header
-              user={this.props.userInfo}
-              onSignOut={this.props.userSignOut}
+              user={this.props.user}
+              logoutUser={this.props.logoutUser}
+              // onSignOut={this.props.userSignOut}
             />
           </div>
         }
@@ -74,19 +94,22 @@ class App extends Component {
 App.propTypes = {
   children: PropTypes.element,
   isAuthenticated: PropTypes.bool,
-  userInfo: PropTypes.object,
-  userLogin: PropTypes.func,
-  userSignOut: PropTypes.func
+  user: PropTypes.object,
+  logoutUser: PropTypes.func
+  // userLogin: PropTypes.func,
+  // userSignOut: PropTypes.func
 };
 
-function mapStateToProps(state) {
-  return {
-    isAuthenticated: state.users.isAuthenticated,
-    userInfo: state.users.userInfo
-  };
-}
+// function mapStateToProps(state) {
+//   return {
+//     isAuthenticated: state.sign.isAuthenticated,
+//     user: state.sign.user
+//   };
+// }
+//
+// export default connect(mapStateToProps, {
+//   // userLogin,
+//   // userSignOut
+// })(App);
 
-export default connect(mapStateToProps, {
-  userLogin,
-  userSignOut
-})(App);
+export default App;

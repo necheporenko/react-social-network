@@ -21,7 +21,7 @@ class BookPage extends Component {
     return (
       <div>
         <SubHeader
-          user={this.props.userInfo}
+          user={this.props.user}
         />
         <div className="navigation">
           <div className="navigation-wrap book-nav">
@@ -131,12 +131,12 @@ class BookPage extends Component {
 }
 
 BookPage.propTypes = {
-  userInfo: PropTypes.object
+  user: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
-    userInfo: state.users.userInfo
+    user: state.users.user
   };
 }
 

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import NavigationInfoUser from './NavigationUserInfo';
+import NavigationUserInfo from './NavigationUserInfo';
 import './index.scss';
 
 let savePositionTop;
@@ -38,7 +38,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const { first_name, last_name } = this.props.userInfo;
+    const { first_name, last_name } = this.props.user;
     const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { scrollTop } = this.state;
 
@@ -105,7 +105,7 @@ class Navigation extends Component {
             displayUser={navigation.show}
           />
         } */}
-        <NavigationInfoUser
+        <NavigationUserInfo
           userName={`${first_name} ${last_name}`}
           link={link}
           displayUser={navigation.show}
@@ -118,13 +118,13 @@ class Navigation extends Component {
 
 Navigation.propTypes = {
   // children: PropTypes.element,
-  userInfo: PropTypes.object,
+  user: PropTypes.object,
   // routing: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
-    userInfo: state.users.userInfo,
+    user: state.sign.user,
     // routing: state.routing.locationBeforeTransitions
   };
 }

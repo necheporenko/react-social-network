@@ -7,7 +7,7 @@ import './index.scss';
 
 class BooksTree extends Component {
   render() {
-    const { first_name, last_name } = this.props.userInfo;
+    const { first_name, last_name } = this.props.user;
     const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
 
     return (
@@ -26,12 +26,12 @@ class BooksTree extends Component {
 BooksTree.propTypes = {
   children: PropTypes.element,
   infoBlocksTop: PropTypes.string,
-  userInfo: PropTypes.object,
+  user: PropTypes.object,
 };
 
 function mapStateToProps(state) {
   return {
-    userInfo: state.users.userInfo
+    user: state.sign.user
   };
 }
 

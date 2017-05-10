@@ -92,8 +92,9 @@ class Header extends Component {
         <Logo />
         <SearchField />
         <UserButtons
-          onSignIn={this.props.onSignIn}
-          onSignOut={this.props.onSignOut}
+          // onSignIn={this.props.onSignIn}
+          // onSignOut={this.props.onSignOut}
+          logoutUser={this.props.logoutUser}
           user={this.props.user}
         />
 
@@ -165,9 +166,10 @@ class Header extends Component {
 
 Header.propTypes = {
   children: PropTypes.element,
-  onSignIn: PropTypes.func,
-  onSignOut: PropTypes.func,
-  user: PropTypes.object
+  // onSignIn: PropTypes.func,
+  // onSignOut: PropTypes.func,
+  user: PropTypes.object,
+  logoutUser: PropTypes.func,
 };
 
 export default Header;

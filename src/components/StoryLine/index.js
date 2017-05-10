@@ -50,13 +50,13 @@ class StoryLine extends Component {
         <div className="wrap-storyLine">
           <BooksTree
             infoBlocksTop={chooseScroll.booksTree}
-            userInfo={this.props.userInfo}
+            user={this.props.user}
           />
           <Stream
             storiesArr={this.props.storiesArr}
             createStoryRequest={this.props.createStoryRequest}
             showUserStoriesRequest={this.props.showUserStoriesRequest}
-            userInfo={this.props.userInfo}
+            user={this.props.user}
           />
           <InfoBloks />
         </div>
@@ -69,7 +69,7 @@ StoryLine.propTypes = {
   showUserStoriesRequest: PropTypes.func,
   createStoryRequest: PropTypes.func,
   storiesArr: PropTypes.array,
-  userInfo: PropTypes.object
+  user: PropTypes.object
 };
 
 export default StoryLine;

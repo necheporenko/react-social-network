@@ -9,7 +9,7 @@ class TokensContainer extends Component {
     return (
       <div>
         <SubHeader
-          user={this.props.userInfo}
+          user={this.props.user}
         />
         <Navigation />
         {this.props.children}
@@ -20,12 +20,12 @@ class TokensContainer extends Component {
 
 TokensContainer.propTypes = {
   children: PropTypes.element,
-  userInfo: PropTypes.object
+  user: PropTypes.object
 };
 
 function mapStateToProps(state) {
   return {
-    userInfo: state.users.userInfo
+    user: state.users.user
   };
 }
 

@@ -4,7 +4,7 @@ import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 
 const UserButtons = (props) => {
   const { first_name, last_name } = props.user;
-  const { onSignOut } = props;
+  const { logoutUser } = props;
   return (
     <nav className="header-navigation">
       <div className="extension">
@@ -76,7 +76,7 @@ const UserButtons = (props) => {
           <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title={''} id={2} noCaret pullRight >
             <Link to="/settings">Settings</Link>
             <Link to="/settings/privacy">Privacy Control Center</Link>
-            <a onClick={onSignOut}>Sign out</a>
+            <a onClick={logoutUser}>Sign out</a>
           </DropdownButton>
         </ButtonToolbar>
       </div>
@@ -87,7 +87,7 @@ const UserButtons = (props) => {
 
 UserButtons.propTypes = {
   user: PropTypes.object,
-  onSignOut: PropTypes.func
+  logoutUser: PropTypes.func
 };
 
 // UserButtons.defaultProps = {

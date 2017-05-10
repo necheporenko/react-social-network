@@ -6,7 +6,7 @@ import './index.scss';
 
 class PeopleMenu extends Component {
   render() {
-    const { first_name, last_name } = this.props.userInfo;
+    const { first_name, last_name } = this.props.user;
     const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
 
     return (
@@ -28,12 +28,12 @@ class PeopleMenu extends Component {
 }
 
 PeopleMenu.propTypes = {
-  userInfo: PropTypes.object,
+  user: PropTypes.object,
 };
 
 function mapStateToProps(state) {
   return {
-    userInfo: state.users.userInfo,
+    user: state.users.user,
   };
 }
 
