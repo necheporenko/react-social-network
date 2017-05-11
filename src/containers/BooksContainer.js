@@ -4,7 +4,11 @@ import Navigation from '../components/Navigation';
 import Books from '../components/Books';
 import SubHeader from '../components/StoryLine/SubHeader';
 
-class BooksContainer extends Component {
+@connect((state) => ({
+  user: state.sign.user
+}), {})
+
+export default class BooksContainer extends Component {
   render() {
     return (
       <div>
@@ -21,11 +25,3 @@ class BooksContainer extends Component {
 BooksContainer.propTypes = {
   user: PropTypes.object
 };
-
-function mapStateToProps(state) {
-  return {
-    user: state.users.user
-  };
-}
-
-export default connect(mapStateToProps, null)(BooksContainer);

@@ -3,8 +3,11 @@ import { connect } from 'react-redux';
 import Navigation from '../components/Navigation';
 import SubHeader from '../components/StoryLine/SubHeader';
 
-class PeopleContainer extends Component {
+@connect((state) => ({
+  user: state.sign.user
+}), {})
 
+export default class PeopleContainer extends Component {
   render() {
     return (
       <div>
@@ -22,11 +25,3 @@ PeopleContainer.propTypes = {
   children: PropTypes.element,
   user: PropTypes.object
 };
-
-function mapStateToProps(state) {
-  return {
-    user: state.users.user
-  };
-}
-
-export default connect(mapStateToProps, null)(PeopleContainer);

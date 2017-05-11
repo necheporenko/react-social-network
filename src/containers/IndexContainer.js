@@ -5,8 +5,8 @@ import { asyncConnect } from 'redux-connect';
 import { login as loginUser, isLoaded as isAuthLoaded, load as loadAuth } from '../redux/modules/sign';
 import { showActiveForm } from '../redux/modules/form';
 import { createChannelRequest } from '../redux/modules/channel';
-// import { createStoryRequest, showUserStoriesRequest,
-//   isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
+import { createStoryRequest, showUserStoriesRequest,
+  isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
 import NewUser from '../components/Registration/Main';
 import MainPage from '../components/MainPage';
 
@@ -45,22 +45,22 @@ import MainPage from '../components/MainPage';
 // }])
 
 @connect((state) => ({
-  stories: state.story.storiesArr,
   user: state.sign.user,
   isAuthenticated: state.sign.isAuthenticated,
   authEmail: state.sign.authEmail,
   authPass: state.sign.authPass,
-
   activeForm: state.forms.activeForm,
   channelsArr: state.channel.channelsArr,
+  stories: state.story.storiesArr,
 }), {
   loginUser,
   loadAuth,
   showActiveForm,
-  createChannelRequest
+  createChannelRequest,
+  loadStories
 })
 
-class IndexContainer extends Component {
+export default class IndexContainer extends Component {
   render() {
     return (
       <div>
@@ -78,7 +78,7 @@ class IndexContainer extends Component {
         }
         <div>
           asdd
-          {/*<button onClick={() => this.props.loadStories(this.props.user.id)}>load</button>*/}
+          <button onClick={() => this.props.loadStories()}>load</button>
         </div>
         {!this.props.isAuthenticated &&
           <div>
@@ -119,8 +119,6 @@ IndexContainer.propTypes = {
   loginUser: PropTypes.func,
   loadAuth: PropTypes.func,
 };
-
-export default IndexContainer;
 
 
 // function mapStateToProps(state) {

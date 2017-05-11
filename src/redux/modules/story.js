@@ -136,15 +136,10 @@ export function isLoaded(globalState) {
   return globalState.story && globalState.story.loaded;
 }
 
-export function load(id) {
+export function load() {
   return {
     types: [LOAD_SHOW_USER_STORIES, LOAD_SUCCESS_SHOW_USER_STORIES, LOAD_FAIL_SHOW_USER_STORIES],
-    promise: (client) => client.get(
-      '/user/stories',
-      {
-        params: {
-          user_id: id
-        }
-      }) //api?? user/stories?access-token=
+    promise: (client) => client.get('/user/stories')
+    // promise: (client) => client.get('/user/stories', { params: { user_id: id }})
   };
 }

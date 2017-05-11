@@ -40,7 +40,7 @@ TokensMenu.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    user: state.users.user,
+    user: state.sign.user,
   };
 }
 
