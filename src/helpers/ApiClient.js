@@ -4,30 +4,42 @@ import config from '../config';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
-function saveAuthCookie(value) {
-  Cookies.set('_u', value
-  , { expires: 30 });
+function saveAuthCookie(req, value) {
+  if (__CLIENT__) {
+    Cookies.set('_u', value
+      , { expires: 30 });
+  } else {
+    // console.log('REQ:', req);                                      // look req in terminal
+    return req.session.token = value;
+  }
   // console.info('saveCookie:', value);
   // console.log(Cookies.get());
 }
 
 function readAuthCookie(req) {
   if (req && req.session && req.session.token) {
+    console.log('req.session.token:', req.session.token);
     return req.session.token;
   }
 
   const cookie = __CLIENT__ ? document.cookie : req.headers['cookie'];
 
+  // console.log('req.headers', req.headers['cookie']);
+
   if (cookie) {
     const matches = cookie.match(new RegExp('(?:^|; )_u=([^;]*)'));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
+    return matches ? decodeURIComponent(matches[1]) : undefined;        // get cookie token
   }
 
   return '';
 }
 
-function deleteAuthCookie() {
-  Cookies.remove('_u');
+function deleteAuthCookie(req) {
+  if (__CLIENT__) {
+    Cookies.remove('_u');
+  } else {
+    return req.session.token = '';
+  }
 }
 
 function formatUrl(path) {
@@ -57,14 +69,16 @@ export default class ApiClient {
           params['access_token'] = apiKey;
         }
 
-        if (params) {                     // for get request
+        if (params) {                         // for get request
           console.log('==Params:', params);
           request.query(params);
         }
 
-        if (data) {                       // for post request
+        if (data) {                           // for post request
           request.send(data);
         }
+
+        // console.log('REQ:', req);          // look req in terminal
 
         if (__SERVER__ && req.get('cookie')) {
           request.set('cookie', req.get('cookie'));
@@ -96,11 +110,11 @@ export default class ApiClient {
           console.info('==Body:', body);
 
           if (method === 'post' && path === '/auth/login' && body && body.data.access_token) {
-            saveAuthCookie(body.data.access_token);
+            saveAuthCookie(req, body.data.access_token);
           }
 
           if (path === '/auth/logout') {
-            deleteAuthCookie();
+            deleteAuthCookie(req);
           }
 
           return resolve(body);

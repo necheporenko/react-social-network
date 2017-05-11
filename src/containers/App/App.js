@@ -64,11 +64,11 @@ class App extends Component {
     }
   }*/
 
-  componentWillReceiveProps() {
+  // componentWillReceiveProps() {
     // const path = this.props.children.props.router.location.pathname;
     // const { first_name, last_name } = this.props.user;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
-  }
+  // }
 
   render() {
     const { children } = this.props;

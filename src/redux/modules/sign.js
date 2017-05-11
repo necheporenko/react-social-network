@@ -24,13 +24,13 @@ export default function usersReducer(state = initialState, action) {
         loaded: false
       };
     case LOGIN_SUCCESS:
-      console.log('LOGIN_SUCCESS:', action.result);
+      // console.log('LOGIN_SUCCESS:', action.result);
       return {
         ...state,
         loggingIn: false,
         loaded: true,
         user: action.result.data,
-        isAuthenticated: !!action.result.data.access_token
+        // isAuthenticated: !!action.result.data.access_token
       };
     case LOGIN_FAIL:
       console.log('LOGIN_FAIL:', action.result);
@@ -48,12 +48,14 @@ export default function usersReducer(state = initialState, action) {
         loading: true
       };
     case LOAD_SUCCESS:
-      console.log('LOAD_SUCCESS:', action);
+      // console.log('LOAD_SUCCESS:', action);
       return {
         ...state,
         loading: false,
         loaded: true,
         user: action.result.data,
+        // isAuthenticated: !!action.result.data.access_token,
+        isAuthenticated: true
       };
     case LOAD_FAIL:
       console.log('LOAD_FAIL:', action);
@@ -62,7 +64,8 @@ export default function usersReducer(state = initialState, action) {
         loading: false,
         loaded: false,
         error: action.error,
-        user: null
+        user: null,
+        isAuthenticated: false
       };
 
     case LOGOUT:
@@ -93,7 +96,7 @@ export default function usersReducer(state = initialState, action) {
 
 
 export function isLoaded(globalState) {
-  return globalState.sign && globalState.sign.loaded;
+  return globalState.sign && globalState.sign.isAuthenticated;
 }
 
 // export function load(access_token) {

@@ -33,16 +33,16 @@ import MainPage from '../components/MainPage';
 //   // return Promise.all(listsPromises)
 // }])
 
-@asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
-    const promises = [];
-
-    if (!isAuthLoaded(getState())) {
-      promises.push(dispatch(loadAuth()));
-    }
-    return Promise.all(promises);
-  }
-}])
+// @asyncConnect([{
+//   promise: ({ store: { dispatch, getState } }) => {
+//     const promises = [];
+//
+//     if (!isAuthLoaded(getState())) {
+//       promises.push(dispatch(loadAuth()));
+//     }
+//     return Promise.all(promises);
+//   }
+// }])
 
 @connect((state) => ({
   stories: state.story.storiesArr,
