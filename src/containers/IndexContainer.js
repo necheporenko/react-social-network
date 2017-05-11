@@ -33,16 +33,16 @@ import MainPage from '../components/MainPage';
 //   // return Promise.all(listsPromises)
 // }])
 
-// @asyncConnect([{
-//   promise: ({ store: { dispatch, getState } }) => {
-//     const promises = [];
-//
-//     if (!isAuthLoaded(getState())) {
-//       promises.push(dispatch(loadAuth()));
-//     }
-//     return Promise.all(promises);
-//   }
-// }])
+@asyncConnect([{
+  promise: ({ store: { dispatch, getState } }) => {
+    const promises = [];
+
+    if (!isStoriesLoaded(getState())) {
+      promises.push(dispatch(loadStories()));
+    }
+    return Promise.all(promises);
+  }
+}])
 
 @connect((state) => ({
   user: state.sign.user,
@@ -51,13 +51,16 @@ import MainPage from '../components/MainPage';
   authPass: state.sign.authPass,
   activeForm: state.forms.activeForm,
   channelsArr: state.channel.channelsArr,
-  stories: state.story.storiesArr,
+  storiesArr: state.story.storiesArr
 }), {
   loginUser,
   loadAuth,
   showActiveForm,
   createChannelRequest,
-  loadStories
+  loadStories,
+  isStoriesLoaded,
+  createStoryRequest,
+  // showUserStoriesRequest
 })
 
 export default class IndexContainer extends Component {
@@ -89,6 +92,7 @@ export default class IndexContainer extends Component {
               // userRegisterRequest={this.props.userRegisterRequest}
               loginUser={this.props.loginUser}
               loadAuth={this.props.loadAuth}
+              loadStories={this.props.loadStories}
             />
           </div>
         }
@@ -118,6 +122,7 @@ IndexContainer.propTypes = {
 
   loginUser: PropTypes.func,
   loadAuth: PropTypes.func,
+  loadStories: PropTypes.func
 };
 
 

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-// import { asyncConnect } from 'redux-connect';
+import { asyncConnect } from 'redux-connect';
 import { createStoryRequest, showUserStoriesRequest,
   isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
 import SubHeader from '../components/StoryLine/SubHeader';
@@ -32,11 +32,24 @@ import StoryLine from '../components/StoryLine';
 //   }
 // }])
 
+@asyncConnect([{
+  promise: ({ store: { dispatch, getState } }) => {
+    const promises = [];
+
+    if (!isStoriesLoaded(getState())) {
+      promises.push(dispatch(loadStories()));
+    }
+    return Promise.all(promises);
+  }
+}])
+
 @connect((state) => ({
-  stories: state.story.storiesArr
+  isAuthenticated: state.sign.isAuthenticated,
+  user: state.sign.user,
+  storiesArr: state.story.storiesArr
 }), {loadStories})
 
-class UserContainer extends Component {
+export default class UserContainer extends Component {
   render() {
     return (
       <div>
@@ -53,7 +66,7 @@ class UserContainer extends Component {
         />
         <div>
           asdd
-          <button onClick={() => this.props.loadStories(this.props.user.id)}>load</button>
+          <button onClick={() => this.props.loadStories()}>load</button>
         </div>
       </div>
     );
@@ -69,16 +82,15 @@ UserContainer.propTypes = {
   showUserStoriesRequest: PropTypes.func
 };
 
-function mapStateToProps(state) {
-  return {
-    isAuthenticated: state.sign.isAuthenticated,
-    user: state.sign.user,
-
-    storiesArr: state.story.storiesArr
-  };
-}
-
-export default connect(mapStateToProps, {
-  createStoryRequest,
-  showUserStoriesRequest
-})(UserContainer);
+// function mapStateToProps(state) {
+//   return {
+//     isAuthenticated: state.sign.isAuthenticated,
+//     user: state.sign.user,
+//     storiesArr: state.story.storiesArr
+//   };
+// }
+//
+// export default connect(mapStateToProps, {
+//   createStoryRequest,
+//   showUserStoriesRequest
+// })(UserContainer);

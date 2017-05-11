@@ -30,9 +30,12 @@ class New extends Component {
   onSubmitSignInForm(data) {
     // this.props.userLoginRequest(data.email, data.password);
     this.props.loginUser(data.email, data.password)
-      .then((data) => {
+      .then(() => {
         // console.log('DATAAA:', data);
         return this.props.loadAuth();
+      })
+      .then(() => {
+        return this.props.loadStories();
       });
   }
 
