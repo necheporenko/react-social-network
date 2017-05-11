@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 // import { userRegisterRequest, userLoginRequest, userLogin, login as loginUser, isLoaded as isAuthLoaded, load as loadAuth } from '../redux/modules/user';
-import { login as loginUser, isLoaded as isAuthLoaded, load as loadAuth } from '../redux/modules/sign';
+import { login as loginUser, load as loadAuth, register as registerUser } from '../redux/modules/sign';
 import { showActiveForm } from '../redux/modules/form';
 import { createChannelRequest } from '../redux/modules/channel';
 import { createStoryRequest, showUserStoriesRequest,
@@ -55,6 +55,7 @@ import MainPage from '../components/MainPage';
 }), {
   loginUser,
   loadAuth,
+  registerUser,
   showActiveForm,
   createChannelRequest,
   loadStories,
@@ -93,6 +94,7 @@ export default class IndexContainer extends Component {
               loginUser={this.props.loginUser}
               loadAuth={this.props.loadAuth}
               loadStories={this.props.loadStories}
+              registerUser={this.props.registerUser}
             />
           </div>
         }
@@ -122,7 +124,8 @@ IndexContainer.propTypes = {
 
   loginUser: PropTypes.func,
   loadAuth: PropTypes.func,
-  loadStories: PropTypes.func
+  loadStories: PropTypes.func,
+  registerUser: PropTypes.func
 };
 
 

@@ -7,6 +7,12 @@ export const LOAD_FAIL = 'LOAD_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAIL = 'LOGOUT_FAIL';
+export const REGISTER = 'REGISTER';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const LOGIN_FB = 'LOGIN_FB';
+export const LOGIN_FB_SUCCESS = 'LOGIN_FB_SUCCESS';
+export const LOGIN_FB_FAIL = 'LOGIN_FB_FAIL';
 
 const initialState = {
   isAuthenticated: false,
@@ -68,6 +74,27 @@ export default function usersReducer(state = initialState, action) {
         isAuthenticated: false
       };
 
+    case REGISTER:
+      return {
+        ...state,
+        registeringIn: true
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        registeringIn: false,
+        user: action.result.data,
+        isAuthenticated: action.result.data.access_token && true
+      };
+    case REGISTER_FAIL:
+      return {
+        ...state,
+        user: null,
+        isAuthenticated: false,
+        registeringIn: false,
+        registerError: action.error
+      };
+
     case LOGOUT:
       return {
         ...state,
@@ -86,6 +113,32 @@ export default function usersReducer(state = initialState, action) {
         loggingOut: false,
         logoutError: action.error,
         user: null,
+        isAuthenticated: false
+      };
+
+    case LOGIN_FB:
+      console.log('LOGIN_FB:', action);
+      return {
+        ...state,
+        loggingFB: true,
+        loaded: false
+      };
+    case LOGIN_FB_SUCCESS:
+      console.log('LOGIN_FB_SUCCESS:', action.result);
+      return {
+        ...state,
+        loggingFB: false,
+        loaded: true,
+        user: action.result.data,
+        isAuthenticated: action.result.data.access_token && true
+      };
+    case LOGIN_FB_FAIL:
+      console.log('LOGIN_FB_FAIL:', action.result);
+      return {
+        ...state,
+        loggingFB: false,
+        user: null,
+        loginError: action.error,
         isAuthenticated: false
       };
 
@@ -113,6 +166,13 @@ export function load() {
   };
 }
 
+export function register(email, password, first_name, last_name) {
+  return {
+    types: [REGISTER, REGISTER_SUCCESS, REGISTER_FAIL],
+    promise: (client) => client.post('/registration', { data: { email, password, first_name, last_name }})
+  };
+}
+
 export function login(email, password) {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
@@ -124,5 +184,22 @@ export function logout() {
   return {
     types: [LOGOUT, LOGOUT_SUCCESS, LOGOUT_FAIL],
     promise: (client) => client.post('/auth/logout')
+  };
+}
+
+export function loginFB(id, email, first_name, last_name, avatar, fb_token) {
+  const provider = 'facebook';
+  return {
+    types: [LOGIN_FB, LOGIN_FB_SUCCESS, LOGIN_FB_FAIL],
+    promise: (client) => client.post('/auth/connect', { data:
+    {
+      provider,
+      id,
+      email,
+      first_name,
+      last_name,
+      avatar,
+      fb_token
+    }})
   };
 }

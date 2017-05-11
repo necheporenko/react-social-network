@@ -12,7 +12,7 @@ class New extends Component {
     this.state = {
       authEmail: '',
       authPass: '',
-      facebook_id: '281599312011088' //got from validbook.org
+      facebook_id: '562706323765481' //got from validbook.org
     };
 
     this.onFormShow = this.onFormShow.bind(this);
@@ -23,12 +23,11 @@ class New extends Component {
   }
 
   onFormShow(formName) {
-    console.log(formName);      // eslint-disable-line no-console
+    console.log(formName);
     this.props.showActiveForm(formName);
   }
 
   onSubmitSignInForm(data) {
-    // this.props.userLoginRequest(data.email, data.password);
     this.props.loginUser(data.email, data.password)
       .then(() => {
         // console.log('DATAAA:', data);
@@ -40,21 +39,21 @@ class New extends Component {
   }
 
   onSubmitRegisterForm(data) {
-    const { firstName, lastName, email, password } = data;
-    this.props.userRegisterRequest(firstName, lastName, email, password);
+    const { email, password, firstName, lastName } = data;
+    this.props.registerUser(email, password, firstName, lastName);
   }
 
   handleAuth(data) {
-    console.log(data);          // eslint-disable-line no-console
+    console.log(data);
     this.setState({ authEmail: data.email, authPass: data.password });
   }
 
   responseFacebook(response) {
-    console.log('Facebook API login', response); // eslint-disable-line no-console
+    console.log('Facebook API login', response);
   }
 
   invalid() {
-    console.log('error');       // eslint-disable-line no-console
+    console.log('error');
   }
 
   render() {
@@ -89,6 +88,7 @@ class New extends Component {
                     socialId={this.state.facebook_id}
                     language="en_US"
                     scope="public_profile,email"
+                    fields="id,email,first_name,last_name,picture"
                     responseHandler={this.responseFacebook}
                     xfbml={true}
                     version="v2.5"

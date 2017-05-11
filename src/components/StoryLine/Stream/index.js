@@ -33,7 +33,7 @@ class Stream extends Component {
         {storiesArr && storiesArr.map((story) => (
           <Post
             key={story.id}
-            post={story.description}
+            post={story.text}
           />
         ))}
         {this.props.children}
