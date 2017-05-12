@@ -43,13 +43,13 @@ class New extends Component {
     this.props.registerUser(email, password, firstName, lastName);
   }
 
+  responseFacebook(response) {
+    console.log('Facebook API login', response);
+  }
+
   handleAuth(data) {
     console.log(data);
     this.setState({ authEmail: data.email, authPass: data.password });
-  }
-
-  responseFacebook(response) {
-    console.log('Facebook API login', response);
   }
 
   invalid() {
@@ -115,7 +115,6 @@ class New extends Component {
                     <FormSignIn
                       email_value={this.email_value}
                       password_value={this.password_value}
-                      userLoginRequest={this.props.userLoginRequest}
                     />
                     {/* <Link to="/engagement">   */}
                     <input className="registration-btn registration-btn-sign-in" type="submit" value="Login"/>
@@ -123,7 +122,6 @@ class New extends Component {
                     <span className="registration-link registration-cancel" onClick={() => this.onFormShow('default')}>Cancel</span>
                     <Link to="/account/password-recovery/" className="registration-forgot">Forgot password?</Link>
                     <button className="registration-btn registration-btn-fb" type="submit">Sign In With Facebook</button>
-
                   </Form>
                 </div>
                 }
@@ -144,7 +142,6 @@ class New extends Component {
                     <div className="registration-wrap-info">
                       <span>By clicking "Sign Up" you indicate that you have read and agreed to the </span>
                       <Link to="/terms-of-service" className="hidden-link">Terms of Service.</Link>
-
                     </div>
                     <input className="registration-btn registration-btn-sign-up" type="submit" defaultValue="Sign Up"/>
                     <span className="registration-link registration-cancel" onClick={() => this.onFormShow('default')}>Cancel</span>
@@ -173,8 +170,10 @@ class New extends Component {
 New.propTypes = {
   activeForm: PropTypes.string,
   showActiveForm: PropTypes.func,
-  userLoginRequest: PropTypes.func,
-  userRegisterRequest: PropTypes.func
+  loginUser: PropTypes.func,
+  loadAuth: PropTypes.func,
+  loadStories: PropTypes.func,
+  registerUser: PropTypes.func
 };
 
 export default New;

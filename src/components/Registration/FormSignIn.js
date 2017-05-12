@@ -13,7 +13,7 @@ const FormSignIn = ({
         type="email"
         validations="isEmail"
         placeholder="Your Email"
-        elementWrapperClassName = {[{'col-sm-9': false}]}
+        elementWrapperClassName={[{'col-sm-9': false}]}
         labelClassName={[{'col-sm-3': false}, 'disabled-label']}
         required
       />
@@ -24,9 +24,9 @@ const FormSignIn = ({
         placeholder="Your Password"
         validations="minLength:2"
         validationErrors={{
-            minLength: 'The entered password less than 8 characters'
+          minLength: 'The entered password less than 8 characters'
         }}
-        elementWrapperClassName = {[{'col-sm-9': false}]}
+        elementWrapperClassName={[{'col-sm-9': false}]}
         labelClassName={[{'col-sm-3': false}, 'disabled-label']}
         required
       />

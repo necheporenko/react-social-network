@@ -1,7 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-// import { userRegisterRequest, userLoginRequest, userLogin, login as loginUser, isLoaded as isAuthLoaded, load as loadAuth } from '../redux/modules/user';
 import { login as loginUser, load as loadAuth, register as registerUser } from '../redux/modules/sign';
 import { showActiveForm } from '../redux/modules/form';
 import { createChannelRequest } from '../redux/modules/channel';
@@ -76,7 +75,7 @@ export default class IndexContainer extends Component {
               createChannelRequest={this.props.createChannelRequest}
               storiesArr={this.props.storiesArr}
               createStoryRequest={this.props.createStoryRequest}
-              showUserStoriesRequest={this.props.showUserStoriesRequest}
+              // showUserStoriesRequest={this.props.showUserStoriesRequest}
             />
           </div>
         }
