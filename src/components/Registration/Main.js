@@ -29,13 +29,8 @@ class New extends Component {
 
   onSubmitSignInForm(data) {
     this.props.loginUser(data.email, data.password)
-      .then(() => {
-        // console.log('DATAAA:', data);
-        return this.props.loadAuth();
-      })
-      .then(() => {
-        return this.props.loadStories();
-      });
+      .then(() => this.props.loadAuth())
+      .then(() => this.props.loadStories());
   }
 
   onSubmitRegisterForm(data) {
@@ -44,7 +39,10 @@ class New extends Component {
   }
 
   responseFacebook(response) {
-    console.log('Facebook API login', response);
+    // console.log('Facebook API login', response.picture.data.url, response.accessToken);
+    this.props.loginSocial('facebook', response.picture.data.url, response.accessToken)
+      .then(() => this.props.loadAuth())
+      .then(() => this.props.loadStories());
   }
 
   handleAuth(data) {
@@ -162,6 +160,15 @@ class New extends Component {
             </div>
           </div>
         </div>
+
+        {this.props.loading && (
+          <div className="spinner-bg">
+            <div className="spinner">
+              <i className="fa fa-pulse fa-spinner"/>
+            </div>
+          </div>
+        )}
+
       </div>
     );
   }
@@ -173,7 +180,9 @@ New.propTypes = {
   loginUser: PropTypes.func,
   loadAuth: PropTypes.func,
   loadStories: PropTypes.func,
-  registerUser: PropTypes.func
+  registerUser: PropTypes.func,
+  loginSocial: PropTypes.func,
+  loading: PropTypes.bool,
 };
 
 export default New;

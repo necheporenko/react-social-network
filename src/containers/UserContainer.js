@@ -1,41 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { createStoryRequest, showUserStoriesRequest,
-  isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
+import { create as createStory, isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 import StoryLine from '../components/StoryLine';
 
-// @asyncConnect([{
-//   promise: ({store: { dispatch, getState }}) => {
-//     // console.log('before if');
-//     // if (!isStoriesLoaded(getState())) {
-//     //   console.log('if:', getState().user.id);
-//       // return dispatch(loadStories(getState().user.id));
-//       //   return dispatch(loadStories(2));
-//     // }
-//
-//     // const promises = []
-//     // const getCurrentUser = !isAuthLoaded(getState())
-//     //   ? dispatch(loadAuth()).then(() => getState().auth.user).catch(() => null)
-//     //   : Promise.resolve(getState().auth.user)
-//     //
-//     // promises.push(getCurrentUser.then((currentUser) => {
-//     // const listsPromises = []
-//     //
-//     // if (currentUser && !isAppsLoaded(getState())) {
-//     //   listsPromises.push(dispatch(loadApps(currentUser)))
-//     // }
-//     //
-//     // return Promise.all(listsPromises)
-//   }
-// }])
 
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
-
     if (!isStoriesLoaded(getState())) {
       promises.push(dispatch(loadStories()));
     }
@@ -43,11 +17,15 @@ import StoryLine from '../components/StoryLine';
   }
 }])
 
+
 @connect((state) => ({
-  isAuthenticated: state.sign.isAuthenticated,
   user: state.sign.user,
+  isAuthenticated: state.sign.isAuthenticated,
   storiesArr: state.story.storiesArr
-}), {loadStories})
+}), {
+  loadStories,
+  createStory
+})
 
 export default class UserContainer extends Component {
   render() {
@@ -56,41 +34,25 @@ export default class UserContainer extends Component {
         <SubHeader
           user={this.props.user}
         />
-        <Navigation />
-        {/*{this.props.isAuthenticated && }*/}
-        <StoryLine
-          storiesArr={this.props.storiesArr}
-          createStoryRequest={this.props.createStoryRequest}
-          showUserStoriesRequest={this.props.showUserStoriesRequest}
+        <Navigation
           user={this.props.user}
         />
-        <div>
-          asdd
-          <button onClick={() => this.props.loadStories()}>load</button>
-        </div>
+        {/*{this.props.isAuthenticated && }*/}
+        <StoryLine
+          user={this.props.user}
+          storiesArr={this.props.storiesArr}
+          createStory={this.props.createStory}
+          loadStories={this.props.loadStories}
+        />
       </div>
     );
   }
 }
 
 UserContainer.propTypes = {
+  user: PropTypes.object,                     //sign
   // isAuthenticated: PropTypes.bool,
-  user: PropTypes.object,
-
-  createStoryRequest: PropTypes.func,
+  createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
-  showUserStoriesRequest: PropTypes.func
+  loadStories: PropTypes.func,
 };
-
-// function mapStateToProps(state) {
-//   return {
-//     isAuthenticated: state.sign.isAuthenticated,
-//     user: state.sign.user,
-//     storiesArr: state.story.storiesArr
-//   };
-// }
-//
-// export default connect(mapStateToProps, {
-//   createStoryRequest,
-//   showUserStoriesRequest
-// })(UserContainer);

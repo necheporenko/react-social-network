@@ -7,7 +7,6 @@ import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import uploadImageCallBack from './uploadImageCallBack';
 import BooksTree from '../../BooksTree';
 import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
 import './index.scss';
 
 const list = ['15px', '55px'];
@@ -37,7 +36,11 @@ class Sbox extends Component {
 
   onSubmitStory() {
     console.log(this.state.data);
-    this.props.createStoryRequest(this.state.data);
+    this.props.createStory(this.state.data)
+      .then(() => this.props.loadStories());
+    this.setState({
+      editorContent: '',        //  cleaning input
+    });
   }
 
   showToolbar() {
@@ -108,12 +111,12 @@ class Sbox extends Component {
 }
 
 Sbox.propTypes = {
- //placeholder: PropTypes.string
-  createStoryRequest: PropTypes.func,
   user: PropTypes.shape({
     first_name: PropTypes.string,
     last_name: PropTypes.string
-  })
+  }),
+  createStory: PropTypes.func,                //story
+  loadStories: PropTypes.func,
 };
 
 export default Sbox;

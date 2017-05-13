@@ -26,6 +26,7 @@ export default function usersReducer(state = initialState, action) {
       console.log('LOGIN:', action);
       return {
         ...state,
+        loading: true,
         loggingIn: true,
         loaded: false
       };
@@ -130,7 +131,7 @@ export default function usersReducer(state = initialState, action) {
         loggingFB: false,
         loaded: true,
         user: action.result.data,
-        isAuthenticated: action.result.data.access_token && true
+        // isAuthenticated: action.result.data.access_token && true
       };
     case LOGIN_FB_FAIL:
       console.log('LOGIN_FB_FAIL:', action.result);
@@ -139,7 +140,7 @@ export default function usersReducer(state = initialState, action) {
         loggingFB: false,
         user: null,
         loginError: action.error,
-        isAuthenticated: false
+        // isAuthenticated: false
       };
 
     default:
@@ -187,19 +188,9 @@ export function logout() {
   };
 }
 
-export function loginFB(id, email, first_name, last_name, avatar, fb_token) {
-  const provider = 'facebook';
+export function loginSocial(provider, avatar, token) {
   return {
     types: [LOGIN_FB, LOGIN_FB_SUCCESS, LOGIN_FB_FAIL],
-    promise: (client) => client.post('/auth/connect', { data:
-    {
-      provider,
-      id,
-      email,
-      first_name,
-      last_name,
-      avatar,
-      fb_token
-    }})
+    promise: (client) => client.post('/auth/connect', { data: { provider, avatar, token }})
   };
 }

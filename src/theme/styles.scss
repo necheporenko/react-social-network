@@ -154,6 +154,29 @@ b {
   align-items: flex-start;
 }
 
+
+/*
+  Spinner
+*/
+
+.spinner-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.5);
+}
+
+.spinner {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 75px;
+}
+
+
 /*
   Override Bootstrap styles
 */

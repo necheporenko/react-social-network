@@ -1,77 +1,9 @@
-// import request from 'superagent';
-// import Cookies from 'js-cookie';
-// import { apiURL } from '../../constants/apiURL';
-
-// export const CREATE_STORY = 'CREATE_STORY';
-
 export const LOAD_SHOW_USER_STORIES = 'LOAD_SHOW_USER_STORIES';
 export const LOAD_SUCCESS_SHOW_USER_STORIES = 'LOAD_SUCCESS_SHOW_USER_STORIES';
 export const LOAD_FAIL_SHOW_USER_STORIES = 'LOAD_FAIL_SHOW_USER_STORIES';
-
-// export const SHOW_USER_STORIES = 'SHOW_USER_STORIES';
-
-
-// export function createStory(description) {
-//   return (dispatch) => {
-//     dispatch({
-//       type: CREATE_STORY,
-//       description,
-//       book_ids: [1]
-//     });
-//   };
-// }
-
-// export function createStoryRequest(description) {
-//   return (dispatch) => {
-//     const cookie = JSON.parse(Cookies.get('_u'));
-//     const { token } = cookie;
-//     return request
-//       .post(`${apiURL}/story?access-token=${token}`)
-//       .send({
-//         description,
-//         book_ids: [1]
-//       })
-//       .end((err, res) => {
-//         if (err || res.body.status === 'error') {
-//           console.log('createChannelRequest error:', err); // eslint-disable-line no-console
-//         } else {
-//           dispatch(createStory(res.body.data.description));
-//           console.log(`Yeah! ${JSON.stringify(res.body)}`);
-//         }
-//       });
-//   };
-// }
-
-
-// export function showUserStories(stories) {
-//   return (dispatch) => {
-//     dispatch({
-//       type: SHOW_USER_STORIES,
-//       stories
-//     });
-//   };
-// }
-//
-// export function showUserStoriesRequest() {
-//   return (dispatch) => {
-//     const cookie = Cookies.get('_u') ? JSON.parse(Cookies.get('_u')) : '';
-//     const { token, id } = cookie;
-//     return request
-//       .get(`${apiURL}/user/stories?access-token=${token}`)
-//       .query({ user_id: id })
-//       .end((err, res) => {
-//         if (err || res.body.status === 'error') {
-//           console.log('showUserStoriesRequest error:', err); // eslint-disable-line no-console
-//         } else {
-//           dispatch(showUserStories(res.body.data));
-//           console.log(`Yeah! ${JSON.stringify(res.body)}`);
-//         }
-//       });
-//   };
-// }
-
-
-//REDUCER
+export const CREATE = 'CREATE';
+export const CREATE_SUCCESS = 'CREATE_SUCCESS';
+export const CREATE_FAIL = 'CREATE_FAIL';
 
 const initialState = {
   isAuthenticated: false,
@@ -81,26 +13,6 @@ const initialState = {
 
 export default function storyReducer(state = initialState, action) {
   switch (action.type) {
-    // case CREATE_STORY: {
-    //   const { book_ids, description } = action;
-    //   const newStories = [...[{ book_ids: book_ids, description: description }], ...state.storiesArr];
-    //
-    //   return {
-    //     ...state,
-    //     storiesArr: newStories
-    //   };
-    // }
-    //
-    // case SHOW_USER_STORIES: {
-    //   const newStories = [...action.stories, ...state.storiesArr];
-    //
-    //   return {
-    //     ...state,
-    //     storiesArr: newStories
-    //   };
-    // }
-
-
     case LOAD_SHOW_USER_STORIES:
       return {
         ...state,
@@ -124,6 +36,27 @@ export default function storyReducer(state = initialState, action) {
         storiesArr: []
       };
 
+    case CREATE:
+      console.log('CREATE:', action);
+      return {
+        ...state,
+        creating: true
+      };
+    case CREATE_SUCCESS:
+      console.log('CREATE_SUCCESS:', action);
+      return {
+        ...state,
+        creating: false,
+        created: true,
+      };
+    case CREATE_FAIL:
+      console.log('CREATE_FAIL:', action);
+      return {
+        ...state,
+        creating: false,
+        created: false,
+      };
+
     default:
       return state;
   }
@@ -138,5 +71,13 @@ export function load() {
     types: [LOAD_SHOW_USER_STORIES, LOAD_SUCCESS_SHOW_USER_STORIES, LOAD_FAIL_SHOW_USER_STORIES],
     promise: (client) => client.get('/user/stories')
     // promise: (client) => client.get('/user/stories', { params: { user_id: id }})
+  };
+}
+
+export function create(description) {
+  const book_ids = [1];                                                                                                  //todo add dynamic id of book
+  return {
+    types: [CREATE, CREATE_SUCCESS, CREATE_FAIL],
+    promise: (client) => client.post('/story', { data: { description, book_ids }})
   };
 }

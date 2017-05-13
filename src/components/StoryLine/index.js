@@ -53,10 +53,10 @@ class StoryLine extends Component {
             user={this.props.user}
           />
           <Stream
-            storiesArr={this.props.storiesArr}
-            createStoryRequest={this.props.createStoryRequest}
-            showUserStoriesRequest={this.props.showUserStoriesRequest}
             user={this.props.user}
+            storiesArr={this.props.storiesArr}
+            createStory={this.props.createStory}
+            loadStories={this.props.loadStories}
           />
           <InfoBloks />
         </div>
@@ -66,10 +66,10 @@ class StoryLine extends Component {
 }
 
 StoryLine.propTypes = {
-  showUserStoriesRequest: PropTypes.func,
-  createStoryRequest: PropTypes.func,
+  user: PropTypes.object,
+  createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
-  user: PropTypes.object
+  loadStories: PropTypes.func,
 };
 
 export default StoryLine;

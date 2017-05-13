@@ -109,7 +109,7 @@ export default class ApiClient {
           console.info('==Path:', path);
           console.info('==Body:', body);
 
-          if (method === 'post' && path === '/auth/login' && body && body.data.access_token) {
+          if (method === 'post' && (path === '/auth/login' || '/auth/connect') && body && body.data.access_token) {
             saveAuthCookie(req, body.data.access_token);
           }
 

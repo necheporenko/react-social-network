@@ -5,15 +5,18 @@ import AddBook from './addBook';
 import Demo from './Tree/index';
 import './index.scss';
 
-class BooksTree extends Component {
+@connect((state) => ({
+  user: state.sign.user,
+}), {})
+
+export default class BooksTree extends Component {
   render() {
-    const { first_name, last_name } = this.props.user;
-    const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
+    const { slug } = this.props.user;
 
     return (
       <div className="bookstree">
         <div className={this.props.infoBlocksTop}>
-          <div className="bookstree-title"><Link to={`${link}/books`}>BOOKS</Link></div>
+          <div className="bookstree-title"><Link to={`/${slug}/books`}>BOOKS</Link></div>
           <Demo />
           <AddBook />
           {this.props.children}
@@ -28,11 +31,3 @@ BooksTree.propTypes = {
   infoBlocksTop: PropTypes.string,
   user: PropTypes.object,
 };
-
-function mapStateToProps(state) {
-  return {
-    user: state.sign.user
-  };
-}
-
-export default connect(mapStateToProps, null)(BooksTree);

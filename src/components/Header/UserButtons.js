@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 
 const UserButtons = (props) => {
-  const { first_name, last_name } = props.user;
+  const { slug, first_name } = props.user;
   const { logoutUser } = props;
   return (
     <nav className="header-navigation">
@@ -65,7 +65,7 @@ const UserButtons = (props) => {
       </div>
 
       <div className="infouser">
-        <Link to={`/${first_name.toLowerCase()}.${last_name.toLowerCase()}`}>
+        <Link to={`/${slug}`}>
           <span>{first_name}</span>
           <img src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1486723970" alt="" />
         </Link>
@@ -89,12 +89,5 @@ UserButtons.propTypes = {
   user: PropTypes.object,
   logoutUser: PropTypes.func
 };
-
-// UserButtons.defaultProps = {
-//   user: {
-//     first_name: 'Neo',
-//     last_name: 'Surname'
-//   }
-// };
 
 export default UserButtons;

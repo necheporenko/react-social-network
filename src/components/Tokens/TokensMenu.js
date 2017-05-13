@@ -1,28 +1,30 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-
 import './index.scss';
 
-class TokensMenu extends Component {
+@connect((state) => ({
+  user: state.sign.user,
+}), {})
+
+export default class TokensMenu extends Component {
   render() {
-    const { first_name, last_name } = this.props.user;
-    const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
+    const { slug } = this.props.user;
 
     return (
       <div className="sidebar tokens-nav">
         <div className="title">Caches</div>
         <ul>
-          <Link onlyActiveOnIndex={true} to={`${link}/tokens`} activeClassName="active">
+          <Link onlyActiveOnIndex={true} to={`/${slug}/tokens`} activeClassName="active">
             <li className="tokens-mnu-sash">Sash</li>
           </Link>
-          <Link onlyActiveOnIndex={true} to={`${link}/tokens/exchange`} activeClassName="active">
+          <Link onlyActiveOnIndex={true} to={`/${slug}/tokens/exchange`} activeClassName="active">
             <li className="tokens-mnu-exchange">Exchange</li>
           </Link>
-          <Link onlyActiveOnIndex={true} to={`${link}/tokens/public`} activeClassName="active">
+          <Link onlyActiveOnIndex={true} to={`/${slug}/tokens/public`} activeClassName="active">
             <li className="tokens-mnu-public">Public cache</li>
           </Link>
-          <Link onlyActiveOnIndex={true} to={`${link}/tokens/private`} activeClassName="active">
+          <Link onlyActiveOnIndex={true} to={`/${slug}/tokens/private`} activeClassName="active">
             <li className="tokens-mnu-private">Private cache</li>
           </Link>
         </ul>
@@ -37,11 +39,3 @@ class TokensMenu extends Component {
 TokensMenu.propTypes = {
   user: PropTypes.object,
 };
-
-function mapStateToProps(state) {
-  return {
-    user: state.sign.user,
-  };
-}
-
-export default connect(mapStateToProps, null)(TokensMenu);

@@ -6,7 +6,11 @@ import './index.scss';
 
 let savePositionTop;
 
-class Navigation extends Component {
+@connect((state) => ({
+  user: state.sign.user,
+}), {})
+
+export default class Navigation extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,8 +42,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const { first_name, last_name } = this.props.user;
-    const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
+    const { slug, first_name, last_name } = this.props.user;
     const { scrollTop } = this.state;
 
     const chooseNav = () => {
@@ -63,35 +66,35 @@ class Navigation extends Component {
       <div className={navigation.posTop}>
         <div className="navigation-wrap">
           <Link
-            to={link}
+            to={`/${slug}`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
             Storyline
           </Link>
           <Link
-            to={`${link}/books`}
+            to={`/${slug}/books`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
             Books
           </Link>
           <Link
-            to={`${link}/tokens`}
+            to={`/${slug}/tokens`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
             Tokens
           </Link>
           <Link
-            to={`${link}/people`}
+            to={`/${slug}/people`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
             People
           </Link>
           <Link
-            to={`${link}/photos`}
+            to={`/${slug}/photos`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
@@ -107,7 +110,7 @@ class Navigation extends Component {
         } */}
         <NavigationUserInfo
           userName={`${first_name} ${last_name}`}
-          link={link}
+          link={`/${slug}`}
           displayUser={navigation.show}
         />
       </div>
@@ -117,16 +120,5 @@ class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-  // children: PropTypes.element,
   user: PropTypes.object,
-  // routing: PropTypes.object
 };
-
-function mapStateToProps(state) {
-  return {
-    user: state.sign.user,
-    // routing: state.routing.locationBeforeTransitions
-  };
-}
-
-export default connect(mapStateToProps, null)(Navigation);
