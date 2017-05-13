@@ -76,7 +76,7 @@ const UserButtons = (props) => {
           <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title={''} id={2} noCaret pullRight >
             <Link to="/settings">Settings</Link>
             <Link to="/settings/privacy">Privacy Control Center</Link>
-            <a onClick={logoutUser}>Sign out</a>
+            <Link to="/" onClick={logoutUser}>Sign out</Link>
           </DropdownButton>
         </ButtonToolbar>
       </div>

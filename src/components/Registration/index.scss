@@ -20,7 +20,7 @@
   border: 2px solid #979798;
   margin: auto;
   display: block;
-  top: 23%;
+  top: calc(50% - 250px);
 }
 
 .title-cart {
@@ -252,50 +252,47 @@
   margin-bottom: 8px;
 }
 
-
-
-@media screen and (max-width: 1920px){
+@media all and (min-width: 1921px) {
   .registration-bg {
-      background: url('../../img/login-page/login-background1920.jpg') no-repeat center center fixed;
-      background-size: cover;
-  }
-  .login-popup {
-    top: 25%;
+    background: url('../../img/login-page/login-background1920.jpg') no-repeat top center;
+    background-size: cover;
   }
 }
-@media screen and (max-width: 1600px) {
+
+
+@media all and (max-width: 1920px){
+  .registration-bg {
+      background: url('../../img/login-page/login-background1920-test2.jpg') no-repeat top center;
+      background-size: cover;
+  }
+}
+@media all and (max-width: 1600px) {
   .registration-bg {
       //background: url('../../img/login-page/login-background1600.jpg');
-      background: url('../../img/login-page/login-background1440x900.jpg') no-repeat center center;
-
+      background: url('../../img/login-page/login-background1440x900.jpg') no-repeat top center;
       background-size: cover;
   }
 }
 
 @media all and (max-width: 1440px) {
   .registration-bg {
-      background: url('../../img/login-page/login-background1366x768.jpg') no-repeat center center;
+      background: url('../../img/login-page/login-background1366x768.jpg') no-repeat top center;
       background-size: cover;
   }
 }
 
-@media screen and (max-width: 1366px) {
+@media all and (max-width: 1366px) {
   .registration-bg {
-      //background: url('../../img/login-page/login-background1366x768.jpg');
-      background: url('../../img/login-page/login-background1280.jpg') no-repeat center center ;
+      background: url('../../img/login-page/login-background1366x768.jpg') no-repeat top center;
+      //background: url('../../img/login-page/login-background1280.jpg') no-repeat center center ;
       background-size: cover;
-  }
-  .login-popup {
-    top: 16%;
   }
 }
-@media screen and (max-width: 1280px) {
+@media all and (max-width: 1280px) {
   .registration-bg {
-      background: url('../../img/login-page/login-background1024x648.jpg') no-repeat center center;
+      //background: url('../../img/login-page/login-background1024x648.jpg') no-repeat center center;
+      background: url('../../img/login-page/login-background1280.jpg') no-repeat top center ;
       background-size: cover;
-  }
-  .login-popup {
-    top: 17%;
   }
 }
 @media all and (max-width: 1024px) {
