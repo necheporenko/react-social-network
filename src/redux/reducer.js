@@ -1,11 +1,11 @@
 // import multireducer from 'multireducer';
 import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
-// import user from './modules/user';
 import form from './modules/form';
 import channel from './modules/channel';
 import story from './modules/story';
 import sign from './modules/sign';
+import follow from './modules/follow';
 
 export default function createReducers(asyncReducers) {
   return {
@@ -17,6 +17,7 @@ export default function createReducers(asyncReducers) {
     channel,
     story,
     sign,
+    follow,
     ...asyncReducers
   };
 }

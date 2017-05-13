@@ -20,7 +20,7 @@ const initialState = {
   loaded: false
 };
 
-export default function usersReducer(state = initialState, action) {
+export default function signReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN:
       console.log('LOGIN:', action);
