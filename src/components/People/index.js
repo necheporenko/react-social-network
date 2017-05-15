@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { loadPeopleFollowing, isLoadedFollowing } from '../../redux/modules/follow';
+import { loadPeopleFollowing, isLoadedFollowing, follow as followUser, unfollow as unfollowUser } from '../../redux/modules/follow';
 import PeopleMenu from './PeopleMenu';
 import './index.scss';
 
@@ -20,9 +20,27 @@ import './index.scss';
 }), {
   loadPeopleFollowing,
   isLoadedFollowing,
+  followUser,
+  unfollowUser,
 })
 
 class People extends Component {
+  constructor(props) {
+    super(props);
+    this.follow = this.follow.bind(this);
+    this.unfollow = this.unfollow.bind(this);
+  }
+
+  follow(id) {
+    this.props.followUser(id)
+      .then(() => this.props.loadPeopleFollowing());
+  }
+
+  unfollow(id) {
+    this.props.unfollowUser(id)
+      .then(() => this.props.loadPeopleFollowing());
+  }
+
   render() {
     const { following } = this.props;
 
@@ -40,7 +58,17 @@ class People extends Component {
                   <img src="http://devianmbanks.validbook.org/cdn/460/avatar/90x90.jpg?t=1486723970" />
                   <div>{`${people.first_name} ${people.last_name}`}</div>
                 </a>
-                <div className="btn-following" onClick={() => this.follow(`${people.id}`)}>Unfollow <span></span></div>
+                <div
+                  className="btn-following"
+                  onClick={
+                    !people.isFollowing ?
+                      () => this.follow(people.id)
+                      :
+                      () => this.unfollow(people.id)
+                  }>
+                  {!people.isFollowing ? 'Follow' : 'Following'}
+                  <span></span>
+                </div>
               </div>
             ))}
 
@@ -53,6 +81,9 @@ class People extends Component {
 
 People.propTypes = {
   following: PropTypes.array,
+  followUser: PropTypes.func,
+  unfollowUser: PropTypes.func,
+  loadPeopleFollowing: PropTypes.func,
 };
 
 export default People;

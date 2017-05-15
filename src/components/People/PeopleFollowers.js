@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { loadPeopleFollowers, isLoadedFollowers } from '../../redux/modules/follow';
+import { loadPeopleFollowers, isLoadedFollowers, follow as followUser, unfollow as unfollowUser } from '../../redux/modules/follow';
 import PeopleMenu from './PeopleMenu';
 import './index.scss';
 
@@ -16,13 +16,31 @@ import './index.scss';
 }])
 
 @connect((state) => ({
-  suggested: state.follow.suggested,
+  followers: state.follow.followers,
 }), {
   loadPeopleFollowers,
   isLoadedFollowers,
+  followUser,
+  unfollowUser,
 })
 
 class PeopleFollowers extends Component {
+  constructor(props) {
+    super(props);
+    this.follow = this.follow.bind(this);
+    this.unfollow = this.unfollow.bind(this);
+  }
+
+  follow(id) {
+    this.props.followUser(id)
+      .then(() => this.props.loadPeopleFollowers());
+  }
+
+  unfollow(id) {
+    this.props.unfollowUser(id)
+      .then(() => this.props.loadPeopleFollowers());
+  }
+
   render() {
     const { followers } = this.props;
 
@@ -40,7 +58,17 @@ class PeopleFollowers extends Component {
                   <img src="http://devianmbanks.validbook.org/cdn/460/avatar/90x90.jpg?t=1486723970" />
                   <div>{`${people.first_name} ${people.last_name}`}</div>
                 </a>
-                <div className="btn-following">Follow <span></span></div>
+                <div
+                  className="btn-following"
+                  onClick={
+                    !people.isFollowing ?
+                      () => this.follow(people.id)
+                      :
+                      () => this.unfollow(people.id)
+                  }>
+                  {!people.isFollowing ? 'Follow' : 'Following'}
+                  <span></span>
+                </div>
               </div>
             ))}
 
@@ -53,7 +81,10 @@ class PeopleFollowers extends Component {
 
 PeopleFollowers.propTypes = {
   followers: PropTypes.array,
-  // followUser: PropTypes.func,
+  followUser: PropTypes.func,
+  unfollowUser: PropTypes.func,
+  loadPeopleFollowers: PropTypes.func,
+
 };
 
 export default PeopleFollowers;

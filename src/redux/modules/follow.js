@@ -1,6 +1,9 @@
 export const FOLLOW_USER = 'FOLLOW_USER';
 export const FOLLOW_USER_SUCCESS = 'FOLLOW_USER_SUCCESS';
 export const FOLLOW_USER_FAIL = 'FOLLOW_USER_FAIL';
+export const UNFOLLOW_USER = 'UNFOLLOW_USER';
+export const UNFOLLOW_USER_SUCCESS = 'UNFOLLOW_USER_SUCCESS';
+export const UNFOLLOW_USER_FAIL = 'UNFOLLOW_USER_FAIL';
 export const LOAD_PEOPLE_FOLLOWING = 'LOAD_PEOPLE_FOLLOWING';
 export const LOAD_PEOPLE_FOLLOWING_SUCCESS = 'LOAD_PEOPLE_FOLLOWING_SUCCESS';
 export const LOAD_PEOPLE_FOLLOWING_FAIL = 'LOAD_PEOPLE_FOLLOWING_FAIL';
@@ -29,7 +32,6 @@ export default function followReducer(state = initialState, action) {
       return {
         ...state,
         following: false,
-
       };
     case FOLLOW_USER_SUCCESS:
       return {
@@ -40,6 +42,23 @@ export default function followReducer(state = initialState, action) {
       return {
         ...state,
         following: false,
+        error: action.error,
+      };
+
+    case UNFOLLOW_USER:
+      return {
+        ...state,
+        unfollowing: false,
+      };
+    case UNFOLLOW_USER_SUCCESS:
+      return {
+        ...state,
+        unfollowing: true,
+      };
+    case UNFOLLOW_USER_FAIL:
+      return {
+        ...state,
+        unfollowing: false,
         error: action.error,
       };
 
@@ -136,6 +155,13 @@ export function follow(id) {
   return {
     types: [FOLLOW_USER, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAIL],
     promise: (client) => client.post('/follow/connect', { data: { user_id: id, channel_id: 1 }})
+  };
+}
+
+export function unfollow(id) {
+  return {
+    types: [UNFOLLOW_USER, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAIL],
+    promise: (client) => client.post('/follow/disconnect', { data: { user_id: id, channel_id: 1 }})
   };
 }
 
