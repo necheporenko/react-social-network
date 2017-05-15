@@ -30,7 +30,7 @@ class New extends Component {
   onSubmitSignInForm(data) {
     this.props.loginUser(data.email, data.password)
       .then(() => this.props.loadAuth())
-      .then(() => this.props.loadStories());
+      .then(() => this.props.showChannel());
   }
 
   onSubmitRegisterForm(data) {
@@ -42,7 +42,7 @@ class New extends Component {
     // console.log('Facebook API login', response.picture.data.url, response.accessToken);
     this.props.loginSocial('facebook', response.picture.data.url, response.accessToken)
       .then(() => this.props.loadAuth())
-      .then(() => this.props.loadStories());
+      .then(() => this.props.showChannel());
   }
 
   handleAuth(data) {
@@ -183,6 +183,7 @@ New.propTypes = {
   registerUser: PropTypes.func,
   loginSocial: PropTypes.func,
   loading: PropTypes.bool,
+  showChannel: PropTypes.func,
 };
 
 export default New;

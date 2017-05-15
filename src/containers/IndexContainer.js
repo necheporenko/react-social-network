@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { login as loginUser, load as loadAuth, register as registerUser, loginSocial } from '../redux/modules/sign';
 import { showActiveForm } from '../redux/modules/form';
-import { createChannelRequest } from '../redux/modules/channel';
-import { create as createStory, isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
+import { isLoadedChannelList, isLoadedChannelStories, create as createChannel, show as showChannel, load as loadChannels, isMashUp } from '../redux/modules/channel';
+import { isLoaded as isLoadedStories, create as createStory, load as loadStories } from '../redux/modules/story';
 import NewUser from '../components/Registration/Main';
 import MainPage from '../components/MainPage';
 
@@ -12,9 +12,20 @@ import MainPage from '../components/MainPage';
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
-    if (!isStoriesLoaded(getState())) {
-      promises.push(dispatch(loadStories()));
+
+    // if (!isLoadedStories(getState())) {
+    //   promises.push(dispatch(loadStories()));
+    // }
+
+    if (!isLoadedChannelStories(getState())) {
+      console.log('isMashUppppppppppppppppppp', isMashUp(getState()));
+      promises.push(dispatch(showChannel(isMashUp(getState()))));
     }
+
+    if (!isLoadedChannelList(getState())) {
+      promises.push(dispatch(loadChannels()));
+    }
+
     return Promise.all(promises);
   }
 }])
@@ -28,17 +39,21 @@ import MainPage from '../components/MainPage';
   authPass: state.sign.authPass,
   activeForm: state.forms.activeForm,
   channelsArr: state.channel.channelsArr,
+  channelStories: state.channel.channelStories,
   storiesArr: state.story.storiesArr
 }), {
   loginUser,
+  loginSocial,
   loadAuth,
   registerUser,
   showActiveForm,
-  createChannelRequest,
   loadStories,
-  isStoriesLoaded,
+  isLoadedStories,
   createStory,
-  loginSocial
+  showChannel,
+  isLoadedChannelList,
+  createChannel,
+  loadChannels,
 })
 
 export default class IndexContainer extends Component {
@@ -48,13 +63,19 @@ export default class IndexContainer extends Component {
         {this.props.isAuthenticated &&
           <MainPage
             user={this.props.user}
-            storiesArr={this.props.storiesArr}
+            // storiesArr={this.props.storiesArr}
             createStory={this.props.createStory}
-            loadStories={this.props.loadStories}
+            // loadStories={this.props.loadStories}
             channelsArr={this.props.channelsArr}
-            createChannelRequest={this.props.createChannelRequest}
+            loadChannels={this.props.loadChannels}
+            showChannel={this.props.showChannel}
+            createChannel={this.props.createChannel}
+            channelStories={this.props.channelStories}
           />
         }
+        <div>
+          <button onClick={() => console.log(this.getState())}>CLICK</button>
+        </div>
         {!this.props.isAuthenticated &&
           <NewUser
             activeForm={this.props.activeForm}
@@ -65,6 +86,7 @@ export default class IndexContainer extends Component {
             registerUser={this.props.registerUser}
             loginSocial={this.props.loginSocial}
             loading={this.props.loading}
+            showChannel={this.props.showChannel}
           />
         }
       </div>
@@ -82,8 +104,11 @@ IndexContainer.propTypes = {
   loading: PropTypes.bool,
   showActiveForm: PropTypes.func,             //form
   activeForm: PropTypes.string,
-  createChannelRequest: PropTypes.func,       //channel
+  createChannel: PropTypes.func,              //channel
+  loadChannels: PropTypes.func,
+  showChannel: PropTypes.func,
   channelsArr: PropTypes.array,
+  channelStories: PropTypes.array,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,

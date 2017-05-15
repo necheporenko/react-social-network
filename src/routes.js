@@ -57,6 +57,7 @@ export default () => {
   return (
     <Route path="/" component={App}>
       <IndexRoute component={IndexContainer} />
+      <Route path="/channel/:channelName" component={IndexContainer} />
 
       <Route path="users" getComponent={() => System.import('./containers/Users')} />
 

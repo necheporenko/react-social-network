@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Stream from '../StoryLine/Stream';
+import ChannelStream from '../StoryLine/Stream/ChannelStream';
 import LeftMenu from './LeftMenu';
 import Channels from './Channels';
 import FollowBlock from './FollowBlock';
@@ -16,16 +17,19 @@ class MainPage extends Component {
             />
             <Channels
               channelsArr={this.props.channelsArr}
-              createChannelRequest={this.props.createChannelRequest}
+              loadChannels={this.props.loadChannels}
+              createChannel={this.props.createChannel}
+              showChannel={this.props.showChannel}
             />
           </div>
 
           <div className="mid-column">
-            <Stream
+            <ChannelStream
               user={this.props.user}
-              storiesArr={this.props.storiesArr}
+              // storiesArr={this.props.storiesArr}
               createStory={this.props.createStory}
-              loadStories={this.props.loadStories}
+              // loadStories={this.props.loadStories}
+              channelStories={this.props.channelStories}
             />
             <FollowBlock />
           </div>
@@ -40,8 +44,10 @@ MainPage.propTypes = {
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,
-  createChannelRequest: PropTypes.func,
+  createChannel: PropTypes.func,              //channel
+  loadChannels: PropTypes.func,
   channelsArr: PropTypes.array,
+  channelStories: PropTypes.array,
 };
 
 export default MainPage;

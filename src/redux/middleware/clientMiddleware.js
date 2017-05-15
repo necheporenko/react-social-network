@@ -15,7 +15,7 @@ export default function clientMiddleware(client) {
     const actionPromise = promise(client, dispatch);
     actionPromise.then(
       result => {
-        console.log('RESULT_SUCCESS:', result);
+        // console.log('RESULT_SUCCESS:', result);
         next({ ...rest, result, type: SUCCESS });
       },
       error => {

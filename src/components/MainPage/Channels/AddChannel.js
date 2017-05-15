@@ -16,7 +16,9 @@ class AddChannel extends Component {
 
   onSubmitChannel(data) {
     console.log(data);
-    this.props.createChannelRequest(data.name, data.description);
+    this.props.createChannel(data.name, data.description)
+      .then(this.Close())
+      .then(() => this.props.loadChannels());
   }
 
   Close() {
@@ -87,7 +89,8 @@ class AddChannel extends Component {
 AddChannel.propTypes = {
   channel_name: PropTypes.string,
   channel_description: PropTypes.string,
-  createChannelRequest: PropTypes.func
+  createChannel: PropTypes.func,
+  loadChannels: PropTypes.func,
 };
 
 export default AddChannel;
