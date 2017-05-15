@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { loadPeopleSuggested, isLoaded as isPeopleLoaded, follow as followUser } from '../../redux/modules/follow';
+import { loadPeopleSuggested, isLoadedSuggested, follow as followUser } from '../../redux/modules/follow';
 import PeopleMenu from './PeopleMenu';
 import './index.scss';
 
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
-    if (!isPeopleLoaded(getState())) {
+    if (!isLoadedSuggested(getState())) {
       promises.push(dispatch(loadPeopleSuggested()));
     }
     return Promise.all(promises);
@@ -19,7 +19,7 @@ import './index.scss';
   suggested: state.follow.suggested,
 }), {
   loadPeopleSuggested,
-  isPeopleLoaded,
+  isLoadedSuggested,
   followUser,
 })
 
