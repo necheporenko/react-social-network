@@ -1,8 +1,3 @@
-// import request from 'superagent';
-// import Cookies from 'js-cookie';
-// import { apiURL } from '../../constants/apiURL';
-
-// export const CREATE_CHANNEL = 'CREATE_CHANNEL';
 export const LOAD_CHANNELS = 'LOAD_CHANNELS';
 export const LOAD_CHANNELS_SUCCESS = 'LOAD_CHANNELS_SUCCESS';
 export const LOAD_CHANNELS_FAIL = 'LOAD_CHANNELS_FAIL';
@@ -13,38 +8,6 @@ export const CREATE_CHANNEL = 'CREATE_CHANNEL';
 export const CREATE_CHANNEL_SUCCESS = 'CREATE_CHANNEL_SUCCESS';
 export const CREATE_CHANNEL_FAIL = 'CREATE_CHANNEL_FAIL';
 
-// export function createChannel(name, description) {
-//   return (dispatch) => {
-//     dispatch({
-//       type: CREATE_CHANNEL,
-//       name,
-//       description
-//     });
-//   };
-// }
-//
-// export function createChannelRequest(name, description) {
-//   return (dispatch) => {
-//     const cookie = JSON.parse(Cookies.get('_u'));
-//     const { token } = cookie;
-//     return request
-//       .post(`${apiURL}/channel?access-token=${token}`)
-//       .send({
-//         name,
-//         description
-//       })
-//       .end((err, res) => {
-//         if (err || res.body.status === 'error') {
-//           console.log('createChannelRequest error:', err); // eslint-disable-line no-console
-//         } else {
-//           dispatch(createChannel(res.body.data.name, res.body.data.id));
-//           console.log(`Yeah! ${JSON.stringify(res.body)}`);
-//         }
-//       });
-//   };
-// }
-
-//REDUCER
 
 const initialState = {
   channelsArr: [],
@@ -53,29 +16,23 @@ const initialState = {
     loadedChannelList: false,
     loadedChannelStories: false,
   },
-  loading: false
 };
 
 export default function channelReducer(state = initialState, action) {
   switch (action.type) {
-    // case CREATE_CHANNEL: {
-    //   const { name, description } = action;
-    //   const newChannels = [...state.channelsArr, ...[{ name: name, description: description }]];
-    //
-    //   return {
-    //     ...state,
-    //     channelsArr: newChannels
-    //   };
-    // }
     case LOAD_CHANNELS:
       return {
         ...state,
-        loading: true
+        loading: {
+          loadingChannelList: true
+        }
       };
     case LOAD_CHANNELS_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loading: {
+          loadingChannelList: false
+        },
         loaded: {
           loadedChannelList: action.result.status === 'success' && true
         },
@@ -84,7 +41,9 @@ export default function channelReducer(state = initialState, action) {
     case LOAD_CHANNELS_FAIL:
       return {
         ...state,
-        loading: false,
+        loading: {
+          loadingChannelList: false
+        },
         loaded: {
           loadedChannelList: false
         },
@@ -95,12 +54,16 @@ export default function channelReducer(state = initialState, action) {
     case SHOW_CHANNEL:
       return {
         ...state,
-        loading: true
+        loading: {
+          loadingChannelStories: true
+        }
       };
     case SHOW_CHANNEL_SUCCESS:
       return {
         ...state,
-        loading: false,
+        loading: {
+          loadingChannelStories: false
+        },
         loaded: {
           loadedChannelStories: action.result.status === 'success' && true
         },
@@ -109,7 +72,9 @@ export default function channelReducer(state = initialState, action) {
     case SHOW_CHANNEL_FAIL:
       return {
         ...state,
-        loading: false,
+        loading: {
+          loadingChannelStories: false
+        },
         loaded: {
           loadedChannelStories: false
         },
@@ -149,10 +114,11 @@ export function isLoadedChannelStories(globalState) {
 }
 
 export function isMashUp(globalState) {
-  return globalState.routing.locationBeforeTransitions.parthname === '/' || '/channel/mashup' ?
+  const path = globalState.routing.locationBeforeTransitions.pathname;
+  return path === '/' || path === '/channel/mashup' ?
     ''
     :
-    globalState.routing.locationBeforeTransitions.parthname.substring(9);
+    globalState.routing.locationBeforeTransitions.pathname.substring(9);        // get slug in pathname after /channel/
 }
 
 export function load() {

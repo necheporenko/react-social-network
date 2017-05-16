@@ -12,6 +12,7 @@ class Channels extends Component {
   showChannelStories(slug) {
     this.props.showChannel(slug);
   }
+
   render() {
     const { channelsArr } = this.props;
     return (
@@ -45,6 +46,7 @@ class Channels extends Component {
 Channels.propTypes = {
   createChannel: PropTypes.func,
   loadChannels: PropTypes.func,
+  showChannel: PropTypes.func,
   channelsArr: PropTypes.array
 };
 

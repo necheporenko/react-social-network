@@ -26,9 +26,7 @@ class MainPage extends Component {
           <div className="mid-column">
             <ChannelStream
               user={this.props.user}
-              // storiesArr={this.props.storiesArr}
               createStory={this.props.createStory}
-              // loadStories={this.props.loadStories}
               channelStories={this.props.channelStories}
             />
             <FollowBlock />
@@ -42,10 +40,9 @@ class MainPage extends Component {
 MainPage.propTypes = {
   user: PropTypes.object,
   createStory: PropTypes.func,                //story
-  storiesArr: PropTypes.array,
-  loadStories: PropTypes.func,
   createChannel: PropTypes.func,              //channel
   loadChannels: PropTypes.func,
+  showChannel: PropTypes.func,
   channelsArr: PropTypes.array,
   channelStories: PropTypes.array,
 };

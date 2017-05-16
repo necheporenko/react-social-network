@@ -11,7 +11,6 @@ class ChannelStream extends Component {
         <Sbox
           user={this.props.user}
           createStory={this.props.createStory}
-          // loadStories={this.props.loadStories}
         />
         {channelStories && channelStories.map((story) => (
           <Post
@@ -19,7 +18,6 @@ class ChannelStream extends Component {
             post={story.text}
           />
         ))}
-        {this.props.children}
       </div>
     );
   }
@@ -27,10 +25,7 @@ class ChannelStream extends Component {
 
 ChannelStream.propTypes = {
   user: PropTypes.object,
-  children: PropTypes.element,
-  createStory: PropTypes.func,                //story
-  storiesArr: PropTypes.array,
-  loadStories: PropTypes.func,
+  createStory: PropTypes.func,
   channelStories: PropTypes.array,
 };
 

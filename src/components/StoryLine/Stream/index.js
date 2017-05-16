@@ -19,7 +19,6 @@ class Stream extends Component {
             post={story.text}
           />
         ))}
-        {this.props.children}
       </div>
     );
   }
@@ -27,7 +26,6 @@ class Stream extends Component {
 
 Stream.propTypes = {
   user: PropTypes.object,
-  children: PropTypes.element,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,

@@ -179,7 +179,6 @@ New.propTypes = {
   showActiveForm: PropTypes.func,
   loginUser: PropTypes.func,
   loadAuth: PropTypes.func,
-  loadStories: PropTypes.func,
   registerUser: PropTypes.func,
   loginSocial: PropTypes.func,
   loading: PropTypes.bool,
