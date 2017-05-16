@@ -5,7 +5,7 @@ import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import uploadImageCallBack from './uploadImageCallBack';
-import BooksTree from '../../BooksTree';
+import BooksTreeContainer from '../../../containers/BooksTreeContainer';
 import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './index.scss';
 
@@ -96,7 +96,7 @@ class Sbox extends Component {
             <button className="btn-brand" type="submit" onClick={this.onSubmitStory}>Log</button>
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} pullRight >
-                <BooksTree />
+                <BooksTreeContainer />
               </DropdownButton>
             </ButtonToolbar>
           </div>

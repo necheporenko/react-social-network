@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import BooksTree from '../BooksTree';
+import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import Stream from './Stream/index';
 import InfoBloks from './InfoBlocks/index';
 import './index.scss';
@@ -48,7 +48,7 @@ class StoryLine extends Component {
     return (
       <div className="storyLine">
         <div className="wrap-storyLine">
-          <BooksTree
+          <BooksTreeContainer
             infoBlocksTop={chooseScroll.booksTree}
             user={this.props.user}
           />

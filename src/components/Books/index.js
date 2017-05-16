@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import StackGrid, { transition, easings } from "react-stack-grid";
 import StackGrid from 'react-stack-grid';
-import BookTree from '../../components/BooksTree';
+import BookTree from '../../containers/BooksTreeContainer';
 //import {BOOKS} from '../../constants/books';
 import './index.scss';
 

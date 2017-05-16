@@ -3,7 +3,7 @@ import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router';
 import {connect} from 'react-redux';
 import { Form, RadioGroup } from 'formsy-react-components';
-import BooksTree from '../BooksTree';
+import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import Stream from '../StoryLine/Stream/index';
 //import InfoBloks from '../StoryLine/InfoBlocks';
 import Photos from '../StoryLine/InfoBlocks/Photos';
@@ -49,7 +49,7 @@ class BookPage extends Component {
         <div className="book-page">
           <div className="storyLine">
             <div className="wrap-storyLine">
-              <BooksTree />
+              <BooksTreeContainer />
               <Stream />
               <div className="infobloks">
                 <div className="infobloks-book">

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import BooksTree from '../../../components/BooksTree';
+import BooksTreeContainer from '../../../containers/BooksTreeContainer';
 import './index.scss';
 
 class Privacy extends Component {
@@ -22,7 +22,7 @@ class Privacy extends Component {
           <ButtonToolbar>
             <DropdownButton className="bootstrap-pure-btn privacy-pure-btn" title="Books privacy" >
               <div className="privacy-books-tree">
-                <BooksTree />
+                <BooksTreeContainer />
               </div>
             </DropdownButton>
           </ButtonToolbar>
