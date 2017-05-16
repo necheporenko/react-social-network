@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import AddBook from '../components/BooksTree/addBook';
+import AddBook from '../components/BooksTree/AddBook';
 import Demo from '../components/BooksTree/index';
 import '../components/BooksTree/index.scss';
 

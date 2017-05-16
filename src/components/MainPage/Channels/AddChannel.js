@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Form, Input } from 'formsy-react-components';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import './index.scss';
 
 class AddChannel extends Component {
@@ -75,8 +75,10 @@ class AddChannel extends Component {
             </Modal.Body>
 
             <Modal.Footer>
-              <Button onClick={this.Close}>Close</Button>
-              <Button bsStyle="primary" type="submit">Create channel</Button>
+              <div style={{float: 'right'}}>
+                <button className="btn-brand btn-cancel" onClick={this.Close}>Cancel</button>
+                <button className="btn-brand" style={{marginLeft: '10px'}} type="submit">Create Channel</button>
+              </div>
             </Modal.Footer>
           </Form>
 

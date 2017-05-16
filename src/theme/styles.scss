@@ -97,12 +97,15 @@ b {
 }
 
 .sidebar {
-  width: 160px;
+  width: 220px;
 
   ul {
     list-style: none;
 
     > a {
+      color: $default-color;
+      text-decoration: none;
+
       &:hover {
         color: $default-color;
       }
@@ -112,6 +115,7 @@ b {
           font-family: $font-medium;
           border-left: 4px solid #8F8F8F;
           background-color: #E1E1E1;
+          padding-left: 26px;
         }
       }
     }

@@ -12,6 +12,7 @@
   padding: 10px 0;
   padding-left: 26px;
   border-left: 4px solid transparent;
+  cursor: pointer;
   &:hover {
     border-color: #8F8F8F;
     background-color: #E1E1E1;
@@ -20,6 +21,10 @@
 
 .nav-a {
   color: $default-color;
+
+  &:hover {
+    color: $default-color;
+  }
 }
 
 .nav-storyline {
