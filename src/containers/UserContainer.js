@@ -58,9 +58,6 @@ export default class UserContainer extends Component {
           createStory={this.props.createStory}
           loadStories={this.props.loadStories}
         />
-        <div>
-          <button onClick={() => this.props.loadStories('bohdan.andriyiv')}>Click</button>
-        </div>
       </div>
     );
   }
