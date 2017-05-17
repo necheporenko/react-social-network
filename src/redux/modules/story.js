@@ -61,10 +61,11 @@ export function isLoaded(globalState) {
   return globalState.story && globalState.story.loaded;
 }
 
-export function load() {
+export function load(slug) {
+  const user_slug = slug || '';
   return {
     types: [LOAD_SHOW_USER_STORIES, LOAD_SHOW_USER_STORIES_SUCCESS, LOAD_SHOW_USER_STORIES_FAIL],
-    promise: (client) => client.get('/user/stories')
+    promise: (client) => client.get('/user/stories', { params: { user_slug }})
     // promise: (client) => client.get('/user/stories', { params: { user_id: id }})
   };
 }

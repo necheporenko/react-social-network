@@ -18,9 +18,9 @@ import StoryLine from '../components/StoryLine';
 
     promises.push(dispatch(getUser(getUserSlug(getState()))));
 
-    if (!isStoriesLoaded(getState())) {
-      promises.push(dispatch(loadStories()));
-    }
+    // if (!isStoriesLoaded(getState())) {
+    promises.push(dispatch(loadStories(getUserSlug(getState()))));
+    // }
     return Promise.all(promises);
   }
 }])
@@ -59,7 +59,7 @@ export default class UserContainer extends Component {
           loadStories={this.props.loadStories}
         />
         <div>
-          <button onClick={() => this.props.getUser('vad-vad')}>Click</button>
+          <button onClick={() => this.props.loadStories('bohdan.andriyiv')}>Click</button>
         </div>
       </div>
     );

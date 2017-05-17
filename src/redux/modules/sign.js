@@ -158,7 +158,14 @@ export default function signReducer(state = initialState, action) {
       return {
         ...state,
         loadingUser: false,
-        activeUser: action.result.data
+        activeUser: action.result.data,
+        // globalState: {
+        //   follow: {
+        //     loaded: {
+        //       loadedFollowing: false
+        //     }
+        //   }
+        // },
       };
     case SHOW_USER_FAIL:
       console.log('SHOW_USER_FAIL:', action.result);
