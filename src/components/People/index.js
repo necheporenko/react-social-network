@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
+import { getUserSlug } from '../../redux/modules/sign';
 import { loadPeopleFollowing, isLoadedFollowing, follow as followUser, unfollow as unfollowUser } from '../../redux/modules/follow';
 import PeopleMenu from './PeopleMenu';
 import './index.scss';
@@ -8,9 +10,9 @@ import './index.scss';
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
-    if (!isLoadedFollowing(getState())) {
-      promises.push(dispatch(loadPeopleFollowing()));
-    }
+    // if (!isLoadedFollowing(getState())) {
+    promises.push(dispatch(loadPeopleFollowing(getUserSlug(getState()))));
+    // }
     return Promise.all(promises);
   }
 }])
@@ -22,6 +24,7 @@ import './index.scss';
   isLoadedFollowing,
   followUser,
   unfollowUser,
+  getUserSlug,
 })
 
 class People extends Component {
@@ -54,10 +57,10 @@ class People extends Component {
 
             {following && following.map((people) => (
               <div key={people.id} className="people-card">
-                <a href="#">
+                <Link to={`/${people.slug}`}>
                   <img src="http://devianmbanks.validbook.org/cdn/460/avatar/90x90.jpg?t=1486723970" />
                   <div>{`${people.first_name} ${people.last_name}`}</div>
-                </a>
+                </Link>
                 <div
                   className="btn-following"
                   onClick={

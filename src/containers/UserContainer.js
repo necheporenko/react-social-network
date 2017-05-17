@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { getUser, getUserSlug } from '../redux/modules/sign';
+import { getUser, getUserSlug, isPolling } from '../redux/modules/sign';
 import { create as createStory, isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
@@ -13,8 +13,10 @@ import StoryLine from '../components/StoryLine';
     const promises = [];
     // console.log('asyncConnect in container');
     // console.log('GET USER SLUG:', getUserSlug(getState()));
-    // // console.log('GET USER:', getUser(getUserSlug(getState())));
-    // getUser(getUserSlug(getState()));
+    // console.log('isPolling:', isPolling(getState()));
+    // console.log('GET USER:', getUser(getUserSlug(getState())));
+
+    promises.push(dispatch(getUser(getUserSlug(getState()))));
 
     if (!isStoriesLoaded(getState())) {
       promises.push(dispatch(loadStories()));
@@ -33,16 +35,19 @@ import StoryLine from '../components/StoryLine';
   loadStories,
   createStory,
   getUser,
-  getUserSlug
+  getUserSlug,
+  isPolling
 })
 
 export default class UserContainer extends Component {
+
   render() {
     return (
       <div>
         {/*{this.props.isAuthenticated && }*/}
         <SubHeader
-          user={this.props.user}
+          user={this.props.user}      //DELETE
+          activeUser={this.props.activeUser}
         />
         <Navigation
           user={this.props.user}
@@ -53,6 +58,9 @@ export default class UserContainer extends Component {
           createStory={this.props.createStory}
           loadStories={this.props.loadStories}
         />
+        <div>
+          <button onClick={() => this.props.getUser('vad-vad')}>Click</button>
+        </div>
       </div>
     );
   }
@@ -60,6 +68,7 @@ export default class UserContainer extends Component {
 
 UserContainer.propTypes = {
   user: PropTypes.object,                     //sign
+  activeUser: PropTypes.object,
   // isAuthenticated: PropTypes.bool,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,

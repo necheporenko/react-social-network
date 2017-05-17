@@ -1,6 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import './index.scss';
+
+@connect((state) => ({
+  activeUser: state.sign.activeUser
+}), {})
 
 class SubHeader extends Component {
   constructor(props) {
@@ -43,17 +48,19 @@ class SubHeader extends Component {
   }
 
   render() {
-    const { first_name, last_name } = this.props.user;
-    const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
+    // const { first_name, last_name } = this.props.user;
+    const { first_name, last_name, slug } = this.props.activeUser;
+    // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { imageAvatar } = this.state;
     const { imageCover } = this.state;
+
 
     return (
       <div className="subHeader">
         <img src={imageCover} />
         <div className="wrapper">
           <div className="subHeader-userAvatar">
-            <Link to={link}>
+            <Link to={`/${slug}`}>
               <img src={imageAvatar} />
             </Link>
             <div className="subHeader-add">
@@ -75,7 +82,7 @@ class SubHeader extends Component {
             </div>
           </div>
           <div className="subHeader-userName">
-            <Link to={link}>{first_name} {last_name}</Link>
+            <Link to={`/${slug}`}>{first_name} {last_name}</Link>
           </div>
         </div>
         {/* <div className="subHeader-bg"></div> */}
@@ -85,9 +92,10 @@ class SubHeader extends Component {
 }
 
 SubHeader.propTypes = {
-  user: PropTypes.shape({
+  activeUser: PropTypes.shape({
     first_name: PropTypes.string,
     last_name: PropTypes.string,
+    slug: PropTypes.string,
     id: PropTypes.number
   })
 };

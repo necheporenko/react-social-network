@@ -4,12 +4,12 @@ import { Link } from 'react-router';
 import './index.scss';
 
 @connect((state) => ({
-  user: state.sign.user,
+  activeUser: state.sign.activeUser,
 }), {})
 
 export default class PeopleMenu extends Component {
   render() {
-    const { slug } = this.props.user;
+    const { slug } = this.props.activeUser;
 
     return (
       <div className="sidebar people-nav">
@@ -30,5 +30,5 @@ export default class PeopleMenu extends Component {
 }
 
 PeopleMenu.propTypes = {
-  user: PropTypes.object,
+  activeUser: PropTypes.object,
 };

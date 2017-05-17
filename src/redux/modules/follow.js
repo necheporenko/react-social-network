@@ -165,23 +165,26 @@ export function unfollow(id) {
   };
 }
 
-export function loadPeopleFollowing() {
+export function loadPeopleFollowing(slug) {
+  const user_slug = slug || '';
   return {
     types: [LOAD_PEOPLE_FOLLOWING, LOAD_PEOPLE_FOLLOWING_SUCCESS, LOAD_PEOPLE_FOLLOWING_FAIL],
-    promise: (client) => client.get('/people/following')
+    promise: (client) => client.get('/people/following', { params: { user_slug }})
   };
 }
 
-export function loadPeopleFollowers() {
+export function loadPeopleFollowers(slug) {
+  const user_slug = slug || '';
   return {
     types: [LOAD_PEOPLE_FOLLOWERS, LOAD_PEOPLE_FOLLOWERS_SUCCESS, LOAD_PEOPLE_FOLLOWERS_FAIL],
-    promise: (client) => client.get('/people/followers')
+    promise: (client) => client.get('/people/followers', { params: { user_slug }})
   };
 }
 
-export function loadPeopleSuggested() {
+export function loadPeopleSuggested(slug) {
+  const user_slug = slug || '';
   return {
     types: [LOAD_PEOPLE_SUGGESTED, LOAD_PEOPLE_SUGGESTED_SUCCESS, LOAD_PEOPLE_SUGGESTED_FAIL],
-    promise: (client) => client.get('/people/suggested')
+    promise: (client) => client.get('/people/suggested', { params: { user_slug }})
   };
 }

@@ -7,7 +7,7 @@ import './index.scss';
 let savePositionTop;
 
 @connect((state) => ({
-  user: state.sign.user,
+  activeUser: state.sign.activeUser,
 }), {})
 
 export default class Navigation extends Component {
@@ -42,7 +42,7 @@ export default class Navigation extends Component {
   }
 
   render() {
-    const { slug, first_name, last_name } = this.props.user;
+    const { first_name, last_name, slug } = this.props.activeUser;
     const { scrollTop } = this.state;
 
     const chooseNav = () => {
@@ -120,5 +120,5 @@ export default class Navigation extends Component {
 }
 
 Navigation.propTypes = {
-  user: PropTypes.object,
+  activeUser: PropTypes.object,
 };

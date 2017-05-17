@@ -61,7 +61,7 @@ export default class ApiClient {
     methods.forEach(method => {
       this[method] = (path, { params = {}, data, headers, files, fields } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
-        console.log('       === REQUEST ===');
+        console.log('       ============ REQUEST ============');
 
         // console.log('Paramsssssss:', params);
         const apiKey = readAuthCookie(req);
@@ -70,7 +70,7 @@ export default class ApiClient {
         }
 
         if (params) {                         // for get request
-          // console.log('==Params:', params);
+          console.log('  ====Params:', params);
           request.query(params);
         }
 
@@ -105,9 +105,9 @@ export default class ApiClient {
             return reject(body || err);
           }
 
-          console.info('==Method:', method);
-          console.info('==Path:', path);
-          console.info('==Body:', body);
+          console.info('  ====Method:  ', method);
+          console.info('  ====Path:  ', path);
+          console.info('  ====Body:  ', body);
 
           if (method === 'post' && (path === '/auth/login' || '/auth/connect') && body && body.data.access_token) {
             saveAuthCookie(req, body.data.access_token);
