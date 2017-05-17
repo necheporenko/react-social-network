@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
+import { getUser, getUserSlug } from '../redux/modules/sign';
 import { create as createStory, isLoaded as isStoriesLoaded, load as loadStories } from '../redux/modules/story';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
@@ -10,6 +11,11 @@ import StoryLine from '../components/StoryLine';
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
+    // console.log('asyncConnect in container');
+    // console.log('GET USER SLUG:', getUserSlug(getState()));
+    // // console.log('GET USER:', getUser(getUserSlug(getState())));
+    // getUser(getUserSlug(getState()));
+
     if (!isStoriesLoaded(getState())) {
       promises.push(dispatch(loadStories()));
     }
@@ -20,24 +26,27 @@ import StoryLine from '../components/StoryLine';
 
 @connect((state) => ({
   user: state.sign.user,
+  activeUser: state.sign.activeUser,
   isAuthenticated: state.sign.isAuthenticated,
   storiesArr: state.story.storiesArr
 }), {
   loadStories,
-  createStory
+  createStory,
+  getUser,
+  getUserSlug
 })
 
 export default class UserContainer extends Component {
   render() {
     return (
       <div>
+        {/*{this.props.isAuthenticated && }*/}
         <SubHeader
           user={this.props.user}
         />
         <Navigation
           user={this.props.user}
         />
-        {/*{this.props.isAuthenticated && }*/}
         <StoryLine
           user={this.props.user}
           storiesArr={this.props.storiesArr}

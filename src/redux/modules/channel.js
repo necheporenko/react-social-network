@@ -118,7 +118,7 @@ export function isMashUp(globalState) {
   return path === '/' || path === '/channel/mashup' ?
     ''
     :
-    globalState.routing.locationBeforeTransitions.pathname.substring(9);        // get slug in pathname after /channel/
+    globalState.routing.locationBeforeTransitions.pathname.substring(9);               // get slug in pathname after /channel/
 }
 
 export function load() {

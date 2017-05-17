@@ -13,10 +13,14 @@ export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const LOGIN_FB = 'LOGIN_FB';
 export const LOGIN_FB_SUCCESS = 'LOGIN_FB_SUCCESS';
 export const LOGIN_FB_FAIL = 'LOGIN_FB_FAIL';
+export const SHOW_USER = 'SHOW_USER';
+export const SHOW_USER_SUCCESS = 'SHOW_USER_SUCCESS';
+export const SHOW_USER_FAIL = 'SHOW_USER_FAIL';
 
 const initialState = {
   isAuthenticated: false,
   user: null,
+  activeUser: null,
   loaded: false
 };
 
@@ -143,6 +147,24 @@ export default function signReducer(state = initialState, action) {
         // isAuthenticated: false
       };
 
+    case SHOW_USER:
+      return {
+        ...state,
+        loadingUser: true,
+      };
+    case SHOW_USER_SUCCESS:
+      return {
+        ...state,
+        loadingUser: false,
+        activeUser: action.result.data
+      };
+    case SHOW_USER_FAIL:
+      return {
+        ...state,
+        loadingUser: false,
+        activeUser: null
+      };
+
     default:
       return state;
   }
@@ -194,3 +216,19 @@ export function loginSocial(provider, avatar, token) {
     promise: (client) => client.post('/auth/connect', { data: { provider, avatar, token }})
   };
 }
+
+export function getUserSlug(globalState) {
+  const path = globalState.routing.locationBeforeTransitions.pathname;
+  console.log('PATH:', path);
+  return path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));     // get user slug in pathname between / or after first /
+}
+
+export function getUser(slug) {
+  console.log('slug in sign', slug);
+  const user_slug = slug || '';
+  return {
+    types: [SHOW_USER, SHOW_USER_SUCCESS, SHOW_USER_FAIL],
+    promise: (client) => client.get('/user/view', { params: { user_slug }})
+  };
+}
+
