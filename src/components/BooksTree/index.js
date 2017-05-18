@@ -11,7 +11,10 @@ import './draggable.scss';
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
+
+    console.log('asyncConnect BooksTree')
     promises.push(dispatch(loadBookTree('vad-vad')));
+
     return Promise.all(promises);
   }
 }])
@@ -134,11 +137,11 @@ class BooksTree extends Component {
 
   render() {
     console.log('RENDER DATA props:', this.props.bookTreeArr);
-    console.log('RENDER GGGGGGDATA:', this.state.gData);
+    // console.log('RENDER GGGGGGDATA:', this.state.gData);
     const { bookTreeArr } = this.props;
     const loop = data => (
       data.map((item) => {
-        console.log('ITEM:', item);
+        // console.log('ITEM:', item);
         return (
           <TreeNode
             key={item.key}
@@ -191,7 +194,7 @@ class BooksTree extends Component {
 
         </div>
 
-        <button onClick={() => this.props.loadBookTree('vad-vad')}>Click Me</button>
+        {/*<button onClick={() => this.props.loadBookTree('vad-vad')}>Click Me</button>*/}
       </div>
     );
   }

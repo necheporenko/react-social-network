@@ -1,13 +1,29 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
 import { Link } from 'react-router';
 import AddBook from '../components/BooksTree/AddBook';
-import Demo from '../components/BooksTree/index';
+import BooksTree from '../components/BooksTree/index';
+import { create as createBook, load as loadBookTree } from '../redux/modules/book';
 import '../components/BooksTree/index.scss';
+
+@asyncConnect([{
+  promise: ({ store: { dispatch, getState } }) => {
+    const promises = [];
+
+    console.log('asyncConnect BooksTreeContainer')
+    promises.push(dispatch(loadBookTree('vad-vad')));
+    return Promise.all(promises);
+  }
+}])
 
 @connect((state) => ({
   user: state.sign.user,
-}), {})
+  bookTreeArr: state.book.bookTreeArr,
+}), {
+  loadBookTree,
+  createBook,
+})
 
 export default class BooksTreeContainer extends Component {
   render() {
@@ -17,8 +33,13 @@ export default class BooksTreeContainer extends Component {
       <div className="bookstree">
         <div className={this.props.infoBlocksTop}>
           <div className="bookstree-title"><Link to={`/${slug}/books`}>BOOKS</Link></div>
-          <Demo />
-          <AddBook />
+          <BooksTree
+            bookTreeArr={this.props.bookTreeArr}
+          />
+          <AddBook
+            // loadBookTree={this.props.loadBookTree}
+            // createBook={this.props.createBook}
+          />
           {this.props.children}
         </div>
       </div>
@@ -30,4 +51,7 @@ BooksTreeContainer.propTypes = {
   children: PropTypes.element,
   infoBlocksTop: PropTypes.string,
   user: PropTypes.object,
+  bookTreeArr: PropTypes.array,
+  loadBookTree: PropTypes.func,
+  createBook: PropTypes.func,
 };

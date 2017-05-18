@@ -51,6 +51,7 @@ class StoryLine extends Component {
           <BooksTreeContainer
             infoBlocksTop={chooseScroll.booksTree}
             user={this.props.user}
+            bookTreeArr={this.props.bookTreeArr}
           />
           <Stream
             user={this.props.user}

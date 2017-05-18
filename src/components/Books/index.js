@@ -39,7 +39,9 @@ class Books extends Component {
     return (
       <div className="books contents">
         <div className="sidebar-books">
-          <BookTree />
+          <BookTree
+            bookTreeArr={this.props.bookTreeArr}
+          />
         </div>
 
         <div className="wrapper">

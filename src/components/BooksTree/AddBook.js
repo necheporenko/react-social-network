@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { Form, Input, Select } from 'formsy-react-components';
+import { connect } from 'react-redux';
 import AvatarEditor from 'react-avatar-editor';
 import { Modal } from 'react-bootstrap';
+import { create as createBook, load as loadBookTree } from '../../redux/modules/book';
 import './index.scss';
 import coverBook from '../../img/Default/cover-book.png';
 
@@ -14,6 +16,13 @@ const selectCountry = [
   {value: 'Albania', label: 'Albania'},
   {value: 'Algeria', label: 'Algeria'}
 ];
+
+@connect((state) => ({
+  bookTreeArr: state.book.bookTreeArr,
+}), {
+  loadBookTree,
+  createBook,
+})
 
 class AddBook extends Component {
   constructor(props) {
@@ -32,17 +41,18 @@ class AddBook extends Component {
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
-    // this.onSubmitChannel = this.onSubmitChannel.bind(this);
+    this.onSubmitBook = this.onSubmitBook.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleScale = this.handleScale.bind(this);
   }
 
-  // onSubmitChannel(data) {
-  //   console.log(data);
-  //   //this.props.createChannel(data.name, data.description);
-  //   this.props.createChannelRequest(data.name, data.description);
-  // }
+  onSubmitBook(data) {
+    console.log(data);
+    this.props.createBook(data.name, 'root')
+      .then(this.Close())
+      .then(() => this.props.loadBookTree());
+  }
 
   Close() {
     this.setState({ showModal: false });
@@ -110,7 +120,7 @@ class AddBook extends Component {
 
           <Form
             rowClassName={[{'form-group': false}, {row: false}, 'channel-form']}
-            onSubmit={this.onSubmitChannel}
+            onSubmit={this.onSubmitBook}
           >
             <Modal.Body>
               <div className="cover-book">
@@ -205,7 +215,8 @@ class AddBook extends Component {
 AddBook.propTypes = {
   book_name: PropTypes.string,
   book_description: PropTypes.string,
-  // createChannelRequest: PropTypes.func
+  loadBookTree: PropTypes.func,
+  createBook: PropTypes.func,
 };
 
 export default AddBook;

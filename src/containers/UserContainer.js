@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { getUser, getUserSlug, isPolling } from '../redux/modules/sign';
 import { create as createStory, load as loadStories } from '../redux/modules/story';
+import { create as createBook, load as loadBookTree } from '../redux/modules/book';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 import StoryLine from '../components/StoryLine';
@@ -13,6 +14,8 @@ import StoryLine from '../components/StoryLine';
     const promises = [];
     promises.push(dispatch(getUser(getUserSlug(getState()))));
     promises.push(dispatch(loadStories(getUserSlug(getState()))));
+
+    promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
     return Promise.all(promises);
   }
 }])
@@ -22,13 +25,15 @@ import StoryLine from '../components/StoryLine';
   user: state.sign.user,
   activeUser: state.sign.activeUser,
   isAuthenticated: state.sign.isAuthenticated,
-  storiesArr: state.story.storiesArr
+  storiesArr: state.story.storiesArr,
+  bookTreeArr: state.book.bookTreeArr,
 }), {
   loadStories,
   createStory,
   getUser,
   getUserSlug,
-  isPolling
+  isPolling,
+  loadBookTree,
 })
 
 export default class UserContainer extends Component {
@@ -47,6 +52,7 @@ export default class UserContainer extends Component {
           storiesArr={this.props.storiesArr}
           createStory={this.props.createStory}
           loadStories={this.props.loadStories}
+          bookTreeArr={this.props.bookTreeArr}
         />
       </div>
     );

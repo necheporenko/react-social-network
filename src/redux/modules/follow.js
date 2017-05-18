@@ -154,14 +154,14 @@ export function isLoadedSuggested(globalState) {
 export function follow(id) {
   return {
     types: [FOLLOW_USER, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAIL],
-    promise: (client) => client.post('/follow/connect', { data: { user_id: id, channel_id: 1 }})
+    promise: (client) => client.post('/follow/connect', { data: { user_id: id, channel_id: '' }})                       //todo:  add channel_id
   };
 }
 
 export function unfollow(id) {
   return {
     types: [UNFOLLOW_USER, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAIL],
-    promise: (client) => client.post('/follow/disconnect', { data: { user_id: id, channel_id: 1 }})
+    promise: (client) => client.post('/follow/disconnect', { data: { user_id: id, channel_id: '' }})
   };
 }
 

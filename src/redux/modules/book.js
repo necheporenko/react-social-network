@@ -68,9 +68,9 @@ export function load(user_slug) {
   };
 }
 
-export function create(name, id) {
+export function create(name, parent_slug) {
   return {
     types: [CREATE_BOOK, CREATE_BOOK_SUCCESS, CREATE_BOOK_FAIL],
-    promise: (client) => client.post('/book', { data: { name, id }})
+    promise: (client) => client.post('/book', { data: { name, parent_slug }})
   };
 }

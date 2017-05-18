@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { getUser, getUserSlug, isPolling } from '../redux/modules/sign';
+import { create as createBook, load as loadBookTree } from '../redux/modules/book';
 import Navigation from '../components/Navigation';
 import Books from '../components/Books';
 import SubHeader from '../components/StoryLine/SubHeader';
@@ -12,15 +13,19 @@ import SubHeader from '../components/StoryLine/SubHeader';
 
     promises.push(dispatch(getUser(getUserSlug(getState()))));
 
+    promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
+
     return Promise.all(promises);
   }
 }])
 
 @connect((state) => ({
-  activeUser: state.sign.activeUser
+  activeUser: state.sign.activeUser,
+  bookTreeArr: state.book.bookTreeArr,
 }), {
   getUser,
   getUserSlug,
+  loadBookTree,
 })
 
 export default class BooksContainer extends Component {
@@ -33,7 +38,9 @@ export default class BooksContainer extends Component {
         <Navigation
           activeUser={this.props.activeUser}
         />
-        <Books />
+        <Books
+          bookTreeArr={this.props.bookTreeArr}
+        />
       </div>
     );
   }
