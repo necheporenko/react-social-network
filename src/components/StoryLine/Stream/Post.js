@@ -4,6 +4,9 @@ import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 
 class Post extends Component {
   render() {
+    const { fullName, slug } = this.props.user;
+    const created = this.props.created;
+    const post = this.props.post;
     return (
       <div className="post">
 
@@ -13,15 +16,15 @@ class Post extends Component {
         <div className="post-header">
 
           <div className="wrap-post-user-avatar">
-            <a href="#"><img className="post_user_avatar" src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1486723970" /></a>
+            <Link to={`/${slug}`}><img className="post_user_avatar" src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1486723970" /></Link>
           </div>
 
           <div className="wrap-post-user-info">
             <div className="post-user-name">
-              <a href="#">Bob Surname</a>
+              <Link to={`/${slug}`}>{fullName}</Link>
             </div>
             <div className="post-details">
-              <div className="post-details-date">30 Jan 2017</div>
+              <div className="post-details-date">{created}</div>
               <div className="post-delimiter"><span> · </span></div>
               <div className="post-details-loud-icon"><span></span></div>
               <div className="post-delimiter"><span> · </span></div>
@@ -69,7 +72,7 @@ class Post extends Component {
 
             <div
               className="post_content_type_text"
-              dangerouslySetInnerHTML={{__html: this.props.post}}
+              dangerouslySetInnerHTML={{__html: post}}
             />
 
 
@@ -167,7 +170,9 @@ class Post extends Component {
 }
 
 Post.propTypes = {
-  post: PropTypes.string
+  user: PropTypes.object,
+  post: PropTypes.string,
+  created: PropTypes.string,
 };
 
 export default Post;

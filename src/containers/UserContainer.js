@@ -65,4 +65,5 @@ UserContainer.propTypes = {
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,
+  bookTreeArr: PropTypes.array,               //book
 };

@@ -17,6 +17,8 @@ class Stream extends Component {
           <Post
             key={story.id}
             post={story.text}
+            user={story.user}
+            created={story.created}
           />
         ))}
       </div>
