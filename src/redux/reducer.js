@@ -6,6 +6,7 @@ import channel from './modules/channel';
 import story from './modules/story';
 import sign from './modules/sign';
 import follow from './modules/follow';
+import book from './modules/book';
 
 export default function createReducers(asyncReducers) {
   return {
@@ -18,6 +19,7 @@ export default function createReducers(asyncReducers) {
     story,
     sign,
     follow,
+    book,
     ...asyncReducers
   };
 }

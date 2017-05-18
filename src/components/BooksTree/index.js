@@ -1,9 +1,29 @@
-import React, { Component } from 'react';
-import Tree, {TreeNode} from 'draggable-react-tree-component';
+import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
+import Tree, { TreeNode } from 'draggable-react-tree-component';
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
+import { load as loadBookTree } from '../../redux/modules/book';
 import { gData } from './util';
 import './draggable.scss';
 
-class Demo extends Component {
+
+@asyncConnect([{
+  promise: ({ store: { dispatch, getState } }) => {
+    const promises = [];
+    promises.push(dispatch(loadBookTree('vad-vad')));
+    return Promise.all(promises);
+  }
+}])
+
+
+@connect((state) => ({
+  bookTreeArr: state.book.bookTreeArr,
+}), {
+  loadBookTree
+})
+
+class BooksTree extends Component {
   constructor(props) {
     super(props);
     [
@@ -14,11 +34,13 @@ class Demo extends Component {
     ].forEach((name) => (this[name] = this[name].bind(this)));
 
     this.state = {
+      // gData: this.props.bookTreeArr,
       gData,
       autoExpandParent: true,  //??????
-      expandedKeys: ['0-0']
+      expandedKeys: ['root']
     };
   }
+
   onDragStart(info) {
     console.log('start', info); // eslint-disable-line no-console
   }
@@ -111,20 +133,26 @@ class Demo extends Component {
 
 
   render() {
+    console.log('RENDER DATA props:', this.props.bookTreeArr);
+    console.log('RENDER GGGGGGDATA:', this.state.gData);
+    const { bookTreeArr } = this.props;
     const loop = data => (
-      data.map((item) =>
-        (<TreeNode
-          key={item.key}
-          items={(item.children && item.children.length) ? loop(item.children) : null}
-          //no_drag = {item.no_drag ? draggable={false} : null}
-          //className={item.show ? 'not_show' : null}
-          className={this.onPick(item)}
-          disabled={item.no_drag}
-        >
-          <a href={`#/${item.key}`} draggable={false}>
-            {item.title}
-          </a>
-        </TreeNode>)
+      data.map((item) => {
+        console.log('ITEM:', item);
+        return (
+          <TreeNode
+            key={item.key}
+            items={(item.children && item.children.length) ? loop(item.children) : null}
+        //no_drag = {item.no_drag ? draggable={false} : null}
+        //className={item.show ? 'not_show' : null}
+            className={this.onPick(item)}
+            disabled={item.no_drag}
+          >
+            <Link to={`books/${item.key}`} draggable={false}>
+              {item.name}
+            </Link>
+          </TreeNode>);
+      }
       )
     );
     return (
@@ -139,15 +167,95 @@ class Demo extends Component {
             onDrop={this.onDrop}
             droppedNodeClassNameDelay={2400}
             defaultExpandAll={false}
-            defaultExpandedKeys={['0-0']}
+            defaultExpandedKeys={['root']}
             //defaultExpandAll={this.defaultExpandAll} //new
           >
-            {loop(this.state.gData)}
+            {loop(this.props.bookTreeArr)}
+
+
+            {/*{bookTreeArr && bookTreeArr.map((item) => (*/}
+            {/*<TreeNode*/}
+            {/*key={item.key}*/}
+            {/*// items={(item.children && item.children.length) ? (item.children) : null}*/}
+            {/*//no_drag = {item.no_drag ? draggable={false} : null}*/}
+            {/*//className={item.show ? 'not_show' : null}*/}
+            {/*className={this.onPick(item)}*/}
+            {/*disabled={item.no_drag}*/}
+            {/*>*/}
+            {/*<Link to={`books/${item.key}`} draggable={false}>*/}
+            {/*{item.name}*/}
+            {/*</Link>*/}
+            {/*</TreeNode>*/}
+            {/*))}*/}
           </Tree>
+
         </div>
+
+        <button onClick={() => this.props.loadBookTree('vad-vad')}>Click Me</button>
       </div>
     );
   }
 }
 
-export default Demo;
+export default BooksTree;
+
+BooksTree.propTypes = {
+  bookTreeArr: PropTypes.object,
+  loadBookTree: PropTypes.func,
+};
+
+
+// BooksTree.defaultProps = {
+//   bookTreeArr: [
+//     {
+//       name: 'root',
+//       key: 'root',
+//       show: true,
+//       children: [
+//         {
+//           name: 'Wallbook',
+//           key: 'wallbook',
+//           icon: 'book',
+//           no_drag: true,
+//           children: []
+//         },
+//         {
+//           name: 'Test',
+//           key: 'test',
+//           icon: 'book',
+//           no_drag: false,
+//           children: [
+//             {
+//               name: 'Test2',
+//               key: 'test2',
+//               icon: 'book',
+//               no_drag: false,
+//               children: []
+//             }
+//           ]
+//         },
+//         {
+//           name: 'Test3',
+//           key: 'test3',
+//           icon: 'book',
+//           no_drag: false,
+//           children: []
+//         },
+//         {
+//           name: 'Test4',
+//           key: 'test4',
+//           icon: 'secret',
+//           no_drag: false,
+//           children: []
+//         },
+//         {
+//           name: 'Test5',
+//           key: 'test5',
+//           icon: 'bin',
+//           no_drag: false,
+//           children: []
+//         }
+//       ]
+//     }
+//   ]
+// };
