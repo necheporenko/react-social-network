@@ -1,6 +1,9 @@
 export const LOAD_SHOW_USER_STORIES = 'LOAD_SHOW_USER_STORIES';
 export const LOAD_SHOW_USER_STORIES_SUCCESS = 'LOAD_SHOW_USER_STORIES_SUCCESS';
 export const LOAD_SHOW_USER_STORIES_FAIL = 'LOAD_SHOW_USER_STORIES_FAIL';
+export const LOAD_NEXT_SHOW_USER_STORIES = 'LOAD_NEXT_SHOW_USER_STORIES';
+export const LOAD_NEXT_SHOW_USER_STORIES_SUCCESS = 'LOAD_NEXT_SHOW_USER_STORIES_SUCCESS';
+export const LOAD_NEXT_SHOW_USER_STORIES_FAIL = 'LOAD_NEXT_SHOW_USER_STORIES_FAIL';
 export const CREATE_STORY = 'CREATE_STORY';
 export const CREATE_STORY_SUCCESS = 'CREATE_STORY_SUCCESS';
 export const CREATE_STORY_FAIL = 'CREATE_STORY_FAIL';
@@ -26,6 +29,27 @@ export default function storyReducer(state = initialState, action) {
         storiesArr: action.result.data,
       };
     case LOAD_SHOW_USER_STORIES_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error: action.error,
+        storiesArr: []
+      };
+
+    case LOAD_NEXT_SHOW_USER_STORIES:
+      return {
+        ...state,
+        loading: true
+      };
+    case LOAD_NEXT_SHOW_USER_STORIES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: action.result.status === 'success' && true,       // or just true
+        storiesArr: [...state.storiesArr, ...action.result.data],
+      };
+    case LOAD_NEXT_SHOW_USER_STORIES_FAIL:
       return {
         ...state,
         loading: false,
@@ -66,6 +90,15 @@ export function load(slug) {
   return {
     types: [LOAD_SHOW_USER_STORIES, LOAD_SHOW_USER_STORIES_SUCCESS, LOAD_SHOW_USER_STORIES_FAIL],
     promise: (client) => client.get('/user/stories', { params: { user_slug }})
+    // promise: (client) => client.get('/user/stories', { params: { user_id: id }})
+  };
+}
+
+export function loadNext(slug, page) {
+  const user_slug = slug || '';
+  return {
+    types: [LOAD_NEXT_SHOW_USER_STORIES, LOAD_NEXT_SHOW_USER_STORIES_SUCCESS, LOAD_NEXT_SHOW_USER_STORIES_FAIL],
+    promise: (client) => client.get('/user/stories', { params: { user_slug, page }})
     // promise: (client) => client.get('/user/stories', { params: { user_id: id }})
   };
 }

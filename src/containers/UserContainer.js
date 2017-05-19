@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { getUser, getUserSlug, isPolling } from '../redux/modules/sign';
-import { create as createStory, load as loadStories } from '../redux/modules/story';
+import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../redux/modules/story';
 import { create as createBook, load as loadBookTree } from '../redux/modules/book';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
@@ -34,6 +34,7 @@ import StoryLine from '../components/StoryLine';
   getUserSlug,
   isPolling,
   loadBookTree,
+  loadNextStories
 })
 
 export default class UserContainer extends Component {
@@ -53,6 +54,7 @@ export default class UserContainer extends Component {
           createStory={this.props.createStory}
           loadStories={this.props.loadStories}
           bookTreeArr={this.props.bookTreeArr}
+          loadNextStories={this.props.loadNextStories}
         />
       </div>
     );
@@ -65,5 +67,6 @@ UserContainer.propTypes = {
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,
+  loadNextStories: PropTypes.func,
   bookTreeArr: PropTypes.array,               //book
 };

@@ -58,6 +58,7 @@ class StoryLine extends Component {
             storiesArr={this.props.storiesArr}
             createStory={this.props.createStory}
             loadStories={this.props.loadStories}
+            loadNextStories={this.props.loadNextStories}
           />
           <InfoBloks />
         </div>
@@ -71,6 +72,8 @@ StoryLine.propTypes = {
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,
+  loadNextStories: PropTypes.func,
+  bookTreeArr: PropTypes.array,
 };
 
 export default StoryLine;

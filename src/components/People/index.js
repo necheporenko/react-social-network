@@ -36,12 +36,12 @@ class People extends Component {
 
   follow(id) {
     this.props.followUser(id)
-      .then(() => this.props.loadPeopleFollowing());
+      // .then(() => this.props.loadPeopleFollowing());
   }
 
   unfollow(id) {
     this.props.unfollowUser(id)
-      .then(() => this.props.loadPeopleFollowing());
+      // .then(() => this.props.loadPeopleFollowing());
   }
 
   render() {
@@ -65,9 +65,17 @@ class People extends Component {
                   className="btn-following"
                   onClick={
                     !people.isFollowing ?
-                      () => this.follow(people.id)
+                      () => {
+                        this.follow(people.id);
+                        console.log('follow');
+                      }
                       :
-                      () => this.unfollow(people.id)
+                      () => {
+                        this.unfollow(people.id);
+                        console.log('before', people.isFollowing);
+                        people.isFollowing = !people.isFollowing;
+                        console.log('after', people.isFollowing);
+                      }
                   }>
                   {!people.isFollowing ? 'Follow' : 'Following'}
                   <span></span>
