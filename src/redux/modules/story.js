@@ -7,11 +7,14 @@ export const LOAD_NEXT_SHOW_USER_STORIES_FAIL = 'LOAD_NEXT_SHOW_USER_STORIES_FAI
 export const CREATE_STORY = 'CREATE_STORY';
 export const CREATE_STORY_SUCCESS = 'CREATE_STORY_SUCCESS';
 export const CREATE_STORY_FAIL = 'CREATE_STORY_FAIL';
+export const TEST_TYT = 'TEST_TYT';
 
 const initialState = {
   isAuthenticated: false,
   loaded: false,
-  storiesArr: []
+  storiesArr: [],
+  over: false,
+  test: false,
 };
 
 export default function storyReducer(state = initialState, action) {
@@ -47,8 +50,11 @@ export default function storyReducer(state = initialState, action) {
         ...state,
         loading: false,
         loaded: action.result.status === 'success' && true,       // or just true
+        over: action.result.data.length === 0 && true,
         storiesArr: [...state.storiesArr, ...action.result.data],
       };
+
+
     case LOAD_NEXT_SHOW_USER_STORIES_FAIL:
       return {
         ...state,
@@ -75,6 +81,13 @@ export default function storyReducer(state = initialState, action) {
         creating: false,
         created: false,
       };
+
+    case TEST_TYT: {
+      return {
+        ...state,
+        test: true,
+      };
+    }
 
     default:
       return state;

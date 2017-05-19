@@ -1,45 +1,43 @@
 import React, { Component, PropTypes } from 'react';
-// import InfiniteScroll from 'redux-infinite-scroll';
-// import InfiniteScroll from 'react-infinite-scroller';
+import { connect } from 'react-redux';
+import InfiniteScroll from 'react-infinite-scroller';
 import Sbox from './Sbox';
 import Post from './Post';
 import './index.scss';
 
-let page = 1;
+let page;
+
+@connect((state) => ({
+  over: state.story.over,
+  slug: state.sign.activeUser.slug,
+}), {})
 
 class Stream extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loadingMore: false,
-    };
     this.load = this.load.bind(this);
+  }
+
+  componentDidMount() {
+    console.log(page);
+    page = 1;
+    console.log(page);
   }
 
   load() {
     page++;
-    console.log('loading More');
-    // this.setState({loadingMore: false})
-      // .then(() => {
-        this.props.loadNextStories('vad-vad', page);
-        // this.setState({loadingMore: false});
-      // });
+    // if (!this.props.over) {
+      console.log(this.props.slug);
+      // console.log(this.state.slug);
+      // this.props.loadNextStories('vad-vad', page);
+      // this.props.loadNextStories(this.props.activeUser.slug, page);
+      this.props.loadNextStories(this.props.slug, page);
+    // }
   }
-
-  // _loadMore() {
-  //   console.log('loading More');
-  //   this.setState({loadingMore: true}, () => {
-  //     // CB emulates an ajax request
-  //     this.setState({
-  //       numOfItems: this.state.numOfItems + 40,
-  //       loadingMore: false
-  //     })
-  //   })
-  // }
 
   render() {
     const { storiesArr } = this.props;
-    const loader = <div className="loader">Loading ...</div>;
+    // const loader = <div className="loader">Loading ...</div>;
 
     return (
       <div className="stream">
@@ -49,20 +47,13 @@ class Stream extends Component {
           loadStories={this.props.loadStories}
         />
 
-        {/*<InfiniteScroll*/}
-          {/*loadMore={this.load()}*/}
-          {/*hasMore={this.state.loadingMore}*/}
-          {/*// loadingMore={this.state.loadingMore}*/}
-          {/*// showLoader={true}*/}
-          {/*threshold={50}*/}
-          {/*loader={loader}*/}
+        <InfiniteScroll
+          loadMore={this.load}
+          hasMore={true}
+          threshold={50}
+          // loader={loader}
 
-        {/*// The number of pixels from the bottom that the scroll bar must reach in order to trigger loadMore.*/}
-          {/*// containerHeight={200}*/}
-          {/*// animateItems={true}*/}
-          {/*// items={this._createData()}*/}
-        {/*>*/}
-
+        >
           {storiesArr && storiesArr.map((story) => (
             <Post
               key={story.id}
@@ -71,11 +62,7 @@ class Stream extends Component {
               created={story.created}
             />
           ))}
-
-          <button onClick={() => this.load()}>GET NEXT STORIES</button>
-
-        {/*</InfiniteScroll>*/}
-
+        </InfiniteScroll>
       </div>
     );
   }
@@ -87,6 +74,8 @@ Stream.propTypes = {
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
+  over: PropTypes.bool,
+  activeUser: PropTypes.object,
 };
 
 export default Stream;

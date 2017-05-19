@@ -50,6 +50,7 @@ export default class UserContainer extends Component {
         />
         <StoryLine
           user={this.props.user}
+          activeUser={this.props.activeUser}
           storiesArr={this.props.storiesArr}
           createStory={this.props.createStory}
           loadStories={this.props.loadStories}
