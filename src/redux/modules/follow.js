@@ -31,34 +31,58 @@ export default function followReducer(state = initialState, action) {
     case FOLLOW_USER:
       return {
         ...state,
-        following: false,
+        follow: false,
       };
     case FOLLOW_USER_SUCCESS:
+      const followFollowing = state.following.map((user) => {
+        if (user.id === action.id) {
+          return {
+            ...user,
+            isFollowing: true
+          };
+        }
+        return {
+          ...user
+        };
+      });
       return {
         ...state,
-        following: true,
+        follow: true,
+        following: followFollowing
       };
     case FOLLOW_USER_FAIL:
       return {
         ...state,
-        following: false,
+        follow: false,
         error: action.error,
       };
 
     case UNFOLLOW_USER:
       return {
         ...state,
-        unfollowing: false,
+        unfollow: false,
       };
     case UNFOLLOW_USER_SUCCESS:
+      const unfollowFollowing = state.following.map((user) => {
+        if (user.id === action.id) {
+          return {
+            ...user,
+            isFollowing: false
+          };
+        }
+        return {
+          ...user
+        };
+      });
       return {
         ...state,
-        unfollowing: true,
+        unfollow: true,
+        following: unfollowFollowing
       };
     case UNFOLLOW_USER_FAIL:
       return {
         ...state,
-        unfollowing: false,
+        unfollow: false,
         error: action.error,
       };
 
@@ -154,6 +178,7 @@ export function isLoadedSuggested(globalState) {
 export function follow(id) {
   return {
     types: [FOLLOW_USER, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAIL],
+    id,
     promise: (client) => client.post('/follow/connect', { data: { user_id: id, channel_id: '' }})                       //todo:  add channel_id
   };
 }
@@ -161,6 +186,7 @@ export function follow(id) {
 export function unfollow(id) {
   return {
     types: [UNFOLLOW_USER, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAIL],
+    id,
     promise: (client) => client.post('/follow/disconnect', { data: { user_id: id, channel_id: '' }})
   };
 }

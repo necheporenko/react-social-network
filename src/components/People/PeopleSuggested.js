@@ -59,7 +59,7 @@ class PeopleSuggested extends Component {
             {suggested && suggested.map((people) => (
               <div key={people.id} className="people-card">
                 <Link to={`/${people.slug}`}>
-                  <img src="http://devianmbanks.validbook.org/cdn/460/avatar/90x90.jpg?t=1486723970" />
+                  <img src={people.avatar} />
                   <div>{`${people.first_name} ${people.last_name}`}</div>
                 </Link>
                 <div
