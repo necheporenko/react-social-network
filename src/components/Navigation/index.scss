@@ -9,6 +9,12 @@
   display: flex;
   background: #fafafa;
   z-index: 9;
+
+  .btn-following {
+    position: absolute;
+    right: calc(50% - 590px);
+    top: -3px;
+  }
 }
 
 .navigation-fixed {
@@ -21,6 +27,7 @@
   position: absolute;
   left: calc(50% - 250px);
   top: 15px;
+
   a {
     display: inline-block;
     text-decoration: none;

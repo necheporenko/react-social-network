@@ -54,7 +54,7 @@ class Sbox extends Component {
 
   render() {
     const { editorContent } = this.state;
-    const { first_name, last_name, avatar_url } = this.props.user;
+    const { first_name, last_name, avatar} = this.props.user;
     const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
 
     return (
@@ -88,7 +88,7 @@ class Sbox extends Component {
         />
 
         <div className="sbox-user-avatar" style={{top: this.state.jump}}>
-          <Link to={link}><img src={avatar_url} /></Link>
+          <Link to={link}><img src={avatar} /></Link>
         </div>
 
         <div className="sbox-footer">
@@ -114,7 +114,7 @@ Sbox.propTypes = {
   user: PropTypes.shape({
     first_name: PropTypes.string,
     last_name: PropTypes.string,
-    avatar_url: PropTypes.string,
+    avatar: PropTypes.string,
   }),
   createStory: PropTypes.func,                //story
   loadStories: PropTypes.func,

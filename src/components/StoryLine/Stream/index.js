@@ -26,13 +26,13 @@ class Stream extends Component {
 
   load() {
     page++;
-    // if (!this.props.over) {
+    if (!this.props.over) {
       console.log(this.props.slug);
       // console.log(this.state.slug);
       // this.props.loadNextStories('vad-vad', page);
       // this.props.loadNextStories(this.props.activeUser.slug, page);
       this.props.loadNextStories(this.props.slug, page);
-    // }
+    }
   }
 
   render() {
