@@ -4,7 +4,7 @@ import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 
 class Post extends Component {
   render() {
-    const { fullName, slug } = this.props.user;
+    const { fullName, slug, avatar } = this.props.user;
     const created = this.props.created;
     const post = this.props.post;
     return (
@@ -16,7 +16,7 @@ class Post extends Component {
         <div className="post-header">
 
           <div className="wrap-post-user-avatar">
-            <Link to={`/${slug}`}><img className="post_user_avatar" src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1486723970" /></Link>
+            <Link to={`/${slug}`}><img className="post-user-avatar" src={avatar} /></Link>
           </div>
 
           <div className="wrap-post-user-info">
@@ -67,8 +67,8 @@ class Post extends Component {
         {/* ===========
             Post Content
             =========== */}
-        <div className="post_content">
-          <div className="wrap_post_content">
+        <div className="post-content">
+          <div className="wrap-post-content">
 
             <div
               className="post_content_type_text"
@@ -137,28 +137,28 @@ class Post extends Component {
         {/* ===========
             Post Footer
             =========== */}
-        <div className="post_footer">
-          <div className="post_like">
+        <div className="post-footer">
+          <div className="post-like">
             <a href="">
-              <i className="post_action_icon"></i>
+              <i className="post-action-icon"></i>
               <span>Kudos</span>
             </a>
           </div>
-          <div className="post_comment">
+          <div className="post-comment">
             <a href="">
-              <i className="post_action_icon"></i>
+              <i className="post-action-icon"></i>
               <span>Comment</span>
             </a>
           </div>
-          <div className="post_log">
+          <div className="post-log">
             <a href="#">
-              <i className="post_action_icon"></i>
+              <i className="post-action-icon"></i>
               <span>Log</span>
             </a>
           </div>
-          <div className="post_share">
+          <div className="post-share">
             <a href="">
-              <i className="post_action_icon"></i>
+              <i className="post-action-icon"></i>
               <span>Share</span>
             </a>
           </div>

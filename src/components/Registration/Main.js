@@ -6,24 +6,25 @@ import FormSignUp from './FormSignUp';
 import FormSignIn from './FormSignIn';
 import './index.scss';
 
+const facebook_id = '562706323765481';
+
 class New extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      authEmail: '',
-      authPass: '',
-      facebook_id: '562706323765481' //got from validbook.org
-    };
+    // this.state = {
+      // authEmail: '',
+      // authPass: '',
+      // facebook_id: '562706323765481' //got from validbook.org
+    // };
 
     this.onFormShow = this.onFormShow.bind(this);
-    this.handleAuth = this.handleAuth.bind(this);
+    // this.handleAuth = this.handleAuth.bind(this);
     this.onSubmitSignInForm = this.onSubmitSignInForm.bind(this);
     this.onSubmitRegisterForm = this.onSubmitRegisterForm.bind(this);
     this.responseFacebook = this.responseFacebook.bind(this);
   }
 
   onFormShow(formName) {
-    console.log(formName);
     this.props.showActiveForm(formName);
   }
 
@@ -45,10 +46,10 @@ class New extends Component {
       .then(() => this.props.showChannel());
   }
 
-  handleAuth(data) {
-    console.log(data);
-    this.setState({ authEmail: data.email, authPass: data.password });
-  }
+  // handleAuth(data) {
+  //   console.log(data);
+  //   this.setState({ authEmail: data.email, authPass: data.password });
+  // }
 
   invalid() {
     console.log('error');
@@ -83,7 +84,7 @@ class New extends Component {
                 <div className="registration-form_default">
                   <FacebookLogin
                     class="registration-btn registration-btn-fb"
-                    socialId={this.state.facebook_id}
+                    socialId={facebook_id}
                     language="en_US"
                     scope="public_profile,email"
                     fields="id,email,first_name,last_name,picture"

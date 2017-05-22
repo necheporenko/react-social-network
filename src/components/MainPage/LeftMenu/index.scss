@@ -13,9 +13,15 @@
   padding-left: 26px;
   border-left: 4px solid transparent;
   cursor: pointer;
+
   &:hover {
     border-color: #8F8F8F;
     background-color: #E1E1E1;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
   }
 }
 

@@ -4,7 +4,7 @@ import './index.scss';
 
 class LeftMenu extends Component {
   render() {
-    const { slug, first_name, last_name } = this.props.user;
+    const { slug, first_name, last_name, avatar_url } = this.props.user;
 
     return (
       <div className="leftpanel-menu">
@@ -13,7 +13,7 @@ class LeftMenu extends Component {
           <ul className="nav-ul">
             <IndexLink to={`/${slug}`} className="nav-a nav-storyline">
               <li className="nav-li">
-                <img src="http://devianmbanks.validbook.org/cdn/460/avatar/20x20.jpg?t=1486723970" />
+                <img src={avatar_url} />
                 <span>{`${first_name} ${last_name}`}</span>
               </li>
             </IndexLink>

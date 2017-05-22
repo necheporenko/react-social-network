@@ -89,7 +89,7 @@ export default function signReducer(state = initialState, action) {
         ...state,
         registeringIn: false,
         user: action.result.data,
-        isAuthenticated: action.result.data.access_token && true
+        isAuthenticated: !!action.result.data.access_token
       };
     case REGISTER_FAIL:
       return {
@@ -159,13 +159,6 @@ export default function signReducer(state = initialState, action) {
         ...state,
         loadingUser: false,
         activeUser: action.result.data,
-        // globalState: {
-        //   follow: {
-        //     loaded: {
-        //       loadedFollowing: false
-        //     }
-        //   }
-        // },
       };
     case SHOW_USER_FAIL:
       console.log('SHOW_USER_FAIL:', action.result);
@@ -184,13 +177,6 @@ export default function signReducer(state = initialState, action) {
 export function isLoaded(globalState) {
   return globalState.sign && globalState.sign.isAuthenticated;
 }
-
-// export function load(access_token) {
-//   return {
-//     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-//     promise: (client) => client.get('/user', { params: { access_token }})
-//   };
-// }
 
 export function load() {
   return {

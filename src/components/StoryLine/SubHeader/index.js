@@ -49,7 +49,7 @@ class SubHeader extends Component {
 
   render() {
     // const { first_name, last_name } = this.props.user;
-    const { first_name, last_name, slug } = this.props.activeUser;
+    const { first_name, last_name, slug, avatar_url } = this.props.activeUser;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { imageAvatar } = this.state;
     const { imageCover } = this.state;
@@ -61,7 +61,7 @@ class SubHeader extends Component {
         <div className="wrapper">
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`}>
-              <img src={imageAvatar} />
+              <img src={avatar_url} />
             </Link>
             <div className="subHeader-add">
               <input type="file" onChange={(e) => this.handleAvatarChange(e)}/>

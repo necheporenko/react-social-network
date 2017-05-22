@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 
 const UserButtons = (props) => {
-  const { slug, first_name } = props.user;
+  const { slug, first_name, avatar_url } = props.user;
   const { logoutUser } = props;
   return (
     <nav className="header-navigation">
@@ -67,7 +67,7 @@ const UserButtons = (props) => {
       <div className="infouser">
         <Link to={`/${slug}`}>
           <span>{first_name}</span>
-          <img src="http://devianmbanks.validbook.org/cdn/460/avatar/32x32.jpg?t=1486723970" alt="" />
+          <img src={avatar_url} alt="" />
         </Link>
       </div>
 

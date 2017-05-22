@@ -36,23 +36,24 @@ class Stream extends Component {
   }
 
   render() {
-    const { storiesArr } = this.props;
+    const { storiesArr, user, activeUser } = this.props;
     // const loader = <div className="loader">Loading ...</div>;
 
     return (
       <div className="stream">
-        <Sbox
-          user={this.props.user}
-          createStory={this.props.createStory}
-          loadStories={this.props.loadStories}
-        />
+        {user.id === activeUser.id &&
+          <Sbox
+            user={this.props.user}
+            createStory={this.props.createStory}
+            loadStories={this.props.loadStories}
+          />
+        }
 
         <InfiniteScroll
           loadMore={this.load}
           hasMore={true}
           threshold={50}
           // loader={loader}
-
         >
           {storiesArr && storiesArr.map((story) => (
             <Post
