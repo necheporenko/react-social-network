@@ -39,6 +39,9 @@ import StoryLine from '../components/StoryLine';
 })
 
 export default class UserContainer extends Component {
+  componentDidMount() {
+    (function () { document.body.scrollTop = 0; }());
+  }
 
   render() {
     return (
