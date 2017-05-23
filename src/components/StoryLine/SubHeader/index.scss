@@ -21,6 +21,14 @@
     top: 25px;
     left: calc(50% - 512px);                                  // Ahtung!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     display: flex;
+
+    .btn-following {
+      height: 25px;
+      position: absolute;
+      top: 160px;
+      right: calc(50% - 865px);
+      background: #fafafa;
+    }
   }
 }
 

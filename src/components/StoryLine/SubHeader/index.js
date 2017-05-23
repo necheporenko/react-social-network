@@ -84,6 +84,24 @@ class SubHeader extends Component {
           <div className="subHeader-userName">
             <Link to={`/${slug}`}>{first_name} {last_name}</Link>
           </div>
+          <div
+            className="btn-following"
+            //   onClick={
+            //     !people.isFollowing ?
+            //       () => {
+            //         this.follow(people.id);
+            //       }
+            //       :
+            //       () => {
+            //         this.unfollow(people.id);
+            //       }
+            //   }
+          >
+            {/*{!people.isFollowing ? 'Follow' : 'Following'}*/}
+            Following
+            <span></span>
+          </div>
+
         </div>
         {/* <div className="subHeader-bg"></div> */}
       </div>
