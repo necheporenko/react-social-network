@@ -7,6 +7,7 @@ class Post extends Component {
     const { fullName, slug, avatar } = this.props.user;
     const created = this.props.created;
     const post = this.props.post;
+    const images = this.props.images;
     return (
       <div className="post">
 
@@ -71,62 +72,65 @@ class Post extends Component {
           <div className="wrap-post-content">
 
             <div
-              className="post_content_type_text"
+              className="post-content-type-text"
               dangerouslySetInnerHTML={{__html: post}}
             />
 
 
-            {/*<div className="post_content_type_text">
+            {/*<div className="post-content-type-text">
               <p>Математический горизонт, в первом приближении, вызывает перигей. Движение, несмотря на внешние воздействия, последовательно. В связи с этим нужно подчеркнуть, что высота вращает первоначальный популяционный индекс. Это можно записать следующим образом: V = 29.8 * sqrt(2/r – 1/a) км/сек, где юлианская дата многопланово колеблет ионный хвост. Конечно, нельзя не принять во внимание тот факт, что натуральный логарифм прекрасно притягивает межпланетный Южный Треугольник.</p>
               <p>Космогоническая гипотеза Шмидта позволяет достаточно просто объяснить эту нестыковку, однако соединение выслеживает вращательный большой круг небесной сферы. Часовой угол иллюстрирует натуральный логарифм, при этом плотность Вселенной в 3 * 10 в 18-й степени раз меньше, с учетом некоторой неизвестной добавки скрытой массы. Звезда оценивает далекий Млечный Путь, а время ожидания ответа составило бы 80 миллиардов лет.</p>
+            </div> */}
+            {/*{ images && images.map}*/}
+            { images &&
+            <div className="post-content-type-image">
+              <img src={images[0]}/>
             </div>
+            }
 
-            <div className="post_content_type_image">
-              <img src="http://devianmbanks.validbook.org/cdn/stories_images/710/498.jpg" />
-            </div>
 
-            <div className="post_content_type_link">
+            {/*<div className="post-content-type-link">
               <a href="#">
-                <div className="link_preview_image">
-                  <img src="http://devianmbanks.validbook.org/cdn/stories_images/706/498.jpg" alt="" />
+                <div className="link-preview-image">
+                  <img src="http://devianmbanks.validbook.org/cdn/stories-images/706/498.jpg" alt="" />
                 </div>
-                <div className="wrap_link_preview">
-                  <div className="link_preview_title">Photo by Alberto Restifo | Unsplash</div>
-                  <div className="link_preview_description">A free high-resolution photo of snow, mountain, cold, frozen and blue by Alberto Restifo, taken with an Sony DSLR-A900</div>
-                  <div className="link_preview_url">unsplash.com</div>
+                <div className="wrap-link-preview">
+                  <div className="link-preview-title">Photo by Alberto Restifo | Unsplash</div>
+                  <div className="link-preview-description">A free high-resolution photo of snow, mountain, cold, frozen and blue by Alberto Restifo, taken with an Sony DSLR-A900</div>
+                  <div className="link-preview-url">unsplash.com</div>
                 </div>
               </a>
             </div>
 
-            <div className="post_content_type_link_short">
+            <div className="post-content-type-link-short">
               <a href="#">
-                <div className="wrap_content_type_link_short">
-                  <div className="link_preview_image_short">
-                    <img src="http://validbook.org/cdn/stories_images/657/168.jpg" alt="" />
+                <div className="wrap-content-type-link-short">
+                  <div className="link-preview-image-short">
+                    <img src="http://validbook.org/cdn/stories-images/657/168.jpg" alt="" />
                   </div>
-                  <div className="wrap_link_preview_short">
-                    <div className="link_preview_title">Photo by Alberto Restifo | Unsplash</div>
-                    <div className="link_preview_description">A free high-resolution photo of snow, mountain, cold, frozen and blue by Alberto Restifo, taken with an Sony DSLR-A900</div>
-                    <div className="link_preview_url">unsplash.com</div>
+                  <div className="wrap-link-preview-short">
+                    <div className="link-preview-title">Photo by Alberto Restifo | Unsplash</div>
+                    <div className="link-preview-description">A free high-resolution photo of snow, mountain, cold, frozen and blue by Alberto Restifo, taken with an Sony DSLR-A900</div>
+                    <div className="link-preview-url">unsplash.com</div>
                   </div>
                 </div>
               </a>
             </div>
 
-            <div className="post_content_type_gallery">
-              <div className="content_gallery_image">
+            <div className="post-content-type-gallery">
+              <div className="content-gallery-image">
                 <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/AEI66HEQ25.jpg" alt/>
               </div>
-              <div className="content_gallery_image">
+              <div className="content-gallery-image">
                 <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/TXHI5TTAYX.jpg" alt/>
               </div>
-              <div className="content_gallery_image">
+              <div className="content-gallery-image">
                 <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/P84KG21CDH.jpg" alt/>
               </div>
-              <div className="content_gallery_image">
+              <div className="content-gallery-image">
                 <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/DYNEU4SJQ5.jpg" alt/>
               </div>
-              <div className="content_gallery_image">
+              <div className="content-gallery-image">
                 <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/FYZBN8FDKT.jpg" alt/>
               </div>
             </div>*/}
@@ -173,6 +177,7 @@ Post.propTypes = {
   user: PropTypes.object,
   post: PropTypes.string,
   created: PropTypes.string,
+  images: PropTypes.array
 };
 
 export default Post;

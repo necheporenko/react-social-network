@@ -28,9 +28,6 @@ class Stream extends Component {
     page++;
     if (!this.props.over) {
       console.log(this.props.slug);
-      // console.log(this.state.slug);
-      // this.props.loadNextStories('vad-vad', page);
-      // this.props.loadNextStories(this.props.activeUser.slug, page);
       this.props.loadNextStories(this.props.slug, page);
     }
   }
@@ -61,6 +58,7 @@ class Stream extends Component {
               post={story.text}
               user={story.user}
               created={story.created}
+              images={story.images}
             />
           ))}
         </InfiniteScroll>

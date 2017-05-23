@@ -151,6 +151,7 @@ class BooksTree extends Component {
             className={this.onPick(item)}
             disabled={item.no_drag}
           >
+            {/*<input type="checkbox" checked />*/}
             <Link to={`books/${item.key}`} draggable={false}>
               {item.name}
             </Link>

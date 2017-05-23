@@ -28,6 +28,7 @@ class MainPage extends Component {
               user={this.props.user}
               createStory={this.props.createStory}
               channelStories={this.props.channelStories}
+              loadNextChannelStories={this.props.loadNextChannelStories}
             />
             <FollowBlock />
           </div>

@@ -7,6 +7,10 @@ export const SHOW_CHANNEL_FAIL = 'SHOW_CHANNEL_FAIL';
 export const CREATE_CHANNEL = 'CREATE_CHANNEL';
 export const CREATE_CHANNEL_SUCCESS = 'CREATE_CHANNEL_SUCCESS';
 export const CREATE_CHANNEL_FAIL = 'CREATE_CHANNEL_FAIL';
+export const LOAD_NEXT_CHANNEL_STORIES = 'LOAD_NEXT_CHANNEL_STORIES';
+export const LOAD_NEXT_CHANNEL_STORIES_SUCCESS = 'LOAD_NEXT_CHANNEL_STORIES_SUCCESS';
+export const LOAD_NEXT_CHANNEL_STORIES_FAIL = 'LOAD_NEXT_CHANNEL_STORIES_FAIL';
+const CLEAR_PAGINATION = 'CLEAR_PAGINATION';
 
 
 const initialState = {
@@ -36,6 +40,7 @@ export default function channelReducer(state = initialState, action) {
         loaded: {
           loadedChannelList: action.result.status === 'success' && true
         },
+        over: false,
         channelsArr: action.result.data,
       };
     case LOAD_CHANNELS_FAIL:
@@ -67,6 +72,7 @@ export default function channelReducer(state = initialState, action) {
         loaded: {
           loadedChannelStories: action.result.status === 'success' && true
         },
+        channel_slug: action.channel_slug,
         channelStories: action.result.data.stories,
       };
     case SHOW_CHANNEL_FAIL:
@@ -78,6 +84,28 @@ export default function channelReducer(state = initialState, action) {
         loaded: {
           loadedChannelStories: false
         },
+        error: action.error,
+        channelStories: []
+      };
+
+    case LOAD_NEXT_CHANNEL_STORIES:
+      return {
+        ...state,
+        loading: true
+      };
+    case LOAD_NEXT_CHANNEL_STORIES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: action.result.status === 'success' && true,       // or just true
+        over: action.result.data.stories.length === 0 && true,
+        channelStories: [...state.channelStories, ...action.result.data.stories],
+      };
+    case LOAD_NEXT_CHANNEL_STORIES_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
         error: action.error,
         channelStories: []
       };
@@ -99,6 +127,13 @@ export default function channelReducer(state = initialState, action) {
         creating: false,
         created: false,
       };
+
+    case CLEAR_PAGINATION: {
+      return {
+        ...state,
+        over: false,
+      };
+    }
 
     default:
       return state;
@@ -128,10 +163,20 @@ export function load() {
   };
 }
 
+
+export function loadNext(slug, page) {
+  const channel_slug = slug || '';
+  return {
+    types: [LOAD_NEXT_CHANNEL_STORIES, LOAD_NEXT_CHANNEL_STORIES_SUCCESS, LOAD_NEXT_CHANNEL_STORIES_FAIL],
+    promise: (client) => client.get('/channel', { params: { channel_slug, page }})
+  };
+}
+
 export function show(slug) {
   const channel_slug = slug || '';
   return {
     types: [SHOW_CHANNEL, SHOW_CHANNEL_SUCCESS, SHOW_CHANNEL_FAIL],
+    channel_slug,
     promise: (client) => client.get('/channel', { params: { channel_slug }})
   };
 }
@@ -140,5 +185,11 @@ export function create(name, description) {
   return {
     types: [CREATE_CHANNEL, CREATE_CHANNEL_SUCCESS, CREATE_CHANNEL_FAIL],
     promise: (client) => client.post('/channel', { data: { name, description }})
+  };
+}
+
+export function clearPagination() {
+  return {
+    type: CLEAR_PAGINATION
   };
 }

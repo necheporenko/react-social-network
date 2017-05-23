@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { login as loginUser, load as loadAuth, register as registerUser, loginSocial } from '../redux/modules/sign';
 import { showActiveForm } from '../redux/modules/form';
-import { isLoadedChannelList, isLoadedChannelStories, create as createChannel, show as showChannel, load as loadChannels, isMashUp } from '../redux/modules/channel';
+import { isLoadedChannelList, isLoadedChannelStories, create as createChannel,
+  show as showChannel, load as loadChannels, isMashUp, loadNext as loadNextChannelStories,
+  clearPagination } from '../redux/modules/channel';
 import { create as createStory } from '../redux/modules/story';
 import NewUser from '../components/Registration/Main';
 import MainPage from '../components/MainPage';
@@ -16,7 +18,7 @@ import MainPage from '../components/MainPage';
     if (!isLoadedChannelStories(getState())) {
       promises.push(dispatch(showChannel(isMashUp(getState()))));
     }
-
+    // dispatch(clearPagination());
     if (!isLoadedChannelList(getState())) {
       promises.push(dispatch(loadChannels()));
     }
@@ -46,6 +48,7 @@ import MainPage from '../components/MainPage';
   isLoadedChannelList,
   createChannel,
   loadChannels,
+  loadNextChannelStories
 })
 
 export default class IndexContainer extends Component {
@@ -61,6 +64,7 @@ export default class IndexContainer extends Component {
             showChannel={this.props.showChannel}
             createChannel={this.props.createChannel}
             channelStories={this.props.channelStories}
+            loadNextChannelStories={this.props.loadNextChannelStories}
           />
         }
         {!this.props.isAuthenticated &&
@@ -95,5 +99,6 @@ IndexContainer.propTypes = {
   showChannel: PropTypes.func,
   channelsArr: PropTypes.array,
   channelStories: PropTypes.array,
+  loadNextChannelStories: PropTypes.func,
   createStory: PropTypes.func,                //story
 };

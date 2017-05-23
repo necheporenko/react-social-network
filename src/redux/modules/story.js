@@ -7,7 +7,7 @@ export const LOAD_NEXT_SHOW_USER_STORIES_FAIL = 'LOAD_NEXT_SHOW_USER_STORIES_FAI
 export const CREATE_STORY = 'CREATE_STORY';
 export const CREATE_STORY_SUCCESS = 'CREATE_STORY_SUCCESS';
 export const CREATE_STORY_FAIL = 'CREATE_STORY_FAIL';
-export const CLEAR_PAGINATION = 'CLEAR_PAGINATION';
+const CLEAR_PAGINATION = 'CLEAR_PAGINATION';
 
 const initialState = {
   isAuthenticated: false,
@@ -52,8 +52,6 @@ export default function storyReducer(state = initialState, action) {
         over: action.result.data.length === 0 && true,
         storiesArr: [...state.storiesArr, ...action.result.data],
       };
-
-
     case LOAD_NEXT_SHOW_USER_STORIES_FAIL:
       return {
         ...state,
@@ -122,14 +120,6 @@ export function create(description) {
     promise: (client) => client.post('/story', { data: { description, book_ids }})
   };
 }
-
-// export function clearPagination() {
-//   return (dispatch) => {
-//     dispatch({
-//       type: CLEAR_PAGINATION,
-//     });
-//   };
-// }
 
 export function clearPagination() {
   return {
