@@ -10,8 +10,6 @@ export const CREATE_CHANNEL_FAIL = 'CREATE_CHANNEL_FAIL';
 export const LOAD_NEXT_CHANNEL_STORIES = 'LOAD_NEXT_CHANNEL_STORIES';
 export const LOAD_NEXT_CHANNEL_STORIES_SUCCESS = 'LOAD_NEXT_CHANNEL_STORIES_SUCCESS';
 export const LOAD_NEXT_CHANNEL_STORIES_FAIL = 'LOAD_NEXT_CHANNEL_STORIES_FAIL';
-const CLEAR_PAGINATION = 'CLEAR_PAGINATION';
-
 
 const initialState = {
   channelsArr: [],
@@ -20,6 +18,7 @@ const initialState = {
     loadedChannelList: false,
     loadedChannelStories: false,
   },
+  pagination: 1,
 };
 
 export default function channelReducer(state = initialState, action) {
@@ -41,6 +40,7 @@ export default function channelReducer(state = initialState, action) {
           loadedChannelList: action.result.status === 'success' && true
         },
         over: false,
+        pagination: 1,
         channelsArr: action.result.data,
       };
     case LOAD_CHANNELS_FAIL:
@@ -100,6 +100,7 @@ export default function channelReducer(state = initialState, action) {
         loaded: action.result.status === 'success' && true,       // or just true
         over: action.result.data.stories.length === 0 && true,
         channelStories: [...state.channelStories, ...action.result.data.stories],
+        pagination: action.page + 1
       };
     case LOAD_NEXT_CHANNEL_STORIES_FAIL:
       return {
@@ -127,13 +128,6 @@ export default function channelReducer(state = initialState, action) {
         creating: false,
         created: false,
       };
-
-    case CLEAR_PAGINATION: {
-      return {
-        ...state,
-        over: false,
-      };
-    }
 
     default:
       return state;
@@ -168,7 +162,8 @@ export function loadNext(slug, page) {
   const channel_slug = slug || '';
   return {
     types: [LOAD_NEXT_CHANNEL_STORIES, LOAD_NEXT_CHANNEL_STORIES_SUCCESS, LOAD_NEXT_CHANNEL_STORIES_FAIL],
-    promise: (client) => client.get('/channel', { params: { channel_slug, page }})
+    promise: (client) => client.get('/channel', { params: { channel_slug, page }}),
+    page
   };
 }
 
@@ -185,11 +180,5 @@ export function create(name, description) {
   return {
     types: [CREATE_CHANNEL, CREATE_CHANNEL_SUCCESS, CREATE_CHANNEL_FAIL],
     promise: (client) => client.post('/channel', { data: { name, description }})
-  };
-}
-
-export function clearPagination() {
-  return {
-    type: CLEAR_PAGINATION
   };
 }

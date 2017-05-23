@@ -2,9 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 function zeroTop() {
-  // const scrollTop = document.body.scrollTop;
   document.body.scrollTop = 0;
-  // console.log('ZERO:', scrollTop);
   console.log('ZERO');
 }
 

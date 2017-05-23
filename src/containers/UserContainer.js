@@ -13,7 +13,7 @@ import StoryLine from '../components/StoryLine';
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
     promises.push(dispatch(getUser(getUserSlug(getState()))));
-    dispatch(clearPagination());
+    // dispatch(clearPagination());
     promises.push(dispatch(loadStories(getUserSlug(getState()))));
 
     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
