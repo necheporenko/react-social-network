@@ -4,6 +4,7 @@ import { asyncConnect } from 'redux-connect';
 import { getUser, getUserSlug, isPolling } from '../redux/modules/sign';
 import { create as createStory, load as loadStories, loadNext as loadNextStories, clearPagination} from '../redux/modules/story';
 import { create as createBook, load as loadBookTree } from '../redux/modules/book';
+import { load as loadProfile } from '../redux/modules/profile';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 import StoryLine from '../components/StoryLine';
@@ -15,8 +16,8 @@ import StoryLine from '../components/StoryLine';
     promises.push(dispatch(getUser(getUserSlug(getState()))));
     // dispatch(clearPagination());
     promises.push(dispatch(loadStories(getUserSlug(getState()))));
-
     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
+    promises.push(dispatch(loadProfile(getUserSlug(getState()))));
     return Promise.all(promises);
   }
 }])
@@ -28,6 +29,7 @@ import StoryLine from '../components/StoryLine';
   isAuthenticated: state.sign.isAuthenticated,
   storiesArr: state.story.storiesArr,
   bookTreeArr: state.book.bookTreeArr,
+  userProfile: state.profile.userProfile,
 }), {
   loadStories,
   createStory,
@@ -35,7 +37,7 @@ import StoryLine from '../components/StoryLine';
   getUserSlug,
   isPolling,
   loadBookTree,
-  loadNextStories
+  loadNextStories,
 })
 
 export default class UserContainer extends Component {
@@ -60,6 +62,7 @@ export default class UserContainer extends Component {
           loadStories={this.props.loadStories}
           bookTreeArr={this.props.bookTreeArr}
           loadNextStories={this.props.loadNextStories}
+          userProfile={this.props.userProfile}
         />
       </div>
     );
@@ -74,4 +77,5 @@ UserContainer.propTypes = {
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
   bookTreeArr: PropTypes.array,               //book
+  userProfile: PropTypes.object
 };

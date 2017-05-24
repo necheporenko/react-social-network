@@ -10,13 +10,12 @@ class InfoBloks extends Component {
   render() {
     return (
       <div className="infobloks">
-        <div className="wrapper">
-          <Cutaway />
-          <Tokens />
-          <Photos />
-          <Peoples />
-        </div>
-
+        <Cutaway
+          userProfile={this.props.userProfile}
+        />
+        <Tokens />
+        <Photos />
+        <Peoples />
         {this.props.children}
       </div>
     );
@@ -24,7 +23,8 @@ class InfoBloks extends Component {
 }
 
 InfoBloks.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
+  userProfile: PropTypes.object
 };
 
 export default InfoBloks;

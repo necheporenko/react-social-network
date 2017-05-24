@@ -13,7 +13,6 @@ import './index.scss';
 
     if (!isLoadedProfile(getState())) {
       promises.push(dispatch(loadProfile()));
-
     }
     return Promise.all(promises);
   }

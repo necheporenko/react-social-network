@@ -1,11 +1,46 @@
 import React, { Component, PropTypes } from 'react';
-//import { Link } from 'react-router';
-//import { Form, Input, Select, Textarea, File } from 'formsy-react-components';
-//import ProfileMenu from './ProfileMenu';
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
+import { save as saveProfile, load as loadProfile, isLoadedProfile } from '../../../redux/modules/profile';
 import ProfileForm from './ProfileForm';
 import './index.scss';
 
-class Profile extends Component {
+@asyncConnect([{
+  promise: ({ store: { dispatch, getState } }) => {
+    const promises = [];
+
+    if (!isLoadedProfile(getState())) {
+      promises.push(dispatch(loadProfile()));
+    }
+    return Promise.all(promises);
+  }
+}])
+
+@connect((state) => ({
+  activeFormSteps: state.forms.activeFormSteps,
+  first_name: state.sign.user.first_name,
+  last_name: state.sign.user.last_name,
+  bio: state.profile.userProfile.bio,
+  occupation: state.profile.userProfile.occupation,
+  company: state.profile.userProfile.company,
+  country: state.profile.userProfile.country,
+  location: state.profile.userProfile.location,
+  birthDate: state.profile.userProfile.birthDate,
+  birthMonth: state.profile.userProfile.birthMonth,
+  birthDateVisibility: state.profile.userProfile.birthDateVisibility,
+  birthYear: state.profile.userProfile.birthYear,
+  birthYearVisibility: state.profile.userProfile.birthYearVisibility,
+  twitter: state.profile.userProfile.twitter,
+  facebook: state.profile.userProfile.facebook,
+  linkedin: state.profile.userProfile.linkedin,
+  website: state.profile.userProfile.website,
+  phone: state.profile.userProfile.phone,
+  skype: state.profile.userProfile.skype
+}), {
+  saveProfile
+})
+
+export default class Profile extends Component {
 
   submitForm(data) {
     console.log(data); // eslint-disable-line no-console
@@ -23,22 +58,22 @@ class Profile extends Component {
         <ProfileForm
           onSubmit={this.submitForm}
           onInvalidSubmit={this.invalid}
-          bio_value={this.bio_value}
-          occ_value={this.occ_value}
-          company_value={this.company_value}
-          country_value={this.country_value}
-          location_value={this.location_value}
-          birthDate_value={this.birthDate_value}
-          birthMonth_value={this.birthMonth_value}
-          birthDateVisibility_value={this.birthDateVisibility_value}
-          birthYear_value={this.birthYear_value}
-          birthYearVisibility_value={this.birthYearVisibility_value}
-          twitter_value={this.twitter_value}
-          facebook_value={this.facebook_value}
-          linkedin_value={this.linkedin_value}
-          websites_value={this.websites_value}
-          telephone_value={this.telephone_value}
-          skype_value={this.skype_value}
+          bio={this.props.bio}
+          occupation={this.props.occupation}
+          company={this.props.company}
+          country={this.props.country}
+          location={this.props.location}
+          birthDate={this.props.birthDate}
+          birthMonth={this.props.birthMonth}
+          birthDateVisibility={this.props.birthDateVisibility}
+          birthYear={this.props.birthYear}
+          birthYearVisibility={this.props.birthYearVisibility}
+          twitter={this.props.twitter}
+          facebook={this.props.facebook}
+          linkedin={this.props.linkedin}
+          website={this.props.website}
+          phone={this.props.phone}
+          skype={this.props.skype}
          />
 
         {this.props.children}
@@ -48,7 +83,22 @@ class Profile extends Component {
 }
 
 Profile.propTypes = {
-  children: PropTypes.element
+  children: PropTypes.element,
+  bio: PropTypes.string,
+  occupation: PropTypes.string,
+  company: PropTypes.string,
+  country: PropTypes.string,
+  location: PropTypes.string,
+  birthDate: PropTypes.string,
+  birthMonth: PropTypes.string,
+  birthDateVisibility: PropTypes.number,
+  birthYear: PropTypes.string,
+  birthYearVisibility: PropTypes.number,
+  twitter: PropTypes.string,
+  facebook: PropTypes.string,
+  linkedin: PropTypes.string,
+  website: PropTypes.string,
+  phone: PropTypes.string,
+  skype: PropTypes.string,
+  saveProfile: PropTypes.func,
 };
-
-export default Profile;

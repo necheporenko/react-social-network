@@ -184,7 +184,7 @@ const EngagementFormStep1 = ({
         <Input
           name="website"
           value={website}
-          label="website"
+          label="Website"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
           type="url"

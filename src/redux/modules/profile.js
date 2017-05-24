@@ -82,9 +82,10 @@ export function save(profile) {
   };
 }
 
-export function load() {
+export function load(slug) {
+  const user_slug = slug || '';
   return {
     types: [LOAD_PROFILE, LOAD_PROFILE_SUCCESS, LOAD_PROFILE_FAIL],
-    promise: (client) => client.get('/user/profile')
+    promise: (client) => client.get('/user/profile', { params: { user_slug }})
   };
 }

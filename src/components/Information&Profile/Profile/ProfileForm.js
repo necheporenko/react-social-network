@@ -35,22 +35,22 @@ const selectVisibility = [
 const ProfileForm = ({
                                 onSubmit,
                                 onInvalidSubmit,
-                                bio_value,
-                                occ_value,
-                                company_value,
-                                country_value,
-                                location_value,
-                                birthDate_value,
-                                birthMonth_value,
-                                birthDateVisibility_value,
-                                birthYear_value,
-                                birthYearVisibility_value,
-                                twitter_value,
-                                facebook_value,
-                                linkedin_value,
-                                websites_value,
-                                telephone_value,
-                                skype_value
+                                bio,
+                                occupation,
+                                company,
+                                country,
+                                location,
+                                birthDate,
+                                birthMonth,
+                                birthDateVisibility,
+                                birthYear,
+                                birthYearVisibility,
+                                twitter,
+                                facebook,
+                                linkedin,
+                                website,
+                                phone,
+                                skype
                             }) => {
   return (
     <Form
@@ -66,11 +66,11 @@ const ProfileForm = ({
           label="Bio"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
-          value={bio_value}
+          value={bio}
         />
         <Input
           name="occupation"
-          value={occ_value}
+          value={occupation}
           label="Occupation"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
@@ -78,7 +78,7 @@ const ProfileForm = ({
         />
         <Input
           name="company"
-          value={company_value}
+          value={company}
           label="Company"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
@@ -86,7 +86,7 @@ const ProfileForm = ({
         />
         <Select
           name="country"
-          value={country_value}
+          value={country}
           label="Country"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
@@ -96,7 +96,7 @@ const ProfileForm = ({
         />
         <Input
           name="location"
-          value={location_value}
+          value={location}
           label="Location"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
@@ -104,8 +104,8 @@ const ProfileForm = ({
         />
         <div className="engagement-form-birth-date">
           <Select
-            name="birth-date"
-            value={birthDate_value}
+            name="birthDate"
+            value={birthDate}
             label="Birth Date"
             labelClassName={[{'col-sm-3': false}, 'profile-label']}
             className={'form-control profile-form-select profile-form-select-small'}
@@ -115,8 +115,8 @@ const ProfileForm = ({
           />
 
           <Select
-            name="birth-month"
-            value={birthMonth_value}
+            name="birthMonth"
+            value={birthMonth}
             labelClassName={[{'col-sm-3': false}, 'disabled-label']}
             className={'form-control profile-form-select profile-form-select-small'}
             elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper engagement-element-wrapper-small birth-visibility']}
@@ -125,8 +125,8 @@ const ProfileForm = ({
           />
 
           <Select
-            name="birth-date-visibility"
-            value={birthDateVisibility_value}
+            name="birthDateVisibility"
+            value={birthDateVisibility}
             labelClassName={[{'col-sm-3': false}, 'disabled-label']}
             className={'form-control profile-form-select profile-form-select-small'}
             elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper engagement-element-wrapper-small ']}
@@ -136,8 +136,8 @@ const ProfileForm = ({
         </div>
         <div className="engagement-form-birth-date profile-form-birth-year">
           <Select
-            name="birth-year"
-            value={birthYear_value}
+            name="birthYear"
+            value={birthYear}
             label="Birth Year"
             labelClassName={[{'col-sm-3': false}, 'profile-label']}
             className={'form-control profile-form-select profile-form-select-small'}
@@ -147,8 +147,8 @@ const ProfileForm = ({
           />
 
           <Select
-            name="birth-date-visibility"
-            value={birthYearVisibility_value}
+            name="birthYearVisibility"
+            value={birthYearVisibility}
             labelClassName={[{'col-sm-3': false}, 'disabled-label']}
             className={'form-control profile-form-select profile-form-select-small'}
             elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper engagement-element-wrapper-small']}
@@ -159,7 +159,7 @@ const ProfileForm = ({
 
         <Input
           name="twitter"
-          value={twitter_value}
+          value={twitter}
           label="Twitter"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
@@ -167,7 +167,7 @@ const ProfileForm = ({
         />
         <Input
           name="facebook"
-          value={facebook_value}
+          value={facebook}
           label="Facebook"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
@@ -175,31 +175,31 @@ const ProfileForm = ({
         />
         <Input
           name="linkedin"
-          value={linkedin_value}
+          value={linkedin}
           label="Linkedin"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
           type="url"
         />
         <Input
-          name="websites"
-          value={websites_value}
-          label="Websites"
+          name="website"
+          value={website}
+          label="Website"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
           type="url"
         />
         <Input
-          name="telephone"
-          value={telephone_value}
-          label="Telephone"
+          name="phone"
+          value={phone}
+          label="Phone"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
           type="text"
         />
         <Input
           name="skype"
-          value={skype_value}
+          value={skype}
           label="Skype"
           labelClassName={[{'col-sm-3': false}, 'profile-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
@@ -222,22 +222,22 @@ ProfileForm.propTypes = {
   onSubmit: PropTypes.func,
   onInvalidSubmit: PropTypes.func,
 
-  bio_value: PropTypes.string,
-  occ_value: PropTypes.string,
-  company_value: PropTypes.string,
-  country_value: PropTypes.string,
-  location_value: PropTypes.string,
-  birthDate_value: PropTypes.string,
-  birthMonth_value: PropTypes.string,
-  birthDateVisibility_value: PropTypes.string,
-  birthYear_value: PropTypes.string,
-  birthYearVisibility_value: PropTypes.string,
-  twitter_value: PropTypes.string,
-  facebook_value: PropTypes.string,
-  linkedin_value: PropTypes.string,
-  websites_value: PropTypes.string,
-  telephone_value: PropTypes.string,
-  skype_value: PropTypes.string
+  bio: PropTypes.string,
+  occupation: PropTypes.string,
+  company: PropTypes.string,
+  country: PropTypes.string,
+  location: PropTypes.string,
+  birthDate: PropTypes.string,
+  birthMonth: PropTypes.string,
+  birthDateVisibility: PropTypes.string,
+  birthYear: PropTypes.string,
+  birthYearVisibility: PropTypes.string,
+  twitter: PropTypes.string,
+  facebook: PropTypes.string,
+  linkedin: PropTypes.string,
+  website: PropTypes.string,
+  phone: PropTypes.string,
+  skype: PropTypes.string
 };
 
 export default ProfileForm;

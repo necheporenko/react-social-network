@@ -13,10 +13,12 @@
 /* === Title Start === */
 .title-infoblocks {
   padding: 15px 12px;
+  font-size: 16px;
+
   a {
     text-decoration: none;
     color: $default-color;
-    font-size: 16px;
+
     span  {
       color: #999;
       font-size: 12px;
@@ -64,9 +66,7 @@
   width: 21px;
   margin-right: 5px;
 }
-
 /* === Title End === */
-
 
 /* === Common Tokensa Start === */
 .infoblocks-cutaway, .infoblocks-peoples, .infoblocks-photos, .infoblocks-tokens {
@@ -81,6 +81,100 @@
   @include material;
 }
 /* === Common End === */
+
+.infoblocks-cutaway {
+  max-width: 320px;
+  min-height: 0;
+
+  .wrapper {
+    margin: 0 12px 15px 12px;
+    overflow: hidden;
+    font-size: 13px;
+  }
+
+  .bio {
+    margin-bottom: 15px;
+  }
+
+  .occupation,
+  .company,
+  .country,
+  .location,
+  .birthday,
+  .phone,
+  .websites {
+    display: flex;
+    line-height: 22px;
+    overflow: hidden;
+    white-space: nowrap;
+
+    p {
+      position: absolute;
+      margin-left: 90px;
+      max-width: 205px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      a {
+        cursor: pointer;
+        color: $gray;
+      }
+    }
+  }
+
+  .social-network {
+    margin-top: 10px;
+
+    .facebook,
+    .twitter,
+    .linkedin,
+    .skype {
+      background: $sprite;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .facebook {
+      background-position: -137px -218px;
+      height: 18px;
+      width: 10px;
+
+      &:hover {
+        background-position: -149px -218px;
+      }
+    }
+
+    .twitter {
+      background-position: -131px -239px;
+      height: 13px;
+      width: 17px;
+
+      &:hover {
+        background-position: -147px -239px;
+      }
+    }
+
+    .linkedin {
+      background-position: -133px -254px;
+      height: 15px;
+      width: 15px;
+
+      &:hover {
+        background-position: -149px -254px;
+      }
+    }
+
+    .skype {
+      background-position: -127px -271px;
+      height: 13px;
+      width: 14px;
+
+      &:hover {
+        background-position: -142px -271px;
+      }
+    }
+  }
+}
 
 /* === Tokens Start === */
 .infoblocks-tokens {
