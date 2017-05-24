@@ -100,12 +100,16 @@ $valid_color: #1976d2;
   li {
     padding: 0;
     margin: 3px 0;
-    list-style: none;
-    white-space: nowrap;
-    outline: 0;
-    width: 92%;
+    //list-style: none;
+    //white-space: nowrap;
+    //outline: 0;
+    //width: 210px;
+    //padding-right: 35px;
+
     .react-tree-item-label {
       position: relative;
+      padding-right: 30px;
+      width: 160px;
       &:hover {
         background-color: #E1E1E1;
       }
@@ -147,6 +151,10 @@ $valid_color: #1976d2;
       > a {
         text-decoration: none;
         display: block;
+        width: 120%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
     ul {
@@ -269,6 +277,7 @@ $valid_color: #1976d2;
 .react-tree-child-tree-open {
   display: block;
 }
+
 .react-tree-icon__open {
   margin-right: 2px;
   background-position: -110px -16px;

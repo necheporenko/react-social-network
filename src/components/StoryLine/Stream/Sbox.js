@@ -96,7 +96,9 @@ class Sbox extends Component {
             <button className="btn-brand" type="submit" onClick={this.onSubmitStory}>Log</button>
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} pullRight >
-                <BooksTreeContainer />
+                <div className="sbox-booktree">
+                  <BooksTreeContainer />
+                </div>
               </DropdownButton>
             </ButtonToolbar>
           </div>
