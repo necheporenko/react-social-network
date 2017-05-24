@@ -1,10 +1,50 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
+import { save as saveProfile, load as loadProfile, isLoadedProfile } from '../../../redux/modules/profile';
+import { showActiveFormSteps } from '../../../redux/modules/form';
 import EngagementFormStep1 from './EngagementFormStep1';
 import EngagementFormStep2 from './EngagementFormStep2';
-
 import './index.scss';
 
-class Engagement extends Component {
+@asyncConnect([{
+  promise: ({ store: { dispatch, getState } }) => {
+    const promises = [];
+
+    if (!isLoadedProfile(getState())) {
+      promises.push(dispatch(loadProfile()));
+
+    }
+    return Promise.all(promises);
+  }
+}])
+
+@connect((state) => ({
+  activeFormSteps: state.forms.activeFormSteps,
+  first_name: state.sign.user.first_name,
+  last_name: state.sign.user.last_name,
+  bio: state.profile.userProfile.bio,
+  occupation: state.profile.userProfile.occupation,
+  company: state.profile.userProfile.company,
+  country: state.profile.userProfile.country,
+  location: state.profile.userProfile.location,
+  birthDate: state.profile.userProfile.birthDate,
+  birthMonth: state.profile.userProfile.birthMonth,
+  birthDateVisibility: state.profile.userProfile.birthDateVisibility,
+  birthYear: state.profile.userProfile.birthYear,
+  birthYearVisibility: state.profile.userProfile.birthYearVisibility,
+  twitter: state.profile.userProfile.twitter,
+  facebook: state.profile.userProfile.facebook,
+  linkedin: state.profile.userProfile.linkedin,
+  website: state.profile.userProfile.website,
+  phone: state.profile.userProfile.phone,
+  skype: state.profile.userProfile.skype
+}), {
+  showActiveFormSteps,
+  saveProfile
+})
+
+export default class Engagement extends Component {
   constructor(props) {
     super(props);
     this.submitForm = this.submitForm.bind(this);
@@ -12,15 +52,19 @@ class Engagement extends Component {
   }
 
   onFormShowSteps(formSteps) {
-    console.log(formSteps); // eslint-disable-line no-console
+    console.log(formSteps);
     this.props.showActiveFormSteps(formSteps);
   }
 
   submitForm(data) {
-    console.log(data); // eslint-disable-line no-console
+    data.first_name = this.props.first_name;        // get first_name & last_name from store
+    data.last_name = this.props.last_name;
+    console.log(data);
+    this.props.saveProfile(data);
   }
+
   invalid() {
-    console.log('error');// eslint-disable-line no-console
+    console.log('error');
   }
 
   render() {
@@ -51,22 +95,22 @@ class Engagement extends Component {
                 <EngagementFormStep1
                   onSubmit={this.submitForm}      /* todo check onSubmit & onInvalidSubmit */
                   onInvalidSubmit={this.invalid}
-                  bio_value={this.bio_value}
-                  occ_value={this.occ_value}
-                  company_value={this.company_value}
-                  country_value={this.country_value}
-                  location_value={this.location_value}
-                  birthDate_value={this.birthDate_value}
-                  birthMonth_value={this.birthMonth_value}
-                  birthDateVisibility_value={this.birthDateVisibility_value}
-                  birthYear_value={this.birthYear_value}
-                  birthYearVisibility_value={this.birthYearVisibility_value}
-                  twitter_value={this.twitter_value}
-                  facebook_value={this.facebook_value}
-                  linkedin_value={this.linkedin_value}
-                  websites_value={this.websites_value}
-                  telephone_value={this.telephone_value}
-                  skype_value={this.skype_value}
+                  bio={this.props.bio}
+                  occupation={this.props.occupation}
+                  company={this.props.company}
+                  country={this.props.country}
+                  location={this.props.location}
+                  birthDate={this.props.birthDate}
+                  birthMonth={this.props.birthMonth}
+                  birthDateVisibility={this.props.birthDateVisibility}
+                  birthYear={this.props.birthYear}
+                  birthYearVisibility={this.props.birthYearVisibility}
+                  twitter={this.props.twitter}
+                  facebook={this.props.facebook}
+                  linkedin={this.props.linkedin}
+                  website={this.props.website}
+                  phone={this.props.phone}
+                  skype={this.props.skype}
                 />
               </div>
             }
@@ -75,7 +119,7 @@ class Engagement extends Component {
               <div className="engagement-content engagement-content-2">
                 <div className="engagement-content-title">Set your profile picture to help people find you</div>
                 <EngagementFormStep2
-                  avatar_value={this.avatar_value}
+                  avatar={this.avatar}
                 />
               </div>
             }
@@ -90,23 +134,23 @@ class Engagement extends Component {
 Engagement.propTypes = {
   activeFormSteps: PropTypes.string,
   showActiveFormSteps: PropTypes.func,
-
-  // bio_value: PropTypes.string,
-  // occ_value: PropTypes.string,
-  // company_value: PropTypes.string,
-  // country_value: PropTypes.string,
-  // location_value: PropTypes.string,
-  // birthDate_value: PropTypes.string,
-  // birthMonth_value: PropTypes.string,
-  // birthDateVisibility_value: PropTypes.string,
-  // birthYear_value: PropTypes.string,
-  // birthYearVisibility_value: PropTypes.string,
-  // twitter_value: PropTypes.string,
-  // facebook_value: PropTypes.string,
-  // linkedin_value: PropTypes.string,
-  // websites_value: PropTypes.string,
-  // telephone_value: PropTypes.string,
-  // skype_value: PropTypes.string
+  first_name: PropTypes.string,
+  last_name: PropTypes.string,
+  bio: PropTypes.string,
+  occupation: PropTypes.string,
+  company: PropTypes.string,
+  country: PropTypes.string,
+  location: PropTypes.string,
+  birthDate: PropTypes.string,
+  birthMonth: PropTypes.string,
+  birthDateVisibility: PropTypes.number,
+  birthYear: PropTypes.string,
+  birthYearVisibility: PropTypes.number,
+  twitter: PropTypes.string,
+  facebook: PropTypes.string,
+  linkedin: PropTypes.string,
+  website: PropTypes.string,
+  phone: PropTypes.string,
+  skype: PropTypes.string,
+  saveProfile: PropTypes.func,
 };
-
-export default Engagement;

@@ -7,6 +7,7 @@ import story from './modules/story';
 import sign from './modules/sign';
 import follow from './modules/follow';
 import book from './modules/book';
+import profile from './modules/profile';
 
 export default function createReducers(asyncReducers) {
   return {
@@ -20,6 +21,7 @@ export default function createReducers(asyncReducers) {
     sign,
     follow,
     book,
+    profile,
     ...asyncReducers
   };
 }

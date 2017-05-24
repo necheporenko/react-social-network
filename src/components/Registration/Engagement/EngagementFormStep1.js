@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
 import { Form, Input, Select, Textarea } from 'formsy-react-components';
-import './bootstrapForm.scss';     //later need move to folder Styles
+import './bootstrapForm.scss';
 import './index.scss';
 
 const selectCountry = [
   {value: null, label: 'Select your country'},
-  {value: 'United States', label: 'United States'},
-  {value: 'Afghanistan', label: 'Afghanistan'},
-  {value: 'Aland Islands', label: 'Aland Islands'},
-  {value: 'Albania', label: 'Albania'},
-  {value: 'Algeria', label: 'Algeria'}
+  {value: 1, label: 'United States'},
+  {value: 2, label: 'Afghanistan'},
+  {value: 3, label: 'Aland Islands'},
+  {value: 4, label: 'Albania'},
+  {value: 5, label: 'Algeria'}
 ];
 const selectDay = [
   {value: null, label: 'Day'},
@@ -17,9 +17,9 @@ const selectDay = [
 ];
 const selectMonth = [
   {value: null, label: 'Month'},
-  {value: 'Jan', label: 'Jan'},
-  {value: 'Feb', label: 'Feb'},
-  {value: 'Mar', label: 'Mar'}
+  {value: 1, label: 'Jan'},
+  {value: 2, label: 'Feb'},
+  {value: 3, label: 'Mar'}
 ];
 const selectYear = [
   {value: null, label: 'Year'},
@@ -28,29 +28,29 @@ const selectYear = [
   {value: 1902, label: '1902'}
 ];
 const selectVisibility = [
-  {value: 'Public', label: 'Public'},
-  {value: 'Me', label: 'Only me'}
+  {value: 1, label: 'Public'},
+  {value: 0, label: 'Only me'}
 ];
 
 const EngagementFormStep1 = ({
                                 onSubmit,
                                 onInvalidSubmit,
-                                bio_value,
-                                occ_value,
-                                company_value,
-                                country_value,
-                                location_value,
-                                birthDate_value,
-                                birthMonth_value,
-                                birthDateVisibility_value,
-                                birthYear_value,
-                                birthYearVisibility_value,
-                                twitter_value,
-                                facebook_value,
-                                linkedin_value,
-                                websites_value,
-                                telephone_value,
-                                skype_value
+                                bio,
+                                occupation,
+                                company,
+                                country,
+                                location,
+                                birthDate,
+                                birthMonth,
+                                birthDateVisibility,
+                                birthYear,
+                                birthYearVisibility,
+                                twitter,
+                                facebook,
+                                linkedin,
+                                website,
+                                phone,
+                                skype
                             }) => {
   return (
     <Form
@@ -58,7 +58,6 @@ const EngagementFormStep1 = ({
       onInvalidSubmit={onInvalidSubmit}
       rowClassName={[{'form-group': false}, {row: false}, 'engagement-form']}
     >
-
       <div className="engagement-wrap-form">
         <Textarea
           rows={5}
@@ -67,11 +66,11 @@ const EngagementFormStep1 = ({
           label="Bio"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
-          value={bio_value}
+          value={bio}
         />
         <Input
           name="occupation"
-          value={occ_value}
+          value={occupation}
           label="Occupation"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
@@ -79,7 +78,7 @@ const EngagementFormStep1 = ({
         />
         <Input
           name="company"
-          value={company_value}
+          value={company}
           label="Company"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
@@ -87,7 +86,7 @@ const EngagementFormStep1 = ({
         />
         <Select
           name="country"
-          value={country_value}
+          value={country}
           label="Country"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
@@ -97,7 +96,7 @@ const EngagementFormStep1 = ({
         />
         <Input
           name="location"
-          value={location_value}
+          value={location}
           label="Location"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
@@ -105,8 +104,8 @@ const EngagementFormStep1 = ({
         />
         <div className="engagement-form-birth-date">
           <Select
-            name="birth-date"
-            value={birthDate_value}
+            name="birthDate"
+            value={birthDate}
             label="Birth Date"
             labelClassName={[{'col-sm-3': false}, 'engagement-label']}
             elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
@@ -116,8 +115,8 @@ const EngagementFormStep1 = ({
           />
 
           <Select
-            name="birth-month"
-            value={birthMonth_value}
+            name="birthMonth"
+            value={birthMonth}
             labelClassName={[{'col-sm-3': false}, 'disabled-label']}
             className={'form-control engagement-form-select engagement-form-select-small'}
             elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
@@ -126,8 +125,8 @@ const EngagementFormStep1 = ({
           />
 
           <Select
-            name="birth-date-visibility"
-            value={birthDateVisibility_value}
+            name="birthDateVisibility"
+            value={birthDateVisibility}
             labelClassName={[{'col-sm-3': false}, 'disabled-label']}
             className={'form-control engagement-form-select engagement-form-select-small'}
             elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small birth-visibility']}
@@ -137,8 +136,8 @@ const EngagementFormStep1 = ({
         </div>
         <div className="engagement-form-birth-date engagement-form-birth-year">
           <Select
-            name="birth-year"
-            value={birthYear_value}
+            name="birthYear"
+            value={birthYear}
             label="Birth Year"
             labelClassName={[{'col-sm-3': false}, 'engagement-label']}
             elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
@@ -148,8 +147,8 @@ const EngagementFormStep1 = ({
           />
 
           <Select
-            name="birth-date-visibility"
-            value={birthYearVisibility_value}
+            name="birthYearVisibility"
+            value={birthYearVisibility}
             labelClassName={[{'col-sm-3': false}, 'disabled-label']}
             className={'form-control engagement-form-select engagement-form-select-small'}
             elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper engagement-element-wrapper-small']}
@@ -160,7 +159,7 @@ const EngagementFormStep1 = ({
 
         <Input
           name="twitter"
-          value={twitter_value}
+          value={twitter}
           label="Twitter"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
@@ -168,7 +167,7 @@ const EngagementFormStep1 = ({
         />
         <Input
           name="facebook"
-          value={facebook_value}
+          value={facebook}
           label="Facebook"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
@@ -176,31 +175,31 @@ const EngagementFormStep1 = ({
         />
         <Input
           name="linkedin"
-          value={linkedin_value}
+          value={linkedin}
           label="Linkedin"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
           type="url"
         />
         <Input
-          name="websites"
-          value={websites_value}
-          label="Websites"
+          name="website"
+          value={website}
+          label="website"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
           type="url"
         />
         <Input
-          name="telephone"
-          value={telephone_value}
-          label="Telephone"
+          name="phone"
+          value={phone}
+          label="Phone"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
           type="text"
         />
         <Input
           name="skype"
-          value={skype_value}
+          value={skype}
           label="Skype"
           labelClassName={[{'col-sm-3': false}, 'engagement-label']}
           elementWrapperClassName={[{'col-sm-9': false}, 'engagement-element-wrapper']}
@@ -223,22 +222,22 @@ EngagementFormStep1.propTypes = {
   onSubmit: PropTypes.func,
   onInvalidSubmit: PropTypes.func,
 
-  bio_value: PropTypes.string,
-  occ_value: PropTypes.string,
-  company_value: PropTypes.string,
-  country_value: PropTypes.string,
-  location_value: PropTypes.string,
-  birthDate_value: PropTypes.string,
-  birthMonth_value: PropTypes.string,
-  birthDateVisibility_value: PropTypes.string,
-  birthYear_value: PropTypes.string,
-  birthYearVisibility_value: PropTypes.string,
-  twitter_value: PropTypes.string,
-  facebook_value: PropTypes.string,
-  linkedin_value: PropTypes.string,
-  websites_value: PropTypes.string,
-  telephone_value: PropTypes.string,
-  skype_value: PropTypes.string
+  bio: PropTypes.string,
+  occupation: PropTypes.string,
+  company: PropTypes.string,
+  country: PropTypes.string,
+  location: PropTypes.string,
+  birthDate: PropTypes.string,
+  birthMonth: PropTypes.string,
+  birthDateVisibility: PropTypes.number,
+  birthYear: PropTypes.string,
+  birthYearVisibility: PropTypes.number,
+  twitter: PropTypes.string,
+  facebook: PropTypes.string,
+  linkedin: PropTypes.string,
+  website: PropTypes.string,
+  phone: PropTypes.string,
+  skype: PropTypes.string
 };
 
 export default EngagementFormStep1;
