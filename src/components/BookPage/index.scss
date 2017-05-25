@@ -29,51 +29,57 @@
   color: #333;
   margin-bottom: 20px;
   padding: 10px 15px 8px;
-}
 
-.title-infoblocks-book {
-  padding-bottom: 12px;
-  display: flex;
-  h5 {
-    font-size: 16px;
-    font-family: $font-medium;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 155px;
-    display: inline-block;
-    line-height: 30px;
-  }
-  .btn-following {
-    margin: 0;
-    margin-left: 27px;
-    width: 105px;
-    height: 25px;
-    span {
-      left: 12px;
+  .title {
+    padding-bottom: 12px;
+    display: flex;
+
+    h5 {
+      font-size: 16px;
+      font-family: $font-medium;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 155px;
+      display: inline-block;
+      line-height: 30px;
+    }
+
+    .btn-following {
+      margin: 0;
+      margin-left: 27px;
+      width: 105px;
+      height: 25px;
+
+      span {
+        left: 12px;
+      }
     }
   }
 }
 
+
+
 .book-info {
-  //margin: 0 15px;
-  //border-bottom: 1px solid $default-bg;
+  ul {
+    list-style: none;
+
+    li {
+      background: $gray;
+      color: #fff;
+      display: inline-block;
+      padding: 3px 3px 0 3px;
+      margin-right: 5px;
+    }
+  }
+
   hr {
     margin-top: 15px;
     margin-bottom: 10px;
   }
 }
 
-.book-info-list {
-  list-style: none;
-  li {
-    background: $gray;
-    color: #fff;
-    display: inline-block;
-    padding: 3px 3px 0 3px;
-    margin-right: 5px;
-  }
-}
+
 
 .book-icon-visibility,
 .book-icon-stories,

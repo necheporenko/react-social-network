@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import Tree, { TreeNode } from 'draggable-react-tree-component';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { load as loadBookTree } from '../../redux/modules/book';
+import { load as loadBookTree, show as showBookStories } from '../../redux/modules/book';
 import { gData } from './util';
 import './draggable.scss';
 
@@ -11,9 +11,9 @@ import './draggable.scss';
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
-
-    console.log('asyncConnect BooksTree')
-    promises.push(dispatch(loadBookTree('vad-vad')));
+    //
+    // console.log('asyncConnect BooksTree')
+    // promises.push(dispatch(loadBookTree('vad-vad')));
 
     return Promise.all(promises);
   }
@@ -22,8 +22,11 @@ import './draggable.scss';
 
 @connect((state) => ({
   bookTreeArr: state.book.bookTreeArr,
+  activeUserSlug: state.sign.activeUser.slug,
+  userSlug: state.sign.user.slug,
 }), {
-  loadBookTree
+  loadBookTree,
+  showBookStories
 })
 
 class BooksTree extends Component {
@@ -138,7 +141,8 @@ class BooksTree extends Component {
   render() {
     console.log('RENDER DATA props:', this.props.bookTreeArr);
     // console.log('RENDER GGGGGGDATA:', this.state.gData);
-    const { bookTreeArr } = this.props;
+    const bookTreeArr = this.props;
+    const slug = this.props.activeUserSlug || this.props.userSlug;
     const loop = data => (
       data.map((item) => {
         // console.log('ITEM:', item);
@@ -146,13 +150,18 @@ class BooksTree extends Component {
           <TreeNode
             key={item.key}
             items={(item.children && item.children.length) ? loop(item.children) : null}
-        //no_drag = {item.no_drag ? draggable={false} : null}
-        //className={item.show ? 'not_show' : null}
+            //no_drag = {item.no_drag ? draggable={false} : null}
+            //className={item.show ? 'not_show' : null}
             className={this.onPick(item)}
             disabled={item.no_drag}
           >
             {/*<input type="checkbox" checked />*/}
-            <Link to={`books/${item.key}`} draggable={false}>
+            <Link
+              // to={`/${slug}/books/${item.key}`}
+              to={`/${slug}/books/${item.key}`}
+              draggable={false}
+              // onClick={() => this.showBookStories(item.key)}
+            >
               {item.name}
             </Link>
           </TreeNode>);
@@ -176,21 +185,6 @@ class BooksTree extends Component {
           >
             {loop(this.props.bookTreeArr)}
 
-
-            {/*{bookTreeArr && bookTreeArr.map((item) => (*/}
-            {/*<TreeNode*/}
-            {/*key={item.key}*/}
-            {/*// items={(item.children && item.children.length) ? (item.children) : null}*/}
-            {/*//no_drag = {item.no_drag ? draggable={false} : null}*/}
-            {/*//className={item.show ? 'not_show' : null}*/}
-            {/*className={this.onPick(item)}*/}
-            {/*disabled={item.no_drag}*/}
-            {/*>*/}
-            {/*<Link to={`books/${item.key}`} draggable={false}>*/}
-            {/*{item.name}*/}
-            {/*</Link>*/}
-            {/*</TreeNode>*/}
-            {/*))}*/}
           </Tree>
 
         </div>
@@ -207,59 +201,3 @@ BooksTree.propTypes = {
   bookTreeArr: PropTypes.object,
   loadBookTree: PropTypes.func,
 };
-
-
-// BooksTree.defaultProps = {
-//   bookTreeArr: [
-//     {
-//       name: 'root',
-//       key: 'root',
-//       show: true,
-//       children: [
-//         {
-//           name: 'Wallbook',
-//           key: 'wallbook',
-//           icon: 'book',
-//           no_drag: true,
-//           children: []
-//         },
-//         {
-//           name: 'Test',
-//           key: 'test',
-//           icon: 'book',
-//           no_drag: false,
-//           children: [
-//             {
-//               name: 'Test2',
-//               key: 'test2',
-//               icon: 'book',
-//               no_drag: false,
-//               children: []
-//             }
-//           ]
-//         },
-//         {
-//           name: 'Test3',
-//           key: 'test3',
-//           icon: 'book',
-//           no_drag: false,
-//           children: []
-//         },
-//         {
-//           name: 'Test4',
-//           key: 'test4',
-//           icon: 'secret',
-//           no_drag: false,
-//           children: []
-//         },
-//         {
-//           name: 'Test5',
-//           key: 'test5',
-//           icon: 'bin',
-//           no_drag: false,
-//           children: []
-//         }
-//       ]
-//     }
-//   ]
-// };

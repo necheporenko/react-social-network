@@ -11,8 +11,7 @@ import SubHeader from '../components/StoryLine/SubHeader';
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
 
-    promises.push(dispatch(getUser(getUserSlug(getState()))));
-
+    // promises.push(dispatch(getUser(getUserSlug(getState()))));
     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
 
     return Promise.all(promises);

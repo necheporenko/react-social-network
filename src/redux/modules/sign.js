@@ -20,7 +20,7 @@ export const SHOW_USER_FAIL = 'SHOW_USER_FAIL';
 const initialState = {
   isAuthenticated: false,
   user: null,
-  activeUser: null,
+  activeUser: [],
   loaded: false
 };
 

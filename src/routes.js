@@ -61,7 +61,7 @@ export default () => {
 
       <Route path="users" getComponent={() => System.import('./containers/Users')} />
 
-      <Route path="/bookpage" component={BookPage} />
+      {/*<Route path="/bookpage" component={BookPage} />*/}
 
       <Route path="/notification" component={Notification} />
       <Route path="/engagement" component={EngagementContainer} />
@@ -104,9 +104,11 @@ export default () => {
       <Route path="/:userName" component={UserContainer} />
 
       <Route path="/:userName/books" component={BooksContainer}>
-        {/*<Route path="/:bookname"/>*/}
+        {/*<Route path=":bookName" component={BookPage} />*/}
         {/*<Route path="/:bookname/subbooks"/>*/}
       </Route>
+
+      <Route path="/:userName/books/:bookName" component={BookPage} />
 
       <Route path="/:userName/people" component={PeopleContainer}>
         <IndexRoute component={People} />

@@ -11,8 +11,8 @@ import '../components/BooksTree/index.scss';
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
 
-    console.log('asyncConnect BooksTreeContainer')
-    promises.push(dispatch(loadBookTree('vad-vad')));
+    // console.log('asyncConnect BooksTreeContainer')
+    // promises.push(dispatch(loadBookTree('vad-vad')));
     return Promise.all(promises);
   }
 }])

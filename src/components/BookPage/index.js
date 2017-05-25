@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
 import { Form, RadioGroup } from 'formsy-react-components';
+import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
+import { getUser, getUserSlug } from '../../redux/modules/sign';
+import { create as createBook, load as loadBookTree, show as showBookStories, next as nextBookStories, getBookSlug } from '../../redux/modules/book';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
-import Stream from '../StoryLine/Stream/index';
+import BookStream from '../StoryLine/Stream/BookStream';
 //import InfoBloks from '../StoryLine/InfoBlocks';
 import Photos from '../StoryLine/InfoBlocks/Photos';
 import SubHeader from '../StoryLine/SubHeader/index';
@@ -16,12 +19,34 @@ const radioOptions = [
        {value: 'c', label: 'specific people'}
 ];
 
-class BookPage extends Component {
+@asyncConnect([{
+  promise: ({ store: { dispatch, getState } }) => {
+    const promises = [];
+    promises.push(dispatch(getUser(getUserSlug(getState()))));
+    promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
+    promises.push(dispatch(showBookStories(getBookSlug(getState()))));
+    return Promise.all(promises);
+  }
+}])
+
+@connect((state) => ({
+  user: state.sign.user,
+  activeUser: state.sign.activeUser,
+  bookTreeArr: state.book.bookTreeArr,
+  bookStories: state.book.bookStories,
+  bookPageName: state.book.bookPage.name,
+  book_slug: state.book.book_slug,
+}), {
+  nextBookStories
+})
+
+export default class BookPage extends Component {
   render() {
+    const bookPageName = this.props.bookPageName;
     return (
       <div>
         <SubHeader
-          user={this.props.user}
+          activeUser={this.props.activeUser}
         />
         <div className="navigation">
           <div className="navigation-wrap book-nav">
@@ -38,7 +63,7 @@ class BookPage extends Component {
               </li>
               <li>
                 <Link>
-                  Name Book
+                  {bookPageName}
                 </Link>
               </li>
             </ul>
@@ -49,16 +74,25 @@ class BookPage extends Component {
         <div className="book-page">
           <div className="storyLine">
             <div className="wrap-storyLine">
-              <BooksTreeContainer />
-              <Stream />
+
+              <BooksTreeContainer
+                bookTreeArr={this.props.bookTreeArr}
+              />
+              <BookStream
+                user={this.props.user}
+                book_slug={this.props.book_slug}
+                bookStories={this.props.bookStories}
+                nextBookStories={this.props.nextBookStories}
+              />
+
               <div className="infobloks">
                 <div className="infobloks-book">
-                  <div className="title-infoblocks-book">
-                    <h5>Book</h5>
+                  <div className="title">
+                    <h5>{bookPageName}</h5>
                     <div className="btn-following">Following <span></span></div>
                   </div>
                   <div className="book-info">
-                    <ul className="book-info-list">
+                    <ul>
                       <li className="book-icon-visibility"></li>
                       <li className="book-icon-stories">5</li>
                       <li className="book-icon-subbooks">3</li>
@@ -133,11 +167,3 @@ class BookPage extends Component {
 BookPage.propTypes = {
   user: PropTypes.object
 };
-
-function mapStateToProps(state) {
-  return {
-    user: state.users.user
-  };
-}
-
-export default connect(mapStateToProps, null)(BookPage);
