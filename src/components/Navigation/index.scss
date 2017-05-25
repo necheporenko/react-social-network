@@ -11,9 +11,7 @@
   z-index: 9;
 
   .btn-following {
-    position: absolute;
-    right: 20px;
-    top: -3px;
+    display: none;
   }
 }
 
@@ -21,6 +19,13 @@
   position: fixed;
   top: 52px;
   z-index: 11;
+
+  .btn-following {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: -3px;
+  }
 }
 
 .navigation-wrap {
