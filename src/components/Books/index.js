@@ -5,11 +5,12 @@ import BookTree from '../../containers/BooksTreeContainer';
 //import {BOOKS} from '../../constants/books';
 import './index.scss';
 
-const TestBook = () => {
+const TestBook = ({ name, childrens }) => {
+  // console.log(childrens)
   return (
     <div className="book">
       <div className="title-infoblocks-book">
-        <h5>Book</h5>
+        <h5>{ name }</h5>
       </div>
       <div className="book-info">
         <ul className="book-info-list">
@@ -27,7 +28,9 @@ const TestBook = () => {
         <span>2 subbooks</span>
       </div>
       <div className="book-subbooks">
-        <BookTree />
+        <BookTree
+          bookTreeArr={childrens}
+        />
       </div>
       <div className="book-btn">Edit</div>
     </div>
@@ -36,6 +39,7 @@ const TestBook = () => {
 
 class Books extends Component {
   render() {
+    const bookTreeArr = this.props.bookTreeArr;
     return (
       <div className="books contents">
         <div className="sidebar-books">
@@ -71,18 +75,26 @@ class Books extends Component {
               <div className="book-btn">Edit</div>
             </div>
           ))} */}
+            { bookTreeArr[0].children.map((book) => (
+              <TestBook
+                key={book.key}
+                name={book.name}
+                childrens={book.children}
+              />
+              ))
+            }
 
-            <TestBook />
-            <TestBook />
-            <TestBook />
-            <TestBook />
-            <TestBook />
-            <TestBook />
-            <TestBook />
-            <TestBook />
-            <TestBook />
-            <TestBook />
-            <TestBook />
+            {/*<TestBook />*/}
+            {/*<TestBook />*/}
+            {/*<TestBook />*/}
+            {/*<TestBook />*/}
+            {/*<TestBook />*/}
+            {/*<TestBook />*/}
+            {/*<TestBook />*/}
+            {/*<TestBook />*/}
+            {/*<TestBook />*/}
+            {/*<TestBook />*/}
+            {/*<TestBook />*/}
 
           </StackGrid>
         </div>

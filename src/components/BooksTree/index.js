@@ -139,9 +139,6 @@ class BooksTree extends Component {
 
 
   render() {
-    console.log('RENDER DATA props:', this.props.bookTreeArr);
-    // console.log('RENDER GGGGGGDATA:', this.state.gData);
-    const bookTreeArr = this.props;
     const slug = this.props.activeUserSlug || this.props.userSlug;
     const loop = data => (
       data.map((item) => {
