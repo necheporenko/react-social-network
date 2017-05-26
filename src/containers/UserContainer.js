@@ -25,7 +25,7 @@ import StoryLine from '../components/StoryLine';
 
 @connect((state) => ({
   authorizedUser: state.sign.authorizedUser,
-  activeUser: state.sign.activeUser,
+  requestedUser: state.sign.requestedUser,
   isAuthenticated: state.sign.isAuthenticated,
   storiesArr: state.story.storiesArr,
   bookTreeArr: state.book.bookTreeArr,
@@ -49,14 +49,14 @@ export default class UserContainer extends Component {
     return (
       <div>
         <SubHeader
-          activeUser={this.props.activeUser}
+          requestedUser={this.props.requestedUser}
         />
         <Navigation
-          activeUser={this.props.activeUser}
+          requestedUser={this.props.requestedUser}
         />
         <StoryLine
           authorizedUser={this.props.authorizedUser}
-          activeUser={this.props.activeUser}
+          requestedUser={this.props.requestedUser}
           storiesArr={this.props.storiesArr}
           createStory={this.props.createStory}
           loadStories={this.props.loadStories}
@@ -71,7 +71,7 @@ export default class UserContainer extends Component {
 
 UserContainer.propTypes = {
   authorizedUser: PropTypes.object,                     //sign
-  activeUser: PropTypes.object,
+  requestedUser: PropTypes.object,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,

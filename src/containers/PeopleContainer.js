@@ -16,7 +16,7 @@ import SubHeader from '../components/StoryLine/SubHeader';
 }])
 
 @connect((state) => ({
-  activeUser: state.sign.activeUser
+  requestedUser: state.sign.requestedUser
 }), {
   getUser,
   getUserSlug,
@@ -27,10 +27,10 @@ export default class PeopleContainer extends Component {
     return (
       <div>
         <SubHeader
-          activeUser={this.props.activeUser}
+          requestedUser={this.props.requestedUser}
         />
         <Navigation
-          activeUser={this.props.activeUser}
+          requestedUser={this.props.requestedUser}
         />
         {this.props.children}
       </div>
@@ -40,5 +40,5 @@ export default class PeopleContainer extends Component {
 
 PeopleContainer.propTypes = {
   children: PropTypes.element,
-  activeUser: PropTypes.object
+  requestedUser: PropTypes.object
 };

@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import './index.scss';
 
 @connect((state) => ({
-  activeUser: state.sign.activeUser
+  requestedUser: state.sign.requestedUser
 }), {})
 
 class SubHeader extends Component {
@@ -49,7 +49,7 @@ class SubHeader extends Component {
 
   render() {
     // const { first_name, last_name } = this.props.authorizedUser;
-    const { first_name, last_name, slug, avatar} = this.props.activeUser;
+    const { first_name, last_name, slug, avatar } = this.props.requestedUser;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { imageAvatar } = this.state;
     const { imageCover } = this.state;
@@ -109,7 +109,7 @@ class SubHeader extends Component {
 }
 
 SubHeader.propTypes = {
-  activeUser: PropTypes.shape({
+  requestedUser: PropTypes.shape({
     first_name: PropTypes.string,
     last_name: PropTypes.string,
     slug: PropTypes.string,

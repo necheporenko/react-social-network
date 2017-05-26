@@ -9,7 +9,7 @@ let page;
 
 @connect((state) => ({
   over: state.story.over,
-  slug: state.sign.activeUser.slug,
+  slug: state.sign.requestedUser.slug,
 }), {})
 
 class Stream extends Component {
@@ -33,12 +33,12 @@ class Stream extends Component {
   }
 
   render() {
-    const { storiesArr, authorizedUser, activeUser } = this.props;
+    const { storiesArr, authorizedUser, requestedUser } = this.props;
     // const loader = <div className="loader">Loading ...</div>;
 
     return (
       <div className="stream">
-        {authorizedUser.id === activeUser.id &&
+        {authorizedUser.id === requestedUser.id &&
           <Sbox
             authorizedUser={this.props.authorizedUser}
             createStory={this.props.createStory}
@@ -74,7 +74,7 @@ Stream.propTypes = {
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
   over: PropTypes.bool,
-  activeUser: PropTypes.object,
+  requestedUser: PropTypes.object,
 };
 
 export default Stream;

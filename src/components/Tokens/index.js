@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import TokensMenu from './TokensMenu';
 import AddToken from './AddToken';
 import './index.scss';
 
 let savePositionTop;
 
-class Tokens extends Component {
+@connect((state) => ({
+  authorizedUser: state.sign.authorizedUser,
+}), {})
+
+export default class Tokens extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -60,7 +65,9 @@ class Tokens extends Component {
 
         <div className="common-lists tokens-lists">
 
-          <AddToken />
+          <AddToken
+            authorizedUser={this.props.authorizedUser}
+          />
 
           <div className="token">
             <a href=""><i></i></a>
@@ -139,5 +146,3 @@ class Tokens extends Component {
     );
   }
 }
-
-export default Tokens;

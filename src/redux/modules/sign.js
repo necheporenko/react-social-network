@@ -20,7 +20,7 @@ export const SHOW_USER_FAIL = 'SHOW_USER_FAIL';
 const initialState = {
   isAuthenticated: false,
   authorizedUser: null,
-  activeUser: [],
+  requestedUser: [],
   loaded: false
 };
 
@@ -158,14 +158,14 @@ export default function signReducer(state = initialState, action) {
       return {
         ...state,
         loadingUser: false,
-        activeUser: action.result.data,
+        requestedUser: action.result.data,
       };
     case SHOW_USER_FAIL:
       console.log('SHOW_USER_FAIL:', action.result);
       return {
         ...state,
         loadingUser: false,
-        activeUser: null
+        requestedUser: null
       };
 
     default:

@@ -11,7 +11,7 @@ import SubHeader from '../components/StoryLine/SubHeader';
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
 
-    // promises.push(dispatch(getUser(getUserSlug(getState()))));
+    promises.push(dispatch(getUser(getUserSlug(getState()))));
     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
 
     return Promise.all(promises);
@@ -19,7 +19,7 @@ import SubHeader from '../components/StoryLine/SubHeader';
 }])
 
 @connect((state) => ({
-  activeUser: state.sign.activeUser,
+  requestedUser: state.sign.requestedUser,
   bookTreeArr: state.book.bookTreeArr,
 }), {
   getUser,
@@ -32,10 +32,10 @@ export default class BooksContainer extends Component {
     return (
       <div>
         <SubHeader
-          activeUser={this.props.activeUser}
+          requestedUser={this.props.requestedUser}
         />
         <Navigation
-          activeUser={this.props.activeUser}
+          requestedUser={this.props.requestedUser}
         />
         <Books
           bookTreeArr={this.props.bookTreeArr}
@@ -46,5 +46,5 @@ export default class BooksContainer extends Component {
 }
 
 BooksContainer.propTypes = {
-  activeUser: PropTypes.object
+  requestedUser: PropTypes.object
 };

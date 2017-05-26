@@ -31,7 +31,7 @@ const radioOptions = [
 
 @connect((state) => ({
   authorizedUser: state.sign.authorizedUser,
-  activeUser: state.sign.activeUser,
+  requestedUser: state.sign.requestedUser,
   bookTreeArr: state.book.bookTreeArr,
   bookStories: state.book.bookStories,
   bookPageName: state.book.bookPage.name,
@@ -46,7 +46,7 @@ export default class BookPage extends Component {
     return (
       <div>
         <SubHeader
-          activeUser={this.props.activeUser}
+          requestedUser={this.props.requestedUser}
         />
         <div className="navigation">
           <div className="navigation-wrap book-nav">

@@ -55,7 +55,7 @@ class StoryLine extends Component {
           />
           <Stream
             authorizedUser={this.props.authorizedUser}
-            activeUser={this.props.activeUser}
+            requestedUser={this.props.requestedUser}
             storiesArr={this.props.storiesArr}
             createStory={this.props.createStory}
             loadStories={this.props.loadStories}

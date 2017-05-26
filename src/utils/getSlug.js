@@ -14,7 +14,7 @@
 //   }])
 //
 //   @connect((state) => ({
-//     activeUser: state.sign.activeUser
+//     requestedUser: state.sign.requestedUser
 //   }), {
 //     getUser,
 //     getUserSlug,
