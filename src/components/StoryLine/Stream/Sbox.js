@@ -54,7 +54,7 @@ class Sbox extends Component {
 
   render() {
     const { editorContent } = this.state;
-    const { first_name, last_name, avatar} = this.props.user;
+    const { first_name, last_name, avatar} = this.props.authorizedUser;
     const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
 
     return (
@@ -113,7 +113,7 @@ class Sbox extends Component {
 }
 
 Sbox.propTypes = {
-  user: PropTypes.shape({
+  authorizedUser: PropTypes.shape({
     first_name: PropTypes.string,
     last_name: PropTypes.string,
     avatar: PropTypes.string,

@@ -29,7 +29,7 @@ import MainPage from '../components/MainPage';
 
 
 @connect((state) => ({
-  user: state.sign.user,
+  authorizedUser: state.sign.authorizedUser,
   isAuthenticated: state.sign.isAuthenticated,
   loading: state.sign.loading,
   authEmail: state.sign.authEmail,
@@ -57,7 +57,7 @@ export default class IndexContainer extends Component {
       <div>
         {this.props.isAuthenticated &&
           <MainPage
-            user={this.props.user}
+            authorizedUser={this.props.authorizedUser}
             createStory={this.props.createStory}
             channelsArr={this.props.channelsArr}
             loadChannels={this.props.loadChannels}
@@ -86,7 +86,7 @@ export default class IndexContainer extends Component {
 
 IndexContainer.propTypes = {
   isAuthenticated: PropTypes.bool,            //sign
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
   loginUser: PropTypes.func,
   loadAuth: PropTypes.func,
   registerUser: PropTypes.func,

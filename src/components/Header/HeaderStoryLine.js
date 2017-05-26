@@ -94,7 +94,7 @@
 //         <UserButtons
 //           onSignIn={this.props.onSignIn}
 //           onSignOut={this.props.onSignOut}
-//           user={this.props.user}
+//           authorizedUser={this.props.authorizedUser}
 //         />
 //
 //         {this.state.isMob &&
@@ -167,7 +167,7 @@
 //   children: PropTypes.element,
 //   onSignIn: PropTypes.func,
 //   onSignOut: PropTypes.func,
-//   user: PropTypes.object
+//   authorizedUser: PropTypes.object
 // };
 //
 // export default HeaderStoryLine;

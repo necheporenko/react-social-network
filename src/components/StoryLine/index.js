@@ -50,11 +50,11 @@ class StoryLine extends Component {
         <div className="wrap-storyLine">
           <BooksTreeContainer
             infoBlocksTop={chooseScroll.booksTree}
-            user={this.props.user}
+            authorizedUser={this.props.authorizedUser}
             bookTreeArr={this.props.bookTreeArr}
           />
           <Stream
-            user={this.props.user}
+            authorizedUser={this.props.authorizedUser}
             activeUser={this.props.activeUser}
             storiesArr={this.props.storiesArr}
             createStory={this.props.createStory}
@@ -71,7 +71,7 @@ class StoryLine extends Component {
 }
 
 StoryLine.propTypes = {
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,

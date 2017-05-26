@@ -48,7 +48,7 @@ class SubHeader extends Component {
   }
 
   render() {
-    // const { first_name, last_name } = this.props.user;
+    // const { first_name, last_name } = this.props.authorizedUser;
     const { first_name, last_name, slug, avatar} = this.props.activeUser;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { imageAvatar } = this.state;

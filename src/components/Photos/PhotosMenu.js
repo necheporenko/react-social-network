@@ -4,12 +4,12 @@ import { Link } from 'react-router';
 import './index.scss';
 
 @connect((state) => ({
-  user: state.sign.user,
+  authorizedUser: state.sign.authorizedUser,
 }), {})
 
 export default class PhotosMenu extends Component {
   render() {
-    const { slug } = this.props.user;
+    const { slug } = this.props.authorizedUser;
 
     return (
       <div className="sidebar">
@@ -34,5 +34,5 @@ export default class PhotosMenu extends Component {
 }
 
 PhotosMenu.propTypes = {
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
 };

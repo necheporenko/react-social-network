@@ -30,7 +30,7 @@ export default class BookStream extends Component {
     return (
       <div className="stream">
         <Sbox
-          user={this.props.user}
+          authorizedUser={this.props.authorizedUser}
           createStory={this.props.createStory}
         />
         <InfiniteScroll
@@ -54,7 +54,7 @@ export default class BookStream extends Component {
 }
 
 BookStream.propTypes = {
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
   createStory: PropTypes.func,
   bookStories: PropTypes.array,
   over: PropTypes.bool,

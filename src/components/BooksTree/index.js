@@ -23,7 +23,7 @@ import './draggable.scss';
 @connect((state) => ({
   bookTreeArr: state.book.bookTreeArr,
   activeUserSlug: state.sign.activeUser.slug,
-  userSlug: state.sign.user.slug,
+  authorizedUserSlug: state.sign.authorizedUser.slug,
 }), {
   loadBookTree,
   showBookStories
@@ -139,7 +139,7 @@ class BooksTree extends Component {
 
 
   render() {
-    const slug = this.props.activeUserSlug || this.props.userSlug;
+    const slug = this.props.activeUserSlug || this.props.authorizedUserSlug;
     const loop = data => (
       data.map((item) => {
         // console.log('ITEM:', item);

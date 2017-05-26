@@ -4,7 +4,7 @@ import './index.scss';
 
 class LeftMenu extends Component {
   render() {
-    const { slug, first_name, last_name, avatar} = this.props.user;
+    const { slug, first_name, last_name, avatar} = this.props.authorizedUser;
 
     return (
       <div className="leftpanel-menu">
@@ -36,7 +36,7 @@ class LeftMenu extends Component {
 }
 
 LeftMenu.propTypes = {
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
 };
 
 export default LeftMenu;

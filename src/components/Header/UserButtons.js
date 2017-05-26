@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 
 const UserButtons = (props) => {
-  const { slug, first_name, avatar} = props.user;
+  const { slug, first_name, avatar} = props.authorizedUser;
   const { logoutUser } = props;
   return (
     <nav className="header-navigation">
@@ -86,7 +86,7 @@ const UserButtons = (props) => {
 };
 
 UserButtons.propTypes = {
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
   logoutUser: PropTypes.func
 };
 

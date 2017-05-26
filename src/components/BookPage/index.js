@@ -30,7 +30,7 @@ const radioOptions = [
 }])
 
 @connect((state) => ({
-  user: state.sign.user,
+  authorizedUser: state.sign.authorizedUser,
   activeUser: state.sign.activeUser,
   bookTreeArr: state.book.bookTreeArr,
   bookStories: state.book.bookStories,
@@ -79,7 +79,7 @@ export default class BookPage extends Component {
                 bookTreeArr={this.props.bookTreeArr}
               />
               <BookStream
-                user={this.props.user}
+                authorizedUser={this.props.authorizedUser}
                 book_slug={this.props.book_slug}
                 bookStories={this.props.bookStories}
                 nextBookStories={this.props.nextBookStories}
@@ -165,5 +165,5 @@ export default class BookPage extends Component {
 }
 
 BookPage.propTypes = {
-  user: PropTypes.object
+  authorizedUser: PropTypes.object
 };

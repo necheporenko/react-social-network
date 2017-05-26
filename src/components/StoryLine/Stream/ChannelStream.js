@@ -29,7 +29,7 @@ class ChannelStream extends Component {
     return (
       <div className="stream">
         <Sbox
-          user={this.props.user}
+          authorizedUser={this.props.authorizedUser}
           createStory={this.props.createStory}
         />
         <InfiniteScroll
@@ -53,7 +53,7 @@ class ChannelStream extends Component {
 }
 
 ChannelStream.propTypes = {
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
   createStory: PropTypes.func,
   channelStories: PropTypes.array,
   over: PropTypes.bool,

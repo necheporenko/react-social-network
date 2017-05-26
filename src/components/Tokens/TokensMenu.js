@@ -4,12 +4,12 @@ import { Link } from 'react-router';
 import './index.scss';
 
 @connect((state) => ({
-  user: state.sign.user,
+  authorizedUser: state.sign.authorizedUser,
 }), {})
 
 export default class TokensMenu extends Component {
   render() {
-    const { slug } = this.props.user;
+    const { slug } = this.props.authorizedUser;
 
     return (
       <div className="sidebar tokens-nav">
@@ -39,5 +39,5 @@ export default class TokensMenu extends Component {
 }
 
 TokensMenu.propTypes = {
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
 };

@@ -13,7 +13,7 @@ class MainPage extends Component {
         <div className="wrapper">
           <div className="left-column">
             <LeftMenu
-              user={this.props.user}
+              authorizedUser={this.props.authorizedUser}
             />
             <Channels
               channelsArr={this.props.channelsArr}
@@ -25,7 +25,7 @@ class MainPage extends Component {
 
           <div className="mid-column">
             <ChannelStream
-              user={this.props.user}
+              authorizedUser={this.props.authorizedUser}
               createStory={this.props.createStory}
               channelStories={this.props.channelStories}
               loadNextChannelStories={this.props.loadNextChannelStories}
@@ -39,7 +39,7 @@ class MainPage extends Component {
 }
 
 MainPage.propTypes = {
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
   createStory: PropTypes.func,                //story
   createChannel: PropTypes.func,              //channel
   loadChannels: PropTypes.func,

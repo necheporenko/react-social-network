@@ -19,7 +19,7 @@ export const SHOW_USER_FAIL = 'SHOW_USER_FAIL';
 
 const initialState = {
   isAuthenticated: false,
-  user: null,
+  authorizedUser: null,
   activeUser: [],
   loaded: false
 };
@@ -40,7 +40,7 @@ export default function signReducer(state = initialState, action) {
         ...state,
         loggingIn: false,
         loaded: true,
-        user: action.result.data,
+        authorizedUser: action.result.data,
         // isAuthenticated: !!action.result.data.access_token
       };
     case LOGIN_FAIL:
@@ -48,7 +48,7 @@ export default function signReducer(state = initialState, action) {
       return {
         ...state,
         loggingIn: false,
-        user: null,
+        authorizedUser: null,
         loginError: action.error
       };
 
@@ -64,7 +64,7 @@ export default function signReducer(state = initialState, action) {
         ...state,
         loading: false,
         loaded: true,
-        user: action.result.data,
+        authorizedUser: action.result.data,
         // isAuthenticated: !!action.result.data.access_token,
         isAuthenticated: true
       };
@@ -75,7 +75,7 @@ export default function signReducer(state = initialState, action) {
         loading: false,
         loaded: false,
         error: action.error,
-        user: null,
+        authorizedUser: null,
         isAuthenticated: false
       };
 
@@ -88,13 +88,13 @@ export default function signReducer(state = initialState, action) {
       return {
         ...state,
         registeringIn: false,
-        user: action.result.data,
+        authorizedUser: action.result.data,
         isAuthenticated: !!action.result.data.access_token
       };
     case REGISTER_FAIL:
       return {
         ...state,
-        user: null,
+        authorizedUser: null,
         isAuthenticated: false,
         registeringIn: false,
         registerError: action.error
@@ -109,7 +109,7 @@ export default function signReducer(state = initialState, action) {
       return {
         ...state,
         loggingOut: false,
-        user: null,
+        authorizedUser: null,
         isAuthenticated: false
       };
     case LOGOUT_FAIL:
@@ -117,7 +117,7 @@ export default function signReducer(state = initialState, action) {
         ...state,
         loggingOut: false,
         logoutError: action.error,
-        user: null,
+        authorizedUser: null,
         isAuthenticated: false
       };
 
@@ -134,7 +134,7 @@ export default function signReducer(state = initialState, action) {
         ...state,
         loggingFB: false,
         loaded: true,
-        user: action.result.data,
+        authorizedUser: action.result.data,
         // isAuthenticated: action.result.data.access_token && true
       };
     case LOGIN_FB_FAIL:
@@ -142,7 +142,7 @@ export default function signReducer(state = initialState, action) {
       return {
         ...state,
         loggingFB: false,
-        user: null,
+        authorizedUser: null,
         loginError: action.error,
         // isAuthenticated: false
       };

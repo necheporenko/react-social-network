@@ -33,14 +33,14 @@ class Stream extends Component {
   }
 
   render() {
-    const { storiesArr, user, activeUser } = this.props;
+    const { storiesArr, authorizedUser, activeUser } = this.props;
     // const loader = <div className="loader">Loading ...</div>;
 
     return (
       <div className="stream">
-        {user.id === activeUser.id &&
+        {authorizedUser.id === activeUser.id &&
           <Sbox
-            user={this.props.user}
+            authorizedUser={this.props.authorizedUser}
             createStory={this.props.createStory}
             loadStories={this.props.loadStories}
           />
@@ -68,7 +68,7 @@ class Stream extends Component {
 }
 
 Stream.propTypes = {
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,

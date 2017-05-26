@@ -24,7 +24,7 @@ import StoryLine from '../components/StoryLine';
 
 
 @connect((state) => ({
-  user: state.sign.user,
+  authorizedUser: state.sign.authorizedUser,
   activeUser: state.sign.activeUser,
   isAuthenticated: state.sign.isAuthenticated,
   storiesArr: state.story.storiesArr,
@@ -55,7 +55,7 @@ export default class UserContainer extends Component {
           activeUser={this.props.activeUser}
         />
         <StoryLine
-          user={this.props.user}
+          authorizedUser={this.props.authorizedUser}
           activeUser={this.props.activeUser}
           storiesArr={this.props.storiesArr}
           createStory={this.props.createStory}
@@ -70,7 +70,7 @@ export default class UserContainer extends Component {
 }
 
 UserContainer.propTypes = {
-  user: PropTypes.object,                     //sign
+  authorizedUser: PropTypes.object,                     //sign
   activeUser: PropTypes.object,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
