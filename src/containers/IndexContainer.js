@@ -77,6 +77,7 @@ export default class IndexContainer extends Component {
             loginSocial={this.props.loginSocial}
             loading={this.props.loading}
             showChannel={this.props.showChannel}
+            loadChannels={this.props.loadChannels}
           />
         }
       </div>

@@ -31,7 +31,8 @@ class New extends Component {
   onSubmitSignInForm(data) {
     this.props.loginUser(data.email, data.password)
       .then(() => this.props.loadAuth())
-      .then(() => this.props.showChannel());
+      .then(() => this.props.showChannel())
+      .then(() => this.props.loadChannels());
   }
 
   onSubmitRegisterForm(data) {
@@ -184,6 +185,7 @@ New.propTypes = {
   loginSocial: PropTypes.func,
   loading: PropTypes.bool,
   showChannel: PropTypes.func,
+  loadChannels: PropTypes.func,
 };
 
 export default New;

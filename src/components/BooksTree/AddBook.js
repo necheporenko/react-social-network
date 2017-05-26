@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { Form, Input, Select } from 'formsy-react-components';
 import { connect } from 'react-redux';
-import AvatarEditor from 'react-avatar-editor';
 import { Modal } from 'react-bootstrap';
 import { create as createBook, load as loadBookTree } from '../../redux/modules/book';
+import { showPopUp } from '../../redux/modules/form';
+import ChangeImage from '../Popup/ChangeImage';
 import './index.scss';
 import coverBook from '../../img/Default/cover-book.png';
 
@@ -19,9 +20,12 @@ const selectCountry = [
 
 @connect((state) => ({
   bookTreeArr: state.book.bookTreeArr,
+  visible: state.forms.visible,
+  currentImage: state.forms.currentImage
 }), {
   loadBookTree,
   createBook,
+  showPopUp
 })
 
 class AddBook extends Component {
@@ -31,20 +35,20 @@ class AddBook extends Component {
       showModal: false,
       file: '',
       coverBook: coverBook,
-      scale: 1.2,
-      rotate: 0,
-      border: 0,
-      preview: null,
-      width: 460,
-      height: 200,
-      picture: 'http://devianmbanks.validbook.org/cdn/stories_images/713/original.jpg'
+      // scale: 1.2,
+      // rotate: 0,
+      // border: 0,
+      // preview: null,
+      // width: 460,
+      // height: 200,
+      // picture: 'http://devianmbanks.validbook.org/cdn/stories_images/713/original.jpg',
+      // test: '',
+      // showPopup: false
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
     this.onSubmitBook = this.onSubmitBook.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-    this.handleScale = this.handleScale.bind(this);
   }
 
   onSubmitBook(data) {
@@ -64,45 +68,17 @@ class AddBook extends Component {
   handleCoverChange(e) {
     e.preventDefault();
     const reader = new FileReader();
-    const file = e.target.files[0];
+    let file = e.target.files[0];
 
     reader.onloadend = () => {
       this.setState({
-        file: file,
-        coverBook: reader.result
+        // file: file,
+        // coverBook: reader.result,
       });
+      this.props.showPopUp(true, reader.result);
+      file = null;
     };
     reader.readAsDataURL(file);
-  }
-
-  handleSave = () => {
-    const img = this.editor.getImageScaledToCanvas().toDataURL();
-    const rect = this.editor.getCroppingRect();
-    const canvas = this.editor.getImage();
-    console.log(img);
-    console.log(rect);
-    console.log(canvas);
-
-    this.setState({
-      picture: canvas,
-      preview: {
-        img,
-        rect,
-        scale: this.state.scale,
-        width: this.state.width,
-        height: this.state.height,
-        borderRadius: this.state.borderRadius
-      }
-    });
-  }
-
-  setEditorRef = (editor) => {
-    if (editor) this.editor = editor;
-  }
-
-  handleScale = (e) => {
-    const scale = parseFloat(e.target.value);
-    this.setState({ scale });
   }
 
   render() {
@@ -123,9 +99,11 @@ class AddBook extends Component {
             onSubmit={this.onSubmitBook}
           >
             <Modal.Body>
-              <div className="cover-book">
+              <div className="wrapper-popup">
                 <h4>Cover image</h4>
+
                 <img src={coverBook} alt=""/>
+
                 <div className="add-cover-book">
                   <input type="file" onChange={(e) => this.handleCoverChange(e)}/>
                   <span>Change Cover</span>
@@ -159,52 +137,21 @@ class AddBook extends Component {
                 placeholder="(Optional)"
                 type="text"
               />
-
-              <AvatarEditor
-                ref={this.setEditorRef}
-                image={this.state.picture}
-                width={525}
-                height={200}
-                border={0}
-                color={[255, 255, 255, 0.6]} // RGBA
-                scale={parseFloat(this.state.scale)}
-                rotate={0}
-                onSave={this.handleSave}
-              />
-              Zoom:
-              <br />
-              <input
-                name="scale"
-                type="range"
-                onChange={this.handleScale}
-                min="1"
-                max="2"
-                step="0.01"
-                defaultValue="1"
-              />
-              <br />
-              <input type="button" onClick={this.handleSave} value="Preview" />
-              <br />
-              { !!this.state.preview &&
-              <img
-                crossOrigin="anonymous"
-                src={this.state.preview.img}
-                style={{ borderRadius: `${(Math.min(this.state.preview.height, this.state.preview.width) + 10) * ((this.state.preview.borderRadius / 2) / 100)}px` }}
-              />
-              }
-
             </Modal.Body>
 
             <Modal.Footer>
-              {/*<Button onClick={this.Close}>Cancel</Button>*/}
-              {/*<Button bsStyle="primary" type="submit">Create Book</Button>*/}
               <div style={{float: 'right'}}>
                 <button className="btn-brand btn-cancel" onClick={this.Close}>Cancel</button>
                 <button className="btn-brand" style={{marginLeft: '10px'}} type="submit">Create Book</button>
               </div>
-
             </Modal.Footer>
           </Form>
+
+          <ChangeImage
+            showPopUp={this.props.showPopUp}
+            visible={this.props.visible}
+            currentImage={this.props.currentImage}
+          />
 
         </Modal>
       </div>
