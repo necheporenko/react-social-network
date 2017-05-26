@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Cookies from 'js-cookie';
 import Helmet from 'react-helmet';
 import config from 'config';
 import { asyncConnect } from 'redux-connect';
@@ -49,7 +48,7 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
 
 @connect((state) => ({
   isAuthenticated: state.sign.isAuthenticated,
-  user: state.sign.user
+  authorizedUser: state.sign.authorizedUser
 }), {
   logoutUser
 })
@@ -79,7 +78,7 @@ class App extends Component {
         {this.props.isAuthenticated &&
           <div style={{ marginTop: '52px' }}>
             <Header
-              user={this.props.user}
+              authorizedUser={this.props.authorizedUser}
               logoutUser={this.props.logoutUser}
               // onSignOut={this.props.userSignOut}
             />
@@ -94,7 +93,7 @@ class App extends Component {
 App.propTypes = {
   children: PropTypes.element,
   isAuthenticated: PropTypes.bool,
-  user: PropTypes.object,
+  authorizedUser: PropTypes.object,
   logoutUser: PropTypes.func
   // userLogin: PropTypes.func,
   // userSignOut: PropTypes.func
