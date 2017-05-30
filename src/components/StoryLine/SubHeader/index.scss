@@ -11,9 +11,14 @@
     }
   }
 
-  > img {
+  .imageCover {
     height: 235px;
-    width: 100%;
+    overflow: hidden;
+
+    > img {
+      height: 235px;
+      width: 100%;
+    }
   }
 
   .wrapper {

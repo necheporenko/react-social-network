@@ -57,7 +57,9 @@ class SubHeader extends Component {
 
     return (
       <div className="subHeader">
-        <img src={imageCover} />
+        <div className="imageCover">
+          <img src={imageCover} />
+        </div>
         <div className="wrapper">
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`}>

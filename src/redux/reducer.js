@@ -8,6 +8,7 @@ import sign from './modules/sign';
 import follow from './modules/follow';
 import book from './modules/book';
 import profile from './modules/profile';
+import search from './modules/search';
 
 export default function createReducers(asyncReducers) {
   return {
@@ -15,13 +16,13 @@ export default function createReducers(asyncReducers) {
     online: (v = true) => v,
     routing: routerReducer,
     forms: form,
-    // users: user,
     channel,
     story,
     sign,
     follow,
     book,
     profile,
+    search,
     ...asyncReducers
   };
 }

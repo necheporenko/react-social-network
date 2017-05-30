@@ -21,7 +21,6 @@ const initialState = {
     loadedBookStories: false,
   },
   pagination: 1,
-
 };
 
 export default function bookReducer(state = initialState, action) {

@@ -63,18 +63,6 @@ class Books extends Component {
             // entered={transition.entered}
             //leaved={transition.leaved}
           >
-
-            {/* <div key="key1">Item 1</div>
-            <div key="key2">Item 2</div>
-            <div key="key3">Item 3</div> */}
-
-            {/* {BOOKS.map((book, index) => (
-            <div key={index} className="book">
-              <div className="book-title">{book.title}</div>
-              <div className="book-content">{book.content}</div>
-              <div className="book-btn">Edit</div>
-            </div>
-          ))} */}
             { bookTreeArr[0].children.map((book) => (
               <TestBook
                 key={book.key}
@@ -83,19 +71,6 @@ class Books extends Component {
               />
               ))
             }
-
-            {/*<TestBook />*/}
-            {/*<TestBook />*/}
-            {/*<TestBook />*/}
-            {/*<TestBook />*/}
-            {/*<TestBook />*/}
-            {/*<TestBook />*/}
-            {/*<TestBook />*/}
-            {/*<TestBook />*/}
-            {/*<TestBook />*/}
-            {/*<TestBook />*/}
-            {/*<TestBook />*/}
-
           </StackGrid>
         </div>
       </div>

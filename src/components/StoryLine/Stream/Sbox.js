@@ -63,6 +63,10 @@ class Sbox extends Component {
     });
   }
 
+  test() {
+    console.log(this.quiet_log);
+  }
+
   render() {
     const { editorContent } = this.state;
     const { first_name, last_name, avatar} = this.props.authorizedUser;
@@ -106,14 +110,27 @@ class Sbox extends Component {
           <div style={{display: 'flex'}}>
             <button className="btn-brand" type="submit" onClick={this.onSubmitStory}>Log</button>
             <ButtonToolbar>
-              <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} pullRight >
+              <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} >
                 <div className="sbox-booktree">
                   <BookTreeForSboxContainer />
                 </div>
               </DropdownButton>
+              <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="" id={6} >
+                <div className="sbox-logging">
+                  <ul>
+                    <li><input type="radio" ref={(el) => { this.quiet_log = el; }}/><i>Quiet logging</i></li>
+                    <li><input type="checkbox" ref={(el) => { this.quiet_log = el; }}/><i>Loud logging</i></li>
+                    <li><input type="checkbox" ref={(el) => { this.quiet_log = el; }}/><i>Loud in book</i></li>
+                    <li><input type="checkbox"/><i>Post to Facebook</i></li>
+                    <li><input type="checkbox"/><i>Post to Twitter</i></li>
+                    <li><input type="checkbox"/><i>Story will appear on Storyline</i></li>
+                    <button onClick={() => this.test()}>click for test</button>
+                  </ul>
+                </div>
+              </DropdownButton>
             </ButtonToolbar>
           </div>
-          <div style={{height: '20px', marginTop: '3px'}} onClick={this.showToolbar}>
+          <div className="camera" style={{height: '20px', marginTop: '3px'}} onClick={this.showToolbar}>
             <span>More Options</span>
             <i></i>
           </div>
