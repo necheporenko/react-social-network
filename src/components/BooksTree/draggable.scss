@@ -113,7 +113,8 @@ $valid_color: #1976d2;
       &:hover {
         background-color: #E1E1E1;
       }
-      .react-tree-expander {
+      .react-tree-expander,
+      .react-tree-expander-noop {
         position: absolute;
         top: 6px;                                         //0
         left: 0;
@@ -406,7 +407,7 @@ $sprite: url('http://validbook.org/images/main_sprite.png') no-repeat;
 
 .not_drag {
   span {
-    margin-left: 2.5px;
+    margin-left: 3.5px;
     a:before {
       content: '';
       background: $sprite;

@@ -1,17 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import draftToHtml from 'draftjs-to-html';
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import uploadImageCallBack from './uploadImageCallBack';
-import BooksTreeContainer from '../../../containers/BooksTreeContainer';
+import { getCheckboxOfBook } from '../../../redux/modules/book';
+import { create as createStory } from '../../../redux/modules/story';
+import BookTreeForSboxContainer from '../../../containers/BookTreeForSboxContainer';
 import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './index.scss';
 
 const list = ['15px', '55px'];
 let index;
 let step = 0;
+
+@connect((state) => ({
+  arrCheckbox: state.book.arrCheckbox,
+}), {
+  getCheckboxOfBook,
+  createStory
+})
 
 class Sbox extends Component {
   constructor(props) {
@@ -36,8 +46,9 @@ class Sbox extends Component {
 
   onSubmitStory() {
     console.log(this.state.data);
-    this.props.createStory(this.state.data)
+    this.props.createStory(this.state.data, this.props.arrCheckbox)
       .then(() => this.props.loadStories());
+    this.props.getCheckboxOfBook([]);
     this.setState({
       editorContent: '',        //  cleaning input
     });
@@ -97,7 +108,7 @@ class Sbox extends Component {
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} pullRight >
                 <div className="sbox-booktree">
-                  <BooksTreeContainer />
+                  <BookTreeForSboxContainer />
                 </div>
               </DropdownButton>
             </ButtonToolbar>

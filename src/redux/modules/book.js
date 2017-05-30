@@ -10,15 +10,18 @@ const SHOW_NEXT_BOOK_FAIL = 'SHOW_NEXT_BOOK_FAIL';
 export const CREATE_BOOK = 'CREATE_BOOK';
 export const CREATE_BOOK_SUCCESS = 'CREATE_BOOK_SUCCESS';
 export const CREATE_BOOK_FAIL = 'CREATE_BOOK_FAIL';
+const GET_ARR_CHECKBOX = 'GET_ARR_CHECKBOX';
 
 const initialState = {
   bookTreeArr: [],
   bookStories: [],
+  arrCheckbox: [],
   loaded: {
     loadedBookTree: false,
     loadedBookStories: false,
   },
   pagination: 1,
+
 };
 
 export default function bookReducer(state = initialState, action) {
@@ -118,6 +121,13 @@ export default function bookReducer(state = initialState, action) {
         created: false,
       };
 
+    case GET_ARR_CHECKBOX:
+      return {
+        ...state,
+        arrCheckbox: action.checkbox
+      };
+
+
     default:
       return state;
   }
@@ -160,5 +170,12 @@ export function create(name, parent_slug) {
   return {
     types: [CREATE_BOOK, CREATE_BOOK_SUCCESS, CREATE_BOOK_FAIL],
     promise: (client) => client.post('/book', { data: { name, parent_slug }})
+  };
+}
+
+export function getCheckboxOfBook(checkbox) {
+  return {
+    type: GET_ARR_CHECKBOX,
+    checkbox
   };
 }

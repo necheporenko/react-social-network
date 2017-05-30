@@ -3,23 +3,18 @@ import { Link } from 'react-router';
 import Tree, { TreeNode } from 'draggable-react-tree-component';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { Form, Checkbox, CheckboxGroup } from 'formsy-react-components';
-import { load as loadBookTree, show as showBookStories } from '../../redux/modules/book';
+import { load as loadBookTree, show as showBookStories, getCheckboxOfBook } from '../../redux/modules/book';
 import { gData } from './util';
 import './draggable.scss';
 
+const arrCheckbox = [];
 
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
-    //
-    // console.log('asyncConnect BooksTree')
-    // promises.push(dispatch(loadBookTree('vad-vad')));
-
     return Promise.all(promises);
   }
 }])
-
 
 @connect((state) => ({
   bookTreeArr: state.book.bookTreeArr,
@@ -27,10 +22,11 @@ import './draggable.scss';
   authorizedUserSlug: state.sign.authorizedUser.slug,
 }), {
   loadBookTree,
-  showBookStories
+  showBookStories,
+  getCheckboxOfBook
 })
 
-class BooksTree extends Component {
+class BooksTreeForSbox extends Component {
   constructor(props) {
     super(props);
     [
@@ -137,6 +133,17 @@ class BooksTree extends Component {
     return null;
   }
 
+  checked(key) {
+    const find = arrCheckbox.indexOf(key);
+    if (find !== -1) {
+      arrCheckbox.splice(find, 1);
+    } else {
+      arrCheckbox.push(key);
+    }
+    this.props.getCheckboxOfBook(arrCheckbox);
+  }
+
+
   render() {
     const slug = this.props.requestedUserSlug || this.props.authorizedUserSlug;
     const loop = data => (
@@ -145,21 +152,18 @@ class BooksTree extends Component {
           <TreeNode
             key={item.key}
             items={(item.children && item.children.length) ? loop(item.children) : null}
-            //no_drag = {item.no_drag ? draggable={false} : null}
-            //className={item.show ? 'not_show' : null}
             className={this.onPick(item)}
             disabled={item.no_drag}
           >
+            <input type="checkbox" value={item.key} onChange={(e) => this.checked(e.target.value)} />
             <Link
-              // to={`/${slug}/books/${item.key}`}
               to={`/${slug}/books/${item.key}`}
               draggable={false}
-              // onClick={() => this.showBookStories(item.key)}
             >
               {item.name}
             </Link>
           </TreeNode>);
-        }
+      }
       )
     );
     return (
@@ -185,9 +189,9 @@ class BooksTree extends Component {
   }
 }
 
-export default BooksTree;
+export default BooksTreeForSbox;
 
-BooksTree.propTypes = {
+BooksTreeForSbox.propTypes = {
   bookTreeArr: PropTypes.object,
   loadBookTree: PropTypes.func,
 };

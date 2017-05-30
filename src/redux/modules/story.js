@@ -113,11 +113,10 @@ export function loadNext(slug, page) {
   };
 }
 
-export function create(description) {
-  const book_ids = [1];                                                                                                  //todo add dynamic id of book
+export function create(description, books) {
   return {
     types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
-    promise: (client) => client.post('/story', { data: { description, book_ids }})
+    promise: (client) => client.post('/story', { data: { description, books }})
   };
 }
 
