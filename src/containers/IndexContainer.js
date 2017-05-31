@@ -4,8 +4,8 @@ import { asyncConnect } from 'redux-connect';
 import { login as loginUser, load as loadAuth, register as registerUser, loginSocial } from '../redux/modules/sign';
 import { showActiveForm } from '../redux/modules/form';
 import { isLoadedChannelList, isLoadedChannelStories, create as createChannel,
-  show as showChannel, load as loadChannels, isMashUp, loadNext as loadNextChannelStories,
-  clearPagination } from '../redux/modules/channel';
+  show as showChannel, load as loadChannels, isMashUp, loadNext as loadNextChannelStories } from '../redux/modules/channel';
+import { load as loadBookTree } from '../redux/modules/book';
 import { create as createStory } from '../redux/modules/story';
 import NewUser from '../components/Registration/Main';
 import MainPage from '../components/MainPage';
@@ -18,10 +18,10 @@ import MainPage from '../components/MainPage';
     if (!isLoadedChannelStories(getState())) {
       promises.push(dispatch(showChannel(isMashUp(getState()))));
     }
-    // dispatch(clearPagination());
     if (!isLoadedChannelList(getState())) {
       promises.push(dispatch(loadChannels()));
     }
+    promises.push(dispatch(loadBookTree()));
 
     return Promise.all(promises);
   }
@@ -37,6 +37,7 @@ import MainPage from '../components/MainPage';
   activeForm: state.forms.activeForm,
   channelsArr: state.channel.channelsArr,
   channelStories: state.channel.channelStories,
+  bookTreeArr: state.book.bookTreeArr,
 }), {
   loginUser,
   loginSocial,

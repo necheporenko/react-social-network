@@ -30,11 +30,21 @@ class Sbox extends Component {
       editorContent: '',
       data: '',
       toolbarHidden: true,
-      jump: '15px'
+      jump: '15px',
+      loud: {
+        quiet_log: true,
+        loud_log: false,
+        loud_book: true,
+        post_fb: false,
+        post_twitter: false,
+        storyline: false
+      }
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
     this.showToolbar = this.showToolbar.bind(this);
     this.onSubmitStory = this.onSubmitStory.bind(this);
+    this.test = this.test.bind(this);
+    this.test2 = this.test2.bind(this);
   }
 
   onEditorStateChange = (editorContent) => {
@@ -47,7 +57,7 @@ class Sbox extends Component {
   onSubmitStory() {
     console.log(this.state.data);
     this.props.createStory(this.state.data, this.props.arrCheckbox)
-      .then(() => this.props.loadStories());
+      .then(() => this.props.reloadStream());
     this.props.getCheckboxOfBook([]);
     this.setState({
       editorContent: '',        //  cleaning input
@@ -63,8 +73,15 @@ class Sbox extends Component {
     });
   }
 
-  test() {
-    console.log(this.quiet_log);
+  test(event) {
+    event.preventDefault();
+    console.log(this.state.loud);
+    console.log('hi');
+  }
+
+  test2(event) {
+    this.state.loud[event.target.name] = event.target.checked;
+    this.setState({loud: this.state.loud});
   }
 
   render() {
@@ -105,10 +122,11 @@ class Sbox extends Component {
         <div className="sbox-user-avatar" style={{top: this.state.jump}}>
           <Link to={link}><img src={avatar} /></Link>
         </div>
-
+        {/*<form onSubmit={this.test}>*/}
         <div className="sbox-footer">
           <div style={{display: 'flex'}}>
             <button className="btn-brand" type="submit" onClick={this.onSubmitStory}>Log</button>
+            {/*<button className="btn-brand" type="submit">Log</button>*/}
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} >
                 <div className="sbox-booktree">
@@ -118,12 +136,30 @@ class Sbox extends Component {
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="" id={6} >
                 <div className="sbox-logging">
                   <ul>
-                    <li><input type="radio" ref={(el) => { this.quiet_log = el; }}/><i>Quiet logging</i></li>
-                    <li><input type="checkbox" ref={(el) => { this.quiet_log = el; }}/><i>Loud logging</i></li>
-                    <li><input type="checkbox" ref={(el) => { this.quiet_log = el; }}/><i>Loud in book</i></li>
-                    <li><input type="checkbox"/><i>Post to Facebook</i></li>
-                    <li><input type="checkbox"/><i>Post to Twitter</i></li>
-                    <li><input type="checkbox"/><i>Story will appear on Storyline</i></li>
+                    <li>
+                      <input type="radio" name="quiet_log" checked={this.state.loud.quiet_log} onChange={this.test2}/>
+                      <i>Quiet logging</i>
+                    </li>
+                    <li>
+                      <input type="checkbox" name="loud_log" checked={this.state.loud.loud_log} onChange={this.test2}/>
+                      <i>Loud logging</i>
+                    </li>
+                    <li>
+                      <input type="checkbox" name="loud_book" checked={this.state.loud.loud_book} onChange={this.test2}/>
+                      <i>Loud in book</i>
+                    </li>
+                    <li>
+                      <input type="checkbox" name="post_fb" checked={this.state.loud.post_fb} onChange={this.test2}/>
+                      <i>Post to Facebook</i>
+                    </li>
+                    <li>
+                      <input type="checkbox" name="post_twitter" checked={this.state.loud.post_twitter} onChange={this.test2}/>
+                      <i>Post to Twitter</i>
+                    </li>
+                    <li>
+                      <input type="checkbox" name="storyline" checked={this.state.loud.storyline} onChange={this.test2}/>
+                      <i>Story will appear on Storyline</i>
+                    </li>
                     <button onClick={() => this.test()}>click for test</button>
                   </ul>
                 </div>
@@ -135,6 +171,7 @@ class Sbox extends Component {
             <i></i>
           </div>
         </div>
+        {/*</form>*/}
       </div>
     );
   }

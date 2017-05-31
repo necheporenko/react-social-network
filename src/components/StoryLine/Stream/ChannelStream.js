@@ -16,12 +16,17 @@ class ChannelStream extends Component {
   constructor(props) {
     super(props);
     this.load = this.load.bind(this);
+    this.reloadStreamChannel = this.reloadStreamChannel.bind(this);
   }
 
   load() {
     if (!this.props.over) {
       this.props.loadNextChannelStories(this.props.channel_slug, this.props.pagination);
     }
+  }
+
+  reloadStreamChannel() {
+    this.props.showChannel('');
   }
 
   render() {
@@ -31,6 +36,7 @@ class ChannelStream extends Component {
         <Sbox
           authorizedUser={this.props.authorizedUser}
           createStory={this.props.createStory}
+          reloadStream={this.reloadStreamChannel}
         />
         <InfiniteScroll
           loadMore={this.load}

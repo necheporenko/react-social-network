@@ -37,7 +37,8 @@ const radioOptions = [
   bookPageName: state.book.bookPage.name,
   book_slug: state.book.book_slug,
 }), {
-  nextBookStories
+  nextBookStories,
+  showBookStories
 })
 
 export default class BookPage extends Component {
@@ -83,6 +84,7 @@ export default class BookPage extends Component {
                 book_slug={this.props.book_slug}
                 bookStories={this.props.bookStories}
                 nextBookStories={this.props.nextBookStories}
+                showBookStories={this.props.showBookStories}
               />
 
               <div className="infobloks">

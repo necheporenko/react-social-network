@@ -28,6 +28,7 @@ class MainPage extends Component {
               authorizedUser={this.props.authorizedUser}
               createStory={this.props.createStory}
               channelStories={this.props.channelStories}
+              showChannel={this.props.showChannel}
               loadNextChannelStories={this.props.loadNextChannelStories}
             />
             <FollowBlock />

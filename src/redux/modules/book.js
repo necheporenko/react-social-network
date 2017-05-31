@@ -11,6 +11,7 @@ export const CREATE_BOOK = 'CREATE_BOOK';
 export const CREATE_BOOK_SUCCESS = 'CREATE_BOOK_SUCCESS';
 export const CREATE_BOOK_FAIL = 'CREATE_BOOK_FAIL';
 const GET_ARR_CHECKBOX = 'GET_ARR_CHECKBOX';
+const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
 
 const initialState = {
   bookTreeArr: [],
@@ -126,7 +127,6 @@ export default function bookReducer(state = initialState, action) {
         arrCheckbox: action.checkbox
       };
 
-
     default:
       return state;
   }
@@ -134,7 +134,7 @@ export default function bookReducer(state = initialState, action) {
 
 export function getBookSlug(globalState) {
   const path = globalState.routing.locationBeforeTransitions.pathname;
-  return path.substring(path.indexOf('/books/') + 7);                               //get book slug after '/books/'
+  return path.substring(path.indexOf('/books/') + 7);           //get book slug after '/books/'
 }
 
 export function load(user_slug) {

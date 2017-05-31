@@ -8,21 +8,25 @@ import './index.scss';
 
 @connect((state) => ({
   over: state.book.over,
-  // channel_slug: state.channel.channel_slug,
   pagination: state.book.pagination,
-
+  book_slug: state.book.book_slug
 }), {})
 
 export default class BookStream extends Component {
   constructor(props) {
     super(props);
     this.load = this.load.bind(this);
+    this.reloadStreamBook = this.reloadStreamBook.bind(this);
   }
 
   load() {
     if (!this.props.over) {
       this.props.nextBookStories(this.props.book_slug, this.props.pagination);
     }
+  }
+
+  reloadStreamBook() {
+    this.props.showBookStories(this.props.book_slug);
   }
 
   render() {
@@ -32,6 +36,7 @@ export default class BookStream extends Component {
         <Sbox
           authorizedUser={this.props.authorizedUser}
           createStory={this.props.createStory}
+          reloadStream={this.reloadStreamBook}
         />
         <InfiniteScroll
           loadMore={this.load}

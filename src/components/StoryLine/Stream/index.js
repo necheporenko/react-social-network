@@ -16,12 +16,11 @@ class Stream extends Component {
   constructor(props) {
     super(props);
     this.load = this.load.bind(this);
+    this.reloadStreamStoryline = this.reloadStreamStoryline.bind(this);
   }
 
   componentDidMount() {
-    console.log(page);
     page = 1;
-    console.log(page);
   }
 
   load() {
@@ -30,6 +29,10 @@ class Stream extends Component {
       console.log(this.props.slug);
       this.props.loadNextStories(this.props.slug, page);
     }
+  }
+
+  reloadStreamStoryline() {
+    this.props.loadStories();
   }
 
   render() {
@@ -42,7 +45,7 @@ class Stream extends Component {
           <Sbox
             authorizedUser={this.props.authorizedUser}
             createStory={this.props.createStory}
-            loadStories={this.props.loadStories}
+            reloadStream={this.reloadStreamStoryline}
           />
         }
 
