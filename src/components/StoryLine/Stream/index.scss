@@ -108,6 +108,43 @@
   }
 
   .sbox-booktree {
+    width: 225px;
+
+    /*
+    STYLE CHECKBOX
+     */
+    input[type="checkbox"] {
+      display:none;
+    }
+
+    input[type="checkbox"] + label span {
+      display:inline-block;
+      width:11px;
+      height:11px;
+      margin: 0 7px 0 -2px;
+      cursor:pointer;
+      border-radius: 1px;
+      background-color: rgba(255, 255, 255, .05);
+      border: 1px solid rgba(155, 155, 155, .57);
+    }
+
+    label {
+      margin-top: 4px;
+      margin-left: -3px;
+      position: absolute;
+    }
+
+    input[type="checkbox"]:checked + label span {
+      background:url(../../../img/Icons/checkmark.png) -6px repeat;
+    }
+    /*
+    STYLE CHECKBOX
+     */
+
+    .react-tree {
+      padding: 0;
+    }
+
     a {
       padding: 0 !important;
       padding-left: 15px !important;
@@ -123,6 +160,10 @@
     input[type="checkbox"] {
       position: absolute;
       left: -1px;
+    }
+
+    .react-tree li .react-tree-item-label:hover {
+      background-color: #eeeeee;
     }
 
     .not_drag,

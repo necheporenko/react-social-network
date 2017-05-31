@@ -21,12 +21,12 @@ const TestBook = ({ name, childrens }) => {
         </ul>
         <hr />
       </div>
-      <div className="book-description">
-        <p>Description...</p>
-      </div>
-      <div className="book-quantity">
-        <span>2 subbooks</span>
-      </div>
+      {/*<div className="book-description">*/}
+        {/*<p>Description...</p>*/}
+      {/*</div>*/}
+      {/*<div className="book-quantity">*/}
+        {/*<span>2 subbooks</span>*/}
+      {/*</div>*/}
       <div className="book-subbooks">
         <BookTree
           bookTreeArr={childrens}

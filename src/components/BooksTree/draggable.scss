@@ -116,7 +116,7 @@ $valid_color: #1976d2;
       .react-tree-expander,
       .react-tree-expander-noop {
         position: absolute;
-        top: 6px;                                         //0
+        top: 8px;                                         //0
         left: 0;
         z-index: 1;
       }
@@ -128,18 +128,7 @@ $valid_color: #1976d2;
         @extend %extend_2;
       }
     }
-    // .react-tree-item-label-active {
-    // 	background-color: #2d79d9;
-    // 	color: white;
-    // 	&:hover {
-    // 		background-color: #2d79d9;
-    // 		color: white;
-    // 	}
-    // 	a {
-    // 		background-color: #2d79d9;
-    // 		color: white;
-    // 	}
-    // }
+
     .draggable[draggable] {
       @extend %extend_1;
       > a {
@@ -152,7 +141,7 @@ $valid_color: #1976d2;
       > a {
         text-decoration: none;
         display: block;
-        width: 120%;
+        width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -179,20 +168,45 @@ $valid_color: #1976d2;
           @extend %extend_5;
         }
         &.react-tree-expander_close::before {
-          content: '▶︎';
+          content: '';
+          width: 0;
+          height: 0;
+          border-top: 5px solid transparent;
+          border-right: 5px solid transparent;
+          border-left: 5px solid #777777;
+          border-bottom: 5px solid transparent;
         }
         &.react-tree-expander_open::before {
-          content: '▶︎';
+          content: '';
+          width: 0;
+          height: 0;
+          border-top: 5px solid transparent;
+          border-right: 5px solid transparent;
+          border-left: 5px solid #777777;
+          border-bottom: 5px solid transparent;
           //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
           transform: rotate(90deg);
         }
         &.react-tree-expander_close:before {
-          content: '▶︎';
+          content: '';
+          width: 0;
+          height: 0;
+          border-top: 5px solid transparent;
+          border-right: 5px solid transparent;
+          border-left: 5px solid #777777;
+          border-bottom: 5px solid transparent;
+          transform-origin: left;
         }
         &.react-tree-expander_open:before {
-          content: '▶︎';
-          //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+          content: '';
+          width: 0;
+          height: 0;
+          border-top: 5px solid transparent;
+          border-right: 5px solid transparent;
+          border-left: 5px solid #777777;
+          border-bottom: 5px solid transparent;
           transform: rotate(90deg);
+          transform-origin: left;
         }
       }
       &.react-tree-checkbox {
@@ -342,7 +356,7 @@ $valid_color: #1976d2;
 .react-tree-treenode-disabled > .react-tree-item-label {
   span {
     color: #ccc;
-    cursor: not-allowed;
+    //cursor: not-allowed;
   }
   .draggable {
     color: #ccc;
@@ -407,7 +421,10 @@ $sprite: url('http://validbook.org/images/main_sprite.png') no-repeat;
 
 .not_drag {
   span {
-    margin-left: 3.5px;
+    margin-left: 3px;
+    display: block;
+    margin-bottom: -5px;
+    height: 26px;
     a:before {
       content: '';
       background: $sprite;

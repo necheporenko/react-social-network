@@ -1,11 +1,38 @@
 import React, { Component, PropTypes } from 'react';
 import { Link, IndexLink } from 'react-router';
+import BooksTree from '../../BooksTree';
 import './index.scss';
 
 class LeftMenu extends Component {
-  render() {
-    const { slug, first_name, last_name, avatar} = this.props.authorizedUser;
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+    };
+  }
 
+  openBooktree() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
+
+  render() {
+    const { isOpen } = this.state;
+    const { slug, first_name, last_name, avatar} = this.props.authorizedUser;
+    const showBooktree = () => {
+      let arrow;
+      let display_state;
+      if (!isOpen) {
+        arrow = 'booktree';
+        display_state = 'none';
+      } else {
+        arrow = 'booktree booktree-close';
+        display_state = 'block';
+      }
+      return { arrow, display_state };
+    };
+    const navigation = showBooktree();
     return (
       <div className="leftpanel-menu">
         <div className="wrapper">
@@ -17,11 +44,13 @@ class LeftMenu extends Component {
                 <span>{`${first_name} ${last_name}`}</span>
               </li>
             </IndexLink>
-            <Link to={`/${slug}/books`} className="nav-a">
+            <Link to={`/${slug}/books`} className="nav-a nav-book">
               <li className="nav-li nav-books">
                 <span>Books</span>
               </li>
             </Link>
+            <i className={navigation.arrow} onClick={() => this.openBooktree()}></i>
+            <div style={{display: navigation.display_state}}><BooksTree /></div>
             <Link to={`/${slug}/tokens`} className="nav-a">
               <li className="nav-li nav-tokens">
                 <span>Tokens</span>
