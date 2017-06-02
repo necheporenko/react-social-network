@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import config from 'config';
 import { asyncConnect } from 'redux-connect';
+import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import Header from '../../components/Header';
-// import { userLogin, userSignOut, isLoaded as isAuthLoaded, load as loadAuth, } from '../../redux/modules/user';
 import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from '../../redux/modules/sign';
 
 // @asyncConnect([{
@@ -42,6 +42,9 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
     if (!isAuthLoaded(getState())) {
       promises.push(dispatch(loadAuth()));
     }
+
+    dispatch(showLoading());
+
     return Promise.all(promises);
   }
 }])
@@ -49,25 +52,19 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
 @connect((state) => ({
   isAuthenticated: state.sign.isAuthenticated,
   authorizedUser: state.sign.authorizedUser
-}), {
-  logoutUser
-})
+}), ({
+  logoutUser,
+  hideLoading
+}))
 
 class App extends Component {
 
-  /*componentWillMount() {
-    const user = Cookies.get('_u') ? JSON.parse(Cookies.get('_u')) : null; // let
-    if (user) {
-      console.log(user.id, user.email, user.token, user.first_name, user.last_name);
-      this.props.userLogin(user.id, user.email, user.token, user.first_name, user.last_name);
-    }
-  }*/
-
-  // componentWillReceiveProps() {
-    // const path = this.props.children.props.router.location.pathname;
-    // const { first_name, last_name } = this.props.user;
-    // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
-  // }
+  componentWillReceiveProps() {
+    this.props.hideLoading();
+  }
+  componentWillMount() {
+    this.props.hideLoading();
+  }
 
   render() {
     const { children } = this.props;
@@ -94,7 +91,8 @@ App.propTypes = {
   children: PropTypes.element,
   isAuthenticated: PropTypes.bool,
   authorizedUser: PropTypes.object,
-  logoutUser: PropTypes.func
+  logoutUser: PropTypes.func,
+  hideLoading: PropTypes.func,
   // userLogin: PropTypes.func,
   // userSignOut: PropTypes.func
 };

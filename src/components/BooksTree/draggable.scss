@@ -96,7 +96,7 @@ $valid_color: #1976d2;
 
 .react-tree {
   margin: 0;
-  padding: 3px 5px;
+  //padding: 3px 5px;
   li {
     padding: 0;
     //list-style: none;
@@ -269,12 +269,8 @@ $valid_color: #1976d2;
     &.drag-over-gap-top > .react-tree-item-label .draggable[draggable]::before {
       display: block;
       top: 0;
-      display: block;
-      top: 0;
     }
     &.drag-over-gap-bottom > .react-tree-item-label .draggable[draggable]::before {
-      display: block;
-      bottom: 0;
       display: block;
       bottom: 0;
     }

@@ -1,11 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import LoadingBar from 'react-redux-loading-bar';
 import Logo from './Logo';
 import SearchField from './SearchField';
 import UserButtons from './UserButtons';
-//import Sidebar from 'react-sidebar';
-//import LeftMenu from '../MainPage/LeftMenu';
-//import Channels from '../MainPage/Channels';
-
 import './index.scss';
 
 class Header extends Component {
@@ -88,7 +85,7 @@ class Header extends Component {
         {/* {this.state.isMob &&
           <div style={{width: '35px'}}></div>
         } */}
-
+        <LoadingBar style={{ backgroundColor: '#2887D2', height: '3px', top: 0, left: 0 }} />
         <Logo />
         <SearchField />
         <UserButtons

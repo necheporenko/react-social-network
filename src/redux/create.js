@@ -4,6 +4,7 @@ import { createPersistor } from 'redux-persist';
 import createMiddleware from './middleware/clientMiddleware';
 import createReducers from './reducer';
 
+
 export function inject(store, name, asyncReducer) {
   if (store.asyncReducers[name]) return;
   store.asyncReducers[name] = asyncReducer;
@@ -34,6 +35,7 @@ export default function createStore(history, client, data, persistConfig = null)
 
   const finalCreateStore = compose(...enhancers)(_createStore);
   const missingReducers = getMissingReducers(createReducers(), data);
+  // const loadingBar = combineReducers({loadingBar: loadingBarReducer});
   const store = finalCreateStore(combineReducers(createReducers(missingReducers)), data);
 
   store.asyncReducers = {};

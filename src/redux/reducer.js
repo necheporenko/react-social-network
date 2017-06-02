@@ -1,6 +1,7 @@
 // import multireducer from 'multireducer';
 import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
+import { loadingBarReducer } from 'react-redux-loading-bar';
 import form from './modules/form';
 import channel from './modules/channel';
 import story from './modules/story';
@@ -15,6 +16,7 @@ export default function createReducers(asyncReducers) {
     reduxAsyncConnect,
     online: (v = true) => v,
     routing: routerReducer,
+    loadingBar: loadingBarReducer,
     forms: form,
     channel,
     story,
