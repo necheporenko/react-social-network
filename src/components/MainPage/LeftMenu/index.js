@@ -44,7 +44,7 @@ class LeftMenu extends Component {
                 <span>{`${first_name} ${last_name}`}</span>
               </li>
             </IndexLink>
-            <Link to={`/${slug}/books`} className="nav-a nav-book">
+            <Link to={`/${slug}/books`} className="nav-a">
               <li className="nav-li nav-books">
                 <span>Books</span>
               </li>

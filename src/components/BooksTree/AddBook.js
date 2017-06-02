@@ -87,7 +87,8 @@ class AddBook extends Component {
 
     return (
       <div className="create-new-book" onClick={this.Open}>
-        <a href="#">+ Create new book</a>
+        {/*<a href="#">+ Create new book</a>*/}
+        <div className="active-popup"></div>
 
         <Modal show={this.state.showModal} onHide={this.Close} className="modal-channel">
           <Modal.Header closeButton>

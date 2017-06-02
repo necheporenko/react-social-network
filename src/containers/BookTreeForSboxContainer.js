@@ -32,10 +32,9 @@ export default class BooksTreeContainer extends Component {
           <BooksTreeForSbox
             bookTreeArr={this.props.bookTreeArr}
           />
-          <AddBook
-            // loadBookTree={this.props.loadBookTree}
-            // createBook={this.props.createBook}
-          />
+          <div className="title-new-book" style={{marginLeft: '26px'}}>+ Create new book
+            <AddBook />
+          </div>
           {this.props.children}
         </div>
       </div>

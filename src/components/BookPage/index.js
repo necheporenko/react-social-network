@@ -8,7 +8,6 @@ import { getUser, getUserSlug } from '../../redux/modules/sign';
 import { create as createBook, load as loadBookTree, show as showBookStories, next as nextBookStories, getBookSlug } from '../../redux/modules/book';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import BookStream from '../StoryLine/Stream/BookStream';
-//import InfoBloks from '../StoryLine/InfoBlocks';
 import Photos from '../StoryLine/InfoBlocks/Photos';
 import SubHeader from '../StoryLine/SubHeader/index';
 import './index.scss';
@@ -44,6 +43,7 @@ const radioOptions = [
 export default class BookPage extends Component {
   render() {
     const bookPageName = this.props.bookPageName;
+    const { slug } = this.props.requestedUser;
     return (
       <div>
         <SubHeader
@@ -52,18 +52,14 @@ export default class BookPage extends Component {
         <div className="navigation">
           <div className="navigation-wrap book-nav">
             <ul>
-              <li>
-                <Link>
-                  Books
-                </Link>
-              </li>
+              <li><Link to={`/${slug}/books`}>Books</Link></li>
               <li>
                 <svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">
                   <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
                 </svg>
               </li>
               <li>
-                <Link>
+                <Link to={`/${slug}/${bookPageName}`}>
                   {bookPageName}
                 </Link>
               </li>

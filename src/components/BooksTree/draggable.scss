@@ -90,7 +90,7 @@ $valid_color: #1976d2;
   //Instead of the line below you could use @include transform-origin($origin-x, $origin-y, $origin-z, $only3d)
   transform-origin: 50% 50%;
   //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
-  transition: transform 0.3s ease-in;
+  transition: transform 0.1s ease-in;
 }
 
 
@@ -99,7 +99,6 @@ $valid_color: #1976d2;
   padding: 3px 5px;
   li {
     padding: 0;
-    margin: 3px 0;
     //list-style: none;
     //white-space: nowrap;
     //outline: 0;
@@ -108,15 +107,15 @@ $valid_color: #1976d2;
 
     .react-tree-item-label {
       position: relative;
-      padding-right: 30px;
-      width: 160px;
+      padding: 4px 30px 4px 0;
+      //padding-right: 30px;
       &:hover {
         background-color: #E1E1E1;
       }
       .react-tree-expander,
       .react-tree-expander-noop {
         position: absolute;
-        top: 8px;                                         //0
+        top: 12px;                                         //0
         left: 0;
         z-index: 1;
       }
@@ -154,7 +153,6 @@ $valid_color: #1976d2;
     .draggable {
       display: inline-block;
       padding: 3px; 												//0 2px
-      margin: 6px 0;
       cursor: pointer;
       text-decoration: none;
       vertical-align: top;

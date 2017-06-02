@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-//import StackGrid, { transition, easings } from "react-stack-grid";
 import StackGrid from 'react-stack-grid';
 import BookTree from '../../containers/BooksTreeContainer';
-//import {BOOKS} from '../../constants/books';
+import AddBook from '../../components/BooksTree/AddBook';
 import './index.scss';
 
-const TestBook = ({ name, childrens }) => {
-  // console.log(childrens)
+const TestBook = ({ name, bookTreeArr }) => {
+  console.log(bookTreeArr);
   return (
     <div className="book">
       <div className="title-infoblocks-book">
@@ -29,10 +28,14 @@ const TestBook = ({ name, childrens }) => {
       {/*</div>*/}
       <div className="book-subbooks">
         <BookTree
-          bookTreeArr={childrens}
+          bookTreeArr={bookTreeArr}
         />
       </div>
-      <div className="book-btn">Edit</div>
+      <div className="book-btn" style={{position: 'relative'}}>Edit
+        <AddBook
+          book_name={name}
+        />
+      </div>
     </div>
   );
 };
@@ -46,6 +49,10 @@ class Books extends Component {
           <BookTree
             bookTreeArr={this.props.bookTreeArr}
           />
+          <div className="title-new-book" style={{marginLeft: '26px'}}>+ Create new book
+            <AddBook />
+          </div>
+
         </div>
 
         <div className="wrapper">
@@ -67,7 +74,7 @@ class Books extends Component {
               <TestBook
                 key={book.key}
                 name={book.name}
-                childrens={book.children}
+                bookTreeArr={book.children}
               />
               ))
             }

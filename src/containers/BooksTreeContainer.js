@@ -36,10 +36,10 @@ export default class BooksTreeContainer extends Component {
           <BooksTree
             bookTreeArr={this.props.bookTreeArr}
           />
-          <AddBook
-            // loadBookTree={this.props.loadBookTree}
-            // createBook={this.props.createBook}
-          />
+          {/*<AddBook*/}
+            {/*// loadBookTree={this.props.loadBookTree}*/}
+            {/*// createBook={this.props.createBook}*/}
+          {/*/>*/}
           {this.props.children}
         </div>
       </div>

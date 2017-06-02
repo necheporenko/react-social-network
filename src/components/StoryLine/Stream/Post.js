@@ -9,7 +9,7 @@ class Post extends Component {
     const post = this.props.post;
     const images = this.props.images;
     return (
-      <div className="post">
+      <div className="post post-appear ">
 
         {/* ===========
             Post Header

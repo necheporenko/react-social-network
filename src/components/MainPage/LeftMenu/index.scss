@@ -12,13 +12,6 @@
     margin-top: -28px;
     margin-left: 15px;
 
-    &:hover {
-      .nav-book {
-        border-color: #8F8F8F;
-        background-color: #E1E1E1;
-      }
-    }
-
     &::before {
       content: '';
       display: inline-block;

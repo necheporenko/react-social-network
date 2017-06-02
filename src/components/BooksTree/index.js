@@ -26,7 +26,6 @@ import './draggable.scss';
   requestedUserSlug: state.sign.requestedUser.slug,
   authorizedUserSlug: state.sign.authorizedUser.slug,
 }), {
-  loadBookTree,
   showBookStories
 })
 
@@ -122,13 +121,13 @@ class BooksTree extends Component {
     if (item.show) {
       return 'not_show';
     }
-    if (item.no_drag && item.icon === 'book') {
+    if (item.no_drag && item.icon === 'public') {
       return 'not_drag icon_book';
     }
-    if (item.icon === 'secret') {
+    if (item.icon === 'private') {
       return 'icon_secret';
     }
-    if (item.icon === 'book') {
+    if (item.icon === 'public') {
       return 'icon_book';
     }
     if (item.icon === 'bin') {
@@ -189,5 +188,4 @@ export default BooksTree;
 
 BooksTree.propTypes = {
   bookTreeArr: PropTypes.object,
-  loadBookTree: PropTypes.func,
 };

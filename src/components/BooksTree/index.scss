@@ -27,14 +27,14 @@
 }
 
 .create-new-book {
-  margin-left: 26px;
+  //margin-left: 26px;
+}
 
-  a {
-    font-size: 10px;
-    text-decoration: none;
-    cursor: pointer;
-    color: $gray;
-  }
+.title-new-book {
+  font-size: 10px;
+  cursor: pointer;
+  color: $gray;
+  position: relative;
 }
 
 .wrapper-popup {
