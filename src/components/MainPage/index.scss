@@ -8,7 +8,8 @@
       float: left;
     }
     .mid-column {
-      margin: 0 auto;
+      position: relative;
+      left: calc(50% - 250px);
       display: flex;
     }
   }
@@ -17,6 +18,10 @@
 
 .left-column {
   width: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: calc(100% - 100px);
+  position: fixed;
 }
 
 
