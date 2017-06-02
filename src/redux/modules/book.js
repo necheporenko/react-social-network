@@ -10,8 +10,11 @@ const SHOW_NEXT_BOOK_FAIL = 'SHOW_NEXT_BOOK_FAIL';
 export const CREATE_BOOK = 'CREATE_BOOK';
 export const CREATE_BOOK_SUCCESS = 'CREATE_BOOK_SUCCESS';
 export const CREATE_BOOK_FAIL = 'CREATE_BOOK_FAIL';
+export const EDIT_BOOK = 'EDIT_BOOK';
+export const EDIT_BOOK_SUCCESS = 'EDIT_BOOK_SUCCESS';
+export const EDIT_BOOK_FAIL = 'EDIT_BOOK_FAIL';
 const GET_ARR_CHECKBOX = 'GET_ARR_CHECKBOX';
-const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
+// const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
 
 const initialState = {
   bookTreeArr: [],
@@ -121,6 +124,24 @@ export default function bookReducer(state = initialState, action) {
         created: false,
       };
 
+    case EDIT_BOOK:
+      return {
+        ...state,
+        editing: true
+      };
+    case EDIT_BOOK_SUCCESS:
+      return {
+        ...state,
+        editing: false,
+        edited: true,
+      };
+    case EDIT_BOOK_FAIL:
+      return {
+        ...state,
+        editing: false,
+        edited: false,
+      };
+
     case GET_ARR_CHECKBOX:
       return {
         ...state,
@@ -169,6 +190,13 @@ export function create(name, parent_slug) {
   return {
     types: [CREATE_BOOK, CREATE_BOOK_SUCCESS, CREATE_BOOK_FAIL],
     promise: (client) => client.post('/book', { data: { name, parent_slug }})
+  };
+}
+
+export function edit(book_slug, name, description) {
+  return {
+    types: [CREATE_BOOK, CREATE_BOOK_SUCCESS, CREATE_BOOK_FAIL],
+    promise: (client) => client.patch('/book', { data: { book_slug, name, description }})
   };
 }
 

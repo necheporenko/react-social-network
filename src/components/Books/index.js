@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import StackGrid from 'react-stack-grid';
 import BookTree from '../../containers/BooksTreeContainer';
+import EditBook from '../../components/BooksTree/EditBook';
 import AddBook from '../../components/BooksTree/AddBook';
 import './index.scss';
 
-const TestBook = ({ name, bookTreeArr }) => {
-  console.log(bookTreeArr);
+const TestBook = ({ name, bookTreeArr, book_slug }) => {
+  // console.log(bookTreeArr);
   return (
     <div className="book">
       <div className="title-infoblocks-book">
@@ -32,8 +33,9 @@ const TestBook = ({ name, bookTreeArr }) => {
         />
       </div>
       <div className="book-btn" style={{position: 'relative'}}>Edit
-        <AddBook
+        <EditBook
           book_name={name}
+          book_slug={book_slug}
         />
       </div>
     </div>
@@ -74,6 +76,7 @@ class Books extends Component {
               <TestBook
                 key={book.key}
                 name={book.name}
+                book_slug={book.key}
                 bookTreeArr={book.children}
               />
               ))
