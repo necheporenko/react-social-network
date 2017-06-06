@@ -66,6 +66,7 @@ export default class IndexContainer extends Component {
             createChannel={this.props.createChannel}
             channelStories={this.props.channelStories}
             loadNextChannelStories={this.props.loadNextChannelStories}
+            bookTreeArr={this.props.bookTreeArr}
           />
         }
         {!this.props.isAuthenticated &&
@@ -103,4 +104,5 @@ IndexContainer.propTypes = {
   channelStories: PropTypes.array,
   loadNextChannelStories: PropTypes.func,
   createStory: PropTypes.func,                //story
+  bookTreeArr: PropTypes.array,               //book
 };

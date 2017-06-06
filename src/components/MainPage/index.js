@@ -14,6 +14,7 @@ class MainPage extends Component {
           <div className="left-column">
             <LeftMenu
               authorizedUser={this.props.authorizedUser}
+              bookTreeArr={this.props.bookTreeArr}
             />
             <Channels
               channelsArr={this.props.channelsArr}

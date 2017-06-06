@@ -2,24 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { Link } from 'react-router';
-import AddBook from '../components/BooksTree/AddBook';
 import BooksTree from '../components/BooksTree/index';
 import { create as createBook, load as loadBookTree } from '../redux/modules/book';
 import '../components/BooksTree/index.scss';
 
-@asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
-    const promises = [];
-
-    // console.log('asyncConnect BooksTreeContainer')
-    // promises.push(dispatch(loadBookTree('vad-vad')));
-    return Promise.all(promises);
-  }
-}])
+// @asyncConnect([{
+//   promise: ({ store: { dispatch, getState } }) => {
+//     const promises = [];
+//     return Promise.all(promises);
+//   }
+// }])
 
 @connect((state) => ({
   authorizedUser: state.sign.authorizedUser,
-  bookTreeArr: state.book.bookTreeArr,
 }), {
   loadBookTree,
   createBook,

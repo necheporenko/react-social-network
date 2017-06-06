@@ -22,7 +22,7 @@ import './draggable.scss';
 
 
 @connect((state) => ({
-  bookTreeArr: state.book.bookTreeArr,
+  // bookTreeArr: state.book.bookTreeArr,
   requestedUserSlug: state.sign.requestedUser.slug,
   authorizedUserSlug: state.sign.authorizedUser.slug,
 }), {
@@ -125,10 +125,10 @@ class BooksTree extends Component {
       return 'not_drag icon_book';
     }
     if (item.icon === 'private') {
-      return 'icon_secret';
+      return 'icon_private';
     }
     if (item.icon === 'public') {
-      return 'icon_book';
+      return 'icon_public';
     }
     if (item.icon === 'bin') {
       return 'icon_bin';

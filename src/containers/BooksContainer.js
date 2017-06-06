@@ -39,6 +39,7 @@ export default class BooksContainer extends Component {
         />
         <Books
           bookTreeArr={this.props.bookTreeArr}
+          requestedUser={this.props.requestedUser}
         />
       </div>
     );

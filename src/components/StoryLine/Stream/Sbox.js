@@ -18,6 +18,7 @@ let step = 0;
 
 @connect((state) => ({
   arrCheckbox: state.book.arrCheckbox,
+  bookTreeArr: state.book.bookTreeArr,
 }), {
   getCheckboxOfBook,
   createStory
@@ -130,7 +131,9 @@ class Sbox extends Component {
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} >
                 <div className="sbox-booktree">
-                  <BookTreeForSboxContainer />
+                  <BookTreeForSboxContainer
+                    bookTreeArr={this.props.bookTreeArr}
+                  />
                 </div>
               </DropdownButton>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="" id={6} >

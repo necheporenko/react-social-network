@@ -50,7 +50,11 @@ class LeftMenu extends Component {
               </li>
             </Link>
             <i className={navigation.arrow} onClick={() => this.openBooktree()}></i>
-            <div style={{display: navigation.display_state}}><BooksTree /></div>
+            <div style={{display: navigation.display_state}}>
+              <BooksTree
+                bookTreeArr={this.props.bookTreeArr}
+              />
+            </div>
             <Link to={`/${slug}/tokens`} className="nav-a">
               <li className="nav-li nav-tokens">
                 <span>Tokens</span>

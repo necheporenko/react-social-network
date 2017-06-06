@@ -22,7 +22,7 @@ import '../components/BooksTree/index.scss';
   createBook,
 })
 
-export default class BooksTreeContainer extends Component {
+export default class BooksTreeForSboxContainer extends Component {
   render() {
     const { slug } = this.props.authorizedUser;
 
@@ -42,7 +42,7 @@ export default class BooksTreeContainer extends Component {
   }
 }
 
-BooksTreeContainer.propTypes = {
+BooksTreeForSboxContainer.propTypes = {
   children: PropTypes.element,
   infoBlocksTop: PropTypes.string,
   authorizedUser: PropTypes.object,
