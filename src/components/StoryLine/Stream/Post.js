@@ -1,13 +1,59 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { Modal } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
+import { like as likePost } from '../../../redux/modules/story';
+
+@connect((state) => ({
+}), {
+  likePost
+})
 
 class Post extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLiked: this.props.likes.is_liked,
+      qty: this.props.likes.qty,
+      showModal: false,
+    };
+    this.like = this.like.bind(this);
+    this.Close = this.Close.bind(this);
+    this.Open = this.Open.bind(this);
+  }
+
+  like(id) {
+    this.setState({
+      isLiked: !this.state.isLiked
+    });
+
+    this.state.isLiked ?
+      this.setState({
+        qty: this.state.qty - 1
+      })
+      :
+      this.setState({
+        qty: this.state.qty + 1
+      });
+
+    this.props.likePost(id);
+  }
+
+  Close() {
+    this.setState({ showModal: false });
+  }
+  Open() {
+    this.setState({ showModal: true });
+  }
+
   render() {
     const { fullName, slug, avatar } = this.props.user;
+    const { qty, is_liked, people_list } = this.props.likes;
     const created = this.props.created;
     const post = this.props.post;
     const images = this.props.images;
+    const id = this.props.id;
     return (
       <div className="post post-appear ">
 
@@ -142,32 +188,60 @@ class Post extends Component {
             Post Footer
             =========== */}
         <div className="post-footer">
-          <div className="post-like">
-            <a href="">
-              <i className="post-action-icon"></i>
-              <span>Kudos</span>
-            </a>
+          {/*<div className="post-like post-like-active" onClick={() => this.like(id)}>*/}
+          <div className={!this.state.isLiked ? 'post-like' : 'post-like post-like-active'} onClick={() => this.like(id)}>
+            <i className="post-action-icon"></i>
+            <span>Kudos</span>
           </div>
           <div className="post-comment">
-            <a href="">
-              <i className="post-action-icon"></i>
-              <span>Comment</span>
-            </a>
+            <i className="post-action-icon"></i>
+            <span>Comment</span>
           </div>
           <div className="post-log">
-            <a href="#">
-              <i className="post-action-icon"></i>
-              <span>Log</span>
-            </a>
+            <i className="post-action-icon"></i>
+            <span>Log</span>
           </div>
           <div className="post-share">
-            <a href="">
-              <i className="post-action-icon"></i>
-              <span>Share</span>
-            </a>
+            <i className="post-action-icon"></i>
+            <span>Share</span>
           </div>
-
         </div>
+
+        <div className="post-lc" style={{display: (this.state.qty > 0) ? 'block' : 'none'}}>
+          <div className="post-like" onClick={this.Open}>
+            <i className="post-action-icon"></i>
+            <span>{this.state.qty}</span>
+          </div>
+        </div>
+
+        <Modal className="modal-likes" show={this.state.showModal} onHide={this.Close} >
+          <Modal.Header closeButton>
+            <span>All {this.state.qty}</span>
+          </Modal.Header>
+
+          <Modal.Body>
+            <div className="people-like-card">
+              <a href="#">
+                <img src="https://s3-us-west-2.amazonaws.com/dev.validbook/avatars/2017/05/29/1/q8WF8j2UJWdppuCyh7qyiGtjla2fc0gJ.jpg" />
+                <div>Bohdan Andriyiv</div>
+              </a>
+            </div>
+            <div className="people-like-card">
+              <a href="#">
+                <img src="https://s3-us-west-2.amazonaws.com/dev.validbook/avatars/2017/05/29/1/q8WF8j2UJWdppuCyh7qyiGtjla2fc0gJ.jpg" />
+                <div>Bohdan Andriyiv</div>
+              </a>
+            </div>
+            <div className="people-like-card">
+              <a href="#">
+                <img src="https://s3-us-west-2.amazonaws.com/dev.validbook/avatars/2017/05/29/1/q8WF8j2UJWdppuCyh7qyiGtjla2fc0gJ.jpg" />
+                <div>Bohdan Andriyiv</div>
+              </a>
+            </div>
+          </Modal.Body>
+
+        </Modal>
+
       </div>
     );
   }
@@ -175,8 +249,10 @@ class Post extends Component {
 
 Post.propTypes = {
   user: PropTypes.object,
+  likes: PropTypes.object,
   post: PropTypes.string,
   created: PropTypes.string,
+  id: PropTypes.string,
   images: PropTypes.array
 };
 

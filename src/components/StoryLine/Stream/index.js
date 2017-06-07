@@ -58,10 +58,12 @@ class Stream extends Component {
           {storiesArr && storiesArr.map((story) => (
             <Post
               key={story.id}
+              id={story.id}
               post={story.text}
               user={story.user}
               created={story.created}
               images={story.images}
+              likes={story.likes}
             />
           ))}
         </InfiniteScroll>

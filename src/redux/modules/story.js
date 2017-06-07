@@ -8,6 +8,9 @@ export const CREATE_STORY = 'CREATE_STORY';
 export const CREATE_STORY_SUCCESS = 'CREATE_STORY_SUCCESS';
 export const CREATE_STORY_FAIL = 'CREATE_STORY_FAIL';
 const CLEAR_PAGINATION = 'CLEAR_PAGINATION';
+const LIKE_STORY = 'LIKE_STORY';
+const LIKE_STORY_SUCCESS = 'LIKE_STORY_SUCCESS';
+const LIKE_STORY_FAIL = 'LIKE_STORY_FAIL';
 
 const initialState = {
   isAuthenticated: false,
@@ -86,6 +89,26 @@ export default function storyReducer(state = initialState, action) {
       };
     }
 
+    case LIKE_STORY: {
+      return {
+        ...state,
+        liking: true
+      };
+    }
+    case LIKE_STORY_SUCCESS: {
+      return {
+        ...state,
+        liking: false
+      };
+    }
+    case LIKE_STORY_FAIL: {
+      return {
+        ...state,
+        like: false,
+        error: action.error,
+      };
+    }
+
     default:
       return state;
   }
@@ -117,6 +140,14 @@ export function create(description, books) {
   return {
     types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
     promise: (client) => client.post('/story', { data: { description, books }})
+  };
+}
+
+export function like(story_id) {
+  console.log('like ID:', story_id);
+  return {
+    types: [LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_FAIL],
+    promise: (client) => client.post('/like/story', { data: { story_id }})
   };
 }
 

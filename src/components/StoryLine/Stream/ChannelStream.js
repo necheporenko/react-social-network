@@ -46,11 +46,13 @@ class ChannelStream extends Component {
           {channelStories && channelStories.map((story) => (
             <Post
               key={story.id}
+              id={story.id}
               post={story.text}
               user={story.user}
               created={story.created}
               images={story.images}
-          />
+              likes={story.likes}
+            />
         ))}
         </InfiniteScroll>
       </div>

@@ -85,7 +85,7 @@ class Header extends Component {
         {/* {this.state.isMob &&
           <div style={{width: '35px'}}></div>
         } */}
-        <LoadingBar style={{ backgroundColor: '#2887D2', height: '3px', top: 0, left: 0 }} />
+        <LoadingBar style={{ backgroundColor: '#2887D2', height: '3px', top: 0, left: 0, transition: 'transform 300ms ease-in' }} />
         <Logo />
         <SearchField />
         <UserButtons
