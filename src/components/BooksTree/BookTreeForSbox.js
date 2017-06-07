@@ -121,11 +121,11 @@ class BooksTreeForSbox extends Component {
     if (item.no_drag && item.icon === 'public') {
       return 'not_drag icon_book';
     }
-    if (item.icon === 'secret') {
-      return 'icon_secret';
+    if (item.icon === 'private') {
+      return 'icon_private';
     }
     if (item.icon === 'public') {
-      return 'icon_book';
+      return 'icon_public';
     }
     if (item.icon === 'bin') {
       return 'icon_bin';

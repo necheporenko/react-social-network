@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router';
 import StackGrid from 'react-stack-grid';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
-import BooksTree from '../../components/BooksTree';
 import EditBook from '../../components/BooksTree/EditBook';
 import AddBook from '../../components/BooksTree/AddBook';
 import './index.scss';
 
 const BookCard = ({ name, bookTreeArr, book_slug, icon, requestedUser }) => {
-  // console.log(bookTreeArr);
   return (
     <div className="book">
       <div className="title-infoblocks-book">

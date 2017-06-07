@@ -376,7 +376,7 @@
 
 
 .post-content {
-  margin-top: 15px;
+  padding: 12px 0;
 }
 
 .wrap-post-content {
@@ -388,7 +388,7 @@
 
 .post-footer {
   border-top: 1px solid #eee;
-  margin-top: 15px;
+  //margin-top: 15px;
   padding-top: 5px;
   display: flex;
   position: relative;
@@ -407,11 +407,13 @@
 }
 
 .post-like {
-
   i {
-    background-position: -28px -20px;
-    height: 12px;
+    background: url("../../../img/Icons/like.png");
     width: 13px;
+    height: 13px;
+    //background-position: -28px -20px;
+    //height: 12px;
+    //width: 13px;
   }
 }
 
@@ -469,7 +471,7 @@
 }
 
 .post-content-type-image {
-  margin: 10px 0;
+  //margin: 10px 0;
 }
 
 .link-preview-image, .post-content-type-image {

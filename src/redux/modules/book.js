@@ -1,18 +1,21 @@
-export const LOAD_BOOKTREE = 'LOAD_BOOKTREE';
-export const LOAD_BOOKTREE_SUCCESS = 'LOAD_BOOKTREE_SUCCESS';
-export const LOAD_BOOKTREE_FAIL = 'LOAD_BOOKTREE_FAIL';
-export const SHOW_BOOK = 'SHOW_BOOK';
-export const SHOW_BOOK_SUCCESS = 'SHOW_BOOK_SUCCESS';
-export const SHOW_BOOK_FAIL = 'SHOW_BOOK_FAIL';
+const LOAD_BOOKTREE = 'LOAD_BOOKTREE';
+const LOAD_BOOKTREE_SUCCESS = 'LOAD_BOOKTREE_SUCCESS';
+const LOAD_BOOKTREE_FAIL = 'LOAD_BOOKTREE_FAIL';
+const SHOW_BOOK = 'SHOW_BOOK';
+const SHOW_BOOK_SUCCESS = 'SHOW_BOOK_SUCCESS';
+const SHOW_BOOK_FAIL = 'SHOW_BOOK_FAIL';
 const SHOW_NEXT_BOOK = 'SHOW_NEXT_BOOK';
 const SHOW_NEXT_BOOK_SUCCESS = 'SHOW_NEXT_BOOK_SUCCESS';
 const SHOW_NEXT_BOOK_FAIL = 'SHOW_NEXT_BOOK_FAIL';
-export const CREATE_BOOK = 'CREATE_BOOK';
-export const CREATE_BOOK_SUCCESS = 'CREATE_BOOK_SUCCESS';
-export const CREATE_BOOK_FAIL = 'CREATE_BOOK_FAIL';
-export const EDIT_BOOK = 'EDIT_BOOK';
-export const EDIT_BOOK_SUCCESS = 'EDIT_BOOK_SUCCESS';
-export const EDIT_BOOK_FAIL = 'EDIT_BOOK_FAIL';
+const CREATE_BOOK = 'CREATE_BOOK';
+const CREATE_BOOK_SUCCESS = 'CREATE_BOOK_SUCCESS';
+const CREATE_BOOK_FAIL = 'CREATE_BOOK_FAIL';
+const EDIT_BOOK = 'EDIT_BOOK';
+const EDIT_BOOK_SUCCESS = 'EDIT_BOOK_SUCCESS';
+const EDIT_BOOK_FAIL = 'EDIT_BOOK_FAIL';
+const MOVE_BOOK = 'MOVE_BOOK';
+const MOVE_BOOK_SUCCESS = 'MOVE_BOOK_SUCCESS';
+const MOVE_BOOK_FAIL = 'MOVE_BOOK_FAIL';
 const GET_ARR_CHECKBOX = 'GET_ARR_CHECKBOX';
 // const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
 
@@ -142,6 +145,24 @@ export default function bookReducer(state = initialState, action) {
         edited: false,
       };
 
+    case MOVE_BOOK:
+      return {
+        ...state,
+        moving: true,
+      };
+    case MOVE_BOOK_SUCCESS:
+      return {
+        ...state,
+        moving: false,
+        moved: true,
+      };
+    case MOVE_BOOK_FAIL:
+      return {
+        ...state,
+        moving: false,
+        moved: false,
+      };
+
     case GET_ARR_CHECKBOX:
       return {
         ...state,
@@ -197,6 +218,13 @@ export function edit(book_slug, name, description) {
   return {
     types: [CREATE_BOOK, CREATE_BOOK_SUCCESS, CREATE_BOOK_FAIL],
     promise: (client) => client.patch('/book', { data: { book_slug, name, description }})
+  };
+}
+
+export function move(book_slug, book_parent_slug, book_before_slug) {
+  return {
+    types: [MOVE_BOOK, MOVE_BOOK_SUCCESS, MOVE_BOOK_FAIL],
+    promise: (client) => client.post('/book/move', { data: { book_slug, book_parent_slug, book_before_slug }})
   };
 }
 

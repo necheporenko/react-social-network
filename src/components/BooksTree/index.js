@@ -2,31 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import Tree, { TreeNode } from 'draggable-react-tree-component';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
-import { Form, Checkbox, CheckboxGroup } from 'formsy-react-components';
-import { load as loadBookTree, show as showBookStories } from '../../redux/modules/book';
+import { load as loadBookTree, show as showBookStories, move as moveBook } from '../../redux/modules/book';
 import { gData } from './util';
 import './draggable.scss';
-
-
-@asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
-    const promises = [];
-    //
-    // console.log('asyncConnect BooksTree')
-    // promises.push(dispatch(loadBookTree('vad-vad')));
-
-    return Promise.all(promises);
-  }
-}])
-
 
 @connect((state) => ({
   // bookTreeArr: state.book.bookTreeArr,
   requestedUserSlug: state.sign.requestedUser.slug,
   authorizedUserSlug: state.sign.authorizedUser.slug,
 }), {
-  showBookStories
+  showBookStories,
+  moveBook
 })
 
 class BooksTree extends Component {
@@ -40,8 +26,8 @@ class BooksTree extends Component {
     ].forEach((name) => (this[name] = this[name].bind(this)));
 
     this.state = {
-      // gData: this.props.bookTreeArr,
-      gData,
+      gData: this.props.bookTreeArr,
+      // gData,
       autoExpandParent: true,  //??????
       expandedKeys: ['root']
     };
@@ -57,8 +43,7 @@ class BooksTree extends Component {
     });
   }
   onDrop(info) {
-    console.log('drop', info); // eslint-disable-line no-console
-
+    console.log('drop', info);
     const dropKey = info.node.props.eventKey;
     const dragKey = info.dragNode.props.eventKey;
 
@@ -83,6 +68,7 @@ class BooksTree extends Component {
       arr.splice(index, 1);
       dragObj = item;
     });
+    let book_before_slug;
 
     if (info.dropToGap) {
       traverseToKey(data, dropKey, (item) => {
@@ -96,12 +82,22 @@ class BooksTree extends Component {
         }
         // where to insert
         item.children.splice(index, 0, dragObj);
+        const take_book = item.children[index - 1];
+        if (take_book) {
+          book_before_slug = take_book.key;
+          console.log('PREV OR NEXT', take_book.key);
+        } else {
+          book_before_slug = '';
+          console.log('PREV OR NEXT Error');
+        }
       });
     } else {
       traverseToKey(data, dropKey, (item) => {
         item.children = item.children || [];
         // where to insert
         item.children.push(dragObj);                                //       TYT
+        book_before_slug = '';
+        console.log('children', item.children);
       });
     }
 
@@ -109,6 +105,8 @@ class BooksTree extends Component {
       gData: data,
       expandedKeys: info.rawExpandedKeys.concat([dropKey]),
     });
+    console.log('MOVE BOOK', dragKey, dropKey, book_before_slug);
+    this.props.moveBook(dragKey, dropKey, book_before_slug);
   }
   onExpand(expandedKeys) {
     this.setState({
@@ -188,4 +186,5 @@ export default BooksTree;
 
 BooksTree.propTypes = {
   bookTreeArr: PropTypes.object,
+  moveBook: PropTypes.func,
 };

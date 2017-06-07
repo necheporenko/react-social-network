@@ -110,7 +110,7 @@ $valid_color: #1976d2;
       padding: 3px 30px 3px 0;
       //padding-right: 30px;
       &:hover {
-        background-color: #E1E1E1;
+        background-color: #EEE;
       }
       .react-tree-expander,
       .react-tree-expander-noop {
@@ -379,7 +379,7 @@ $sprite: url('http://validbook.org/images/main_sprite.png') no-repeat;
   }
 }
 
-.icon_public, .icon_bin, .icon_private {
+.icon_public, .icon_private {
   .draggable {
     a:before {
       background: $sprite;
@@ -414,6 +414,26 @@ $sprite: url('http://validbook.org/images/main_sprite.png') no-repeat;
   }
 }
 
+.icon_bin {
+  span {
+    margin-left: 3px;
+  }
+  a {
+    &:before {
+      background: $sprite;
+      content: '';
+      display: inline-block;
+      position: relative;
+      background-position: -74px -282px;
+      height: 14px;
+      width: 15px;
+      top: 2px;
+      margin-right: 5px;
+      margin-left: 1px;
+    }
+  }
+}
+
 .not_drag {
   span {
     margin-left: 3px;
@@ -433,14 +453,4 @@ $sprite: url('http://validbook.org/images/main_sprite.png') no-repeat;
   }
 }
 
-.icon_bin {
-  .draggable {
-    a:before {
-      background-position: -74px -282px;
-      height: 14px;
-      width: 15px;
-      top: 2px;
-      margin-right: 5px;
-    }
-  }
-}
+
