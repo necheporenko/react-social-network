@@ -299,13 +299,9 @@
     margin-right: 5px;
 
     &::before {
-      //background: $sprite;
-      //background-position: -62px -221px;
-      //width: 15px;
-      //height: 19px;
-      background: url('../../img/Icons/gear.png');
-      width: 18px;
-      height: 18px;
+      background: url('../../img/Icons/gear.svg');
+      width: 16px;
+      height: 16px;
       display: block;
       content: '';
     }

@@ -402,19 +402,25 @@
   margin-right: 5px;
 }
 
-.post-like {
+.post-like,
+.post-like-active {
   i {
-    background: url("../../../img/Icons/like.png");
     width: 13px;
     height: 13px;
-    //background-position: -28px -20px;
-    //height: 12px;
-    //width: 13px;
+  }
+}
+
+.post-like {
+  i {
+    background: url("../../../img/Icons/like.svg");
   }
 }
 
 .post-like-active {
   color: $link-color;
+  i {
+    background: url("../../../img/Icons/like-active.svg");
+  }
 }
 
 .post-comment {
@@ -447,6 +453,13 @@
   }
 }
 
+.post-like,
+.post-comment,
+.post-log,
+.post-share {
+  cursor: pointer;
+}
+
 .post-lc {
   margin: 10px -10px -10px;
   background-color: #f5f5f5;
@@ -457,7 +470,7 @@
     padding: 10px 0 0 10px;
     color: $link-color;
     i {
-      background: url("../../../img/Icons/like1.png");
+      background: url("../../../img/Icons/like-active-sm.svg");
       width: 13px;
       height: 13px;
     }

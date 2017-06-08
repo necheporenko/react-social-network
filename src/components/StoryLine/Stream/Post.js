@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Modal } from 'react-bootstrap';
+import { Modal, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { like as likePost } from '../../../redux/modules/story';
 
@@ -54,6 +54,23 @@ class Post extends Component {
     const post = this.props.post;
     const images = this.props.images;
     const id = this.props.id;
+    // const tooltip = (props) => (
+    //
+    //   <Tooltip id={props.id}>
+    //     { people_list.map((people) => (
+    //       <div>{people.user.fullName}</div>
+    //     ))}
+    //   </Tooltip>
+    // );
+
+    // tooltip.id = 'test';
+    const tooltip = (
+      <Tooltip id="tooltip" arrowOffsetLeft={10} >
+        { people_list.map((people) => (
+          <div>{people.user.fullName}</div>
+        ))}
+      </Tooltip>
+    );
     return (
       <div className="post post-appear ">
 
@@ -191,7 +208,7 @@ class Post extends Component {
           {/*<div className="post-like post-like-active" onClick={() => this.like(id)}>*/}
           <div className={!this.state.isLiked ? 'post-like' : 'post-like post-like-active'} onClick={() => this.like(id)}>
             <i className="post-action-icon"></i>
-            <span>Kudos</span>
+            <span>Like</span>
           </div>
           <div className="post-comment">
             <i className="post-action-icon"></i>
@@ -208,9 +225,12 @@ class Post extends Component {
         </div>
 
         <div className="post-lc" style={{display: (this.state.qty > 0) ? 'block' : 'none'}}>
-          <div className="post-like" onClick={this.Open}>
+
+          <div className="post-like post-like-sm" onClick={this.Open}>
             <i className="post-action-icon"></i>
-            <span>{this.state.qty}</span>
+            <OverlayTrigger placement="top" overlay={tooltip} id="tooltip" arrowOffsetLeft={200}>
+              <span>{this.state.qty}</span>
+            </OverlayTrigger>
           </div>
         </div>
 
