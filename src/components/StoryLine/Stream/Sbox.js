@@ -87,7 +87,7 @@ class Sbox extends Component {
 
   render() {
     const { editorContent } = this.state;
-    const { first_name, last_name, avatar} = this.props.authorizedUser;
+    const { first_name, last_name, avatar32} = this.props.authorizedUser;
     const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
 
     return (
@@ -120,8 +120,8 @@ class Sbox extends Component {
           }}
         />
 
-        <div className="sbox-user-avatar" style={{top: this.state.jump}}>
-          <Link to={link}><img src={avatar} /></Link>
+        <div className="sbox-user-avatar32" style={{top: this.state.jump, position: 'absolute', left: '15px'}}>
+          <Link to={link}><img src={avatar32} /></Link>
         </div>
         {/*<form onSubmit={this.test}>*/}
         <div className="sbox-footer">
@@ -184,7 +184,7 @@ Sbox.propTypes = {
   authorizedUser: PropTypes.shape({
     first_name: PropTypes.string,
     last_name: PropTypes.string,
-    avatar: PropTypes.string,
+    avatar32: PropTypes.string,
   }),
   createStory: PropTypes.func,                //story
   loadStories: PropTypes.func,

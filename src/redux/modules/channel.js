@@ -10,6 +10,7 @@ export const CREATE_CHANNEL_FAIL = 'CREATE_CHANNEL_FAIL';
 export const LOAD_NEXT_CHANNEL_STORIES = 'LOAD_NEXT_CHANNEL_STORIES';
 export const LOAD_NEXT_CHANNEL_STORIES_SUCCESS = 'LOAD_NEXT_CHANNEL_STORIES_SUCCESS';
 export const LOAD_NEXT_CHANNEL_STORIES_FAIL = 'LOAD_NEXT_CHANNEL_STORIES_FAIL';
+const HEADER_CHANNEL_NAME = 'HEADER_CHANNEL_NAME';
 
 const initialState = {
   channelsArr: [],
@@ -129,6 +130,12 @@ export default function channelReducer(state = initialState, action) {
         created: false,
       };
 
+    case HEADER_CHANNEL_NAME:
+      return {
+        ...state,
+        header_channel_name: true,
+      };
+
     default:
       return state;
   }
@@ -181,4 +188,8 @@ export function create(name, description) {
     types: [CREATE_CHANNEL, CREATE_CHANNEL_SUCCESS, CREATE_CHANNEL_FAIL],
     promise: (client) => client.post('/channel', { data: { name, description }})
   };
+}
+
+export function getChannelName(slug) {
+
 }

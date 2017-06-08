@@ -226,7 +226,7 @@ class Post extends Component {
 
         <div className="post-lc" style={{display: (this.state.qty > 0) ? 'block' : 'none'}}>
 
-          <div className="post-like post-like-sm" onClick={this.Open}>
+          <div className="post-like" onClick={this.Open}>
             <i className="post-action-icon"></i>
             <OverlayTrigger placement="top" overlay={tooltip} id="tooltip" arrowOffsetLeft={200}>
               <span>{this.state.qty}</span>

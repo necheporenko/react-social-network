@@ -13,7 +13,7 @@ class SubHeader extends Component {
     super(props);
     this.state = {
       file: '',
-      imageAvatar: 'http://devianmbanks.validbook.org/cdn/460/avatar/230x230.jpg?t=1486723970',
+      imageAvatar: 'http://devianmbanks.validbook.org/cdn/460/avatar200/230x230.jpg?t=1486723970',
       imageCover: 'http://devianmbanks.validbook.org/images/default-cover-img.jpg'
     };
     this.handleAvatarChange = this.handleAvatarChange.bind(this);
@@ -50,7 +50,7 @@ class SubHeader extends Component {
 
   render() {
     // const { first_name, last_name } = this.props.authorizedUser;
-    const { first_name, last_name, slug, avatar } = this.props.requestedUser;
+    const { first_name, last_name, slug, avatar200 } = this.props.requestedUser;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { imageAvatar } = this.state;
     const { imageCover } = this.state;
@@ -64,7 +64,7 @@ class SubHeader extends Component {
         <div className="wrapper">
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`}>
-              <img src={avatar} />
+              <img src={avatar200} />
             </Link>
             <div className="subHeader-add">
               <input type="file" onChange={(e) => this.handleAvatarChange(e)}/>
@@ -116,7 +116,8 @@ SubHeader.propTypes = {
     first_name: PropTypes.string,
     last_name: PropTypes.string,
     slug: PropTypes.string,
-    id: PropTypes.number
+    id: PropTypes.number,
+    avatar200: PropTypes.string
   })
 };
 

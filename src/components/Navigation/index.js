@@ -42,7 +42,7 @@ export default class Navigation extends Component {
   }
 
   render() {
-    const { first_name, last_name, slug, avatar} = this.props.requestedUser;
+    const { first_name, last_name, slug, avatar32} = this.props.requestedUser;
     const { scrollTop } = this.state;
 
     const chooseNav = () => {
@@ -127,7 +127,7 @@ export default class Navigation extends Component {
         } */}
         <NavigationUserInfo
           userName={`${first_name} ${last_name}`}
-          avatar={avatar}
+          avatar32={avatar32}
           link={`/${slug}`}
           displayUser={navigation.show}
         />

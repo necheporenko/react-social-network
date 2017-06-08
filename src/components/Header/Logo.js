@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 
 function zeroTop() {
   document.body.scrollTop = 0;
-  console.log('ZERO');
 }
 
 const Logo = () => {
@@ -12,7 +11,7 @@ const Logo = () => {
       className="logo"
     >
       <Link to="/" onClick={() => zeroTop()}>
-        <img src="http://validbook.org/images/logo.svg" />
+        <img src={require('../../img/Default/logo.svg')} />
       </Link>
     </div>
   );

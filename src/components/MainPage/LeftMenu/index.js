@@ -19,7 +19,7 @@ class LeftMenu extends Component {
 
   render() {
     const { isOpen } = this.state;
-    const { slug, first_name, last_name, avatar} = this.props.authorizedUser;
+    const { slug, first_name, last_name, avatar32} = this.props.authorizedUser;
     const showBooktree = () => {
       let arrow;
       let display_state;
@@ -40,7 +40,7 @@ class LeftMenu extends Component {
           <ul className="nav-ul">
             <IndexLink to={`/${slug}`} className="nav-a nav-storyline">
               <li className="nav-li">
-                <img src={avatar} />
+                <img src={avatar32} />
                 <span>{`${first_name} ${last_name}`}</span>
               </li>
             </IndexLink>
