@@ -23,6 +23,26 @@
 }
 /* -- Logo End  -- */
 
+/* -- Channel Name Start  -- */
+.channel-name {
+  color: #666;
+  font-size: 18px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 187px;
+
+  &:before {
+    content: '';
+    height: 26px;
+    display: inline-block;
+    vertical-align: middle;
+    border-left: 1px solid #ddd;
+    margin: 7px 20px 14px 15px;
+  }
+}
+/* -- Channel Name End  -- */
+
 /* -- SearchField Start  -- */
 .search-field {
   margin-left: 65px;

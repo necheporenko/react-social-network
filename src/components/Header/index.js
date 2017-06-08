@@ -1,14 +1,19 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar';
 import Logo from './Logo';
 import SearchField from './SearchField';
 import UserButtons from './UserButtons';
 import './index.scss';
 
+@connect((state) => ({
+  header_channel_name: state.channel.header_channel_name,
+}), {})
+
 class Header extends Component {
   // constructor(props) {
   //   super(props);
-  //   this.state = {
+    // this.state = {
   //     isMob: false,
   //     sidebarOpen: false,
   //
@@ -87,6 +92,11 @@ class Header extends Component {
         } */}
         <LoadingBar style={{ backgroundColor: '#2887D2', height: '3px', top: 0, left: 0, transition: 'transform 300ms ease-in' }} />
         <Logo />
+        { this.props.header_channel_name &&
+          <div className="channel-name">
+            {this.props.header_channel_name}
+          </div>
+        }
         <SearchField />
         <UserButtons
           // onSignIn={this.props.onSignIn}

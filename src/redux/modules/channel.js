@@ -133,7 +133,7 @@ export default function channelReducer(state = initialState, action) {
     case HEADER_CHANNEL_NAME:
       return {
         ...state,
-        header_channel_name: true,
+        header_channel_name: action.header_channel_name,
       };
 
     default:
@@ -190,6 +190,21 @@ export function create(name, description) {
   };
 }
 
-export function getChannelName(slug) {
+export function getChannelName(globalState) {
+  const path = globalState.routing.locationBeforeTransitions.pathname;
+  let header_channel_name;
 
+  if (path.indexOf('channel') === 1) {
+    const channelName = path.substring(9);
+    header_channel_name = channelName[0].toUpperCase() + channelName.substring(1);
+  } else if (path === '/') {
+    header_channel_name = 'Mashup';
+  } else {
+    header_channel_name = false;
+  }
+
+  return {
+    type: HEADER_CHANNEL_NAME,
+    header_channel_name
+  };
 }

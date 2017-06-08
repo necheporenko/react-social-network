@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import config from 'config';
 import { asyncConnect } from 'redux-connect';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
+import { getChannelName } from '../../redux/modules/channel';
 import Header from '../../components/Header';
 import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from '../../redux/modules/sign';
 
@@ -44,6 +45,7 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
     }
 
     dispatch(showLoading());
+    promises.push(dispatch(getChannelName(getState())));
 
     return Promise.all(promises);
   }
