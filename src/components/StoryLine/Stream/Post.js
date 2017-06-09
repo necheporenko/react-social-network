@@ -21,6 +21,7 @@ class Post extends Component {
     this.like = this.like.bind(this);
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
+    this.test = this.test.bind(this);
   }
 
   like(id) {
@@ -45,6 +46,32 @@ class Post extends Component {
   }
   Open() {
     this.setState({ showModal: true });
+  }
+
+  test(people) {
+    let result;
+    let others;
+
+    if (people.user.is_owner) {
+      others = this.state.qty - 1;
+      console.log(others);
+
+      if (others === 0) {
+        result = 'Only YOU';
+      } else if (others === 1) {
+        result = `You and ${others} other`;
+      } else {
+        result = `You and ${others} others`;
+      }
+
+
+    } else if (people.user.is_friend) {
+      console.log('Friends', people.user.is_friend);
+    } else if (people.user.is_owner && people.user.is_friend) {
+      result = this.state.qty;
+      // result = people.user.fullName;
+    }
+    return result;
   }
 
   render() {
@@ -229,7 +256,18 @@ class Post extends Component {
           <div className="post-like" onClick={this.Open}>
             <i className="post-action-icon"></i>
             <OverlayTrigger placement="top" overlay={tooltip} id="tooltip" arrowOffsetLeft={200}>
-              <span>{this.state.qty}</span>
+              {/*<div>*/}
+                {/*<span>{this.state.qty}</span>*/}
+                <span>
+                  { people_list.map((people) => (
+                    this.test(people)
+                  ))}
+                </span>
+
+                {/*<div>{this.test()}</div>*/}
+                {/*<test1 />*/}
+              {/*</div>*/}
+
             </OverlayTrigger>
           </div>
         </div>

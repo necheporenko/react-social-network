@@ -12,15 +12,23 @@ const BookCard = ({ name, bookTreeArr, book_slug, icon, requestedUser }) => {
       <div className="title-infoblocks-book">
         <h5>{ name }</h5>
       </div>
-      <div className="book-info">
-        <ul className="book-info-list">
-          <li className="book-icon-visibility"></li>
-          <li className="book-icon-stories">5</li>
-          <li className="book-icon-subbooks">3</li>
-          <li className="book-icon-followers">1</li>
-        </ul>
-        {/*<hr />*/}
+
+      {/*<div className="book-btn" style={{position: 'relative'}}>Edit*/}
+        {/*<EditBook*/}
+          {/*book_name={name}*/}
+          {/*book_slug={book_slug}*/}
+        {/*/>*/}
+      {/*</div>*/}
+
+      <div className="book-edit">
+        <i>
+          <EditBook
+            book_name={name}
+            book_slug={book_slug}
+          />
+        </i>
       </div>
+
       {/*<div className="book-description">*/}
         {/*<p>Description...</p>*/}
       {/*</div>*/}
@@ -47,12 +55,16 @@ const BookCard = ({ name, bookTreeArr, book_slug, icon, requestedUser }) => {
         }
       </div>
 
-      <div className="book-btn" style={{position: 'relative'}}>Edit
-        <EditBook
-          book_name={name}
-          book_slug={book_slug}
-        />
+      <div className="book-info">
+        <ul className="book-info-list">
+          <li className="book-icon-visibility"></li>
+          <li className="book-icon-stories">5</li>
+          <li className="book-icon-subbooks">3</li>
+          <li className="book-icon-followers">1</li>
+        </ul>
+        {/*<hr />*/}
       </div>
+
     </div>
   );
 };
