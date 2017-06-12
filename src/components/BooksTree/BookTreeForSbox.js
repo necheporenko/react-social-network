@@ -193,6 +193,5 @@ class BooksTreeForSbox extends Component {
 export default BooksTreeForSbox;
 
 BooksTreeForSbox.propTypes = {
-  bookTreeArr: PropTypes.object,
-  loadBookTree: PropTypes.func,
+  bookTreeArr: PropTypes.array,
 };

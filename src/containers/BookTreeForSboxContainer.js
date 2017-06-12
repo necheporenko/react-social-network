@@ -46,7 +46,7 @@ BooksTreeForSboxContainer.propTypes = {
   children: PropTypes.element,
   infoBlocksTop: PropTypes.string,
   authorizedUser: PropTypes.object,
-  bookTreeArr: PropTypes.array,
+
   loadBookTree: PropTypes.func,
   createBook: PropTypes.func,
 };

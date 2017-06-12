@@ -116,7 +116,7 @@ export default function storyReducer(state = initialState, action) {
     case LIKE_STORY_FAIL: {
       return {
         ...state,
-        like: false,
+        liking: false,
         error: action.error,
       };
     }

@@ -12,6 +12,7 @@ export const LOAD_NEXT_CHANNEL_STORIES_SUCCESS = 'LOAD_NEXT_CHANNEL_STORIES_SUCC
 export const LOAD_NEXT_CHANNEL_STORIES_FAIL = 'LOAD_NEXT_CHANNEL_STORIES_FAIL';
 const HEADER_CHANNEL_NAME = 'HEADER_CHANNEL_NAME';
 
+
 const initialState = {
   channelsArr: [],
   channelStories: [],

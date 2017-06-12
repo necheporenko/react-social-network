@@ -32,7 +32,9 @@ class MainPage extends Component {
               showChannel={this.props.showChannel}
               loadNextChannelStories={this.props.loadNextChannelStories}
             />
-            <FollowBlock />
+            <FollowBlock
+              whoToFollowList={this.props.whoToFollowList}
+            />
           </div>
         </div>
       </div>
@@ -48,6 +50,7 @@ MainPage.propTypes = {
   showChannel: PropTypes.func,
   channelsArr: PropTypes.array,
   channelStories: PropTypes.array,
+  whoToFollowList: PropTypes.array,           //follow
 };
 
 export default MainPage;

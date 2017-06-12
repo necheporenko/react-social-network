@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
-const defaultAvatar = require('../../../img/Peoples/100x100.jpg');
+@connect((state) => ({
+  friends: state.profile.friends,
+}), {})
 
-const Peoples = () => {
-  return (
-    <div className="infoblocks-peoples">
-      <div className="title-infoblocks">
-        <a href="#"><span className="peoples-icon"></span> People · <span>10</span></a>
-      </div>
-      <div className="people-gallery">
-        <div className="people-avatar">
-          <a href="#">
-            {/*<img src="../../../img/Peoples/100x100.jpg" />*/}
-            <img src={defaultAvatar} alt=""/>
-            <div className="people-avatar-user-name">Name Surname</div>
-          </a>
+
+export default class Peoples extends Component {
+  render() {
+    const { friends } = this.props;
+
+    return (
+      <div className="infoblocks-peoples">
+        <div className="title-infoblocks">
+          <a href="#"><span className="peoples-icon"></span> People · <span>{friends && friends.length}</span></a>
+        </div>
+        <div className="people-gallery">
+          {friends && friends.map((friend) => (
+            <div className="people-avatar">
+              <Link key={friend.id} to={`/${friend.slug}`}>
+                <img src={friend.avatar}/>
+                <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
+              </Link>
+            </div>
+            ))}
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
-export default Peoples;
+Peoples.propTypes = {
+  friends: PropTypes.array,
+};

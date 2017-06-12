@@ -4,7 +4,7 @@ import { asyncConnect } from 'redux-connect';
 import { getUser, getUserSlug, isPolling } from '../redux/modules/sign';
 import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../redux/modules/story';
 import { create as createBook, load as loadBookTree } from '../redux/modules/book';
-import { load as loadProfile } from '../redux/modules/profile';
+import { load as loadProfile, loadUserFriends } from '../redux/modules/profile';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 import StoryLine from '../components/StoryLine';
@@ -18,6 +18,7 @@ import StoryLine from '../components/StoryLine';
     promises.push(dispatch(loadStories(getUserSlug(getState()))));
     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
     promises.push(dispatch(loadProfile(getUserSlug(getState()))));
+    promises.push(dispatch(loadUserFriends(getUserSlug(getState()))));
     return Promise.all(promises);
   }
 }])

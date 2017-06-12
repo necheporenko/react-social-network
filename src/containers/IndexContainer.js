@@ -7,6 +7,7 @@ import { isLoadedChannelList, isLoadedChannelStories, create as createChannel,
   show as showChannel, load as loadChannels, isMashUp, loadNext as loadNextChannelStories } from '../redux/modules/channel';
 import { load as loadBookTree } from '../redux/modules/book';
 import { create as createStory } from '../redux/modules/story';
+import { loadWhoToFollow } from '../redux/modules/follow';
 import NewUser from '../components/Registration/Main';
 import MainPage from '../components/MainPage';
 
@@ -22,6 +23,7 @@ import MainPage from '../components/MainPage';
       promises.push(dispatch(loadChannels()));
     }
     promises.push(dispatch(loadBookTree()));
+    promises.push(dispatch(loadWhoToFollow()));
 
     return Promise.all(promises);
   }
@@ -38,6 +40,7 @@ import MainPage from '../components/MainPage';
   channelsArr: state.channel.channelsArr,
   channelStories: state.channel.channelStories,
   bookTreeArr: state.book.bookTreeArr,
+  whoToFollowList: state.follow.whoToFollowList,
 }), {
   loginUser,
   loginSocial,
@@ -67,6 +70,7 @@ export default class IndexContainer extends Component {
             channelStories={this.props.channelStories}
             loadNextChannelStories={this.props.loadNextChannelStories}
             bookTreeArr={this.props.bookTreeArr}
+            whoToFollowList={this.props.whoToFollowList}
           />
         }
         {!this.props.isAuthenticated &&
@@ -105,4 +109,5 @@ IndexContainer.propTypes = {
   loadNextChannelStories: PropTypes.func,
   createStory: PropTypes.func,                //story
   bookTreeArr: PropTypes.array,               //book
+  whoToFollowList: PropTypes.array,           //follow
 };

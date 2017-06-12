@@ -185,6 +185,6 @@ class BooksTree extends Component {
 export default BooksTree;
 
 BooksTree.propTypes = {
-  bookTreeArr: PropTypes.object,
+  bookTreeArr: PropTypes.array,
   moveBook: PropTypes.func,
 };

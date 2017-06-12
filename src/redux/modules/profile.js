@@ -4,6 +4,9 @@ const SAVE_PROFILE_FAIL = 'SAVE_PROFILE_FAIL';
 const LOAD_PROFILE = 'LOAD_PROFILE';
 const LOAD_PROFILE_SUCCESS = 'LOAD_PROFILE_SUCCESS';
 const LOAD_PROFILE_FAIL = 'LOAD_PROFILE_FAIL';
+const LOAD_USER_FRIENDS = 'LOAD_USER_FRIENDS';
+const LOAD_USER_FRIENDS_SUCCESS = 'LOAD_USER_FRIENDS_SUCCESS';
+const LOAD_USER_FRIENDS_FAIL = 'LOAD_USER_FRIENDS_FAIL';
 
 const initialState = {
   userProfile: {
@@ -25,6 +28,7 @@ const initialState = {
     skype: ''
   },
   loaded: false,
+  friends: [],
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -66,6 +70,24 @@ export default function profileReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case LOAD_USER_FRIENDS:
+      return {
+        ...state,
+        loading: true
+      };
+    case LOAD_USER_FRIENDS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        friends: action.result.data,
+      };
+    case LOAD_USER_FRIENDS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -87,5 +109,13 @@ export function load(slug) {
   return {
     types: [LOAD_PROFILE, LOAD_PROFILE_SUCCESS, LOAD_PROFILE_FAIL],
     promise: (client) => client.get('/user/profile', { params: { user_slug }})
+  };
+}
+
+export function loadUserFriends(slug) {
+  const user_slug = slug || '';
+  return {
+    types: [LOAD_USER_FRIENDS, LOAD_USER_FRIENDS_SUCCESS, LOAD_USER_FRIENDS_FAIL],
+    promise: (client) => client.get('/people/friends', { params: { user_slug }})
   };
 }

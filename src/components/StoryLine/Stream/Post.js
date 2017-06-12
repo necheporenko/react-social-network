@@ -112,7 +112,7 @@ class Post extends Component {
     const tooltip = (
       <Tooltip id="tooltip" arrowOffsetLeft={10} >
         { people_list.map((people) => (
-          <div>{people.user.fullName}</div>
+          <div key={people.user.id}>{people.user.fullName}</div>
         ))}
       </Tooltip>
     );
