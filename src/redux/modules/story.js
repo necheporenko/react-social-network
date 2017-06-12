@@ -96,9 +96,21 @@ export default function storyReducer(state = initialState, action) {
       };
     }
     case LIKE_STORY_SUCCESS: {
+      const likedStory = state.storiesArr.map((story) => {
+        if (story.id === action.story_id) {
+          return {
+            ...story,
+            likes: action.result.data
+          };
+        }
+        return {
+          ...story
+        };
+      });
       return {
         ...state,
-        liking: false
+        liking: false,
+        storiesArr: likedStory
       };
     }
     case LIKE_STORY_FAIL: {
@@ -147,6 +159,7 @@ export function like(story_id) {
   console.log('like ID:', story_id);
   return {
     types: [LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_FAIL],
+    story_id,
     promise: (client) => client.post('/like/story', { data: { story_id }})
   };
 }

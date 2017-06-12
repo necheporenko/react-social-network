@@ -21,7 +21,7 @@ class Post extends Component {
     this.like = this.like.bind(this);
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
-    this.test = this.test.bind(this);
+    this.loadLikeInfo = this.loadLikeInfo.bind(this);
   }
 
   like(id) {
@@ -48,28 +48,46 @@ class Post extends Component {
     this.setState({ showModal: true });
   }
 
-  test(people) {
+  loadLikeInfo(people_list) {
+    const friends = [];
     let result;
-    let others;
+    const is_Friend = people_list.some(people => people.user.is_friend);
+    const is_Owner = people_list.some(people => people.user.is_owner);
+    const is_Not_Owner = people_list.every(people => !people.user.is_owner);
 
-    if (people.user.is_owner) {
-      others = this.state.qty - 1;
-      console.log(others);
-
-      if (others === 0) {
-        result = 'Only YOU';
-      } else if (others === 1) {
-        result = `You and ${others} other`;
+    if (is_Owner && !is_Friend) {
+      if (people_list.length - 1 === 0) {
+        people_list.map(people => {
+          if (people.user.is_owner) {
+            result = people.user.fullName;
+          }
+        });
       } else {
-        result = `You and ${others} others`;
+        result = `You and ${people_list.length - 1} others`;
       }
+    } else if (is_Friend) {
+      people_list.map(people => {
+        if (people.user.is_friend) {
+          friends.push(` ${people.user.fullName}`);
+        }
+        return friends;
+      });
 
+      const qtyFriend = friends[1] ? 2 : 1;
 
-    } else if (people.user.is_friend) {
-      console.log('Friends', people.user.is_friend);
-    } else if (people.user.is_owner && people.user.is_friend) {
-      result = this.state.qty;
-      // result = people.user.fullName;
+      if (is_Owner) {
+        if (people_list.length - qtyFriend - 1 === 0) {
+          result = `You and ${friends.slice(0, qtyFriend)}`;
+        } else {
+          result = `You, ${friends.slice(0, qtyFriend)} and ${people_list.length - qtyFriend - 1} others`;
+        }
+      } else if (people_list.length - 1 === 0) {
+        result = friends[0];
+      } else {
+        result = `${friends.slice(0, qtyFriend)} and ${people_list.length - qtyFriend} others`;
+      }
+    } else if (is_Not_Owner && !is_Friend) {
+      result = people_list.length;
     }
     return result;
   }
@@ -251,23 +269,14 @@ class Post extends Component {
           </div>
         </div>
 
-        <div className="post-lc" style={{display: (this.state.qty > 0) ? 'block' : 'none'}}>
+        <div className="post-lc" style={{display: (this.state.qty === 0) ? 'none' : 'block'}}>
 
           <div className="post-like" onClick={this.Open}>
             <i className="post-action-icon"></i>
-            <OverlayTrigger placement="top" overlay={tooltip} id="tooltip" arrowOffsetLeft={200}>
-              {/*<div>*/}
-                {/*<span>{this.state.qty}</span>*/}
-                <span>
-                  { people_list.map((people) => (
-                    this.test(people)
-                  ))}
-                </span>
-
-                {/*<div>{this.test()}</div>*/}
-                {/*<test1 />*/}
-              {/*</div>*/}
-
+            <OverlayTrigger placement="top" overlay={tooltip} id="tooltip" arrowOffsetLeft={200} >
+              <span>
+                {this.loadLikeInfo(people_list)}
+              </span>
             </OverlayTrigger>
           </div>
         </div>
