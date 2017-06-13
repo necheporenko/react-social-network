@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
+import { like as likePostChannel } from '../../../redux/modules/channel';
 import Sbox from './Sbox';
 import Post from './Post';
 import './index.scss';
@@ -10,12 +11,15 @@ import './index.scss';
   over: state.channel.over,
   channel_slug: state.channel.channel_slug,
   pagination: state.channel.pagination
-}), {})
+}), {
+  likePostChannel
+})
 
-class ChannelStream extends Component {
+export default class ChannelStream extends Component {
   constructor(props) {
     super(props);
     this.load = this.load.bind(this);
+    this.like = this.like.bind(this);
     this.reloadStreamChannel = this.reloadStreamChannel.bind(this);
   }
 
@@ -28,6 +32,11 @@ class ChannelStream extends Component {
   reloadStreamChannel() {
     this.props.showChannel('');
   }
+
+  like(id) {
+    this.props.likePostChannel(id);
+  }
+
 
   render() {
     const { channelStories } = this.props;
@@ -52,6 +61,7 @@ class ChannelStream extends Component {
               created={story.created}
               images={story.images}
               likes={story.likes}
+              likeFunc={this.like}
             />
         ))}
         </InfiniteScroll>
@@ -67,7 +77,6 @@ ChannelStream.propTypes = {
   over: PropTypes.bool,
   loadNextChannelStories: PropTypes.func,
   channel_slug: PropTypes.string,
-  pagination: PropTypes.number
+  pagination: PropTypes.number,
+  likePostChannel: PropTypes.func,
 };
-
-export default ChannelStream;

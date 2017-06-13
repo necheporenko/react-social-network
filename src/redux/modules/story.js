@@ -135,7 +135,6 @@ export function load(slug) {
   return {
     types: [LOAD_SHOW_USER_STORIES, LOAD_SHOW_USER_STORIES_SUCCESS, LOAD_SHOW_USER_STORIES_FAIL],
     promise: (client) => client.get('/user/stories', { params: { user_slug }})
-    // promise: (client) => client.get('/user/stories', { params: { user_id: id }})
   };
 }
 
@@ -144,7 +143,6 @@ export function loadNext(slug, page) {
   return {
     types: [LOAD_NEXT_SHOW_USER_STORIES, LOAD_NEXT_SHOW_USER_STORIES_SUCCESS, LOAD_NEXT_SHOW_USER_STORIES_FAIL],
     promise: (client) => client.get('/user/stories', { params: { user_slug, page }})
-    // promise: (client) => client.get('/user/stories', { params: { user_id: id }})
   };
 }
 
@@ -156,7 +154,6 @@ export function create(description, books) {
 }
 
 export function like(story_id) {
-  console.log('like ID:', story_id);
   return {
     types: [LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_FAIL],
     story_id,

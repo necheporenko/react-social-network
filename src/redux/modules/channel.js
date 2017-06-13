@@ -11,6 +11,9 @@ export const LOAD_NEXT_CHANNEL_STORIES = 'LOAD_NEXT_CHANNEL_STORIES';
 export const LOAD_NEXT_CHANNEL_STORIES_SUCCESS = 'LOAD_NEXT_CHANNEL_STORIES_SUCCESS';
 export const LOAD_NEXT_CHANNEL_STORIES_FAIL = 'LOAD_NEXT_CHANNEL_STORIES_FAIL';
 const HEADER_CHANNEL_NAME = 'HEADER_CHANNEL_NAME';
+const LIKE_STORY = 'LIKE_STORY';
+const LIKE_STORY_SUCCESS = 'LIKE_STORY_SUCCESS';
+const LIKE_STORY_FAIL = 'LIKE_STORY_FAIL';
 
 
 const initialState = {
@@ -137,6 +140,38 @@ export default function channelReducer(state = initialState, action) {
         header_channel_name: action.header_channel_name,
       };
 
+    case LIKE_STORY: {
+      return {
+        ...state,
+        liking: true
+      };
+    }
+    case LIKE_STORY_SUCCESS: {
+      const likedStory = state.channelStories.map((story) => {
+        if (story.id === action.story_id) {
+          return {
+            ...story,
+            likes: action.result.data
+          };
+        }
+        return {
+          ...story
+        };
+      });
+      return {
+        ...state,
+        liking: false,
+        channelStories: likedStory
+      };
+    }
+    case LIKE_STORY_FAIL: {
+      return {
+        ...state,
+        liking: false,
+        error: action.error,
+      };
+    }
+
     default:
       return state;
   }
@@ -207,5 +242,13 @@ export function getChannelName(globalState) {
   return {
     type: HEADER_CHANNEL_NAME,
     header_channel_name
+  };
+}
+
+export function like(story_id) {
+  return {
+    types: [LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_FAIL],
+    story_id,
+    promise: (client) => client.post('/like/story', { data: { story_id }})
   };
 }

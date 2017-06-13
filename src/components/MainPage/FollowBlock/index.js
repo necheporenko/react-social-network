@@ -1,10 +1,32 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { follow as followUser, unfollow as unfollowUser } from '../../../redux/modules/follow';
 import './index.scss';
 
-class FollowBlock extends Component {
+@connect((state) => ({}), {
+  followUser,
+  unfollowUser,
+})
+
+export default class FollowBlock extends Component {
+  constructor(props) {
+    super(props);
+    this.follow = this.follow.bind(this);
+    this.unfollow = this.unfollow.bind(this);
+  }
+
+  follow(id) {
+    this.props.followUser(id);
+  }
+
+  unfollow(id) {
+    this.props.unfollowUser(id);
+  }
+
   render() {
     const { whoToFollowList } = this.props;
+
     return (
       <div className="follow-block">
         <div className="wrapper">
@@ -14,14 +36,24 @@ class FollowBlock extends Component {
             <div key={people.id} className="follow-people">
               <Link to={`/${people.slug}`} className="follow-people-link-img">
                 <img src={people.avatar}/>
-                <div className="people-avatar-user-name">{`${people.first_name} ${people.last_name}`}</div>
               </Link>
               <div className="follow-people-text">
                 <div className="follow-people-text-user">
                   <Link to={`/${people.slug}`}>{`${people.first_name} ${people.last_name}`}</Link>
                 </div>
-                <div className="follow-people-text-btn">
-                  <a href="#">Follow</a>
+                <div
+                  className="follow-people-text-btn"
+                  onClick={
+                     !people.isFollowing ?
+                       () => {
+                         this.follow(people.id);
+                       }
+                       :
+                       () => {
+                         this.unfollow(people.id);
+                       }
+                   }>
+                  {!people.isFollowing ? 'Follow' : 'Following'}
                 </div>
               </div>
             </div>
@@ -33,4 +65,6 @@ class FollowBlock extends Component {
   }
 }
 
-export default FollowBlock;
+FollowBlock.propTypes = {
+  whoToFollowList: PropTypes.array,
+};

@@ -17,6 +17,9 @@ const MOVE_BOOK = 'MOVE_BOOK';
 const MOVE_BOOK_SUCCESS = 'MOVE_BOOK_SUCCESS';
 const MOVE_BOOK_FAIL = 'MOVE_BOOK_FAIL';
 const GET_ARR_CHECKBOX = 'GET_ARR_CHECKBOX';
+const LIKE_STORY = 'LIKE_STORY';
+const LIKE_STORY_SUCCESS = 'LIKE_STORY_SUCCESS';
+const LIKE_STORY_FAIL = 'LIKE_STORY_FAIL';
 // const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
 
 const initialState = {
@@ -169,6 +172,38 @@ export default function bookReducer(state = initialState, action) {
         arrCheckbox: action.checkbox
       };
 
+    case LIKE_STORY: {
+      return {
+        ...state,
+        liking: true
+      };
+    }
+    case LIKE_STORY_SUCCESS: {
+      const likedStory = state.bookStories.map((story) => {
+        if (story.id === action.story_id) {
+          return {
+            ...story,
+            likes: action.result.data
+          };
+        }
+        return {
+          ...story
+        };
+      });
+      return {
+        ...state,
+        liking: false,
+        bookStories: likedStory
+      };
+    }
+    case LIKE_STORY_FAIL: {
+      return {
+        ...state,
+        liking: false,
+        error: action.error,
+      };
+    }
+
     default:
       return state;
   }
@@ -232,5 +267,13 @@ export function getCheckboxOfBook(checkbox) {
   return {
     type: GET_ARR_CHECKBOX,
     checkbox
+  };
+}
+
+export function like(story_id) {
+  return {
+    types: [LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_FAIL],
+    story_id,
+    promise: (client) => client.post('/like/story', { data: { story_id }})
   };
 }

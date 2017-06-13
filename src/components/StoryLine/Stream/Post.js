@@ -10,35 +10,15 @@ import { like as likePost } from '../../../redux/modules/story';
   likePost
 })
 
-class Post extends Component {
+export default class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLiked: this.props.likes.is_liked,
-      qty: this.props.likes.qty,
       showModal: false,
     };
-    this.like = this.like.bind(this);
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
     this.loadLikeInfo = this.loadLikeInfo.bind(this);
-  }
-
-  like(id) {
-    this.setState({
-      isLiked: !this.state.isLiked
-    });
-
-    this.state.isLiked ?
-      this.setState({
-        qty: this.state.qty - 1
-      })
-      :
-      this.setState({
-        qty: this.state.qty + 1
-      });
-
-    this.props.likePost(id);
   }
 
   Close() {
@@ -190,10 +170,11 @@ class Post extends Component {
               <p>Космогоническая гипотеза Шмидта позволяет достаточно просто объяснить эту нестыковку, однако соединение выслеживает вращательный большой круг небесной сферы. Часовой угол иллюстрирует натуральный логарифм, при этом плотность Вселенной в 3 * 10 в 18-й степени раз меньше, с учетом некоторой неизвестной добавки скрытой массы. Звезда оценивает далекий Млечный Путь, а время ожидания ответа составило бы 80 миллиардов лет.</p>
             </div> */}
             {/*{ images && images.map}*/}
+
             { images &&
-            <div className="post-content-type-image">
-              <img src={images[0]}/>
-            </div>
+              <div className="post-content-type-image">
+                <img src={images[0]}/>
+              </div>
             }
 
 
@@ -251,7 +232,7 @@ class Post extends Component {
             =========== */}
         <div className="post-footer">
           {/*<div className="post-like post-like-active" onClick={() => this.like(id)}>*/}
-          <div className={!this.state.isLiked ? 'post-like' : 'post-like post-like-active'} onClick={() => this.like(id)}>
+          <div className={!is_liked ? 'post-like' : 'post-like post-like-active'} onClick={() => this.props.likeFunc(id)}>
             <i className="post-action-icon"></i>
             <span>Like</span>
           </div>
@@ -269,8 +250,7 @@ class Post extends Component {
           </div>
         </div>
 
-        <div className="post-lc" style={{display: (this.state.qty === 0) ? 'none' : 'block'}}>
-
+        <div className="post-lc" style={{display: (qty === 0) ? 'none' : 'block'}}>
           <div className="post-like" onClick={this.Open}>
             <i className="post-action-icon"></i>
             <OverlayTrigger placement="top" overlay={tooltip} id="tooltip" arrowOffsetLeft={200} >
@@ -283,7 +263,7 @@ class Post extends Component {
 
         <Modal className="modal-likes" show={this.state.showModal} onHide={this.Close} >
           <Modal.Header closeButton>
-            <span>All {this.state.qty}</span>
+            <span>All {qty}</span>
           </Modal.Header>
 
           <Modal.Body>
@@ -320,7 +300,6 @@ Post.propTypes = {
   post: PropTypes.string,
   created: PropTypes.string,
   id: PropTypes.string,
-  images: PropTypes.array
+  images: PropTypes.array,
+  likeFunc: PropTypes.func,
 };
-
-export default Post;

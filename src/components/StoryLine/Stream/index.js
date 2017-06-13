@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
+import { like as likePostStoryline } from '../../../redux/modules/story';
 import Sbox from './Sbox';
 import Post from './Post';
 import './index.scss';
@@ -10,12 +11,15 @@ let page;
 @connect((state) => ({
   over: state.story.over,
   slug: state.sign.requestedUser.slug,
-}), {})
+}), {
+  likePostStoryline
+})
 
 class Stream extends Component {
   constructor(props) {
     super(props);
     this.load = this.load.bind(this);
+    this.like = this.like.bind(this);
     this.reloadStreamStoryline = this.reloadStreamStoryline.bind(this);
   }
 
@@ -33,6 +37,10 @@ class Stream extends Component {
 
   reloadStreamStoryline() {
     this.props.loadStories();
+  }
+
+  like(id) {
+    this.props.likePostStoryline(id);
   }
 
   render() {
@@ -64,6 +72,7 @@ class Stream extends Component {
               created={story.created}
               images={story.images}
               likes={story.likes}
+              likeFunc={this.like}
             />
           ))}
         </InfiniteScroll>
@@ -80,6 +89,7 @@ Stream.propTypes = {
   loadNextStories: PropTypes.func,
   over: PropTypes.bool,
   requestedUser: PropTypes.object,
+  likePostStoryline: PropTypes.func,
 };
 
 export default Stream;

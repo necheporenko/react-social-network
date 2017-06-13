@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
+import { like as likePostBook } from '../../../redux/modules/book';
 import Sbox from './Sbox';
 import Post from './Post';
 import './index.scss';
@@ -10,12 +11,15 @@ import './index.scss';
   over: state.book.over,
   pagination: state.book.pagination,
   book_slug: state.book.book_slug
-}), {})
+}), {
+  likePostBook
+})
 
 export default class BookStream extends Component {
   constructor(props) {
     super(props);
     this.load = this.load.bind(this);
+    this.like = this.like.bind(this);
     this.reloadStreamBook = this.reloadStreamBook.bind(this);
   }
 
@@ -27,6 +31,10 @@ export default class BookStream extends Component {
 
   reloadStreamBook() {
     this.props.showBookStories(this.props.book_slug);
+  }
+
+  like(id) {
+    this.props.likePostBook(id);
   }
 
   render() {
@@ -52,6 +60,7 @@ export default class BookStream extends Component {
               created={story.created}
               images={story.images}
               likes={story.likes}
+              likeFunc={this.like}
             />
           ))}
         </InfiniteScroll>
@@ -67,5 +76,6 @@ BookStream.propTypes = {
   over: PropTypes.bool,
   nextBookStories: PropTypes.func,
   book_slug: PropTypes.string,
-  pagination: PropTypes.number
+  pagination: PropTypes.number,
+  likePostBook: PropTypes.func,
 };
