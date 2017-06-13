@@ -8,8 +8,8 @@ import './draggable.scss';
 
 @connect((state) => ({
   // bookTreeArr: state.book.bookTreeArr,
-  requestedUserSlug: state.sign.requestedUser.slug,
-  authorizedUserSlug: state.sign.authorizedUser.slug,
+  requestedUserSlug: state.user.requestedUser.slug,
+  authorizedUserSlug: state.user.authorizedUser.slug,
 }), {
   showBookStories,
   moveBook

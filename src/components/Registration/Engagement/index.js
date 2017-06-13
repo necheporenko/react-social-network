@@ -20,8 +20,8 @@ import './index.scss';
 
 @connect((state) => ({
   activeFormSteps: state.forms.activeFormSteps,
-  first_name: state.sign.authorizedUser.first_name,
-  last_name: state.sign.authorizedUser.last_name,
+  first_name: state.user.authorizedUser.first_name,
+  last_name: state.user.authorizedUser.last_name,
   bio: state.profile.userProfile.bio,
   occupation: state.profile.userProfile.occupation,
   company: state.profile.userProfile.company,

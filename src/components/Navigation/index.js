@@ -7,7 +7,7 @@ import './index.scss';
 let savePositionTop;
 
 @connect((state) => ({
-  requestedUser: state.sign.requestedUser,
+  requestedUser: state.user.requestedUser,
 }), {})
 
 export default class Navigation extends Component {

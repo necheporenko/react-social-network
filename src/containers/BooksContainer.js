@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { getUser, getUserSlug, isPolling } from '../redux/modules/sign';
+import { getUser, getUserSlug, isPolling } from '../redux/modules/user';
 import { create as createBook, load as loadBookTree } from '../redux/modules/book';
 import Navigation from '../components/Navigation';
 import Books from '../components/Books';
@@ -19,7 +19,7 @@ import SubHeader from '../components/StoryLine/SubHeader';
 }])
 
 @connect((state) => ({
-  requestedUser: state.sign.requestedUser,
+  requestedUser: state.user.requestedUser,
   bookTreeArr: state.book.bookTreeArr,
 }), {
   getUser,

@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import './index.scss';
 
 @connect((state) => ({
-  authorizedUser: state.sign.authorizedUser,
+  authorizedUser: state.user.authorizedUser,
 }), {})
 
 export default class TokensMenu extends Component {

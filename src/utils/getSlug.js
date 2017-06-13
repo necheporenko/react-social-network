@@ -1,6 +1,6 @@
 // import { connect } from 'react-redux';
 // import { asyncConnect } from 'redux-connect';
-// import { getUser, getUserSlug } from '../redux/modules/sign';
+// import { getUser, getUserSlug } from '../redux/modules/user';
 //
 // export default function getSlug() {
 //   @asyncConnect([{
@@ -14,7 +14,7 @@
 //   }])
 //
 //   @connect((state) => ({
-//     requestedUser: state.sign.requestedUser
+//     requestedUser: state.user.requestedUser
 //   }), {
 //     getUser,
 //     getUserSlug,

@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { login as loginUser, load as loadAuth, register as registerUser, loginSocial } from '../redux/modules/sign';
+import { login as loginUser, load as loadAuth, register as registerUser, loginSocial } from '../redux/modules/user';
 import { showActiveForm } from '../redux/modules/form';
 import { isLoadedChannelList, isLoadedChannelStories, create as createChannel,
   show as showChannel, load as loadChannels, isMashUp, loadNext as loadNextChannelStories } from '../redux/modules/channel';
@@ -31,11 +31,11 @@ import MainPage from '../components/MainPage';
 
 
 @connect((state) => ({
-  authorizedUser: state.sign.authorizedUser,
-  isAuthenticated: state.sign.isAuthenticated,
-  loading: state.sign.loading,
-  authEmail: state.sign.authEmail,
-  authPass: state.sign.authPass,
+  authorizedUser: state.user.authorizedUser,
+  isAuthenticated: state.user.isAuthenticated,
+  loading: state.user.loading,
+  authEmail: state.user.authEmail,
+  authPass: state.user.authPass,
   activeForm: state.forms.activeForm,
   channelsArr: state.channel.channelsArr,
   channelStories: state.channel.channelStories,
@@ -92,7 +92,7 @@ export default class IndexContainer extends Component {
 }
 
 IndexContainer.propTypes = {
-  isAuthenticated: PropTypes.bool,            //sign
+  isAuthenticated: PropTypes.bool,            //user
   authorizedUser: PropTypes.object,
   loginUser: PropTypes.func,
   loadAuth: PropTypes.func,

@@ -5,7 +5,7 @@ import { loadingBarReducer } from 'react-redux-loading-bar';
 import form from './modules/form';
 import channel from './modules/channel';
 import story from './modules/story';
-import sign from './modules/sign';
+import user from './modules/user';
 import follow from './modules/follow';
 import book from './modules/book';
 import profile from './modules/profile';
@@ -20,7 +20,7 @@ export default function createReducers(asyncReducers) {
     forms: form,
     channel,
     story,
-    sign,
+    user,
     follow,
     book,
     profile,

@@ -10,7 +10,7 @@ let page;
 
 @connect((state) => ({
   over: state.story.over,
-  slug: state.sign.requestedUser.slug,
+  slug: state.user.requestedUser.slug,
 }), {
   likePostStoryline
 })

@@ -7,7 +7,7 @@ import './index.scss';
 let savePositionTop;
 
 @connect((state) => ({
-  authorizedUser: state.sign.authorizedUser,
+  authorizedUser: state.user.authorizedUser,
 }), {})
 
 export default class Tokens extends Component {

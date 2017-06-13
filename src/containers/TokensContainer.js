@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { getUser, getUserSlug, isPolling } from '../redux/modules/sign';
+import { getUser, getUserSlug, isPolling } from '../redux/modules/user';
 import Navigation from '../components/Navigation';
 import SubHeader from '../components/StoryLine/SubHeader';
 
@@ -16,7 +16,7 @@ import SubHeader from '../components/StoryLine/SubHeader';
 }])
 
 @connect((state) => ({
-  requestedUser: state.sign.requestedUser,
+  requestedUser: state.user.requestedUser,
 }), {
   getUser,
   getUserSlug,

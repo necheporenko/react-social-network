@@ -175,7 +175,7 @@ export default function signReducer(state = initialState, action) {
 
 
 export function isLoaded(globalState) {
-  return globalState.sign && globalState.sign.isAuthenticated;
+  return globalState.user && globalState.user.isAuthenticated;
 }
 
 export function load() {
@@ -232,7 +232,7 @@ export function isPolling(globalState) {
 }
 
 export function getUser(slug) {
-  console.log('slug in sign', slug);
+  console.log('slug in user', slug);
   const user_slug = slug || '';
   return {
     types: [SHOW_USER, SHOW_USER_SUCCESS, SHOW_USER_FAIL],

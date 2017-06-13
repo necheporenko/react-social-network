@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { Form, RadioGroup } from 'formsy-react-components';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import { getUser, getUserSlug } from '../../redux/modules/sign';
+import { getUser, getUserSlug } from '../../redux/modules/user';
 import { create as createBook, load as loadBookTree, show as showBookStories, next as nextBookStories, getBookSlug } from '../../redux/modules/book';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import BookStream from '../StoryLine/Stream/BookStream';
@@ -29,8 +29,8 @@ const radioOptions = [
 }])
 
 @connect((state) => ({
-  authorizedUser: state.sign.authorizedUser,
-  requestedUser: state.sign.requestedUser,
+  authorizedUser: state.user.authorizedUser,
+  requestedUser: state.user.requestedUser,
   bookTreeArr: state.book.bookTreeArr,
   bookStories: state.book.bookStories,
   bookPageName: state.book.bookPage.name,

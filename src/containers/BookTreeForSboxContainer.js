@@ -15,7 +15,7 @@ import '../components/BooksTree/index.scss';
 }])
 
 @connect((state) => ({
-  authorizedUser: state.sign.authorizedUser,
+  authorizedUser: state.user.authorizedUser,
   bookTreeArr: state.book.bookTreeArr,
 }), {
   loadBookTree,

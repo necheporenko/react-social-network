@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import './index.scss';
 
 @connect((state) => ({
-  requestedUser: state.sign.requestedUser,
+  requestedUser: state.user.requestedUser,
 }), {})
 
 export default class PeopleMenu extends Component {

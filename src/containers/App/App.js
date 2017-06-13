@@ -6,7 +6,7 @@ import { asyncConnect } from 'redux-connect';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { getChannelName } from '../../redux/modules/channel';
 import Header from '../../components/Header';
-import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from '../../redux/modules/sign';
+import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from '../../redux/modules/user';
 
 // @asyncConnect([{
 //   promise: ({store: { dispatch, getState }}) => {
@@ -52,8 +52,8 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
 }])
 
 @connect((state) => ({
-  isAuthenticated: state.sign.isAuthenticated,
-  authorizedUser: state.sign.authorizedUser
+  isAuthenticated: state.user.isAuthenticated,
+  authorizedUser: state.user.authorizedUser
 }), ({
   logoutUser,
   hideLoading
@@ -101,8 +101,8 @@ App.propTypes = {
 
 // function mapStateToProps(state) {
 //   return {
-//     isAuthenticated: state.sign.isAuthenticated,
-//     user: state.sign.user
+//     isAuthenticated: state.user.isAuthenticated,
+//     user: state.user.user
 //   };
 // }
 //

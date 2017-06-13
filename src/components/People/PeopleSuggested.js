@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { getUserSlug } from '../../redux/modules/sign';
+import { getUserSlug } from '../../redux/modules/user';
 import { loadPeopleSuggested, isLoadedSuggested, follow as followUser, unfollow as unfollowUser } from '../../redux/modules/follow';
 import PeopleMenu from './PeopleMenu';
 import './index.scss';

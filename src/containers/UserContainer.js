@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { getUser, getUserSlug, isPolling } from '../redux/modules/sign';
+import { getUser, getUserSlug, isPolling } from '../redux/modules/user';
 import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../redux/modules/story';
 import { create as createBook, load as loadBookTree } from '../redux/modules/book';
 import { load as loadProfile, loadUserFriends } from '../redux/modules/profile';
@@ -25,9 +25,9 @@ import StoryLine from '../components/StoryLine';
 
 
 @connect((state) => ({
-  authorizedUser: state.sign.authorizedUser,
-  requestedUser: state.sign.requestedUser,
-  isAuthenticated: state.sign.isAuthenticated,
+  authorizedUser: state.user.authorizedUser,
+  requestedUser: state.user.requestedUser,
+  isAuthenticated: state.user.isAuthenticated,
   storiesArr: state.story.storiesArr,
   bookTreeArr: state.book.bookTreeArr,
   userProfile: state.profile.userProfile,
@@ -71,7 +71,7 @@ export default class UserContainer extends Component {
 }
 
 UserContainer.propTypes = {
-  authorizedUser: PropTypes.object,                     //sign
+  authorizedUser: PropTypes.object,                     //user
   requestedUser: PropTypes.object,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
