@@ -11,11 +11,6 @@ const facebook_id = '562706323765481';
 class New extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-      // authEmail: '',
-      // authPass: '',
-      // facebook_id: '562706323765481' //got from validbook.org
-    // };
 
     this.onFormShow = this.onFormShow.bind(this);
     // this.handleAuth = this.handleAuth.bind(this);

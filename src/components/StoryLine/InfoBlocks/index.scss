@@ -272,6 +272,29 @@
 /* === Peoples Start === */
 .infoblocks-peoples {
   min-height: 147px;
+
+  .title-infoblocks {
+    display: flex;
+    padding-bottom: 5px;
+
+    > div {
+      display: flex;
+      position: relative;
+      top: -3px;
+      left: 14px;
+
+      div {
+        padding-right: 25px;
+        cursor: pointer;
+
+        span {
+          color: #2962FF;
+          //font-family: $font-Montserrat;
+          //font-family: $font-Hind;
+        }
+      }
+    }
+  }
 }
 
 .people-gallery {

@@ -1,6 +1,7 @@
-export const SHOW_FORM = 'SHOW_FORM';
-export const SHOW_FORM_STEPS = 'SHOW_FORM_STEPS';
-export const SHOW_POPUP = 'SHOW_POPUP';
+const SHOW_FORM = 'SHOW_FORM';
+const SHOW_FORM_STEPS = 'SHOW_FORM_STEPS';
+const SHOW_POPUP = 'SHOW_POPUP';
+const SHOW_PEOPLE_TAB = 'SHOW_PEOPLE_TAB';
 
 export function showActiveForm(formName) {
   return {
@@ -24,6 +25,13 @@ export function showPopUp(visible, currentImage) {
   };
 }
 
+export function showActivePeopleTab(peopleTab) {
+  return {
+    type: SHOW_PEOPLE_TAB,
+    peopleTab
+  };
+}
+
 
 /* ============
    | REDUCER  |
@@ -33,7 +41,8 @@ const initialState = {
   activeForm: 'default',
   activeFormSteps: 'step-1',
   visible: false,
-  currentImage: ''
+  currentImage: '',
+  activePeopleTab: 'people'
 };
 
 export default function formsReducer(state = initialState, action) {
@@ -57,6 +66,13 @@ export default function formsReducer(state = initialState, action) {
         ...state,
         visible: action.visible,
         currentImage: action.currentImage
+      };
+    }
+
+    case SHOW_PEOPLE_TAB: {
+      return {
+        ...state,
+        activePeopleTab: action.peopleTab
       };
     }
 
