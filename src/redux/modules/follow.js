@@ -38,21 +38,44 @@ export default function followReducer(state = initialState, action) {
         follow: false,
       };
     case FOLLOW_USER_SUCCESS:
-      const followFollowing = state.following.map((user) => {
-        if (user.id === action.id) {
-          return {
-            ...user,
-            isFollowing: true
-          };
-        }
-        return {
-          ...user
-        };
-      });
+      let followFollowing;
+      let followInWhoToFollowList;
+
+      switch (action.choiceFollow) {
+        case 'whoToFollow':
+          followInWhoToFollowList = state.whoToFollowList.map((user) => {
+            if (user.id === action.user_id) {
+              return {
+                ...user,
+                isFollowing: true
+              };
+            }
+            return {
+              ...user
+            };
+          });
+          break;
+        case 'people':
+          followFollowing = state.following.map((user) => {
+            if (user.id === action.user_id) {
+              return {
+                ...user,
+                isFollowing: true
+              };
+            }
+            return {
+              ...user
+            };
+          });
+          break;
+        default:
+          console.log('choiceFollow not found');
+      }
       return {
         ...state,
         follow: true,
-        following: followFollowing
+        following: followFollowing || state.following,
+        whoToFollowList: followInWhoToFollowList || state.whoToFollowList
       };
     case FOLLOW_USER_FAIL:
       return {
@@ -67,21 +90,45 @@ export default function followReducer(state = initialState, action) {
         unfollow: false,
       };
     case UNFOLLOW_USER_SUCCESS:
-      const unfollowFollowing = state.following.map((user) => {
-        if (user.id === action.id) {
-          return {
-            ...user,
-            isFollowing: false
-          };
-        }
-        return {
-          ...user
-        };
-      });
+      let unfollowFollowing;
+      let unfollowInWhoToFollowList;
+
+      switch (action.choiceFollow) {
+        case 'whoToFollow':
+          unfollowInWhoToFollowList = state.whoToFollowList.map((user) => {
+            if (user.id === action.user_id) {
+              return {
+                ...user,
+                isFollowing: false
+              };
+            }
+            return {
+              ...user
+            };
+          });
+          break;
+        case 'people':
+          unfollowFollowing = state.following.map((user) => {
+            if (user.id === action.user_id) {
+              return {
+                ...user,
+                isFollowing: false
+              };
+            }
+            return {
+              ...user
+            };
+          });
+          break;
+        default:
+          console.log('choiceUnfollow not found');
+      }
+
       return {
         ...state,
         unfollow: true,
-        following: unfollowFollowing
+        following: unfollowFollowing || state.following,
+        whoToFollowList: unfollowInWhoToFollowList || state.whoToFollowList
       };
     case UNFOLLOW_USER_FAIL:
       return {
@@ -197,19 +244,22 @@ export function isLoadedSuggested(globalState) {
   return globalState.follow && globalState.follow.loaded.loadedSuggested;
 }
 
-export function follow(id) {
+export function follow(user_id, choiceFollow) {
   return {
     types: [FOLLOW_USER, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAIL],
-    id,
-    promise: (client) => client.post('/follow/connect', { data: { user_id: id, channel_id: '' }})                       //todo:  add channel_id
+    user_id,
+    choiceFollow,
+    promise: (client) => client.post('/follow/connect', { data: { user_id, channel_id: '' }})                       //todo:  add channel_id
   };
 }
 
-export function unfollow(id) {
+export function unfollow(user_id, choiceFollow) {
+  console.log('Choice of follow', choiceFollow);
   return {
     types: [UNFOLLOW_USER, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAIL],
-    id,
-    promise: (client) => client.post('/follow/disconnect', { data: { user_id: id, channel_id: '' }})
+    user_id,
+    choiceFollow,
+    promise: (client) => client.post('/follow/disconnect', { data: { user_id, channel_id: '' }})
   };
 }
 

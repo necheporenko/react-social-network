@@ -17,11 +17,11 @@ export default class FollowBlock extends Component {
   }
 
   follow(id) {
-    this.props.followUser(id);
+    this.props.followUser(id, 'whoToFollow');
   }
 
   unfollow(id) {
-    this.props.unfollowUser(id);
+    this.props.unfollowUser(id, 'whoToFollow');
   }
 
   render() {
