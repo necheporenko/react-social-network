@@ -1,26 +1,32 @@
-export const LOGIN = 'LOGIN';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAIL = 'LOGIN_FAIL';
-export const LOAD = 'LOAD';
-export const LOAD_SUCCESS = 'LOAD_SUCCESS';
-export const LOAD_FAIL = 'LOAD_FAIL';
-export const LOGOUT = 'LOGOUT';
-export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
-export const LOGOUT_FAIL = 'LOGOUT_FAIL';
-export const REGISTER = 'REGISTER';
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const REGISTER_FAIL = 'REGISTER_FAIL';
-export const LOGIN_FB = 'LOGIN_FB';
-export const LOGIN_FB_SUCCESS = 'LOGIN_FB_SUCCESS';
-export const LOGIN_FB_FAIL = 'LOGIN_FB_FAIL';
-export const SHOW_USER = 'SHOW_USER';
-export const SHOW_USER_SUCCESS = 'SHOW_USER_SUCCESS';
-export const SHOW_USER_FAIL = 'SHOW_USER_FAIL';
+const LOGIN = 'LOGIN';
+const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+const LOGIN_FAIL = 'LOGIN_FAIL';
+const LOAD = 'LOAD';
+const LOAD_SUCCESS = 'LOAD_SUCCESS';
+const LOAD_FAIL = 'LOAD_FAIL';
+const LOGOUT = 'LOGOUT';
+const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+const LOGOUT_FAIL = 'LOGOUT_FAIL';
+const REGISTER = 'REGISTER';
+const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+const REGISTER_FAIL = 'REGISTER_FAIL';
+const LOGIN_FB = 'LOGIN_FB';
+const LOGIN_FB_SUCCESS = 'LOGIN_FB_SUCCESS';
+const LOGIN_FB_FAIL = 'LOGIN_FB_FAIL';
+const SHOW_USER = 'SHOW_USER';
+const SHOW_USER_SUCCESS = 'SHOW_USER_SUCCESS';
+const SHOW_USER_FAIL = 'SHOW_USER_FAIL';
+const FOLLOW_REQUESTED_USER = 'FOLLOW_REQUESTED_USER';
+const FOLLOW_REQUESTED_USER_SUCCESS = 'FOLLOW_REQUESTED_USER_SUCCESS';
+const FOLLOW_REQUESTED_USER_FAIL = 'FOLLOW_REQUESTED_USER_FAIL';
+const UNFOLLOW_REQUESTED_USER = 'UNFOLLOW_REQUESTED_USER';
+const UNFOLLOW_REQUESTED_USER_SUCCESS = 'UNFOLLOW_REQUESTED_USER_SUCCESS';
+const UNFOLLOW_REQUESTED_USER_FAIL = 'UNFOLLOW_REQUESTED_USER_FAIL';
 
 const initialState = {
   isAuthenticated: false,
   authorizedUser: null,
-  requestedUser: [],
+  requestedUser: {},
   loaded: false
 };
 
@@ -168,6 +174,44 @@ export default function signReducer(state = initialState, action) {
         requestedUser: null
       };
 
+    case FOLLOW_REQUESTED_USER:
+      return {
+        ...state,
+      };
+    case FOLLOW_REQUESTED_USER_SUCCESS:
+      const followRequestedUser = Object.assign(state.requestedUser);
+      followRequestedUser.isFollowing = true;
+      return {
+        ...state,
+        requestedUser: followRequestedUser,
+      };
+    case FOLLOW_REQUESTED_USER_FAIL:
+      return {
+        ...state,
+        error: action.error,
+      };
+
+    case UNFOLLOW_REQUESTED_USER:
+      return {
+        ...state,
+      };
+    case UNFOLLOW_REQUESTED_USER_SUCCESS:
+      const unfollowRequestedUser = Object.assign(state.requestedUser);
+      unfollowRequestedUser.isFollowing = false;
+      console.log('unfollowRequestedUser after', unfollowRequestedUser)
+      return {
+        ...state,
+        // requestedUser: {
+        //   isFollowing: false
+        // },
+        requestedUser: unfollowRequestedUser,
+      };
+    case UNFOLLOW_REQUESTED_USER_FAIL:
+      return {
+        ...state,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -240,3 +284,16 @@ export function getUser(slug) {
   };
 }
 
+export function followRequestedUser(user_id) {
+  return {
+    types: [FOLLOW_REQUESTED_USER, FOLLOW_REQUESTED_USER_SUCCESS, FOLLOW_REQUESTED_USER_FAIL],
+    promise: (client) => client.post('/follow/connect', { data: { user_id, channel_id: '' }})
+  };
+}
+
+export function unfollowRequestedUser(user_id) {
+  return {
+    types: [UNFOLLOW_REQUESTED_USER, UNFOLLOW_REQUESTED_USER_SUCCESS, UNFOLLOW_REQUESTED_USER_FAIL],
+    promise: (client) => client.post('/follow/disconnect', { data: { user_id, channel_id: '' }})
+  };
+}

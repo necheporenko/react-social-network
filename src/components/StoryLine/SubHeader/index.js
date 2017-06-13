@@ -1,12 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { followRequestedUser, unfollowRequestedUser } from '../../../redux/modules/user';
 import './index.scss';
 
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
 
-}), {})
+}), {
+  followRequestedUser,
+  unfollowRequestedUser
+})
 
 class SubHeader extends Component {
   constructor(props) {
@@ -18,6 +22,8 @@ class SubHeader extends Component {
     };
     this.handleAvatarChange = this.handleAvatarChange.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
+    this.followUser = this.followUser.bind(this);
+    this.unfollowUser = this.unfollowUser.bind(this);
   }
 
   handleAvatarChange(e) {
@@ -48,9 +54,17 @@ class SubHeader extends Component {
     reader.readAsDataURL(file);
   }
 
+  followUser(id) {
+    this.props.followRequestedUser(id);
+  }
+
+  unfollowUser(id) {
+    this.props.unfollowRequestedUser(id);
+  }
+
   render() {
     // const { first_name, last_name } = this.props.authorizedUser;
-    const { first_name, last_name, slug, avatar200 } = this.props.requestedUser;
+    const { first_name, last_name, slug, avatar200, isFollowing, id } = this.props.requestedUser;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { imageAvatar } = this.state;
     const { imageCover } = this.state;
@@ -90,19 +104,18 @@ class SubHeader extends Component {
         </div>
         <div
           className="btn-following"
-          //   onClick={
-          //     !people.isFollowing ?
-          //       () => {
-          //         this.follow(people.id);
-          //       }
-          //       :
-          //       () => {
-          //         this.unfollow(people.id);
-          //       }
-          //   }
+          onClick={
+             !isFollowing ?
+               () => {
+                 this.followUser(id);
+               }
+               :
+               () => {
+                 this.unfollowUser(id);
+               }
+           }
         >
-          {/*{!people.isFollowing ? 'Follow' : 'Following'}*/}
-          Following
+          {!isFollowing ? 'Follow' : 'Following'}
           <span></span>
         </div>
         {/* <div className="subHeader-bg"></div> */}
@@ -117,7 +130,8 @@ SubHeader.propTypes = {
     last_name: PropTypes.string,
     slug: PropTypes.string,
     id: PropTypes.number,
-    avatar200: PropTypes.string
+    avatar200: PropTypes.string,
+    isFollowing: PropTypes.boolean,
   })
 };
 
