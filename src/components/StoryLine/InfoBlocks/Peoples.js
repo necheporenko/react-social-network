@@ -14,10 +14,15 @@ import { showActivePeopleTab } from '../../../redux/modules/form';
 export default class Peoples extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      activeTab: 'people'
+    };
+
     this.showPeopleTab = this.showPeopleTab.bind(this);
   }
 
   showPeopleTab(tab) {
+    this.setState({ activeTab: tab });
     this.props.showActivePeopleTab(tab);
   }
 
@@ -29,9 +34,26 @@ export default class Peoples extends Component {
         <div className="title-infoblocks">
           <span className="peoples-icon"></span>
           <div>
-            <div onClick={() => this.showPeopleTab('people')}>People<br/><span>{friends && friends.length}</span></div>
-            <div onClick={() => this.showPeopleTab('following')}>Following<br/><span >999</span></div>
-            <div onClick={() => this.showPeopleTab('followers')}>Followers<br/><span>999</span></div>
+            <div
+              className={this.state.activeTab === 'people' ? 'people-tab-active' : ''}
+              onClick={() => this.showPeopleTab('people')}
+            >
+              People
+            </div>
+            |
+            <div
+              className={this.state.activeTab === 'following' ? 'people-tab-active' : ''}
+              onClick={() => this.showPeopleTab('following')}
+            >
+              Following<span > 999</span>
+            </div>
+            |
+            <div
+              className={this.state.activeTab === 'followers' ? 'people-tab-active' : ''}
+              onClick={() => this.showPeopleTab('followers')}
+            >
+              Followers<span> 999</span>
+            </div>
           </div>
         </div>
         { this.props.activePeopleTab === 'people' &&

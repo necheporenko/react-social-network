@@ -27,6 +27,11 @@ const initialState = {
     loadedFollowers: false,
     loadedSuggested: false,
   },
+  over: {
+    overFollowing: false,
+    overFollowers: false,
+    overSuggested: false,
+  },
   whoToFollowList: [],
 };
 

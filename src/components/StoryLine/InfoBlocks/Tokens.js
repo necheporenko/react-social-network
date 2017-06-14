@@ -5,7 +5,7 @@ const Tokens = () => {
     <div className="infoblocks-tokens">
 
       <div className="title-infoblocks">
-        <a href="#"><span className="token-icon"></span>Tokens</a>
+        <a href="#"><span className="token-icon"></span>Caches</a>
       </div>
 
       <ul className="tokens-mnu">

@@ -63,8 +63,8 @@
   background: $sprite;
   background-position: -55px -501px;
   height: 14px;
-  width: 21px;
-  margin-right: 5px;
+  width: 25px;
+  //margin-right: 5px;
 }
 /* === Title End === */
 
@@ -176,7 +176,7 @@
   }
 }
 
-/* === Tokens Start === */
+/* === Caches Start === */
 .infoblocks-tokens {
   min-height: 175px;
   padding-bottom: 5px;
@@ -251,7 +251,7 @@
     top: 3px;
   }
 }
-/* === Tokens End === */
+/* === Caches End === */
 
 
 /* === Photos Start === */
@@ -261,6 +261,7 @@
 }
 .photos-image {
   padding-left: 5px;
+
   img {
     width: 100px;
     height: 100px;
@@ -281,14 +282,14 @@
       display: flex;
       position: relative;
       top: -3px;
-      left: 14px;
+      //left: 7px;
 
       div {
-        padding-right: 25px;
+        padding: 0 3px;
         cursor: pointer;
 
         span {
-          color: #2962FF;
+          font-size: 14px;
           //font-family: $font-Montserrat;
           //font-family: $font-Hind;
         }
@@ -304,6 +305,7 @@
 .people-avatar {
   position: relative;
   padding-left: 5px;
+
   img {
     width: 100px;
     height: 100px;
@@ -320,6 +322,10 @@
   color: #fff;
   background: linear-gradient(transparent, rgba(0, 0, 0, .7));
 }
+.people-tab-active {
+  //color: red;
+  font-family: $font-medium;
+}
 /* === Peoples End === */
 
 
@@ -329,6 +335,7 @@
   }
 
   .photos-image {
+
     img {
       width: 90px;
       height: 90px;
@@ -337,6 +344,7 @@
   }
 
   .people-avatar {
+
     img {
     width: 90px;
     height: 90px;

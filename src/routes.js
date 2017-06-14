@@ -14,10 +14,10 @@ import People from 'components/People';
 import PeopleFollowers from 'components/People/PeopleFollowers';
 import PeopleSuggested from 'components/People/PeopleSuggested';
 import TokensContainer from 'containers/TokensContainer';
-import Tokens from 'components/Tokens';
-import TokensPrivate from 'components/Tokens/TokensPrivate';
-import TokensPublic from 'components/Tokens/TokensPublic';
-import TokensExchange from 'components/Tokens/TokensExchange';
+import Tokens from 'components/Caches';
+import TokensPrivate from 'components/Caches/TokensPrivate';
+import TokensPublic from 'components/Caches/TokensPublic';
+import TokensExchange from 'components/Caches/TokensExchange';
 import MessagesContainer from 'containers/MessagesContainer';
 import Messages from 'components/Messages';
 import NewMessage from 'components/Messages/NewMessage';
@@ -116,7 +116,7 @@ export default () => {
         <Route path="suggested" component={PeopleSuggested} />
       </Route>
 
-      <Route path="/:userName/tokens" component={TokensContainer}>
+      <Route path="/:userName/caches" component={TokensContainer}>
         <IndexRoute component={Tokens} />
         <Route path="exchange" component={TokensExchange}/>
         <Route path="public" component={TokensPublic} />

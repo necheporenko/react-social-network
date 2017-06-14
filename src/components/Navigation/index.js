@@ -80,11 +80,11 @@ export default class Navigation extends Component {
             Books
           </Link>
           <Link
-            to={`/${slug}/tokens`}
+            to={`/${slug}/caches`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
-            Tokens
+            Caches
           </Link>
           <Link
             to={`/${slug}/people`}

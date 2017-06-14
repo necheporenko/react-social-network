@@ -41,7 +41,7 @@ class AddToken extends Component {
     return (
       <div className="token add-token" onClick={this.Open}>
         <a href="#">
-          <i><span>Create <br/> New Token</span></i>
+          <i><span>Create <br/> New Document</span></i>
         </a>
 
         <Modal show={this.state.showModal} onHide={this.Close} className="modal-token">
