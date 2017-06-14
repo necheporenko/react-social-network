@@ -20,6 +20,9 @@ const GET_ARR_CHECKBOX = 'GET_ARR_CHECKBOX';
 const LIKE_STORY = 'LIKE_STORY';
 const LIKE_STORY_SUCCESS = 'LIKE_STORY_SUCCESS';
 const LIKE_STORY_FAIL = 'LIKE_STORY_FAIL';
+const UPLOAD_BOOK_COVER = 'UPLOAD_BOOK_COVER';
+const UPLOAD_BOOK_COVER_SUCCESS = 'UPLOAD_BOOK_COVER_SUCCESS';
+const UPLOAD_BOOK_COVER_FAIL = 'UPLOAD_BOOK_COVER_FAIL';
 // const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
 
 const initialState = {
@@ -31,6 +34,7 @@ const initialState = {
     loadedBookStories: false,
   },
   pagination: 1,
+  uploading: false,
 };
 
 export default function bookReducer(state = initialState, action) {
@@ -204,6 +208,24 @@ export default function bookReducer(state = initialState, action) {
       };
     }
 
+    case UPLOAD_BOOK_COVER:
+      return {
+        ...state,
+        uploading: true,
+      };
+    case UPLOAD_BOOK_COVER_SUCCESS:
+      return {
+        ...state,
+        uploading: false,
+        bookCover: action.result.data.url,
+      };
+    case UPLOAD_BOOK_COVER_FAIL:
+      return {
+        ...state,
+        uploading: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -275,5 +297,12 @@ export function like(story_id) {
     types: [LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_FAIL],
     story_id,
     promise: (client) => client.post('/like/story', { data: { story_id }})
+  };
+}
+
+export function upload(img) {
+  return {
+    types: [UPLOAD_BOOK_COVER, UPLOAD_BOOK_COVER_SUCCESS, UPLOAD_BOOK_COVER_FAIL],
+    promise: (client) => client.post('/upload/book-cover', { data: { img }})
   };
 }

@@ -2,14 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { followRequestedUser, unfollowRequestedUser } from '../../../redux/modules/user';
+import { showPopUp } from '../../../redux/modules/form';
+import ChangeCoverImage from '../../Popup/ChangeCoverImage';
 import './index.scss';
 
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
-
+  visible: state.forms.visible,
+  currentImage: state.forms.currentImage
 }), {
   followRequestedUser,
-  unfollowRequestedUser
+  unfollowRequestedUser,
+  showPopUp
 })
 
 class SubHeader extends Component {
@@ -50,6 +54,7 @@ class SubHeader extends Component {
         file: file,
         imageCover: reader.result
       });
+      this.props.showPopUp(true, reader.result);
     };
     reader.readAsDataURL(file);
   }
@@ -119,6 +124,12 @@ class SubHeader extends Component {
           <span></span>
         </div>
         {/* <div className="subHeader-bg"></div> */}
+
+        <ChangeCoverImage
+          showPopUp={this.props.showPopUp}
+          visible={this.props.visible}
+          currentImage={this.props.currentImage}
+        />
       </div>
     );
   }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { create as createBook, load as loadBookTree } from '../../redux/modules/book';
 import { showPopUp } from '../../redux/modules/form';
-import ChangeImage from '../Popup/ChangeImage';
+import ChangeBookCoverImage from '../Popup/ChangeBookCoverImage';
 import './index.scss';
 import coverBook from '../../img/Default/cover-book.png';
 
@@ -21,7 +21,8 @@ const selectCountry = [
 @connect((state) => ({
   bookTreeArr: state.book.bookTreeArr,
   visible: state.forms.visible,
-  currentImage: state.forms.currentImage
+  currentImage: state.forms.currentImage,
+  bookCover: state.book.bookCover,
 }), {
   loadBookTree,
   createBook,
@@ -49,6 +50,7 @@ class AddBook extends Component {
     this.Open = this.Open.bind(this);
     this.onSubmitBook = this.onSubmitBook.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
+    this.updateCoverImage = this.updateCoverImage.bind(this);
   }
 
   onSubmitBook(data) {
@@ -79,6 +81,12 @@ class AddBook extends Component {
       file = null;
     };
     reader.readAsDataURL(file);
+  }
+
+  updateCoverImage() {
+    this.setState({
+      coverBook: this.props.bookCover,
+    });
   }
 
   render() {
@@ -148,10 +156,11 @@ class AddBook extends Component {
             </Modal.Footer>
           </Form>
 
-          <ChangeImage
+          <ChangeBookCoverImage
             showPopUp={this.props.showPopUp}
             visible={this.props.visible}
             currentImage={this.props.currentImage}
+            updateCoverImage={this.updateCoverImage}
           />
 
         </Modal>

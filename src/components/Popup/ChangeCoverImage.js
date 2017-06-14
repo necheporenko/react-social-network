@@ -10,7 +10,7 @@ import coverBook from '../../img/Default/cover-book.png';
   // bookTreeArr: state.book.bookTreeArr,
 }), {})
 
-export default class ChangeImage extends Component {
+export default class ChangeCoverImage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -91,7 +91,7 @@ export default class ChangeImage extends Component {
       <div className="create-new-book" onClick={this.Open}>
         <Modal show={visible} onHide={this.Close} className="modal-channel">
           <Modal.Header closeButton>
-            <Modal.Title>Create new book</Modal.Title>
+            <Modal.Title>Edit cover image!!!!</Modal.Title>
           </Modal.Header>
 
           {/*<Form*/}
@@ -112,11 +112,11 @@ export default class ChangeImage extends Component {
                 scale={parseFloat(this.state.scale)}
                 rotate={0}
                 onSave={this.handleSave}
-                />
+              />
             </div>
 
-              Zoom:
-              <br />
+            Zoom:
+            <br />
             <input
               name="scale"
               type="range"
@@ -125,7 +125,7 @@ export default class ChangeImage extends Component {
               max="2"
               step="0.01"
               defaultValue="1"
-              />
+            />
             <br />
             <input type="button" onClick={this.handleSave} value="Preview" />
             <br />
@@ -140,7 +140,6 @@ export default class ChangeImage extends Component {
               <button className="btn-brand" style={{marginLeft: '10px'}} type="submit">Crop and Save</button>
             </div>
           </Modal.Footer>
-          {/*</Form>*/}
 
         </Modal>
       </div>
@@ -148,6 +147,6 @@ export default class ChangeImage extends Component {
   }
 }
 
-ChangeImage.propTypes = {
+ChangeCoverImage.propTypes = {
 
 };

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { edit as editBook, load as loadBookTree } from '../../redux/modules/book';
 import { showPopUp } from '../../redux/modules/form';
-import ChangeImage from '../Popup/ChangeImage';
+import ChangeBookCoverImage from '../Popup/ChangeBookCoverImage';
 import './index.scss';
 import coverBook from '../../img/Default/cover-book.png';
 
@@ -148,7 +148,7 @@ class EditBook extends Component {
             </Modal.Footer>
           </Form>
 
-          <ChangeImage
+          <ChangeBookCoverImage
             showPopUp={this.props.showPopUp}
             visible={this.props.visible}
             currentImage={this.props.currentImage}

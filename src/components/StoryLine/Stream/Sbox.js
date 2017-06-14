@@ -53,7 +53,7 @@ class Sbox extends Component {
       editorContent,
       data: draftToHtml(convertToRaw(editorContent.getCurrentContent()))
     });
-  }
+  };
 
   onSubmitStory() {
     console.log(this.state.data);
