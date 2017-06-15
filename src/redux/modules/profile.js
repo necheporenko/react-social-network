@@ -116,6 +116,6 @@ export function loadUserFriends(slug) {
   const user_slug = slug || '';
   return {
     types: [LOAD_USER_FRIENDS, LOAD_USER_FRIENDS_SUCCESS, LOAD_USER_FRIENDS_FAIL],
-    promise: (client) => client.get('/people/friends', { params: { user_slug }})
+    promise: (client) => client.get('/people/block', { params: { user_slug }})
   };
 }

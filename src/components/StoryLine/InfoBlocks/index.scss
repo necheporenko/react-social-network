@@ -13,7 +13,7 @@
 /* === Title Start === */
 .title-infoblocks {
   padding: 15px 12px;
-  font-size: 16px;
+  font-size: 15px;
 
   a {
     text-decoration: none;
@@ -276,7 +276,7 @@
 
   .title-infoblocks {
     display: flex;
-    padding-bottom: 5px;
+    padding-bottom: 7px;
 
     > div {
       display: flex;
@@ -285,13 +285,14 @@
       //left: 7px;
 
       div {
-        padding: 0 3px;
+        padding: 0 5px;
         cursor: pointer;
 
         span {
           font-size: 14px;
-          //font-family: $font-Montserrat;
-          //font-family: $font-Hind;
+          color: #999;
+          line-height: 18px;
+          vertical-align: bottom;
         }
       }
     }
@@ -302,6 +303,7 @@
   display: flex;
   flex-wrap: wrap;
 }
+
 .people-avatar {
   position: relative;
   padding-left: 5px;
@@ -312,6 +314,7 @@
     padding-bottom: 5px;
   }
 }
+
 .people-avatar-user-name {
   position: absolute;
   bottom: 5px;
@@ -322,9 +325,13 @@
   color: #fff;
   background: linear-gradient(transparent, rgba(0, 0, 0, .7));
 }
+
 .people-tab-active {
-  //color: red;
   font-family: $font-medium;
+
+  span {
+    font-family: "Roboto", Arial, sans-serif;
+  }
 }
 /* === Peoples End === */
 

@@ -116,7 +116,7 @@ export default () => {
         <Route path="suggested" component={PeopleSuggested} />
       </Route>
 
-      <Route path="/:userName/caches" component={TokensContainer}>
+      <Route path="/:userName/cache" component={TokensContainer}>
         <IndexRoute component={Tokens} />
         <Route path="exchange" component={TokensExchange}/>
         <Route path="public" component={TokensPublic} />

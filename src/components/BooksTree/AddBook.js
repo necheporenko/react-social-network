@@ -36,6 +36,7 @@ class AddBook extends Component {
       showModal: false,
       file: '',
       coverBook: coverBook,
+      visiblePopUp: this.props.visible,
       // scale: 1.2,
       // rotate: 0,
       // border: 0,
@@ -158,7 +159,7 @@ class AddBook extends Component {
 
           <ChangeBookCoverImage
             showPopUp={this.props.showPopUp}
-            visible={this.props.visible}
+            visible={this.state.visiblePopUp}
             currentImage={this.props.currentImage}
             updateCoverImage={this.updateCoverImage}
           />

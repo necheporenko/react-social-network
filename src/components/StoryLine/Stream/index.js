@@ -45,7 +45,11 @@ class Stream extends Component {
 
   render() {
     const { storiesArr, authorizedUser, requestedUser } = this.props;
-    // const loader = <div className="loader">Loading ...</div>;
+    const loader = (
+      <div className="spinner-post">
+        <i className="fa fa-pulse fa-spinner"/>
+      </div>
+    );
 
     return (
       <div className="stream">
@@ -61,7 +65,7 @@ class Stream extends Component {
           loadMore={this.load}
           hasMore={true}
           threshold={50}
-          // loader={loader}
+          loader={loader}
         >
           {storiesArr && storiesArr.map((story) => (
             <Post

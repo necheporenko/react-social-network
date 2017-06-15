@@ -55,9 +55,9 @@ class LeftMenu extends Component {
                 bookTreeArr={this.props.bookTreeArr}
               />
             </div>
-            <Link to={`/${slug}/caches`} className="nav-a">
+            <Link to={`/${slug}/cache`} className="nav-a">
               <li className="nav-li nav-tokens">
-                <span>Caches</span>
+                <span>Cache</span>
               </li>
             </Link>
           </ul>

@@ -80,13 +80,6 @@ export default class Navigation extends Component {
             Books
           </Link>
           <Link
-            to={`/${slug}/caches`}
-            onlyActiveOnIndex={true}
-            activeClassName="active"
-          >
-            Caches
-          </Link>
-          <Link
             to={`/${slug}/people`}
             onlyActiveOnIndex={true}
             activeClassName="active"
@@ -99,6 +92,13 @@ export default class Navigation extends Component {
             activeClassName="active"
           >
             Photos
+          </Link>
+          <Link
+            to={`/${slug}/cache`}
+            onlyActiveOnIndex={true}
+            activeClassName="active"
+          >
+            Cache
           </Link>
         </div>
         <div

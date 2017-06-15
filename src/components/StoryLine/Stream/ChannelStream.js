@@ -40,6 +40,12 @@ export default class ChannelStream extends Component {
 
   render() {
     const { channelStories } = this.props;
+    const loader = (
+      <div className="spinner-post" style={{left: 'calc(50% - 110px)'}}>
+        <i className="fa fa-pulse fa-spinner"/>
+      </div>
+    );
+
     return (
       <div className="stream">
         <Sbox
@@ -51,6 +57,7 @@ export default class ChannelStream extends Component {
           loadMore={this.load}
           hasMore={true}
           threshold={50}
+          loader={loader}
         >
           {channelStories && channelStories.map((story) => (
             <Post

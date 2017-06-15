@@ -22,7 +22,7 @@ class Privacy extends Component {
           <ButtonToolbar>
             <DropdownButton className="bootstrap-pure-btn privacy-pure-btn" title="Books privacy" >
               <div className="privacy-books-tree">
-                <BooksTreeContainer />
+                {/*<BooksTreeContainer />*/}
               </div>
             </DropdownButton>
           </ButtonToolbar>

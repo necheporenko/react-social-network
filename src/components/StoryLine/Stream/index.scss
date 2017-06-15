@@ -40,6 +40,10 @@
   .rdw-link-dropdown {
     width: 45px;
   }
+
+  .btn-brand {
+    background: #5c96d0;
+  }
 }
 
 .wrapper-sbox {
@@ -417,7 +421,8 @@
 }
 
 .post-like-active {
-  color: $link-color;
+  color: #1E88E5;
+
   i {
     background: url("../../../img/Icons/like-active.svg");
   }
@@ -468,7 +473,7 @@
 
   .post-like {
     padding: 9px 0 0 10px;
-    color: $link-color;
+    color: #1E88E5;
 
     i {
       background: url("../../../img/Icons/like-active-sm.svg");
@@ -629,30 +634,23 @@
 
   /* === Post Content Type End === */
 .post.post-appear {
-  animation: Posts 600ms ease forwards;
-}
-
-.post {
-  opacity: 0;
+  animation: Posts 600ms ease none;
 }
 
 @keyframes Posts {
-  //0% {
-  //  opacity: 0;
-  //  //-webkit-transform: scale(0.3) rotateY(90deg);
-  //  //transform: scale(0.3) rotateY(90deg);
-  //}
-  //60% {
-  //  -webkit-transform: scale(1.4);
-  //  transform: scale(1.4);
-  //}
-  //90% {
-  //  -webkit-transform: scale(0.9);
-  //  transform: scale(0.9);
-  //}
+  0% {
+    opacity: 0;
+  }
   100% {
     opacity: 1;
   }
+}
+
+.spinner-post {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 48px;
 }
 
 /* === Post End === */

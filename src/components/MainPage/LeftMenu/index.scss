@@ -61,9 +61,12 @@
 .nav-a {
   color: $default-color;
   position: relative;
+  text-decoration: none;
 
-  &:hover {
+  &:hover,
+  &:focus {
     color: $default-color;
+    text-decoration: none;
   }
 }
 

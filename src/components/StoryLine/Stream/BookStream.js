@@ -39,6 +39,12 @@ export default class BookStream extends Component {
 
   render() {
     const { bookStories } = this.props;
+    const loader = (
+      <div className="spinner-post">
+        <i className="fa fa-pulse fa-spinner"/>
+      </div>
+    );
+
     return (
       <div className="stream">
         <Sbox
@@ -50,6 +56,7 @@ export default class BookStream extends Component {
           loadMore={this.load}
           hasMore={true}
           threshold={50}
+          loader={loader}
         >
           {bookStories && bookStories.map((story) => (
             <Post
