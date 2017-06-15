@@ -115,9 +115,9 @@ $valid_color: #1976d2;
       .react-tree-expander,
       .react-tree-expander-noop {
         position: absolute;
-        top: 12px;                                         //0
-        left: 0;
-        z-index: 1;
+        width: 40px;
+        height: 30px;
+        margin-left: -15px;
       }
       .draggable[draggable] {
         position: relative;
@@ -194,6 +194,8 @@ $valid_color: #1976d2;
           border-left: 5px solid #777777;
           border-bottom: 5px solid transparent;
           transform-origin: left;
+          margin-top: 8px;
+          margin-left: 15px;
         }
         &.react-tree-expander_open:before {
           content: '';
@@ -205,6 +207,8 @@ $valid_color: #1976d2;
           border-bottom: 5px solid transparent;
           transform: rotate(90deg);
           transform-origin: left;
+          margin-top: 8px;
+          margin-left: 15px;
         }
       }
       &.react-tree-checkbox {

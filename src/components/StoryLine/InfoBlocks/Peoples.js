@@ -45,14 +45,14 @@ export default class Peoples extends Component {
               className={this.state.activeTab === 'following' ? 'people-tab-active' : ''}
               onClick={() => this.showPeopleTab('following')}
             >
-              Following<span > 999</span>
+              Following<span > · 999</span>
             </div>
             |
             <div
               className={this.state.activeTab === 'followers' ? 'people-tab-active' : ''}
               onClick={() => this.showPeopleTab('followers')}
             >
-              Followers<span> 999</span>
+              Followers<span> · 999</span>
             </div>
           </div>
         </div>

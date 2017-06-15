@@ -40,7 +40,7 @@
 .subHeader-userAvatar {
   z-index: 10;
   position: relative;
-  border: 1px solid #D8D8D8;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .3);
 
   a,
   img {
