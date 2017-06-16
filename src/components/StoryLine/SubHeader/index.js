@@ -78,7 +78,7 @@ class SubHeader extends Component {
 
   render() {
     // const { first_name, last_name } = this.props.authorizedUser;
-    const { first_name, last_name, slug, avatar200, isFollowing, id, cover } = this.props.requestedUser;
+    const { first_name, last_name, slug, avatar200, isFollowing, id } = this.props.requestedUser;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { imageAvatar } = this.state;
     const { imageCover } = this.state;
@@ -86,8 +86,8 @@ class SubHeader extends Component {
 
     return (
       <div className="subHeader">
-        <div className="imageCover">
-          <img src={imageCover} />
+        <div className="imageCover" style={{backgroundImage: `url(${imageCover})`}}>
+          {/*<img src={imageCover} />*/}
         </div>
         <div className="wrapper">
           <div className="subHeader-userAvatar">

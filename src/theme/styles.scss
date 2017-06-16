@@ -4,7 +4,7 @@
 /* Styles */
 body {
  margin: 0;
- font-family: "Roboto", sans-serif;
+ font-family: "Roboto", Arial, sans-serif;
  background: $default-bg;
 }
 
@@ -61,13 +61,13 @@ b {
   cursor: pointer;
   text-align: center;
   line-height: 25px;
-  width: 120px;
+  width: 104px;
   margin: 15px auto 0;
   display: flex;
   position: relative;
 
   > div {
-    width: 100px;
+    width: 85px;
   }
 
   &:hover {
@@ -247,7 +247,7 @@ b {
   .loader {
     position: relative;
     margin: 0 auto;
-    width: 64px;
+    width: 32px;
 
     &:before {
       content: '';

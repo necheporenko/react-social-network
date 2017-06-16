@@ -24,8 +24,8 @@ export default class ChangeCoverImage extends Component {
       rotate: 0,
       border: 0,
       preview: null,
-      width: 460,
-      height: 200,
+      width: 1920,
+      height: 235,
       picture: 'http://devianmbanks.validbook.org/cdn/stories_images/713/original.jpg',
       test: '',
       // qwerty,
@@ -94,8 +94,8 @@ export default class ChangeCoverImage extends Component {
               <AvatarEditor
                 ref={this.setEditorRef}
                 image={currentImage}
-                width={568}
-                height={200}
+                width={1920}
+                height={235}
                 border={0}
                 color={[255, 255, 255, 0.6]} // RGBA
                 scale={parseFloat(this.state.scale)}
