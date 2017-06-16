@@ -22,6 +22,9 @@ const FOLLOW_REQUESTED_USER_FAIL = 'FOLLOW_REQUESTED_USER_FAIL';
 const UNFOLLOW_REQUESTED_USER = 'UNFOLLOW_REQUESTED_USER';
 const UNFOLLOW_REQUESTED_USER_SUCCESS = 'UNFOLLOW_REQUESTED_USER_SUCCESS';
 const UNFOLLOW_REQUESTED_USER_FAIL = 'UNFOLLOW_REQUESTED_USER_FAIL';
+const UPLOAD_USER_COVER = 'UPLOAD_USER_COVER';
+const UPLOAD_USER_COVER_SUCCESS = 'UPLOAD_USER_COVER_SUCCESS';
+const UPLOAD_USER_COVER_FAIL = 'UPLOAD_USER_COVER_FAIL';
 
 const initialState = {
   isAuthenticated: false,
@@ -212,6 +215,27 @@ export default function signReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case UPLOAD_USER_COVER:
+      return {
+        ...state,
+        uploading: true,
+      };
+    case UPLOAD_USER_COVER_SUCCESS:
+      const updateUserCoverImg = state.authorizedUser;
+      updateUserCoverImg.cover = action.result.data.url;
+
+      return {
+        ...state,
+        uploading: false,
+        authorizedUser: updateUserCoverImg,
+      };
+    case UPLOAD_USER_COVER_FAIL:
+      return {
+        ...state,
+        uploading: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -295,5 +319,12 @@ export function unfollowRequestedUser(user_id) {
   return {
     types: [UNFOLLOW_REQUESTED_USER, UNFOLLOW_REQUESTED_USER_SUCCESS, UNFOLLOW_REQUESTED_USER_FAIL],
     promise: (client) => client.post('/follow/disconnect', { data: { user_id, channel_id: '' }})
+  };
+}
+
+export function upload(img) {
+  return {
+    types: [UPLOAD_USER_COVER, UPLOAD_USER_COVER_SUCCESS, UPLOAD_USER_COVER_FAIL],
+    promise: (client) => client.post('/upload/user-cover', { data: { img }})
   };
 }

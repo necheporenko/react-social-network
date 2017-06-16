@@ -17,11 +17,12 @@ export function showActiveFormSteps(formSteps) {
   };
 }
 
-export function showPopUp(visible, currentImage) {
+export function showPopUp(visible, currentImage, activePopUp) {
   return {
     type: SHOW_POPUP,
     visible,
     currentImage,
+    activePopUp
   };
 }
 
@@ -42,7 +43,8 @@ const initialState = {
   activeFormSteps: 'step-1',
   visible: false,
   currentImage: '',
-  activePeopleTab: 'people'
+  activePeopleTab: 'people',
+  activePopUp: '',
 };
 
 export default function formsReducer(state = initialState, action) {
@@ -65,7 +67,8 @@ export default function formsReducer(state = initialState, action) {
       return {
         ...state,
         visible: action.visible,
-        currentImage: action.currentImage
+        currentImage: action.currentImage,
+        activePopUp: action.activePopUp
       };
     }
 

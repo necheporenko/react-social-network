@@ -178,7 +178,7 @@
 
 /* === Caches Start === */
 .infoblocks-tokens {
-  min-height: 175px;
+  min-height: 100px;
   padding-bottom: 5px;
 }
 
@@ -187,10 +187,12 @@
   margin: 0;
   list-style: none;
   width: 100%;
+
   a {
     text-decoration: none;
     color: $default-color;
     display: block;
+
     &:hover {
       background: $bg-hover;
     }
@@ -203,6 +205,7 @@
 
 .infoblocks-token, .tokens-mnu-exchange, .tokens-mnu-sash, .tokens-mnu-public, .tokens-mnu-private {
   padding-left: 12px;
+
   &:before {
     background: $sprite;
     content: '';
@@ -259,6 +262,7 @@
   display: flex;
   flex-wrap: wrap;
 }
+
 .photos-image {
   padding-left: 5px;
 
@@ -354,9 +358,9 @@
   .people-avatar {
 
     img {
-    width: 90px;
-    height: 90px;
-    padding-bottom: 5px;
+      width: 90px;
+      height: 90px;
+      padding-bottom: 5px;
     }
   }
 

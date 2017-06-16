@@ -9,7 +9,8 @@ import './index.scss';
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
   visible: state.forms.visible,
-  currentImage: state.forms.currentImage
+  currentImage: state.forms.currentImage,
+  activePopUp: state.forms.activePopUp,
 }), {
   followRequestedUser,
   unfollowRequestedUser,
@@ -22,12 +23,13 @@ class SubHeader extends Component {
     this.state = {
       file: '',
       imageAvatar: 'http://devianmbanks.validbook.org/cdn/460/avatar200/230x230.jpg?t=1486723970',
-      imageCover: 'http://devianmbanks.validbook.org/images/default-cover-img.jpg'
+      imageCover: this.props.requestedUser.cover,
     };
     this.handleAvatarChange = this.handleAvatarChange.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
     this.followUser = this.followUser.bind(this);
     this.unfollowUser = this.unfollowUser.bind(this);
+    this.updateUserCover = this.updateUserCover.bind(this);
   }
 
   handleAvatarChange(e) {
@@ -52,9 +54,9 @@ class SubHeader extends Component {
     reader.onloadend = () => {
       this.setState({
         file: file,
-        imageCover: reader.result
+        // imageCover: reader.result
       });
-      this.props.showPopUp(true, reader.result);
+      this.props.showPopUp(true, reader.result, 'ChangeCoverImage');
     };
     reader.readAsDataURL(file);
   }
@@ -67,9 +69,16 @@ class SubHeader extends Component {
     this.props.unfollowRequestedUser(id);
   }
 
+  updateUserCover(img) {
+    console.log('NEW IMAGE', img);
+    this.setState({
+      imageCover: img
+    });
+  }
+
   render() {
     // const { first_name, last_name } = this.props.authorizedUser;
-    const { first_name, last_name, slug, avatar200, isFollowing, id } = this.props.requestedUser;
+    const { first_name, last_name, slug, avatar200, isFollowing, id, cover } = this.props.requestedUser;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { imageAvatar } = this.state;
     const { imageCover } = this.state;
@@ -110,26 +119,30 @@ class SubHeader extends Component {
         <div
           className="btn-following"
           onClick={
-             !isFollowing ?
-               () => {
-                 this.followUser(id);
-               }
-               :
-               () => {
-                 this.unfollowUser(id);
-               }
-           }
-        >
-          {!isFollowing ? 'Follow' : 'Following'}
+            !isFollowing ?
+              () => {
+                this.follow(id);
+              }
+              :
+              () => {
+                this.unfollow(id);
+              }
+          }>
+          <div>
+            {!isFollowing ? 'Follow' : 'Following'}
+          </div>
           <span></span>
         </div>
         {/* <div className="subHeader-bg"></div> */}
 
+        { this.props.activePopUp === 'ChangeCoverImage' &&
         <ChangeCoverImage
           showPopUp={this.props.showPopUp}
           visible={this.props.visible}
           currentImage={this.props.currentImage}
+          updateUserCover={this.updateUserCover}
         />
+        }
       </div>
     );
   }

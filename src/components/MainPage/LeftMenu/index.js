@@ -33,6 +33,7 @@ class LeftMenu extends Component {
       return { arrow, display_state };
     };
     const navigation = showBooktree();
+
     return (
       <div className="leftpanel-menu">
         <div className="wrapper">
@@ -70,6 +71,7 @@ class LeftMenu extends Component {
 
 LeftMenu.propTypes = {
   authorizedUser: PropTypes.object,
+  bookTreeArr: PropTypes.array,
 };
 
 export default LeftMenu;

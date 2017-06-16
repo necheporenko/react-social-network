@@ -16,10 +16,10 @@ export default class TokensMenu extends Component {
         <div className={this.props.sidebar}>
           <div className="title">Cache</div>
           <ul>
-            <Link onlyActiveOnIndex={true} to={`/${slug}/tokens`} activeClassName="active">
+            <Link onlyActiveOnIndex={true} to={`/${slug}/cache`} activeClassName="active">
               <li className="tokens-mnu-sash">Sash</li>
             </Link>
-            <Link onlyActiveOnIndex={true} to={`/${slug}/tokens/exchange`} activeClassName="active">
+            <Link onlyActiveOnIndex={true} to={`/${slug}/cache/exchange`} activeClassName="active">
               <li className="tokens-mnu-exchange">Exchange</li>
             </Link>
             {/*<Link onlyActiveOnIndex={true} to={`/${slug}/tokens/public`} activeClassName="active">*/}

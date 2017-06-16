@@ -20,9 +20,10 @@ const selectCountry = [
 
 @connect((state) => ({
   bookTreeArr: state.book.bookTreeArr,
+  bookCover: state.book.bookCover,
   visible: state.forms.visible,
   currentImage: state.forms.currentImage,
-  bookCover: state.book.bookCover,
+  activePopUp: state.forms.activePopUp,
 }), {
   loadBookTree,
   createBook,
@@ -36,7 +37,7 @@ class AddBook extends Component {
       showModal: false,
       file: '',
       coverBook: coverBook,
-      visiblePopUp: this.props.visible,
+      // visiblePopUp: this.props.visible,
       // scale: 1.2,
       // rotate: 0,
       // border: 0,
@@ -78,7 +79,7 @@ class AddBook extends Component {
         // file: file,
         // coverBook: reader.result,
       });
-      this.props.showPopUp(true, reader.result);
+      this.props.showPopUp(true, reader.result, 'ChangeBookCoverImage');
       file = null;
     };
     reader.readAsDataURL(file);
@@ -157,12 +158,22 @@ class AddBook extends Component {
             </Modal.Footer>
           </Form>
 
+          {/*{ this.props.activePopUp === 'ChangeBookCoverImage' &&*/}
+            {/*<ChangeBookCoverImage*/}
+              {/*showPopUp={this.props.showPopUp}*/}
+              {/*visible={this.state.visiblePopUp}*/}
+              {/*currentImage={this.props.currentImage}*/}
+              {/*// updateCoverImage={this.updateCoverImage}*/}
+            {/*/>*/}
+          {/*}*/}
+
+          { this.props.activePopUp === 'ChangeBookCoverImage' &&
           <ChangeBookCoverImage
             showPopUp={this.props.showPopUp}
-            visible={this.state.visiblePopUp}
+            visible={this.props.visible}
             currentImage={this.props.currentImage}
-            updateCoverImage={this.updateCoverImage}
           />
+          }
 
         </Modal>
       </div>

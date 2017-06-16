@@ -64,18 +64,21 @@ class People extends Component {
                 <div
                   className="btn-following"
                   onClick={
-                    !people.isFollowing ?
-                      () => {
-                        this.follow(people.id);
-                      }
-                      :
-                      () => {
-                        this.unfollow(people.id);
-                      }
-                  }>
-                  {!people.isFollowing ? 'Follow' : 'Following'}
+                          !people.isFollowing ?
+                            () => {
+                              this.follow(people.id);
+                            }
+                            :
+                            () => {
+                              this.unfollow(people.id);
+                            }
+                        }>
+                  <div>
+                    {!people.isFollowing ? 'Follow' : 'Following'}
+                  </div>
                   <span></span>
                 </div>
+
               </div>
             ))}
 

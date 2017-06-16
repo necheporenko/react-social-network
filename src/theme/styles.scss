@@ -63,6 +63,12 @@ b {
   line-height: 25px;
   width: 120px;
   margin: 15px auto 0;
+  display: flex;
+  position: relative;
+
+  > div {
+    width: 100px;
+  }
 
   &:hover {
     border-color: #b8b8b8;
@@ -76,9 +82,9 @@ b {
     background-position: -153px -529px;
     height: 14px;
     width: 10px;
-    position: relative;
-    top: 3px;
-    left: 18px;
+    position: absolute;
+    top: 6px;
+    right: 8px;
 
     &::before {
       content: '';

@@ -1,29 +1,40 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
-const Tokens = () => {
-  return (
-    <div className="infoblocks-tokens">
+@connect((state) => ({
+  requestedUser: state.user.requestedUser,
+}), {})
 
-      <div className="title-infoblocks">
-        <a href="#"><span className="token-icon"></span>Caches</a>
+export default class Tokens extends Component {
+  render() {
+    const { slug } = this.props.requestedUser;
+    return (
+      <div className="infoblocks-tokens">
+
+        <div className="title-infoblocks">
+          <Link to={`/${slug}/cache`}><span className="token-icon"></span>Caches</Link>
+        </div>
+
+        <ul className="tokens-mnu">
+          <Link to={`/${slug}/cache/exchange`}>
+            <li className="tokens-mnu-exchange tokens-list">Exchange</li>
+          </Link>
+          <Link to={`/${slug}/cache`}>
+            <li className="tokens-mnu-sash tokens-list">Sash</li>
+          </Link>
+          {/*<a href="#">*/}
+          {/*<li className="tokens-mnu-public tokens-list">Public cache</li>*/}
+          {/*</a>*/}
+          {/*<a href="#">*/}
+          {/*<li className="tokens-mnu-private tokens-list">Private cache</li>*/}
+          {/*</a>*/}
+        </ul>
       </div>
+    );
+  }
+}
 
-      <ul className="tokens-mnu">
-        <a href="#">
-          <li className="tokens-mnu-exchange tokens-list">Exchange</li>
-        </a>
-        <a href="#">
-          <li className="tokens-mnu-sash tokens-list">Sash</li>
-        </a>
-        <a href="#">
-          <li className="tokens-mnu-public tokens-list">Public cache</li>
-        </a>
-        <a href="#">
-          <li className="tokens-mnu-private tokens-list">Private cache</li>
-        </a>
-      </ul>
-    </div>
-  );
+Tokens.propTypes = {
+  requestedUser: PropTypes.object,
 };
-
-export default Tokens;

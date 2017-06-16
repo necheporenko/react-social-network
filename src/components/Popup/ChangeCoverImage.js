@@ -2,13 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AvatarEditor from 'react-avatar-editor';
 import { Modal } from 'react-bootstrap';
+import { upload as uploadUserCover } from '../../redux/modules/user';
 import './index.scss';
 import coverBook from '../../img/Default/cover-book.png';
 
 
 @connect((state) => ({
   // bookTreeArr: state.book.bookTreeArr,
-}), {})
+}), {
+  uploadUserCover
+})
 
 export default class ChangeCoverImage extends Component {
   constructor(props) {
@@ -29,18 +32,9 @@ export default class ChangeCoverImage extends Component {
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
-    this.onSubmitBook = this.onSubmitBook.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleScale = this.handleScale.bind(this);
-  }
-
-
-  onSubmitBook(data) {
-    console.log(data);
-    this.props.createBook(data.name, 'root')
-      .then(this.Close())
-      .then(() => this.props.loadBookTree());
   }
 
   Close() {
@@ -64,12 +58,14 @@ export default class ChangeCoverImage extends Component {
     reader.readAsDataURL(file);
   }
 
-  handleSave = () => {
-    const resized = this.editor.getImageScaledToCanvas().toDataURL();
+  handleSave() {
+    const newImage = this.editor.getImageScaledToCanvas().toDataURL();
     this.setState({
-      test: resized,
+      test: newImage,
     });
-  };
+    this.props.updateUserCover(newImage);
+    this.props.uploadUserCover(newImage);
+  }
 
   setEditorRef = (editor) => {
     this.editor = editor;
@@ -81,9 +77,6 @@ export default class ChangeCoverImage extends Component {
   };
 
   render() {
-    const { book_name, book_description } = this.props;
-    const { coverBook } = this.state;
-    // const showPopup = this.props;
     const visible = this.props.visible;
     const currentImage = this.props.currentImage;
 
@@ -91,13 +84,9 @@ export default class ChangeCoverImage extends Component {
       <div className="create-new-book" onClick={this.Open}>
         <Modal show={visible} onHide={this.Close} className="modal-channel">
           <Modal.Header closeButton>
-            <Modal.Title>Edit cover image!!!!</Modal.Title>
+            <Modal.Title>Edit cover image USEER</Modal.Title>
           </Modal.Header>
 
-          {/*<Form*/}
-          {/*rowClassName={[{'form-group': false}, {row: false}, 'channel-form']}*/}
-          {/*onSubmit={this.onSubmitBook}*/}
-          {/*>*/}
           <Modal.Body>
             <div className="wrapper-popup">
               <h4>Crop it</h4>
@@ -126,18 +115,12 @@ export default class ChangeCoverImage extends Component {
               step="0.01"
               defaultValue="1"
             />
-            <br />
-            <input type="button" onClick={this.handleSave} value="Preview" />
-            <br />
-            <p>IMG</p>
-            <img src={this.state.test} alt="" crossOrigin="anonymous" />
-
           </Modal.Body>
 
           <Modal.Footer>
             <div style={{float: 'right'}}>
               <button className="btn-brand btn-cancel" onClick={this.Close}>Cancel</button>
-              <button className="btn-brand" style={{marginLeft: '10px'}} type="submit">Crop and Save</button>
+              <button className="btn-brand" style={{marginLeft: '10px'}} type="submit" onClick={this.handleSave}>Crop and Save</button>
             </div>
           </Modal.Footer>
 

@@ -21,7 +21,8 @@ import coverBook from '../../img/Default/cover-book.png';
 @connect((state) => ({
   bookTreeArr: state.book.bookTreeArr,
   visible: state.forms.visible,
-  currentImage: state.forms.currentImage
+  currentImage: state.forms.currentImage,
+  activePopUp: state.forms.activePopUp,
 }), {
   loadBookTree,
   editBook,
@@ -75,7 +76,7 @@ class EditBook extends Component {
         // file: file,
         // coverBook: reader.result,
       });
-      this.props.showPopUp(true, reader.result);
+      this.props.showPopUp(true, reader.result, 'ChangeBookCoverImage');
       file = null;
     };
     reader.readAsDataURL(file);
@@ -148,11 +149,13 @@ class EditBook extends Component {
             </Modal.Footer>
           </Form>
 
-          <ChangeBookCoverImage
-            showPopUp={this.props.showPopUp}
-            visible={this.props.visible}
-            currentImage={this.props.currentImage}
-          />
+          { this.props.activePopUp === 'ChangeBookCoverImage' &&
+            <ChangeBookCoverImage
+              showPopUp={this.props.showPopUp}
+              visible={this.props.visible}
+              currentImage={this.props.currentImage}
+            />
+          }
 
         </Modal>
       </div>

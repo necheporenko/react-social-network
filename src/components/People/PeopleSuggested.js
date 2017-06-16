@@ -66,11 +66,17 @@ class PeopleSuggested extends Component {
                   className="btn-following"
                   onClick={
                     !people.isFollowing ?
-                    () => this.follow(people.id)
-                    :
-                    () => this.unfollow(people.id)
+                      () => {
+                        this.follow(people.id);
+                      }
+                      :
+                      () => {
+                        this.unfollow(people.id);
+                      }
                   }>
-                  {!people.isFollowing ? 'Follow' : 'Following'}
+                  <div>
+                    {!people.isFollowing ? 'Follow' : 'Following'}
+                  </div>
                   <span></span>
                 </div>
               </div>
