@@ -159,6 +159,7 @@ export default class Post extends Component {
         <div className="post-content">
           <div className="wrap-post-content">
 
+
             <div
               className="post-content-type-text"
               dangerouslySetInnerHTML={{__html: post}}
