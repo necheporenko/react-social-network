@@ -42,7 +42,7 @@ export default class Navigation extends Component {
   }
 
   render() {
-    const { first_name, last_name, slug, avatar32} = this.props.requestedUser;
+    const { first_name, last_name, slug, avatar32, isFollowing } = this.props.requestedUser;
     const { scrollTop } = this.state;
 
     const chooseNav = () => {
@@ -103,19 +103,19 @@ export default class Navigation extends Component {
         </div>
         <div
           className="btn-following"
-          //   onClick={
-          //     !people.isFollowing ?
-          //       () => {
-          //         this.follow(people.id);
-          //       }
-          //       :
-          //       () => {
-          //         this.unfollow(people.id);
-          //       }
-          //   }
-        >
-          {/*{!people.isFollowing ? 'Follow' : 'Following'}*/}
-          Following
+          onClick={
+            !isFollowing ?
+              () => {
+                this.follow(id);
+              }
+              :
+              () => {
+                this.unfollow(id);
+              }
+          }>
+          <div>
+            {!isFollowing ? 'Follow' : 'Following'}
+          </div>
           <span></span>
         </div>
         {/* {showName &&

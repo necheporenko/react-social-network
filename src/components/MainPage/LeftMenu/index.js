@@ -45,17 +45,20 @@ class LeftMenu extends Component {
                 <span>{`${first_name} ${last_name}`}</span>
               </li>
             </IndexLink>
+
+            <i className={navigation.arrow} onClick={() => this.openBooktree()}></i>
+
             <Link to={`/${slug}/books`} className="nav-a">
               <li className="nav-li nav-books">
                 <span>Books</span>
               </li>
             </Link>
-            <i className={navigation.arrow} onClick={() => this.openBooktree()}></i>
             <div style={{display: navigation.display_state}}>
               <BooksTree
                 bookTreeArr={this.props.bookTreeArr}
               />
             </div>
+
             <Link to={`/${slug}/cache`} className="nav-a">
               <li className="nav-li nav-tokens">
                 <span>Cache</span>

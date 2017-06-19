@@ -12,7 +12,7 @@ import BookTreeForSboxContainer from '../../../containers/BookTreeForSboxContain
 import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './index.scss';
 
-const list = ['15px', '55px'];
+const list = ['20px', '60px'];
 let index;
 let step = 0;
 
@@ -31,7 +31,7 @@ class Sbox extends Component {
       editorContent: '',
       data: '',
       toolbarHidden: true,
-      jump: '15px',
+      jump: '20px',
       loud: {
         quiet_log: true,
         loud_log: false,
@@ -120,7 +120,7 @@ class Sbox extends Component {
           }}
         />
 
-        <div className="sbox-user-avatar32" style={{top: this.state.jump, position: 'absolute', left: '15px'}}>
+        <div className="sbox-user-avatar32" style={{top: this.state.jump, position: 'absolute', left: '20px'}}>
           <Link to={link}><img src={avatar32} /></Link>
         </div>
         {/*<form onSubmit={this.test}>*/}

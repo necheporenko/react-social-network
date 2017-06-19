@@ -9,13 +9,19 @@
 
   .booktree {
     position: absolute;
-    margin-top: -38px;
+    //margin-top: -38px;
     margin-left: 5px;
     width: 20px;
     height: 25px;
     padding-left: 10px;
     padding-top: 10px;
     cursor: pointer;
+    z-index: 1;
+
+    &:hover ~ .nav-a .nav-books {
+      border-color: #8F8F8F;
+      background-color: #E1E1E1;
+    }
 
     &::before {
       content: '';
@@ -30,7 +36,7 @@
   }
 
   .booktree-close {
-    margin-top: -37px;
+    //margin-top: -37px;
     margin-left: 2px;
 
     &::before {
