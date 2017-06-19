@@ -25,6 +25,9 @@ const UNFOLLOW_REQUESTED_USER_FAIL = 'UNFOLLOW_REQUESTED_USER_FAIL';
 const UPLOAD_USER_COVER = 'UPLOAD_USER_COVER';
 const UPLOAD_USER_COVER_SUCCESS = 'UPLOAD_USER_COVER_SUCCESS';
 const UPLOAD_USER_COVER_FAIL = 'UPLOAD_USER_COVER_FAIL';
+const UPLOAD_AVATAR = 'UPLOAD_AVATAR';
+const UPLOAD_AVATAR_SUCCESS = 'UPLOAD_AVATAR_SUCCESS';
+const UPLOAD_AVATAR_FAIL = 'UPLOAD_AVATAR_FAIL';
 
 const initialState = {
   isAuthenticated: false,
@@ -236,6 +239,27 @@ export default function signReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case UPLOAD_AVATAR:
+      return {
+        ...state,
+        uploading: true,
+      };
+    case UPLOAD_AVATAR_SUCCESS:
+      const updateAvatar = state.authorizedUser;
+      updateUserCoverImg.avatar200 = action.result.data.url;
+
+      return {
+        ...state,
+        uploading: false,
+        authorizedUser: updateAvatar,
+      };
+    case UPLOAD_AVATAR_FAIL:
+      return {
+        ...state,
+        uploading: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -322,9 +346,16 @@ export function unfollowRequestedUser(user_id) {
   };
 }
 
-export function upload(img) {
+export function uploadUserCover(img) {
   return {
     types: [UPLOAD_USER_COVER, UPLOAD_USER_COVER_SUCCESS, UPLOAD_USER_COVER_FAIL],
     promise: (client) => client.post('/upload/user-cover', { data: { img }})
+  };
+}
+
+export function uploadAvatar(img) {
+  return {
+    types: [UPLOAD_AVATAR, UPLOAD_AVATAR_SUCCESS, UPLOAD_AVATAR_FAIL],
+    promise: (client) => client.post('/upload/avatar', { data: { img }})
   };
 }

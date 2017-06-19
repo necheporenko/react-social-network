@@ -2,25 +2,20 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AvatarEditor from 'react-avatar-editor';
 import { Modal } from 'react-bootstrap';
-import { uploadUserCover } from '../../redux/modules/user';
+import { uploadAvatar } from '../../redux/modules/user';
 import './index.scss';
 
 @connect((state) => ({}), {
-  uploadUserCover
+  uploadAvatar
 })
 
-export default class ChangeCoverImage extends Component {
+export default class ChangeAvatar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showPopup: false,
       file: '',
       scale: 1.2,
-      rotate: 0,
-      border: 0,
-      preview: null,
-      width: 1920,
-      height: 235,
       picture: '',
     };
     this.Close = this.Close.bind(this);
@@ -56,9 +51,8 @@ export default class ChangeCoverImage extends Component {
     this.setState({
       picture: newImage,
     });
-    this.props.updateUserCover(newImage);
-    this.props.uploadUserCover(newImage);
-    this.Close();
+    this.props.updateUserAvatar(newImage);
+    this.props.uploadAvatar(newImage);
   }
 
   setEditorRef = (editor) => {
@@ -78,7 +72,7 @@ export default class ChangeCoverImage extends Component {
       <div className="create-new-book" onClick={this.Open}>
         <Modal show={visible} onHide={this.Close} className="modal-channel">
           <Modal.Header closeButton>
-            <Modal.Title>Edit cover image </Modal.Title>
+            <Modal.Title>Edit Avatar</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -87,8 +81,8 @@ export default class ChangeCoverImage extends Component {
               <AvatarEditor
                 ref={this.setEditorRef}
                 image={currentImage}
-                width={1920}
-                height={235}
+                width={230}
+                height={230}
                 border={0}
                 color={[255, 255, 255, 0.6]}
                 scale={parseFloat(this.state.scale)}
@@ -123,10 +117,9 @@ export default class ChangeCoverImage extends Component {
   }
 }
 
-ChangeCoverImage.propTypes = {
+ChangeAvatar.propTypes = {
   showPopUp: PropTypes.func,
-  updateUserCover: PropTypes.func,
-  uploadUserCover: PropTypes.func,
+  updateUserAvatar: PropTypes.func,
   visible: PropTypes.bool,
   currentImage: PropTypes.string,
 };

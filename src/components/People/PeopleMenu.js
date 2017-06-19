@@ -5,6 +5,7 @@ import './index.scss';
 
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
+  authorizedUser: state.user.authorizedUser
 }), {})
 
 export default class PeopleMenu extends Component {
@@ -20,9 +21,11 @@ export default class PeopleMenu extends Component {
           <Link onlyActiveOnIndex={true} to={`/${slug}/people/followers`} activeClassName="active">
             <li>Followers</li>
           </Link>
-          <Link onlyActiveOnIndex={true} to={`/${slug}/people/suggested`} activeClassName="active">
-            <li>Suggested</li>
-          </Link>
+          { this.props.authorizedUser.id === this.props.requestedUser.id &&
+            <Link onlyActiveOnIndex={true} to={`/${slug}/people/suggested`} activeClassName="active">
+              <li>Suggested</li>
+            </Link>
+          }
         </ul>
       </div>
     );
@@ -31,4 +34,5 @@ export default class PeopleMenu extends Component {
 
 PeopleMenu.propTypes = {
   requestedUser: PropTypes.object,
+  authorizedUser: PropTypes.object,
 };

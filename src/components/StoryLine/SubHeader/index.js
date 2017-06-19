@@ -4,9 +4,11 @@ import { Link } from 'react-router';
 import { followRequestedUser, unfollowRequestedUser } from '../../../redux/modules/user';
 import { showPopUp } from '../../../redux/modules/form';
 import ChangeCoverImage from '../../Popup/ChangeCoverImage';
+import ChangeAvatar from '../../Popup/ChangeAvatar';
 import './index.scss';
 
 @connect((state) => ({
+  authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
   visible: state.forms.visible,
   currentImage: state.forms.currentImage,
@@ -22,7 +24,7 @@ class SubHeader extends Component {
     super(props);
     this.state = {
       file: '',
-      imageAvatar: 'http://devianmbanks.validbook.org/cdn/460/avatar200/230x230.jpg?t=1486723970',
+      imageAvatar: this.props.requestedUser.avatar200,
       imageCover: this.props.requestedUser.cover,
     };
     this.handleAvatarChange = this.handleAvatarChange.bind(this);
@@ -30,6 +32,7 @@ class SubHeader extends Component {
     this.followUser = this.followUser.bind(this);
     this.unfollowUser = this.unfollowUser.bind(this);
     this.updateUserCover = this.updateUserCover.bind(this);
+    this.updateUserAvatar = this.updateUserAvatar.bind(this);
   }
 
   handleAvatarChange(e) {
@@ -40,8 +43,8 @@ class SubHeader extends Component {
     reader.onloadend = () => {
       this.setState({
         file: file,
-        imageAvatar: reader.result
       });
+      this.props.showPopUp(true, reader.result, 'ChangeAvatar');
     };
     reader.readAsDataURL(file);
   }
@@ -70,19 +73,24 @@ class SubHeader extends Component {
   }
 
   updateUserCover(img) {
-    console.log('NEW IMAGE', img);
     this.setState({
       imageCover: img
     });
   }
 
+  updateUserAvatar(img) {
+    console.log('NEW IMAGE', img);
+    this.setState({
+      imageAvatar: img
+    });
+  }
+
   render() {
     // const { first_name, last_name } = this.props.authorizedUser;
-    const { first_name, last_name, slug, avatar200, isFollowing, id } = this.props.requestedUser;
+    const { first_name, last_name, slug, isFollowing, id } = this.props.requestedUser;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { imageAvatar } = this.state;
     const { imageCover } = this.state;
-
 
     return (
       <div className="subHeader">
@@ -92,25 +100,33 @@ class SubHeader extends Component {
         <div className="wrapper">
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`}>
-              <img src={avatar200} />
+              <img src={imageAvatar} />
             </Link>
             <div className="subHeader-add">
-              <input type="file" onChange={(e) => this.handleAvatarChange(e)}/>
-              <a href="#">
-                <i></i>
-                Update Profile Picture
-              </a>
+              { this.props.authorizedUser.id === this.props.requestedUser.id &&
+              <div>
+                <input type="file" onChange={(e) => this.handleAvatarChange(e)}/>
+                <a href="#">
+                  <i></i>
+                  Update Profile Picture
+                </a>
+              </div>
+              }
             </div>
           </div>
           <div className="subHeader-cover">
-            <i></i>
-            <div className="cover-btn">
-              <input type="file" onChange={(e) => this.handleCoverChange(e)}/>
-              <a>
-                <i></i>
-                Update Cover Photo
-              </a>
+            { this.props.authorizedUser.id === this.props.requestedUser.id &&
+            <div>
+              <i></i>
+              <div className="cover-btn">
+                <input type="file" onChange={(e) => this.handleCoverChange(e)}/>
+                <a>
+                  <i></i>
+                  Update Cover Photo
+                </a>
+              </div>
             </div>
+            }
           </div>
           <div className="subHeader-userName">
             <Link to={`/${slug}`}>{first_name} {last_name}</Link>
@@ -136,13 +152,22 @@ class SubHeader extends Component {
         {/* <div className="subHeader-bg"></div> */}
 
         { this.props.activePopUp === 'ChangeCoverImage' &&
-        <ChangeCoverImage
-          showPopUp={this.props.showPopUp}
-          visible={this.props.visible}
-          currentImage={this.props.currentImage}
-          updateUserCover={this.updateUserCover}
-        />
+          <ChangeCoverImage
+            showPopUp={this.props.showPopUp}
+            visible={this.props.visible}
+            currentImage={this.props.currentImage}
+            updateUserCover={this.updateUserCover}
+          />
         }
+        { this.props.activePopUp === 'ChangeAvatar' &&
+          <ChangeAvatar
+            showPopUp={this.props.showPopUp}
+            visible={this.props.visible}
+            currentImage={this.props.currentImage}
+            updateUserAvatar={this.updateUserAvatar}
+          />
+        }
+
       </div>
     );
   }
@@ -155,8 +180,13 @@ SubHeader.propTypes = {
     slug: PropTypes.string,
     id: PropTypes.number,
     avatar200: PropTypes.string,
+    cover: PropTypes.string,
     isFollowing: PropTypes.boolean,
-  })
+  }),
+  authorizedUser: PropTypes.object,
+  activePopUp: PropTypes.string,
+  visible: PropTypes.bool,
+  currentImage: PropTypes.string,
 };
 
 export default SubHeader;

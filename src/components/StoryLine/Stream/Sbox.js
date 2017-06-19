@@ -121,7 +121,7 @@ class Sbox extends Component {
         />
 
         <div className="sbox-user-avatar32" style={{top: this.state.jump, position: 'absolute', left: '20px'}}>
-          <Link to={link}><img src={avatar32} /></Link>
+          <Link to={link}><img src={avatar32} style={{width: '32px', height: '32px'}} /></Link>
         </div>
         {/*<form onSubmit={this.test}>*/}
         <div className="sbox-footer">
