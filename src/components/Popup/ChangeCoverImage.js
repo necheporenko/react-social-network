@@ -87,9 +87,9 @@ export default class ChangeCoverImage extends Component {
               <AvatarEditor
                 ref={this.setEditorRef}
                 image={currentImage}
-                width={1920}
+                width={1500}
                 height={235}
-                border={0}
+                border={25}
                 color={[255, 255, 255, 0.6]}
                 scale={parseFloat(this.state.scale)}
                 rotate={0}
@@ -103,7 +103,7 @@ export default class ChangeCoverImage extends Component {
               name="scale"
               type="range"
               onChange={this.handleScale}
-              min="1"
+              min="0.5"
               max="2"
               step="0.01"
               defaultValue="1"

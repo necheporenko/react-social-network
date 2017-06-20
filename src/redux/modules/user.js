@@ -246,7 +246,7 @@ export default function signReducer(state = initialState, action) {
       };
     case UPLOAD_AVATAR_SUCCESS:
       const updateAvatar = state.authorizedUser;
-      updateUserCoverImg.avatar200 = action.result.data.url;
+      updateUserCoverImg.avatar230 = action.result.data.url;
 
       return {
         ...state,

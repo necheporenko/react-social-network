@@ -7,6 +7,8 @@ import ChangeCoverImage from '../../Popup/ChangeCoverImage';
 import ChangeAvatar from '../../Popup/ChangeAvatar';
 import './index.scss';
 
+// let newImageAvatar = this.props.requestedUser.avatar230;
+
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
@@ -24,7 +26,7 @@ class SubHeader extends Component {
     super(props);
     this.state = {
       file: '',
-      imageAvatar: this.props.requestedUser.avatar200,
+      imageAvatar: this.props.requestedUser.avatar230,
       imageCover: this.props.requestedUser.cover,
     };
     this.handleAvatarChange = this.handleAvatarChange.bind(this);
@@ -83,6 +85,7 @@ class SubHeader extends Component {
     this.setState({
       imageAvatar: img
     });
+    // newImageAvatar = img;
   }
 
   render() {
@@ -94,8 +97,9 @@ class SubHeader extends Component {
 
     return (
       <div className="subHeader">
-        <div className="imageCover" style={{backgroundImage: `url(${imageCover})`}}>
-          {/*<img src={imageCover} />*/}
+        {/*<div className="imageCover" style={{backgroundImage: `url(${imageCover})`}}>*/}
+        <div className="imageCover">
+          <img src={imageCover} />
         </div>
         <div className="wrapper">
           <div className="subHeader-userAvatar">
@@ -179,7 +183,7 @@ SubHeader.propTypes = {
     last_name: PropTypes.string,
     slug: PropTypes.string,
     id: PropTypes.number,
-    avatar200: PropTypes.string,
+    avatar230: PropTypes.string,
     cover: PropTypes.string,
     isFollowing: PropTypes.boolean,
   }),

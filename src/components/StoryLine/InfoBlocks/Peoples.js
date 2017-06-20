@@ -7,7 +7,7 @@ import { showActivePeopleTab } from '../../../redux/modules/form';
   friends: state.profile.friends,
   activePeopleTab: state.forms.activePeopleTab,
 }), {
-  showActivePeopleTab
+  showActivePeopleTab,
 })
 
 
@@ -27,7 +27,7 @@ export default class Peoples extends Component {
   }
 
   render() {
-    const { friends } = this.props;
+    const { friends, following, followers } = this.props;
 
     return (
       <div className="infoblocks-peoples">
@@ -43,24 +43,24 @@ export default class Peoples extends Component {
             |
             <div
               className={this.state.activeTab === 'following' ? 'people-tab-active' : ''}
-              onClick={() => this.showPeopleTab('following')}
+              onClick={() => { this.showPeopleTab('following'); }}
             >
-              Following<span > · 999</span>
+              Following<span >{` ${following.count}`}</span>
             </div>
             |
             <div
               className={this.state.activeTab === 'followers' ? 'people-tab-active' : ''}
-              onClick={() => this.showPeopleTab('followers')}
+              onClick={() => { this.showPeopleTab('followers'); }}
             >
-              Followers<span> · 999</span>
+              Followers<span>{` ${followers.count}`}</span>
             </div>
           </div>
         </div>
         { this.props.activePeopleTab === 'people' &&
           <div className="people-gallery">
             {friends && friends.map((friend) => (
-              <div className="people-avatar">
-                <Link key={friend.id} to={`/${friend.slug}`}>
+              <div className="people-avatar" key={friend.id}>
+                <Link to={`/${friend.slug}`}>
                   <img src={friend.avatar}/>
                   <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
                 </Link>
@@ -68,30 +68,31 @@ export default class Peoples extends Component {
             ))}
           </div>
         }
-        {/*{ this.props.activePeopleTab === 'following' &&*/}
-        {/*<div className="people-gallery">*/}
-          {/*{friends && friends.map((friend) => (*/}
-            {/*<div className="people-avatar">*/}
-              {/*<Link key={friend.id} to={`/${friend.slug}`}>*/}
-                {/*<img src={friend.avatar}/>*/}
-                {/*<div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>*/}
-              {/*</Link>*/}
-            {/*</div>*/}
-          {/*))}*/}
-        {/*</div>*/}
-        {/*}*/}
-        {/*{ this.props.activePeopleTab === 'followers' &&*/}
-        {/*<div className="people-gallery">*/}
-          {/*{friends && friends.map((friend) => (*/}
-            {/*<div className="people-avatar">*/}
-              {/*<Link key={friend.id} to={`/${friend.slug}`}>*/}
-                {/*<img src={friend.avatar}/>*/}
-                {/*<div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>*/}
-              {/*</Link>*/}
-            {/*</div>*/}
-          {/*))}*/}
-        {/*</div>*/}
-        {/*}*/}
+        { this.props.activePeopleTab === 'following' &&
+        <div className="people-gallery">
+          {following.users && following.users.map((friend) => (
+            <div className="people-avatar" key={friend.id}>
+              <Link to={`/${friend.slug}`}>
+                <img src={friend.avatar}/>
+                <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
+              </Link>
+            </div>
+          ))}
+        </div>
+        }
+
+        { this.props.activePeopleTab === 'followers' &&
+        <div className="people-gallery">
+          {followers.users && followers.users.map((friend) => (
+            <div className="people-avatar" key={friend.id} >
+              <Link to={`/${friend.slug}`}>
+                <img src={friend.avatar}/>
+                <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
+              </Link>
+            </div>
+          ))}
+        </div>
+        }
       </div>
     );
   }
@@ -99,6 +100,8 @@ export default class Peoples extends Component {
 
 Peoples.propTypes = {
   friends: PropTypes.array,
+  followers: PropTypes.object,
+  following: PropTypes.object,
   activePeopleTab: PropTypes.string,
   showActivePeopleTab: PropTypes.func,
 };

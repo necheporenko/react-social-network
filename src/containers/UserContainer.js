@@ -5,6 +5,7 @@ import { getUser, getUserSlug, isPolling } from '../redux/modules/user';
 import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../redux/modules/story';
 import { create as createBook, load as loadBookTree } from '../redux/modules/book';
 import { load as loadProfile, loadUserFriends } from '../redux/modules/profile';
+import { loadPeopleFollowers, loadPeopleFollowing } from '../redux/modules/follow';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 import StoryLine from '../components/StoryLine';
@@ -15,6 +16,8 @@ import StoryLine from '../components/StoryLine';
     const promises = [];
     promises.push(dispatch(getUser(getUserSlug(getState()))));
     // dispatch(clearPagination());
+    promises.push(dispatch(loadPeopleFollowing(getUserSlug(getState()))));
+    promises.push(dispatch(loadPeopleFollowers(getUserSlug(getState()))));
     promises.push(dispatch(loadStories(getUserSlug(getState()))));
     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
     promises.push(dispatch(loadProfile(getUserSlug(getState()))));
@@ -31,6 +34,8 @@ import StoryLine from '../components/StoryLine';
   storiesArr: state.story.storiesArr,
   bookTreeArr: state.book.bookTreeArr,
   userProfile: state.profile.userProfile,
+  following: state.follow.following,
+  followers: state.follow.followers,
 }), {
   loadStories,
   createStory,
@@ -64,6 +69,8 @@ export default class UserContainer extends Component {
           bookTreeArr={this.props.bookTreeArr}
           loadNextStories={this.props.loadNextStories}
           userProfile={this.props.userProfile}
+          following={this.props.following}
+          followers={this.props.followers}
         />
       </div>
     );
@@ -78,5 +85,7 @@ UserContainer.propTypes = {
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
   bookTreeArr: PropTypes.array,               //book
-  userProfile: PropTypes.object
+  userProfile: PropTypes.object,
+  followers: PropTypes.object,                //follow
+  following: PropTypes.object,
 };

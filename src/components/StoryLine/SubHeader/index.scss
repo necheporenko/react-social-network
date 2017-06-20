@@ -114,7 +114,7 @@
 .subHeader-userName {
   align-self: center;
   margin-top: 128px;
-  //margin-left: 20px;
+  margin-left: 25px;
 
   a {
     font-size: 22px;
@@ -147,8 +147,8 @@
 
 .subHeader-cover {
   align-self: baseline;
-  position: relative;
-  left: 25px;
+  position: absolute;
+  left: 265px;
   opacity: 0;
   transition: all 200ms ease-in-out;
 

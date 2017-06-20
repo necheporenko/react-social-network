@@ -63,6 +63,9 @@ class StoryLine extends Component {
           />
           <InfoBloks
             userProfile={this.props.userProfile}
+            requestedUser={this.props.requestedUser}
+            following={this.props.following}
+            followers={this.props.followers}
           />
         </div>
       </div>
@@ -72,12 +75,15 @@ class StoryLine extends Component {
 
 StoryLine.propTypes = {
   authorizedUser: PropTypes.object,
+  requestedUser: PropTypes.object,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
   bookTreeArr: PropTypes.array,
   userProfile: PropTypes.object,
+  followers: PropTypes.object,
+  following: PropTypes.object,
 };
 
 export default StoryLine;

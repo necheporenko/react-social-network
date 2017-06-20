@@ -15,7 +15,7 @@ export default class ChangeAvatar extends Component {
     this.state = {
       showPopup: false,
       file: '',
-      scale: 1.2,
+      scale: 1,
       picture: '',
     };
     this.Close = this.Close.bind(this);
@@ -72,7 +72,7 @@ export default class ChangeAvatar extends Component {
       <div className="create-new-book" onClick={this.Open}>
         <Modal show={visible} onHide={this.Close} className="modal-channel">
           <Modal.Header closeButton>
-            <Modal.Title>Edit Avatar</Modal.Title>
+            <Modal.Title>Edit Profile Image</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -81,9 +81,10 @@ export default class ChangeAvatar extends Component {
               <AvatarEditor
                 ref={this.setEditorRef}
                 image={currentImage}
+                // position={{x: 0.5, y: 0.5}}
                 width={230}
                 height={230}
-                border={0}
+                border={25}
                 color={[255, 255, 255, 0.6]}
                 scale={parseFloat(this.state.scale)}
                 rotate={0}

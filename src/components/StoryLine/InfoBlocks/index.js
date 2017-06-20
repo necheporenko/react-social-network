@@ -3,7 +3,6 @@ import Cutaway from './Сutaway';
 import Tokens from './Tokens';
 import Photos from './Photos';
 import Peoples from './Peoples';
-
 import './index.scss';
 
 class InfoBloks extends Component {
@@ -15,7 +14,10 @@ class InfoBloks extends Component {
         />
         <Tokens />
         <Photos />
-        <Peoples />
+        <Peoples
+          following={this.props.following}
+          followers={this.props.followers}
+        />
         {this.props.children}
       </div>
     );
@@ -24,7 +26,9 @@ class InfoBloks extends Component {
 
 InfoBloks.propTypes = {
   children: PropTypes.element,
-  userProfile: PropTypes.object
+  userProfile: PropTypes.object,
+  followers: PropTypes.object,
+  following: PropTypes.object,
 };
 
 export default InfoBloks;
