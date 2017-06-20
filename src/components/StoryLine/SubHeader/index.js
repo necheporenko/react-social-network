@@ -1,13 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
 import { Link } from 'react-router';
 import { followRequestedUser, unfollowRequestedUser } from '../../../redux/modules/user';
 import { showPopUp } from '../../../redux/modules/form';
+import { uploadAvatar, uploadAvatarBase64, getUser, getUserSlug, } from '../../../redux/modules/user';
 import ChangeCoverImage from '../../Popup/ChangeCoverImage';
 import ChangeAvatar from '../../Popup/ChangeAvatar';
 import './index.scss';
 
-// let newImageAvatar = this.props.requestedUser.avatar230;
+let newImageAvatar;
+
+@asyncConnect([{
+  promise: ({ store: { dispatch, getState } }) => {
+    const promises = [];
+    promises.push(dispatch(getUser(getUserSlug(getState()))));
+    return Promise.all(promises);
+  }
+}])
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
@@ -18,7 +28,11 @@ import './index.scss';
 }), {
   followRequestedUser,
   unfollowRequestedUser,
-  showPopUp
+  showPopUp,
+  uploadAvatar,
+  uploadAvatarBase64,
+  getUser,
+  getUserSlug,
 })
 
 class SubHeader extends Component {
@@ -81,30 +95,33 @@ class SubHeader extends Component {
   }
 
   updateUserAvatar(img) {
-    console.log('NEW IMAGE', img);
+    console.log('NEW IMAGE!!!!!!!!!!!!!!!!!!');
     this.setState({
       imageAvatar: img
     });
+    // this.props.uploadAvatarBase64(img);
     // newImageAvatar = img;
   }
 
   render() {
     // const { first_name, last_name } = this.props.authorizedUser;
-    const { first_name, last_name, slug, isFollowing, id } = this.props.requestedUser;
+    const { first_name, last_name, slug, isFollowing, id, avatar230 } = this.props.requestedUser;
     // const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
     const { imageAvatar } = this.state;
     const { imageCover } = this.state;
+    if (avatar230) { newImageAvatar = avatar230; }
+
 
     return (
       <div className="subHeader">
-        {/*<div className="imageCover" style={{backgroundImage: `url(${imageCover})`}}>*/}
-        <div className="imageCover">
-          <img src={imageCover} />
+        <div className="imageCover" style={{backgroundImage: `url(${imageCover})`}}>
+        {/*<div className="imageCover">*/}
+          {/*<img src={imageCover} />*/}
         </div>
         <div className="wrapper">
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`}>
-              <img src={imageAvatar} />
+              <img src={avatar230} />
             </Link>
             <div className="subHeader-add">
               { this.props.authorizedUser.id === this.props.requestedUser.id &&

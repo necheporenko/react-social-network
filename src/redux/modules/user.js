@@ -28,6 +28,7 @@ const UPLOAD_USER_COVER_FAIL = 'UPLOAD_USER_COVER_FAIL';
 const UPLOAD_AVATAR = 'UPLOAD_AVATAR';
 const UPLOAD_AVATAR_SUCCESS = 'UPLOAD_AVATAR_SUCCESS';
 const UPLOAD_AVATAR_FAIL = 'UPLOAD_AVATAR_FAIL';
+const UPLOAD_AVATAR_BASE64 = 'UPLOAD_AVATAR_BASE64';
 
 const initialState = {
   isAuthenticated: false,
@@ -204,7 +205,7 @@ export default function signReducer(state = initialState, action) {
     case UNFOLLOW_REQUESTED_USER_SUCCESS:
       const unfollowRequestedUser = Object.assign(state.requestedUser);
       unfollowRequestedUser.isFollowing = false;
-      console.log('unfollowRequestedUser after', unfollowRequestedUser)
+      console.log('unfollowRequestedUser after', unfollowRequestedUser);
       return {
         ...state,
         // requestedUser: {
@@ -218,12 +219,13 @@ export default function signReducer(state = initialState, action) {
         error: action.error,
       };
 
-    case UPLOAD_USER_COVER:
+    case UPLOAD_USER_COVER: {
       return {
         ...state,
         uploading: true,
       };
-    case UPLOAD_USER_COVER_SUCCESS:
+    }
+    case UPLOAD_USER_COVER_SUCCESS: {
       const updateUserCoverImg = state.authorizedUser;
       updateUserCoverImg.cover = action.result.data.url;
 
@@ -232,33 +234,50 @@ export default function signReducer(state = initialState, action) {
         uploading: false,
         authorizedUser: updateUserCoverImg,
       };
-    case UPLOAD_USER_COVER_FAIL:
+    }
+    case UPLOAD_USER_COVER_FAIL: {
       return {
         ...state,
         uploading: false,
         error: action.error,
       };
+    }
 
-    case UPLOAD_AVATAR:
+    case UPLOAD_AVATAR: {
       return {
         ...state,
         uploading: true,
       };
-    case UPLOAD_AVATAR_SUCCESS:
+    }
+    case UPLOAD_AVATAR_SUCCESS: {
       const updateAvatar = state.authorizedUser;
-      updateUserCoverImg.avatar230 = action.result.data.url;
-
+      updateAvatar.avatar230 = action.result.data.avatar230;
+      updateAvatar.avatar32 = action.result.data.avatar32;
       return {
         ...state,
         uploading: false,
         authorizedUser: updateAvatar,
       };
-    case UPLOAD_AVATAR_FAIL:
+    }
+    case UPLOAD_AVATAR_FAIL: {
       return {
         ...state,
         uploading: false,
         error: action.error,
       };
+    }
+
+    case UPLOAD_AVATAR_BASE64: {
+      const updateAvatarBase64 = state.authorizedUser;
+      updateAvatarBase64.avatar230 = action.imgBase64;
+      console.log(' action.imgBase64', action.imgBase64);
+
+      return {
+        ...state,
+        authorizedUser: updateAvatarBase64
+      };
+    }
+
 
     default:
       return state;
@@ -357,5 +376,13 @@ export function uploadAvatar(img) {
   return {
     types: [UPLOAD_AVATAR, UPLOAD_AVATAR_SUCCESS, UPLOAD_AVATAR_FAIL],
     promise: (client) => client.post('/upload/avatar', { data: { img }})
+  };
+}
+
+export function uploadAvatarBase64(imgBase64) {
+  console.log('uploadAvatarBase64', imgBase64);
+  return {
+    type: UPLOAD_AVATAR_BASE64,
+    imgBase64
   };
 }

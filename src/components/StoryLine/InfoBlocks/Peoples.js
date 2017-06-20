@@ -69,29 +69,29 @@ export default class Peoples extends Component {
           </div>
         }
         { this.props.activePeopleTab === 'following' &&
-        <div className="people-gallery">
-          {following.users && following.users.map((friend) => (
-            <div className="people-avatar" key={friend.id}>
-              <Link to={`/${friend.slug}`}>
-                <img src={friend.avatar}/>
-                <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
-              </Link>
-            </div>
-          ))}
-        </div>
+          <div className="people-gallery">
+            {following.users && following.users.map((friend) => (
+              <div className="people-avatar" key={friend.id}>
+                <Link to={`/${friend.slug}`}>
+                  <img src={friend.avatar}/>
+                  <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
+                </Link>
+              </div>
+            ))}
+          </div>
         }
 
         { this.props.activePeopleTab === 'followers' &&
-        <div className="people-gallery">
-          {followers.users && followers.users.map((friend) => (
-            <div className="people-avatar" key={friend.id} >
-              <Link to={`/${friend.slug}`}>
-                <img src={friend.avatar}/>
-                <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
-              </Link>
-            </div>
-          ))}
-        </div>
+          <div className="people-gallery">
+            {followers.users && followers.users.map((friend) => (
+              <div className="people-avatar" key={friend.id} >
+                <Link to={`/${friend.slug}`}>
+                  <img src={friend.avatar}/>
+                  <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
+                </Link>
+              </div>
+            ))}
+          </div>
         }
       </div>
     );

@@ -78,7 +78,7 @@ export default class UserContainer extends Component {
 }
 
 UserContainer.propTypes = {
-  authorizedUser: PropTypes.object,                     //user
+  authorizedUser: PropTypes.object,           //user
   requestedUser: PropTypes.object,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,

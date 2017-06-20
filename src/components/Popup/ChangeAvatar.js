@@ -1,12 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
 import AvatarEditor from 'react-avatar-editor';
 import { Modal } from 'react-bootstrap';
-import { uploadAvatar } from '../../redux/modules/user';
+import { uploadAvatar, uploadAvatarBase64, getUser, getUserSlug, } from '../../redux/modules/user';
 import './index.scss';
 
-@connect((state) => ({}), {
-  uploadAvatar
+@connect((state) => ({
+  requestedUser: state.user.requestedUser,
+}), {
+  uploadAvatar,
+  uploadAvatarBase64,
+  getUser,
+  getUserSlug,
 })
 
 export default class ChangeAvatar extends Component {
@@ -52,7 +58,9 @@ export default class ChangeAvatar extends Component {
       picture: newImage,
     });
     this.props.updateUserAvatar(newImage);
-    this.props.uploadAvatar(newImage);
+    this.props.uploadAvatarBase64(newImage);
+    this.props.uploadAvatar(newImage)
+    .then(() => this.props.getUser(this.props.requestedUser.slug));
   }
 
   setEditorRef = (editor) => {
