@@ -16,11 +16,11 @@ const configureApp = transport => feathers()
   .configure(hooks())
   .configure(authentication({ storage }));
 
-export const socket = io('', { path: host('/ws'), autoConnect: false });
-
-const app = configureApp(socketio(socket));
-
-export default app;
+// export const socket = io('', { path: host('/ws'), autoConnect: false });
+//
+// const app = configureApp(socketio(socket));
+//
+// export default app;
 
 export const restApp = configureApp(rest(host('/api')).superagent(superagent));
 
