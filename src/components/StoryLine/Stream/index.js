@@ -11,6 +11,7 @@ let page;
 @connect((state) => ({
   over: state.story.over,
   slug: state.user.requestedUser.slug,
+  isAuthenticated: state.user.isAuthenticated,
 }), {
   likePostStoryline
 })
@@ -23,8 +24,8 @@ class Stream extends Component {
     this.reloadStreamStoryline = this.reloadStreamStoryline.bind(this);
   }
 
-  componentDidMount() {
-    page = 1;
+  componentWillMount() {
+    page = 0;
   }
 
   load() {
@@ -44,7 +45,7 @@ class Stream extends Component {
   }
 
   render() {
-    const { storiesArr, authorizedUser, requestedUser } = this.props;
+    const { storiesArr, authorizedUser, requestedUser, isAuthenticated } = this.props;
     const loader = (
       <div className="wrapper-loader">
         <div className="loader">
@@ -57,7 +58,7 @@ class Stream extends Component {
 
     return (
       <div className="stream">
-        {authorizedUser.id === requestedUser.id &&
+        { isAuthenticated && authorizedUser.id === requestedUser.id &&
           <Sbox
             authorizedUser={this.props.authorizedUser}
             createStory={this.props.createStory}

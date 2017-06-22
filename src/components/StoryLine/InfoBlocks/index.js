@@ -17,6 +17,7 @@ class InfoBloks extends Component {
         <Peoples
           following={this.props.following}
           followers={this.props.followers}
+          friends={this.props.friends}
         />
         {this.props.children}
       </div>
@@ -29,6 +30,7 @@ InfoBloks.propTypes = {
   userProfile: PropTypes.object,
   followers: PropTypes.object,
   following: PropTypes.object,
+  friends: PropTypes.array
 };
 
 export default InfoBloks;

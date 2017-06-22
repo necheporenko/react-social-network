@@ -6,6 +6,7 @@ import { asyncConnect } from 'redux-connect';
 import { showLoading, hideLoading } from 'react-redux-loading-bar';
 import { getChannelName } from '../../redux/modules/channel';
 import Header from '../../components/Header';
+import MinHeader from '../../components/Header/MinHeader';
 import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from '../../redux/modules/user';
 
 // @asyncConnect([{
@@ -53,7 +54,8 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
 
 @connect((state) => ({
   isAuthenticated: state.user.isAuthenticated,
-  authorizedUser: state.user.authorizedUser
+  authorizedUser: state.user.authorizedUser,
+  requestedUser: state.user.requestedUser,
 }), ({
   logoutUser,
   hideLoading
@@ -74,13 +76,18 @@ class App extends Component {
     return (
       <div>
         <Helmet {...config.app.head} />
-        {this.props.isAuthenticated &&
+        { this.props.isAuthenticated &&
           <div style={{ marginTop: '52px' }}>
             <Header
               authorizedUser={this.props.authorizedUser}
               logoutUser={this.props.logoutUser}
               // onSignOut={this.props.userSignOut}
             />
+          </div>
+        }
+        { !this.props.isAuthenticated && this.props.requestedUser !== {} &&
+          <div style={{ marginTop: '52px' }}>
+            <MinHeader/>
           </div>
         }
         {children}
@@ -93,6 +100,7 @@ App.propTypes = {
   children: PropTypes.element,
   isAuthenticated: PropTypes.bool,
   authorizedUser: PropTypes.object,
+  requestedUser: PropTypes.object,
   logoutUser: PropTypes.func,
   hideLoading: PropTypes.func,
   // userLogin: PropTypes.func,

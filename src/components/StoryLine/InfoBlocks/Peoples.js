@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { showActivePeopleTab } from '../../../redux/modules/form';
 
 @connect((state) => ({
-  friends: state.profile.friends,
   activePeopleTab: state.forms.activePeopleTab,
 }), {
   showActivePeopleTab,

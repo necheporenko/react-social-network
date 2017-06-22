@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { login as loginUser, load as loadAuth, register as registerUser, loginSocial } from '../redux/modules/user';
+import { login as loginUser, load as loadAuth, register as registerUser, loginSocial, isLoaded } from '../redux/modules/user';
 import { showActiveForm } from '../redux/modules/form';
 import { isLoadedChannelList, isLoadedChannelStories, create as createChannel,
   show as showChannel, load as loadChannels, isMashUp, loadNext as loadNextChannelStories } from '../redux/modules/channel';
@@ -13,17 +13,19 @@ import MainPage from '../components/MainPage';
 
 
 @asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
+  promise: ({ store: { dispatch, getState }}) => {
     const promises = [];
 
-    if (!isLoadedChannelStories(getState())) {
-      promises.push(dispatch(showChannel(isMashUp(getState()))));
+    if (isLoaded(getState())) {
+      if (!isLoadedChannelStories(getState())) {
+        promises.push(dispatch(showChannel(isMashUp(getState()))));
+      }
+      if (!isLoadedChannelList(getState())) {
+        promises.push(dispatch(loadChannels()));
+      }
+      promises.push(dispatch(loadBookTree()));
+      promises.push(dispatch(loadWhoToFollow()));
     }
-    if (!isLoadedChannelList(getState())) {
-      promises.push(dispatch(loadChannels()));
-    }
-    promises.push(dispatch(loadBookTree()));
-    promises.push(dispatch(loadWhoToFollow()));
 
     return Promise.all(promises);
   }
@@ -52,7 +54,9 @@ import MainPage from '../components/MainPage';
   isLoadedChannelList,
   createChannel,
   loadChannels,
-  loadNextChannelStories
+  loadNextChannelStories,
+  loadBookTree,
+  loadWhoToFollow
 })
 
 export default class IndexContainer extends Component {
@@ -84,6 +88,8 @@ export default class IndexContainer extends Component {
             loading={this.props.loading}
             showChannel={this.props.showChannel}
             loadChannels={this.props.loadChannels}
+            loadBookTree={this.props.loadBookTree}
+            loadWhoToFollow={this.props.loadWhoToFollow}
           />
         }
       </div>
@@ -109,5 +115,7 @@ IndexContainer.propTypes = {
   loadNextChannelStories: PropTypes.func,
   createStory: PropTypes.func,                //story
   bookTreeArr: PropTypes.array,               //book
+  loadBookTree: PropTypes.func,
   whoToFollowList: PropTypes.array,           //follow
+  loadWhoToFollow: PropTypes.func
 };

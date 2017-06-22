@@ -27,7 +27,9 @@ class New extends Component {
     this.props.loginUser(data.email, data.password)
       .then(() => this.props.loadAuth())
       .then(() => this.props.showChannel())
-      .then(() => this.props.loadChannels());
+      .then(() => this.props.loadChannels())
+      .then(() => this.props.loadBookTree())
+      .then(() => this.props.loadWhoToFollow());
   }
 
   onSubmitRegisterForm(data) {
@@ -181,6 +183,8 @@ New.propTypes = {
   loading: PropTypes.bool,
   showChannel: PropTypes.func,
   loadChannels: PropTypes.func,
+  loadBookTree: PropTypes.func,
+  loadWhoToFollow: PropTypes.func
 };
 
 export default New;

@@ -2,11 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AvatarEditor from 'react-avatar-editor';
 import { Modal } from 'react-bootstrap';
-import { uploadUserCover } from '../../redux/modules/user';
+import { getUser, getUserSlug, } from '../../redux/modules/user';
 import './index.scss';
 
-@connect((state) => ({}), {
-  uploadUserCover
+@connect((state) => ({
+  requestedUser: state.user.requestedUser,
+}), {
+  getUser,
+  getUserSlug,
 })
 
 export default class ChangeCoverImage extends Component {
@@ -15,12 +18,8 @@ export default class ChangeCoverImage extends Component {
     this.state = {
       showPopup: false,
       file: '',
-      scale: 1.2,
-      rotate: 0,
-      border: 0,
+      scale: 1,
       preview: null,
-      width: 1920,
-      height: 235,
       picture: '',
     };
     this.Close = this.Close.bind(this);
@@ -52,13 +51,14 @@ export default class ChangeCoverImage extends Component {
   }
 
   handleSave() {
-    const newImage = this.editor.getImageScaledToCanvas().toDataURL();
+    const newImage = this.editor.getImage().toDataURL();
     this.setState({
       picture: newImage,
     });
-    this.props.updateUserCover(newImage);
-    this.props.uploadUserCover(newImage);
-    this.Close();
+    this.props.uploadUserCoverBase64(newImage);
+    this.props.uploadUserCover(newImage)
+    .then(() => this.props.getUser(this.props.requestedUser.slug))
+    .then(() => this.Close());
   }
 
   setEditorRef = (editor) => {
@@ -78,7 +78,7 @@ export default class ChangeCoverImage extends Component {
       <div className="create-new-book" onClick={this.Open}>
         <Modal show={visible} onHide={this.Close} className="modal-channel">
           <Modal.Header closeButton>
-            <Modal.Title>Edit cover image </Modal.Title>
+            <Modal.Title>Edit cover image1 </Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -87,9 +87,9 @@ export default class ChangeCoverImage extends Component {
               <AvatarEditor
                 ref={this.setEditorRef}
                 image={currentImage}
-                width={1500}
-                height={235}
-                border={25}
+                width={540}
+                height={68}
+                border={20}
                 color={[255, 255, 255, 0.6]}
                 scale={parseFloat(this.state.scale)}
                 rotate={0}
@@ -103,7 +103,7 @@ export default class ChangeCoverImage extends Component {
               name="scale"
               type="range"
               onChange={this.handleScale}
-              min="0.5"
+              min="1"
               max="2"
               step="0.01"
               defaultValue="1"
@@ -125,8 +125,8 @@ export default class ChangeCoverImage extends Component {
 
 ChangeCoverImage.propTypes = {
   showPopUp: PropTypes.func,
-  updateUserCover: PropTypes.func,
   uploadUserCover: PropTypes.func,
+  uploadUserCoverBase64: PropTypes.func,
   visible: PropTypes.bool,
   currentImage: PropTypes.string,
 };

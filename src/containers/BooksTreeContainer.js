@@ -14,7 +14,7 @@ import '../components/BooksTree/index.scss';
 // }])
 
 @connect((state) => ({
-  authorizedUser: state.user.authorizedUser,
+  requestedUser: state.user.requestedUser,
 }), {
   loadBookTree,
   createBook,
@@ -22,7 +22,7 @@ import '../components/BooksTree/index.scss';
 
 export default class BooksTreeContainer extends Component {
   render() {
-    const { slug } = this.props.authorizedUser;
+    const { slug } = this.props.requestedUser;
 
     return (
       <div className="bookstree">
@@ -45,7 +45,7 @@ export default class BooksTreeContainer extends Component {
 BooksTreeContainer.propTypes = {
   children: PropTypes.element,
   infoBlocksTop: PropTypes.string,
-  authorizedUser: PropTypes.object,
+  requestedUser: PropTypes.object,
   bookTreeArr: PropTypes.array,
   loadBookTree: PropTypes.func,
   createBook: PropTypes.func,

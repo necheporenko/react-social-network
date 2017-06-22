@@ -61,7 +61,8 @@ export default function storyReducer(state = initialState, action) {
         loading: false,
         loaded: false,
         error: action.error,
-        storiesArr: []
+        storiesArr: [],
+        over: true
       };
 
     case CREATE_STORY:

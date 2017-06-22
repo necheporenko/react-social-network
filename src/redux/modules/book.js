@@ -46,7 +46,7 @@ export default function bookReducer(state = initialState, action) {
         loading: true,
       };
     case LOAD_BOOKTREE_SUCCESS:
-      console.log('LOAD_BOOKTREE_SUCCESS:', action.result);
+      console.log('LOAD_BOOKTREE_SUCCESS:', action.result.data.children);
       return {
         ...state,
         loading: false,

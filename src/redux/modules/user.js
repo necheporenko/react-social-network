@@ -29,10 +29,11 @@ const UPLOAD_AVATAR = 'UPLOAD_AVATAR';
 const UPLOAD_AVATAR_SUCCESS = 'UPLOAD_AVATAR_SUCCESS';
 const UPLOAD_AVATAR_FAIL = 'UPLOAD_AVATAR_FAIL';
 const UPLOAD_AVATAR_BASE64 = 'UPLOAD_AVATAR_BASE64';
+const UPLOAD_USER_COVER_BASE64 = 'UPLOAD_USER_COVER_BASE64';
 
 const initialState = {
   isAuthenticated: false,
-  authorizedUser: null,
+  authorizedUser: {},
   requestedUser: {},
   loaded: false
 };
@@ -82,13 +83,13 @@ export default function signReducer(state = initialState, action) {
         isAuthenticated: true
       };
     case LOAD_FAIL:
-      console.log('LOAD_FAIL:', action);
+      // console.log('LOAD_FAIL:', action);
       return {
         ...state,
         loading: false,
         loaded: false,
         error: action.error,
-        authorizedUser: null,
+        authorizedUser: {},
         isAuthenticated: false
       };
 
@@ -123,7 +124,8 @@ export default function signReducer(state = initialState, action) {
         ...state,
         loggingOut: false,
         authorizedUser: null,
-        isAuthenticated: false
+        isAuthenticated: false,
+        requestedUser: {},
       };
     case LOGOUT_FAIL:
       return {
@@ -167,7 +169,7 @@ export default function signReducer(state = initialState, action) {
         loadingUser: true,
       };
     case SHOW_USER_SUCCESS:
-      console.log('SHOW_USER_SUCCESS:', action.result);
+      // console.log('SHOW_USER_SUCCESS:', action.result);
       return {
         ...state,
         loadingUser: false,
@@ -178,7 +180,7 @@ export default function signReducer(state = initialState, action) {
       return {
         ...state,
         loadingUser: false,
-        requestedUser: null
+        requestedUser: {}
       };
 
     case FOLLOW_REQUESTED_USER:
@@ -269,12 +271,23 @@ export default function signReducer(state = initialState, action) {
 
     case UPLOAD_AVATAR_BASE64: {
       const updateAvatarBase64 = state.authorizedUser;
-      updateAvatarBase64.avatar230 = action.imgBase64;
-      console.log(' action.imgBase64', action.imgBase64);
+      updateAvatarBase64.avatar230 = action.avatarBase64;
+      console.log(' action.avatarBase64', action.avatarBase64);
 
       return {
         ...state,
         authorizedUser: updateAvatarBase64
+      };
+    }
+
+    case UPLOAD_USER_COVER_BASE64: {
+      const updateUserCoverBase64 = state.authorizedUser;
+      updateUserCoverBase64.cover = action.userCoverBase64;
+      console.log(' action.avatarBase64', action.userCoverBase64);
+
+      return {
+        ...state,
+        authorizedUser: updateUserCoverBase64
       };
     }
 
@@ -326,7 +339,7 @@ export function loginSocial(provider, avatar, token) {
 
 export function getUserSlug(globalState) {
   const path = globalState.routing.locationBeforeTransitions.pathname;
-  console.log('PATH in reducer getUserSlug:', path);
+  console.log('PATH in reducer Function getUserSlug():', path);
   // const getSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
   return path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));     // get user slug in pathname between / or after first /
 
@@ -372,6 +385,14 @@ export function uploadUserCover(img) {
   };
 }
 
+export function uploadUserCoverBase64(userCoverBase64) {
+  console.log('uploadCoverBase64', userCoverBase64);
+  return {
+    type: UPLOAD_USER_COVER_BASE64,
+    userCoverBase64
+  };
+}
+
 export function uploadAvatar(img) {
   return {
     types: [UPLOAD_AVATAR, UPLOAD_AVATAR_SUCCESS, UPLOAD_AVATAR_FAIL],
@@ -379,10 +400,10 @@ export function uploadAvatar(img) {
   };
 }
 
-export function uploadAvatarBase64(imgBase64) {
-  console.log('uploadAvatarBase64', imgBase64);
+export function uploadAvatarBase64(avatarBase64) {
+  console.log('uploadAvatarBase64', avatarBase64);
   return {
     type: UPLOAD_AVATAR_BASE64,
-    imgBase64
+    avatarBase64
   };
 }

@@ -14,11 +14,7 @@
   .imageCover {
     height: 235px;
     overflow: hidden;
-
-    > img {
-      height: 235px;
-      width: 100%;
-    }
+    background-size: cover;
   }
 
   .wrapper {

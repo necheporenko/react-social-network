@@ -57,7 +57,7 @@ export default function profileReducer(state = initialState, action) {
         loaded: false,
       };
     case LOAD_PROFILE_SUCCESS:
-      console.log('LOAD_PROFILE_SUCCESS', action.result.data);
+      // console.log('LOAD_PROFILE_SUCCESS', action.result.data);
       return {
         ...state,
         loaded: true,

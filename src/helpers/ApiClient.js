@@ -61,7 +61,7 @@ export default class ApiClient {
     methods.forEach(method => {
       this[method] = (path, { params = {}, data, headers, files, fields } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
-        console.log('       ============ REQUEST ============');
+        console.log('       ============ REQUEST START ============');
 
         // console.log('Paramsssssss:', params);
         const apiKey = readAuthCookie(req);
@@ -75,6 +75,7 @@ export default class ApiClient {
         }
 
         if (data) {                           // for post request
+          console.log('  ====Data:', data);
           request.send(data);
         }
 

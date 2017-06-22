@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Logo from './Logo';
+import SearchField from './SearchField';
 import './index.scss';
 
 class MinHeader extends Component {
@@ -7,6 +8,7 @@ class MinHeader extends Component {
     return (
       <div className="header">
         <Logo />
+        <SearchField />
 
         <div className="header-sign-btn">
           <button className="header-sign-up">Sign Up</button>
