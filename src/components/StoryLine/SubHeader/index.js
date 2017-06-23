@@ -41,15 +41,13 @@ class SubHeader extends Component {
     super(props);
     this.state = {
       file: '',
-      imageAvatar: this.props.requestedUser.avatar230,
-      imageCover: this.props.requestedUser.cover,
     };
     this.handleAvatarChange = this.handleAvatarChange.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
     this.followUser = this.followUser.bind(this);
     this.unfollowUser = this.unfollowUser.bind(this);
-    // this.updateUserCover = this.updateUserCover.bind(this);
-    // this.updateUserAvatar = this.updateUserAvatar.bind(this);
+    this.cleanInputAvatar = this.cleanInputAvatar.bind(this);
+    this.cleanInputCover = this.cleanInputCover.bind(this);
   }
 
   handleAvatarChange(e) {
@@ -62,6 +60,7 @@ class SubHeader extends Component {
         file: file,
       });
       this.props.showPopUp(true, reader.result, 'ChangeAvatar');
+      this.cleanInputAvatar();
     };
     reader.readAsDataURL(file);
   }
@@ -74,9 +73,9 @@ class SubHeader extends Component {
     reader.onloadend = () => {
       this.setState({
         file: file,
-        // imageCover: reader.result
       });
       this.props.showPopUp(true, reader.result, 'ChangeCoverImage');
+      this.cleanInputCover();
     };
     reader.readAsDataURL(file);
   }
@@ -89,22 +88,16 @@ class SubHeader extends Component {
     this.props.unfollowRequestedUser(id);
   }
 
-  // updateUserCover(img) {
-  //   this.setState({
-  //     imageCover: img
-  //   });
-  // }
+  cleanInputAvatar() {
+    this.inputAvatar.value = '';
+  }
 
-  // updateUserAvatar(img) {
-  //   console.log('NEW IMAGE!!!!!!!!!!!!!!!!!!');
-  //   this.setState({
-  //     imageAvatar: img
-  //   });
-  // }
+  cleanInputCover() {
+    this.inputCover.value = '';
+  }
 
   render() {
     const { first_name, last_name, slug, isFollowing, id, avatar230, cover } = this.props.requestedUser;
-    const { imageCover } = this.state;
 
     return (
       <div className="subHeader">
@@ -117,7 +110,7 @@ class SubHeader extends Component {
             <div className="subHeader-add">
               { this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
                 <div>
-                  <input type="file" onChange={(e) => this.handleAvatarChange(e)}/>
+                  <input type="file" onChange={(e) => this.handleAvatarChange(e)} ref={(el) => this.inputAvatar = el}/>
                   <a href="#">
                     <i></i>
                     Update Profile Picture
@@ -131,7 +124,7 @@ class SubHeader extends Component {
               <div>
                 <i></i>
                 <div className="cover-btn">
-                  <input type="file" onChange={(e) => this.handleCoverChange(e)}/>
+                  <input type="file" onChange={(e) => this.handleCoverChange(e)} ref={(el) => this.inputCover = el}/>
                   <a>
                     <i></i>
                     Update Cover Photo
@@ -161,18 +154,17 @@ class SubHeader extends Component {
           </div>
           <span></span>
         </div>
-        {/* <div className="subHeader-bg"></div> */}
 
         { this.props.activePopUp === 'ChangeCoverImage' &&
           <ChangeCoverImage
             showPopUp={this.props.showPopUp}
             visible={this.props.visible}
             currentImage={this.props.currentImage}
-            updateUserCover={this.updateUserCover}
             uploadUserCover={this.props.uploadUserCover}
             uploadUserCoverBase64={this.props.uploadUserCoverBase64}
           />
         }
+
         { this.props.activePopUp === 'ChangeAvatar' &&
           <ChangeAvatar
             showPopUp={this.props.showPopUp}
@@ -199,6 +191,9 @@ SubHeader.propTypes = {
   visible: PropTypes.bool,
   currentImage: PropTypes.string,
   isAuthenticated: PropTypes.bool,
+  followRequestedUser: PropTypes.func,
+  unfollowRequestedUser: PropTypes.func,
+  showPopUp: PropTypes.func,
 };
 
 export default SubHeader;

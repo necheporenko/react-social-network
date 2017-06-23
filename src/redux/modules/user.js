@@ -42,7 +42,6 @@ const initialState = {
 export default function signReducer(state = initialState, action) {
   switch (action.type) {
     case LOGIN:
-      console.log('LOGIN:', action);
       return {
         ...state,
         loading: true,
@@ -50,7 +49,6 @@ export default function signReducer(state = initialState, action) {
         loaded: false
       };
     case LOGIN_SUCCESS:
-      // console.log('LOGIN_SUCCESS:', action.result);
       return {
         ...state,
         loggingIn: false,
@@ -68,13 +66,11 @@ export default function signReducer(state = initialState, action) {
       };
 
     case LOAD:
-      // console.log('LOAD:', action);
       return {
         ...state,
         loading: true
       };
     case LOAD_SUCCESS:
-      // console.log('LOAD_SUCCESS:', action);
       return {
         ...state,
         loading: false,
@@ -84,7 +80,7 @@ export default function signReducer(state = initialState, action) {
         isAuthenticated: true
       };
     case LOAD_FAIL:
-      // console.log('LOAD_FAIL:', action);
+      console.log('LOAD_FAIL:', action);
       return {
         ...state,
         loading: false,
@@ -138,14 +134,12 @@ export default function signReducer(state = initialState, action) {
       };
 
     case LOGIN_FB:
-      console.log('LOGIN_FB:', action);
       return {
         ...state,
         loggingFB: true,
         loaded: false
       };
     case LOGIN_FB_SUCCESS:
-      console.log('LOGIN_FB_SUCCESS:', action.result);
       return {
         ...state,
         loggingFB: false,
@@ -273,7 +267,6 @@ export default function signReducer(state = initialState, action) {
     case UPLOAD_AVATAR_BASE64: {
       const updateAvatarBase64 = state.authorizedUser;
       updateAvatarBase64.avatar230 = action.avatarBase64;
-      console.log(' action.avatarBase64', action.avatarBase64);
 
       return {
         ...state,
@@ -284,7 +277,6 @@ export default function signReducer(state = initialState, action) {
     case UPLOAD_USER_COVER_BASE64: {
       const updateUserCoverBase64 = state.authorizedUser;
       updateUserCoverBase64.cover = action.userCoverBase64;
-      console.log(' action.avatarBase64', action.userCoverBase64);
 
       return {
         ...state,

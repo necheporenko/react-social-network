@@ -25,7 +25,6 @@ export default class ChangeCoverImage extends Component {
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
-    this.handleCoverChange = this.handleCoverChange.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleScale = this.handleScale.bind(this);
   }
@@ -35,20 +34,6 @@ export default class ChangeCoverImage extends Component {
   }
   Open() {
     this.props.showPopUp(true);
-  }
-
-  handleCoverChange(e) {
-    e.preventDefault();
-    const reader = new FileReader();
-    const file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        coverBook: reader.result
-      });
-    };
-    reader.readAsDataURL(file);
   }
 
   handleSave() {
@@ -140,4 +125,8 @@ ChangeCoverImage.propTypes = {
   visible: PropTypes.bool,
   currentImage: PropTypes.string,
   uploadingImage: PropTypes.bool,
+  getUser: PropTypes.func,
+  loadAuth: PropTypes.func,
+  loadStories: PropTypes.func,
+  requestedUser: PropTypes.object,
 };
