@@ -126,12 +126,12 @@ class Sbox extends Component {
         {/*<form onSubmit={this.test}>*/}
         <div className="sbox-footer">
           <div style={{display: 'flex'}}>
-            <button
+            <div
               className="btn-brand"
               type="submit"
               onClick={this.onSubmitStory}
               style={{fontSize: '13px'}}
-            ><b>Log</b></button>
+            >Log</div>
             {/*<button className="btn-brand" type="submit">Log</button>*/}
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} >

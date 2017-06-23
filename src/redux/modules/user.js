@@ -35,7 +35,8 @@ const initialState = {
   isAuthenticated: false,
   authorizedUser: {},
   requestedUser: {},
-  loaded: false
+  loaded: false,
+  uploadingImageImage: false,
 };
 
 export default function signReducer(state = initialState, action) {
@@ -224,7 +225,7 @@ export default function signReducer(state = initialState, action) {
     case UPLOAD_USER_COVER: {
       return {
         ...state,
-        uploading: true,
+        uploadingImage: true,
       };
     }
     case UPLOAD_USER_COVER_SUCCESS: {
@@ -233,14 +234,14 @@ export default function signReducer(state = initialState, action) {
 
       return {
         ...state,
-        uploading: false,
+        uploadingImage: false,
         authorizedUser: updateUserCoverImg,
       };
     }
     case UPLOAD_USER_COVER_FAIL: {
       return {
         ...state,
-        uploading: false,
+        uploadingImage: false,
         error: action.error,
       };
     }
@@ -248,7 +249,7 @@ export default function signReducer(state = initialState, action) {
     case UPLOAD_AVATAR: {
       return {
         ...state,
-        uploading: true,
+        uploadingImage: true,
       };
     }
     case UPLOAD_AVATAR_SUCCESS: {
@@ -257,14 +258,14 @@ export default function signReducer(state = initialState, action) {
       updateAvatar.avatar32 = action.result.data.avatar32;
       return {
         ...state,
-        uploading: false,
+        uploadingImage: false,
         authorizedUser: updateAvatar,
       };
     }
     case UPLOAD_AVATAR_FAIL: {
       return {
         ...state,
-        uploading: false,
+        uploadingImage: false,
         error: action.error,
       };
     }
@@ -386,7 +387,6 @@ export function uploadUserCover(img) {
 }
 
 export function uploadUserCoverBase64(userCoverBase64) {
-  console.log('uploadCoverBase64', userCoverBase64);
   return {
     type: UPLOAD_USER_COVER_BASE64,
     userCoverBase64
@@ -401,7 +401,6 @@ export function uploadAvatar(img) {
 }
 
 export function uploadAvatarBase64(avatarBase64) {
-  console.log('uploadAvatarBase64', avatarBase64);
   return {
     type: UPLOAD_AVATAR_BASE64,
     avatarBase64

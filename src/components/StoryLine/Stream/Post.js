@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Modal, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { like as likePost } from '../../../redux/modules/story';
+import Log from '../../Popup/Log';
 
 @connect((state) => ({
 }), {
@@ -244,6 +245,9 @@ export default class Post extends Component {
           <div className="post-log">
             <i className="post-action-icon"></i>
             <span>Log</span>
+            <Log
+              storyID={id}
+            />
           </div>
           <div className="post-share">
             <i className="post-action-icon"></i>

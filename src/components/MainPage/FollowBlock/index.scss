@@ -15,7 +15,7 @@
   }
 
   .title {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid #eee;
     padding-bottom: 10px;
     @include title-medium-default();
   }
@@ -23,7 +23,7 @@
 
 .follow-people {
   display: flex;
-  margin-top: 15px;
+  margin-top: 18px;
 }
 
 .follow-people-link-img {
@@ -42,6 +42,8 @@
 }
 
 .follow-people-text-user {
+  margin-bottom: 5px;
+
   a {
     width: 138px;
     white-space: nowrap;
@@ -51,15 +53,21 @@
     font-family: $font-medium;
     font-weight: normal;
     font-size: 14px;
+    line-height: 14px;
     display: block;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
 .follow-people-text-btn {
   cursor: pointer;
+  font-size: 12px;
+  color: #404040;
 
-  a {
-    font-size: 12px;
-    color: $default-color;
+  &:hover {
+    text-decoration: underline;
   }
 }

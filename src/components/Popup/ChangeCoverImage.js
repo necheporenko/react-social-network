@@ -7,6 +7,7 @@ import './index.scss';
 
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
+  uploadingImage: state.user.uploadingImage,
 }), {
   getUser,
   getUserSlug,
@@ -18,7 +19,7 @@ export default class ChangeCoverImage extends Component {
     this.state = {
       showPopup: false,
       file: '',
-      scale: 1,
+      scale: 1.2,
       preview: null,
       picture: '',
     };
@@ -71,14 +72,13 @@ export default class ChangeCoverImage extends Component {
   };
 
   render() {
-    const visible = this.props.visible;
-    const currentImage = this.props.currentImage;
+    const { uploadingImage, visible, currentImage } = this.props;
 
     return (
       <div className="create-new-book" onClick={this.Open}>
-        <Modal show={visible} onHide={this.Close} className="modal-channel">
+        <Modal show={visible} onHide={this.Close} className="modal-channel user-cover-popup">
           <Modal.Header closeButton>
-            <Modal.Title>Edit cover image1 </Modal.Title>
+            <Modal.Title>Edit cover image</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
@@ -94,7 +94,17 @@ export default class ChangeCoverImage extends Component {
                 scale={parseFloat(this.state.scale)}
                 rotate={0}
                 onSave={this.handleSave}
+                style={uploadingImage ? {opacity: 0.3} : {opacity: 1}}
               />
+              { uploadingImage &&
+                <div className="wrapper-loader">
+                  <div className="loader">
+                    <svg className="circular" viewBox="25 25 50 50">
+                      <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
+                    </svg>
+                  </div>
+                </div>
+              }
             </div>
 
             Zoom:
@@ -106,7 +116,7 @@ export default class ChangeCoverImage extends Component {
               min="1"
               max="2"
               step="0.01"
-              defaultValue="1"
+              defaultValue="1.2"
             />
           </Modal.Body>
 
@@ -129,4 +139,5 @@ ChangeCoverImage.propTypes = {
   uploadUserCoverBase64: PropTypes.func,
   visible: PropTypes.bool,
   currentImage: PropTypes.string,
+  uploadingImage: PropTypes.bool,
 };

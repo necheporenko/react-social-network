@@ -2,14 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AvatarEditor from 'react-avatar-editor';
 import { Modal } from 'react-bootstrap';
-import { getUser, getUserSlug, } from '../../redux/modules/user';
+import { getUser, getUserSlug, load as loadAuth } from '../../redux/modules/user';
+import { load as loadStories } from '../../redux/modules/story';
 import './index.scss';
 
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
+  uploadingImage: state.user.uploadingImage,
 }), {
   getUser,
   getUserSlug,
+  loadAuth,
+  loadStories
 })
 
 export default class ChangeAvatar extends Component {
@@ -18,8 +22,9 @@ export default class ChangeAvatar extends Component {
     this.state = {
       showPopup: false,
       file: '',
-      scale: 1,
+      scale: 1.2,
       picture: '',
+      loading: false,
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
@@ -57,6 +62,8 @@ export default class ChangeAvatar extends Component {
     this.props.uploadAvatarBase64(newImage);
     this.props.uploadAvatar(newImage)
     .then(() => this.props.getUser(this.props.requestedUser.slug))
+    .then(() => this.props.loadAuth())
+    .then(() => this.props.loadStories())
     .then(() => this.Close());
   }
 
@@ -70,12 +77,11 @@ export default class ChangeAvatar extends Component {
   };
 
   render() {
-    const visible = this.props.visible;
-    const currentImage = this.props.currentImage;
+    const { uploadingImage, visible, currentImage } = this.props;
 
     return (
       <div className="create-new-book" onClick={this.Open}>
-        <Modal show={visible} onHide={this.Close} className="modal-channel">
+        <Modal show={visible} onHide={this.Close} className="modal-channel avatar-popup">
           <Modal.Header closeButton>
             <Modal.Title>Edit Profile Image</Modal.Title>
           </Modal.Header>
@@ -83,18 +89,30 @@ export default class ChangeAvatar extends Component {
           <Modal.Body>
             <div className="wrapper-popup">
               <h4>Crop it</h4>
-              <AvatarEditor
-                ref={this.setEditorRef}
-                image={currentImage}
-                // position={{x: 0.5, y: 0.5}}
-                width={230}
-                height={230}
-                border={25}
-                color={[255, 255, 255, 0.6]}
-                scale={parseFloat(this.state.scale)}
-                rotate={0}
-                onSave={this.handleSave}
-              />
+              <div style={{width: '280px', margin: '0 auto'}}>
+                <AvatarEditor
+                  ref={this.setEditorRef}
+                  image={currentImage}
+                  // position={{x: 0.5, y: 0.5}}
+                  width={230}
+                  height={230}
+                  border={25}
+                  color={[255, 255, 255, 0.6]}
+                  scale={parseFloat(this.state.scale)}
+                  rotate={0}
+                  onSave={this.handleSave}
+                  style={uploadingImage ? {opacity: 0.3} : {opacity: 1}}
+                />
+                { uploadingImage &&
+                  <div className="wrapper-loader">
+                    <div className="loader">
+                      <svg className="circular" viewBox="25 25 50 50">
+                        <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
+                      </svg>
+                    </div>
+                  </div>
+                }
+              </div>
             </div>
 
             Zoom:
@@ -106,7 +124,7 @@ export default class ChangeAvatar extends Component {
               min="1"
               max="2"
               step="0.01"
-              defaultValue="1"
+              defaultValue="1.2"
             />
           </Modal.Body>
 
@@ -129,4 +147,5 @@ ChangeAvatar.propTypes = {
   uploadAvatarBase64: PropTypes.func,
   visible: PropTypes.bool,
   currentImage: PropTypes.string,
+  uploadingImage: PropTypes.bool,
 };

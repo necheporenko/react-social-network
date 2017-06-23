@@ -1,16 +1,19 @@
-export const LOAD_SHOW_USER_STORIES = 'LOAD_SHOW_USER_STORIES';
-export const LOAD_SHOW_USER_STORIES_SUCCESS = 'LOAD_SHOW_USER_STORIES_SUCCESS';
-export const LOAD_SHOW_USER_STORIES_FAIL = 'LOAD_SHOW_USER_STORIES_FAIL';
-export const LOAD_NEXT_SHOW_USER_STORIES = 'LOAD_NEXT_SHOW_USER_STORIES';
-export const LOAD_NEXT_SHOW_USER_STORIES_SUCCESS = 'LOAD_NEXT_SHOW_USER_STORIES_SUCCESS';
-export const LOAD_NEXT_SHOW_USER_STORIES_FAIL = 'LOAD_NEXT_SHOW_USER_STORIES_FAIL';
-export const CREATE_STORY = 'CREATE_STORY';
-export const CREATE_STORY_SUCCESS = 'CREATE_STORY_SUCCESS';
-export const CREATE_STORY_FAIL = 'CREATE_STORY_FAIL';
+const LOAD_SHOW_USER_STORIES = 'LOAD_SHOW_USER_STORIES';
+const LOAD_SHOW_USER_STORIES_SUCCESS = 'LOAD_SHOW_USER_STORIES_SUCCESS';
+const LOAD_SHOW_USER_STORIES_FAIL = 'LOAD_SHOW_USER_STORIES_FAIL';
+const LOAD_NEXT_SHOW_USER_STORIES = 'LOAD_NEXT_SHOW_USER_STORIES';
+const LOAD_NEXT_SHOW_USER_STORIES_SUCCESS = 'LOAD_NEXT_SHOW_USER_STORIES_SUCCESS';
+const LOAD_NEXT_SHOW_USER_STORIES_FAIL = 'LOAD_NEXT_SHOW_USER_STORIES_FAIL';
+const CREATE_STORY = 'CREATE_STORY';
+const CREATE_STORY_SUCCESS = 'CREATE_STORY_SUCCESS';
+const CREATE_STORY_FAIL = 'CREATE_STORY_FAIL';
 const CLEAR_PAGINATION = 'CLEAR_PAGINATION';
 const LIKE_STORY = 'LIKE_STORY';
 const LIKE_STORY_SUCCESS = 'LIKE_STORY_SUCCESS';
 const LIKE_STORY_FAIL = 'LIKE_STORY_FAIL';
+const RELOG_STORY = 'RELOG_STORY';
+const RELOG_STORY_SUCCESS = 'RELOG_STORY_SUCCESS';
+const RELOG_STORY_FAIL = 'RELOG_STORY_FAIL';
 
 const initialState = {
   isAuthenticated: false,
@@ -122,6 +125,26 @@ export default function storyReducer(state = initialState, action) {
       };
     }
 
+    case RELOG_STORY: {
+      return {
+        ...state,
+        reloging: true,
+      };
+    }
+    case RELOG_STORY_SUCCESS: {
+      return {
+        ...state,
+        reloging: false,
+      };
+    }
+    case RELOG_STORY_FAIL: {
+      return {
+        ...state,
+        reloging: false,
+      };
+    }
+
+
     default:
       return state;
   }
@@ -165,5 +188,12 @@ export function like(story_id) {
 export function clearPagination() {
   return {
     type: CLEAR_PAGINATION
+  };
+}
+
+export function relogStory(story_id, books) {
+  return {
+    types: [RELOG_STORY, RELOG_STORY_SUCCESS, RELOG_STORY_FAIL],
+    promise: (client) => client.post('/story/relog', { data: { story_id, books }})
   };
 }
