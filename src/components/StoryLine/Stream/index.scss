@@ -173,8 +173,7 @@
     line-height: 12px;
     border: 1px solid $border-color;
     font-size: 13px;
-    padding: 5px 12px;
-    padding-right: 0;
+    padding: 5px 0 5px 10px;
     margin-left: 10px !important;
     border-radius: 2px;
     background-color: #fff;
@@ -192,6 +191,32 @@
 
   }
 
+  .sbox-dropdown-btn {
+    display: flex;
+    padding: 5px 0 5px 5px;
+
+    span.caret {
+      margin-top: 5px;
+      margin-right: 5px;
+    }
+
+    .dropdown-btn-icon {
+      margin-top: -5px;
+      margin-right: 5px;
+    }
+
+    .loud_book_icon {
+      margin-top: 0;
+      margin-right: 5px;
+    }
+
+    .public_icon,
+    .private_icon,
+    .custom_icon {
+      margin-top: 0;
+    }
+  }
+
   .btn-group.open .dropdown-toggle {
     box-shadow: none !important;
   }
@@ -202,35 +227,6 @@
   .open > .btn-default.dropdown-toggle:hover,
   .open > .btn-default.dropdown-toggle:focus {
     border: 1px solid $border-color;
-  }
-}
-
-.sbox-logging {
-  width: 210px;
-
-  li {
-    line-height: 22px;
-    position: relative;
-    height: 36px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #eeeeee;
-    }
-
-    > div {
-      display: flex;
-      padding: 6px 6px 6px 10px;
-    }
-
-    label {
-      position: static;
-      margin-top: 2px;
-    }
-
-    p {
-      padding-left: 5px;
-    }
   }
 
   .quiet_log_icon,
@@ -256,6 +252,7 @@
     width: 15px;
     height: 16px;
     margin-top: 4px;
+    margin-left: 2px;
   }
 
   .post_fb_icon {
@@ -265,10 +262,72 @@
   .post_twitter_icon {
     background-position: -168px -191px;
   }
+
+  .public_icon,
+  .private_icon {
+    background: $sprite;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-top: 4px;
+  }
+
+  .public_icon {
+    background-position: -163px -530px;
+  }
+
+  .private_icon {
+    background-position: -176px -530px;
+  }
+
+  .custom_icon {
+    background: url('../../../img/Icons/gear.svg') no-repeat;
+    width: 12px;
+    height: 12px;
+    margin-top: 4px;
+  }
 }
 
-.sbox-booktree,
+.sbox-visibility {
+  width: 190px;
+}
+
 .sbox-logging {
+  width: 210px;
+}
+
+.sbox-logging, .sbox-visibility {
+  li {
+    line-height: 22px;
+    position: relative;
+    height: 36px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #eeeeee;
+    }
+
+    > div {
+      display: flex;
+      padding: 6px 6px 6px 10px;
+    }
+
+    label {
+      position: static;
+      margin-top: 2px;
+    }
+
+    p {
+      padding-left: 7px;
+    }
+  }
+}
+
+
+
+.sbox-booktree,
+.sbox-logging,
+.sbox-visibility {
   /*
   STYLE CHECKBOX
    */
@@ -295,13 +354,9 @@
   input[type="radio"] + label {
     background-color: rgba(255,255,255,.05);
     border: 1px solid rgba(155,155,155,.57);
-    font-size: 1px;
     height: 11px;
     margin: 4px 7px 0 -2px;
-    vertical-align: text-bottom;
     width: 11px;
-    //background: none;
-    display: inline-block;
     border-radius: 50%;
     cursor: pointer;
   }
@@ -312,7 +367,7 @@
     background: #666666;
     display: inline-block;
     border-radius: 50%;
-    top: -2px;
+    top: -6px;
     right: -2px;
     position: relative;
   }

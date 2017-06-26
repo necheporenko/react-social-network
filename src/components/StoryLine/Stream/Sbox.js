@@ -39,13 +39,21 @@ class Sbox extends Component {
         post_fb: false,
         post_twitter: false,
         storyline: true
-      }
+      },
+      loudIcon: 'loud_log_icon',
+      visibility: {
+        public: true,
+        private: false,
+        custom: false
+      },
+      visibilityIcon: 'public_icon'
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
     this.showToolbar = this.showToolbar.bind(this);
     this.onSubmitStory = this.onSubmitStory.bind(this);
     this.test = this.test.bind(this);
-    this.test2 = this.test2.bind(this);
+    this.handleCheckLoud = this.handleCheckLoud.bind(this);
+    this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
   }
 
   onEditorStateChange = (editorContent) => {
@@ -80,7 +88,7 @@ class Sbox extends Component {
     console.log('hi');
   }
 
-  test2(event) {
+  handleCheckLoud(event) {
     this.state.loud[event.target.name] = event.target.checked;
 
     const currentStateItem = event.target.checked;
@@ -91,7 +99,7 @@ class Sbox extends Component {
       currentStateLoud.loud_log = false;
       currentStateLoud.loud_book = false;
       currentStateLoud.storyline = false;
-      this.setState({loud: currentStateLoud});
+      this.setState({loud: currentStateLoud, loudIcon: 'quiet_log_icon'});
     }
 
     switch (event.target.name) {
@@ -105,7 +113,8 @@ class Sbox extends Component {
               post_fb: false,
               post_twitter: false,
               storyline: false
-            }
+            },
+            loudIcon: 'quiet_log_icon'
           });
         }
         break;
@@ -113,13 +122,13 @@ class Sbox extends Component {
       case 'loud_log':
         if (!currentStateItem) {
           currentStateLoud.loud_log = false;
-          this.setState({loud: currentStateLoud});
+          this.setState({loud: currentStateLoud,});
         } else {
           currentStateLoud.quiet_log = false;
           currentStateLoud.loud_log = true;
           currentStateLoud.loud_book = true;
           currentStateLoud.storyline = true;
-          this.setState({loud: currentStateLoud});
+          this.setState({loud: currentStateLoud, loudIcon: 'loud_log_icon'});
         }
         break;
 
@@ -127,7 +136,7 @@ class Sbox extends Component {
         if (currentStateItem) {
           currentStateLoud.loud_book = true;
           currentStateLoud.quiet_log = false;
-          this.setState({loud: currentStateLoud});
+          this.setState({loud: currentStateLoud, loudIcon: 'loud_book_icon'});
         } else {
           currentStateLoud.loud_book = false;
           this.setState({loud: currentStateLoud});
@@ -136,6 +145,56 @@ class Sbox extends Component {
 
       default:
         this.setState({loud: this.state.loud});
+    }
+  }
+
+  handleCheckVisibility(event) {
+    this.state.visibility[event.target.name] = event.target.checked;
+    const currentStateItem = event.target.checked;
+    // const currentStateVisibility = Object.assign(this.state.loud);
+
+    switch (event.target.name) {
+      case 'public_visibility':
+        if (currentStateItem) {
+          this.setState({
+            visibility: {
+              public: true,
+              private: false,
+              custom: false
+            },
+            visibilityIcon: 'public_icon'
+          });
+        }
+        break;
+
+      case 'private_visibility':
+        if (currentStateItem) {
+          this.setState({
+            visibility: {
+              public: false,
+              private: true,
+              custom: false
+            },
+            visibilityIcon: 'private_icon'
+          });
+        }
+        break;
+
+      case 'custom_visibility':
+        if (currentStateItem) {
+          this.setState({
+            visibility: {
+              public: false,
+              private: false,
+              custom: true
+            },
+            visibilityIcon: 'custom_icon'
+          });
+        }
+        break;
+
+      default:
+        this.setState({visibility: this.state.visibility});
     }
   }
 
@@ -199,12 +258,13 @@ class Sbox extends Component {
                   />
                 </div>
               </DropdownButton>
-              <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="" id={6} >
+              <DropdownButton className="bootstrap-pure-btn sbox-dropdown-btn" bsStyle="default"
+                title={<i className={`dropdown-btn-icon ${this.state.loudIcon}`}></i>} id={6} >
                 <div className="sbox-logging">
                   <ul>
                     <li>
                       <div>
-                        <input type="radio" name="quiet_log" id="quiet_log" checked={this.state.loud.quiet_log} onChange={this.test2}/>
+                        <input type="radio" name="quiet_log" id="quiet_log" checked={this.state.loud.quiet_log} onChange={this.handleCheckLoud}/>
                         <label htmlFor={'quiet_log'}><span></span></label>
                         <i className="quiet_log_icon"></i>
                         <p>Quiet logging</p>
@@ -212,7 +272,7 @@ class Sbox extends Component {
                     </li>
                     <li>
                       <div>
-                        <input type="checkbox" name="loud_log" id="loud_log" checked={this.state.loud.loud_log} onChange={this.test2}/>
+                        <input type="checkbox" name="loud_log" id="loud_log" checked={this.state.loud.loud_log} onChange={this.handleCheckLoud}/>
                         <label htmlFor={'loud_log'}><span></span></label>
                         <i className="loud_log_icon"></i>
                         <p>Loud logging</p>
@@ -220,7 +280,7 @@ class Sbox extends Component {
                     </li>
                     <li>
                       <div>
-                        <input type="checkbox" name="loud_book" id="loud_book" checked={this.state.loud.loud_book} onChange={this.test2}/>
+                        <input type="checkbox" name="loud_book" id="loud_book" checked={this.state.loud.loud_book} onChange={this.handleCheckLoud}/>
                         <label htmlFor={'loud_book'}><span></span></label>
                         <i className="loud_book_icon"></i>
                         <p>Loud in book</p>
@@ -228,7 +288,7 @@ class Sbox extends Component {
                     </li>
                     <li>
                       <div>
-                        <input type="checkbox" name="post_fb" id="post_fb" checked={this.state.loud.post_fb} onChange={this.test2}/>
+                        <input type="checkbox" name="post_fb" id="post_fb" checked={this.state.loud.post_fb} onChange={this.handleCheckLoud}/>
                         <label htmlFor={'post_fb'}><span></span></label>
                         <i className="post_fb_icon"></i>
                         <p>Post to Facebook</p>
@@ -236,7 +296,7 @@ class Sbox extends Component {
                     </li>
                     <li>
                       <div>
-                        <input type="checkbox" name="post_twitter" id="post_twitter" checked={this.state.loud.post_twitter} onChange={this.test2}/>
+                        <input type="checkbox" name="post_twitter" id="post_twitter" checked={this.state.loud.post_twitter} onChange={this.handleCheckLoud}/>
                         <label htmlFor={'post_twitter'}><span></span></label>
                         <i className="post_twitter_icon"></i>
                         <p>Post to Twitter</p>
@@ -244,12 +304,43 @@ class Sbox extends Component {
                     </li>
                     <li>
                      <div>
-                       <input type="checkbox" name="storyline" id="storyline" checked={this.state.loud.storyline} onChange={this.test2}/>
+                       <input type="checkbox" name="storyline" id="storyline" checked={this.state.loud.storyline} onChange={this.handleCheckLoud}/>
                        <label htmlFor={'storyline'}><span></span></label>
                        <p>Story will appear on Storyline</p>
                      </div>
                     </li>
                     {/*<button onClick={() => this.test()}>click for test</button>*/}
+                  </ul>
+                </div>
+              </DropdownButton>
+              <DropdownButton className="bootstrap-pure-btn sbox-dropdown-btn" bsStyle="default"
+                title={<i className={`dropdown-btn-icon ${this.state.visibilityIcon}`}></i>} id={7} >
+                <div className="sbox-visibility">
+                  <ul>
+                    <li>
+                      <div>
+                        <input type="checkbox" name="public_visibility" id="public_visibility" checked={this.state.visibility.public} onChange={this.handleCheckVisibility}/>
+                        <label htmlFor={'public_visibility'}><span></span></label>
+                        <i className="public_icon"></i>
+                        <p>Public</p>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <input type="checkbox" name="private_visibility" id="private_visibility" checked={this.state.visibility.private} onChange={this.handleCheckVisibility}/>
+                        <label htmlFor={'private_visibility'}><span></span></label>
+                        <i className="private_icon"></i>
+                        <p>Private</p>
+                      </div>
+                    </li>
+                    <li>
+                      <div>
+                        <input type="checkbox" name="custom_visibility" id="custom_visibility" checked={this.state.visibility.custom} onChange={this.handleCheckVisibility}/>
+                        <label htmlFor={'custom_visibility'}><span></span></label>
+                        <i className="custom_icon"></i>
+                        <p>Custom</p>
+                      </div>
+                    </li>
                   </ul>
                 </div>
               </DropdownButton>
