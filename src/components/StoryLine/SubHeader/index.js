@@ -36,7 +36,7 @@ import './index.scss';
   getUserSlug,
 })
 
-class SubHeader extends Component {
+export default class SubHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -125,10 +125,7 @@ class SubHeader extends Component {
                 <i></i>
                 <div className="cover-btn">
                   <input type="file" onChange={(e) => this.handleCoverChange(e)} ref={(el) => this.inputCover = el}/>
-                  <a>
-                    <i></i>
-                    Update Cover Photo
-                  </a>
+                  <div style={{color: '#fff'}}><i></i>Update Cover Photo</div>
                 </div>
               </div>
             }
@@ -195,5 +192,3 @@ SubHeader.propTypes = {
   unfollowRequestedUser: PropTypes.func,
   showPopUp: PropTypes.func,
 };
-
-export default SubHeader;

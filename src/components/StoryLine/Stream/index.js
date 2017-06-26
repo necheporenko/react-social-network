@@ -99,6 +99,7 @@ Stream.propTypes = {
   over: PropTypes.bool,
   requestedUser: PropTypes.object,
   likePostStoryline: PropTypes.func,
+  isAuthenticated: PropTypes.bool,
 };
 
 export default Stream;

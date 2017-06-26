@@ -10,7 +10,8 @@ import './index.scss';
 @connect((state) => ({
   over: state.book.over,
   pagination: state.book.pagination,
-  book_slug: state.book.book_slug
+  book_slug: state.book.book_slug,
+  isAuthenticated: state.user.isAuthenticated,
 }), {
   likePostBook
 })
@@ -38,7 +39,7 @@ export default class BookStream extends Component {
   }
 
   render() {
-    const { bookStories } = this.props;
+    const { bookStories, authorizedUser, requestedUser, isAuthenticated } = this.props;
     const loader = (
       <div className="wrapper-loader">
         <div className="loader">
@@ -51,11 +52,13 @@ export default class BookStream extends Component {
 
     return (
       <div className="stream">
-        <Sbox
-          authorizedUser={this.props.authorizedUser}
-          createStory={this.props.createStory}
-          reloadStream={this.reloadStreamBook}
-        />
+        { isAuthenticated && authorizedUser.id === requestedUser.id &&
+          <Sbox
+            authorizedUser={this.props.authorizedUser}
+            createStory={this.props.createStory}
+            reloadStream={this.reloadStreamBook}
+          />
+        }
         <InfiniteScroll
           loadMore={this.load}
           hasMore={true}
@@ -82,6 +85,8 @@ export default class BookStream extends Component {
 
 BookStream.propTypes = {
   authorizedUser: PropTypes.object,
+  requestedUser: PropTypes.object,
+  isAuthenticated: PropTypes.bool,
   createStory: PropTypes.func,
   bookStories: PropTypes.array,
   over: PropTypes.bool,
@@ -89,4 +94,5 @@ BookStream.propTypes = {
   book_slug: PropTypes.string,
   pagination: PropTypes.number,
   likePostBook: PropTypes.func,
+  showBookStories: PropTypes.func,
 };

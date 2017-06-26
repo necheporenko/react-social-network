@@ -18,7 +18,7 @@ import StoryLine from '../components/StoryLine';
     // dispatch(clearPagination());
     promises.push(dispatch(loadPeopleFollowing(getUserSlug(getState()))));
     promises.push(dispatch(loadPeopleFollowers(getUserSlug(getState()))));
-    // promises.push(dispatch(loadStories(getUserSlug(getState()))));
+    promises.push(dispatch(loadStories(getUserSlug(getState()))));
     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
     promises.push(dispatch(loadProfile(getUserSlug(getState()))));
     promises.push(dispatch(loadUserFriends(getUserSlug(getState()))));

@@ -33,12 +33,12 @@ class Sbox extends Component {
       toolbarHidden: true,
       jump: '20px',
       loud: {
-        quiet_log: true,
-        loud_log: false,
+        quiet_log: false,
+        loud_log: true,
         loud_book: true,
         post_fb: false,
         post_twitter: false,
-        storyline: false
+        storyline: true
       }
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
@@ -75,14 +75,68 @@ class Sbox extends Component {
   }
 
   test(event) {
-    event.preventDefault();
+    // event.preventDefault();
     console.log(this.state.loud);
     console.log('hi');
   }
 
   test2(event) {
     this.state.loud[event.target.name] = event.target.checked;
-    this.setState({loud: this.state.loud});
+
+    const currentStateItem = event.target.checked;
+    const currentStateLoud = Object.assign(this.state.loud);
+
+    if (!this.state.loud.loud_log && !this.state.loud.loud_book) {
+      currentStateLoud.quiet_log = true;
+      currentStateLoud.loud_log = false;
+      currentStateLoud.loud_book = false;
+      currentStateLoud.storyline = false;
+      this.setState({loud: currentStateLoud});
+    }
+
+    switch (event.target.name) {
+      case 'quiet_log':
+        if (currentStateItem) {
+          this.setState({
+            loud: {
+              quiet_log: true,
+              loud_log: false,
+              loud_book: false,
+              post_fb: false,
+              post_twitter: false,
+              storyline: false
+            }
+          });
+        }
+        break;
+
+      case 'loud_log':
+        if (!currentStateItem) {
+          currentStateLoud.loud_log = false;
+          this.setState({loud: currentStateLoud});
+        } else {
+          currentStateLoud.quiet_log = false;
+          currentStateLoud.loud_log = true;
+          currentStateLoud.loud_book = true;
+          currentStateLoud.storyline = true;
+          this.setState({loud: currentStateLoud});
+        }
+        break;
+
+      case 'loud_book':
+        if (currentStateItem) {
+          currentStateLoud.loud_book = true;
+          currentStateLoud.quiet_log = false;
+          this.setState({loud: currentStateLoud});
+        } else {
+          currentStateLoud.loud_book = false;
+          this.setState({loud: currentStateLoud});
+        }
+        break;
+
+      default:
+        this.setState({loud: this.state.loud});
+    }
   }
 
   render() {
@@ -115,7 +169,11 @@ class Sbox extends Component {
               inDropdown: true
             },
             image: {
-              uploadCallback: uploadImageCallBack
+              uploadCallback: uploadImageCallBack,
+              defaultSize: {
+                width: '100%',
+                height: '100%'
+              }
             }
           }}
         />
@@ -145,30 +203,53 @@ class Sbox extends Component {
                 <div className="sbox-logging">
                   <ul>
                     <li>
-                      <input type="radio" name="quiet_log" checked={this.state.loud.quiet_log} onChange={this.test2}/>
-                      <i>Quiet logging</i>
+                      <div>
+                        <input type="radio" name="quiet_log" id="quiet_log" checked={this.state.loud.quiet_log} onChange={this.test2}/>
+                        <label htmlFor={'quiet_log'}><span></span></label>
+                        <i className="quiet_log_icon"></i>
+                        <p>Quiet logging</p>
+                      </div>
                     </li>
                     <li>
-                      <input type="checkbox" name="loud_log" checked={this.state.loud.loud_log} onChange={this.test2}/>
-                      <i>Loud logging</i>
+                      <div>
+                        <input type="checkbox" name="loud_log" id="loud_log" checked={this.state.loud.loud_log} onChange={this.test2}/>
+                        <label htmlFor={'loud_log'}><span></span></label>
+                        <i className="loud_log_icon"></i>
+                        <p>Loud logging</p>
+                      </div>
                     </li>
                     <li>
-                      <input type="checkbox" name="loud_book" checked={this.state.loud.loud_book} onChange={this.test2}/>
-                      <i>Loud in book</i>
+                      <div>
+                        <input type="checkbox" name="loud_book" id="loud_book" checked={this.state.loud.loud_book} onChange={this.test2}/>
+                        <label htmlFor={'loud_book'}><span></span></label>
+                        <i className="loud_book_icon"></i>
+                        <p>Loud in book</p>
+                      </div>
                     </li>
                     <li>
-                      <input type="checkbox" name="post_fb" checked={this.state.loud.post_fb} onChange={this.test2}/>
-                      <i>Post to Facebook</i>
+                      <div>
+                        <input type="checkbox" name="post_fb" id="post_fb" checked={this.state.loud.post_fb} onChange={this.test2}/>
+                        <label htmlFor={'post_fb'}><span></span></label>
+                        <i className="post_fb_icon"></i>
+                        <p>Post to Facebook</p>
+                      </div>
                     </li>
                     <li>
-                      <input type="checkbox" name="post_twitter" checked={this.state.loud.post_twitter} onChange={this.test2}/>
-                      <i>Post to Twitter</i>
+                      <div>
+                        <input type="checkbox" name="post_twitter" id="post_twitter" checked={this.state.loud.post_twitter} onChange={this.test2}/>
+                        <label htmlFor={'post_twitter'}><span></span></label>
+                        <i className="post_twitter_icon"></i>
+                        <p>Post to Twitter</p>
+                      </div>
                     </li>
                     <li>
-                      <input type="checkbox" name="storyline" checked={this.state.loud.storyline} onChange={this.test2}/>
-                      <i>Story will appear on Storyline</i>
+                     <div>
+                       <input type="checkbox" name="storyline" id="storyline" checked={this.state.loud.storyline} onChange={this.test2}/>
+                       <label htmlFor={'storyline'}><span></span></label>
+                       <p>Story will appear on Storyline</p>
+                     </div>
                     </li>
-                    <button onClick={() => this.test()}>click for test</button>
+                    {/*<button onClick={() => this.test()}>click for test</button>*/}
                   </ul>
                 </div>
               </DropdownButton>

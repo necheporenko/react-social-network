@@ -115,39 +115,12 @@
     }
   }
 
+  .dropdown-menu {
+    padding: 5px 0;
+  }
+
   .sbox-booktree {
     width: 225px;
-
-    /*
-    STYLE CHECKBOX
-     */
-    input[type="checkbox"] {
-      display:none;
-    }
-
-    input[type="checkbox"] + label span {
-      display:inline-block;
-      width:11px;
-      height:11px;
-      margin: 0 7px 0 -2px;
-      cursor:pointer;
-      border-radius: 1px;
-      background-color: rgba(255, 255, 255, .05);
-      border: 1px solid rgba(155, 155, 155, .57);
-    }
-
-    label {
-      margin-top: 4px;
-      margin-left: -3px;
-      position: absolute;
-    }
-
-    input[type="checkbox"]:checked + label span {
-      background:url(../../../img/Icons/checkmark.png) -6px repeat;
-    }
-    /*
-    STYLE CHECKBOX
-     */
 
     .react-tree {
       padding: 0;
@@ -157,6 +130,12 @@
       padding: 0 !important;
       padding-left: 15px !important;
       display: inherit;
+    }
+
+    label {
+      margin-top: 4px;
+      margin-left: -3px;
+      position: absolute;
     }
 
     span {
@@ -226,6 +205,121 @@
   }
 }
 
+.sbox-logging {
+  width: 210px;
+
+  li {
+    line-height: 22px;
+    position: relative;
+    height: 36px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #eeeeee;
+    }
+
+    > div {
+      display: flex;
+      padding: 6px 6px 6px 10px;
+    }
+
+    label {
+      position: static;
+      margin-top: 2px;
+    }
+
+    p {
+      padding-left: 5px;
+    }
+  }
+
+  .quiet_log_icon,
+  .loud_log_icon,
+  .post_fb_icon,
+  .post_twitter_icon {
+    background: $sprite;
+    display: inline-block;
+    width: 17px;
+    height: 16px;
+  }
+
+  .quiet_log_icon {
+    background-position: -160px -156px;
+  }
+
+  .loud_log_icon {
+    background-position: -160px -138px;
+  }
+
+  .loud_book_icon {
+    background: url('../../../img/Icons/loudspeaker-in-book.svg') no-repeat;
+    width: 15px;
+    height: 16px;
+    margin-top: 4px;
+  }
+
+  .post_fb_icon {
+    background-position: -154px -191px;
+  }
+
+  .post_twitter_icon {
+    background-position: -168px -191px;
+  }
+}
+
+.sbox-booktree,
+.sbox-logging {
+  /*
+  STYLE CHECKBOX
+   */
+  input[type="checkbox"],
+  input[type="radio"] {
+    display: none;
+  }
+
+  input[type="checkbox"] + label span {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    margin: 0 7px 0 -2px;
+    cursor: pointer;
+    border-radius: 1px;
+    background-color: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(155, 155, 155, .57);
+  }
+
+  input[type="checkbox"]:checked + label span {
+    background: url(../../../img/Icons/checkmark.png) -6px repeat;
+  }
+
+  input[type="radio"] + label {
+    background-color: rgba(255,255,255,.05);
+    border: 1px solid rgba(155,155,155,.57);
+    font-size: 1px;
+    height: 11px;
+    margin: 4px 7px 0 -2px;
+    vertical-align: text-bottom;
+    width: 11px;
+    //background: none;
+    display: inline-block;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  input[type="radio"]:checked + label span {
+    width: 7px;
+    height: 7px;
+    background: #666666;
+    display: inline-block;
+    border-radius: 50%;
+    top: -2px;
+    right: -2px;
+    position: relative;
+  }
+  /*
+  STYLE CHECKBOX
+   */
+}
 
 /* === Post Start === */
 .post {
@@ -537,13 +631,18 @@
 
   /* === Post Content Type Start === */
 .post-content-type-text {
-
   p {
     font-size: 14px;
     color: #333;
     line-height: 1.6em;
     //word-break: break-word;
     margin: 5px 0;
+  }
+
+  img {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
   }
 }
 
