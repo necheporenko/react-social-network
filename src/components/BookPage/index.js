@@ -77,6 +77,7 @@ export default class BookPage extends Component {
               />
               <BookStream
                 authorizedUser={this.props.authorizedUser}
+                requestedUser={this.props.requestedUser}
                 book_slug={this.props.book_slug}
                 bookStories={this.props.bookStories}
                 nextBookStories={this.props.nextBookStories}

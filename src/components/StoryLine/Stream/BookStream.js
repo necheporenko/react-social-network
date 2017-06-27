@@ -74,6 +74,7 @@ export default class BookStream extends Component {
               created={story.created}
               images={story.images}
               likes={story.likes}
+              books={story.books}
               likeFunc={this.like}
             />
           ))}

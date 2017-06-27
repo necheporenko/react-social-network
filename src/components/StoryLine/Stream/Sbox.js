@@ -122,7 +122,7 @@ class Sbox extends Component {
       case 'loud_log':
         if (!currentStateItem) {
           currentStateLoud.loud_log = false;
-          this.setState({loud: currentStateLoud,});
+          this.setState({loud: currentStateLoud, });
         } else {
           currentStateLoud.quiet_log = false;
           currentStateLoud.loud_log = true;
@@ -258,11 +258,12 @@ class Sbox extends Component {
                   />
                 </div>
               </DropdownButton>
-              <DropdownButton className="bootstrap-pure-btn sbox-dropdown-btn" bsStyle="default"
+              <DropdownButton
+                className="bootstrap-pure-btn sbox-dropdown-btn" bsStyle="default"
                 title={<i className={`dropdown-btn-icon ${this.state.loudIcon}`}></i>} id={6} >
                 <div className="sbox-logging">
                   <ul>
-                    <li>
+                    <li style={{borderBottom: '1px solid #eee'}}>
                       <div>
                         <input type="radio" name="quiet_log" id="quiet_log" checked={this.state.loud.quiet_log} onChange={this.handleCheckLoud}/>
                         <label htmlFor={'quiet_log'}><span></span></label>
@@ -278,7 +279,7 @@ class Sbox extends Component {
                         <p>Loud logging</p>
                       </div>
                     </li>
-                    <li>
+                    <li style={{borderBottom: '1px solid #eee'}}>
                       <div>
                         <input type="checkbox" name="loud_book" id="loud_book" checked={this.state.loud.loud_book} onChange={this.handleCheckLoud}/>
                         <label htmlFor={'loud_book'}><span></span></label>
@@ -294,7 +295,7 @@ class Sbox extends Component {
                         <p>Post to Facebook</p>
                       </div>
                     </li>
-                    <li>
+                    <li style={{borderBottom: '1px solid #eee'}}>
                       <div>
                         <input type="checkbox" name="post_twitter" id="post_twitter" checked={this.state.loud.post_twitter} onChange={this.handleCheckLoud}/>
                         <label htmlFor={'post_twitter'}><span></span></label>
@@ -303,17 +304,18 @@ class Sbox extends Component {
                       </div>
                     </li>
                     <li>
-                     <div>
-                       <input type="checkbox" name="storyline" id="storyline" checked={this.state.loud.storyline} onChange={this.handleCheckLoud}/>
-                       <label htmlFor={'storyline'}><span></span></label>
-                       <p>Story will appear on Storyline</p>
-                     </div>
+                      <div>
+                        <input type="checkbox" name="storyline" id="storyline" checked={this.state.loud.storyline} onChange={this.handleCheckLoud}/>
+                        <label htmlFor={'storyline'}><span></span></label>
+                        <p>Story will appear on Storyline</p>
+                      </div>
                     </li>
                     {/*<button onClick={() => this.test()}>click for test</button>*/}
                   </ul>
                 </div>
               </DropdownButton>
-              <DropdownButton className="bootstrap-pure-btn sbox-dropdown-btn" bsStyle="default"
+              <DropdownButton
+                className="bootstrap-pure-btn sbox-dropdown-btn" bsStyle="default"
                 title={<i className={`dropdown-btn-icon ${this.state.visibilityIcon}`}></i>} id={7} >
                 <div className="sbox-visibility">
                   <ul>

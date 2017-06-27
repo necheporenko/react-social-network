@@ -11,6 +11,14 @@ import Log from '../../Popup/Log';
   likePost
 })
 
+// class MyTooltip {
+//   render() {
+//     const { style: left, top } = this.props;
+//
+//     return (<Tooltip {...this.props} id="tooltipLike1" style={{ left: left - 300, top: top + 15 }}>Hello</Tooltip>);
+//   }
+// }
+
 export default class Post extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +28,7 @@ export default class Post extends Component {
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
     this.loadLikeInfo = this.loadLikeInfo.bind(this);
+    this.loadBookInfo = this.loadBookInfo.bind(this);
   }
 
   Close() {
@@ -73,13 +82,29 @@ export default class Post extends Component {
     return result;
   }
 
+  loadBookInfo(books) {
+    const arrBooks = [];
+    const countBooks = books.length;
+    let result;
+
+    if (countBooks > 1) {
+      books.map((book) => (
+        arrBooks.push(` ${book.name}`)
+      ));
+      result = `${countBooks} books: ${arrBooks.join(', ')}`;
+    } else {
+      books.map((book) => (
+        result = book.name
+      ));
+    }
+    return result;
+  }
+
   render() {
     const { fullName, slug, avatar } = this.props.user;
     const { qty, is_liked, people_list } = this.props.likes;
-    const created = this.props.created;
-    const post = this.props.post;
-    const images = this.props.images;
-    const id = this.props.id;
+    const { created, post, images, id, books } = this.props;
+
     // const tooltip = (props) => (
     //
     //   <Tooltip id={props.id}>
@@ -90,13 +115,23 @@ export default class Post extends Component {
     // );
 
     // tooltip.id = 'test';
-    const tooltip = (
-      <Tooltip id="tooltip" arrowOffsetLeft={10} >
+    const tooltipLike = (
+      <Tooltip id="tooltipLike" arrowOffsetLeft={10} >
         { people_list.map((people) => (
           <div key={people.user.id}>{people.user.fullName}</div>
         ))}
       </Tooltip>
     );
+
+    const tooltipBooks = (
+      <Tooltip id="tooltipBooks" arrowOffsetLeft={'10%'} placement="left" positionLeft="333" >
+        <div>Story location:</div>
+        { books.map((book) => (
+          <div key={book.id}>{book.name}</div>
+        ))}
+      </Tooltip>
+    );
+
     return (
       <div className="post post-appear ">
 
@@ -137,9 +172,25 @@ export default class Post extends Component {
                 </div>
               </div>
 
-
               <div className="post-delimiter"><span> · </span></div>
-              <div className="post-details-location">Wallbook</div>
+              <div className="post-details-location">
+                <OverlayTrigger placement="top" overlay={tooltipBooks} id="tooltipBooks" >
+                  <span>
+                    {this.loadBookInfo(books)}
+                  </span>
+                </OverlayTrigger>
+                {/*{this.loadBookInfo(books)}*/}
+                {/*<div className="myTooltip" onClick={(e) => console.log('helllo', e)}>*/}
+                  {/*<div className="myTooltip-arrow"></div>*/}
+                  {/*<div className="myTooltip-inner">*/}
+                    {/*<div>Story location:</div>*/}
+                    {/*{ books.map((book) => (*/}
+                      {/*<div key={book.id}>{book.name}</div>*/}
+                    {/*))}*/}
+                  {/*</div>*/}
+                {/*</div>*/}
+              </div>
+
             </div>
           </div>
 
@@ -159,13 +210,10 @@ export default class Post extends Component {
             =========== */}
         <div className="post-content">
           <div className="wrap-post-content">
-
-
             <div
               className="post-content-type-text"
               dangerouslySetInnerHTML={{__html: post}}
             />
-
 
             {/*<div className="post-content-type-text">
               <p>Математический горизонт, в первом приближении, вызывает перигей. Движение, несмотря на внешние воздействия, последовательно. В связи с этим нужно подчеркнуть, что высота вращает первоначальный популяционный индекс. Это можно записать следующим образом: V = 29.8 * sqrt(2/r – 1/a) км/сек, где юлианская дата многопланово колеблет ионный хвост. Конечно, нельзя не принять во внимание тот факт, что натуральный логарифм прекрасно притягивает межпланетный Южный Треугольник.</p>
@@ -178,7 +226,6 @@ export default class Post extends Component {
                 <img src={images[0]}/>
               </div>
             }
-
 
             {/*<div className="post-content-type-link">
               <a href="#">
@@ -258,7 +305,7 @@ export default class Post extends Component {
         <div className="post-lc" style={{display: (qty === 0) ? 'none' : 'block'}}>
           <div className="post-like" onClick={this.Open}>
             <i className="post-action-icon"></i>
-            <OverlayTrigger placement="top" overlay={tooltip} id="tooltip" arrowOffsetLeft={200} >
+            <OverlayTrigger placement="top" overlay={tooltipLike} id="tooltipLike" arrowOffsetLeft={200} >
               <span>
                 {this.loadLikeInfo(people_list)}
               </span>
@@ -306,5 +353,6 @@ Post.propTypes = {
   created: PropTypes.string,
   id: PropTypes.string,
   images: PropTypes.array,
+  books: PropTypes.array,
   likeFunc: PropTypes.func,
 };

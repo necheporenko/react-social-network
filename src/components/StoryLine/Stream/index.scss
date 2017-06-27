@@ -421,7 +421,7 @@
 }
 
 .post-delimiter {
-  padding: 0 10px;
+  padding: 0 8px;
 }
 
 .post-details {
@@ -447,6 +447,19 @@
     background-position: -155px -206px;
     width: 14px;
     height: 15px;
+  }
+}
+
+.post-details-location {
+  max-width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    .myTooltip {
+      opacity: 1;
+    }
   }
 }
 
@@ -537,6 +550,47 @@
 //   content: "";
 // }
 
+/* === Tooltip Start === */
+#tooltipBooks,
+#tooltipLike {
+  .tooltip-arrow {
+    left: 10% !important;
+  }
+
+  .tooltip-inner {
+    text-align: left;
+  }
+}
+
+.myTooltip {
+  position: absolute;
+  top: -25px;
+  opacity: 0.5;
+
+  .myTooltip-arrow {
+    width: 0;
+    height: 0;
+    border-top: 7px solid #000;
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    position: absolute;
+    bottom: -13px;
+    margin-left: 5px;
+  }
+
+  .myTooltip-inner{
+    max-width: 200px;
+    padding: 3px 8px;
+    color: #fff;
+    text-align: left;
+    background-color: #000;
+    border-radius: 2px;
+    font-size: 12px;
+  }
+}
+
+/* === Tooltip END === */
 
 .post-content {
   padding: 12px 0;

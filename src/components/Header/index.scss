@@ -366,11 +366,21 @@
       background: $brand-hover;
     }
   }
+
+  .header-sign-in {
+    margin-left: 10px;
+  }
+
+  .header-sign-up {
+    background-color: #5c9348;
+
+    &:hover {
+      background-color: #7ead6d;
+    }
+  }
 }
 
-.header-sign-in {
-  margin-left: 10px;
-}
+
 
 /* -- MinHeader End  -- */
 

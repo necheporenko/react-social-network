@@ -162,8 +162,12 @@ class New extends Component {
 
         {this.props.loading && (
           <div className="spinner-bg">
-            <div className="spinner">
-              <i className="fa fa-pulse fa-spinner"/>
+            <div className="wrapper-loader">
+              <div className="loader" style={{width: '65px', position: 'absolute', top: '40%', left: 'calc(50% - 35px)'}}>
+                <svg className="circular" viewBox="25 25 50 50">
+                  <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
+                </svg>
+              </div>
             </div>
           </div>
         )}

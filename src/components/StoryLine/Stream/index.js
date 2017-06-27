@@ -48,7 +48,7 @@ class Stream extends Component {
     const { storiesArr, authorizedUser, requestedUser, isAuthenticated } = this.props;
     const loader = (
       <div className="wrapper-loader">
-        <div className="loader">
+        <div className="loader"z>
           <svg className="circular" viewBox="25 25 50 50">
             <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
           </svg>
@@ -81,6 +81,7 @@ class Stream extends Component {
               created={story.created}
               images={story.images}
               likes={story.likes}
+              books={story.books}
               likeFunc={this.like}
             />
           ))}

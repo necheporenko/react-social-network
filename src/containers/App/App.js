@@ -56,6 +56,7 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
   isAuthenticated: state.user.isAuthenticated,
   authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
+  locationBeforeTransitions: state.routing.locationBeforeTransitions,
 }), ({
   logoutUser,
   hideLoading
@@ -85,7 +86,7 @@ class App extends Component {
             />
           </div>
         }
-        { !this.props.isAuthenticated && this.props.requestedUser !== {} &&
+        { !this.props.isAuthenticated && this.props.locationBeforeTransitions.pathname !== '/' &&
           <div style={{ marginTop: '52px' }}>
             <MinHeader/>
           </div>
@@ -101,6 +102,7 @@ App.propTypes = {
   isAuthenticated: PropTypes.bool,
   authorizedUser: PropTypes.object,
   requestedUser: PropTypes.object,
+  locationBeforeTransitions: PropTypes.object,
   logoutUser: PropTypes.func,
   hideLoading: PropTypes.func,
   // userLogin: PropTypes.func,
