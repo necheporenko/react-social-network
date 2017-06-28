@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Modal, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
+import Textarea from 'react-textarea-autosize';
+import { Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { like as likePost } from '../../../redux/modules/story';
 import Log from '../../Popup/Log';
 
@@ -29,6 +29,7 @@ export default class Post extends Component {
     this.Open = this.Open.bind(this);
     this.loadLikeInfo = this.loadLikeInfo.bind(this);
     this.loadBookInfo = this.loadBookInfo.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   Close() {
@@ -100,15 +101,27 @@ export default class Post extends Component {
     return result;
   }
 
+  handleKeyPress(event) {
+    if (event.keyCode === 13 && event.shiftKey) {
+      console.log('Enter + Shift clicked!!!');
+      // this.setState({
+      //   heightTextarea: this.state.heightTextarea + 14
+      // });
+    } else if (event.keyCode === 13) {
+      alert('Enter clicked!!!');
+    }
+    console.log('key', event.key);
+  }
+
   render() {
     const { fullName, slug, avatar } = this.props.user;
-    const { qty, is_liked, people_list } = this.props.likes;
-    const { created, post, images, id, books } = this.props;
+    // const { qty, is_liked, people_list } = this.props.likes;
+    const { date, post, images, id, books, likes } = this.props;
 
     // const tooltip = (props) => (
     //
     //   <Tooltip id={props.id}>
-    //     { people_list.map((people) => (
+    //     { likes.people_list.map((people) => (
     //       <div>{people.user.fullName}</div>
     //     ))}
     //   </Tooltip>
@@ -117,7 +130,7 @@ export default class Post extends Component {
     // tooltip.id = 'test';
     const tooltipLike = (
       <Tooltip id="tooltipLike" arrowOffsetLeft={10} >
-        { people_list.map((people) => (
+        { likes.people_list.map((people) => (
           <div key={people.user.id}>{people.user.fullName}</div>
         ))}
       </Tooltip>
@@ -134,7 +147,6 @@ export default class Post extends Component {
 
     return (
       <div className="post post-appear ">
-
         {/* ===========
             Post Header
             =========== */}
@@ -149,7 +161,13 @@ export default class Post extends Component {
               <Link to={`/${slug}`}>{fullName}</Link>
             </div>
             <div className="post-details">
-              <div className="post-details-date">{created}</div>
+              <div className="post-details-date">{date.created}
+                <div className="block-additional-date">
+                  <div>{`Created on: ${date.exactCreated}`}</div>
+                  <div>{`Started on: ${date.startedOn}`}</div>
+                  <div>{ date.completedOn && `Completed on: ${date.completedOn}`}</div>
+                </div>
+              </div>
               <div className="post-delimiter"><span> · </span></div>
               <div className="post-details-loud-icon"><span></span></div>
               <div className="post-delimiter"><span> · </span></div>
@@ -161,12 +179,24 @@ export default class Post extends Component {
                   {/* <i className="caret"></i> */}
                   <ButtonToolbar>
                     <DropdownButton className="profileMenu-btn" title={''} id={3} pullRight>
-                      <Link>Public</Link>
-                      <Link>Only me</Link>
-                      <Link>Custom</Link>
-                      <Link>Reset as per visibility of books</Link>
-                      <span className="divider"></span>
-                      <Link>History of Story Visibility</Link>
+                      <div className="sbox-visibility">
+                        <ul>
+                          <li>
+                            <div>
+                              <input type="checkbox" name="public_visibility" id="public_visibility" checked onChange={this.handleCheckVisibility}/>
+                              <label htmlFor={'public_visibility'}><span></span></label>
+                              <i className="public_icon"></i>
+                              <p>Public</p>
+                            </div>
+                          </li>
+                        </ul>
+                        <Link>Public</Link>
+                        <Link>Only me</Link>
+                        <Link>Custom</Link>
+                        <Link>Reset as per visibility of books</Link>
+                        <span className="divider"></span>
+                        <Link>History of Story Visibility</Link>
+                      </div>
                     </DropdownButton>
                   </ButtonToolbar>
                 </div>
@@ -197,9 +227,10 @@ export default class Post extends Component {
           <div className="wrap-post-story-dropdown">
             <ButtonToolbar>
               <DropdownButton className="profileMenu-btn" title={''} id={4} noCaret pullRight >
-                <Link>Pin story</Link>
-                <Link>Story Details</Link>
-                <Link>Delete Story</Link>
+                <Link><li>Pin story</li></Link>
+                <hr/>
+                <Link><li>Story Details</li></Link>
+                <Link><li>Delete Story</li></Link>
               </DropdownButton>
             </ButtonToolbar>
           </div>
@@ -281,7 +312,7 @@ export default class Post extends Component {
             =========== */}
         <div className="post-footer">
           {/*<div className="post-like post-like-active" onClick={() => this.like(id)}>*/}
-          <div className={!is_liked ? 'post-like' : 'post-like post-like-active'} onClick={() => this.props.likeFunc(id)}>
+          <div className={!likes.is_liked ? 'post-like' : 'post-like post-like-active'} onClick={() => this.props.likeFunc(id)}>
             <i className="post-action-icon"></i>
             <span>Like</span>
           </div>
@@ -302,43 +333,66 @@ export default class Post extends Component {
           </div>
         </div>
 
-        <div className="post-lc" style={{display: (qty === 0) ? 'none' : 'block'}}>
-          <div className="post-like" onClick={this.Open}>
+        <div className="post-lc" style={{display: (likes.qty === 0) ? 'none' : 'block'}}>
+          <div className="post-like-field" onClick={this.Open}>
             <i className="post-action-icon"></i>
             <OverlayTrigger placement="top" overlay={tooltipLike} id="tooltipLike" arrowOffsetLeft={200} >
               <span>
-                {this.loadLikeInfo(people_list)}
+                {this.loadLikeInfo(likes.people_list)}
               </span>
             </OverlayTrigger>
+          </div>
+
+          <div className="post-comment-field">
+            <div className="comments">
+              <div className="comment">
+                <img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>
+                <div className="text-block">
+                  <p>
+                    <Link>Vadim Necheporenko</Link>
+                    Validbook is a user controlled, not for profit enterprise. The mission of Validbook is to make cooperation between people, physical objects and virtual entities more effective and efficient by making cooperation more transparent, free and reliable.
+                  </p>
+                  <span className="reply">Reply</span><span> · </span><span className="date">7 Jun 2017</span>
+                </div>
+              </div>
+
+              <div className="comment">
+                <img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>
+                <div className="text-block">
+                  <p>
+                    <Link>Vadim Necheporenko</Link>
+                    Validbook is a user controlled, not for profit enterprise. The mission of Validbook is to make cooperation between people, physical objects and virtual entities more effective and efficient by making cooperation more transparent, free and reliable.
+                  </p>
+                  <span className="reply">Reply</span><span> · </span><span className="date">7 Jun 2017</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="new-comment">
+              <img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>
+              <Textarea
+                placeholder="Write a comment..."
+                onKeyDown={this.handleKeyPress}
+              />
+            </div>
           </div>
         </div>
 
         <Modal className="modal-likes" show={this.state.showModal} onHide={this.Close} >
           <Modal.Header closeButton>
-            <span>All {qty}</span>
+            <span>All {likes.qty}</span>
           </Modal.Header>
 
           <Modal.Body>
-            <div className="people-like-card">
-              <a href="#">
-                <img src="https://s3-us-west-2.amazonaws.com/dev.validbook/avatars/2017/05/29/1/q8WF8j2UJWdppuCyh7qyiGtjla2fc0gJ.jpg" />
-                <div>Bohdan Andriyiv</div>
-              </a>
-            </div>
-            <div className="people-like-card">
-              <a href="#">
-                <img src="https://s3-us-west-2.amazonaws.com/dev.validbook/avatars/2017/05/29/1/q8WF8j2UJWdppuCyh7qyiGtjla2fc0gJ.jpg" />
-                <div>Bohdan Andriyiv</div>
-              </a>
-            </div>
-            <div className="people-like-card">
-              <a href="#">
-                <img src="https://s3-us-west-2.amazonaws.com/dev.validbook/avatars/2017/05/29/1/q8WF8j2UJWdppuCyh7qyiGtjla2fc0gJ.jpg" />
-                <div>Bohdan Andriyiv</div>
-              </a>
-            </div>
+            { likes.people_list.map((people) => (
+              <div key={people.user.id} className="people-like-card">
+                <Link to={people.user.slug}>
+                  <img src={people.user.avatar} />
+                  <div>{people.user.fullName}</div>
+                </Link>
+              </div>
+            ))}
           </Modal.Body>
-
         </Modal>
 
       </div>
@@ -350,8 +404,8 @@ Post.propTypes = {
   user: PropTypes.object,
   likes: PropTypes.object,
   post: PropTypes.string,
-  created: PropTypes.string,
-  id: PropTypes.string,
+  date: PropTypes.object,
+  id: PropTypes.number,
   images: PropTypes.array,
   books: PropTypes.array,
   likeFunc: PropTypes.func,

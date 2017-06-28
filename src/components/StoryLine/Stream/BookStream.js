@@ -65,13 +65,13 @@ export default class BookStream extends Component {
           threshold={50}
           loader={loader}
         >
-          {bookStories && bookStories.map((story) => (
+          { bookStories && bookStories.map((story) => (
             <Post
               key={story.id}
               id={story.id}
               post={story.text}
               user={story.user}
-              created={story.created}
+              date={story.date}
               images={story.images}
               likes={story.likes}
               books={story.books}
