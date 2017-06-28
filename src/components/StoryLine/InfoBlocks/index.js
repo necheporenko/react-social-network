@@ -10,7 +10,7 @@ class InfoBloks extends Component {
     return (
       <div className="infobloks">
         <Cutaway
-          userProfile={this.props.userProfile}
+          requestedUser={this.props.requestedUser}
         />
         <Tokens />
         <Photos />
@@ -27,7 +27,7 @@ class InfoBloks extends Component {
 
 InfoBloks.propTypes = {
   children: PropTypes.element,
-  userProfile: PropTypes.object,
+  requestedUser: PropTypes.object,
   followers: PropTypes.object,
   following: PropTypes.object,
   friends: PropTypes.array

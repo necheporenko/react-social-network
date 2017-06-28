@@ -154,26 +154,24 @@ export function isLoaded(globalState) {
   return globalState.story && globalState.story.loaded;
 }
 
-export function load(slug) {
-  const user_slug = slug || '';
+export function load(user_slug) {
   return {
     types: [LOAD_SHOW_USER_STORIES, LOAD_SHOW_USER_STORIES_SUCCESS, LOAD_SHOW_USER_STORIES_FAIL],
-    promise: (client) => client.get('/user/stories', { params: { user_slug }})
+    promise: (client) => client.get(`/users/${user_slug}/stories`)
   };
 }
 
-export function loadNext(slug, page) {
-  const user_slug = slug || '';
+export function loadNext(user_slug, page) {
   return {
     types: [LOAD_NEXT_SHOW_USER_STORIES, LOAD_NEXT_SHOW_USER_STORIES_SUCCESS, LOAD_NEXT_SHOW_USER_STORIES_FAIL],
-    promise: (client) => client.get('/user/stories', { params: { user_slug, page }})
+    promise: (client) => client.get(`/users/${user_slug}/stories`, { params: page })
   };
 }
 
 export function create(description, books) {
   return {
     types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
-    promise: (client) => client.post('/story', { data: { description, books }})
+    promise: (client) => client.post('/stories', { data: { description, books }})
   };
 }
 

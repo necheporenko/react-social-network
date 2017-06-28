@@ -1,15 +1,15 @@
-export const LOAD_CHANNELS = 'LOAD_CHANNELS';
-export const LOAD_CHANNELS_SUCCESS = 'LOAD_CHANNELS_SUCCESS';
-export const LOAD_CHANNELS_FAIL = 'LOAD_CHANNELS_FAIL';
-export const SHOW_CHANNEL = 'SHOW_CHANNEL';
-export const SHOW_CHANNEL_SUCCESS = 'SHOW_CHANNEL_SUCCESS';
-export const SHOW_CHANNEL_FAIL = 'SHOW_CHANNEL_FAIL';
-export const CREATE_CHANNEL = 'CREATE_CHANNEL';
-export const CREATE_CHANNEL_SUCCESS = 'CREATE_CHANNEL_SUCCESS';
-export const CREATE_CHANNEL_FAIL = 'CREATE_CHANNEL_FAIL';
+export const LOAD_CHANNELS_LIST = 'LOAD_CHANNELS_LIST';
+export const LOAD_CHANNELS_LIST_SUCCESS = 'LOAD_CHANNELS_LIST_SUCCESS';
+export const LOAD_CHANNELS_LIST_FAIL = 'LOAD_CHANNELS_LIST_FAIL';
+export const LOAD_CHANNEL = 'LOAD_CHANNEL';
+export const LOAD_CHANNEL_SUCCESS = 'LOAD_CHANNEL_SUCCESS';
+export const LOAD_CHANNEL_FAIL = 'LOAD_CHANNEL_FAIL';
 export const LOAD_NEXT_CHANNEL_STORIES = 'LOAD_NEXT_CHANNEL_STORIES';
 export const LOAD_NEXT_CHANNEL_STORIES_SUCCESS = 'LOAD_NEXT_CHANNEL_STORIES_SUCCESS';
 export const LOAD_NEXT_CHANNEL_STORIES_FAIL = 'LOAD_NEXT_CHANNEL_STORIES_FAIL';
+export const CREATE_CHANNEL = 'CREATE_CHANNEL';
+export const CREATE_CHANNEL_SUCCESS = 'CREATE_CHANNEL_SUCCESS';
+export const CREATE_CHANNEL_FAIL = 'CREATE_CHANNEL_FAIL';
 const HEADER_CHANNEL_NAME = 'HEADER_CHANNEL_NAME';
 const LIKE_STORY = 'LIKE_STORY';
 const LIKE_STORY_SUCCESS = 'LIKE_STORY_SUCCESS';
@@ -28,14 +28,14 @@ const initialState = {
 
 export default function channelReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_CHANNELS:
+    case LOAD_CHANNELS_LIST:
       return {
         ...state,
         loading: {
           loadingChannelList: true
         }
       };
-    case LOAD_CHANNELS_SUCCESS:
+    case LOAD_CHANNELS_LIST_SUCCESS:
       return {
         ...state,
         loading: {
@@ -48,7 +48,7 @@ export default function channelReducer(state = initialState, action) {
         pagination: 1,
         channelsArr: action.result.data,
       };
-    case LOAD_CHANNELS_FAIL:
+    case LOAD_CHANNELS_LIST_FAIL:
       return {
         ...state,
         loading: {
@@ -61,14 +61,14 @@ export default function channelReducer(state = initialState, action) {
         channelsArr: []
       };
 
-    case SHOW_CHANNEL:
+    case LOAD_CHANNEL:
       return {
         ...state,
         loading: {
           loadingChannelStories: true
         }
       };
-    case SHOW_CHANNEL_SUCCESS:
+    case LOAD_CHANNEL_SUCCESS:
       return {
         ...state,
         loading: {
@@ -80,7 +80,7 @@ export default function channelReducer(state = initialState, action) {
         channel_slug: action.channel_slug,
         channelStories: action.result.data.stories,
       };
-    case SHOW_CHANNEL_FAIL:
+    case LOAD_CHANNEL_FAIL:
       return {
         ...state,
         loading: {
@@ -185,6 +185,10 @@ export function isLoadedChannelStories(globalState) {
   return globalState.channel && globalState.channel.loaded.loadedChannelStories && globalState.channel.loading;
 }
 
+export function getAuthUserSlug(globalState) {
+  return globalState.user.authorizedUser.slug;
+}
+
 export function isMashUp(globalState) {
   const path = globalState.routing.locationBeforeTransitions.pathname;
   return path === '/' || path === '/channel/mashup' ?
@@ -193,36 +197,35 @@ export function isMashUp(globalState) {
     globalState.routing.locationBeforeTransitions.pathname.substring(9);               // get slug in pathname after /channel/
 }
 
-export function load() {
+export function load(user_slug) {
   return {
-    types: [LOAD_CHANNELS, LOAD_CHANNELS_SUCCESS, LOAD_CHANNELS_FAIL],
-    promise: (client) => client.get('/channel/list')
+    types: [LOAD_CHANNELS_LIST, LOAD_CHANNELS_LIST_SUCCESS, LOAD_CHANNELS_LIST_FAIL],
+    promise: (client) => client.get(`/users/${user_slug}/channels`)
   };
 }
 
-
 export function loadNext(slug, page) {
-  const channel_slug = slug || '';
+  const channel_slug = slug || 'mashup';
   return {
     types: [LOAD_NEXT_CHANNEL_STORIES, LOAD_NEXT_CHANNEL_STORIES_SUCCESS, LOAD_NEXT_CHANNEL_STORIES_FAIL],
-    promise: (client) => client.get('/channel', { params: { channel_slug, page }}),
+    promise: (client) => client.get(`/channels/${channel_slug}`, { params: { page }}),
     page
   };
 }
 
 export function show(slug) {
-  const channel_slug = slug || '';
+  const channel_slug = slug || 'mashup';
   return {
-    types: [SHOW_CHANNEL, SHOW_CHANNEL_SUCCESS, SHOW_CHANNEL_FAIL],
+    types: [LOAD_CHANNEL, LOAD_CHANNEL_SUCCESS, LOAD_CHANNEL_FAIL],
     channel_slug,
-    promise: (client) => client.get('/channel', { params: { channel_slug }})
+    promise: (client) => client.get(`/channels/${channel_slug}`)
   };
 }
 
 export function create(name, description) {
   return {
     types: [CREATE_CHANNEL, CREATE_CHANNEL_SUCCESS, CREATE_CHANNEL_FAIL],
-    promise: (client) => client.post('/channel', { data: { name, description }})
+    promise: (client) => client.post('/channels', { data: { name, description }})
   };
 }
 

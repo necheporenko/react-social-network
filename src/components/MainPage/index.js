@@ -17,6 +17,7 @@ class MainPage extends Component {
               bookTreeArr={this.props.bookTreeArr}
             />
             <Channels
+              authorizedUser={this.props.authorizedUser}
               channelsArr={this.props.channelsArr}
               loadChannels={this.props.loadChannels}
               createChannel={this.props.createChannel}
@@ -48,9 +49,11 @@ MainPage.propTypes = {
   createChannel: PropTypes.func,              //channel
   loadChannels: PropTypes.func,
   showChannel: PropTypes.func,
+  loadNextChannelStories: PropTypes.func,
   channelsArr: PropTypes.array,
   channelStories: PropTypes.array,
   whoToFollowList: PropTypes.array,           //follow
+  bookTreeArr: PropTypes.array,
 };
 
 export default MainPage;

@@ -37,7 +37,7 @@ class Stream extends Component {
   }
 
   reloadStreamStoryline() {
-    this.props.loadStories();
+    this.props.loadStories(this.props.slug);
   }
 
   like(id) {
@@ -82,6 +82,7 @@ class Stream extends Component {
               images={story.images}
               likes={story.likes}
               books={story.books}
+              loudness={story.loudness}
               likeFunc={this.like}
             />
           ))}
@@ -98,6 +99,7 @@ Stream.propTypes = {
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
   over: PropTypes.bool,
+  slug: PropTypes.string,
   requestedUser: PropTypes.object,
   likePostStoryline: PropTypes.func,
   isAuthenticated: PropTypes.bool,

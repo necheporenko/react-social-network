@@ -3,7 +3,7 @@ import { Form, Input } from 'formsy-react-components';
 import { Modal } from 'react-bootstrap';
 import './index.scss';
 
-class AddChannel extends Component {
+export default class AddChannel extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,10 +15,9 @@ class AddChannel extends Component {
   }
 
   onSubmitChannel(data) {
-    console.log(data);
     this.props.createChannel(data.name, data.description)
       .then(this.Close())
-      .then(() => this.props.loadChannels());
+      .then(() => this.props.loadChannels(this.props.authorizedUser.slug));
   }
 
   Close() {
@@ -93,6 +92,5 @@ AddChannel.propTypes = {
   channel_description: PropTypes.string,
   createChannel: PropTypes.func,
   loadChannels: PropTypes.func,
+  authorizedUser: PropTypes.object,
 };
-
-export default AddChannel;

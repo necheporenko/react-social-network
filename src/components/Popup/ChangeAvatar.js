@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AvatarEditor from 'react-avatar-editor';
 import { Modal } from 'react-bootstrap';
-import { getUser, getUserSlug, load as loadAuth } from '../../redux/modules/user';
+import { getUser, load as loadAuth } from '../../redux/modules/user';
 import { load as loadStories } from '../../redux/modules/story';
 import './index.scss';
 
@@ -11,7 +11,6 @@ import './index.scss';
   uploadingImage: state.user.uploadingImage,
 }), {
   getUser,
-  getUserSlug,
   loadAuth,
   loadStories
 })
@@ -48,7 +47,7 @@ export default class ChangeAvatar extends Component {
     this.props.uploadAvatar(newImage)
     .then(() => this.props.getUser(this.props.requestedUser.slug))
     .then(() => this.props.loadAuth())
-    .then(() => this.props.loadStories())
+    .then(() => this.props.loadStories(this.props.requestedUser.slug))
     .then(() => this.Close());
   }
 

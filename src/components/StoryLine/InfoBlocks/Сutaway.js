@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-const Cutaway = ({ userProfile }) => {
+const Cutaway = ({ requestedUser }) => {
   const {
     first_name,
     last_name,
     bio,
     occupation,
     company,
+    country_id,
     location,
-    country,
     birthDay,
     birthMonth,
     birthYear,
@@ -19,7 +19,7 @@ const Cutaway = ({ userProfile }) => {
     twitter,
     linkedin,
     skype,
-  } = userProfile;
+  } = requestedUser.profile;
   return (
     <div className="infoblocks-cutaway">
       <div className="title-infoblocks">
@@ -32,11 +32,11 @@ const Cutaway = ({ userProfile }) => {
         }
         <div className="occupation">
           <b>Occupation:</b>
-          <p>{ occupation }</p>
+          <p>{occupation}</p>
         </div>
         <div className="company">
           <b>Company:</b>
-          <p>{ company }</p>
+          <p>{company}</p>
         </div>
         <div className="country">
           <b>Country:</b>
@@ -44,7 +44,7 @@ const Cutaway = ({ userProfile }) => {
         </div>
         <div className="location">
           <b>Location:</b>
-          <p>{ location }</p>
+          <p>{location}</p>
         </div>
         <div className="birthday">
           <b>Birthday:</b>
@@ -78,7 +78,7 @@ const Cutaway = ({ userProfile }) => {
 };
 
 Cutaway.propTypes = {
-  userProfile: PropTypes.object
+  requestedUser: PropTypes.object
 };
 
 export default Cutaway;

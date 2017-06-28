@@ -33,6 +33,7 @@ class Channels extends Component {
             ))}
           </ul>
           <AddChannel
+            authorizedUser={this.props.authorizedUser}
             createChannel={this.props.createChannel}
             loadChannels={this.props.loadChannels}
           />
@@ -47,7 +48,8 @@ Channels.propTypes = {
   createChannel: PropTypes.func,
   loadChannels: PropTypes.func,
   showChannel: PropTypes.func,
-  channelsArr: PropTypes.array
+  channelsArr: PropTypes.array,
+  authorizedUser: PropTypes.object,
 };
 
 export default Channels;

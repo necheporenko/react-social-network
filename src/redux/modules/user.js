@@ -298,7 +298,7 @@ export function isLoaded(globalState) {
 export function load() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/user')
+    promise: (client) => client.get('/users/authorized-user')
   };
 }
 
@@ -335,25 +335,13 @@ export function getUserSlug(globalState) {
   console.log('PATH in reducer Function getUserSlug():', path);
   // const getSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
   return path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));     // get user slug in pathname between / or after first /
-
-  // function isPolling(getSlug) {
-  //   return getSlug === 'ws' ? false : true;
-  // }
-  //
-  // isPolling(getSlug);
-}
-
-export function isPolling(globalState) {
-  const path = globalState.routing.locationBeforeTransitions.pathname;
-  return path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght)) === 'ws';
 }
 
 export function getUser(slug) {
-  console.log('slug in user', slug);
   const user_slug = slug || '';
   return {
     types: [SHOW_USER, SHOW_USER_SUCCESS, SHOW_USER_FAIL],
-    promise: (client) => client.get('/user/get', { params: { user_slug }})
+    promise: (client) => client.get('/users/requested-user', { params: { user_slug }})
   };
 }
 

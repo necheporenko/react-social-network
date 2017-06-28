@@ -4,7 +4,7 @@ import { asyncConnect } from 'redux-connect';
 import { login as loginUser, load as loadAuth, register as registerUser, loginSocial, isLoaded } from '../redux/modules/user';
 import { showActiveForm } from '../redux/modules/form';
 import { isLoadedChannelList, isLoadedChannelStories, create as createChannel,
-  show as showChannel, load as loadChannels, isMashUp, loadNext as loadNextChannelStories } from '../redux/modules/channel';
+  show as showChannel, load as loadChannels, isMashUp, loadNext as loadNextChannelStories, getAuthUserSlug } from '../redux/modules/channel';
 import { load as loadBookTree } from '../redux/modules/book';
 import { create as createStory } from '../redux/modules/story';
 import { loadWhoToFollow } from '../redux/modules/follow';
@@ -21,7 +21,7 @@ import MainPage from '../components/MainPage';
         promises.push(dispatch(showChannel(isMashUp(getState()))));
       }
       if (!isLoadedChannelList(getState())) {
-        promises.push(dispatch(loadChannels()));
+        promises.push(dispatch(loadChannels(getAuthUserSlug(getState()))));
       }
       promises.push(dispatch(loadBookTree()));
       promises.push(dispatch(loadWhoToFollow()));
@@ -56,7 +56,8 @@ import MainPage from '../components/MainPage';
   loadChannels,
   loadNextChannelStories,
   loadBookTree,
-  loadWhoToFollow
+  loadWhoToFollow,
+  getAuthUserSlug
 })
 
 export default class IndexContainer extends Component {
@@ -79,6 +80,7 @@ export default class IndexContainer extends Component {
         }
         {!this.props.isAuthenticated &&
           <NewUser
+            authorizedUser={this.props.authorizedUser}
             activeForm={this.props.activeForm}
             showActiveForm={this.props.showActiveForm}
             loginUser={this.props.loginUser}

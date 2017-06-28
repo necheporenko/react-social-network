@@ -37,7 +37,6 @@ export default class ChannelStream extends Component {
     this.props.likePostChannel(id);
   }
 
-
   render() {
     const { channelStories } = this.props;
     const loader = (
@@ -73,6 +72,7 @@ export default class ChannelStream extends Component {
               images={story.images}
               likes={story.likes}
               books={story.books}
+              loudness={story.loudness}
               likeFunc={this.like}
             />
         ))}

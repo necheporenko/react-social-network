@@ -45,7 +45,8 @@ export default function followReducer(state = initialState, action) {
     case FOLLOW_USER_SUCCESS:
       let followFollowing;
       let followInWhoToFollowList;
-
+      // let followSuggested;
+      console.log('action.choiceFollow FOLLOW_USER_SUCCESS', action.choiceFollow);
       switch (action.choiceFollow) {
         case 'whoToFollow':
           followInWhoToFollowList = state.whoToFollowList.map((user) => {
@@ -61,7 +62,7 @@ export default function followReducer(state = initialState, action) {
           });
           break;
         case 'people':
-          followFollowing = state.following.map((user) => {
+          followFollowing = state.following.users.map((user) => {
             if (user.id === action.user_id) {
               return {
                 ...user,
@@ -73,6 +74,20 @@ export default function followReducer(state = initialState, action) {
             };
           });
           break;
+        // case 'suggested':
+        //   followSuggested = state.suggested.map((user) => {
+        //     if (user.id === action.user_id) {
+        //       return {
+        //         ...user,
+        //         isFollowing: true,
+        //       };
+        //     }
+        //     return {
+        //       ...user
+        //     };
+        //   });
+        //   break;
+
         default:
           console.log('choiceFollow not found');
       }
@@ -83,6 +98,7 @@ export default function followReducer(state = initialState, action) {
         whoToFollowList: followInWhoToFollowList || state.whoToFollowList
       };
     case FOLLOW_USER_FAIL:
+      console.log('FOLLOW_USER_FAIL', action.error);
       return {
         ...state,
         follow: false,
@@ -95,8 +111,9 @@ export default function followReducer(state = initialState, action) {
         unfollow: false,
       };
     case UNFOLLOW_USER_SUCCESS:
-      let unfollowFollowing;
+      const unfollowFollowing = state.following;
       let unfollowInWhoToFollowList;
+      console.log('action.choiceFollow UNFOLLOW_USER_SUCCESS', action.choiceFollow);
 
       switch (action.choiceFollow) {
         case 'whoToFollow':
@@ -113,7 +130,7 @@ export default function followReducer(state = initialState, action) {
           });
           break;
         case 'people':
-          unfollowFollowing = state.following.map((user) => {
+          unfollowFollowing.users = state.following.users.map((user) => {
             if (user.id === action.user_id) {
               return {
                 ...user,
@@ -136,6 +153,7 @@ export default function followReducer(state = initialState, action) {
         whoToFollowList: unfollowInWhoToFollowList || state.whoToFollowList
       };
     case UNFOLLOW_USER_FAIL:
+      console.log('UNFOLLOW_USER_FAIL', action.error);
       return {
         ...state,
         unfollow: false,
@@ -254,7 +272,7 @@ export function follow(user_id, choiceFollow) {
     types: [FOLLOW_USER, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAIL],
     user_id,
     choiceFollow,
-    promise: (client) => client.post('/follow/connect', { data: { user_id, channel_id: '' }})                       //todo:  add channel_id
+    promise: (client) => client.post('/follow/connect-user', { data: { user_id, channel_id: '' }})                       //todo:  add channel_id
   };
 }
 
@@ -264,7 +282,7 @@ export function unfollow(user_id, choiceFollow) {
     types: [UNFOLLOW_USER, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAIL],
     user_id,
     choiceFollow,
-    promise: (client) => client.post('/follow/disconnect', { data: { user_id, channel_id: '' }})
+    promise: (client) => client.post('/follow/disconnect-user', { data: { user_id, channel_id: '' }})
   };
 }
 

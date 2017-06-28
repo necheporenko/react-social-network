@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AvatarEditor from 'react-avatar-editor';
 import { Modal } from 'react-bootstrap';
-import { getUser, getUserSlug, } from '../../redux/modules/user';
+import { getUser } from '../../redux/modules/user';
 import './index.scss';
 
 @connect((state) => ({
@@ -10,7 +10,6 @@ import './index.scss';
   uploadingImage: state.user.uploadingImage,
 }), {
   getUser,
-  getUserSlug,
 })
 
 export default class ChangeCoverImage extends Component {
@@ -126,7 +125,5 @@ ChangeCoverImage.propTypes = {
   currentImage: PropTypes.string,
   uploadingImage: PropTypes.bool,
   getUser: PropTypes.func,
-  loadAuth: PropTypes.func,
-  loadStories: PropTypes.func,
   requestedUser: PropTypes.object,
 };

@@ -46,7 +46,6 @@ export default function bookReducer(state = initialState, action) {
         loading: true,
       };
     case LOAD_BOOKTREE_SUCCESS:
-      console.log('LOAD_BOOKTREE_SUCCESS:', action.result.data.children);
       return {
         ...state,
         loading: false,
@@ -239,7 +238,7 @@ export function getBookSlug(globalState) {
 export function load(user_slug) {
   return {
     types: [LOAD_BOOKTREE, LOAD_BOOKTREE_SUCCESS, LOAD_BOOKTREE_FAIL],
-    promise: (client) => client.get('/book/tree', { params: { user_slug }})
+    promise: (client) => client.get('/books', { params: { user_slug }})
   };
 }
 
@@ -247,8 +246,7 @@ export function show(slug) {
   const book_slug = slug || '';
   return {
     types: [SHOW_BOOK, SHOW_BOOK_SUCCESS, SHOW_BOOK_FAIL],
-    // book_slug,
-    promise: (client) => client.get('/book', { params: { book_slug, page: 1 }}),
+    promise: (client) => client.get(`/books/${book_slug}`, { params: { page: 1 }}),
     book_slug
   };
 }
@@ -257,8 +255,7 @@ export function next(slug, page) {
   const book_slug = slug || '';
   return {
     types: [SHOW_NEXT_BOOK, SHOW_NEXT_BOOK_SUCCESS, SHOW_NEXT_BOOK_FAIL],
-    // book_slug,
-    promise: (client) => client.get('/book', { params: { book_slug, page }}),
+    promise: (client) => client.get(`/books/${book_slug}`, { params: { page }}),
     page,
     book_slug
   };
@@ -267,7 +264,7 @@ export function next(slug, page) {
 export function create(name, parent_slug) {
   return {
     types: [CREATE_BOOK, CREATE_BOOK_SUCCESS, CREATE_BOOK_FAIL],
-    promise: (client) => client.post('/book', { data: { name, parent_slug }})
+    promise: (client) => client.post('/books', { data: { name, parent_slug }})
   };
 }
 

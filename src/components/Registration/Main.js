@@ -8,7 +8,7 @@ import './index.scss';
 
 const facebook_id = '562706323765481';
 
-class New extends Component {
+export default class New extends Component {
   constructor(props) {
     super(props);
 
@@ -27,7 +27,7 @@ class New extends Component {
     this.props.loginUser(data.email, data.password)
       .then(() => this.props.loadAuth())
       .then(() => this.props.showChannel())
-      .then(() => this.props.loadChannels())
+      .then(() => this.props.loadChannels(this.props.authorizedUser.slug))
       .then(() => this.props.loadBookTree())
       .then(() => this.props.loadWhoToFollow());
   }
@@ -178,6 +178,7 @@ class New extends Component {
 }
 
 New.propTypes = {
+  authorizedUser: PropTypes.object,
   activeForm: PropTypes.string,
   showActiveForm: PropTypes.func,
   loginUser: PropTypes.func,
@@ -190,5 +191,3 @@ New.propTypes = {
   loadBookTree: PropTypes.func,
   loadWhoToFollow: PropTypes.func
 };
-
-export default New;

@@ -62,7 +62,6 @@ class StoryLine extends Component {
             loadNextStories={this.props.loadNextStories}
           />
           <InfoBloks
-            userProfile={this.props.userProfile}
             requestedUser={this.props.requestedUser}
             following={this.props.following}
             followers={this.props.followers}
@@ -82,7 +81,7 @@ StoryLine.propTypes = {
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
   bookTreeArr: PropTypes.array,
-  userProfile: PropTypes.object,
+  // userProfile: PropTypes.object,
   followers: PropTypes.object,
   following: PropTypes.object,
   friends: PropTypes.array

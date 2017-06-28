@@ -20,7 +20,7 @@ import StoryLine from '../components/StoryLine';
     promises.push(dispatch(loadPeopleFollowers(getUserSlug(getState()))));
     promises.push(dispatch(loadStories(getUserSlug(getState()))));
     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
-    promises.push(dispatch(loadProfile(getUserSlug(getState()))));
+    // promises.push(dispatch(loadProfile(getUserSlug(getState()))));
     promises.push(dispatch(loadUserFriends(getUserSlug(getState()))));
     return Promise.all(promises);
   }
@@ -33,7 +33,7 @@ import StoryLine from '../components/StoryLine';
   isAuthenticated: state.user.isAuthenticated,
   storiesArr: state.story.storiesArr,
   bookTreeArr: state.book.bookTreeArr,
-  userProfile: state.profile.userProfile,
+  // userProfile: state.profile.userProfile,
   following: state.follow.following,
   followers: state.follow.followers,
   friends: state.profile.friends
@@ -42,7 +42,6 @@ import StoryLine from '../components/StoryLine';
   createStory,
   getUser,
   getUserSlug,
-  isPolling,
   loadBookTree,
   loadNextStories,
 })
@@ -69,7 +68,7 @@ export default class UserContainer extends Component {
           loadStories={this.props.loadStories}
           bookTreeArr={this.props.bookTreeArr}
           loadNextStories={this.props.loadNextStories}
-          userProfile={this.props.userProfile}
+          // userProfile={this.props.userProfile}
           following={this.props.following}
           followers={this.props.followers}
           friends={this.props.friends}
@@ -87,7 +86,7 @@ UserContainer.propTypes = {
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
   bookTreeArr: PropTypes.array,               //book
-  userProfile: PropTypes.object,
+  // userProfile: PropTypes.object,
   followers: PropTypes.object,                //follow
   following: PropTypes.object,
   friends: PropTypes.array,                   //profile
