@@ -45,24 +45,25 @@ export default function signReducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        loggingIn: true,
         loaded: false
       };
     case LOGIN_SUCCESS:
       return {
         ...state,
-        loggingIn: false,
+        loading: false,
         loaded: true,
         authorizedUser: action.result.data,
+        isAuthenticated: true
         // isAuthenticated: !!action.result.data.access_token
       };
     case LOGIN_FAIL:
       console.log('LOGIN_FAIL:', action.result);
       return {
         ...state,
-        loggingIn: false,
+        loading: false,
         authorizedUser: null,
-        loginError: action.error
+        loginError: action.error,
+        isAuthenticated: false
       };
 
     case LOAD:
@@ -93,12 +94,14 @@ export default function signReducer(state = initialState, action) {
     case REGISTER:
       return {
         ...state,
-        registeringIn: true
+        registeringIn: true,
+        loading: true,
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
         registeringIn: false,
+        loading: false,
         authorizedUser: action.result.data,
         isAuthenticated: !!action.result.data.access_token
       };
@@ -108,6 +111,7 @@ export default function signReducer(state = initialState, action) {
         authorizedUser: null,
         isAuthenticated: false,
         registeringIn: false,
+        loading: false,
         registerError: action.error
       };
 
@@ -120,9 +124,10 @@ export default function signReducer(state = initialState, action) {
       return {
         ...state,
         loggingOut: false,
-        authorizedUser: null,
+        authorizedUser: {},
         isAuthenticated: false,
         requestedUser: {},
+        loading: false,
       };
     case LOGOUT_FAIL:
       return {
@@ -130,7 +135,8 @@ export default function signReducer(state = initialState, action) {
         loggingOut: false,
         logoutError: action.error,
         authorizedUser: null,
-        isAuthenticated: false
+        isAuthenticated: false,
+        loading: false,
       };
 
     case LOGIN_FB:

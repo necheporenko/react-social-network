@@ -3,12 +3,13 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import Textarea from 'react-textarea-autosize';
 import { Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import { like as likePost } from '../../../redux/modules/story';
+import { like as likePost, setVisibilityStory } from '../../../redux/modules/story';
 import Log from '../../Popup/Log';
 
 @connect((state) => ({
 }), {
-  likePost
+  likePost,
+  setVisibilityStory
 })
 
 // class MyTooltip {
@@ -30,6 +31,9 @@ export default class Post extends Component {
     this.loadLikeInfo = this.loadLikeInfo.bind(this);
     this.loadBookInfo = this.loadBookInfo.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.chooseLoudnessIcon = this.chooseLoudnessIcon.bind(this);
+    this.chooseVisibilityIcon = this.chooseVisibilityIcon.bind(this);
+    this.setVisibility = this.setVisibility.bind(this);
   }
 
   Close() {
@@ -102,21 +106,45 @@ export default class Post extends Component {
   }
 
   handleKeyPress(event) {
-    if (event.keyCode === 13 && event.shiftKey) {
-      console.log('Enter + Shift clicked!!!');
-      // this.setState({
-      //   heightTextarea: this.state.heightTextarea + 14
-      // });
-    } else if (event.keyCode === 13) {
+    if (event.keyCode === 13) {
       alert('Enter clicked!!!');
     }
     console.log('key', event.key);
   }
 
+  chooseLoudnessIcon(loudness) {
+    if (!loudness.inChannels && !loudness.inBooks) {
+      return 'quiet_log_icon';
+    } else if (loudness.inChannels && loudness.inBooks) {
+      return 'loud_log_icon';
+    } else if (!loudness.inChannels && loudness.inBooks) {
+      return 'loud_book_icon';
+    }
+  }
+
+  chooseVisibilityIcon(visibility) {
+    switch (visibility) {
+      case 'public':
+        return 'public_icon';
+      case 'private':
+        return 'private_icon';
+      case 'custom':
+        return 'custom_icon';
+
+      default:
+        console.error('chooseVisibilityIcon empty');
+    }
+  }
+
+  setVisibility(visibility_type, story_id) {
+    console.log('setVisibility11111', visibility_type, story_id);
+    this.props.setVisibilityStory(visibility_type, story_id);
+  }
+
+
   render() {
     const { fullName, slug, avatar } = this.props.user;
-    // const { qty, is_liked, people_list } = this.props.likes;
-    const { date, post, images, id, books, likes } = this.props;
+    const { date, post, images, id, books, likes, loudness, visibility } = this.props;
 
     // const tooltip = (props) => (
     //
@@ -169,11 +197,11 @@ export default class Post extends Component {
                 </div>
               </div>
               <div className="post-delimiter"><span> · </span></div>
-              <div className="post-details-loud-icon"><span></span></div>
+              <div className="post-details-loud-icon"><span className={this.chooseLoudnessIcon(loudness)} /></div>
               <div className="post-delimiter"><span> · </span></div>
               <div className="post-details-visibility">
                 <div className="post-details-visibility-icon">
-                  <span></span>
+                  <span className={this.chooseVisibilityIcon(visibility.status)}/>
                 </div>
                 <div className="post-details-visibility-menu">
                   {/* <i className="caret"></i> */}
@@ -183,19 +211,47 @@ export default class Post extends Component {
                         <ul>
                           <li>
                             <div>
-                              <input type="checkbox" name="public_visibility" id="public_visibility" checked onChange={this.handleCheckVisibility}/>
-                              <label htmlFor={'public_visibility'}><span></span></label>
-                              <i className="public_icon"></i>
+                              <input type="checkbox" name="public_visibility_story" id="public_visibility_story"
+                                     checked={visibility.status === 'public'} onChange={() => this.setVisibility('public', id)}/>
+                              <label htmlFor={'public_visibility_story'}><span/></label>
+                              <i className="public_icon"/>
                               <p>Public</p>
                             </div>
                           </li>
+                          <li>
+                            <div>
+                              <input type="checkbox" name="private_visibility_story" id="private_visibility_story"
+                                     checked={visibility.status === 'private'} onChange={() => this.setVisibility('private', id)}/>
+                              <label htmlFor={'private_visibility_story'}><span/></label>
+                              <i className="private_icon"/>
+                              <p>Private</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div>
+                              <input type="checkbox" name="custom_visibility_story" id="custom_visibility_story"
+                                     checked={visibility.status === 'custom'} onChange={() => this.setVisibility('custom', id)}/>
+                              <label htmlFor={'custom_visibility_story'}><span/></label>
+                              <i className="custom_icon"/>
+                              <p>Custom</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div>
+                              <input type="checkbox" name="reset_visibility_story" id="reset_visibility_story"
+                                     checked={false} onChange={this.handleCheckVisibility}/>
+                              <label htmlFor={'reset_visibility_story'}><span/></label>
+                              <i className="reset_icon"/>
+                              <p>Reset as per visibility of books</p>
+                            </div>
+                          </li>
+                          <span className="divider" />
+                          <li>
+                            <div>
+                              <p>History of Story Visibility</p>
+                            </div>
+                          </li>
                         </ul>
-                        <Link>Public</Link>
-                        <Link>Only me</Link>
-                        <Link>Custom</Link>
-                        <Link>Reset as per visibility of books</Link>
-                        <span className="divider"></span>
-                        <Link>History of Story Visibility</Link>
                       </div>
                     </DropdownButton>
                   </ButtonToolbar>
@@ -313,29 +369,33 @@ export default class Post extends Component {
         <div className="post-footer">
           {/*<div className="post-like post-like-active" onClick={() => this.like(id)}>*/}
           <div className={!likes.is_liked ? 'post-like' : 'post-like post-like-active'} onClick={() => this.props.likeFunc(id)}>
-            <i className="post-action-icon"></i>
+            <i className="post-action-icon" />
             <span>Like</span>
           </div>
           <div className="post-comment">
-            <i className="post-action-icon"></i>
+            <i className="post-action-icon" />
             <span>Comment</span>
           </div>
           <div className="post-log">
-            <i className="post-action-icon"></i>
+            <i className="post-action-icon" />
             <span>Log</span>
             <Log
               storyID={id}
             />
           </div>
           <div className="post-share">
-            <i className="post-action-icon"></i>
+            <i className="post-action-icon" />
             <span>Share</span>
+
+            <div className="list-of-social-share">
+
+            </div>
           </div>
         </div>
 
         <div className="post-lc" style={{display: (likes.qty === 0) ? 'none' : 'block'}}>
           <div className="post-like-field" onClick={this.Open}>
-            <i className="post-action-icon"></i>
+            <i className="post-action-icon" />
             <OverlayTrigger placement="top" overlay={tooltipLike} id="tooltipLike" arrowOffsetLeft={200} >
               <span>
                 {this.loadLikeInfo(likes.people_list)}
@@ -378,7 +438,7 @@ export default class Post extends Component {
           </div>
         </div>
 
-        <Modal className="modal-likes" show={this.state.showModal} onHide={this.Close} >
+        <Modal className="modal-likes" show={this.state.showModal} onHide={this.Close}>
           <Modal.Header closeButton>
             <span>All {likes.qty}</span>
           </Modal.Header>
@@ -408,5 +468,7 @@ Post.propTypes = {
   id: PropTypes.number,
   images: PropTypes.array,
   books: PropTypes.array,
+  loudness: PropTypes.object,
+  visibility: PropTypes.object,
   likeFunc: PropTypes.func,
 };

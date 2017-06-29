@@ -229,64 +229,78 @@
     border: 1px solid $border-color;
   }
 
-  .quiet_log_icon,
-  .loud_log_icon,
-  .post_fb_icon,
-  .post_twitter_icon {
-    background: $sprite;
-    display: inline-block;
-    width: 17px;
-    height: 16px;
-  }
-
-  .quiet_log_icon {
-    background-position: -160px -156px;
-  }
-
-  .loud_log_icon {
-    background-position: -160px -138px;
-  }
-
-  .loud_book_icon {
-    background: url('../../../img/Icons/loudspeaker-in-book.svg') no-repeat;
-    width: 15px;
-    height: 16px;
-    margin-top: 4px;
-    margin-left: 2px;
-  }
-
-  .post_fb_icon {
-    background-position: -154px -191px;
-  }
-
-  .post_twitter_icon {
-    background-position: -168px -191px;
-  }
-
-  .public_icon,
-  .private_icon {
-    background: $sprite;
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin-top: 4px;
-  }
-
-  .public_icon {
-    background-position: -163px -530px;
-  }
-
-  .private_icon {
-    background-position: -176px -530px;
-  }
-
-  .custom_icon {
-    background: url('../../../img/Icons/gear.svg') no-repeat;
-    width: 12px;
-    height: 12px;
-    margin-top: 4px;
-  }
 }
+
+/* === Icons Start === */
+
+.quiet_log_icon,
+.loud_log_icon,
+.post_fb_icon,
+.post_twitter_icon {
+  background: $sprite;
+  display: inline-block;
+  width: 17px;
+  height: 16px;
+}
+
+.quiet_log_icon {
+  background-position: -160px -156px;
+}
+
+.loud_log_icon {
+  background-position: -160px -138px;
+}
+
+.loud_book_icon {
+  background: url('../../../img/Icons/loudspeaker-in-book.svg') no-repeat;
+  width: 15px;
+  height: 16px;
+  margin-top: 4px;
+  margin-left: 2px;
+}
+
+.post_fb_icon {
+  background-position: -154px -191px;
+}
+
+.post_twitter_icon {
+  background-position: -168px -191px;
+}
+
+.public_icon,
+.private_icon,
+.reset_icon {
+  background: $sprite;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+}
+
+.public_icon {
+  background-position: -163px -530px;
+}
+
+.private_icon {
+  background-position: -176px -530px;
+}
+
+.custom_icon {
+  background: url('../../../img/Icons/gear.svg') no-repeat;
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.reset_icon {
+  background-position: -142px -518px;
+  height: 11px;
+  width: 11px;
+  margin-top: 5px;
+}
+
+/* === Icons End === */
 
 .sbox-visibility {
   width: 190px;
@@ -460,22 +474,32 @@
   }
 }
 
-.post-details-loud-icon,
-.post-details-visibility-icon {
-  span {
-    display: block;
-    background: $sprite;
-  }
-}
-
 .post-details-loud-icon {
   position: relative;
   top: -1px;
 
-  span {
+  .loud_log_icon {
     background-position: -155px -206px;
     width: 14px;
     height: 15px;
+  }
+
+  .quiet_log_icon {
+    background-position: -160px -158px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .loud_book_icon {
+    background: $sprite;
+    background-position: -168px -176px;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin-top: 0;
+    margin-left: 0;
+    top: 1px;
+    position: relative;
   }
 }
 
@@ -490,15 +514,20 @@
       opacity: 1;
     }
   }
+
+  span {
+    cursor: pointer;
+  }
 }
 
 .post-details-visibility {
   display: flex;
   border: 1px solid transparent;
   height: 15px;
-  padding: 0 2px;
+  padding: 1px 3px;
   position: relative;
   top: -2px;
+  cursor: pointer;
 
   &:hover,
   &:active {
@@ -509,21 +538,31 @@
 }
 
 .post-details-visibility-icon {
-  width: 15px;
-  height: 15px;
-  position: relative;
-  top: 1px;
-
-  span {
-    background-position: -161px -483px;
-    width: 11px;
-    height: 11px;
+  .public_icon,
+  .private_icon,
+  .custom_icon {
+    margin-top: 1px;
+    margin-right: 4px;
   }
 }
 
 .post-details-visibility-menu {
   position: relative;
   top: -3px;
+
+  .sbox-visibility {
+    width: 300px;
+
+    li {
+      > div {
+        padding-left: 15px;
+      }
+
+      label {
+        margin-right: 5px;
+      }
+    }
+  }
 
   button {
     background: 0;
@@ -533,7 +572,7 @@
   }
 
   .dropdown-menu {
-    width: 230px;
+    width: 300px;
   }
 
   span {

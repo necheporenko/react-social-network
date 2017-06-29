@@ -10,6 +10,7 @@ function saveAuthCookie(req, value) {
       , { expires: 30 });
   } else {
     // console.log('REQ:', req);                                      // look req in terminal
+    // console.log('value:', value);
     return req.session.token = value;
   }
   // console.info('saveCookie:', value);
@@ -18,7 +19,7 @@ function saveAuthCookie(req, value) {
 
 function readAuthCookie(req) {
   if (req && req.session && req.session.token) {
-    console.log('req.session.token:', req.session.token);
+    // console.log('req.session.token:', req.session.token);
     return req.session.token;
   }
 
@@ -110,12 +111,13 @@ export default class ApiClient {
           console.info('  ====Path:  ', path);
           console.info('  ====Body:  ', body);
 
-          if (method === 'post' && (path === '/auth/login' || '/auth/connect') && body && body.data.access_token) {
-            saveAuthCookie(req, body.data.access_token);
-          }
 
           if (path === '/auth/logout') {
             deleteAuthCookie(req);
+          }
+
+          if ((path === '/auth/login') && body && body.data.access_token) {
+            saveAuthCookie(req, body.data.access_token);
           }
 
           return resolve(body);

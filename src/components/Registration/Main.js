@@ -25,10 +25,10 @@ export default class New extends Component {
 
   onSubmitSignInForm(data) {
     this.props.loginUser(data.email, data.password)
-      .then(() => this.props.loadAuth())
+      // .then(() => this.props.loadAuth())
       .then(() => this.props.showChannel())
       .then(() => this.props.loadChannels(this.props.authorizedUser.slug))
-      .then(() => this.props.loadBookTree())
+      .then(() => this.props.loadBookTree(this.props.authorizedUser.slug))
       .then(() => this.props.loadWhoToFollow());
   }
 

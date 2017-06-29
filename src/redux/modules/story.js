@@ -14,6 +14,9 @@ const LIKE_STORY_FAIL = 'LIKE_STORY_FAIL';
 const RELOG_STORY = 'RELOG_STORY';
 const RELOG_STORY_SUCCESS = 'RELOG_STORY_SUCCESS';
 const RELOG_STORY_FAIL = 'RELOG_STORY_FAIL';
+const SET_VISIBILITY_STORY = 'SET_VISIBILITY_STORY';
+const SET_VISIBILITY_STORY_SUCCESS = 'SET_VISIBILITY_STORY_SUCCESS';
+const SET_VISIBILITY_STORY_FAIL = 'SET_VISIBILITY_STORY_FAIL';
 
 const initialState = {
   isAuthenticated: false,
@@ -144,6 +147,39 @@ export default function storyReducer(state = initialState, action) {
       };
     }
 
+    case SET_VISIBILITY_STORY: {
+      return {
+        ...state,
+        setting_visibility: true,
+      };
+    }
+    case SET_VISIBILITY_STORY_SUCCESS: {
+      const visibilityStory = state.storiesArr.map((story) => {
+        if (story.id === action.story_id) {
+          const visibilityObject = Object.assign(story);
+          visibilityObject.status = action.visibility_type;
+          return {
+            ...story,
+            visibility: visibilityObject
+          };
+        }
+        return {
+          ...story
+        };
+      });
+      return {
+        ...state,
+        setting_visibility: false,
+        storiesArr: visibilityStory
+      };
+    }
+    case SET_VISIBILITY_STORY_FAIL: {
+      return {
+        ...state,
+        setting_visibility: false,
+      };
+    }
+
 
     default:
       return state;
@@ -193,5 +229,14 @@ export function relogStory(story_id, books) {
   return {
     types: [RELOG_STORY, RELOG_STORY_SUCCESS, RELOG_STORY_FAIL],
     promise: (client) => client.post('/story/relog', { data: { story_id, books }})
+  };
+}
+
+export function setVisibilityStory(visibility_type, story_id) {
+  return {
+    types: [SET_VISIBILITY_STORY, SET_VISIBILITY_STORY_SUCCESS, SET_VISIBILITY_STORY_FAIL],
+    visibility_type,
+    story_id,
+    promise: (client) => client.post('/stories/visibility', { data: { visibility_type, story_id }})
   };
 }
