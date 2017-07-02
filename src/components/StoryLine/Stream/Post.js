@@ -294,7 +294,7 @@ export default class Post extends Component {
               <DropdownButton className="profileMenu-btn" title={''} id={4} noCaret pullRight >
                 <Link><li>Pin story</li></Link>
                 <hr/>
-                <Link><li>Story Details</li></Link>
+                <Link to={`/story/${id}`}><li>Story Details</li></Link>
                 <Link><li>Delete Story</li></Link>
               </DropdownButton>
             </ButtonToolbar>

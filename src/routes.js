@@ -48,6 +48,7 @@ import SearchTokens from 'components/Search/SearchTokens';
 import SearchStories from 'components/Search/SearchStories';
 import EngagementContainer from 'components/Registration/Engagement';
 import BookPage from 'components/BookPage';
+import Story from 'containers/StoryDetailsContainer';
 import NotFoundPage from 'components/NotFoundPage/NotFoundPage';
 
 // eslint-disable-next-line import/no-dynamic-require
@@ -100,6 +101,8 @@ export default () => {
         <Route path="stories" component={SearchStories} />
         <Route path="things" component={SearchThings} />
       </Route>
+
+      <Route path="/story/:id" component={Story} />
 
       <Route path="/:userName" component={UserContainer} />
 

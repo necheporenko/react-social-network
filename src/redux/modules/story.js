@@ -17,11 +17,15 @@ const RELOG_STORY_FAIL = 'RELOG_STORY_FAIL';
 const SET_VISIBILITY_STORY = 'SET_VISIBILITY_STORY';
 const SET_VISIBILITY_STORY_SUCCESS = 'SET_VISIBILITY_STORY_SUCCESS';
 const SET_VISIBILITY_STORY_FAIL = 'SET_VISIBILITY_STORY_FAIL';
+const GET_STORY = 'GET_STORY';
+const GET_STORY_SUCCESS = 'GET_STORY_SUCCESS';
+const GET_STORY_FAIL = 'GET_STORY_FAIL';
 
 const initialState = {
   isAuthenticated: false,
   loaded: false,
   storiesArr: [],
+  singleStory: {},
   over: false,
 };
 
@@ -180,6 +184,23 @@ export default function storyReducer(state = initialState, action) {
       };
     }
 
+    case GET_STORY:
+      return {
+        ...state,
+        getting: true
+      };
+    case GET_STORY_SUCCESS:
+      return {
+        ...state,
+        getting: false,
+        singleStory: action.result.data,
+      };
+    case GET_STORY_FAIL:
+      return {
+        ...state,
+        getting: false,
+      };
+
 
     default:
       return state;
@@ -239,4 +260,16 @@ export function setVisibilityStory(visibility_type, story_id) {
     story_id,
     promise: (client) => client.post('/stories/visibility', { data: { visibility_type, story_id }})
   };
+}
+
+export function getStory(id) {
+  return {
+    types: [GET_STORY, GET_STORY_SUCCESS, GET_STORY_FAIL],
+    promise: (client) => client.get(`/stories/${id}`)
+  };
+}
+
+export function getStoryId(globalState) {
+  const path = globalState.routing.locationBeforeTransitions.pathname;
+  return path.substring(path.indexOf('/story/') + 7);     // get story ID after /story/ in path
 }
