@@ -3,8 +3,11 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import Textarea from 'react-textarea-autosize';
 import { Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton } from 'react-bootstrap';
+import { ShareButtons } from 'react-share';
 import { like as likePost, setVisibilityStory } from '../../../redux/modules/story';
 import Log from '../../Popup/Log';
+
+const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
 @connect((state) => ({
 }), {
@@ -25,6 +28,7 @@ export default class Post extends Component {
     super(props);
     this.state = {
       showModal: false,
+      // showComment: false
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
@@ -146,6 +150,7 @@ export default class Post extends Component {
     const { fullName, slug, avatar } = this.props.user;
     const { date, post, images, id, books, likes, loudness, visibility } = this.props;
 
+
     // const tooltip = (props) => (
     //
     //   <Tooltip id={props.id}>
@@ -210,36 +215,40 @@ export default class Post extends Component {
                       <div className="sbox-visibility">
                         <ul>
                           <li>
-                            <div>
-                              <input type="checkbox" name="public_visibility_story" id="public_visibility_story"
-                                     checked={visibility.status === 'public'} onChange={() => this.setVisibility('public', id)}/>
-                              <label htmlFor={'public_visibility_story'}><span/></label>
+                            <div onClick={() => this.setVisibility('public', id)}>
+                              <input
+                                type="checkbox" name="public_visibility_story" id="public_visibility_story"
+                                checked={visibility.status === 'public'} />
+                              <label htmlFor={'public_visibility_story'} ><span/></label>
                               <i className="public_icon"/>
                               <p>Public</p>
                             </div>
                           </li>
                           <li>
-                            <div>
-                              <input type="checkbox" name="private_visibility_story" id="private_visibility_story"
-                                     checked={visibility.status === 'private'} onChange={() => this.setVisibility('private', id)}/>
+                            <div onClick={() => this.setVisibility('private', id)}>
+                              <input
+                                type="checkbox" name="private_visibility_story" id="private_visibility_story"
+                                checked={visibility.status === 'private'} />
                               <label htmlFor={'private_visibility_story'}><span/></label>
                               <i className="private_icon"/>
                               <p>Private</p>
                             </div>
                           </li>
                           <li>
-                            <div>
-                              <input type="checkbox" name="custom_visibility_story" id="custom_visibility_story"
-                                     checked={visibility.status === 'custom'} onChange={() => this.setVisibility('custom', id)}/>
-                              <label htmlFor={'custom_visibility_story'}><span/></label>
+                            <div onClick={() => this.setVisibility('custom', id)}>
+                              <input
+                                type="checkbox" name="custom_visibility_story" id="custom_visibility_story"
+                                checked={visibility.status === 'custom'} />
+                              <label htmlFor={'custom_visibility_story'} ><span/></label>
                               <i className="custom_icon"/>
                               <p>Custom</p>
                             </div>
                           </li>
                           <li>
                             <div>
-                              <input type="checkbox" name="reset_visibility_story" id="reset_visibility_story"
-                                     checked={false} onChange={this.handleCheckVisibility}/>
+                              <input
+                                type="checkbox" name="reset_visibility_story" id="reset_visibility_story"
+                                checked={false} onChange={this.handleCheckVisibility}/>
                               <label htmlFor={'reset_visibility_story'}><span/></label>
                               <i className="reset_icon"/>
                               <p>Reset as per visibility of books</p>
@@ -267,13 +276,13 @@ export default class Post extends Component {
                 </OverlayTrigger>
                 {/*{this.loadBookInfo(books)}*/}
                 {/*<div className="myTooltip" onClick={(e) => console.log('helllo', e)}>*/}
-                  {/*<div className="myTooltip-arrow"></div>*/}
-                  {/*<div className="myTooltip-inner">*/}
-                    {/*<div>Story location:</div>*/}
-                    {/*{ books.map((book) => (*/}
-                      {/*<div key={book.id}>{book.name}</div>*/}
-                    {/*))}*/}
-                  {/*</div>*/}
+                {/*<div className="myTooltip-arrow"></div>*/}
+                {/*<div className="myTooltip-inner">*/}
+                {/*<div>Story location:</div>*/}
+                {/*{ books.map((book) => (*/}
+                {/*<div key={book.id}>{book.name}</div>*/}
+                {/*))}*/}
+                {/*</div>*/}
                 {/*</div>*/}
               </div>
 
@@ -359,7 +368,6 @@ export default class Post extends Component {
                 <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/FYZBN8FDKT.jpg" alt/>
               </div>
             </div>*/}
-
           </div>
         </div>
 
@@ -384,11 +392,29 @@ export default class Post extends Component {
             />
           </div>
           <div className="post-share">
-            <i className="post-action-icon" />
-            <span>Share</span>
+            <div className="wrapper" style={{position: 'relative'}}>
+              <i className="post-action-icon" />
+              <span>Share</span>
+              <div className="list-of-social-share">
+                <FacebookShareButton
+                  url="http://github.com"
+                  title="TEST"
+                  picture="http://i.imgur.com/gu5Ia4D.jpg"
+                  // picture={`${String(window.location)}/${exampleImage}`}
+                  className="Demo__some-network__share-button"
+                >
+                  <div className="share-facebook"><i className="fa fa-facebook" aria-hidden="true"/></div>
+                </FacebookShareButton>
 
-            <div className="list-of-social-share">
-
+                <TwitterShareButton
+                  url="http://github.com"
+                  title="TEST"
+                  picture="http://i.imgur.com/gu5Ia4D.jpg"
+                  className="Demo__some-network__share-button"
+                >
+                  <div className="share-twitter"><i className="fa fa-twitter" aria-hidden="true"/></div>
+                </TwitterShareButton>
+              </div>
             </div>
           </div>
         </div>
@@ -471,4 +497,5 @@ Post.propTypes = {
   loudness: PropTypes.object,
   visibility: PropTypes.object,
   likeFunc: PropTypes.func,
+  setVisibilityStory: PropTypes.func,
 };

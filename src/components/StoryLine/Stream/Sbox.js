@@ -46,6 +46,7 @@ class Sbox extends Component {
         private: false,
         custom: false
       },
+      visibility_type: 'public',
       visibilityIcon: 'public_icon'
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
@@ -64,7 +65,7 @@ class Sbox extends Component {
   };
 
   onSubmitStory() {
-    console.log(this.state.data);
+    console.log('onSubmitStory', this.state.data, this.state.loud, this.state.visibility_type);
     this.props.createStory(this.state.data, this.props.arrCheckbox)
       .then(() => this.props.reloadStream());
     this.props.getCheckboxOfBook([]);
@@ -162,7 +163,8 @@ class Sbox extends Component {
               private: false,
               custom: false
             },
-            visibilityIcon: 'public_icon'
+            visibilityIcon: 'public_icon',
+            visibility_type: 'public'
           });
         }
         break;
@@ -175,7 +177,8 @@ class Sbox extends Component {
               private: true,
               custom: false
             },
-            visibilityIcon: 'private_icon'
+            visibilityIcon: 'private_icon',
+            visibility_type: 'private'
           });
         }
         break;
@@ -188,7 +191,8 @@ class Sbox extends Component {
               private: false,
               custom: true
             },
-            visibilityIcon: 'custom_icon'
+            visibilityIcon: 'custom_icon',
+            visibility_type: 'custom'
           });
         }
         break;
@@ -260,53 +264,71 @@ class Sbox extends Component {
               </DropdownButton>
               <DropdownButton
                 className="bootstrap-pure-btn sbox-dropdown-btn" bsStyle="default"
-                title={<i className={`dropdown-btn-icon ${this.state.loudIcon}`}></i>} id={6} >
+                title={<i className={`dropdown-btn-icon ${this.state.loudIcon}`}/>} id={6} >
                 <div className="sbox-logging">
                   <ul>
                     <li style={{borderBottom: '1px solid #eee'}}>
                       <div>
-                        <input type="radio" name="quiet_log" id="quiet_log" checked={this.state.loud.quiet_log} onChange={this.handleCheckLoud}/>
-                        <label htmlFor={'quiet_log'}><span></span></label>
-                        <i className="quiet_log_icon"></i>
+                        <input
+                          type="radio" name="quiet_log" id="quiet_log"
+                          checked={this.state.loud.quiet_log}
+                          onChange={this.handleCheckLoud}/>
+                        <label htmlFor={'quiet_log'}><span/></label>
+                        <i className="quiet_log_icon"/>
                         <p>Quiet logging</p>
                       </div>
                     </li>
                     <li>
                       <div>
-                        <input type="checkbox" name="loud_log" id="loud_log" checked={this.state.loud.loud_log} onChange={this.handleCheckLoud}/>
-                        <label htmlFor={'loud_log'}><span></span></label>
-                        <i className="loud_log_icon"></i>
+                        <input
+                          type="checkbox" name="loud_log" id="loud_log"
+                          checked={this.state.loud.loud_log}
+                          onChange={this.handleCheckLoud}/>
+                        <label htmlFor={'loud_log'}><span/></label>
+                        <i className="loud_log_icon"/>
                         <p>Loud logging</p>
                       </div>
                     </li>
                     <li style={{borderBottom: '1px solid #eee'}}>
                       <div>
-                        <input type="checkbox" name="loud_book" id="loud_book" checked={this.state.loud.loud_book} onChange={this.handleCheckLoud}/>
-                        <label htmlFor={'loud_book'}><span></span></label>
-                        <i className="loud_book_icon"></i>
+                        <input
+                          type="checkbox" name="loud_book" id="loud_book"
+                          checked={this.state.loud.loud_book}
+                          onChange={this.handleCheckLoud}/>
+                        <label htmlFor={'loud_book'}><span/></label>
+                        <i className="loud_book_icon"/>
                         <p>Loud in book</p>
                       </div>
                     </li>
                     <li>
                       <div>
-                        <input type="checkbox" name="post_fb" id="post_fb" checked={this.state.loud.post_fb} onChange={this.handleCheckLoud}/>
-                        <label htmlFor={'post_fb'}><span></span></label>
-                        <i className="post_fb_icon"></i>
+                        <input
+                          type="checkbox" name="post_fb" id="post_fb"
+                          checked={this.state.loud.post_fb}
+                          onChange={this.handleCheckLoud}/>
+                        <label htmlFor={'post_fb'}><span/></label>
+                        <i className="post_fb_icon"/>
                         <p>Post to Facebook</p>
                       </div>
                     </li>
                     <li style={{borderBottom: '1px solid #eee'}}>
                       <div>
-                        <input type="checkbox" name="post_twitter" id="post_twitter" checked={this.state.loud.post_twitter} onChange={this.handleCheckLoud}/>
-                        <label htmlFor={'post_twitter'}><span></span></label>
-                        <i className="post_twitter_icon"></i>
+                        <input
+                          type="checkbox" name="post_twitter" id="post_twitter"
+                          checked={this.state.loud.post_twitter}
+                          onChange={this.handleCheckLoud}/>
+                        <label htmlFor={'post_twitter'}><span/></label>
+                        <i className="post_twitter_icon"/>
                         <p>Post to Twitter</p>
                       </div>
                     </li>
                     <li>
                       <div>
-                        <input type="checkbox" name="storyline" id="storyline" checked={this.state.loud.storyline} onChange={this.handleCheckLoud}/>
-                        <label htmlFor={'storyline'}><span></span></label>
+                        <input
+                          type="checkbox" name="storyline" id="storyline"
+                          checked={this.state.loud.storyline}
+                          onChange={this.handleCheckLoud}/>
+                        <label htmlFor={'storyline'}><span/></label>
                         <p>Story will appear on Storyline</p>
                       </div>
                     </li>
@@ -316,30 +338,39 @@ class Sbox extends Component {
               </DropdownButton>
               <DropdownButton
                 className="bootstrap-pure-btn sbox-dropdown-btn" bsStyle="default"
-                title={<i className={`dropdown-btn-icon ${this.state.visibilityIcon}`}></i>} id={7} >
+                title={<i className={`dropdown-btn-icon ${this.state.visibilityIcon}`}/>} id={7} >
                 <div className="sbox-visibility">
                   <ul>
                     <li>
                       <div>
-                        <input type="checkbox" name="public_visibility" id="public_visibility" checked={this.state.visibility.public} onChange={this.handleCheckVisibility}/>
-                        <label htmlFor={'public_visibility'}><span></span></label>
-                        <i className="public_icon"></i>
+                        <input
+                          type="checkbox" name="public_visibility" id="public_visibility"
+                          checked={this.state.visibility.public}
+                          onChange={this.handleCheckVisibility}/>
+                        <label htmlFor={'public_visibility'}><span/></label>
+                        <i className="public_icon"/>
                         <p>Public</p>
                       </div>
                     </li>
                     <li>
                       <div>
-                        <input type="checkbox" name="private_visibility" id="private_visibility" checked={this.state.visibility.private} onChange={this.handleCheckVisibility}/>
-                        <label htmlFor={'private_visibility'}><span></span></label>
-                        <i className="private_icon"></i>
+                        <input
+                          type="checkbox" name="private_visibility" id="private_visibility"
+                          checked={this.state.visibility.private}
+                          onChange={this.handleCheckVisibility}/>
+                        <label htmlFor={'private_visibility'}><span/></label>
+                        <i className="private_icon"/>
                         <p>Private</p>
                       </div>
                     </li>
                     <li>
                       <div>
-                        <input type="checkbox" name="custom_visibility" id="custom_visibility" checked={this.state.visibility.custom} onChange={this.handleCheckVisibility}/>
-                        <label htmlFor={'custom_visibility'}><span></span></label>
-                        <i className="custom_icon"></i>
+                        <input
+                          type="checkbox" name="custom_visibility" id="custom_visibility"
+                          checked={this.state.visibility.custom}
+                          onChange={this.handleCheckVisibility}/>
+                        <label htmlFor={'custom_visibility'}><span/></label>
+                        <i className="custom_icon"/>
                         <p>Custom</p>
                       </div>
                     </li>
@@ -350,7 +381,7 @@ class Sbox extends Component {
           </div>
           <div className="camera" style={{height: '20px', marginTop: '3px'}} onClick={this.showToolbar}>
             <span>More Options</span>
-            <i></i>
+            <i/>
           </div>
         </div>
         {/*</form>*/}
@@ -367,6 +398,10 @@ Sbox.propTypes = {
   }),
   createStory: PropTypes.func,                //story
   loadStories: PropTypes.func,
+  reloadStream: PropTypes.func,
+  getCheckboxOfBook: PropTypes.func,
+  bookTreeArr: PropTypes.array,
+  arrCheckbox: PropTypes.array,
 };
 
 export default Sbox;
