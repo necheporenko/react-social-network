@@ -35,6 +35,8 @@ const selectVisibility = [
 const ProfileForm = ({
                                 onSubmit,
                                 onInvalidSubmit,
+                                first_name,
+                                last_name,
                                 bio,
                                 occupation,
                                 company,
@@ -59,6 +61,22 @@ const ProfileForm = ({
       rowClassName={[{'form-group': false}, {row: false}, 'engagement-form']}
     >
       <div className="engagement-wrap-form profile-wrap-form">
+        <Input
+          name="first_name"
+          value={first_name}
+          label="First Name"
+          labelClassName={[{'col-sm-3': false}, 'profile-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
+          type="text"
+        />
+        <Input
+          name="last_name"
+          value={last_name}
+          label="Last Name"
+          labelClassName={[{'col-sm-3': false}, 'profile-label']}
+          elementWrapperClassName={[{'col-sm-9': false}, 'profile-element-wrapper']}
+          type="text"
+        />
         <Textarea
           rows={5}
           cols={40}
@@ -221,7 +239,8 @@ const ProfileForm = ({
 ProfileForm.propTypes = {
   onSubmit: PropTypes.func,
   onInvalidSubmit: PropTypes.func,
-
+  first_name: PropTypes.string,
+  last_name: PropTypes.string,
   bio: PropTypes.string,
   occupation: PropTypes.string,
   company: PropTypes.string,

@@ -16,12 +16,16 @@ export const LOAD_PEOPLE_SUGGESTED_FAIL = 'LOAD_PEOPLE_SUGGESTED_FAIL';
 const LOAD_WHO_TO_FOLLOW_PEOPLE = 'LOAD_WHO_TO_FOLLOW_PEOPLE';
 const LOAD_WHO_TO_FOLLOW_PEOPLE_SUCCESS = 'LOAD_WHO_TO_FOLLOW_PEOPLE_SUCCESS';
 const LOAD_WHO_TO_FOLLOW_PEOPLE_FAIL = 'LOAD_WHO_TO_FOLLOW_PEOPLE_FAIL';
+const LOAD_USER_PEOPLE = 'LOAD_USER_PEOPLE';
+const LOAD_USER_PEOPLE_SUCCESS = 'LOAD_USER_PEOPLE_SUCCESS';
+const LOAD_USER_PEOPLE_FAIL = 'LOAD_USER_PEOPLE_FAIL';
 
 
 const initialState = {
   following: [],
   followers: [],
   suggested: [],
+  people: [],
   loaded: {
     loadedFollowing: false,
     loadedFollowers: false,
@@ -250,6 +254,25 @@ export default function followReducer(state = initialState, action) {
         error: action.error,
       };
 
+
+    case LOAD_USER_PEOPLE:
+      return {
+        ...state,
+        loading: true
+      };
+    case LOAD_USER_PEOPLE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        people: action.result.data,
+      };
+    case LOAD_USER_PEOPLE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -314,5 +337,13 @@ export function loadWhoToFollow() {
   return {
     types: [LOAD_WHO_TO_FOLLOW_PEOPLE, LOAD_WHO_TO_FOLLOW_PEOPLE_SUCCESS, LOAD_WHO_TO_FOLLOW_PEOPLE_FAIL],
     promise: (client) => client.get('/follow/who-to-follow')
+  };
+}
+
+export function loadUserPeople(slug) {
+  const user_slug = slug || '';
+  return {
+    types: [LOAD_USER_PEOPLE, LOAD_USER_PEOPLE_SUCCESS, LOAD_USER_PEOPLE_FAIL],
+    promise: (client) => client.get('/people/block', { params: { user_slug }})
   };
 }

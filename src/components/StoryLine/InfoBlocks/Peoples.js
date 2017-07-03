@@ -26,7 +26,7 @@ export default class Peoples extends Component {
   }
 
   render() {
-    const { friends, following, followers } = this.props;
+    const { people, following, followers } = this.props;
 
     return (
       <div className="infoblocks-peoples">
@@ -57,7 +57,7 @@ export default class Peoples extends Component {
         </div>
         { this.props.activePeopleTab === 'people' &&
           <div className="people-gallery">
-            {friends && friends.map((friend) => (
+            {people && people.map((friend) => (
               <div className="people-avatar" key={friend.id}>
                 <Link to={`/${friend.slug}`}>
                   <img src={friend.avatar}/>
@@ -98,7 +98,7 @@ export default class Peoples extends Component {
 }
 
 Peoples.propTypes = {
-  friends: PropTypes.array,
+  people: PropTypes.array,
   followers: PropTypes.object,
   following: PropTypes.object,
   activePeopleTab: PropTypes.string,

@@ -23,8 +23,9 @@ const Cutaway = ({ requestedUser }) => {
   return (
     <div className="infoblocks-cutaway">
       <div className="title-infoblocks">
-        <span className="cutaway-icon"></span>
+        <span className="cutaway-icon"/>
         {`${first_name} ${last_name}`}
+        <Link to="/settings" className="settings-edit"><i/></Link>
       </div>
       <div className="wrapper">
         { bio &&
@@ -66,10 +67,10 @@ const Cutaway = ({ requestedUser }) => {
         }
 
         <div className="social-network">
-          { facebook && <Link to={facebook} className="facebook"></Link> }
-          { twitter && <Link to={twitter} className="twitter"></Link> }
-          { linkedin && <Link to={linkedin} className="linkedin"></Link> }
-          { skype && <Link to={skype} className="skype"></Link> }
+          { facebook && <a href={facebook} className="facebook"/> }
+          { twitter && <a href={twitter} className="twitter"/> }
+          { linkedin && <a href={linkedin} className="linkedin"/> }
+          { skype && <a href={skype} className="skype"/> }
         </div>
 
       </div>

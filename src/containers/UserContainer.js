@@ -4,8 +4,7 @@ import { asyncConnect } from 'redux-connect';
 import { getUser, getUserSlug } from '../redux/modules/user';
 import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../redux/modules/story';
 import { create as createBook, load as loadBookTree } from '../redux/modules/book';
-import { load as loadProfile, loadUserFriends } from '../redux/modules/profile';
-import { loadPeopleFollowers, loadPeopleFollowing } from '../redux/modules/follow';
+import { loadPeopleFollowers, loadPeopleFollowing, loadUserPeople } from '../redux/modules/follow';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 import StoryLine from '../components/StoryLine';
@@ -15,13 +14,12 @@ import StoryLine from '../components/StoryLine';
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
     promises.push(dispatch(getUser(getUserSlug(getState()))));
-    // dispatch(clearPagination());
     promises.push(dispatch(loadPeopleFollowing(getUserSlug(getState()))));
     promises.push(dispatch(loadPeopleFollowers(getUserSlug(getState()))));
     promises.push(dispatch(loadStories(getUserSlug(getState()))));
     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
     // promises.push(dispatch(loadProfile(getUserSlug(getState()))));
-    promises.push(dispatch(loadUserFriends(getUserSlug(getState()))));
+    promises.push(dispatch(loadUserPeople(getUserSlug(getState()))));
     return Promise.all(promises);
   }
 }])
@@ -36,7 +34,7 @@ import StoryLine from '../components/StoryLine';
   // userProfile: state.profile.userProfile,
   following: state.follow.following,
   followers: state.follow.followers,
-  friends: state.profile.friends
+  people: state.follow.people
 }), {
   loadStories,
   createStory,
@@ -71,7 +69,7 @@ export default class UserContainer extends Component {
           // userProfile={this.props.userProfile}
           following={this.props.following}
           followers={this.props.followers}
-          friends={this.props.friends}
+          people={this.props.people}
         />
       </div>
     );
@@ -89,5 +87,5 @@ UserContainer.propTypes = {
   // userProfile: PropTypes.object,
   followers: PropTypes.object,                //follow
   following: PropTypes.object,
-  friends: PropTypes.array,                   //profile
+  people: PropTypes.array,                   //profile
 };

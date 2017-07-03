@@ -1,23 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
-import { save as saveProfile, load as loadProfile, isLoadedProfile } from '../../../redux/modules/profile';
+import { save as saveProfile } from '../../../redux/modules/user';
 import ProfileForm from './ProfileForm';
 import './index.scss';
 
-@asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
-    const promises = [];
-
-    // if (!isLoadedProfile(getState())) {
-    //   promises.push(dispatch(loadProfile()));
-    // }
-    return Promise.all(promises);
-  }
-}])
 
 @connect((state) => ({
-  activeFormSteps: state.forms.activeFormSteps,
   first_name: state.user.authorizedUser.profile.first_name,
   last_name: state.user.authorizedUser.profile.last_name,
   bio: state.user.authorizedUser.profile.bio,
@@ -41,13 +29,18 @@ import './index.scss';
 })
 
 export default class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.submitForm = this.submitForm.bind(this);
+  }
 
   submitForm(data) {
-    console.log(data); // eslint-disable-line no-console
+    console.log(data);
+    this.props.saveProfile(data);
   }
 
   invalid() {
-    console.log('error');// eslint-disable-line no-console
+    console.log('error');
   }
 
   render() {
@@ -58,6 +51,8 @@ export default class Profile extends Component {
         <ProfileForm
           onSubmit={this.submitForm}
           onInvalidSubmit={this.invalid}
+          first_name={this.props.first_name}
+          last_name={this.props.last_name}
           bio={this.props.bio}
           occupation={this.props.occupation}
           company={this.props.company}
@@ -84,6 +79,8 @@ export default class Profile extends Component {
 
 Profile.propTypes = {
   children: PropTypes.element,
+  first_name: PropTypes.string,
+  last_name: PropTypes.string,
   bio: PropTypes.string,
   occupation: PropTypes.string,
   company: PropTypes.string,

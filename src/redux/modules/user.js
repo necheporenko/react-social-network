@@ -30,6 +30,9 @@ const UPLOAD_AVATAR_SUCCESS = 'UPLOAD_AVATAR_SUCCESS';
 const UPLOAD_AVATAR_FAIL = 'UPLOAD_AVATAR_FAIL';
 const UPLOAD_AVATAR_BASE64 = 'UPLOAD_AVATAR_BASE64';
 const UPLOAD_USER_COVER_BASE64 = 'UPLOAD_USER_COVER_BASE64';
+const SAVE_PROFILE = 'SAVE_PROFILE';
+const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS';
+const SAVE_PROFILE_FAIL = 'SAVE_PROFILE_FAIL';
 
 const initialState = {
   isAuthenticated: false,
@@ -290,6 +293,25 @@ export default function signReducer(state = initialState, action) {
       };
     }
 
+    case SAVE_PROFILE:
+      return {
+        ...state,
+        saved: false,
+      };
+    case SAVE_PROFILE_SUCCESS:
+      const userProfile = state.authorizedUser;
+      userProfile.profile = action.profile;
+      return {
+        ...state,
+        saved: true,
+        userProfile: userProfile
+      };
+    case SAVE_PROFILE_FAIL:
+      return {
+        ...state,
+        saved: false,
+        error: action.error,
+      };
 
     default:
       return state;
@@ -394,5 +416,13 @@ export function uploadAvatarBase64(avatarBase64) {
   return {
     type: UPLOAD_AVATAR_BASE64,
     avatarBase64
+  };
+}
+
+export function save(profile) {
+  return {
+    types: [SAVE_PROFILE, SAVE_PROFILE_SUCCESS, SAVE_PROFILE_FAIL],
+    profile,
+    promise: (client) => client.post('/engagment/profile', { data: profile })
   };
 }

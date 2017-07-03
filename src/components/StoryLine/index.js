@@ -65,7 +65,7 @@ class StoryLine extends Component {
             requestedUser={this.props.requestedUser}
             following={this.props.following}
             followers={this.props.followers}
-            friends={this.props.friends}
+            people={this.props.people}
           />
         </div>
       </div>
@@ -84,7 +84,7 @@ StoryLine.propTypes = {
   // userProfile: PropTypes.object,
   followers: PropTypes.object,
   following: PropTypes.object,
-  friends: PropTypes.array
+  people: PropTypes.array
 };
 
 export default StoryLine;
