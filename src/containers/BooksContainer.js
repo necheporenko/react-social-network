@@ -47,5 +47,6 @@ export default class BooksContainer extends Component {
 }
 
 BooksContainer.propTypes = {
-  requestedUser: PropTypes.object
+  requestedUser: PropTypes.object,
+  bookTreeArr: PropTypes.array,
 };

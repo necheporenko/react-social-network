@@ -151,7 +151,7 @@ export default function signReducer(state = initialState, action) {
         loggingFB: false,
         loaded: true,
         authorizedUser: action.result.data,
-        // isAuthenticated: action.result.data.access_token && true
+        isAuthenticated: true
       };
     case LOGIN_FB_FAIL:
       console.log('LOGIN_FB_FAIL:', action.result);
@@ -160,7 +160,7 @@ export default function signReducer(state = initialState, action) {
         loggingFB: false,
         authorizedUser: null,
         loginError: action.error,
-        // isAuthenticated: false
+        isAuthenticated: false
       };
 
     case SHOW_USER:
@@ -334,6 +334,10 @@ export function loginSocial(provider, avatar, token) {
     types: [LOGIN_FB, LOGIN_FB_SUCCESS, LOGIN_FB_FAIL],
     promise: (client) => client.post('/auth/connect', { data: { provider, avatar, token }})
   };
+}
+
+export function getAuthSlug(globalState) {
+  return globalState.user.authorizedUser && globalState.user.authorizedUser.slug;
 }
 
 export function getUserSlug(globalState) {

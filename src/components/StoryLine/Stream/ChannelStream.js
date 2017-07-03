@@ -75,6 +75,8 @@ export default class ChannelStream extends Component {
               loudness={story.loudness}
               visibility={story.visibility}
               likeFunc={this.like}
+              authorizedUser={this.props.authorizedUser}
+              requestedUser={this.props.requestedUser}
             />
         ))}
         </InfiniteScroll>

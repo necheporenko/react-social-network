@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { getUser, getUserSlug, isPolling } from '../redux/modules/user';
+import { getUser, getUserSlug } from '../redux/modules/user';
 import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../redux/modules/story';
 import { create as createBook, load as loadBookTree } from '../redux/modules/book';
 import { load as loadProfile, loadUserFriends } from '../redux/modules/profile';

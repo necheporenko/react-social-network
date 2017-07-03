@@ -25,11 +25,10 @@ export default class New extends Component {
 
   onSubmitSignInForm(data) {
     this.props.loginUser(data.email, data.password)
-      // .then(() => this.props.loadAuth())
       .then(() => this.props.showChannel())
-      .then(() => this.props.loadChannels(this.props.authorizedUser.slug))
+      .then(() => this.props.loadWhoToFollow())
       .then(() => this.props.loadBookTree(this.props.authorizedUser.slug))
-      .then(() => this.props.loadWhoToFollow());
+      .then(() => this.props.loadChannels(this.props.authorizedUser.slug));
   }
 
   onSubmitRegisterForm(data) {
@@ -40,8 +39,10 @@ export default class New extends Component {
   responseFacebook(response) {
     // console.log('Facebook API login', response.picture.data.url, response.accessToken);
     this.props.loginSocial('facebook', response.picture.data.url, response.accessToken)
-      .then(() => this.props.loadAuth())
-      .then(() => this.props.showChannel());
+      .then(() => this.props.showChannel())
+      .then(() => this.props.loadChannels(this.props.authorizedUser.slug))
+      .then(() => this.props.loadBookTree(this.props.authorizedUser.slug))
+      .then(() => this.props.loadWhoToFollow());
   }
 
   // handleAuth(data) {

@@ -98,12 +98,15 @@ export default class Post extends Component {
 
     if (countBooks > 1) {
       books.map((book) => (
-        arrBooks.push(` ${book.name}`)
+        // arrBooks.push(`<span>${book.name }</span>`)
+        arrBooks.push(`${book.name}`)
       ));
-      result = `${countBooks} books: ${arrBooks.join(', ')}`;
+      console.log('arrBooks', arrBooks);
+      // result = <p>{countBooks} books: <span>{arrBooks.join(', ')}</span></p>;
+      result = <p>{countBooks} books: {arrBooks.map((book, index) => (<span key={index}>{book}</span>))}</p>;
     } else {
       books.map((book) => (
-        result = book.name
+        result = <span>{book.name}</span>
       ));
     }
     return result;
@@ -148,7 +151,7 @@ export default class Post extends Component {
 
   render() {
     const { fullName, slug, avatar } = this.props.user;
-    const { date, post, images, id, books, likes, loudness, visibility } = this.props;
+    const { date, post, images, id, books, likes, loudness, visibility, authorizedUser, requestedUser } = this.props;
 
 
     // const tooltip = (props) => (
@@ -201,8 +204,12 @@ export default class Post extends Component {
                   <div>{ date.completedOn && `Completed on: ${date.completedOn}`}</div>
                 </div>
               </div>
-              <div className="post-delimiter"><span> · </span></div>
-              <div className="post-details-loud-icon"><span className={this.chooseLoudnessIcon(loudness)} /></div>
+
+              { authorizedUser.id === requestedUser.id &&
+                <div className="post-delimiter" style={{display: 'flex'}}><span> · </span>
+                  <div className="post-details-loud-icon"><span className={this.chooseLoudnessIcon(loudness)}/></div>
+                </div>
+              }
               <div className="post-delimiter"><span> · </span></div>
               <div className="post-details-visibility">
                 <div className="post-details-visibility-icon">
@@ -270,9 +277,7 @@ export default class Post extends Component {
               <div className="post-delimiter"><span> · </span></div>
               <div className="post-details-location">
                 <OverlayTrigger placement="top" overlay={tooltipBooks} id="tooltipBooks" >
-                  <span>
-                    {this.loadBookInfo(books)}
-                  </span>
+                  <p>{this.loadBookInfo(books)}</p>
                 </OverlayTrigger>
                 {/*{this.loadBookInfo(books)}*/}
                 {/*<div className="myTooltip" onClick={(e) => console.log('helllo', e)}>*/}
@@ -397,8 +402,8 @@ export default class Post extends Component {
               <span>Share</span>
               <div className="list-of-social-share">
                 <FacebookShareButton
-                  url="http://github.com"
-                  title="TEST"
+                  url={`http://devasimov.validbook.org/story/${id}`}
+                  title={post}
                   picture="http://i.imgur.com/gu5Ia4D.jpg"
                   // picture={`${String(window.location)}/${exampleImage}`}
                   className="Demo__some-network__share-button"
@@ -407,8 +412,8 @@ export default class Post extends Component {
                 </FacebookShareButton>
 
                 <TwitterShareButton
-                  url="http://github.com"
-                  title="TEST"
+                  url={`http://devasimov.validbook.org/story/${id}`}
+                  title={post}
                   picture="http://i.imgur.com/gu5Ia4D.jpg"
                   className="Demo__some-network__share-button"
                 >
@@ -487,6 +492,8 @@ export default class Post extends Component {
 }
 
 Post.propTypes = {
+  authorizedUser: PropTypes.object,           //user
+  requestedUser: PropTypes.object,
   user: PropTypes.object,
   likes: PropTypes.object,
   post: PropTypes.string,

@@ -66,6 +66,7 @@ export default function storyReducer(state = initialState, action) {
         storiesArr: [...state.storiesArr, ...action.result.data],
       };
     case LOAD_NEXT_SHOW_USER_STORIES_FAIL:
+      console.log('LOAD_NEXT_SHOW_USER_STORIES_FAIL', action.error);
       return {
         ...state,
         loading: false,

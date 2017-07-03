@@ -28,6 +28,7 @@ class MainPage extends Component {
           <div className="mid-column">
             <ChannelStream
               authorizedUser={this.props.authorizedUser}
+              requestedUser={this.props.requestedUser}
               createStory={this.props.createStory}
               channelStories={this.props.channelStories}
               showChannel={this.props.showChannel}

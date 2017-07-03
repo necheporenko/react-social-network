@@ -78,6 +78,8 @@ export default class BookStream extends Component {
               loudness={story.loudness}
               visibility={story.visibility}
               likeFunc={this.like}
+              authorizedUser={this.props.authorizedUser}
+              requestedUser={this.props.requestedUser}
             />
           ))}
         </InfiniteScroll>

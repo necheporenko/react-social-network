@@ -164,5 +164,7 @@ export default class BookPage extends Component {
 }
 
 BookPage.propTypes = {
-  authorizedUser: PropTypes.object
+  authorizedUser: PropTypes.object,
+  requestedUser: PropTypes.object,
+  bookTreeArr: PropTypes.array,
 };

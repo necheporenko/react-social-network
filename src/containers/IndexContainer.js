@@ -1,10 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { login as loginUser, load as loadAuth, register as registerUser, loginSocial, isLoaded } from '../redux/modules/user';
+import { } from '../redux/modules/user';
+import { login as loginUser, load as loadAuth, register as registerUser, loginSocial, isLoaded, getUser,
+  getAuthSlug } from '../redux/modules/user';
 import { showActiveForm } from '../redux/modules/form';
-import { isLoadedChannelList, isLoadedChannelStories, create as createChannel,
-  show as showChannel, load as loadChannels, isMashUp, loadNext as loadNextChannelStories, getAuthUserSlug } from '../redux/modules/channel';
+import { isLoadedChannelList, isLoadedChannelStories, create as createChannel, show as showChannel,
+  load as loadChannels, isMashUp, loadNext as loadNextChannelStories, getAuthUserSlug } from '../redux/modules/channel';
 import { load as loadBookTree } from '../redux/modules/book';
 import { create as createStory } from '../redux/modules/story';
 import { loadWhoToFollow } from '../redux/modules/follow';
@@ -15,6 +17,7 @@ import MainPage from '../components/MainPage';
 @asyncConnect([{
   promise: ({ store: { dispatch, getState }}) => {
     const promises = [];
+    promises.push(dispatch(getUser(getAuthSlug(getState()))));
 
     if (isLoaded(getState())) {
       if (!isLoadedChannelStories(getState())) {
@@ -34,6 +37,7 @@ import MainPage from '../components/MainPage';
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
+  requestedUser: state.user.requestedUser,
   isAuthenticated: state.user.isAuthenticated,
   loading: state.user.loading,
   authEmail: state.user.authEmail,
@@ -47,6 +51,8 @@ import MainPage from '../components/MainPage';
   loginUser,
   loginSocial,
   loadAuth,
+  getUser,
+  getAuthSlug,
   registerUser,
   showActiveForm,
   createStory,
@@ -67,6 +73,7 @@ export default class IndexContainer extends Component {
         {this.props.isAuthenticated &&
           <MainPage
             authorizedUser={this.props.authorizedUser}
+            requestedUser={this.props.requestedUser}
             createStory={this.props.createStory}
             channelsArr={this.props.channelsArr}
             loadChannels={this.props.loadChannels}
@@ -102,6 +109,7 @@ export default class IndexContainer extends Component {
 IndexContainer.propTypes = {
   isAuthenticated: PropTypes.bool,            //user
   authorizedUser: PropTypes.object,
+  requestedUser: PropTypes.object,
   loginUser: PropTypes.func,
   loadAuth: PropTypes.func,
   registerUser: PropTypes.func,

@@ -453,6 +453,7 @@
 .post-details-date {
   position: relative;
   cursor: pointer;
+  width: 65px;
 
   &:hover {
     text-decoration: underline;
@@ -477,6 +478,7 @@
 .post-details-loud-icon {
   position: relative;
   top: -1px;
+  left: 8px;
 
   .loud_log_icon {
     background-position: -155px -206px;
@@ -509,6 +511,13 @@
   overflow: hidden;
   text-overflow: ellipsis;
 
+  p {
+    max-width: 265px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &:hover {
     .myTooltip {
       opacity: 1;
@@ -517,6 +526,22 @@
 
   span {
     cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &::after {
+      content: ', \a0';
+      display: inline-block;
+
+    }
+
+    &:last-child {
+      &::after {
+        content: none;
+      }
+    }
   }
 }
 
@@ -585,7 +610,13 @@
   right: 0;
   top: 5px;
 
+  .dropdown-menu-right {
+    right: -2px;
+  }
+
   .dropdown-menu {
+    min-width: 150px;
+
     a {
       padding: 0 !important;
 
@@ -740,6 +771,8 @@
     background-position: -15px -19px;
     height: 12px;
     width: 12px;
+    position: relative;
+    top: 2px;
   }
 }
 .post-log {
@@ -747,6 +780,8 @@
     height: 13px;
     width: 16px;
     background: url('http://devianmbanks.validbook.org/images/svg-icons/log.svg') center no-repeat;
+    position: relative;
+    top: 1px;
   }
 }
 
