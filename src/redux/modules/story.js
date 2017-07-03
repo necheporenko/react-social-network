@@ -20,6 +20,9 @@ const SET_VISIBILITY_STORY_FAIL = 'SET_VISIBILITY_STORY_FAIL';
 const GET_STORY = 'GET_STORY';
 const GET_STORY_SUCCESS = 'GET_STORY_SUCCESS';
 const GET_STORY_FAIL = 'GET_STORY_FAIL';
+const DELETE_STORY = 'DELETE_STORY';
+const DELETE_STORY_SUCCESS = 'DELETE_STORY_SUCCESS';
+const DELETE_STORY_FAIL = 'DELETE_STORY_FAIL';
 
 const initialState = {
   isAuthenticated: false,
@@ -202,6 +205,25 @@ export default function storyReducer(state = initialState, action) {
         getting: false,
       };
 
+    case DELETE_STORY: {
+      return {
+        ...state,
+        deleting: true,
+      };
+    }
+    case DELETE_STORY_SUCCESS: {
+      return {
+        ...state,
+        deleting: false,
+      };
+    }
+    case DELETE_STORY_FAIL: {
+      return {
+        ...state,
+        deleting: false,
+      };
+    }
+
 
     default:
       return state;
@@ -226,10 +248,29 @@ export function loadNext(user_slug, page) {
   };
 }
 
-export function create(description, books) {
+export function create(description, books, in_storyline, loud_type, visibility_type) {
+  in_storyline = in_storyline ? 1 : 0;
+  const in_channels = loud_type.in_channels;
+  const in_books = loud_type.in_books;
+  const users_ids = [];
   return {
     types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
-    promise: (client) => client.post('/stories', { data: { description, books }})
+    promise: (client) => client.post('/stories', { data: {
+      description,
+      books,
+      in_storyline,
+      in_channels,
+      in_books,
+      visibility_type,
+      users_ids
+    }})
+  };
+}
+
+export function deleteStory(id) {
+  return {
+    types: [DELETE_STORY, DELETE_STORY_SUCCESS, DELETE_STORY_FAIL],
+    promise: (client) => client.del(`/stories/${id}`)
   };
 }
 

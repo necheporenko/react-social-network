@@ -4,15 +4,17 @@ import { connect } from 'react-redux';
 import Textarea from 'react-textarea-autosize';
 import { Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { ShareButtons } from 'react-share';
-import { like as likePost, setVisibilityStory } from '../../../redux/modules/story';
-import Log from '../../Popup/Log';
+import { like as likePost, setVisibilityStory, deleteStory } from '../../../redux/modules/story';
+import LogStory from '../../Popup/Log';
+import DeleteStory from '../../Popup/DeleteStory';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
 @connect((state) => ({
 }), {
   likePost,
-  setVisibilityStory
+  setVisibilityStory,
+  deleteStory
 })
 
 // class MyTooltip {
@@ -300,7 +302,17 @@ export default class Post extends Component {
                 <Link><li>Pin story</li></Link>
                 <hr/>
                 <Link to={`/story/${id}`}><li>Story Details</li></Link>
-                <Link><li>Delete Story</li></Link>
+                {/*<Link onClick={() => this.props.deleteStory(id)}>*/}
+                <Link>
+                  <li>Delete Story</li>
+                  <div className="wrapper-delete-story">
+                    <DeleteStory
+                      deleteStory={this.props.deleteStory}
+                      id={id}
+                    />
+                  </div>
+
+                </Link>
               </DropdownButton>
             </ButtonToolbar>
           </div>
@@ -392,7 +404,7 @@ export default class Post extends Component {
           <div className="post-log">
             <i className="post-action-icon" />
             <span>Log</span>
-            <Log
+            <LogStory
               storyID={id}
             />
           </div>

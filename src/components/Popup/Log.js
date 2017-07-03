@@ -12,7 +12,7 @@ import './index.scss';
   relogStory
 })
 
-export default class Log extends Component {
+export default class LogStory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,6 +57,7 @@ export default class Log extends Component {
   }
 }
 
-Log.propTypes = {
-
+LogStory.propTypes = {
+  storyID: PropTypes.number,
+  relogStory: PropTypes.func,
 };

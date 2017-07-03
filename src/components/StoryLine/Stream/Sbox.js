@@ -40,6 +40,10 @@ class Sbox extends Component {
         post_twitter: false,
         storyline: true
       },
+      loud_type: {
+        in_channels: 1,
+        in_books: 1,
+      },
       loudIcon: 'loud_log_icon',
       visibility: {
         public: true,
@@ -65,8 +69,14 @@ class Sbox extends Component {
   };
 
   onSubmitStory() {
-    console.log('onSubmitStory', this.state.data, this.state.loud, this.state.visibility_type);
-    this.props.createStory(this.state.data, this.props.arrCheckbox)
+    console.log('onSubmitStory', this.state.data, this.state.loud.storyline, this.state.loud_type, this.state.visibility_type);
+    this.props.createStory(
+      this.state.data,
+      this.props.arrCheckbox,
+      this.state.loud.storyline,
+      this.state.loud_type,
+      this.state.visibility_type
+    )
       .then(() => this.props.reloadStream());
     this.props.getCheckboxOfBook([]);
     this.setState({
@@ -100,7 +110,23 @@ class Sbox extends Component {
       currentStateLoud.loud_log = false;
       currentStateLoud.loud_book = false;
       currentStateLoud.storyline = false;
-      this.setState({loud: currentStateLoud, loudIcon: 'quiet_log_icon'});
+      this.setState({
+        loud: currentStateLoud,
+        loudIcon: 'quiet_log_icon',
+        loud_type: {
+          in_channels: 0,
+          in_books: 0,
+        }
+      });
+    } else if (this.state.loud.loud_log && !this.state.loud.loud_book) {
+      currentStateLoud.loud_book = true;
+      this.setState({
+        loud: currentStateLoud,
+        loud_type: {
+          in_channels: 1,
+          in_books: 1,
+        }
+      });
     }
 
     switch (event.target.name) {
@@ -115,6 +141,10 @@ class Sbox extends Component {
               post_twitter: false,
               storyline: false
             },
+            loud_type: {
+              in_channels: 0,
+              in_books: 0,
+            },
             loudIcon: 'quiet_log_icon'
           });
         }
@@ -123,13 +153,26 @@ class Sbox extends Component {
       case 'loud_log':
         if (!currentStateItem) {
           currentStateLoud.loud_log = false;
-          this.setState({loud: currentStateLoud, });
+          this.setState({
+            loud: currentStateLoud,
+            loud_type: {
+              in_channels: 0,
+              in_books: 1,
+            }
+          });
         } else {
           currentStateLoud.quiet_log = false;
           currentStateLoud.loud_log = true;
           currentStateLoud.loud_book = true;
           currentStateLoud.storyline = true;
-          this.setState({loud: currentStateLoud, loudIcon: 'loud_log_icon'});
+          this.setState({
+            loud: currentStateLoud,
+            loudIcon: 'loud_log_icon',
+            loud_type: {
+              in_channels: 1,
+              in_books: 1,
+            }
+          });
         }
         break;
 
@@ -137,15 +180,19 @@ class Sbox extends Component {
         if (currentStateItem) {
           currentStateLoud.loud_book = true;
           currentStateLoud.quiet_log = false;
-          this.setState({loud: currentStateLoud, loudIcon: 'loud_book_icon'});
-        } else {
-          currentStateLoud.loud_book = false;
-          this.setState({loud: currentStateLoud});
+          this.setState({
+            loud: currentStateLoud,
+            loudIcon: 'loud_book_icon',
+            loud_type: {
+              in_channels: 0,
+              in_books: 1,
+            }
+          });
         }
         break;
 
       default:
-        this.setState({loud: this.state.loud});
+        this.setState({loud: this.state.loud, loud_type: this.state.loud_type});
     }
   }
 
@@ -332,7 +379,7 @@ class Sbox extends Component {
                         <p>Story will appear on Storyline</p>
                       </div>
                     </li>
-                    {/*<button onClick={() => this.test()}>click for test</button>*/}
+                    {/*<button onClick={() => console.log('state 8:', this.state.loud_type)}>click for test</button>*/}
                   </ul>
                 </div>
               </DropdownButton>
