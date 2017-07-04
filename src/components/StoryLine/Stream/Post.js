@@ -41,7 +41,6 @@ export default class Post extends Component {
     this.chooseLoudnessTooltip = this.chooseLoudnessTooltip.bind(this);
     this.chooseVisibilityIcon = this.chooseVisibilityIcon.bind(this);
     this.setVisibility = this.setVisibility.bind(this);
-    this.test = this.test.bind(this);
   }
 
   Close() {
@@ -155,11 +154,7 @@ export default class Post extends Component {
     console.log('setVisibility11111', visibility_type, story_id);
     this.props.setVisibilityStory(visibility_type, story_id);
   }
-
-  test() {
-    console.log(this.contentText);
-  }
-
+  
   render() {
     const { fullName, slug, avatar } = this.props.user;
     const { date, post, images, id, books, likes, loudness, visibility, authorizedUser, requestedUser } = this.props;
@@ -339,9 +334,7 @@ export default class Post extends Component {
             <div
               className="post-content-type-text"
               dangerouslySetInnerHTML={{__html: post}}
-              // ref={(c) => { this.contentText = c; }}
             />
-            {/*<button onClick={() => this.test()}>click</button>*/}
 
             {/*<div className="post-content-type-text">
               <p>Математический горизонт, в первом приближении, вызывает перигей. Движение, несмотря на внешние воздействия, последовательно. В связи с этим нужно подчеркнуть, что высота вращает первоначальный популяционный индекс. Это можно записать следующим образом: V = 29.8 * sqrt(2/r – 1/a) км/сек, где юлианская дата многопланово колеблет ионный хвост. Конечно, нельзя не принять во внимание тот факт, что натуральный логарифм прекрасно притягивает межпланетный Южный Треугольник.</p>

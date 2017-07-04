@@ -28,9 +28,9 @@ const TestBook = ({ name, childrens }) => {
         <span>2 subbooks</span>
       </div>
       <div className="book-subbooks">
-        <BookTree
-          bookTreeArr={childrens}
-        />
+        {/*<BookTree*/}
+          {/*bookTreeArr={childrens}*/}
+        {/*/>*/}
       </div>
       <div className="book-btn">Edit</div>
     </div>
@@ -71,14 +71,14 @@ class SearchBooks extends Component {
           // entered={transition.entered}
           //leaved={transition.leaved}
         >
-          {/*{foundBooks && foundBooks[0].children.map((book) => (*/}
-            {/*<TestBook*/}
-              {/*key={book.key}*/}
-              {/*name={book.name}*/}
-              {/*childrens={book.children}*/}
-            {/*/>*/}
-          {/*))*/}
-          {/*}*/}
+          {foundBooks && foundBooks.map((book) => (
+            <TestBook
+              key={book.key}
+              name={book.name}
+              childrens={book.children}
+            />
+          ))
+          }
         </StackGrid>
       </div>
     );

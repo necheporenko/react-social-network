@@ -162,7 +162,7 @@ class BooksTreeForSbox extends Component {
             disabled={item.no_drag}
           >
             <input type="checkbox" ref={(c) => { this.bookCheckbox = c; }} id={item.key} value={item.key} onChange={(e) => this.checked(e.target.value)} />
-            <label htmlFor={item.key}><span></span></label>
+            <label htmlFor={item.key}><span/></label>
             <Link
               to={`/${slug}/books/${item.key}`}
               draggable={false}

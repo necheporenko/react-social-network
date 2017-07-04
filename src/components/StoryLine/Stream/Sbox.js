@@ -31,6 +31,7 @@ class Sbox extends Component {
       editorContent: '',
       data: '',
       toolbarHidden: true,
+      sboxVisibleElements: 'none',
       jump: '20px',
       loud: {
         quiet_log: false,
@@ -57,6 +58,7 @@ class Sbox extends Component {
     this.showToolbar = this.showToolbar.bind(this);
     this.onSubmitStory = this.onSubmitStory.bind(this);
     this.test = this.test.bind(this);
+    this.focusSboxElement = this.focusSboxElement.bind(this);
     this.handleCheckLoud = this.handleCheckLoud.bind(this);
     this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
   }
@@ -67,6 +69,10 @@ class Sbox extends Component {
       data: draftToHtml(convertToRaw(editorContent.getCurrentContent()))
     });
   };
+
+  focusSboxElement() {
+    this.setState({sboxVisibleElements: 'flex'});
+  }
 
   onSubmitStory() {
     console.log('onSubmitStory', this.state.data, this.state.loud.storyline, this.state.loud_type, this.state.visibility_type);
@@ -258,6 +264,7 @@ class Sbox extends Component {
       <div className="sbox">
         <Editor
           toolbarHidden={this.state.toolbarHidden}
+          onFocus={this.focusSboxElement}
           wrapperClassName="wrapper-sbox"
           editorClassName="editor-sbox"
           toolbarClassName="toolbar-sbox"
@@ -311,7 +318,9 @@ class Sbox extends Component {
               </DropdownButton>
               <DropdownButton
                 className="bootstrap-pure-btn sbox-dropdown-btn" bsStyle="default"
-                title={<i className={`dropdown-btn-icon ${this.state.loudIcon}`}/>} id={6} >
+                title={<i className={`dropdown-btn-icon ${this.state.loudIcon}`}/>} id={6}
+                style={{display: this.state.sboxVisibleElements}}
+              >
                 <div className="sbox-logging">
                   <ul>
                     <li style={{borderBottom: '1px solid #eee'}}>
@@ -385,7 +394,9 @@ class Sbox extends Component {
               </DropdownButton>
               <DropdownButton
                 className="bootstrap-pure-btn sbox-dropdown-btn" bsStyle="default"
-                title={<i className={`dropdown-btn-icon ${this.state.visibilityIcon}`}/>} id={7} >
+                title={<i className={`dropdown-btn-icon ${this.state.visibilityIcon}`}/>} id={7}
+                style={{display: this.state.sboxVisibleElements}}
+              >
                 <div className="sbox-visibility">
                   <ul>
                     <li>
@@ -426,8 +437,10 @@ class Sbox extends Component {
               </DropdownButton>
             </ButtonToolbar>
           </div>
-          <div className="camera" style={{height: '20px', marginTop: '3px'}} onClick={this.showToolbar}>
-            <span>More Options</span>
+          <div
+            className="camera" style={{height: '20px', marginTop: '3px', display: this.state.sboxVisibleElements}}
+            onClick={this.showToolbar}>
+            <span style={{marginTop: '4px'}}>More Options</span>
             <i/>
           </div>
         </div>

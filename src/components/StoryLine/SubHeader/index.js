@@ -149,7 +149,7 @@ export default class SubHeader extends Component {
           <div>
             {!isFollowing ? 'Follow' : 'Following'}
           </div>
-          <span></span>
+          <span/>
         </div>
 
         { this.props.activePopUp === 'ChangeCoverImage' &&

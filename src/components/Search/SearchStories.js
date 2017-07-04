@@ -16,13 +16,15 @@ import './index.scss';
 @connect((state) => ({
   query: state.search.query,
   foundStories: state.search.foundStories,
+  authorizedUser: state.user.authorizedUser,
+  requestedUser: state.user.requestedUser,
 }), {
   searchStory
 })
 
 class SearchStories extends Component {
   render() {
-    const { foundStories } = this.props;
+    const { foundStories, authorizedUser, requestedUser} = this.props;
     return (
       <div className="search-story page-bg">
         <div className="stream">
@@ -30,10 +32,18 @@ class SearchStories extends Component {
           {foundStories && foundStories.map((story) => (
             <Post
               key={story.id}
+              id={story.id}
               post={story.text}
               user={story.user}
-              created={story.created}
+              date={story.date}
               images={story.images}
+              likes={story.likes}
+              books={story.books}
+              loudness={story.loudness}
+              visibility={story.visibility}
+              likeFunc={this.like}
+              authorizedUser={this.props.authorizedUser}
+              requestedUser={this.props.requestedUser}
             />
           ))}
         </div>

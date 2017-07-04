@@ -34,7 +34,16 @@ class SearchPeople extends Component {
                   <img src={people.avatar} />
                   <div>{`${people.first_name} ${people.last_name}`}</div>
                 </Link>
-                <div className="btn-following">Following <span></span></div>
+
+                <div
+                  className="btn-following"
+                >
+                  <div>
+                    Following
+                  </div>
+                  <span/>
+                </div>
+
               </div>
             ))}
 
