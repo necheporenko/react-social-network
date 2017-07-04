@@ -465,20 +465,35 @@
 
   .block-additional-date {
     display: none;
-    position: absolute;
-    background: #fff;
-    color: #333;
-    border: 1px solid #ccc;
-    padding: 6px 8px;
-    border-radius: 2px;
-    white-space: nowrap;
   }
+
+}
+
+.block-additional {
+  position: absolute;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
 }
 
 .post-details-loud-icon {
   position: relative;
   top: -1px;
   left: 8px;
+  cursor: pointer;
+
+  &:hover {
+    .block-additional-loud {
+      display: block;
+    }
+  }
+
+  .block-additional-loud {
+    display: none;
+  }
 
   .loud_log_icon {
     background-position: -155px -206px;
@@ -512,7 +527,7 @@
   text-overflow: ellipsis;
 
   p {
-    max-width: 265px;
+    max-width: 255px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -524,10 +539,11 @@
     }
   }
 
-  span {
+  a {
     cursor: pointer;
 
     &:hover {
+      color: #333;
       text-decoration: underline;
     }
 

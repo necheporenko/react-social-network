@@ -30,6 +30,7 @@ const initialState = {
   storiesArr: [],
   singleStory: {},
   over: false,
+  paginationStory: 1,
 };
 
 export default function storyReducer(state = initialState, action) {
@@ -45,6 +46,7 @@ export default function storyReducer(state = initialState, action) {
         loading: false,
         loaded: action.result.status === 'success' && true,       // or just true
         storiesArr: action.result.data,
+        paginationStory: 1,
       };
     case LOAD_SHOW_USER_STORIES_FAIL:
       return {
@@ -67,6 +69,7 @@ export default function storyReducer(state = initialState, action) {
         loaded: action.result.status === 'success' && true,       // or just true
         over: action.result.data.length === 0 && true,
         storiesArr: [...state.storiesArr, ...action.result.data],
+        paginationStory: action.paginationStory + 1,
       };
     case LOAD_NEXT_SHOW_USER_STORIES_FAIL:
       console.log('LOAD_NEXT_SHOW_USER_STORIES_FAIL', action.error);
@@ -241,10 +244,11 @@ export function load(user_slug) {
   };
 }
 
-export function loadNext(user_slug, page) {
+export function loadNext(user_slug, paginationStory) {
   return {
     types: [LOAD_NEXT_SHOW_USER_STORIES, LOAD_NEXT_SHOW_USER_STORIES_SUCCESS, LOAD_NEXT_SHOW_USER_STORIES_FAIL],
-    promise: (client) => client.get(`/users/${user_slug}/stories`, { params: page })
+    promise: (client) => client.get(`/users/${user_slug}/stories`, { params: { page: paginationStory } }),
+    paginationStory
   };
 }
 

@@ -30,7 +30,7 @@ export default class Post extends Component {
     super(props);
     this.state = {
       showModal: false,
-      // showComment: false
+      // showComment: false,
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
@@ -38,6 +38,7 @@ export default class Post extends Component {
     this.loadBookInfo = this.loadBookInfo.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.chooseLoudnessIcon = this.chooseLoudnessIcon.bind(this);
+    this.chooseLoudnessTooltip = this.chooseLoudnessTooltip.bind(this);
     this.chooseVisibilityIcon = this.chooseVisibilityIcon.bind(this);
     this.setVisibility = this.setVisibility.bind(this);
   }
@@ -94,21 +95,16 @@ export default class Post extends Component {
   }
 
   loadBookInfo(books) {
-    const arrBooks = [];
     const countBooks = books.length;
     let result;
 
     if (countBooks > 1) {
-      books.map((book) => (
-        // arrBooks.push(`<span>${book.name }</span>`)
-        arrBooks.push(`${book.name}`)
-      ));
-      console.log('arrBooks', arrBooks);
-      // result = <p>{countBooks} books: <span>{arrBooks.join(', ')}</span></p>;
-      result = <p>{countBooks} books: {arrBooks.map((book, index) => (<span key={index}>{book}</span>))}</p>;
+      result = (<p>{countBooks} books: {books.map((book) => (
+        <Link to={`/${this.props.requestedUser.slug}/books/${book.slug}`} key={book.id}>{book.name}</Link>)
+      )}</p>);
     } else {
       books.map((book) => (
-        result = <span>{book.name}</span>
+        result = <Link to={`/${this.props.requestedUser.slug}/books/${book.slug}`} key={book.id}>{book.name}</Link>
       ));
     }
     return result;
@@ -128,6 +124,15 @@ export default class Post extends Component {
       return 'loud_log_icon';
     } else if (!loudness.inChannels && loudness.inBooks) {
       return 'loud_book_icon';
+    }
+  }
+  chooseLoudnessTooltip(loudness) {
+    if (!loudness.inChannels && !loudness.inBooks) {
+      return 'Story will not appear in the channels of your followers';
+    } else if (loudness.inChannels && loudness.inBooks) {
+      return 'Story will appear in the channels of your followers';
+    } else if (!loudness.inChannels && loudness.inBooks) {
+      return 'Story will appear in the channels of book followers';
     }
   }
 
@@ -200,7 +205,7 @@ export default class Post extends Component {
             </div>
             <div className="post-details">
               <div className="post-details-date">{date.created}
-                <div className="block-additional-date">
+                <div className="block-additional block-additional-date">
                   <div>{`Created on: ${date.exactCreated}`}</div>
                   <div>{`Started on: ${date.startedOn}`}</div>
                   <div>{ date.completedOn && `Completed on: ${date.completedOn}`}</div>
@@ -209,7 +214,10 @@ export default class Post extends Component {
 
               { authorizedUser.id === requestedUser.id &&
                 <div className="post-delimiter" style={{display: 'flex'}}><span> · </span>
-                  <div className="post-details-loud-icon"><span className={this.chooseLoudnessIcon(loudness)}/></div>
+                  <div className="post-details-loud-icon">
+                    <span className={this.chooseLoudnessIcon(loudness)}/>
+                    <div className="block-additional block-additional-loud">{this.chooseLoudnessTooltip(loudness)}</div>
+                  </div>
                 </div>
               }
               <div className="post-delimiter"><span> · </span></div>
@@ -311,16 +319,17 @@ export default class Post extends Component {
                       id={id}
                     />
                   </div>
-
                 </Link>
               </DropdownButton>
             </ButtonToolbar>
           </div>
         </div>
 
+
         {/* ===========
             Post Content
             =========== */}
+
         <div className="post-content">
           <div className="wrap-post-content">
             <div
@@ -415,7 +424,7 @@ export default class Post extends Component {
               <div className="list-of-social-share">
                 <FacebookShareButton
                   url={`http://devasimov.validbook.org/story/${id}`}
-                  title={post}
+                  title={{__html: post}}
                   picture="http://i.imgur.com/gu5Ia4D.jpg"
                   // picture={`${String(window.location)}/${exampleImage}`}
                   className="Demo__some-network__share-button"
@@ -425,7 +434,8 @@ export default class Post extends Component {
 
                 <TwitterShareButton
                   url={`http://devasimov.validbook.org/story/${id}`}
-                  title={post}
+                  title={{dangerouslySetInnerHTML: {__html: post}}}
+                  // dangerouslySetInnerHTML={{__html: post}}
                   picture="http://i.imgur.com/gu5Ia4D.jpg"
                   className="Demo__some-network__share-button"
                 >

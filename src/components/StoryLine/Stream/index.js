@@ -6,12 +6,11 @@ import Sbox from './Sbox';
 import Post from './Post';
 import './index.scss';
 
-let page;
-
 @connect((state) => ({
   over: state.story.over,
   slug: state.user.requestedUser.slug,
   isAuthenticated: state.user.isAuthenticated,
+  paginationStory: state.story.paginationStory
 }), {
   likePostStoryline
 })
@@ -24,15 +23,9 @@ class Stream extends Component {
     this.reloadStreamStoryline = this.reloadStreamStoryline.bind(this);
   }
 
-  componentWillMount() {
-    page = 1;
-  }
-
   load() {
-    page++;
     if (!this.props.over) {
-      console.log(this.props.slug);
-      this.props.loadNextStories(this.props.slug, page);
+      this.props.loadNextStories(this.props.slug, this.props.paginationStory);
     }
   }
 
@@ -106,6 +99,7 @@ Stream.propTypes = {
   requestedUser: PropTypes.object,
   likePostStoryline: PropTypes.func,
   isAuthenticated: PropTypes.bool,
+  paginationStory: PropTypes.number,
 };
 
 export default Stream;
