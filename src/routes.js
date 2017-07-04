@@ -1,5 +1,5 @@
 import React from 'react';
-import { IndexRoute, Route } from 'react-router';
+import { IndexRoute, Route, IndexRedirect } from 'react-router';
 import App from 'containers/App/App';
 import IndexContainer from 'containers/IndexContainer';
 import UserContainer from 'containers/UserContainer';
@@ -74,7 +74,8 @@ export default () => {
       </Route>
 
       <Route path="/settings" component={ProfileContainer}>
-        <IndexRoute component={Profile} />
+        <IndexRedirect to="profile" />
+        <Route path="profile" component={Profile} />
         <Route path="password" component={Password} />
         <Route path="notifications" component={Notifications} />
         <Route path="privacy" component={Privacy} />
@@ -84,9 +85,9 @@ export default () => {
       <Route path="/contacts" component={Contacts} />
       <Route path="/terms-of-service" component={TermsOfService} />
       <Route path="/about" component={About} />
-      <Route path="/auth" component={Auth} />
-      <Route path="/easy" component={Easy} />
-      <Route path="/recovery" component={Recovery} />
+      <Route path="/account/auth" component={Auth} />
+      <Route path="/registration/easy" component={Easy} />
+      <Route path="/account/password-recovery" component={Recovery} />
       <Route path="/unsubscribe" component={Unsubscribe} />
       <Route path="/notifications" component={NotificationList} />
 

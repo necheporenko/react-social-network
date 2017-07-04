@@ -12,10 +12,10 @@ class MinHeader extends Component {
         <SearchField />
 
         <div className="header-sign-btn">
-          <Link to="/easy" >
+          <Link to="/registration/easy" >
             <button className="header-sign-up">Sign Up</button>
           </Link>
-          <Link to="/auth" >
+          <Link to="/account/auth" >
             <button className="header-sign-in">Sign In</button>
           </Link>
         </div>

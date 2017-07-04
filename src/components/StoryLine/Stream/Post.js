@@ -41,6 +41,7 @@ export default class Post extends Component {
     this.chooseLoudnessTooltip = this.chooseLoudnessTooltip.bind(this);
     this.chooseVisibilityIcon = this.chooseVisibilityIcon.bind(this);
     this.setVisibility = this.setVisibility.bind(this);
+    this.test = this.test.bind(this);
   }
 
   Close() {
@@ -155,6 +156,9 @@ export default class Post extends Component {
     this.props.setVisibilityStory(visibility_type, story_id);
   }
 
+  test() {
+    console.log(this.contentText);
+  }
 
   render() {
     const { fullName, slug, avatar } = this.props.user;
@@ -335,7 +339,9 @@ export default class Post extends Component {
             <div
               className="post-content-type-text"
               dangerouslySetInnerHTML={{__html: post}}
+              // ref={(c) => { this.contentText = c; }}
             />
+            {/*<button onClick={() => this.test()}>click</button>*/}
 
             {/*<div className="post-content-type-text">
               <p>Математический горизонт, в первом приближении, вызывает перигей. Движение, несмотря на внешние воздействия, последовательно. В связи с этим нужно подчеркнуть, что высота вращает первоначальный популяционный индекс. Это можно записать следующим образом: V = 29.8 * sqrt(2/r – 1/a) км/сек, где юлианская дата многопланово колеблет ионный хвост. Конечно, нельзя не принять во внимание тот факт, что натуральный логарифм прекрасно притягивает межпланетный Южный Треугольник.</p>
@@ -424,7 +430,7 @@ export default class Post extends Component {
               <div className="list-of-social-share">
                 <FacebookShareButton
                   url={`http://devasimov.validbook.org/story/${id}`}
-                  title={{__html: post}}
+                  title={post.replace(/<[^>]*>?/g, '')}
                   picture="http://i.imgur.com/gu5Ia4D.jpg"
                   // picture={`${String(window.location)}/${exampleImage}`}
                   className="Demo__some-network__share-button"
@@ -434,8 +440,7 @@ export default class Post extends Component {
 
                 <TwitterShareButton
                   url={`http://devasimov.validbook.org/story/${id}`}
-                  title={{dangerouslySetInnerHTML: {__html: post}}}
-                  // dangerouslySetInnerHTML={{__html: post}}
+                  title={post.replace(/<[^>]*>?/g, '')}
                   picture="http://i.imgur.com/gu5Ia4D.jpg"
                   className="Demo__some-network__share-button"
                 >

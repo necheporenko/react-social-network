@@ -8,7 +8,7 @@ const ProfileMenu = () => {
       <div className="additional-title">Settings</div>
       <ul className="additional-mnu-ul">
         <Link
-          to="/settings"
+          to="/settings/profile"
           onlyActiveOnIndex={true}
           className="additional-mnu-link"
           activeClassName="additional-mnu-link-active"

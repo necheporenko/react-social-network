@@ -95,7 +95,7 @@ export function searchUser(globalState) {
   const q = globalState.search.query;
   return {
     types: [SEARCH_USER, SEARCH_USER_SUCCESS, SEARCH_USER_FAIL],
-    promise: (client) => client.get('/search/user', { params: { q }})
+    promise: (client) => client.get('/search/users', { params: { q }})
   };
 }
 
@@ -103,7 +103,7 @@ export function searchBook(globalState) {
   const q = globalState.search.query;
   return {
     types: [SEARCH_BOOK, SEARCH_BOOK_SUCCESS, SEARCH_BOOK_FAIL],
-    promise: (client) => client.get('/search/book', { params: { q }})
+    promise: (client) => client.get('/search/books', { params: { q }})
   };
 }
 
@@ -111,6 +111,6 @@ export function searchStory(globalState) {
   const q = globalState.search.query;
   return {
     types: [SEARCH_STORY, SEARCH_STORY_SUCCESS, SEARCH_STORY_FAIL],
-    promise: (client) => client.get('/search/story', { params: { q }})
+    promise: (client) => client.get('/search/stories', { params: { q }})
   };
 }
