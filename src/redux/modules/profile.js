@@ -30,14 +30,16 @@ export default function profileReducer(state = initialState, action) {
       };
 
 
-    case SET_NOTIFICATION_SETTINGS:
+    case SET_NOTIFICATION_SETTINGS: {
       return {
         ...state,
         settingNotification: true,
       };
-    case SET_NOTIFICATION_SETTINGS_SUCCESS:
+    }
+    case SET_NOTIFICATION_SETTINGS_SUCCESS: {
       const newNotificationSettings = Object.assign(state.notificationSettings);
-      switch (action.type) {
+
+      switch (action.notification_type) {
         case 'settings':
           newNotificationSettings.settings = action.settings;
           break;
@@ -48,17 +50,20 @@ export default function profileReducer(state = initialState, action) {
         default:
           console.log('error');
       }
+
       return {
         ...state,
         settingNotification: false,
         notificationSettings: newNotificationSettings
       };
-    case SET_NOTIFICATION_SETTINGS_FAIL:
+    }
+    case SET_NOTIFICATION_SETTINGS_FAIL: {
       return {
         ...state,
         settingNotification: false,
         error: action.error,
       };
+    }
 
     default:
       return state;
@@ -68,16 +73,18 @@ export default function profileReducer(state = initialState, action) {
 export function getNotificationSettings() {
   return {
     types: [GET_NOTIFICATION_SETTINGS, GET_NOTIFICATION_SETTINGS_SUCCESS, GET_NOTIFICATION_SETTINGS_FAIL],
-    promise: (client) => client.get('/notifications/view-settings')
+    promise: (client) => client.get('/notifications/settings')
   };
 }
 
-export function setNotificationSettings(settings, type) {
+export function setNotificationSettings(settings, notification_type) {
+  console.log('setNotificationSettings', settings, notification_type);
   return {
     types: [SET_NOTIFICATION_SETTINGS, SET_NOTIFICATION_SETTINGS_SUCCESS, SET_NOTIFICATION_SETTINGS_FAIL],
-    promise: (client) => client.post('/notifications/update-settings', { data: { settings, type }}),
+    // type: SET_NOTIFICATION_SETTINGS_SUCCESS,
+    promise: (client) => client.post('/notifications/settings', { data: { settings, notification_type }}),
     settings,
-    type
+    notification_type
   };
 }
 

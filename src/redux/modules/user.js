@@ -364,7 +364,7 @@ export function getAuthSlug(globalState) {
 
 export function getUserSlug(globalState) {
   const path = globalState.routing.locationBeforeTransitions.pathname;
-  console.log('PATH in reducer Function getUserSlug():', path);
+  console.log('PATH in reducer Function getUserSlug(test):', path);
   // const getSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
   return path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));     // get user slug in pathname between / or after first /
 }

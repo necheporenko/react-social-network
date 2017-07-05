@@ -9,7 +9,9 @@ import uploadImageCallBack from './uploadImageCallBack';
 import { getCheckboxOfBook } from '../../../redux/modules/book';
 import { create as createStory } from '../../../redux/modules/story';
 import BookTreeForSboxContainer from '../../../containers/BookTreeForSboxContainer';
-import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+// import './react-draft-wysiwyg.css';
+import './draft-wysiwyg.scss';
 import './index.scss';
 
 const list = ['20px', '60px'];

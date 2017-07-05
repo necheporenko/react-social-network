@@ -17,7 +17,6 @@ import MainPage from '../components/MainPage';
 @asyncConnect([{
   promise: ({ store: { dispatch, getState }}) => {
     const promises = [];
-    promises.push(dispatch(getUser(getAuthSlug(getState()))));
 
     if (isLoaded(getState())) {
       if (!isLoadedChannelStories(getState())) {
@@ -28,6 +27,7 @@ import MainPage from '../components/MainPage';
       }
       promises.push(dispatch(loadBookTree()));
       promises.push(dispatch(loadWhoToFollow()));
+      // promises.push(dispatch(getUser(getAuthSlug(getState()))));
     }
 
     return Promise.all(promises);

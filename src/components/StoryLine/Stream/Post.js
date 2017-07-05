@@ -154,7 +154,7 @@ export default class Post extends Component {
     console.log('setVisibility11111', visibility_type, story_id);
     this.props.setVisibilityStory(visibility_type, story_id);
   }
-  
+
   render() {
     const { fullName, slug, avatar } = this.props.user;
     const { date, post, images, id, books, likes, loudness, visibility, authorizedUser, requestedUser } = this.props;
@@ -211,14 +211,14 @@ export default class Post extends Component {
                 </div>
               </div>
 
-              { authorizedUser.id === requestedUser.id &&
+              {/*{ authorizedUser.id === requestedUser.id &&*/}
                 <div className="post-delimiter" style={{display: 'flex'}}><span> · </span>
                   <div className="post-details-loud-icon">
                     <span className={this.chooseLoudnessIcon(loudness)}/>
                     <div className="block-additional block-additional-loud">{this.chooseLoudnessTooltip(loudness)}</div>
                   </div>
                 </div>
-              }
+              // }
               <div className="post-delimiter"><span> · </span></div>
               <div className="post-details-visibility">
                 <div className="post-details-visibility-icon">
