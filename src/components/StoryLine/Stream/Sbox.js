@@ -32,6 +32,7 @@ class Sbox extends Component {
       data: '',
       toolbarHidden: true,
       sboxVisibleElements: 'none',
+      sboxFocusBtn: '#5c96d0',
       jump: '20px',
       loud: {
         quiet_log: false,
@@ -71,7 +72,7 @@ class Sbox extends Component {
   };
 
   focusSboxElement() {
-    this.setState({sboxVisibleElements: 'flex'});
+    this.setState({sboxVisibleElements: 'flex', sboxFocusBtn: '#1870C8'});
   }
 
   onSubmitStory() {
@@ -305,7 +306,7 @@ class Sbox extends Component {
               className="btn-brand"
               type="submit"
               onClick={this.onSubmitStory}
-              style={{fontSize: '13px'}}
+              style={{fontSize: '13px', backgroundColor: this.state.sboxFocusBtn }}
             >Log</div>
             {/*<button className="btn-brand" type="submit">Log</button>*/}
             <ButtonToolbar>

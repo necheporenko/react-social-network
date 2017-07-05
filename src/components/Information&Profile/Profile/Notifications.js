@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { Form, Checkbox } from 'formsy-react-components';
-import {NOTIFICATION, NOTIFICATION_UPDATES} from '../../../constants/notification';
 import { getNotificationSettings, setNotificationSettings } from '../../../redux/modules/profile';
 import './index.scss';
 
@@ -44,6 +42,7 @@ class Notifications extends Component {
           currentNotificationSettings: newSettings,
         });
         break;
+
       case 'web':
         newSettings[index].web = !newSettings[index].web;
         this.props.setNotificationSettings(newSettings, 'settings');
@@ -51,6 +50,7 @@ class Notifications extends Component {
           currentNotificationSettings: newSettings,
         });
         break;
+
       case 'update':
         newUpdates[index].value = !newUpdates[index].value;
         this.props.setNotificationSettings(newUpdates, 'updates');
@@ -62,7 +62,6 @@ class Notifications extends Component {
       default:
         console.log('error');
     }
-    // console.log('test', this.state.currentNotificationSettings);
   }
 
   render() {
@@ -104,30 +103,6 @@ class Notifications extends Component {
             </div>
           ))}
 
-
-          {/*{NOTIFICATION.map((notice, index) => (*/}
-            {/*<div key={index} className="notification-line">*/}
-              {/*<span>{notice.content}</span>*/}
-              {/*<div className="notification-checkbox">*/}
-                {/*<Form*/}
-                  {/*layout="notification"*/}
-                  {/*rowClassName={[{'form-group': false}, {row: false}]}*/}
-                {/*>*/}
-                  {/*{notice.checkbox.map((checkbox, index) => (*/}
-                    {/*<Checkbox*/}
-                      {/*key={index}*/}
-                      {/*name={checkbox.name}*/}
-                      {/*value={checkbox.value}*/}
-                      {/*className={`notification-checkbox-${checkbox.name}`}*/}
-                      {/*labelClassName={[{'col-sm-3': false}, 'disabled-label']}*/}
-                      {/*/>*/}
-                    {/*)*/}
-                  {/*)}*/}
-                {/*</Form>*/}
-              {/*</div>*/}
-            {/*</div>*/}
-            {/*))}*/}
-
           <div className="notifications-updates">Updates from Validbook</div>
 
           { this.state.currentNotificationUpdates.map((element, index) => (
@@ -142,33 +117,15 @@ class Notifications extends Component {
             </div>
           ))}
 
-          {/*{NOTIFICATION_UPDATES.map((notice, index) => (*/}
-            {/*<div key={index} className="notifications-update-line">*/}
-              {/*<Form*/}
-                {/*layout="notification"*/}
-                {/*rowClassName={[{'form-group': false}, {row: false}]}*/}
-              {/*>*/}
-                {/*<Checkbox*/}
-                  {/*name={notice.name}*/}
-                  {/*value={notice.value}*/}
-                  {/*labelClassName={[{'col-sm-3': false}, 'disabled-label']}*/}
-                {/*/>*/}
-              {/*</Form>*/}
-              {/*<span>{notice.content}</span>*/}
-            {/*</div>*/}
-          {/*))}*/}
-
         </div>
-
-        {/* {this.props.children} */}
       </div>
-
     );
   }
 }
 
 Notifications.propTypes = {
   notificationSettings: PropTypes.array,
+  setNotificationSettings: PropTypes.func,
 };
 
 export default Notifications;
