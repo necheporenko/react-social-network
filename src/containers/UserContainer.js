@@ -9,7 +9,6 @@ import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 import StoryLine from '../components/StoryLine';
 
-
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];

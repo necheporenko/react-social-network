@@ -72,13 +72,20 @@ textarea.form-control {
 .notification-head-web {
   position: relative;
 }
+
 .notification-head-email {
   right: 70px;
 }
+
 .notification-head-web {
   right: 10px;
 }
 
+.notification-wrap {
+  input[type="checkbox"] + label span {
+    margin-top: 4px;
+  }
+}
 
 .notification-checkbox-element {
   width: 15px;
@@ -94,6 +101,7 @@ textarea.form-control {
 }
 
 .notification-checkbox {
+  display: flex;
   position: absolute;
   right: 10px;
 }
@@ -108,7 +116,7 @@ textarea.form-control {
 
 .notification-checkbox-email {
   position: relative;
-  right: 80px;
+  right: 75px;
 }
 
 .notifications-updates {

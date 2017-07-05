@@ -8,46 +8,65 @@ const LOAD_USER_FRIENDS = 'LOAD_USER_FRIENDS';
 const LOAD_USER_FRIENDS_SUCCESS = 'LOAD_USER_FRIENDS_SUCCESS';
 const LOAD_USER_FRIENDS_FAIL = 'LOAD_USER_FRIENDS_FAIL';
 
+const GET_NOTIFICATION_SETTINGS = 'GET_NOTIFICATION_SETTINGS';
+const GET_NOTIFICATION_SETTINGS_SUCCESS = 'GET_NOTIFICATION_SETTINGS_SUCCESS';
+const GET_NOTIFICATION_SETTINGS_FAIL = 'GET_NOTIFICATION_SETTINGS_FAIL';
+const SET_NOTIFICATION_SETTINGS = 'SET_NOTIFICATION_SETTINGS';
+const SET_NOTIFICATION_SETTINGS_SUCCESS = 'SET_NOTIFICATION_SETTINGS_SUCCESS';
+const SET_NOTIFICATION_SETTINGS_FAIL = 'SET_NOTIFICATION_SETTINGS_FAIL';
+
 const initialState = {
-  userProfile: {
-    bio: '',
-    occupation: '',
-    company: '',
-    country: '',
-    location: '',
-    birthDate: '',
-    birthMonth: '',
-    birthDateVisibility: 1,
-    birthYear: '',
-    birthYearVisibility: 1,
-    twitter: '',
-    facebook: '',
-    linkedin: '',
-    website: '',
-    phone: '',
-    skype: ''
-  },
-  loaded: false,
-  friends: [],
+  notificationSettings: {},
 };
 
 export default function profileReducer(state = initialState, action) {
   switch (action.type) {
-    case SAVE_PROFILE:
+    case GET_NOTIFICATION_SETTINGS:
       return {
         ...state,
-        saved: false,
+        gettingNotification: true,
       };
-    case SAVE_PROFILE_SUCCESS:
+    case GET_NOTIFICATION_SETTINGS_SUCCESS:
       return {
         ...state,
-        saved: true,
-        userProfile: action.result.data
+        gettingNotification: false,
+        notificationSettings: action.result.data
       };
-    case SAVE_PROFILE_FAIL:
+    case GET_NOTIFICATION_SETTINGS_FAIL:
       return {
         ...state,
-        saved: false,
+        gettingNotification: false,
+        error: action.error,
+      };
+
+
+    case SET_NOTIFICATION_SETTINGS:
+      return {
+        ...state,
+        settingNotification: true,
+      };
+    case SET_NOTIFICATION_SETTINGS_SUCCESS:
+      const newNotificationSettings = Object.assign(state.notificationSettings);
+      switch (action.place) {
+        case 'settings':
+          newNotificationSettings.settings = action.settings;
+          break;
+        case 'updates':
+          newNotificationSettings.updates = action.settings;
+          break;
+
+        default:
+          console.log('error');
+      }
+      return {
+        ...state,
+        settingNotification: false,
+        notificationSettings: newNotificationSettings
+      };
+    case SET_NOTIFICATION_SETTINGS_FAIL:
+      return {
+        ...state,
+        settingNotification: false,
         error: action.error,
       };
 
@@ -93,14 +112,26 @@ export default function profileReducer(state = initialState, action) {
   }
 }
 
-export function isLoadedProfile(globalState) {
-  return globalState.profile && globalState.profile.loaded;
+export function getNotificationSettings() {
+  return {
+    types: [GET_NOTIFICATION_SETTINGS, GET_NOTIFICATION_SETTINGS_SUCCESS, GET_NOTIFICATION_SETTINGS_FAIL],
+    promise: (client) => client.get('/notifications/view-settings')
+  };
 }
 
-export function save(profile) {
+// export function setNotificationSettings() {
+//   return {
+//     types: [GET_NOTIFICATION_SETTINGS, GET_NOTIFICATION_SETTINGS_SUCCESS, GET_NOTIFICATION_SETTINGS_FAIL],
+//     promise: (client) => client.post('/notifications/settings', { data: { something }})
+//   };
+// }
+
+export function setNotificationSettings(settings, place) {
+  console.log('setNotificationSettings', settings, place);
   return {
-    types: [SAVE_PROFILE, SAVE_PROFILE_SUCCESS, SAVE_PROFILE_FAIL],
-    promise: (client) => client.post('/engagment/profile', { data: profile })
+    type: SET_NOTIFICATION_SETTINGS_SUCCESS,
+    settings,
+    place
   };
 }
 

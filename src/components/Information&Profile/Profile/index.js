@@ -4,7 +4,6 @@ import { save as saveProfile } from '../../../redux/modules/user';
 import ProfileForm from './ProfileForm';
 import './index.scss';
 
-
 @connect((state) => ({
   first_name: state.user.authorizedUser.profile.first_name,
   last_name: state.user.authorizedUser.profile.last_name,
