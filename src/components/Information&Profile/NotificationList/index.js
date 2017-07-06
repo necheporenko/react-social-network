@@ -11,24 +11,24 @@ class NotificationList extends Component {
           <hr/>
           <ul>
             <li>
-              <a href="#">
+              <div>
                 <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                <h6><a href=""><b>Name Surname</b></a>commented on your story</h6>
-              </a>
+                <h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>
+              </div>
               <p>21 Mar 2017</p>
             </li>
             <li>
-              <a href="#">
+              <div>
                 <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                <h6><a href=""><b>Name Surname</b></a> liked your <a href=""> story</a></h6>
-              </a>
+                <h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>
+              </div>
               <p>21 Mar 2017</p>
             </li>
             <li>
-              <a href="#">
+              <div>
                 <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                <h6><a href=""><b>Name Surname</b></a>commented on your story</h6>
-              </a>
+                <h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>
+              </div>
               <p>21 Mar 2017</p>
             </li>
           </ul>

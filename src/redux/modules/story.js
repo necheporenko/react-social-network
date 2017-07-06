@@ -23,6 +23,10 @@ const GET_STORY_FAIL = 'GET_STORY_FAIL';
 const DELETE_STORY = 'DELETE_STORY';
 const DELETE_STORY_SUCCESS = 'DELETE_STORY_SUCCESS';
 const DELETE_STORY_FAIL = 'DELETE_STORY_FAIL';
+const PIN_STORY = 'PIN_STORY';
+const PIN_STORY_SUCCESS = 'PIN_STORY_SUCCESS';
+const PIN_STORY_FAIL = 'PIN_STORY_FAIL';
+
 
 const initialState = {
   isAuthenticated: false,
@@ -227,6 +231,25 @@ export default function storyReducer(state = initialState, action) {
       };
     }
 
+    case PIN_STORY: {
+      return {
+        ...state,
+        pin: true,
+      };
+    }
+    case PIN_STORY_SUCCESS: {
+      return {
+        ...state,
+        pin: false,
+      };
+    }
+    case PIN_STORY_FAIL: {
+      return {
+        ...state,
+        pin: false,
+      };
+    }
+
 
     default:
       return state;
@@ -318,4 +341,11 @@ export function getStory(id) {
 export function getStoryId(globalState) {
   const path = globalState.routing.locationBeforeTransitions.pathname;
   return path.substring(path.indexOf('/story/') + 7);     // get story ID after /story/ in path
+}
+
+export function pinStory(id) {
+  return {
+    types: [PIN_STORY, PIN_STORY_SUCCESS, PIN_STORY_FAIL],
+    promise: (client) => client.post(`/stories/pin/${id}`)
+  };
 }

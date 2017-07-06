@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import Textarea from 'react-textarea-autosize';
 import { Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { ShareButtons } from 'react-share';
-import { like as likePost, setVisibilityStory, deleteStory } from '../../../redux/modules/story';
+import { like as likePost, setVisibilityStory, deleteStory, pinStory } from '../../../redux/modules/story';
 import LogStory from '../../Popup/Log';
 import DeleteStory from '../../Popup/DeleteStory';
+import PinStory from '../../Popup/PinStory';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
@@ -14,7 +15,8 @@ const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 }), {
   likePost,
   setVisibilityStory,
-  deleteStory
+  deleteStory,
+  pinStory
 })
 
 // class MyTooltip {
@@ -306,18 +308,30 @@ export default class Post extends Component {
           <div className="wrap-post-story-dropdown">
             <ButtonToolbar>
               <DropdownButton className="profileMenu-btn" title={''} id={4} noCaret pullRight >
-                <Link><li>Pin story</li></Link>
+                <Link>
+                  <li>Pin story
+                    <div className="wrapper-popup-story">
+                      <PinStory
+                        pinStory={this.props.pinStory}
+                        id={id}
+                      />
+                    </div>
+                  </li>
+
+                </Link>
                 <hr/>
                 <Link to={`/story/${id}`}><li>Story Details</li></Link>
                 {/*<Link onClick={() => this.props.deleteStory(id)}>*/}
                 <Link>
-                  <li>Delete Story</li>
-                  <div className="wrapper-delete-story">
-                    <DeleteStory
-                      deleteStory={this.props.deleteStory}
-                      id={id}
-                    />
-                  </div>
+                  <li>Delete Story
+                    <div className="wrapper-popup-story">
+                      <DeleteStory
+                        deleteStory={this.props.deleteStory}
+                        id={id}
+                      />
+                    </div>
+                  </li>
+
                 </Link>
               </DropdownButton>
             </ButtonToolbar>
@@ -525,4 +539,6 @@ Post.propTypes = {
   visibility: PropTypes.object,
   likeFunc: PropTypes.func,
   setVisibilityStory: PropTypes.func,
+  pinStory: PropTypes.func,
+  deleteStory: PropTypes.func,
 };

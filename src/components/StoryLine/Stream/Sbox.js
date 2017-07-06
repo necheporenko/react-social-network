@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import draftToHtml from 'draftjs-to-html';
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+// import io from 'socket.io-client';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import uploadImageCallBack from './uploadImageCallBack';
 import { getCheckboxOfBook } from '../../../redux/modules/book';
@@ -11,10 +12,13 @@ import { create as createStory } from '../../../redux/modules/story';
 import BookTreeForSboxContainer from '../../../containers/BookTreeForSboxContainer';
 // import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 // import './react-draft-wysiwyg.css';
+// import { socket } from '../../../client';
+import { socket } from '../../../client';
 import './draft-wysiwyg.scss';
 import './index.scss';
 
 const list = ['20px', '60px'];
+// const socket = io('slackclone.herokuapp.com', { path: '/api/chat/'})
 let index;
 let step = 0;
 
@@ -64,6 +68,7 @@ class Sbox extends Component {
     this.focusSboxElement = this.focusSboxElement.bind(this);
     this.handleCheckLoud = this.handleCheckLoud.bind(this);
     this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
+    this.testSocket = this.testSocket.bind(this);
   }
 
   onEditorStateChange = (editorContent) => {
@@ -258,6 +263,32 @@ class Sbox extends Component {
     }
   }
 
+  testSocket() {
+    // socket.emit('msg', {test: 'Wake up Neo'});
+    // socket.emit('test');
+    // console.log('test', socket);
+    // socket.emit('hi');
+    // socket.on('hi', () => {
+    //   console.log('hi, socket');
+    // });
+
+    socket.send('hello');
+    socket.onmessage = function (event) {
+      console.log('onmessage', event.data);
+    };
+    console.log('click on testSocket');
+  }
+
+//   export const socket = new WebSocket('ws://api.validbook.org:8000');
+//
+//   socket.onopen = function() {
+//   console.log('Connection established!');
+// };
+//
+//   socket.onmessage = function (event) {
+//   console.log('onmessage', event.data);
+// };
+
   render() {
     const { editorContent } = this.state;
     const { first_name, last_name, avatar32} = this.props.authorizedUser;
@@ -299,7 +330,7 @@ class Sbox extends Component {
         />
 
         <div className="sbox-user-avatar32" style={{top: this.state.jump, position: 'absolute', left: '20px'}}>
-          <Link to={link}><img src={avatar32} style={{width: '32px', height: '32px'}} /></Link>
+          <Link to={link}><img src={avatar32} style={{width: '32px', height: '32px', border: '1px solid #dddddd'}} /></Link>
         </div>
         {/*<form onSubmit={this.test}>*/}
         <div className="sbox-footer">
@@ -310,7 +341,7 @@ class Sbox extends Component {
               onClick={this.onSubmitStory}
               style={{fontSize: '13px', backgroundColor: this.state.sboxFocusBtn }}
             >Log</div>
-            {/*<button className="btn-brand" type="submit">Log</button>*/}
+            <button className="btn-brand" type="submit" onClick={() => this.testSocket()}>JUST CLICK ME</button>
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} >
                 <div className="sbox-booktree">

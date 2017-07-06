@@ -23,40 +23,40 @@ class Notifications extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // currentNotificationSettings: this.props.notificationSettings.settings,
-      // currentNotificationUpdates: this.props.notificationSettings.updates,
+      currentNotificationSettings: this.props.notificationSettings.settings,
+      currentNotificationUpdates: this.props.notificationSettings.updates,
     };
     this.handleCheckSettings = this.handleCheckSettings.bind(this);
   }
 
   handleCheckSettings(index, place) {
-    const newSettings = this.props.notificationSettings.settings;
-    const newUpdates = this.props.notificationSettings.updates;
+    const newSettings = this.state.currentNotificationSettings;
+    const newUpdates = this.state.currentNotificationUpdates;
     // console.log(newSettings, newUpdates);
 
     switch (place) {
       case 'email':
         newSettings[index].email = !newSettings[index].email;
         this.props.setNotificationSettings(newSettings, 'settings');
-        // this.setState({
-        //   currentNotificationSettings: newSettings,
-        // });
+        this.setState({
+          currentNotificationSettings: newSettings,
+        });
         break;
 
       case 'web':
         newSettings[index].web = !newSettings[index].web;
         this.props.setNotificationSettings(newSettings, 'settings');
-        // this.setState({
-        //   currentNotificationSettings: newSettings,
-        // });
+        this.setState({
+          currentNotificationSettings: newSettings,
+        });
         break;
 
       case 'update':
         newUpdates[index].value = !newUpdates[index].value;
         this.props.setNotificationSettings(newUpdates, 'updates');
-        // this.setState({
-        //   currentNotificationUpdates: newUpdates,
-        // });
+        this.setState({
+          currentNotificationUpdates: newUpdates,
+        });
         break;
 
       default:
@@ -77,7 +77,7 @@ class Notifications extends Component {
 
         <div className="notification-wrap">
 
-          { settings && settings.map((element, index) => (
+          { this.state.currentNotificationSettings.map((element, index) => (
             <div className="notification-line" key={index}>
               {console.log('settings')}
               <span>{element.label}</span>
@@ -106,7 +106,7 @@ class Notifications extends Component {
 
           <div className="notifications-updates">Updates from Validbook</div>
 
-          { updates && updates.map((element, index) => (
+          { this.state.currentNotificationUpdates.map((element, index) => (
             <div className="notifications-update-line checkboxStyles" key={index}>
               <input
                 type="checkbox" name={`update${index}`} id={`update${index}`}
