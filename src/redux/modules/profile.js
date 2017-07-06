@@ -4,9 +4,13 @@ const GET_NOTIFICATION_SETTINGS_FAIL = 'GET_NOTIFICATION_SETTINGS_FAIL';
 const SET_NOTIFICATION_SETTINGS = 'SET_NOTIFICATION_SETTINGS';
 const SET_NOTIFICATION_SETTINGS_SUCCESS = 'SET_NOTIFICATION_SETTINGS_SUCCESS';
 const SET_NOTIFICATION_SETTINGS_FAIL = 'SET_NOTIFICATION_SETTINGS_FAIL';
+const GET_USER_NOTIFICATIONS = 'GET_USER_NOTIFICATIONS';
+const GET_USER_NOTIFICATIONS_SUCCESS = 'GET_USER_NOTIFICATIONS_SUCCESS';
+const GET_USER_NOTIFICATIONS_FAIL = 'GET_USER_NOTIFICATIONS_FAIL';
 
 const initialState = {
   notificationSettings: {},
+  notifications: [],
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -65,6 +69,24 @@ export default function profileReducer(state = initialState, action) {
       };
     }
 
+    case GET_USER_NOTIFICATIONS:
+      return {
+        ...state,
+        gettingUserNotification: true,
+      };
+    case GET_USER_NOTIFICATIONS_SUCCESS:
+      return {
+        ...state,
+        gettingUserNotification: false,
+        notifications: action.result.data
+      };
+    case GET_USER_NOTIFICATIONS_FAIL:
+      return {
+        ...state,
+        gettingUserNotification: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -88,11 +110,9 @@ export function setNotificationSettings(settings, notification_type) {
   };
 }
 
-// export function setNotificationSettings(settings, type) {
-//   console.log('setNotificationSettings', settings, type);
-//   return {
-//     type: SET_NOTIFICATION_SETTINGS_SUCCESS,
-//     settings,
-//     type
-//   };
-// }
+export function getUserNotifications() {
+  return {
+    types: [GET_USER_NOTIFICATIONS, GET_USER_NOTIFICATIONS_SUCCESS, GET_USER_NOTIFICATIONS_FAIL],
+    promise: (client) => client.get('/notifications')
+  };
+}

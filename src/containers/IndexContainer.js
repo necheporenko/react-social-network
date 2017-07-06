@@ -37,7 +37,7 @@ import MainPage from '../components/MainPage';
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
-  requestedUser: state.user.requestedUser,
+  requestedUserID: state.user.requestedUser.id,
   isAuthenticated: state.user.isAuthenticated,
   loading: state.user.loading,
   authEmail: state.user.authEmail,

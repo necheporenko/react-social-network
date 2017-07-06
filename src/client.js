@@ -11,11 +11,12 @@ import { ReduxAsyncConnect } from 'redux-connect';
 import { AppContainer as HotEnabler } from 'react-hot-loader';
 import { getStoredState } from 'redux-persist';
 import localForage from 'localforage';
-import { socket } from 'app';
+// import { socket } from 'app';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import getRoutes from './routes';
 import isOnline from './utils/isOnline';
+// import { socket } from './constants/socket';
 // import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 // add bootstrap style, (don't work - 'You may need an appropriate loader to handle this file type.')
 import './theme/styles.scss'; // add common style
@@ -27,6 +28,34 @@ const offlinePersistConfig = {
 
 const client = new ApiClient();
 const dest = document.getElementById('content');
+
+const socket = new WebSocket('ws://api.validbook.org:8000');
+global.socket = socket;
+
+socket.onopen = function () {
+  console.log('Connection established!');
+};
+
+socket.onmessage = function (result) {
+  const json = JSON.parse(result.data);
+  console.log('result.data', result.data);
+  console.log('result', result);
+  console.log('result json', json);
+};
+
+socket.onclose = function (event) {
+  if (event.wasClean) {
+    console.log('Connection closed pure');
+  } else {
+    console.log('disconnection');
+  }
+  console.log(`Code: ${event.code} reason: ${event.reason}`);
+};
+
+
+socket.onerror = function (error) {
+  console.log(`Error ${error.message}`);
+};
 
 // function initSocket() {
 //   socket.on('news', data => {

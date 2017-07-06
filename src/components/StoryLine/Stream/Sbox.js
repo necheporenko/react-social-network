@@ -4,21 +4,17 @@ import { connect } from 'react-redux';
 import draftToHtml from 'draftjs-to-html';
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
-// import io from 'socket.io-client';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
+import { getUserNotifications } from '../../../redux/modules/profile';
 import uploadImageCallBack from './uploadImageCallBack';
 import { getCheckboxOfBook } from '../../../redux/modules/book';
 import { create as createStory } from '../../../redux/modules/story';
 import BookTreeForSboxContainer from '../../../containers/BookTreeForSboxContainer';
-// import '../../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import './react-draft-wysiwyg.css';
 // import { socket } from '../../../client';
-import { socket } from '../../../client';
 import './draft-wysiwyg.scss';
 import './index.scss';
 
 const list = ['20px', '60px'];
-// const socket = io('slackclone.herokuapp.com', { path: '/api/chat/'})
 let index;
 let step = 0;
 
@@ -27,7 +23,8 @@ let step = 0;
   bookTreeArr: state.book.bookTreeArr,
 }), {
   getCheckboxOfBook,
-  createStory
+  createStory,
+  getUserNotifications
 })
 
 class Sbox extends Component {
@@ -264,30 +261,25 @@ class Sbox extends Component {
   }
 
   testSocket() {
-    // socket.emit('msg', {test: 'Wake up Neo'});
-    // socket.emit('test');
-    // console.log('test', socket);
-    // socket.emit('hi');
-    // socket.on('hi', () => {
-    //   console.log('hi, socket');
-    // });
-
-    socket.send('hello');
-    socket.onmessage = function (event) {
-      console.log('onmessage', event.data);
-    };
-    console.log('click on testSocket');
+    socket.send({
+      employees: [
+        {firstName: 'John', lastName: 'Doe'},
+        {firstName: 'Anna', lastName: 'Smith'},
+        {firstName: 'Peter', lastName: 'Jones'}
+      ]
+    });
+    // socket.onmessage = function (event) {
+    //   console.log('onmessage', event.data);
+    // };
+    this.props.getUserNotifications();
+    console.log({
+      employees: [
+        {firstName: 'John', lastName: 'Doe'},
+        {firstName: 'Anna', lastName: 'Smith'},
+        {firstName: 'Peter', lastName: 'Jones'}
+      ]
+    });
   }
-
-//   export const socket = new WebSocket('ws://api.validbook.org:8000');
-//
-//   socket.onopen = function() {
-//   console.log('Connection established!');
-// };
-//
-//   socket.onmessage = function (event) {
-//   console.log('onmessage', event.data);
-// };
 
   render() {
     const { editorContent } = this.state;
