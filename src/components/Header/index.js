@@ -8,6 +8,7 @@ import './index.scss';
 
 @connect((state) => ({
   header_channel_name: state.channel.header_channel_name,
+  notifications: state.profile.notifications,
 }), {})
 
 class Header extends Component {
@@ -103,6 +104,7 @@ class Header extends Component {
           // onSignOut={this.props.onSignOut}
           logoutUser={this.props.logoutUser}
           authorizedUser={this.props.authorizedUser}
+          notifications={this.props.notifications}
         />
 
         {/* {this.state.isMob &&

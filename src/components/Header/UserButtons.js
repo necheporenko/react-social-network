@@ -4,7 +4,7 @@ import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 
 const UserButtons = (props) => {
   const { slug, first_name, avatar32} = props.authorizedUser;
-  const { logoutUser } = props;
+  const { logoutUser, notifications } = props;
   return (
     <nav className="header-navigation">
       <div className="extension">
@@ -14,12 +14,12 @@ const UserButtons = (props) => {
       <div className="icons">
         <div className="wrap-icon-search">
           <a href="#">
-            <div className="icon-search"></div>
+            <div className="icon-search"/>
           </a>
         </div>
         <div className="wrap-icon-mail">
           <Link to="/messages">
-            <div className="icon-mail"></div>
+            <div className="icon-mail"/>
           </Link>
         </div>
         <div className="wrap-icon-bell">
@@ -32,6 +32,16 @@ const UserButtons = (props) => {
                 </div>
                 <hr/>
                 <ul>
+                  { notifications && notifications.map((notification) => (
+                    <li key={notification.id}>
+                      <div>
+                        <img src={notification.user.avatar} alt=""/>
+                        <h6 dangerouslySetInnerHTML={{__html: notification.text}}/>
+                      </div>
+                      <p>{notification.created}</p>
+                    </li>
+                  ))}
+
                   <li>
                     <div>
                       <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>

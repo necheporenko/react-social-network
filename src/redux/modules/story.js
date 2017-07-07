@@ -118,11 +118,17 @@ export default function storyReducer(state = initialState, action) {
       };
     }
     case LIKE_STORY_SUCCESS: {
+      const notification = action.result.data.notification;
+      if (notification) {
+        notification.type = 'notification';
+        socket.send(JSON.stringify(notification));
+      }
+
       const likedStory = state.storiesArr.map((story) => {
         if (story.id === action.story_id) {
           return {
             ...story,
-            likes: action.result.data
+            likes: action.result.data.likes,
           };
         }
         return {

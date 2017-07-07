@@ -64,3 +64,28 @@
     padding: 15px 0;
   }
 }
+
+.pin-body {
+  display: flex;
+  justify-content: space-between;
+
+  .pin-counter {
+    display: flex;
+
+    input {
+      width: 100px;
+      font-size: 14px;
+      border: 1px solid #A9A9A9;
+      padding: 3px 0 3px 6px;
+      height: 16px;
+    }
+
+    .plus,
+    .minus {
+      width: 29px;
+      height: 20px;
+      text-align: center;
+      border: 1px solid;
+    }
+  }
+}

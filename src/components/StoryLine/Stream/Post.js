@@ -102,11 +102,11 @@ export default class Post extends Component {
 
     if (countBooks > 1) {
       result = (<p>{countBooks} books: {books.map((book) => (
-        <Link to={`/${this.props.requestedUser.slug}/books/${book.slug}`} key={book.id}>{book.name}</Link>)
+        <Link to={`/${this.props.user.slug}/books/${book.slug}`} key={book.id}>{book.name}</Link>)
       )}</p>);
     } else {
       books.map((book) => (
-        result = <Link to={`/${this.props.requestedUser.slug}/books/${book.slug}`} key={book.id}>{book.name}</Link>
+        result = <p><Link to={`/${this.props.user.slug}/books/${book.slug}`} key={book.id}>{book.name}</Link></p>
       ));
     }
     return result;
@@ -161,7 +161,6 @@ export default class Post extends Component {
     const { fullName, slug, avatar } = this.props.user;
     const { date, post, images, id, books, likes, loudness, visibility, authorizedUser, requestedUser } = this.props;
 
-
     // const tooltip = (props) => (
     //
     //   <Tooltip id={props.id}>
@@ -174,7 +173,7 @@ export default class Post extends Component {
     // tooltip.id = 'test';
     const tooltipLike = (
       <Tooltip id="tooltipLike" arrowOffsetLeft={10} >
-        { likes.people_list.map((people) => (
+        { likes.people_list && likes.people_list.map((people) => (
           <div key={people.user.id}>{people.user.fullName}</div>
         ))}
       </Tooltip>
@@ -213,14 +212,14 @@ export default class Post extends Component {
                 </div>
               </div>
 
-              {/*{ authorizedUser.id === requestedUser.id &&*/}
+              { authorizedUser.slug === slug &&
                 <div className="post-delimiter" style={{display: 'flex'}}><span> · </span>
                   <div className="post-details-loud-icon">
                     <span className={this.chooseLoudnessIcon(loudness)}/>
                     <div className="block-additional block-additional-loud">{this.chooseLoudnessTooltip(loudness)}</div>
                   </div>
                 </div>
-              // }
+              }
               <div className="post-delimiter"><span> · </span></div>
               <div className="post-details-visibility">
                 <div className="post-details-visibility-icon">
@@ -288,8 +287,9 @@ export default class Post extends Component {
               <div className="post-delimiter"><span> · </span></div>
               <div className="post-details-location">
                 <OverlayTrigger placement="top" overlay={tooltipBooks} id="tooltipBooks" >
-                  <p>{this.loadBookInfo(books)}</p>
+                  <div>{this.loadBookInfo(books)}</div>
                 </OverlayTrigger>
+
                 {/*{this.loadBookInfo(books)}*/}
                 {/*<div className="myTooltip" onClick={(e) => console.log('helllo', e)}>*/}
                 {/*<div className="myTooltip-arrow"></div>*/}
@@ -313,6 +313,7 @@ export default class Post extends Component {
                     <div className="wrapper-popup-story">
                       <PinStory
                         pinStory={this.props.pinStory}
+                        books={books}
                         id={id}
                       />
                     </div>

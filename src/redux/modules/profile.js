@@ -7,6 +7,9 @@ const SET_NOTIFICATION_SETTINGS_FAIL = 'SET_NOTIFICATION_SETTINGS_FAIL';
 const GET_USER_NOTIFICATIONS = 'GET_USER_NOTIFICATIONS';
 const GET_USER_NOTIFICATIONS_SUCCESS = 'GET_USER_NOTIFICATIONS_SUCCESS';
 const GET_USER_NOTIFICATIONS_FAIL = 'GET_USER_NOTIFICATIONS_FAIL';
+const SOCKET_SEND_USER_NOTIFICATION = 'SOCKET_SEND_USER_NOTIFICATION';
+const SOCKET_SEND_USER_NOTIFICATION_SUCCESS = 'SOCKET_SEND_USER_NOTIFICATION_SUCCESS';
+const SOCKET_SEND_USER_NOTIFICATION_FAIL = 'SOCKET_SEND_USER_NOTIFICATION_FAIL';
 
 const initialState = {
   notificationSettings: {},
@@ -87,6 +90,13 @@ export default function profileReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case SOCKET_SEND_USER_NOTIFICATION:
+      return {
+        ...state,
+        socketUserNotification: true,
+        notifications: [action.data, ...state.notifications]
+      };
+
     default:
       return state;
   }
@@ -114,5 +124,13 @@ export function getUserNotifications() {
   return {
     types: [GET_USER_NOTIFICATIONS, GET_USER_NOTIFICATIONS_SUCCESS, GET_USER_NOTIFICATIONS_FAIL],
     promise: (client) => client.get('/notifications')
+  };
+}
+
+export function socketUserNotification(data) {
+  console.log('redux socketUserNotification', data);
+  return {
+    type: SOCKET_SEND_USER_NOTIFICATION,
+    data
   };
 }

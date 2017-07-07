@@ -261,24 +261,32 @@ class Sbox extends Component {
   }
 
   testSocket() {
-    socket.send({
-      employees: [
-        {firstName: 'John', lastName: 'Doe'},
-        {firstName: 'Anna', lastName: 'Smith'},
-        {firstName: 'Peter', lastName: 'Jones'}
-      ]
-    });
+    socket.send(
+      JSON.stringify({
+        type: 'notification',
+        id: 10,
+        text: "<a href='http://devasimov.validbook.org/bohdan.andriyiv'>Bohdan Andriyiv</a> liked your <a href='http://devasimov.validbook.org/story/1440'>story</a>.",
+        created: '06 Jul 2017',
+        user: {
+          id: 4,
+          fullName: 'Bohdan Andriyiv',
+          slug: 'bohdan.andriyiv',
+          avatar: 'https://s3-us-west-2.amazonaws.com/dev.validbook/avatars/2017/06/20/4/7oSnPdcNeVyCaF0Vo2-LA0Sl_7f0aB-C.jpg'
+        }
+      })
+      // 'test'
+      );
     // socket.onmessage = function (event) {
     //   console.log('onmessage', event.data);
     // };
     this.props.getUserNotifications();
-    console.log({
-      employees: [
-        {firstName: 'John', lastName: 'Doe'},
-        {firstName: 'Anna', lastName: 'Smith'},
-        {firstName: 'Peter', lastName: 'Jones'}
-      ]
-    });
+    // console.log({
+    //   employees: [
+    //     {firstName: 'John', lastName: 'Doe'},
+    //     {firstName: 'Anna', lastName: 'Smith'},
+    //     {firstName: 'Peter', lastName: 'Jones'}
+    //   ]
+    // });
   }
 
   render() {
@@ -333,7 +341,7 @@ class Sbox extends Component {
               onClick={this.onSubmitStory}
               style={{fontSize: '13px', backgroundColor: this.state.sboxFocusBtn }}
             >Log</div>
-            <button className="btn-brand" type="submit" onClick={() => this.testSocket()}>JUST CLICK ME</button>
+            <button className="btn-brand" type="submit" onClick={() => this.testSocket()}>not press</button>
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} >
                 <div className="sbox-booktree">
