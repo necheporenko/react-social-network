@@ -279,7 +279,7 @@ class Sbox extends Component {
     // socket.onmessage = function (event) {
     //   console.log('onmessage', event.data);
     // };
-    this.props.getUserNotifications();
+    // this.props.getUserNotifications();
     // console.log({
     //   employees: [
     //     {firstName: 'John', lastName: 'Doe'},

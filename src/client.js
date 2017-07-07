@@ -16,6 +16,7 @@ import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import getRoutes from './routes';
 import isOnline from './utils/isOnline';
+import sockets from './utils/socket';
 // import { socket } from './constants/socket';
 // import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 // add bootstrap style, (don't work - 'You may need an appropriate loader to handle this file type.')
@@ -29,33 +30,29 @@ const offlinePersistConfig = {
 const client = new ApiClient();
 const dest = document.getElementById('content');
 
-const socket = new WebSocket('ws://api.validbook.org:8000');
-global.socket = socket;
+// const socket = new WebSocket('ws://sandbox.kaazing.net/echo');
+// export const websocket = new WebSocket('ws://api.validbook.org:8000');
+// global.websocket = websocket;
+//
+// websocket.onopen = function () {
+//   console.log('Connection established!');
+// };
 
-socket.onopen = function () {
-  console.log('Connection established!');
-};
+// sockets();  // socket.onmessage
 
-socket.onmessage = function (result) {
-  const json = JSON.parse(result.data);
-  console.log('result.data', result.data);
-  console.log('result', result);
-  console.log('result json', json);
-};
-
-socket.onclose = function (event) {
-  if (event.wasClean) {
-    console.log('Connection closed pure');
-  } else {
-    console.log('disconnection');
-  }
-  console.log(`Code: ${event.code} reason: ${event.reason}`);
-};
+// socket.onclose = function (event) {
+//   if (event.wasClean) {
+//     console.log('Connection closed pure');
+//   } else {
+//     console.log('disconnection');
+//   }
+//   console.log(`Code: ${event.code} reason: ${event.reason}`);
+// };
 
 
-socket.onerror = function (error) {
-  console.log(`Error ${error.message}`);
-};
+// socket.onerror = function (error) {
+//   console.log(`Error 23 ${error.message}`);
+// };
 
 // function initSocket() {
 //   socket.on('news', data => {

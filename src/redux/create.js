@@ -2,6 +2,7 @@ import { createStore as _createStore, applyMiddleware, compose, combineReducers 
 import { routerMiddleware } from 'react-router-redux';
 import { createPersistor } from 'redux-persist';
 import createMiddleware from './middleware/clientMiddleware';
+import socketMiddleware from './middleware/socketMiddleware';
 import createReducers from './reducer';
 
 
@@ -20,7 +21,7 @@ function getMissingReducers(reducers, data) {
 }
 
 export default function createStore(history, client, data, persistConfig = null) {
-  const middleware = [createMiddleware(client), routerMiddleware(history)];
+  const middleware = [createMiddleware(client), socketMiddleware(), routerMiddleware(history)];
 
   let enhancers = [applyMiddleware(...middleware)];
   if (__CLIENT__ && __DEVTOOLS__) {
