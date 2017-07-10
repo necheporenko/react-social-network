@@ -16,7 +16,7 @@ import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import getRoutes from './routes';
 import isOnline from './utils/isOnline';
-import sockets from './utils/socket';
+// import sockets from './utils/socket';
 // import { socket } from './constants/socket';
 // import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 // add bootstrap style, (don't work - 'You may need an appropriate loader to handle this file type.')

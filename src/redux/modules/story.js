@@ -26,6 +26,15 @@ const DELETE_STORY_FAIL = 'DELETE_STORY_FAIL';
 const PIN_STORY = 'PIN_STORY';
 const PIN_STORY_SUCCESS = 'PIN_STORY_SUCCESS';
 const PIN_STORY_FAIL = 'PIN_STORY_FAIL';
+const CREATE_NEW_COMMENT = 'CREATE_NEW_COMMENT';
+const CREATE_NEW_COMMENT_SUCCESS = 'CREATE_NEW_COMMENT_SUCCESS';
+const CREATE_NEW_COMMENT_FAIL = 'CREATE_NEW_COMMENT_FAIL';
+const UPDATE_COMMENT = 'UPDATE_COMMENT';
+const UPDATE_COMMENT_SUCCESS = 'UPDATE_COMMENT_SUCCESS';
+const UPDATE_COMMENT_FAIL = 'UPDATE_COMMENT_FAIL';
+const DELETE_COMMENT = 'DELETE_COMMENT';
+const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
+const DELETE_COMMENT_FAIL = 'DELETE_COMMENT_FAIL';
 
 
 const initialState = {
@@ -120,7 +129,7 @@ export default function storyReducer(state = initialState, action) {
     case LIKE_STORY_SUCCESS: {
       const notification = action.result.data.notification;
       if (notification) {
-        notification.type = 'notification';
+        notification.type = 'notification-like';
         socket.send(JSON.stringify(notification));
       }
 
@@ -256,6 +265,75 @@ export default function storyReducer(state = initialState, action) {
       };
     }
 
+    case CREATE_NEW_COMMENT: {
+      return {
+        ...state,
+        creatingNewComment: true,
+      };
+    }
+    case CREATE_NEW_COMMENT_SUCCESS: {
+      const addNewComment = state.storiesArr.map((story) => {
+        if (story.id === action.entity_id) {
+          return {
+            ...story,
+            comments: [...story.comments, action.result.data.comment, ]
+          };
+        }
+        return {
+          ...story
+        };
+      });
+      return {
+        ...state,
+        creatingNewComment: false,
+        storiesArr: addNewComment,
+      };
+    }
+    case CREATE_NEW_COMMENT_FAIL: {
+      return {
+        ...state,
+        creatingNewComment: false,
+      };
+    }
+
+    case UPDATE_COMMENT: {
+      return {
+        ...state,
+        pin: true,
+      };
+    }
+    case UPDATE_COMMENT_SUCCESS: {
+      return {
+        ...state,
+        pin: false,
+      };
+    }
+    case UPDATE_COMMENT_FAIL: {
+      return {
+        ...state,
+        pin: false,
+      };
+    }
+
+    case DELETE_COMMENT: {
+      return {
+        ...state,
+        pin: true,
+      };
+    }
+    case DELETE_COMMENT_SUCCESS: {
+      return {
+        ...state,
+        pin: false,
+      };
+    }
+    case DELETE_COMMENT_FAIL: {
+      return {
+        ...state,
+        pin: false,
+      };
+    }
+
 
     default:
       return state;
@@ -355,3 +433,32 @@ export function pinStory(id) {
     promise: (client) => client.post(`/stories/pin/${id}`)
   };
 }
+
+export function createComment(entity_id, content, parent_id, created_by) {
+  return {
+    types: [CREATE_NEW_COMMENT, CREATE_NEW_COMMENT_SUCCESS, CREATE_NEW_COMMENT_FAIL],
+    entity_id,    //story id
+    promise: (client) => client.post('/comments', { data: {
+      entity: 'story',
+      entity_id,  //story id
+      content,    //text
+      parent_id,  //default 0
+      created_by  //auth_id
+    }})
+  };
+}
+
+export function updateComment(id, content) {
+  return {
+    types: [UPDATE_COMMENT, UPDATE_COMMENT_SUCCESS, UPDATE_COMMENT_FAIL],
+    promise: (client) => client.patch(`/comments/${id}`, { data: { content }})
+  };
+}
+
+export function deleteComment(id) {
+  return {
+    types: [DELETE_COMMENT, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_FAIL],
+    promise: (client) => client.del(`/comments/${id}`)
+  };
+}
+

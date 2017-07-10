@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Textarea from 'react-textarea-autosize';
 import { Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { ShareButtons } from 'react-share';
-import { like as likePost, setVisibilityStory, deleteStory, pinStory } from '../../../redux/modules/story';
+import { like as likePost, setVisibilityStory, deleteStory, pinStory, createComment } from '../../../redux/modules/story';
 import LogStory from '../../Popup/Log';
 import DeleteStory from '../../Popup/DeleteStory';
 import PinStory from '../../Popup/PinStory';
@@ -16,7 +16,8 @@ const { FacebookShareButton, TwitterShareButton } = ShareButtons;
   likePost,
   setVisibilityStory,
   deleteStory,
-  pinStory
+  pinStory,
+  createComment,
 })
 
 // class MyTooltip {
@@ -32,6 +33,7 @@ export default class Post extends Component {
     super(props);
     this.state = {
       showModal: false,
+      parent_id: 0,
       // showComment: false,
     };
     this.Close = this.Close.bind(this);
@@ -113,10 +115,12 @@ export default class Post extends Component {
   }
 
   handleKeyPress(event) {
-    if (event.keyCode === 13) {
-      alert('Enter clicked!!!');
+    if (event.keyCode === 13 && !event.shiftKey) {
+      event.preventDefault();
+      // console.log('comment', this.props.id, event.target.value, this.state.parent_id, this.props.authorizedUser.id);
+      this.props.createComment(this.props.id, event.target.value, this.state.parent_id, this.props.authorizedUser.id)
+        .then(event.target.value = '');
     }
-    console.log('key', event.key);
   }
 
   chooseLoudnessIcon(loudness) {
@@ -159,7 +163,7 @@ export default class Post extends Component {
 
   render() {
     const { fullName, slug, avatar } = this.props.user;
-    const { date, post, images, id, books, likes, loudness, visibility, authorizedUser, requestedUser } = this.props;
+    const { date, post, images, id, books, likes, loudness, visibility, authorizedUser, requestedUser, comments } = this.props;
 
     // const tooltip = (props) => (
     //
@@ -471,26 +475,147 @@ export default class Post extends Component {
 
           <div className="post-comment-field">
             <div className="comments">
-              <div className="comment">
+              { comments && comments.map((comment) => (
+                <div className="comment">
+                  <img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>
+                  <div className="text-block">
+                    <p><Link>{`${comment.user.first_name} ${comment.user.last_name}`}</Link>{comment.content}</p>
+                    <span className="reply">Reply</span><span> · </span><span className="date">{comment.date}</span>
+                  </div>
+                  <ButtonToolbar>
+                    <DropdownButton className="profileMenu-btn" title={''} id={comment.id} noCaret pullRight >
+                      <li>
+                        <p>Edit Comment</p>
+                      </li>
+                      <li>
+                        <p>Delete Comment</p>
+                      </li>
+                      <li>
+                        <p>Report Comment</p>
+                      </li>
+                    </DropdownButton>
+                  </ButtonToolbar>
+                </div>
+              ))}
+              <div className="comment" style={{paddingLeft: '30px'}}>
                 <img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>
                 <div className="text-block">
-                  <p>
-                    <Link>Vadim Necheporenko</Link>
-                    Validbook is a user controlled, not for profit enterprise. The mission of Validbook is to make cooperation between people, physical objects and virtual entities more effective and efficient by making cooperation more transparent, free and reliable.
-                  </p>
-                  <span className="reply">Reply</span><span> · </span><span className="date">7 Jun 2017</span>
+                  <p><Link>User1 User2</Link>random text</p>
+                  <span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>
                 </div>
+                <ButtonToolbar>
+                  <DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >
+                    <li>
+                      <p>Edit Comment</p>
+                    </li>
+                    <li>
+                      <p>Delete Comment</p>
+                    </li>
+                    <li>
+                      <p>Report Comment</p>
+                    </li>
+                  </DropdownButton>
+                </ButtonToolbar>
               </div>
-
-              <div className="comment">
+              <div className="comment" style={{paddingLeft: '60px'}}>
                 <img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>
                 <div className="text-block">
-                  <p>
-                    <Link>Vadim Necheporenko</Link>
-                    Validbook is a user controlled, not for profit enterprise. The mission of Validbook is to make cooperation between people, physical objects and virtual entities more effective and efficient by making cooperation more transparent, free and reliable.
-                  </p>
-                  <span className="reply">Reply</span><span> · </span><span className="date">7 Jun 2017</span>
+                  <p><Link>User1 User2</Link>random text</p>
+                  <span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>
                 </div>
+                <ButtonToolbar>
+                  <DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >
+                    <li>
+                      <p>Edit Comment</p>
+                    </li>
+                    <li>
+                      <p>Delete Comment</p>
+                    </li>
+                    <li>
+                      <p>Report Comment</p>
+                    </li>
+                  </DropdownButton>
+                </ButtonToolbar>
+              </div>
+              <div className="comment" style={{paddingLeft: '90px'}}>
+                <img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>
+                <div className="text-block">
+                  <p><Link>User1 User2</Link>random text</p>
+                  <span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>
+                </div>
+                <ButtonToolbar>
+                  <DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >
+                    <li>
+                      <p>Edit Comment</p>
+                    </li>
+                    <li>
+                      <p>Delete Comment</p>
+                    </li>
+                    <li>
+                      <p>Report Comment</p>
+                    </li>
+                  </DropdownButton>
+                </ButtonToolbar>
+              </div>
+              <div className="comment" style={{paddingLeft: '120px'}}>
+                <img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>
+                <div className="text-block">
+                  <p><Link>User1 User2</Link>random textrandom textrandom</p>
+                  <span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>
+                </div>
+                <ButtonToolbar>
+                  <DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >
+                    <li>
+                      <p>Edit Comment</p>
+                    </li>
+                    <li>
+                      <p>Delete Comment</p>
+                    </li>
+                    <li>
+                      <p>Report Comment</p>
+                    </li>
+                  </DropdownButton>
+                </ButtonToolbar>
+              </div>
+              <div className="comment" style={{paddingLeft: '150px'}}>
+                <img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>
+                <div className="text-block">
+                  <p><Link>User1 User2</Link>random textrandom textrandom </p>
+                  <span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>
+                </div>
+                <ButtonToolbar>
+                  <DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >
+                    <li>
+                      <p>Edit Comment</p>
+                    </li>
+                    <li>
+                      <p>Delete Comment</p>
+                    </li>
+                    <li>
+                      <p>Report Comment</p>
+                    </li>
+                  </DropdownButton>
+                </ButtonToolbar>
+              </div>
+              <div className="comment" style={{paddingLeft: '180px'}}>
+                <img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>
+                <div className="text-block">
+                  <p><Link>User1 User2</Link>random textrandom</p>
+                  <span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>
+                </div>
+                <ButtonToolbar>
+                  <DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >
+                    <li>
+                      <p>Edit Comment</p>
+                    </li>
+                    <li>
+                      <p>Delete Comment</p>
+                    </li>
+                    <li>
+                      <p>Report Comment</p>
+                    </li>
+                  </DropdownButton>
+                </ButtonToolbar>
               </div>
             </div>
 
@@ -542,4 +667,5 @@ Post.propTypes = {
   setVisibilityStory: PropTypes.func,
   pinStory: PropTypes.func,
   deleteStory: PropTypes.func,
+  createComment: PropTypes.func,
 };

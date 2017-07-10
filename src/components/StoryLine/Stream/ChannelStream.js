@@ -74,6 +74,7 @@ export default class ChannelStream extends Component {
               books={story.books}
               loudness={story.loudness}
               visibility={story.visibility}
+              comments={story.comments}
               likeFunc={this.like}
               authorizedUser={this.props.authorizedUser}
               requestedUser={this.props.requestedUser}

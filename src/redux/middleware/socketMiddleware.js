@@ -4,11 +4,14 @@ export default function socketMiddleware() {
   const onMessage = (ws, store) => evt => {
     //Parse the JSON message received on the websocket
     const msg = JSON.parse(evt.data);
+    const currentState = store.getState();
 
     switch (msg.type) {
-      case 'notification':
-        store.dispatch(socketUserNotification(msg));
-        console.log('muhahaha');
+      case 'notification-like':
+        if (currentState.user.authorizedUser.id !== msg.user.id) {
+          store.dispatch(socketUserNotification(msg));
+          console.log('muhahaha', currentState.user.authorizedUser.id);
+        }
         break;
 
       default:
