@@ -43,6 +43,7 @@
     line-height: 16px;
     height: 29px;
     box-sizing: border-box;
+    z-index: 12;
 
     &:hover, &.active {
       text-decoration: none;

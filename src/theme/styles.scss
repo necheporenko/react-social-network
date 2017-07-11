@@ -6,6 +6,8 @@ body {
  margin: 0;
  font-family: "Roboto", Arial, sans-serif;
  background: $default-bg;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1,h2,h3,h4,h5,h6,p,ul, button {
@@ -46,13 +48,13 @@ b {
   border-radius: 2px;
   padding: 6px 12px;
   border: 1px solid transparent;
-  opacity: .65;
+  //opacity: .65;
   min-width: 60px;
 
-  &:hover {
-    opacity: 1;
-    color: #fff;
-  }
+  //&:hover {
+  //  opacity: 1;
+  //  color: #fff;
+  //}
 }
 
 .btn-following {

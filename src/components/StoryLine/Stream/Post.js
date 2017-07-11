@@ -134,11 +134,11 @@ export default class Post extends Component {
   }
   chooseLoudnessTooltip(loudness) {
     if (!loudness.inChannels && !loudness.inBooks) {
-      return 'Story will not appear in the channels of your followers';
+      return 'Story did not appear in the channels';
     } else if (loudness.inChannels && loudness.inBooks) {
-      return 'Story will appear in the channels of your followers';
+      return 'Story appeared in the channels of your followers';
     } else if (!loudness.inChannels && loudness.inBooks) {
-      return 'Story will appear in the channels of book followers';
+      return 'Story appeared in the channels of book followers';
     }
   }
 

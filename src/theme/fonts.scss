@@ -1,18 +1,21 @@
-@font-face {
-    font-family: "Roboto";
-    src: url("../fonts/Roboto/Roboto-Regular.ttf") format("truetype");
-    font-weight: 400;
-}
-@font-face {
-    font-family: "Roboto Bold";
-    font-weight: bold;
-    src: url("../fonts/Roboto/Roboto-Bold.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Roboto Medium";
-    font-weight: 500;
-    src: url("../fonts/Roboto/Roboto-Medium.ttf") format("truetype");
-}
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700&subset=cyrillic');
+
+//@font-face {
+//    font-family: "Roboto";
+//    font-weight: 400;
+//    font-style: normal;
+//    src: local('Roboto-Regular'), url(https://fonts.googleapis.com/css?family=Roboto&amp;subset=cyrillic) format("woff2");
+//}
+//@font-face {
+//    font-family: "Roboto Bold";
+//    font-weight: bold;
+//    src: url("../fonts/Roboto/Roboto-Bold.ttf") format("truetype");
+//}
+//@font-face {
+//    font-family: "Roboto Medium";
+//    font-weight: 500;
+//    src: url("../fonts/Roboto/Roboto-Medium.ttf") format("truetype");
+//}
 
 @font-face {
     font-family: "Montserrat";

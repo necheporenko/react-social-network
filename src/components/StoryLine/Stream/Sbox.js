@@ -341,7 +341,7 @@ class Sbox extends Component {
               onClick={this.onSubmitStory}
               style={{fontSize: '13px', backgroundColor: this.state.sboxFocusBtn }}
             >Log</div>
-            <button className="btn-brand" type="submit" onClick={() => this.testSocket()}>not press</button>
+            <button style={{padding: '5px'}} className="btn-brand" type="submit" onClick={() => this.testSocket()}>not press</button>
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} >
                 <div className="sbox-booktree">

@@ -166,7 +166,7 @@
     &::after {
       content: '';
       cursor: default;
-      border-left: 1px solid #ddd;
+      border-left: 1px solid #EEE;
       height: 16px;
       position: relative;
       left: 15px;
@@ -293,7 +293,7 @@
   span {
     vertical-align: -4px;
     margin-right: 10px;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   img {
@@ -349,7 +349,7 @@
 .header-sign-btn {
   position: absolute;
   right: 20px;
-  top: 13px;
+  top: 11px;
 
   button {
     cursor: pointer;
@@ -358,13 +358,14 @@
     font-size: 14px;
     border-radius: 2px;
     border: 0;
-    height: 20px;
-    width: 75px;
-    padding: 3px 1px;
+    text-align: center;
+    padding: 6px 12px;
+    line-height: 16px;
+    font-family: $font-medium;
 
-    &:hover {
-      background: $brand-hover;
-    }
+    //&:hover {
+    //  background: $brand-hover;
+    //}
   }
 
   .header-sign-in {

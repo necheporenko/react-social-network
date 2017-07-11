@@ -73,7 +73,7 @@ class Auth extends Component {
             responseHandler={this.responseFacebook}
             xfbml={true}
             version="v2.5"
-            buttonText="Sign up with Facebook"
+            buttonText="Continue with Facebook"
             />
           <InformationFooter />
         </div>

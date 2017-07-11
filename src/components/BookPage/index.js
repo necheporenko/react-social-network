@@ -10,6 +10,7 @@ import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import BookStream from '../StoryLine/Stream/BookStream';
 import Photos from '../StoryLine/InfoBlocks/Photos';
 import SubHeader from '../StoryLine/SubHeader/index';
+import NavigationBookPage from '../Navigation/NavigationBookPage';
 import './index.scss';
 
 const radioOptions = [
@@ -41,15 +42,56 @@ const radioOptions = [
 })
 
 export default class BookPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      scrollTop: 0
+    };
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll(e) {
+    const scrollTop = e.srcElement.body.scrollTop;
+    //console.log(scrollTop);
+    this.setState({ scrollTop: scrollTop });
+  }
+
   render() {
+    const { scrollTop } = this.state;
+    const scroll = () => {
+      let Nav;
+      let booksTreeTop;
+      let displayUser;
+
+      if (scrollTop <= 275) {
+        Nav = 'navigation';
+        booksTreeTop = 'wrapper';
+        displayUser = 'navigation-infouser-none';
+      } else {
+        Nav = 'navigation navigation-fixed';
+        booksTreeTop = 'wrapper wrapper-fixed';
+        displayUser = 'navigation-infouser';
+      }
+      const result = { booksTree: booksTreeTop, show: displayUser, posTop: Nav };
+      return result;
+    };
+    const chooseScroll = scroll();
     const bookPageName = this.props.bookPageName;
-    const { slug } = this.props.requestedUser;
+    const { slug, first_name, last_name, avatar32 } = this.props.requestedUser;
     return (
       <div>
         <SubHeader
           requestedUser={this.props.requestedUser}
         />
-        <div className="navigation">
+        <div className={chooseScroll.posTop}>
           <div className="navigation-wrap book-nav">
             <ul>
               <li><Link to={`/${slug}/books`}>Books</Link></li>
@@ -65,6 +107,12 @@ export default class BookPage extends Component {
               </li>
             </ul>
           </div>
+          <NavigationBookPage
+            userName={`${first_name} ${last_name}`}
+            avatar32={avatar32}
+            link={`/${slug}`}
+            displayUser={chooseScroll.show}
+          />
         </div>
 
 
@@ -74,6 +122,7 @@ export default class BookPage extends Component {
 
               <BooksTreeContainer
                 bookTreeArr={this.props.bookTreeArr}
+                infoBlocksTop={chooseScroll.booksTree}
               />
               <BookStream
                 authorizedUser={this.props.authorizedUser}
