@@ -23,7 +23,7 @@ import { exposeInitialRequest } from 'app';
 process.on('unhandledRejection', error => console.error(error));
 
 //const targetUrl = `http://${config.apiHost}:${config.apiPort}`;
-const targetUrl = 'http://' + config.apiHost;
+const targetUrl = `http://${config.apiHost}`;
 const pretty = new PrettyError();
 const app = new express();
 const server = new http.Server(app);
@@ -48,30 +48,29 @@ app.use((req, res, next) => {
 // Proxy to API server
 app.use('/api', (req, res) => {
   //proxy.web(req, res, { target: targetUrl });
-  const url = `${req.url.replace('/api', '').split('?')[0]}`
-  const method = req.method.toLowerCase()
+  const url = `${req.url.replace('/api', '').split('?')[0]}`;
+  const method = req.method.toLowerCase();
 
-  const request = superagent[method](targetUrl+url)
-  const params = req.query
-  request.query(params)
+  const request = superagent[method](targetUrl + url);
+  const params = req.query;
+  request.query(params);
   if (method == 'get') {
-    request.send()
+    request.send();
   } else {
-    request.send(req.body)
+    request.send(req.body);
   }
-  res.setHeader('content-Type', req.headers['content-type'] || 'application/json')
+  res.setHeader('content-Type', req.headers['content-type'] || 'application/json');
 
   request.end((error, resourcesResponse) => {
     if (error) {
       if (resourcesResponse) {
-        return res.status(error.status || 500).send(resourcesResponse.body || '')
-      } else {
-        return res.status(error.status || 500).send('')
-      }
+        return res.status(error.status || 500).send(resourcesResponse.body || '');
+      } 
+      return res.status(error.status || 500).send('');
     }
 
-    return res.json(resourcesResponse.body || '')
-  })
+    return res.json(resourcesResponse.body || '');
+  });
 });
 
 // app.use('/ws', (req, res) => {

@@ -1,6 +1,7 @@
 import { createStore as _createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import { createPersistor } from 'redux-persist';
+import { loadingBarMiddleware } from 'react-redux-loading-bar';
 import createMiddleware from './middleware/clientMiddleware';
 import socketMiddleware from './middleware/socketMiddleware';
 import createReducers from './reducer';
