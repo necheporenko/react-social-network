@@ -9,6 +9,7 @@ import './index.scss';
 @connect((state) => ({
   header_channel_name: state.channel.header_channel_name,
   notifications: state.profile.notifications,
+  loadingBar: state.loadingBar,
 }), {})
 
 class Header extends Component {
@@ -91,7 +92,10 @@ class Header extends Component {
         {/* {this.state.isMob &&
           <div style={{width: '35px'}}></div>
         } */}
-        <LoadingBar style={{ backgroundColor: '#2887D2', height: '2px', top: 0, left: 0, transition: 'transform 500ms ease 0s' }} />
+        <div className="wrap-loadingBar" style={{opacity: this.props.loadingBar}}>
+          <LoadingBar style={{ backgroundColor: '#2887D2', height: '2px', top: 0, left: 0, transition: 'transform 300ms ease 0s' }} />
+        </div>
+
         <Logo />
         { this.props.header_channel_name &&
           <div className="channel-name">

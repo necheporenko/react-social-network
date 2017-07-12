@@ -57,18 +57,21 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
   authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
   locationBeforeTransitions: state.routing.locationBeforeTransitions,
+  loadedPage: state.reduxAsyncConnect.loaded,
 }), ({
   logoutUser,
   hideLoading
 }))
 
 class App extends Component {
-
-  componentWillReceiveProps() {
+  componentDidMount() {
     this.props.hideLoading();
   }
-  componentWillMount() {
-    this.props.hideLoading();
+
+  componentDidUpdate() {
+    if (this.props.loadedPage) {
+      this.props.hideLoading();
+    }
   }
 
   render() {
@@ -105,6 +108,7 @@ App.propTypes = {
   locationBeforeTransitions: PropTypes.object,
   logoutUser: PropTypes.func,
   hideLoading: PropTypes.func,
+  loadedPage: PropTypes.bool,
   // userLogin: PropTypes.func,
   // userSignOut: PropTypes.func
 };
