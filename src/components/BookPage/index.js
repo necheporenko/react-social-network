@@ -122,7 +122,7 @@ export default class BookPage extends Component {
 
               <BooksTreeContainer
                 bookTreeArr={this.props.bookTreeArr}
-                infoBlocksTop={chooseScroll.booksTree}
+                booksTreeTop={chooseScroll.booksTree}
               />
               <BookStream
                 authorizedUser={this.props.authorizedUser}

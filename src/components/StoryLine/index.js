@@ -8,13 +8,16 @@ class StoryLine extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      scrollTop: 0
+      scrollTop: 0,
+      height: 0,
     };
     this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
+    const height = this.infoBlock.clientHeight;
+    this.setState({ height });
   }
 
   componentWillUnmount() {
@@ -23,7 +26,7 @@ class StoryLine extends Component {
 
   handleScroll(e) {
     const scrollTop = e.srcElement.body.scrollTop;
-    //console.log(scrollTop);
+    // console.log(scrollTop);
     this.setState({ scrollTop: scrollTop });
   }
 
@@ -35,11 +38,16 @@ class StoryLine extends Component {
 
       if (scrollTop <= 275) {
         booksTreeTop = 'wrapper';
-        infoBlocksTop = 'navigation-infouser-none';
       } else {
         booksTreeTop = 'wrapper wrapper-fixed';
-        infoBlocksTop = 'navigation-infouser';
       }
+
+      if (scrollTop < (this.state.height + 50) / 2) {
+        infoBlocksTop = scrollTop;
+      } else if (scrollTop >= (this.state.height + 50) / 2) {
+        infoBlocksTop = (this.state.height + 50) / 2;
+      }
+
       const result = {booksTree: booksTreeTop, infoBloks: infoBlocksTop};
       return result;
     };
@@ -48,25 +56,40 @@ class StoryLine extends Component {
     return (
       <div className="storyLine">
         <div className="wrap-storyLine">
-          <BooksTreeContainer
-            infoBlocksTop={chooseScroll.booksTree}
-            requestedUser={this.props.requestedUser}
-            bookTreeArr={this.props.bookTreeArr}
-          />
-          <Stream
-            authorizedUser={this.props.authorizedUser}
-            requestedUser={this.props.requestedUser}
-            storiesArr={this.props.storiesArr}
-            createStory={this.props.createStory}
-            loadStories={this.props.loadStories}
-            loadNextStories={this.props.loadNextStories}
-          />
-          <InfoBloks
-            requestedUser={this.props.requestedUser}
-            following={this.props.following}
-            followers={this.props.followers}
-            people={this.props.people}
-          />
+          <div style={{display: 'flex', width: '860px'}}>
+            <BooksTreeContainer
+              booksTreeTop={chooseScroll.booksTree}
+              requestedUser={this.props.requestedUser}
+              bookTreeArr={this.props.bookTreeArr}
+            />
+            <Stream
+              authorizedUser={this.props.authorizedUser}
+              requestedUser={this.props.requestedUser}
+              storiesArr={this.props.storiesArr}
+              createStory={this.props.createStory}
+              loadStories={this.props.loadStories}
+              loadNextStories={this.props.loadNextStories}
+            />
+          </div>
+
+          <div
+            style={{
+              left: 'calc(50% + 275px)',
+              width: '322px',
+              flex: '0 0 320px',
+              top: `calc(354px - ${chooseScroll.infoBloks}px)`,
+              position: 'fixed',
+            }}
+            ref={(c) => { this.infoBlock = c; }}
+            >
+            <InfoBloks
+              requestedUser={this.props.requestedUser}
+              following={this.props.following}
+              followers={this.props.followers}
+              people={this.props.people}
+              />
+          </div>
+
         </div>
       </div>
     );
