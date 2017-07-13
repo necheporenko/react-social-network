@@ -3,15 +3,14 @@
 /* === Mixins === */
 @mixin title-medium-default($size: 16px) {
   font: {
-    weight: normal;
-    family: $font-medium;
+    weight: 500;
     size: $size;
   }
   color: $default-color;
 }
 
 @mixin title-nav {
-  font-family: $font-medium;
+  font-weight: 500;
   font-size: 13px;
   color: $gray;
   text-transform: uppercase;

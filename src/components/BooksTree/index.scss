@@ -20,7 +20,7 @@
   margin-left: 26px;
 
   a {
-  font-family: $font-bold;
+  font-weight: bold;;
   font-size: 15px;
   color: $gray;
   }
@@ -50,7 +50,7 @@
     padding-top: 15px;
     padding-bottom: 10px;
     font-size: 14px;
-    font-family: $font-medium;
+    font-weight: 500;
   }
 
   .add-cover-book {

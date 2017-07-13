@@ -36,7 +36,7 @@ label {
 }
 
 b {
-  font-family: $font-bold;
+  font-weight: bold;;
 }
 
 .btn-brand {
@@ -44,7 +44,7 @@ b {
   background: #4280ff;
   color: #fff;
   font-size: 11px;
-  font-family: $font-bold;
+  font-weight: bold;;
   border-radius: 2px;
   padding: 6px 12px;
   border: 1px solid transparent;
@@ -59,7 +59,7 @@ b {
 
 .btn-following {
   font-size: 13px;
-  font-family: $font-medium;
+  font-weight: 500;
   border-radius: 2px;
   border: 1px solid #D9D9D9;
   box-shadow: 0 1px 0 rgba(0,0,0,.05);
@@ -132,7 +132,7 @@ b {
 
       &.active {
         > li {
-          font-family: $font-medium;
+          font-weight: 500;
           border-left: 4px solid #8F8F8F;
           background-color: #E1E1E1;
           padding-left: 26px;

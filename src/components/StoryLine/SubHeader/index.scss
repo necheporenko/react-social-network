@@ -86,7 +86,7 @@
       border: 0;
       box-shadow: none;
       color: #fff;
-      //font-family: $font-medium;
+      //font-weight: 500;
       font-size: 16px;
       padding: 15px;
       padding-left: 20px;
@@ -110,11 +110,11 @@
 .subHeader-userName {
   align-self: center;
   margin-top: 128px;
-  margin-left: 25px;
+  margin-left: 30px;
 
   a {
     font-size: 22px;
-    font-family: $font-bold;
+    font-weight: bold;;
     color: #fff;
     text-decoration: none;
     text-shadow: 0 0 3px rgba(0,0,0,.8);

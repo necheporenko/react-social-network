@@ -64,7 +64,7 @@
 
   h3 {
     font-size: 20px;
-    font-family: $font-bold;
+    font-weight: bold;;
   }
 
   p {
@@ -80,7 +80,7 @@
 
 .engagement-content-title {
   font-size: 18px;
-  font-family: $font-medium;
+  font-weight: 500;
   padding: 12px 20px;
   border: 0 none;
   border-bottom: 1px solid #cacaca;
@@ -90,7 +90,7 @@
   width: 140px;
   float: left;
   font-size: 14px;
-  font-family: $font-medium;
+  font-weight: 500;
 }
 
 .control-label {

@@ -226,7 +226,7 @@
     }
 
     h4 {
-      font-family: $font-medium;
+      font-weight: 500;
     }
   }
 
@@ -265,7 +265,7 @@
       font-size: 13px;
 
       b {
-        font-family: $font-bold;
+        font-weight: bold;;
         padding-right: 5px;
       }
 
@@ -296,7 +296,7 @@
   a {
     text-decoration: none;
     color: #333;
-    font-family: $font-bold;
+    font-weight: bold;;
   }
 
   span {
@@ -370,7 +370,7 @@
     text-align: center;
     padding: 6px 12px;
     line-height: 16px;
-    font-family: $font-medium;
+    font-weight: 500;
 
     //&:hover {
     //  background: $brand-hover;

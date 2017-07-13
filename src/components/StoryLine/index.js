@@ -18,6 +18,7 @@ class StoryLine extends Component {
     window.addEventListener('scroll', this.handleScroll);
     const height = this.infoBlock.clientHeight;
     this.setState({ height });
+    console.log('height', height)
   }
 
   componentWillUnmount() {
@@ -26,7 +27,7 @@ class StoryLine extends Component {
 
   handleScroll(e) {
     const scrollTop = e.srcElement.body.scrollTop;
-    // console.log(scrollTop);
+    console.log(scrollTop);
     this.setState({ scrollTop: scrollTop });
   }
 
@@ -35,6 +36,7 @@ class StoryLine extends Component {
     const scroll = () => {
       let booksTreeTop;
       let infoBlocksTop;
+      const clientHeight = document.documentElement.clientHeight;
 
       if (scrollTop <= 275) {
         booksTreeTop = 'wrapper';
@@ -42,11 +44,12 @@ class StoryLine extends Component {
         booksTreeTop = 'wrapper wrapper-fixed';
       }
 
-      if (scrollTop < (this.state.height + 50) / 2) {
+      if (scrollTop < (this.state.height - (clientHeight - 350))) {
         infoBlocksTop = scrollTop;
-      } else if (scrollTop >= (this.state.height + 50) / 2) {
-        infoBlocksTop = (this.state.height + 50) / 2;
+      } else if (this.state.height - (clientHeight - 350)) {
+        infoBlocksTop = this.state.height - (clientHeight - 350);
       }
+      console.log('result', this.state.height - (clientHeight - 350));
 
       const result = {booksTree: booksTreeTop, infoBloks: infoBlocksTop};
       return result;
