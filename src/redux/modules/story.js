@@ -427,10 +427,11 @@ export function getStoryId(globalState) {
   return path.substring(path.indexOf('/story/') + 7);     // get story ID after /story/ in path
 }
 
-export function pinStory(id) {
+export function pinStory(pins, id) {
+  console.log(pins);
   return {
     types: [PIN_STORY, PIN_STORY_SUCCESS, PIN_STORY_FAIL],
-    promise: (client) => client.post(`/stories/pin/${id}`)
+    promise: (client) => client.post(`/stories/pin/${id}`, { data: { pins }})
   };
 }
 

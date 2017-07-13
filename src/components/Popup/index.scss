@@ -73,19 +73,29 @@
     display: flex;
 
     input {
-      width: 100px;
+      width: 90px;
       font-size: 14px;
       border: 1px solid #A9A9A9;
       padding: 3px 0 3px 6px;
       height: 16px;
+      margin-right: 5px;
     }
 
     .plus,
     .minus {
       width: 29px;
-      height: 20px;
+      height: 22px;
       text-align: center;
-      border: 1px solid;
+      background-color: #fff;
+    }
+
+    .plus {
+      border: 1px solid green;
+    }
+
+    .minus {
+      border: 1px solid #bf0f0f;
+      margin-right: 5px;
     }
   }
 }

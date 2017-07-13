@@ -21,7 +21,8 @@ export default class DeleteStory extends Component {
   }
 
   deleteStory() {
-    this.props.deleteStory(this.props.id);
+    this.props.deleteStory(this.props.id)
+      .then(() => this.Close());
   }
 
   render() {

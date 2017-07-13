@@ -7,12 +7,15 @@ export default class PinStory extends Component {
     super(props);
     this.state = {
       showModal: false,
-      order: 0,
+      order: {},
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
     this.Counter = this.Counter.bind(this);
-    // this.deleteStory = this.deleteStory.bind(this);
+    this.pinStory = this.pinStory.bind(this);
+    this.props.books.map((book) => {
+      this.state.order[book.id] = 0;
+    });
   }
 
   Close() {
@@ -22,31 +25,36 @@ export default class PinStory extends Component {
     this.setState({ showModal: true });
   }
 
-  Counter(type) {
-    const currentPinOrder = this.pinOrder;
-    console.log(currentPinOrder);
-
+  Counter(type, id) {
     switch (type) {
       case 'inc':
-        this.setState({
-          order: this.state.order + 1
-        });
+        const newOrderInc = this.state.order;
+        newOrderInc[id]++;
+        this.setState({ order: newOrderInc });
         break;
 
       case 'dec':
-        this.setState({
-          order: this.state.order - 1
-        });
+        const newOrderDec = this.state.order;
+        if (newOrderDec[id] > 0) {
+          newOrderDec[id]--;
+        }
+        this.setState({ order: newOrderDec });
         break;
 
       default:
         console.log('error');
     }
+    console.log(this.state.order);
   }
 
-  // deleteStory() {
-  //   this.props.deleteStory(this.props.id);
-  // }
+  pinStory() {
+    const result = [];
+    for (const key in this.state.order) {
+      result.push({ book_id: key, order: this.state.order[key] });
+    }
+    this.props.pinStory(result, this.props.id)
+      .then(() => this.Close());
+  }
 
   render() {
     const { books } = this.props;
@@ -58,14 +66,13 @@ export default class PinStory extends Component {
           </Modal.Header>
 
           <Modal.Body>
-            {/*<p>fldklfkdkfkdkfkdkfodofkd</p>*/}
             { books.map((book) => (
               <div key={book.id} className="pin-body">
                 <div style={{paddingBottom: '13px'}}>{book.name}</div>
                 <div className="pin-counter">
-                  <input type="text" value={this.state.order} id={book.id} ref={(c) => { this.pinOrder = c; }}/>
-                  <div className="plus" onClick={() => this.Counter('inc')}>+</div>
-                  <div className="minus" onClick={() => this.Counter('dec')}>-</div>
+                  <input type="text" value={this.state.order[book.id]} id={book.id}/>
+                  <button className="minus" onClick={() => this.Counter('dec', book.id)}>-</button>
+                  <button className="plus" onClick={() => this.Counter('inc', book.id)}>+</button>
                 </div>
               </div>
             ))}
@@ -76,7 +83,7 @@ export default class PinStory extends Component {
               <button className="btn-brand btn-cancel" onClick={this.Close}>Cancel</button>
               <button
                 className="btn-brand" style={{marginLeft: '10px'}} type="submit"
-                // onClick={() => this.deleteStory()}
+                onClick={() => this.pinStory()}
               >Pin Story</button>
             </div>
           </Modal.Footer>
@@ -88,6 +95,7 @@ export default class PinStory extends Component {
 }
 
 PinStory.propTypes = {
-  deleteStory: PropTypes.func,
+  books: PropTypes.array,
+  pinStory: PropTypes.func,
   id: PropTypes.number,
 };

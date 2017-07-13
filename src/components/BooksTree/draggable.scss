@@ -114,6 +114,13 @@ $valid_color: #1976d2;
       }
 
       .react-tree-expander,
+      .react-tree-expander_close {
+        &:hover {
+          background-color: rgba(101, 101, 107, 0.34);
+        }
+      }
+
+      .react-tree-expander,
       .react-tree-expander-noop {
         position: absolute;
         width: 55px;
