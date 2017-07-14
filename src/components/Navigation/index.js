@@ -31,7 +31,7 @@ export default class Navigation extends Component {
 
 
   handleScroll(e) {
-    const scrollTop = e.srcElement.body.scrollTop;
+    const scrollTop = document.documentElement.scrollTop || (e.target || e.srcElement).body.scrollTop;
     savePositionTop = scrollTop;
     this.setState({ scrollTop });
   }

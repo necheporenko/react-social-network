@@ -78,7 +78,7 @@ class App extends Component {
     const { children } = this.props;
 
     return (
-      <div>
+      <div className="App">
         <Helmet {...config.app.head} />
         { this.props.isAuthenticated &&
           <div style={{ marginTop: '52px' }}>

@@ -29,30 +29,6 @@ const offlinePersistConfig = {
 const client = new ApiClient();
 const dest = document.getElementById('content');
 
-// const socket = new WebSocket('ws://sandbox.kaazing.net/echo');
-// export const websocket = new WebSocket('ws://api.validbook.org:8000');
-// global.websocket = websocket;
-//
-// websocket.onopen = function () {
-//   console.log('Connection established!');
-// };
-
-// sockets();  // socket.onmessage
-
-// socket.onclose = function (event) {
-//   if (event.wasClean) {
-//     console.log('Connection closed pure');
-//   } else {
-//     console.log('disconnection');
-//   }
-//   console.log(`Code: ${event.code} reason: ${event.reason}`);
-// };
-
-
-// socket.onerror = function (error) {
-//   console.log(`Error 23 ${error.message}`);
-// };
-
 // function initSocket() {
 //   socket.on('news', data => {
 //     console.log(data);

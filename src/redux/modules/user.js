@@ -51,6 +51,13 @@ export default function signReducer(state = initialState, action) {
         loaded: false
       };
     case LOGIN_SUCCESS:
+      const socket = new WebSocket(`ws://api.validbook.org:8000/?user=${action.result.data.id}`);
+      console.log('this is store', action.result.data.id);
+      global.socket = socket;
+      socket.onopen = function () {
+        console.log('Connection established!');
+      };
+      // socket.onmessage = onMessage(socket, store);
       return {
         ...state,
         loading: false,
@@ -301,10 +308,12 @@ export default function signReducer(state = initialState, action) {
     case SAVE_PROFILE_SUCCESS:
       const userProfile = state.authorizedUser;
       userProfile.profile = action.profile;
+      userProfile.first_name = action.profile.first_name;
+      userProfile.last_name = action.profile.last_name;
       return {
         ...state,
         saved: true,
-        userProfile: userProfile
+        authorizedUser: userProfile
       };
     case SAVE_PROFILE_FAIL:
       return {
