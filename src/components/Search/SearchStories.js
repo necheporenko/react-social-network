@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { searchStory } from '../../redux/modules/search';
-import Post from '../StoryLine/Stream/Post';
+import Post from '../StoryLine/Post/index';
 import './index.scss';
 
 @asyncConnect([{

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { getStory, getStoryId } from '../redux/modules/story';
-import Post from '../components/StoryLine/Stream/Post';
+import Post from '../components/StoryLine/Post/index';
 
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {

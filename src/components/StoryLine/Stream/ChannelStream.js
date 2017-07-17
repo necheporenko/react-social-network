@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import { like as likePostChannel } from '../../../redux/modules/channel';
 import Sbox from './Sbox';
-import Post from './Post';
+import Post from '../Post/index';
 import './index.scss';
 
 
