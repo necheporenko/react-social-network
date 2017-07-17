@@ -66,6 +66,7 @@ class Sbox extends Component {
     this.handleCheckLoud = this.handleCheckLoud.bind(this);
     this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
     this.testSocket = this.testSocket.bind(this);
+    this.selectedBooks = this.selectedBooks.bind(this);
   }
 
   onEditorStateChange = (editorContent) => {
@@ -260,6 +261,18 @@ class Sbox extends Component {
     }
   }
 
+  selectedBooks(arrCheckbox) {
+    const quantity = arrCheckbox.length;
+
+    if (quantity === 0) {
+      return 'Select Book';
+    } else if (quantity === 1) {
+      return arrCheckbox[0];
+    } else if (quantity > 1) {
+      return `${quantity} books`;
+    }
+  }
+
   testSocket() {
     socket.send(
       JSON.stringify({
@@ -341,9 +354,16 @@ class Sbox extends Component {
               onClick={this.onSubmitStory}
               style={{fontSize: '13px', backgroundColor: this.state.sboxFocusBtn }}
             >Log</div>
-            <button style={{padding: '5px'}} className="btn-brand" type="submit" onClick={() => this.testSocket()}>not press</button>
+            <button
+              style={{padding: '5px'}} className="btn-brand" type="submit"
+              onClick={() => this.testSocket()}>not press</button>
             <ButtonToolbar>
-              <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title="Select Book" id={5} >
+              <DropdownButton
+                className="bootstrap-pure-btn"
+                bsStyle="default"
+                title={this.selectedBooks(this.props.arrCheckbox)}
+                id={5}
+              >
                 <div className="sbox-booktree">
                   <BookTreeForSboxContainer
                     bookTreeArr={this.props.bookTreeArr}
@@ -364,8 +384,10 @@ class Sbox extends Component {
                           checked={this.state.loud.quiet_log}
                           onChange={this.handleCheckLoud}/>
                         <label htmlFor={'quiet_log'}><span/></label>
-                        <i className="quiet_log_icon"/>
-                        <p>Quiet logging</p>
+                        <div>
+                          <i className="quiet_log_icon"/>
+                          <p>Quiet logging</p>
+                        </div>
                       </div>
                     </li>
                     <li>
@@ -375,8 +397,10 @@ class Sbox extends Component {
                           checked={this.state.loud.loud_log}
                           onChange={this.handleCheckLoud}/>
                         <label htmlFor={'loud_log'}><span/></label>
-                        <i className="loud_log_icon"/>
-                        <p>Loud logging</p>
+                        <div>
+                          <i className="loud_log_icon"/>
+                          <p>Loud logging</p>
+                        </div>
                       </div>
                     </li>
                     <li style={{borderBottom: '1px solid #eee'}}>
@@ -386,8 +410,10 @@ class Sbox extends Component {
                           checked={this.state.loud.loud_book}
                           onChange={this.handleCheckLoud}/>
                         <label htmlFor={'loud_book'}><span/></label>
-                        <i className="loud_book_icon"/>
-                        <p>Loud in book</p>
+                        <div>
+                          <i className="loud_book_icon"/>
+                          <p>Loud in book</p>
+                        </div>
                       </div>
                     </li>
                     <li>
@@ -397,8 +423,10 @@ class Sbox extends Component {
                           checked={this.state.loud.post_fb}
                           onChange={this.handleCheckLoud}/>
                         <label htmlFor={'post_fb'}><span/></label>
-                        <i className="post_fb_icon"/>
-                        <p>Post to Facebook</p>
+                        <div>
+                          <i className="post_fb_icon"/>
+                          <p>Post to Facebook</p>
+                        </div>
                       </div>
                     </li>
                     <li style={{borderBottom: '1px solid #eee'}}>
@@ -408,8 +436,10 @@ class Sbox extends Component {
                           checked={this.state.loud.post_twitter}
                           onChange={this.handleCheckLoud}/>
                         <label htmlFor={'post_twitter'}><span/></label>
-                        <i className="post_twitter_icon"/>
-                        <p>Post to Twitter</p>
+                        <div>
+                          <i className="post_twitter_icon"/>
+                          <p>Post to Twitter</p>
+                        </div>
                       </div>
                     </li>
                     <li>
@@ -419,7 +449,9 @@ class Sbox extends Component {
                           checked={this.state.loud.storyline}
                           onChange={this.handleCheckLoud}/>
                         <label htmlFor={'storyline'}><span/></label>
-                        <p>Story will appear on Storyline</p>
+                        <div>
+                          <p>Story will appear on Storyline</p>
+                        </div>
                       </div>
                     </li>
                     {/*<button onClick={() => console.log('state 8:', this.state.loud_type)}>click for test</button>*/}
@@ -440,8 +472,10 @@ class Sbox extends Component {
                           checked={this.state.visibility.public}
                           onChange={this.handleCheckVisibility}/>
                         <label htmlFor={'public_visibility'}><span/></label>
-                        <i className="public_icon"/>
-                        <p>Public</p>
+                        <div>
+                          <i className="public_icon"/>
+                          <p>Public</p>
+                        </div>
                       </div>
                     </li>
                     <li>
@@ -451,8 +485,10 @@ class Sbox extends Component {
                           checked={this.state.visibility.private}
                           onChange={this.handleCheckVisibility}/>
                         <label htmlFor={'private_visibility'}><span/></label>
-                        <i className="private_icon"/>
-                        <p>Private</p>
+                        <div>
+                          <i className="private_icon"/>
+                          <p>Private</p>
+                        </div>
                       </div>
                     </li>
                     <li>
@@ -462,8 +498,10 @@ class Sbox extends Component {
                           checked={this.state.visibility.custom}
                           onChange={this.handleCheckVisibility}/>
                         <label htmlFor={'custom_visibility'}><span/></label>
-                        <i className="custom_icon"/>
-                        <p>Custom</p>
+                        <div>
+                          <i className="custom_icon"/>
+                          <p>Custom</p>
+                        </div>
                       </div>
                     </li>
                   </ul>

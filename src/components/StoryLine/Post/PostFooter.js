@@ -105,7 +105,7 @@ class PostFooter extends Component {
 
     function treeOfComments(comments) {
       comments && comments.map(comment => {
-        console.log(comment)
+        // console.log(comment)
         if (comment.rightParent) {
           comment.right = comment.rightParent;
           right = comment.rightParent;

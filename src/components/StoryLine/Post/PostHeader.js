@@ -136,8 +136,10 @@ class PostHeader extends Component {
                               type="checkbox" name="public_visibility_story" id="public_visibility_story"
                               checked={visibility.status === 'public'} />
                             <label htmlFor={'public_visibility_story'}><span/></label>
-                            <i className="public_icon"/>
-                            <p>Public</p>
+                            <div>
+                              <i className="public_icon"/>
+                              <p>Public</p>
+                            </div>
                           </div>
                         </li>
                         <li>
@@ -146,8 +148,10 @@ class PostHeader extends Component {
                               type="checkbox" name="private_visibility_story" id="private_visibility_story"
                               checked={visibility.status === 'private'} />
                             <label htmlFor={'private_visibility_story'}><span/></label>
-                            <i className="private_icon"/>
-                            <p>Private</p>
+                            <div>
+                              <i className="private_icon"/>
+                              <p>Private</p>
+                            </div>
                           </div>
                         </li>
                         <li>
@@ -156,8 +160,10 @@ class PostHeader extends Component {
                               type="checkbox" name="custom_visibility_story" id="custom_visibility_story"
                               checked={visibility.status === 'custom'} />
                             <label htmlFor={'custom_visibility_story'} ><span/></label>
-                            <i className="custom_icon"/>
-                            <p>Custom</p>
+                            <div>
+                              <i className="custom_icon"/>
+                              <p>Custom</p>
+                            </div>
                           </div>
                         </li>
                         <li>
@@ -166,8 +172,10 @@ class PostHeader extends Component {
                               type="checkbox" name="reset_visibility_story" id="reset_visibility_story"
                               checked={false} onChange={this.handleCheckVisibility}/>
                             <label htmlFor={'reset_visibility_story'}><span/></label>
-                            <i className="reset_icon"/>
-                            <p>Reset as per visibility of books</p>
+                            <div>
+                              <i className="reset_icon"/>
+                              <p>Reset as per visibility of books</p>
+                            </div>
                           </div>
                         </li>
                         <span className="divider" />
