@@ -27,9 +27,7 @@ class StoryLine extends Component {
 
   handleScroll(e) {
     const scrollTop = document.documentElement.scrollTop || (e.target || e.srcElement).body.scrollTop;
-    console.log(scrollTop);
-    // console.log('event target', e.target.body.scrollTop, e.srcElement.body.scrollTop, document.documentElement.scrollTop);
-    // console.log('event target', e.target.body.scrollTop, document.documentElement.scrollTop);
+    // console.log(scrollTop);
     this.setState({ scrollTop: scrollTop });
   }
 

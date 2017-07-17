@@ -306,10 +306,13 @@ export default function signReducer(state = initialState, action) {
         saved: false,
       };
     case SAVE_PROFILE_SUCCESS:
-      const userProfile = state.authorizedUser;
-      userProfile.profile = action.profile;
-      userProfile.first_name = action.profile.first_name;
-      userProfile.last_name = action.profile.last_name;
+      const userProfile = Object.assign({}, state.authorizedUser, {
+        profile: action.profile,
+        first_name: action.profile.first_name,
+        last_name: action.profile.last_name,
+        slug: action.result.data.slug
+      });
+
       return {
         ...state,
         saved: true,

@@ -10,31 +10,32 @@ import './index.scss';
   header_channel_name: state.channel.header_channel_name,
   notifications: state.profile.notifications,
   loadingBar: state.loadingBar,
+  authorizedUser: state.user.authorizedUser,
 }), {})
 
 class Header extends Component {
-  // constructor(props) {
-  //   super(props);
-    // this.state = {
-  //     isMob: false,
-  //     sidebarOpen: false,
-  //
-  //     docked1: false,
-  //     docked2: false,
-  //     open1: false,
-  //     open2: false,
-  //     transitions: true,
-  //     touch: true,
-  //     shadow: true,
-  //     touchHandleWidth: 20,
-  //     dragToggleDistance: 30,
-  //   };
-  //   this.isMobile = this.isMobile.bind(this);
-  //   this.onSetOpen1 = this.onSetOpen1.bind(this);
-  //   this.onSetOpen2 = this.onSetOpen2.bind(this);
-  //   this.menuButtonClick1 = this.menuButtonClick1.bind(this);
-  //   this.menuButtonClick2 = this.menuButtonClick2.bind(this);
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      // isMob: false,
+      // sidebarOpen: false,
+      //
+      // docked1: false,
+      // docked2: false,
+      // open1: false,
+      // open2: false,
+      // transitions: true,
+      // touch: true,
+      // shadow: true,
+      // touchHandleWidth: 20,
+      // dragToggleDistance: 30,
+    };
+    // this.isMobile = this.isMobile.bind(this);
+    // this.onSetOpen1 = this.onSetOpen1.bind(this);
+    // this.onSetOpen2 = this.onSetOpen2.bind(this);
+    // this.menuButtonClick1 = this.menuButtonClick1.bind(this);
+    // this.menuButtonClick2 = this.menuButtonClick2.bind(this);
+  }
   //
   // componentWillMount() {
   //   this.isMobile();
