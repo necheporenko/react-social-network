@@ -7,7 +7,6 @@ import { Editor } from 'react-draft-wysiwyg';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { getUserNotifications } from '../../../redux/modules/profile';
 import uploadImageCallBack from './uploadImageCallBack';
-import { getCheckboxOfBook } from '../../../redux/modules/book';
 import { create as createStory } from '../../../redux/modules/story';
 import BookTreeForSboxContainer from '../../../containers/BookTreeForSboxContainer';
 // import { socket } from '../../../client';
@@ -22,7 +21,6 @@ let step = 0;
   arrCheckbox: state.book.arrCheckbox,
   bookTreeArr: state.book.bookTreeArr,
 }), {
-  getCheckboxOfBook,
   createStory,
   getUserNotifications
 })
@@ -90,7 +88,6 @@ class Sbox extends Component {
       this.state.visibility_type
     )
       .then(() => this.props.reloadStream());
-    this.props.getCheckboxOfBook([]);
     this.setState({
       editorContent: '',        //  cleaning input
     });
@@ -267,7 +264,13 @@ class Sbox extends Component {
     if (quantity === 0) {
       return 'Select Book';
     } else if (quantity === 1) {
-      return arrCheckbox[0];
+      let result;
+      this.props.bookTreeArr[0].children.map(book => {
+        if (book.key === arrCheckbox[0]) {
+          result = book.name;
+        }
+      });
+      return result;
     } else if (quantity > 1) {
       return `${quantity} books`;
     }
@@ -531,7 +534,6 @@ Sbox.propTypes = {
   createStory: PropTypes.func,                //story
   loadStories: PropTypes.func,
   reloadStream: PropTypes.func,
-  getCheckboxOfBook: PropTypes.func,
   bookTreeArr: PropTypes.array,
   arrCheckbox: PropTypes.array,
 };

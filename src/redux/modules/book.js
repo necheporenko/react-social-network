@@ -170,9 +170,10 @@ export default function bookReducer(state = initialState, action) {
       };
 
     case GET_ARR_CHECKBOX:
+      const newArrCheckbox = action.checkbox.slice();
       return {
         ...state,
-        arrCheckbox: action.checkbox
+        arrCheckbox: newArrCheckbox
       };
 
     case LIKE_STORY: {

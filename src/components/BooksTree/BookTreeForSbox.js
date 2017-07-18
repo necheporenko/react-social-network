@@ -34,7 +34,6 @@ class BooksTreeForSbox extends Component {
       'onDragEnter',
       'onDrop',
       'onExpand',
-      'clearCheckbox'
     ].forEach((name) => (this[name] = this[name].bind(this)));
 
     this.state = {
@@ -144,11 +143,6 @@ class BooksTreeForSbox extends Component {
     this.props.getCheckboxOfBook(arrCheckbox);
   }
 
-  clearCheckbox() {
-    const arrCheck = this.bookCheckbox;
-    arrCheck.checked = false;
-    console.log(arrCheck);
-  }
 
   render() {
     const slug = this.props.requestedUserSlug || this.props.authorizedUserSlug;
@@ -161,7 +155,14 @@ class BooksTreeForSbox extends Component {
             className={this.onPick(item)}
             disabled={item.no_drag}
           >
-            <input type="checkbox" ref={(c) => { this.bookCheckbox = c; }} id={item.key} value={item.key} onChange={(e) => this.checked(e.target.value)} />
+            <input
+              type="checkbox"
+              ref={(c) => { this.bookCheckbox = c; }}
+              id={item.key}
+              value={item.key}
+              defaultChecked={false}
+              onChange={(e) => this.checked(e.target.value)}
+            />
             <label htmlFor={item.key}><span/></label>
             <Link
               to={`/${slug}/books/${item.key}`}
@@ -191,7 +192,6 @@ class BooksTreeForSbox extends Component {
             {loop(this.props.bookTreeArr)}
           </Tree>
         </div>
-        {/*<button onClick={() => this.clearCheckbox()}>click</button>*/}
       </div>
     );
   }
@@ -201,4 +201,7 @@ export default BooksTreeForSbox;
 
 BooksTreeForSbox.propTypes = {
   bookTreeArr: PropTypes.array,
+  authorizedUserSlug: PropTypes.object,
+  requestedUserSlug: PropTypes.object,
+  getCheckboxOfBook: PropTypes.func,
 };

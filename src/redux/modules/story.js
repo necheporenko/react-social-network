@@ -44,6 +44,7 @@ const initialState = {
   singleStory: {},
   over: false,
   paginationStory: 1,
+  creatingNewComment: false,
 };
 
 export default function storyReducer(state = initialState, action) {
@@ -268,24 +269,57 @@ export default function storyReducer(state = initialState, action) {
     case CREATE_NEW_COMMENT: {
       return {
         ...state,
-        creatingNewComment: true,
+        creatingNewComment: false,
       };
     }
     case CREATE_NEW_COMMENT_SUCCESS: {
-      const addNewComment = state.storiesArr.map((story) => {
+      let fn;
+      const receivedComment = action.result.data;
+
+      const addNewComment = state.storiesArr.map(story => {
         if (story.id === action.entity_id) {
-          return {
-            ...story,
-            comments: [...story.comments, action.result.data.comment, ]
+          const searchComment = story.comments;
+
+          if (receivedComment.parent_id === 0) {
+            return {
+              ...story,
+              comments: [...story.comments, receivedComment]
+            };
+          }
+
+          fn = function fnComments(searchComment) {
+            searchComment.map(comment => {
+              if (comment.id === receivedComment.parent_id) {
+                const newComment = Object.assign(comment);
+
+                if (newComment.children === null) {
+                  newComment.children = [];
+                  newComment.children.push(receivedComment);
+                } else {
+                  newComment.children.push(receivedComment);
+                }
+
+                return {
+                  ...story,
+                  comments: [...story.comments, newComment]
+                };
+              }
+
+              if (comment.children) {
+                fn(comment.children);
+              }
+            });
           };
+          fn(searchComment);
         }
         return {
-          ...story
+          ...story,
         };
       });
+      console.log(addNewComment);
       return {
         ...state,
-        creatingNewComment: false,
+        creatingNewComment: true,
         storiesArr: addNewComment,
       };
     }

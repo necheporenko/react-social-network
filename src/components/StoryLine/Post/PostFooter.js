@@ -9,7 +9,9 @@ import LogStory from '../../Popup/Log';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 
-@connect((state) => ({}), {
+@connect((state) => ({
+  creatingNewComment: state.story.creatingNewComment
+}), {
   likePost,
   createComment,
 })
@@ -28,6 +30,16 @@ class PostFooter extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.reply = this.reply.bind(this);
     this.replyComments = this.replyComments.bind(this);
+  }
+
+  // componentWillUpdate(nextProps, nextState) {}
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.creatingNewComment === this.props.creatingNewComment) {
+      this.setState({showReply: false});
+      return true;
+    }
+    return true;
   }
 
   Close() {
@@ -106,6 +118,7 @@ class PostFooter extends Component {
     function treeOfComments(comments) {
       comments && comments.map(comment => {
         // console.log(comment)
+        // comment.rightParent = 0;
         if (comment.rightParent) {
           comment.right = comment.rightParent;
           right = comment.rightParent;
@@ -440,6 +453,7 @@ PostFooter.propTypes = {
   likeFunc: PropTypes.func,
   comments: PropTypes.array,
   authorizedUser: PropTypes.object,
+  creatingNewComment: PropTypes.bool,
 };
 
 export default PostFooter;
