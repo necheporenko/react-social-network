@@ -70,7 +70,7 @@ export default () => {
       <Route path="/messages" component={MessagesContainer}>
         <IndexRoute component={Messages} />
         <Route path="new" component={NewMessage} />
-        <Route path="/:conversation/ID" />
+        <Route path=":conversationID" component={Messages} />
       </Route>
 
       <Route path="/settings" component={ProfileContainer}>

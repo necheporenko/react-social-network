@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import Stream from '../StoryLine/Stream';
 import ChannelStream from '../StoryLine/Stream/ChannelStream';
 import LeftMenu from './LeftMenu';
 import Channels from './Channels';

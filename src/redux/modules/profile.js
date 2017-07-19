@@ -10,11 +10,21 @@ const GET_USER_NOTIFICATIONS_FAIL = 'GET_USER_NOTIFICATIONS_FAIL';
 const SOCKET_SEND_USER_NOTIFICATION = 'SOCKET_SEND_USER_NOTIFICATION';
 // const SOCKET_SEND_USER_NOTIFICATION_SUCCESS = 'SOCKET_SEND_USER_NOTIFICATION_SUCCESS';
 // const SOCKET_SEND_USER_NOTIFICATION_FAIL = 'SOCKET_SEND_USER_NOTIFICATION_FAIL';
+const GET_CONVERSATION = 'GET_CONVERSATION';
+const GET_CONVERSATION_SUCCESS = 'GET_CONVERSATION_SUCCESS';
+const GET_CONVERSATION_FAIL = 'GET_CONVERSATION_FAIL';
+const GET_CONVERSATION_LIST = 'GET_CONVERSATION_LIST';
+const GET_CONVERSATION_LIST_SUCCESS = 'GET_CONVERSATION_LIST_SUCCESS';
+const GET_CONVERSATION_LIST_FAIL = 'GET_CONVERSATION_LIST_FAIL';
+const CREATE_MESSAGE = 'CREATE_MESSAGE';
+const CREATE_MESSAGE_SUCCESS = 'CREATE_MESSAGE_SUCCESS';
+const CREATE_MESSAGE_FAIL = 'CREATE_MESSAGE_FAIL';
 
 const initialState = {
   notificationSettings: {},
   notifications: [],
-  messages: [],
+  conversation: {},
+  conversations: [],
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -98,10 +108,71 @@ export default function profileReducer(state = initialState, action) {
         notifications: [action.data, ...state.notifications]
       };
 
+    case GET_CONVERSATION:
+      return {
+        ...state,
+        gettingConversation: true,
+      };
+    case GET_CONVERSATION_SUCCESS:
+      return {
+        ...state,
+        gettingConversation: false,
+        conversation: action.result.data
+      };
+    case GET_CONVERSATION_FAIL:
+      return {
+        ...state,
+        gettingConversation: false,
+        error: action.error,
+      };
+
+    case GET_CONVERSATION_LIST:
+      return {
+        ...state,
+        gettingConversationList: true,
+      };
+    case GET_CONVERSATION_LIST_SUCCESS:
+      return {
+        ...state,
+        gettingConversationList: false,
+        conversations: action.result.data
+      };
+    case GET_CONVERSATION_LIST_FAIL:
+      return {
+        ...state,
+        gettingConversationList: false,
+        error: action.error,
+      };
+
+    case CREATE_MESSAGE:
+      return {
+        ...state,
+        sendingMessage: true,
+      };
+    case CREATE_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        sendingMessage: false,
+        // conversation: action.result.data
+      };
+    case CREATE_MESSAGE_FAIL:
+      return {
+        ...state,
+        sendingMessage: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }
 }
+
+export function getConversatonID(globalState) {
+  const path = globalState.routing.locationBeforeTransitions.pathname;
+
+  return path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));     // get user slug in pathname between / or after first /
+}
+
 
 export function getNotificationSettings() {
   return {
@@ -133,5 +204,34 @@ export function socketUserNotification(data) {
   return {
     type: SOCKET_SEND_USER_NOTIFICATION,
     data
+  };
+}
+
+export function getConversationByID(id) {
+  return {
+    types: [GET_CONVERSATION, GET_CONVERSATION_SUCCESS, GET_CONVERSATION_FAIL],
+    promise: (client) => client.get(`/conversations/${id}`)
+  };
+}
+
+export function getConversationByUser(user_ids) {
+  console.log('user_ids', user_ids);
+  return {
+    types: [GET_CONVERSATION, GET_CONVERSATION_SUCCESS, GET_CONVERSATION_FAIL],
+    promise: (client) => client.get('/conversations/by-users', { params: { user_ids }})
+  };
+}
+
+export function getConversationList() {
+  return {
+    types: [GET_CONVERSATION_LIST, GET_CONVERSATION_LIST_SUCCESS, GET_CONVERSATION_LIST_FAIL],
+    promise: (client) => client.get('/conversations')
+  };
+}
+
+export function createMessage(text, conversation_id, receivers) {
+  return {
+    types: [CREATE_MESSAGE, CREATE_MESSAGE_SUCCESS, CREATE_MESSAGE_FAIL],
+    promise: (client) => client.post('/messages', { data: { text, conversation_id, receivers }}),
   };
 }

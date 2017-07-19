@@ -40,6 +40,7 @@ export default function bookReducer(state = initialState, action) {
         ...state,
         searching: false,
         error: action.error,
+        foundUsers: []
       };
 
     case SEARCH_BOOK:
@@ -112,5 +113,12 @@ export function searchStory(globalState) {
   return {
     types: [SEARCH_STORY, SEARCH_STORY_SUCCESS, SEARCH_STORY_FAIL],
     promise: (client) => client.get('/search/stories', { params: { q }})
+  };
+}
+
+export function newSearchUser(str) {
+  return {
+    types: [SEARCH_USER, SEARCH_USER_SUCCESS, SEARCH_USER_FAIL],
+    promise: (client) => client.get('/search/users', { params: { q: str }})
   };
 }

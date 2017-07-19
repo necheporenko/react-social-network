@@ -1,15 +1,70 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
 import { Form, Textarea } from 'formsy-react-components';
+import { getConversationByID, createMessage } from '../../redux/modules/profile';
 import './index.scss';
 
+@asyncConnect([{
+  promise: ({ store: { dispatch, getState } }) => {
+    const promises = [];
+    promises.push(dispatch(getConversationByID(7)));
+    return Promise.all(promises);
+  }
+}])
+
+@connect((state) => ({
+  conversation: state.profile.conversation
+}), {
+  getConversationByID,
+  createMessage
+})
+
 class Messages extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checkedUsersID: [],
+    };
+    this.sendMessage = this.sendMessage.bind(this);
+  }
+
+  sendMessage(data) {
+    console.log('data', data.message);
+
+    this.props.createMessage(
+      data.message,
+      this.props.conversation.conversation_id,
+      this.props.conversation.receivers
+    );
+  }
+
   render() {
+    const { conversation } = this.props;
     return (
       <div className="messages-content">
         <div className="wrapper">
           <div className="additional-title">New Private Messages</div>
           <div>
             <div className="messages-box">
+
+              { conversation.messages && conversation.messages.map(message => (
+                <div>
+                  <div className="time-divider">
+                    <span>{message.date}</span>
+                  </div>
+                  <div className="messages-post">
+                    <Link to={`/${message.user.slug}`}>
+                      <img src={message.user.avatar32} alt=""/>
+                      <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
+                    </Link>
+                    <span>12:00</span>
+                    <p>{message.text}</p>
+                  </div>
+                </div>
+              ))}
+
               <div className="time-divider">
                 <span>23 March</span>
               </div>
@@ -47,6 +102,7 @@ class Messages extends Component {
               <div className="wrapper">
                 <Form
                   rowClassName={[{'form-group': false}, {row: false}, 'messages-form']}
+                  onSubmit={this.sendMessage}
                 >
                   <div className="messages-wrap-form">
                     <Textarea
@@ -70,5 +126,10 @@ class Messages extends Component {
     );
   }
 }
+
+Messages.propTypes = {
+  conversation: PropTypes.object,
+  createMessage: PropTypes.func,
+};
 
 export default Messages;

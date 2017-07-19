@@ -35,10 +35,10 @@ function help() {
   console.log('    --testdir [path]  Directory with a test environment');
   console.log('Optional options:');
   console.log('    --token [token]   Security token for the URL');
-  console.log('    --name [name]     Package name to show in messages');
+  console.log('    --name [name]     Package name to show in conversation');
   console.log('    --noinst          Do not run npm install.');
   console.log('    --exec [command]  Command to run after success');
-  console.log('    --quiet           Do not show log messages');
+  console.log('    --quiet           Do not show log conversation');
   console.log('    --detail          Show log and diff of code to deploy.');
   console.log('Email-related options:');
   console.log('    --user [user]     User for email server');
