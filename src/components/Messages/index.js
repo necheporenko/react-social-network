@@ -3,13 +3,13 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { Form, Textarea } from 'formsy-react-components';
-import { getConversationByID, createMessage } from '../../redux/modules/profile';
+import { getConversationByID, createMessage, getConversationID } from '../../redux/modules/profile';
 import './index.scss';
 
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
-    promises.push(dispatch(getConversationByID(7)));
+    promises.push(dispatch(getConversationByID(getConversationID(getState()))));
     return Promise.all(promises);
   }
 }])
@@ -31,12 +31,12 @@ class Messages extends Component {
   }
 
   sendMessage(data) {
-    console.log('data', data.message);
+    console.log('datass', data.message, this.props.conversation.receiversID);
 
     this.props.createMessage(
       data.message,
       this.props.conversation.conversation_id,
-      this.props.conversation.receivers
+      this.props.conversation.receiversID
     );
   }
 
@@ -50,7 +50,7 @@ class Messages extends Component {
             <div className="messages-box">
 
               { conversation.messages && conversation.messages.map(message => (
-                <div>
+                <div key={message.id}>
                   <div className="time-divider">
                     <span>{message.date}</span>
                   </div>

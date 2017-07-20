@@ -3,16 +3,19 @@
 
 .conversations-list {
   list-style: none;
-  padding: 10px 0;
+  padding-top: 15px;
+  max-height: calc(92% + 3px);
+  overflow-y: auto;
 
   a {
     display: block;
-    padding: 10px 20px;
+    padding: 10px 10px 10px 15px;
     cursor: pointer;
     position: relative;
 
     &:hover {
       background: $bg-hover;
+      color: #333;
     }
 
     li {
@@ -29,12 +32,15 @@
       font-weight: 500;
       margin-top: 5px;
       margin-left: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
     p {
       position: absolute;
       top: 35px;
-      left: 75px;
+      left: 70px;
       width: 150px;
       height: 20px;
     }
@@ -45,7 +51,8 @@
 .messages-box {
   padding: 20px;
   min-height: 400px;
-  //overflow-y: auto;
+  max-height: 650px;
+  overflow-y: auto;
 }
 
 .time-divider {
@@ -219,6 +226,7 @@
   width: 320px;
   max-height: 450px;
   position: absolute;
+  z-index: 1;
 
   .found-user {
     display: flex;

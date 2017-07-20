@@ -101,7 +101,7 @@ export default class SubHeader extends Component {
 
     return (
       <div className="subHeader">
-        <div className="imageCover" style={{backgroundImage: `url(${cover})`}}></div>
+        <div className="imageCover" style={{backgroundImage: `url(${cover})`}}/>
         <div className="wrapper">
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`}>

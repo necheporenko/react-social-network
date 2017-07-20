@@ -1,4 +1,4 @@
-import { socketUserNotification } from '../../redux/modules/profile';
+import { socketUserNotification, socketGetMessage, socketLastMessage } from '../../redux/modules/profile';
 
 export default function socketMiddleware() {
   const onMessage = (ws, store) => evt => {
@@ -6,21 +6,29 @@ export default function socketMiddleware() {
     const msg = JSON.parse(evt.data);
     const currentState = store.getState();
 
-    store.dispatch(socketUserNotification(msg));
-    console.log(msg);
+    // store.dispatch(socketUserNotification(msg));
+    // console.log(msg);
 
-    // switch (msg.type) {
-    //   case 'notification-like':
-    //     if (currentState.user.authorizedUser.id !== msg.user.id) {
-    //       store.dispatch(socketUserNotification(msg));
-    //       console.log('muhahaha', currentState.user.authorizedUser.id);
-    //     }
-    //     break;
-    //
-    //   default:
-    //     console.log(`Received unknown message type: '${msg.type}'`);
-    //     break;
-    // }
+    switch (msg.type) {
+      // case 'notification-like':
+      //   if (currentState.user.authorizedUser.id !== msg.user.id) {
+      //     store.dispatch(socketUserNotification(msg));
+      //     console.log('muhahaha', currentState.user.authorizedUser.id);
+      //   }
+      //   break;
+      case 'message':
+        console.log('msg:', msg.conversation_id, currentState.profile.conversation.conversation_id);
+        if (currentState.profile.conversation.conversation_id === msg.conversation_id) {
+          store.dispatch(socketGetMessage(msg));
+        } else if (currentState.profile.conversation.conversation_id !== msg.conversation_id) {
+          store.dispatch(socketLastMessage(msg));
+        }
+        break;
+
+      default:
+        console.log(`Received unknown message type: '${msg.type}'`);
+        break;
+    }
   };
 
   return store => next => action => {

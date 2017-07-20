@@ -19,6 +19,12 @@ const GET_CONVERSATION_LIST_FAIL = 'GET_CONVERSATION_LIST_FAIL';
 const CREATE_MESSAGE = 'CREATE_MESSAGE';
 const CREATE_MESSAGE_SUCCESS = 'CREATE_MESSAGE_SUCCESS';
 const CREATE_MESSAGE_FAIL = 'CREATE_MESSAGE_FAIL';
+const CLEAR_CONVERSATION = 'CLEAR_CONVERSATION';
+const DELETE_CONVERSATION = 'DELETE_CONVERSATION';
+const DELETE_CONVERSATION_SUCCESS = 'DELETE_CONVERSATION_SUCCESS';
+const DELETE_CONVERSATION_FAIL = 'DELETE_CONVERSATION_FAIL';
+const SOCKET_GET_MESSAGE = 'SOCKET_GET_MESSAGE';
+const SOCKET_LAST_MESSAGE = 'SOCKET_LAST_MESSAGE';
 
 const initialState = {
   notificationSettings: {},
@@ -46,7 +52,6 @@ export default function profileReducer(state = initialState, action) {
         gettingNotification: false,
         error: action.error,
       };
-
 
     case SET_NOTIFICATION_SETTINGS: {
       return {
@@ -114,10 +119,17 @@ export default function profileReducer(state = initialState, action) {
         gettingConversation: true,
       };
     case GET_CONVERSATION_SUCCESS:
+      const newConversation = action.result.data;
+      if (newConversation.receivers) {
+        newConversation.receiversID = [];
+        newConversation.receivers.map(receiver => {
+          newConversation.receiversID.push(receiver.id);
+        });
+      }
       return {
         ...state,
         gettingConversation: false,
-        conversation: action.result.data
+        conversation: newConversation
       };
     case GET_CONVERSATION_FAIL:
       return {
@@ -132,10 +144,17 @@ export default function profileReducer(state = initialState, action) {
         gettingConversationList: true,
       };
     case GET_CONVERSATION_LIST_SUCCESS:
+      const newConversations = action.result.data;
+      newConversations.map(conversation => {
+        conversation.receiversID = [];
+        conversation.receivers.map(receiver => {
+          conversation.receiversID.push(receiver);
+        });
+      });
       return {
         ...state,
         gettingConversationList: false,
-        conversations: action.result.data
+        conversations: newConversations
       };
     case GET_CONVERSATION_LIST_FAIL:
       return {
@@ -150,10 +169,25 @@ export default function profileReducer(state = initialState, action) {
         sendingMessage: true,
       };
     case CREATE_MESSAGE_SUCCESS:
+      let newMessage;
+      console.log('state.conversation', state.conversation);
+      if (state.conversation.length === 0) {
+        console.log('NO CONVERSATION');
+        newMessage = {
+          conversation_id: action.result.data.conversation_id,
+          messages: [action.result.data]
+        };
+      } else {
+        console.log('CONVERSATION');
+        newMessage = Object.assign({}, state.conversation, {
+          messages: [...state.conversation.messages, action.result.data]
+        });
+      }
+
       return {
         ...state,
         sendingMessage: false,
-        // conversation: action.result.data
+        conversation: newMessage
       };
     case CREATE_MESSAGE_FAIL:
       return {
@@ -162,17 +196,94 @@ export default function profileReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case CLEAR_CONVERSATION:
+      return {
+        ...state,
+        conversation: [],
+      };
+
+    case SOCKET_GET_MESSAGE:
+      const newSocketMessage = Object.assign({}, state.conversation, {
+        messages: [...state.conversation.messages, action.msg]
+      });
+      return {
+        ...state,
+        conversation: newSocketMessage,
+      };
+
+    case SOCKET_LAST_MESSAGE:
+      console.log('newSocketLastMessage');
+      const newSocketLastMessage = state.conversations.map(conversation => {
+        if (conversation.conversation_id === action.msg.conversation_id) {
+          let conversationMessages = conversation.messages;
+          conversationMessages = action.msg;
+          return {
+            ...conversation,
+            messages: [conversationMessages]
+          };
+        }
+        return {
+          ...conversation
+        };
+      });
+      return {
+        ...state,
+        conversations: newSocketLastMessage,
+      };
+
+    case DELETE_CONVERSATION:
+      return {
+        ...state,
+        deletingConversation: true,
+      };
+    case DELETE_CONVERSATION_SUCCESS:
+      return {
+        ...state,
+        deletingConversation: false,
+      };
+    case DELETE_CONVERSATION_FAIL:
+      return {
+        ...state,
+        deletingConversation: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }
 }
 
-export function getConversatonID(globalState) {
+export function getConversationID(globalState) {
   const path = globalState.routing.locationBeforeTransitions.pathname;
-
-  return path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));     // get user slug in pathname between / or after first /
+  const id = path.substring(path.indexOf('/messages') + 10);
+  if (id) {
+    return id;
+  } else {
+    if (globalState.profile.conversations) {
+      return globalState.profile.conversations[0].conversation_id;
+    }
+  }
 }
 
+export function cleanConversation() {
+  return {
+    type: CLEAR_CONVERSATION
+  };
+}
+
+export function socketGetMessage(msg) {
+  return {
+    type: SOCKET_GET_MESSAGE,
+    msg
+  };
+}
+
+export function socketLastMessage(msg) {
+  return {
+    type: SOCKET_LAST_MESSAGE,
+    msg
+  };
+}
 
 export function getNotificationSettings() {
   return {
