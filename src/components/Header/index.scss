@@ -139,34 +139,113 @@
   }
 }
 
-.wrap-icon-mail {
-  margin-right: 12px;
+.bubble {
+  position: absolute;
+  z-index: 3;
+  font-size: 10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #C53929;
+  color: #FFFFFF;
+  border: 1px solid #fff;
+  top: 6px;
+  left: -12px;
+  text-align: center;
 
-  .icon-mail {
+  span {
+    position: relative;
+    top: 2px;
+    left: -1px;
+  }
+}
+
+.wrap-icon-mail {
+  margin-right: 15px;
+  position: relative;
+
+  .notification-box {
+    span {
+      position: absolute;
+      top: 35px;
+      left: 70px;
+    }
+
+    a:hover {
+      color: #333;
+    }
+  }
+
+    //.icon-mail {
+  //  background: $sprite;
+  //  background-position: -129px -466px;
+	//	height: 13px;
+	//	width: 17px;
+  //
+  //  &:hover {
+  //    background-position: -112px -466px;
+  //  }
+  //}
+
+  button {
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    //margin-top: 2px;
+    //padding-left: 5px;
+    height: 13px;
+    width: 17px;
     background: $sprite;
     background-position: -129px -466px;
-		height: 13px;
-		width: 17px;
 
     &:hover {
       background-position: -112px -466px;
+    }
+  }
+
+  .btn-default:active,
+  .btn-default.active,
+  .open > .btn-default.dropdown-toggle {
+    background: $sprite;
+    background-position: -129px -466px;
+    box-shadow: none;
+
+    &:hover {
+      background-position: -112px -466px;
+    }
+  }
+
+  .dropdown-menu-right {
+    left: -190px;
+  }
+
+  .dropdown-menu {
+    top: 32px;
+    width: 350px;
+    box-shadow: none;
+    a {
+      padding: 0 !important;
     }
   }
 }
 
 .wrap-icon-bell {
   margin-right: 30px;
+  position: relative;
+
+  .bubble {
+    top: 9px;
+  }
 
   button {
-    background: 0;
     border: 0;
     padding: 0;
     margin-top: 2px;
     padding-left: 5px;
-    background: $sprite;
-    background-position: -32px -486px;
     height: 15px;
     width: 10px;
+    background: $sprite;
+    background-position: -32px -486px;
 
     &:hover {
       background-position: -46px -486px;
@@ -236,9 +315,15 @@
     margin-bottom: 0px;
   }
 
+  ul {
+    max-height: 465px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0 -10px;
+  }
+
   li {
     padding: 10px 15px;
-    margin: 0 -10px;
     cursor: pointer;
     position: relative;
     border-bottom: 1px solid $default-bg;

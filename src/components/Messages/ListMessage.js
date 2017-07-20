@@ -2,12 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { Form, Input } from 'formsy-react-components';
-import { cleanConversation } from '../../redux/modules/profile';
+import { clearConversation } from '../../redux/modules/profile';
 import './index.scss';
 
 @connect((state) => ({
 }), {
-  cleanConversation
+  clearConversation
 })
 
 class ListMessage extends Component {
@@ -16,7 +16,7 @@ class ListMessage extends Component {
     return (
       <div className="messages-mnu">
         <div className="additional-title">Messanger
-         <Link to="/messages/new" className="new-message" onClick={() => this.props.cleanConversation()}><i/></Link>
+         <Link to="/messages/new" className="new-message" onClick={() => this.props.clearConversation()}><i/></Link>
         </div>
         <ul className="conversations-list">
           <Form rowClassName={[{'form-group': false}, {row: false}, 'messages-form']} >

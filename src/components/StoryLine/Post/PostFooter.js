@@ -145,9 +145,9 @@ class PostFooter extends Component {
     // console.log(obj)
 
     return arrResult.map((comment) => (
-      <div className="comment" key={comment.id} style={{paddingLeft: comment.right}}>
+      <div className="comment" key={comment.id} style={{marginLeft: comment.right}}>
         <img src={comment.user.avatar32} alt=""/>
-        <div className="text-block">
+        <div className="text-block" style={{width: `calc(100% - ${comment.right}px)`}}>
           <p><Link>{`${comment.user.first_name} ${comment.user.last_name}`}</Link>{comment.content}</p>
           <span className="reply" onClick={() => this.reply(comment.id)}>Reply Y{comment.right}</span><span> · </span><span
             className="date">{comment.date}</span>

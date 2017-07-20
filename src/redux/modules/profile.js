@@ -20,6 +20,7 @@ const CREATE_MESSAGE = 'CREATE_MESSAGE';
 const CREATE_MESSAGE_SUCCESS = 'CREATE_MESSAGE_SUCCESS';
 const CREATE_MESSAGE_FAIL = 'CREATE_MESSAGE_FAIL';
 const CLEAR_CONVERSATION = 'CLEAR_CONVERSATION';
+const CLEAR_MAIL_COUNTER = 'CLEAR_MAIL_COUNTER';
 const DELETE_CONVERSATION = 'DELETE_CONVERSATION';
 const DELETE_CONVERSATION_SUCCESS = 'DELETE_CONVERSATION_SUCCESS';
 const DELETE_CONVERSATION_FAIL = 'DELETE_CONVERSATION_FAIL';
@@ -31,6 +32,8 @@ const initialState = {
   notifications: [],
   conversation: {},
   conversations: [],
+  bubbleMessage: 0,
+  bubbleNotification: 0,
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -202,6 +205,12 @@ export default function profileReducer(state = initialState, action) {
         conversation: [],
       };
 
+    case CLEAR_MAIL_COUNTER:
+      return {
+        ...state,
+        bubbleMessage: 0,
+      };
+
     case SOCKET_GET_MESSAGE:
       const newSocketMessage = Object.assign({}, state.conversation, {
         messages: [...state.conversation.messages, action.msg]
@@ -229,6 +238,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         conversations: newSocketLastMessage,
+        bubbleMessage: state.bubbleMessage + 1
       };
 
     case DELETE_CONVERSATION:
@@ -265,9 +275,15 @@ export function getConversationID(globalState) {
   }
 }
 
-export function cleanConversation() {
+export function clearConversation() {
   return {
     type: CLEAR_CONVERSATION
+  };
+}
+
+export function clearMailCounter() {
+  return {
+    type: CLEAR_MAIL_COUNTER
   };
 }
 
