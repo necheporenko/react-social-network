@@ -19,13 +19,19 @@ const GET_CONVERSATION_LIST_FAIL = 'GET_CONVERSATION_LIST_FAIL';
 const CREATE_MESSAGE = 'CREATE_MESSAGE';
 const CREATE_MESSAGE_SUCCESS = 'CREATE_MESSAGE_SUCCESS';
 const CREATE_MESSAGE_FAIL = 'CREATE_MESSAGE_FAIL';
+const DELETE_MESSAGE = 'DELETE_MESSAGE';
+const DELETE_MESSAGE_SUCCESS = 'DELETE_MESSAGE_SUCCESS';
+const DELETE_MESSAGE_FAIL = 'DELETE_MESSAGE_FAIL';
 const CLEAR_CONVERSATION = 'CLEAR_CONVERSATION';
 const CLEAR_MAIL_COUNTER = 'CLEAR_MAIL_COUNTER';
+const SOCKET_GET_MESSAGE = 'SOCKET_GET_MESSAGE';
+const SOCKET_LAST_MESSAGE = 'SOCKET_LAST_MESSAGE';
 const DELETE_CONVERSATION = 'DELETE_CONVERSATION';
 const DELETE_CONVERSATION_SUCCESS = 'DELETE_CONVERSATION_SUCCESS';
 const DELETE_CONVERSATION_FAIL = 'DELETE_CONVERSATION_FAIL';
-const SOCKET_GET_MESSAGE = 'SOCKET_GET_MESSAGE';
-const SOCKET_LAST_MESSAGE = 'SOCKET_LAST_MESSAGE';
+const LEFT_CONVERSATION = 'LEFT_CONVERSATION';
+const LEFT_CONVERSATION_SUCCESS = 'LEFT_CONVERSATION_SUCCESS';
+const LEFT_CONVERSATION_FAIL = 'LEFT_CONVERSATION_FAIL';
 
 const initialState = {
   notificationSettings: {},
@@ -199,6 +205,23 @@ export default function profileReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case DELETE_MESSAGE:
+      return {
+        ...state,
+        deletingMessage: true,
+      };
+    case DELETE_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        deletingMessage: false,
+      };
+    case DELETE_MESSAGE_FAIL:
+      return {
+        ...state,
+        deletingMessage: false,
+        error: action.error,
+      };
+
     case CLEAR_CONVERSATION:
       return {
         ...state,
@@ -258,6 +281,23 @@ export default function profileReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case LEFT_CONVERSATION:
+      return {
+        ...state,
+        leavingConversation: true,
+      };
+    case LEFT_CONVERSATION_SUCCESS:
+      return {
+        ...state,
+        leavingConversation: false,
+      };
+    case LEFT_CONVERSATION_FAIL:
+      return {
+        ...state,
+        leavingConversation: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -301,6 +341,14 @@ export function socketLastMessage(msg) {
   };
 }
 
+export function socketUserNotification(data) {
+  console.log('redux socketUserNotification', data);
+  return {
+    type: SOCKET_SEND_USER_NOTIFICATION,
+    data
+  };
+}
+
 export function getNotificationSettings() {
   return {
     types: [GET_NOTIFICATION_SETTINGS, GET_NOTIFICATION_SETTINGS_SUCCESS, GET_NOTIFICATION_SETTINGS_FAIL],
@@ -312,7 +360,6 @@ export function setNotificationSettings(settings, notification_type) {
   console.log('setNotificationSettings', settings, notification_type);
   return {
     types: [SET_NOTIFICATION_SETTINGS, SET_NOTIFICATION_SETTINGS_SUCCESS, SET_NOTIFICATION_SETTINGS_FAIL],
-    // type: SET_NOTIFICATION_SETTINGS_SUCCESS,
     promise: (client) => client.post('/notifications/settings', { data: { settings, notification_type }}),
     settings,
     notification_type
@@ -323,14 +370,6 @@ export function getUserNotifications() {
   return {
     types: [GET_USER_NOTIFICATIONS, GET_USER_NOTIFICATIONS_SUCCESS, GET_USER_NOTIFICATIONS_FAIL],
     promise: (client) => client.get('/notifications')
-  };
-}
-
-export function socketUserNotification(data) {
-  console.log('redux socketUserNotification', data);
-  return {
-    type: SOCKET_SEND_USER_NOTIFICATION,
-    data
   };
 }
 
@@ -353,6 +392,20 @@ export function getConversationList() {
   return {
     types: [GET_CONVERSATION_LIST, GET_CONVERSATION_LIST_SUCCESS, GET_CONVERSATION_LIST_FAIL],
     promise: (client) => client.get('/conversations')
+  };
+}
+
+export function deleteConversation(id) {
+  return {
+    types: [DELETE_CONVERSATION, DELETE_CONVERSATION_SUCCESS, DELETE_CONVERSATION_FAIL],
+    promise: (client) => client.del(`/conversations/${id}`)
+  };
+}
+
+export function leftConversation(id) {
+  return {
+    types: [LEFT_CONVERSATION, LEFT_CONVERSATION_SUCCESS, LEFT_CONVERSATION_FAIL],
+    promise: (client) => client.patch(`/conversations/${id}`)
   };
 }
 

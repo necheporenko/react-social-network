@@ -52,50 +52,54 @@ class Messages extends Component {
               { conversation.messages && conversation.messages.map(message => (
                 <div key={message.id}>
                   <div className="time-divider">
-                    <span>{message.date}</span>
+                    <span>{message.date.substring(0, 11)}</span>
                   </div>
                   <div className="messages-post">
-                    <Link to={`/${message.user.slug}`}>
-                      <img src={message.user.avatar32} alt=""/>
-                      <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
-                    </Link>
-                    <span>12:00</span>
+                    <div>
+                      <Link to={`/${message.user.slug}`}>
+                        <img src={message.user.avatar32} alt=""/>
+                      </Link>
+                      <Link to={`/${message.user.slug}`}>
+                        <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
+                      </Link>
+                    </div>
+                    <span>{message.date.substring(11, 17)}</span>
                     <p>{message.text}</p>
                   </div>
                 </div>
               ))}
 
-              <div className="time-divider">
-                <span>23 March</span>
-              </div>
-              <div className="messages-post">
-                <a href="#">
-                  <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                  <h5>Name Surname</h5>
-                </a>
-                <span>12:00</span>
-                <p>Message text...</p>
-              </div>
-              <div className="messages-post">
-                <a href="#">
-                  <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                  <h5>Name Surname</h5>
-                </a>
-                <span>12:01</span>
-                <p>Message text...</p>
-              </div>
+              {/*<div className="time-divider">*/}
+                {/*<span>23 March</span>*/}
+              {/*</div>*/}
+              {/*<div className="messages-post">*/}
+                {/*<a href="#">*/}
+                  {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                  {/*<h5>Name Surname</h5>*/}
+                {/*</a>*/}
+                {/*<span>12:00</span>*/}
+                {/*<p>Message text...</p>*/}
+              {/*</div>*/}
+              {/*<div className="messages-post">*/}
+                {/*<a href="#">*/}
+                  {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                  {/*<h5>Name Surname</h5>*/}
+                {/*</a>*/}
+                {/*<span>12:01</span>*/}
+                {/*<p>Message text...</p>*/}
+              {/*</div>*/}
 
-              <div className="time-divider">
-                <span>Today</span>
-              </div>
-              <div className="messages-post">
-                <a href="#">
-                  <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                  <h5>Name Surname</h5>
-                </a>
-                <span>14:00</span>
-                <p>Message text...</p>
-              </div>
+              {/*<div className="time-divider">*/}
+                {/*<span>Today</span>*/}
+              {/*</div>*/}
+              {/*<div className="messages-post">*/}
+                {/*<a href="#">*/}
+                  {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                  {/*<h5>Name Surname</h5>*/}
+                {/*</a>*/}
+                {/*<span>14:00</span>*/}
+                {/*<p>Message text...</p>*/}
+              {/*</div>*/}
             </div>
 
             <div className="messages-send">

@@ -21,7 +21,12 @@ class UserButtons extends Component {
 
   clickMail() {
     this.props.getConversationList();
-    this.prop.clearMailCounter();
+    this.props.clearMailCounter();
+  }
+
+  closeDropdown() {
+    console.log('hiiiii')
+    return false;
   }
 
   render() {
@@ -160,7 +165,7 @@ class UserButtons extends Component {
       </nav>
     );
   }
-};
+}
 
 UserButtons.propTypes = {
   authorizedUser: PropTypes.object,
@@ -168,6 +173,8 @@ UserButtons.propTypes = {
   clearMailCounter: PropTypes.func,
   getConversationList: PropTypes.func,
   bubbleMessage: PropTypes.number,
+  conversations: PropTypes.array,
+  notifications: PropTypes.array,
 };
 
 export default UserButtons;

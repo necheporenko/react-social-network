@@ -11,6 +11,29 @@ import './index.scss';
 })
 
 class ListMessage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checkedUsersID: [],
+    };
+    this.getReceivers = this.getReceivers.bind(this);
+  }
+
+  getReceivers(receivers) {
+    let result;
+    const receiversArr = [];
+
+    if (receivers.length === 1) {
+      result = `${receivers[0].first_name} ${receivers[0].last_name}`;
+    } else if (receivers.length > 1) {
+      receivers.map(receiver => {
+        receiversArr.push(` ${receiver.first_name}`);
+      });
+      result = receiversArr.toString();
+    }
+
+    return result;
+  }
   render() {
     const { conversations } = this.props;
     return (
@@ -38,8 +61,21 @@ class ListMessage extends Component {
             <Link to={`/messages/${conversation.conversation_id}`} key={conversation.conversation_id}>
               <li>
                 <img src={conversation.receivers[0].avatar32} alt=""/>
-                <h5>{`${conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h5>
+                <h5>{this.getReceivers(conversation.receivers)}</h5>
               </li>
+              <span>{conversation.messages[0].date.substring(11, 17)}</span>
+              <div>
+                <i> </i>
+                  <div className="conversation-settings">
+                    <ul>
+                      <li>Leave Group</li>
+                      <li>Delete</li>
+                      <li>Mark as Spam</li>
+                    </ul>
+                  </div>
+              </div>
+
+
               <p>{conversation.messages[0].text}</p>
             </Link>
          ))}
