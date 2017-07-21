@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Form, Input, Textarea } from 'formsy-react-components';
+import { Form, Input, } from 'formsy-react-components';
+import Textarea from 'react-textarea-autosize';
 import { getConversationByUser, createMessage } from '../../redux/modules/profile';
 import { newSearchUser } from '../../redux/modules/search';
 import './index.scss';
@@ -23,8 +24,8 @@ class NewMessage extends Component {
       hideTypeahead: false,
     };
     this.handleSearchUser = this.handleSearchUser.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
     this.addCheckedUser = this.addCheckedUser.bind(this);
-    this.sendMessage = this.sendMessage.bind(this);
   }
 
   handleSearchUser(event) {
@@ -44,14 +45,17 @@ class NewMessage extends Component {
     this.inputMessage.value = '';
   }
 
-  sendMessage(data) {
-    console.log('data', data.message);
+  handleKeyPress(event) {
+    if (event.keyCode === 13 && !event.shiftKey) {
+      event.preventDefault();
 
-    this.props.createMessage(
-      data.message,
-      null,
-      Array.from(this.state.checkedUsersID, item => parseInt(item, 10))  // str -> number
-    );
+      this.props.createMessage(
+        event.target.value,
+        null,
+        Array.from(this.state.checkedUsersID, item => parseInt(item, 10))  // str -> number
+      )
+        .then(event.target.value = '');
+    }
   }
 
   render() {
@@ -136,26 +140,13 @@ class NewMessage extends Component {
 
             <div className="messages-send">
               <div className="wrapper">
-                <Form
-                  rowClassName={[{'form-group': false}, {row: false}, 'messages-form']}
-                  onSubmit={this.sendMessage}
-                >
-                  <div className="messages-wrap-form">
-                    <Textarea
-                      rows={5}
-                      cols={40}
-                      name="message"
-                      labelClassName={[{'col-sm-3': false}, 'disabled-label']}
-                      className={['form-control messages-send-field']}
-                      elementWrapperClassName={[{'col-sm-9': false}, 'messages-element-wrapper']}
-                      value=""
-                      placeholder="Enter your message..."
-                    />
-                    <button className="messages-btn" type="submit">Send Message</button>
-                  </div>
-                </Form>
+                <Textarea
+                  placeholder="Enter your message..."
+                  onKeyDown={this.handleKeyPress}
+                />
               </div>
             </div>
+
           </div>
         </div>
       </div>

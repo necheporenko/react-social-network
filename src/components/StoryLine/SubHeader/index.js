@@ -112,7 +112,7 @@ export default class SubHeader extends Component {
                 <div>
                   <input type="file" onChange={(e) => this.handleAvatarChange(e)} ref={(el) => this.inputAvatar = el}/>
                   <a href="#">
-                    <i></i>
+                    <i/>
                     Update Profile Picture
                   </a>
                 </div>

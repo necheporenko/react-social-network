@@ -2,12 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { Form, Input } from 'formsy-react-components';
-import { clearConversation } from '../../redux/modules/profile';
+import { clearConversation, deleteConversation, leftConversation } from '../../redux/modules/profile';
 import './index.scss';
 
 @connect((state) => ({
 }), {
-  clearConversation
+  clearConversation,
+  deleteConversation,
+  leftConversation
 })
 
 class ListMessage extends Component {
@@ -58,26 +60,28 @@ class ListMessage extends Component {
           }
 
           { conversations && conversations.map(conversation => (
-            <Link to={`/messages/${conversation.conversation_id}`} key={conversation.conversation_id}>
-              <li>
-                <img src={conversation.receivers[0].avatar32} alt=""/>
-                <h5>{this.getReceivers(conversation.receivers)}</h5>
-              </li>
-              <span>{conversation.messages[0].date.substring(11, 17)}</span>
+            <div>
+              <Link to={`/messages/${conversation.conversation_id}`} key={conversation.conversation_id}>
+                <li>
+                  <img src={conversation.receivers[0].avatar32} alt=""/>
+                  <h5>{this.getReceivers(conversation.receivers)}</h5>
+                </li>
+                <span>{conversation.messages[0].date.substring(11, 17)}</span>
+                <p>{conversation.messages[0].text}</p>
+              </Link>
               <div>
-                <i> </i>
-                  <div className="conversation-settings">
-                    <ul>
-                      <li>Leave Group</li>
-                      <li>Delete</li>
-                      <li>Mark as Spam</li>
-                    </ul>
-                  </div>
+                <i/>
+                <div className="conversation-settings">
+                  <ul>
+                    { conversation.receivers.length > 1 &&
+                      <li onClick={() => this.props.leftConversation(conversation.conversation_id)}>Leave Group</li>
+                    }
+                    <li onClick={() => this.props.deleteConversation(conversation.conversation_id)}>Delete</li>
+                    <li>Mark as Spam</li>
+                  </ul>
+                </div>
               </div>
-
-
-              <p>{conversation.messages[0].text}</p>
-            </Link>
+            </div>
          ))}
 
           {/*<Link to="/messages">*/}
@@ -106,6 +110,8 @@ class ListMessage extends Component {
 ListMessage.propTypes = {
   conversations: PropTypes.array,
   cleanConversation: PropTypes.func,
+  deleteConversation: PropTypes.func,
+  leftConversation: PropTypes.func,
 };
 
 export default ListMessage;
