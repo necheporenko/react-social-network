@@ -8,8 +8,6 @@ const GET_USER_NOTIFICATIONS = 'GET_USER_NOTIFICATIONS';
 const GET_USER_NOTIFICATIONS_SUCCESS = 'GET_USER_NOTIFICATIONS_SUCCESS';
 const GET_USER_NOTIFICATIONS_FAIL = 'GET_USER_NOTIFICATIONS_FAIL';
 const SOCKET_SEND_USER_NOTIFICATION = 'SOCKET_SEND_USER_NOTIFICATION';
-// const SOCKET_SEND_USER_NOTIFICATION_SUCCESS = 'SOCKET_SEND_USER_NOTIFICATION_SUCCESS';
-// const SOCKET_SEND_USER_NOTIFICATION_FAIL = 'SOCKET_SEND_USER_NOTIFICATION_FAIL';
 const GET_CONVERSATION = 'GET_CONVERSATION';
 const GET_CONVERSATION_SUCCESS = 'GET_CONVERSATION_SUCCESS';
 const GET_CONVERSATION_FAIL = 'GET_CONVERSATION_FAIL';
@@ -24,6 +22,7 @@ const DELETE_MESSAGE_SUCCESS = 'DELETE_MESSAGE_SUCCESS';
 const DELETE_MESSAGE_FAIL = 'DELETE_MESSAGE_FAIL';
 const CLEAR_CONVERSATION = 'CLEAR_CONVERSATION';
 const CLEAR_MAIL_COUNTER = 'CLEAR_MAIL_COUNTER';
+const CLEAR_NOTIFICATIONS_COUNTER = 'CLEAR_NOTIFICATIONS_COUNTER';
 const SOCKET_GET_MESSAGE = 'SOCKET_GET_MESSAGE';
 const SOCKET_LAST_MESSAGE = 'SOCKET_LAST_MESSAGE';
 const DELETE_CONVERSATION = 'DELETE_CONVERSATION';
@@ -119,7 +118,14 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         socketUserNotification: true,
-        notifications: [action.data, ...state.notifications]
+        notifications: [action.data, ...state.notifications],
+        bubbleNotification: state.bubbleNotification + 1
+      };
+
+    case CLEAR_NOTIFICATIONS_COUNTER:
+      return {
+        ...state,
+        bubbleNotification: 0,
       };
 
     case GET_CONVERSATION:
@@ -280,9 +286,12 @@ export default function profileReducer(state = initialState, action) {
         deletingConversation: true,
       };
     case DELETE_CONVERSATION_SUCCESS:
+      const deletingConversations = state.conversations.filter(conversation => (conversation.conversation_id !== action.id));
+
       return {
         ...state,
         deletingConversation: false,
+        conversations: deletingConversations
       };
     case DELETE_CONVERSATION_FAIL:
       return {
@@ -297,9 +306,11 @@ export default function profileReducer(state = initialState, action) {
         leavingConversation: true,
       };
     case LEFT_CONVERSATION_SUCCESS:
+      const leavingConversation = state.conversations.filter(conversation => (conversation.conversation_id !== action.id));
       return {
         ...state,
         leavingConversation: false,
+        conversations: leavingConversation
       };
     case LEFT_CONVERSATION_FAIL:
       return {
@@ -333,6 +344,12 @@ export function clearConversation() {
 export function clearMailCounter() {
   return {
     type: CLEAR_MAIL_COUNTER
+  };
+}
+
+export function clearNotificationsCounter() {
+  return {
+    type: CLEAR_NOTIFICATIONS_COUNTER
   };
 }
 
@@ -407,14 +424,16 @@ export function getConversationList() {
 export function deleteConversation(id) {
   return {
     types: [DELETE_CONVERSATION, DELETE_CONVERSATION_SUCCESS, DELETE_CONVERSATION_FAIL],
-    promise: (client) => client.del(`/conversations/${id}`)
+    promise: (client) => client.del(`/conversations/${id}`),
+    id
   };
 }
 
 export function leftConversation(id) {
   return {
     types: [LEFT_CONVERSATION, LEFT_CONVERSATION_SUCCESS, LEFT_CONVERSATION_FAIL],
-    promise: (client) => client.patch(`/conversations/${id}`)
+    promise: (client) => client.patch(`/conversations/${id}`),
+    id
   };
 }
 

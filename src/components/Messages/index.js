@@ -128,51 +128,51 @@ class Messages extends Component {
             {/*<p>Message text...</p>*/}
             {/*</div>*/}
 
-            <div className="time-divider">
-              <span>Today</span>
-            </div>
-            <div className="messages-post">
-              <a href="#">
-                <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                <h5>Name Surname</h5>
-              </a>
-              <span>14:00</span>
-              <div
-                className="message-settings"
-                onClick={this.openMessageSettings}
-              >
-                <i>...</i>
-                <div
-                  style={{ display: this.state.messageSetting ? 'block' : 'none'}}
-                >
-                  <ul>
-                    <li>Delete</li>
-                  </ul>
-                </div>
-              </div>
-              <p>Message text...3</p>
-            </div>
-            <div className="messages-post">
-              <a href="#">
-                <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                <h5>Name Surname</h5>
-              </a>
-              <span>14:00</span>
-              <div
-                className="message-settings"
-                onClick={this.openMessageSettings}
-              >
-                <i>...</i>
-                <div
-                  style={{ display: this.state.messageSetting ? 'block' : 'none'}}
-                >
-                  <ul>
-                    <li>Delete</li>
-                  </ul>
-                </div>
-              </div>
-              <p>Message text...3</p>
-            </div>
+            {/*<div className="time-divider">*/}
+              {/*<span>Today</span>*/}
+            {/*</div>*/}
+            {/*<div className="messages-post">*/}
+              {/*<a href="#">*/}
+                {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                {/*<h5>Name Surname</h5>*/}
+              {/*</a>*/}
+              {/*<span>14:00</span>*/}
+              {/*<div*/}
+                {/*className="message-settings"*/}
+                {/*onClick={this.openMessageSettings}*/}
+              {/*>*/}
+                {/*<i>...</i>*/}
+                {/*<div*/}
+                  {/*style={{ display: this.state.messageSetting ? 'block' : 'none'}}*/}
+                {/*>*/}
+                  {/*<ul>*/}
+                    {/*<li>Delete</li>*/}
+                  {/*</ul>*/}
+                {/*</div>*/}
+              {/*</div>*/}
+              {/*<p>Message text...3</p>*/}
+            {/*</div>*/}
+            {/*<div className="messages-post">*/}
+              {/*<a href="#">*/}
+                {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                {/*<h5>Name Surname</h5>*/}
+              {/*</a>*/}
+              {/*<span>14:00</span>*/}
+              {/*<div*/}
+                {/*className="message-settings"*/}
+                {/*onClick={this.openMessageSettings}*/}
+              {/*>*/}
+                {/*<i>...</i>*/}
+                {/*<div*/}
+                  {/*style={{ display: this.state.messageSetting ? 'block' : 'none'}}*/}
+                {/*>*/}
+                  {/*<ul>*/}
+                    {/*<li>Delete</li>*/}
+                  {/*</ul>*/}
+                {/*</div>*/}
+              {/*</div>*/}
+              {/*<p>Message text...3</p>*/}
+            {/*</div>*/}
 
           </div>
 
