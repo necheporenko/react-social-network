@@ -199,8 +199,9 @@ export default function signReducer(state = initialState, action) {
         ...state,
       };
     case FOLLOW_REQUESTED_USER_SUCCESS:
-      const followRequestedUser = Object.assign(state.requestedUser);
-      followRequestedUser.isFollowing = true;
+      const followRequestedUser = Object.assign({}, state.requestedUser, {
+        isFollowing: true
+      });
       return {
         ...state,
         requestedUser: followRequestedUser,
@@ -216,14 +217,11 @@ export default function signReducer(state = initialState, action) {
         ...state,
       };
     case UNFOLLOW_REQUESTED_USER_SUCCESS:
-      const unfollowRequestedUser = Object.assign(state.requestedUser);
-      unfollowRequestedUser.isFollowing = false;
-      console.log('unfollowRequestedUser after', unfollowRequestedUser);
+      const unfollowRequestedUser = Object.assign({}, state.requestedUser, {
+        isFollowing: false
+      });
       return {
         ...state,
-        // requestedUser: {
-        //   isFollowing: false
-        // },
         requestedUser: unfollowRequestedUser,
       };
     case UNFOLLOW_REQUESTED_USER_FAIL:
@@ -392,14 +390,14 @@ export function getUser(slug) {
 export function followRequestedUser(user_id) {
   return {
     types: [FOLLOW_REQUESTED_USER, FOLLOW_REQUESTED_USER_SUCCESS, FOLLOW_REQUESTED_USER_FAIL],
-    promise: (client) => client.post('/follow/connect', { data: { user_id, channel_id: '' }})
+    promise: (client) => client.post('/follow/connect-user', { data: { user_id, channel_id: '' }})
   };
 }
 
 export function unfollowRequestedUser(user_id) {
   return {
     types: [UNFOLLOW_REQUESTED_USER, UNFOLLOW_REQUESTED_USER_SUCCESS, UNFOLLOW_REQUESTED_USER_FAIL],
-    promise: (client) => client.post('/follow/disconnect', { data: { user_id, channel_id: '' }})
+    promise: (client) => client.post('/follow/disconnect-user', { data: { user_id, channel_id: '' }})
   };
 }
 

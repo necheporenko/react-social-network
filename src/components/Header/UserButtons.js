@@ -2,14 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import { getConversationList, clearMailCounter } from '../../redux/modules/profile';
+import { getConversationList, clearMailCounter, clearNotificationsCounter } from '../../redux/modules/profile';
 
 @connect((state) => ({
   conversations: state.profile.conversations,
   bubbleMessage: state.profile.bubbleMessage,
+  bubbleNotification: state.profile.bubbleNotification,
 }), {
   getConversationList,
-  clearMailCounter
+  clearMailCounter,
+  clearNotificationsCounter
 })
 
 class UserButtons extends Component {
@@ -17,6 +19,7 @@ class UserButtons extends Component {
     super(props);
     this.state = {};
     this.clickMail = this.clickMail.bind(this);
+    this.clickNotification = this.clickNotification.bind(this);
   }
 
   clickMail() {
@@ -24,14 +27,18 @@ class UserButtons extends Component {
     this.props.clearMailCounter();
   }
 
+  clickNotification() {
+    this.props.clearNotificationsCounter();
+  }
+
   closeDropdown() {
-    console.log('hiiiii')
+    console.log('hiiiii');
     return false;
   }
 
   render() {
     const { slug, first_name, avatar32 } = this.props.authorizedUser;
-    const { logoutUser, notifications, conversations, bubbleMessage } = this.props;
+    const { logoutUser, notifications, conversations, bubbleMessage, bubbleNotification } = this.props;
     return (
       <nav className="header-navigation">
         <div className="extension">
@@ -44,11 +51,7 @@ class UserButtons extends Component {
               <div className="icon-search"/>
             </a>
           </div>
-          <div className="wrap-icon-mail" onClick={() => this.clickMail()}>
-
-            {/*<Link to="/messages">*/}
-            {/*<div className="icon-mail"/>*/}
-            {/*</Link>*/}
+          <div className="wrap-icon-mail" onClick={this.clickMail}>
             <ButtonToolbar>
               { bubbleMessage > 0 &&
                 <div className="bubble"><span>{ bubbleMessage }</span></div>
@@ -70,20 +73,20 @@ class UserButtons extends Component {
                         </li>
                       </Link>
                     ))}
-                    <a href="#">
-                      <li>
-                        <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                        <h6>Name Surname</h6>
-                        <span>Message text...</span>
-                      </li>
-                    </a>
-                    <a href="#">
-                      <li>
-                        <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                        <h6>Name Surname</h6>
-                        <span>Message text...</span>
-                      </li>
-                    </a>
+                    {/*<a href="#">*/}
+                      {/*<li>*/}
+                        {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                        {/*<h6>Name Surname</h6>*/}
+                        {/*<span>Message text...</span>*/}
+                      {/*</li>*/}
+                    {/*</a>*/}
+                    {/*<a href="#">*/}
+                      {/*<li>*/}
+                        {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                        {/*<h6>Name Surname</h6>*/}
+                        {/*<span>Message text...</span>*/}
+                      {/*</li>*/}
+                    {/*</a>*/}
                   </ul>
                   <div style={{paddingTop: '7px'}}>
                     <Link to="/messages">See all</Link>
@@ -92,8 +95,10 @@ class UserButtons extends Component {
               </DropdownButton>
             </ButtonToolbar>
           </div>
-          <div className="wrap-icon-bell">
-            <div className="bubble"><span>12</span></div>
+          <div className="wrap-icon-bell" onClick={this.clickNotification}>
+            { bubbleNotification > 0 &&
+              <div className="bubble"><span>{ bubbleNotification }</span></div>
+            }
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title={''} id={2} noCaret pullRight>
                 <div className="notification-box">
@@ -171,6 +176,7 @@ UserButtons.propTypes = {
   authorizedUser: PropTypes.object,
   logoutUser: PropTypes.func,
   clearMailCounter: PropTypes.func,
+  clearNotificationsCounter: PropTypes.func,
   getConversationList: PropTypes.func,
   bubbleMessage: PropTypes.number,
   conversations: PropTypes.array,

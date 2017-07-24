@@ -122,10 +122,10 @@ export default class SubHeader extends Component {
           <div className="subHeader-cover">
             { this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
               <div>
-                <i></i>
+                <i/>
                 <div className="cover-btn">
                   <input type="file" onChange={(e) => this.handleCoverChange(e)} ref={(el) => this.inputCover = el}/>
-                  <div style={{color: '#fff'}}><i></i>Update Cover Photo</div>
+                  <div style={{color: '#fff'}}><i/>Update Cover Photo</div>
                 </div>
               </div>
             }
@@ -138,13 +138,9 @@ export default class SubHeader extends Component {
           className="btn-following"
           onClick={
             !isFollowing ?
-              () => {
-                this.follow(id);
-              }
+              () => this.followUser(id)
               :
-              () => {
-                this.unfollow(id);
-              }
+              () => this.unfollowUser(id)
           }>
           <div>
             {!isFollowing ? 'Follow' : 'Following'}

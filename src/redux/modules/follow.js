@@ -49,8 +49,8 @@ export default function followReducer(state = initialState, action) {
     case FOLLOW_USER_SUCCESS:
       let followFollowing;
       let followInWhoToFollowList;
-      // let followSuggested;
       console.log('action.choiceFollow FOLLOW_USER_SUCCESS', action.choiceFollow);
+
       switch (action.choiceFollow) {
         case 'whoToFollow':
           followInWhoToFollowList = state.whoToFollowList.map((user) => {
@@ -66,31 +66,20 @@ export default function followReducer(state = initialState, action) {
           });
           break;
         case 'people':
-          followFollowing = state.following.users.map((user) => {
-            if (user.id === action.user_id) {
+          followFollowing = Object.assign({}, state.following, {
+            users: state.following.users.map((user) => {
+              if (user.id === action.user_id) {
+                return {
+                  ...user,
+                  isFollowing: true
+                };
+              }
               return {
-                ...user,
-                isFollowing: true
+                ...user
               };
-            }
-            return {
-              ...user
-            };
+            })
           });
           break;
-        // case 'suggested':
-        //   followSuggested = state.suggested.map((user) => {
-        //     if (user.id === action.user_id) {
-        //       return {
-        //         ...user,
-        //         isFollowing: true,
-        //       };
-        //     }
-        //     return {
-        //       ...user
-        //     };
-        //   });
-        //   break;
 
         default:
           console.log('choiceFollow not found');
@@ -115,7 +104,7 @@ export default function followReducer(state = initialState, action) {
         unfollow: false,
       };
     case UNFOLLOW_USER_SUCCESS:
-      const unfollowFollowing = state.following;
+      let unfollowFollowing;
       let unfollowInWhoToFollowList;
       console.log('action.choiceFollow UNFOLLOW_USER_SUCCESS', action.choiceFollow);
 
@@ -134,16 +123,18 @@ export default function followReducer(state = initialState, action) {
           });
           break;
         case 'people':
-          unfollowFollowing.users = state.following.users.map((user) => {
-            if (user.id === action.user_id) {
+          unfollowFollowing = Object.assign({}, state.following, {
+            users: state.following.users.map((user) => {
+              if (user.id === action.user_id) {
+                return {
+                  ...user,
+                  isFollowing: false
+                };
+              }
               return {
-                ...user,
-                isFollowing: false
+                ...user
               };
-            }
-            return {
-              ...user
-            };
+            })
           });
           break;
         default:
@@ -153,7 +144,7 @@ export default function followReducer(state = initialState, action) {
       return {
         ...state,
         unfollow: true,
-        following: unfollowFollowing || state.following,
+        following: unfollowFollowing || state.foconstllowing,
         whoToFollowList: unfollowInWhoToFollowList || state.whoToFollowList
       };
     case UNFOLLOW_USER_FAIL:
