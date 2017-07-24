@@ -160,6 +160,16 @@ export default function profileReducer(state = initialState, action) {
           conversation.receiversID.push(receiver);
         });
       });
+
+      newConversations.sort((a, b) => {
+        if (a.messages[0].date > b.messages[0].date) {
+          return -1;
+        }
+        if (a.messages[0].date < b.messages[0].date) {
+          return 1;
+        }
+        return 0;
+      });
       return {
         ...state,
         gettingConversationList: false,
@@ -308,10 +318,9 @@ export function getConversationID(globalState) {
   const id = path.substring(path.indexOf('/messages') + 10);
   if (id) {
     return id;
-  } else {
-    if (globalState.profile.conversations) {
-      return globalState.profile.conversations[0].conversation_id;
-    }
+  }
+  if (globalState.profile.conversations) {
+    return globalState.profile.conversations[0].conversation_id;
   }
 }
 
@@ -413,5 +422,12 @@ export function createMessage(text, conversation_id, receivers) {
   return {
     types: [CREATE_MESSAGE, CREATE_MESSAGE_SUCCESS, CREATE_MESSAGE_FAIL],
     promise: (client) => client.post('/messages', { data: { text, conversation_id, receivers }}),
+  };
+}
+
+export function deleteMessage(message_id) {
+  return {
+    types: [DELETE_MESSAGE, DELETE_MESSAGE_SUCCESS, DELETE_MESSAGE_FAIL],
+    promise: (client) => client.del(`/messages/${message_id}`),
   };
 }

@@ -60,8 +60,8 @@ class ListMessage extends Component {
           }
 
           { conversations && conversations.map(conversation => (
-            <div>
-              <Link to={`/messages/${conversation.conversation_id}`} key={conversation.conversation_id}>
+            <div key={conversation.conversation_id}>
+              <Link to={`/messages/${conversation.conversation_id}`} >
                 <li>
                   <img src={conversation.receivers[0].avatar32} alt=""/>
                   <h5>{this.getReceivers(conversation.receivers)}</h5>
@@ -69,9 +69,9 @@ class ListMessage extends Component {
                 <span>{conversation.messages[0].date.substring(11, 17)}</span>
                 <p>{conversation.messages[0].text}</p>
               </Link>
-              <div>
+              <div className="conversation-settings">
                 <i/>
-                <div className="conversation-settings">
+                <div>
                   <ul>
                     { conversation.receivers.length > 1 &&
                       <li onClick={() => this.props.leftConversation(conversation.conversation_id)}>Leave Group</li>
@@ -109,7 +109,7 @@ class ListMessage extends Component {
 
 ListMessage.propTypes = {
   conversations: PropTypes.array,
-  cleanConversation: PropTypes.func,
+  clearConversation: PropTypes.func,
   deleteConversation: PropTypes.func,
   leftConversation: PropTypes.func,
 };

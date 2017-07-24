@@ -3,8 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Textarea from 'react-textarea-autosize';
-import { Form } from 'formsy-react-components';
-import { getConversationByID, createMessage, getConversationID } from '../../redux/modules/profile';
+import { getConversationByID, createMessage, deleteMessage, getConversationID } from '../../redux/modules/profile';
 import './index.scss';
 
 @asyncConnect([{
@@ -19,7 +18,8 @@ import './index.scss';
   conversation: state.profile.conversation
 }), {
   getConversationByID,
-  createMessage
+  createMessage,
+  deleteMessage
 })
 
 class Messages extends Component {
@@ -27,8 +27,11 @@ class Messages extends Component {
     super(props);
     this.state = {
       checkedUsersID: [],
+      messageSetting: false,
+      test: false,
     };
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.openMessageSettings = this.openMessageSettings.bind(this);
   }
 
   componentDidMount() {
@@ -52,6 +55,14 @@ class Messages extends Component {
     }
   }
 
+  openMessageSettings() {
+    console.log('click2', this.state.messageSetting);
+    const currentState = this.state.messageSetting;
+    this.setState({messageSetting: !currentState});
+
+    return this.state.messageSetting;
+  }
+
   render() {
     const { conversation } = this.props;
     return (
@@ -60,11 +71,15 @@ class Messages extends Component {
           <div className="additional-title">New Private Messages</div>
           <div className="messages-box" ref={(el) => this.messageBlock = el} >
 
-            { conversation.messages && conversation.messages.map(message => (
+            { conversation.messages && conversation.messages.map((message, i, arr) => (
               <div key={message.id}>
-                <div className="time-divider">
-                  <span>{message.date.substring(0, 11)}</span>
-                </div>
+                {/*message.date.substring(0, 2) ===  it's a day*/}
+                { (i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
+                  <div className="time-divider">
+                    <span>{message.date.substring(0, 11)}</span>
+                  </div>
+                }
+
                 <div className="messages-post">
                   <div>
                     <Link to={`/${message.user.slug}`}>
@@ -75,6 +90,19 @@ class Messages extends Component {
                     </Link>
                   </div>
                   <span>{message.date.substring(11, 17)}</span>
+                  <div
+                    className="message-settings"
+                    onClick={this.openMessageSettings}
+                  >
+                    <i>...</i>
+                    <div
+                      style={{ display: this.state.messageSetting ? 'block' : 'none'}}
+                    >
+                      <ul>
+                        <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
+                      </ul>
+                    </div>
+                  </div>
                   <p>{message.text}</p>
                 </div>
               </div>
@@ -100,17 +128,52 @@ class Messages extends Component {
             {/*<p>Message text...</p>*/}
             {/*</div>*/}
 
-            {/*<div className="time-divider">*/}
-            {/*<span>Today</span>*/}
-            {/*</div>*/}
-            {/*<div className="messages-post">*/}
-            {/*<a href="#">*/}
-            {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-            {/*<h5>Name Surname</h5>*/}
-            {/*</a>*/}
-            {/*<span>14:00</span>*/}
-            {/*<p>Message text...</p>*/}
-            {/*</div>*/}
+            <div className="time-divider">
+              <span>Today</span>
+            </div>
+            <div className="messages-post">
+              <a href="#">
+                <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
+                <h5>Name Surname</h5>
+              </a>
+              <span>14:00</span>
+              <div
+                className="message-settings"
+                onClick={this.openMessageSettings}
+              >
+                <i>...</i>
+                <div
+                  style={{ display: this.state.messageSetting ? 'block' : 'none'}}
+                >
+                  <ul>
+                    <li>Delete</li>
+                  </ul>
+                </div>
+              </div>
+              <p>Message text...3</p>
+            </div>
+            <div className="messages-post">
+              <a href="#">
+                <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
+                <h5>Name Surname</h5>
+              </a>
+              <span>14:00</span>
+              <div
+                className="message-settings"
+                onClick={this.openMessageSettings}
+              >
+                <i>...</i>
+                <div
+                  style={{ display: this.state.messageSetting ? 'block' : 'none'}}
+                >
+                  <ul>
+                    <li>Delete</li>
+                  </ul>
+                </div>
+              </div>
+              <p>Message text...3</p>
+            </div>
+
           </div>
 
           <div className="messages-send">
@@ -131,6 +194,7 @@ class Messages extends Component {
 Messages.propTypes = {
   conversation: PropTypes.object,
   createMessage: PropTypes.func,
+  deleteMessage: PropTypes.func,
 };
 
 export default Messages;
