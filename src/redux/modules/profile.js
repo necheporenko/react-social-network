@@ -11,6 +11,9 @@ const SOCKET_SEND_USER_NOTIFICATION = 'SOCKET_SEND_USER_NOTIFICATION';
 const GET_CONVERSATION = 'GET_CONVERSATION';
 const GET_CONVERSATION_SUCCESS = 'GET_CONVERSATION_SUCCESS';
 const GET_CONVERSATION_FAIL = 'GET_CONVERSATION_FAIL';
+const GET_CONVERSATION_BY_USER = 'GET_CONVERSATION_BY_USER';
+const GET_CONVERSATION_BY_USER_SUCCESS = 'GET_CONVERSATION_BY_USER_SUCCESS';
+const GET_CONVERSATION_BY_USER_FAIL = 'GET_CONVERSATION_BY_USER_FAIL';
 const GET_CONVERSATION_LIST = 'GET_CONVERSATION_LIST';
 const GET_CONVERSATION_LIST_SUCCESS = 'GET_CONVERSATION_LIST_SUCCESS';
 const GET_CONVERSATION_LIST_FAIL = 'GET_CONVERSATION_LIST_FAIL';
@@ -153,6 +156,47 @@ export default function profileReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case GET_CONVERSATION_BY_USER:
+      return {
+        ...state,
+        gettingConversation: true,
+      };
+    case GET_CONVERSATION_BY_USER_SUCCESS:
+      const newConversationByUser = action.result.data;
+      if (newConversationByUser.receivers > 0) {
+        newConversationByUser.receiversID = [];
+        newConversationByUser.receivers.map(receiver => {
+          newConversationByUser.receiversID.push(receiver.id);
+        });
+      }
+      const addTemporaryConversation = Object.assign(
+        {}, state.conversations[0].new ? state.conversations[0] : action.result.data, {
+          conversation_id: action.result.data.conversation_id ? action.result.data.conversation_id : 'new',
+          receivers: [{
+            id: 'new',
+            first_name: 'New',
+            last_name: 'Conversation',
+            avatar32: 'https://s3-us-west-2.amazonaws.com/dev.validbook/200x200.png',
+          }],
+          new: true,
+        });
+      return {
+        ...state,
+        gettingConversation: false,
+        conversation: newConversationByUser,
+        conversations: state.conversations[0].new
+          ?
+          [state.conversations[0] = addTemporaryConversation]
+          :
+          [addTemporaryConversation, ...state.conversations]
+      };
+    case GET_CONVERSATION_BY_USER_FAIL:
+      return {
+        ...state,
+        gettingConversation: false,
+        error: action.error,
+      };
+
     case GET_CONVERSATION_LIST:
       return {
         ...state,
@@ -227,9 +271,14 @@ export default function profileReducer(state = initialState, action) {
         deletingMessage: true,
       };
     case DELETE_MESSAGE_SUCCESS:
+      const deletingMessage = Object.assign({}, state.conversation, {
+        messages: state.conversation.messages.filter(message => (message.id !== action.message_id))
+      });
+
       return {
         ...state,
         deletingMessage: false,
+        conversation: deletingMessage
       };
     case DELETE_MESSAGE_FAIL:
       return {
@@ -407,9 +456,8 @@ export function getConversationByID(id) {
 }
 
 export function getConversationByUser(user_ids) {
-  console.log('user_ids', user_ids);
   return {
-    types: [GET_CONVERSATION, GET_CONVERSATION_SUCCESS, GET_CONVERSATION_FAIL],
+    types: [GET_CONVERSATION_BY_USER, GET_CONVERSATION_BY_USER_SUCCESS, GET_CONVERSATION_BY_USER_FAIL],
     promise: (client) => client.get('/conversations/by-users', { params: { user_ids }})
   };
 }
@@ -448,5 +496,6 @@ export function deleteMessage(message_id) {
   return {
     types: [DELETE_MESSAGE, DELETE_MESSAGE_SUCCESS, DELETE_MESSAGE_FAIL],
     promise: (client) => client.del(`/messages/${message_id}`),
+    message_id
   };
 }

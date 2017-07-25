@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { } from '../redux/modules/user';
 import { login as loginUser, load as loadAuth, register as registerUser, loginSocial, isLoaded, getUser,
-  getAuthSlug } from '../redux/modules/user';
+  getAuthSlug, openWebsocket } from '../redux/modules/user';
 import { showActiveForm } from '../redux/modules/form';
 import { isLoadedChannelList, isLoadedChannelStories, create as createChannel, show as showChannel,
   load as loadChannels, isMashUp, loadNext as loadNextChannelStories, getAuthUserSlug } from '../redux/modules/channel';
@@ -63,7 +63,8 @@ import MainPage from '../components/MainPage';
   loadNextChannelStories,
   loadBookTree,
   loadWhoToFollow,
-  getAuthUserSlug
+  getAuthUserSlug,
+  openWebsocket
 })
 
 export default class IndexContainer extends Component {
@@ -99,6 +100,7 @@ export default class IndexContainer extends Component {
             loadChannels={this.props.loadChannels}
             loadBookTree={this.props.loadBookTree}
             loadWhoToFollow={this.props.loadWhoToFollow}
+            openWebsocket={this.props.openWebsocket}
           />
         }
       </div>

@@ -179,7 +179,7 @@ class Messages extends Component {
           <div className="messages-send">
             <div className="wrapper">
               <Textarea
-                placeholder="Enter your message..."
+                placeholder="Type a message..."
                 onKeyDown={this.handleKeyPress}
               />
             </div>

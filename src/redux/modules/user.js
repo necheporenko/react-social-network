@@ -33,6 +33,7 @@ const UPLOAD_USER_COVER_BASE64 = 'UPLOAD_USER_COVER_BASE64';
 const SAVE_PROFILE = 'SAVE_PROFILE';
 const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS';
 const SAVE_PROFILE_FAIL = 'SAVE_PROFILE_FAIL';
+export const OPEN_SOCKET = 'OPEN_SOCKET';
 
 const initialState = {
   isAuthenticated: false,
@@ -51,13 +52,6 @@ export default function signReducer(state = initialState, action) {
         loaded: false
       };
     case LOGIN_SUCCESS:
-      const socket = new WebSocket(`ws://api.validbook.org:8000/?user=${action.result.data.id}`);
-      console.log('this is store', action.result.data.id);
-      global.socket = socket;
-      socket.onopen = function () {
-        console.log('Connection established!');
-      };
-      // socket.onmessage = onMessage(socket, store);
       return {
         ...state,
         loading: false,
@@ -434,5 +428,11 @@ export function save(profile) {
     types: [SAVE_PROFILE, SAVE_PROFILE_SUCCESS, SAVE_PROFILE_FAIL],
     profile,
     promise: (client) => client.post('/engagment/profile', { data: profile })
+  };
+}
+
+export function openWebsocket() {
+  return {
+    type: OPEN_SOCKET
   };
 }

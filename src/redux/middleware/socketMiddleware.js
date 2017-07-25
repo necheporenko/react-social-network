@@ -37,6 +37,13 @@ export default function socketMiddleware() {
           socket.onmessage = onMessage(socket, store);
         }
         break;
+      case 'OPEN_SOCKET':
+        const socket = new WebSocket(`ws://api.validbook.org:8000/?user=${currentState.user.authorizedUser.id}`);
+        // console.log('this is store', currentState.user.authorizedUser);
+        global.socket = socket;
+        socket.onopen = () => console.log('Connection established!');
+        socket.onmessage = onMessage(socket, store);
+        break;
 
       default:
         return next(action);

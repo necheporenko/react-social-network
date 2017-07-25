@@ -44,16 +44,21 @@ class ListMessage extends Component {
          <Link to="/messages/new" className="new-message" onClick={() => this.props.clearConversation()}><i/></Link>
         </div>
         <ul className="conversations-list">
-          <Form rowClassName={[{'form-group': false}, {row: false}, 'messages-form']} >
-            <Input
-              name="to"
-              value=""
-              labelClassName={[{'col-sm-3': false}, 'disabled-label']}
-              elementWrapperClassName={[{'col-sm-9': false}, 'messages-search']}
-              type="text"
-              placeholder="Search"
-           />
-          </Form>
+          <div className="messages-search">
+            <input type="text" placeholder="Search"/>
+            <i/>
+          </div>
+
+          {/*<Form rowClassName={[{'form-group': false}, {row: false}, 'messages-form']} >*/}
+            {/*<Input*/}
+              {/*name="to"*/}
+              {/*value=""*/}
+              {/*labelClassName={[{'col-sm-3': false}, 'disabled-label']}*/}
+              {/*elementWrapperClassName={[{'col-sm-9': false}, 'messages-search']}*/}
+              {/*type="text"*/}
+              {/*placeholder="Search"*/}
+           {/*/>*/}
+          {/*</Form>*/}
 
           { !conversations &&
             <li style={{padding: '10px 15px'}}>No conversations yet.</li>
@@ -66,8 +71,8 @@ class ListMessage extends Component {
                   <img src={conversation.receivers[0].avatar32} alt=""/>
                   <h5>{this.getReceivers(conversation.receivers)}</h5>
                 </li>
-                <span>{conversation.messages[0].date.substring(11, 17)}</span>
-                <p>{conversation.messages[0].text}</p>
+                <span>{conversation.messages[0] && conversation.messages[0].date.substring(11, 17)}</span>
+                <p>{conversation.messages[0] && conversation.messages[0].text}</p>
               </Link>
               <div className="conversation-settings">
                 <i/>
@@ -77,30 +82,30 @@ class ListMessage extends Component {
                       <li onClick={() => this.props.leftConversation(conversation.conversation_id)}>Leave Group</li>
                     }
                     <li onClick={() => this.props.deleteConversation(conversation.conversation_id)}>Delete</li>
-                    <li>Mark as Spam</li>
+                    <li>Report Spam or Abuse...</li>
                   </ul>
                 </div>
               </div>
             </div>
          ))}
 
-          {/*<Link to="/messages">*/}
-          <a href="#">
-            <li>
-              <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-              <h5>Name Surname</h5>
-            </li>
-            <p>Message text...</p>
-          </a>
-          {/*</Link>*/}
+          {/*/!*<Link to="/messages">*!/*/}
+          {/*<a href="#">*/}
+            {/*<li>*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+              {/*<h5>Name Surname</h5>*/}
+            {/*</li>*/}
+            {/*<p>Message text...</p>*/}
+          {/*</a>*/}
+          {/*/!*</Link>*!/*/}
 
-          <a href="#">
-            <li>
-              <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-              <h5>Name Surname</h5>
-            </li>
-            <p>Message text...</p>
-          </a>
+          {/*<a href="#">*/}
+            {/*<li>*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+              {/*<h5>Name Surname</h5>*/}
+            {/*</li>*/}
+            {/*<p>Message text...</p>*/}
+          {/*</a>*/}
         </ul>
       </div>
     );

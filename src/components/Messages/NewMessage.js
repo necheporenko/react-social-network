@@ -20,7 +20,10 @@ class NewMessage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedUsersID: [],
+      checkedUsersID: {
+        fullName: [],
+        id: []
+      },
       hideTypeahead: false,
     };
     this.handleSearchUser = this.handleSearchUser.bind(this);
@@ -38,10 +41,12 @@ class NewMessage extends Component {
 
   addCheckedUser(user) {
     const currentCheckedUsersID = this.state.checkedUsersID;
-    currentCheckedUsersID.push(user.id);
+    currentCheckedUsersID.fullName.push(`${user.first_name} ${user.last_name}`);
+    currentCheckedUsersID.id.push(user.id);
 
     this.setState({ checkedUsersID: currentCheckedUsersID, hideTypeahead: true });
-    this.props.getConversationByUser(this.state.checkedUsersID.toString());
+    console.log('this.state.checkedUsersID', this.state.checkedUsersID.id);
+    this.props.getConversationByUser(this.state.checkedUsersID.id.toString());
     this.inputMessage.value = '';
   }
 
@@ -64,29 +69,23 @@ class NewMessage extends Component {
       <div className="messages-content">
         <div className="wrapper">
           <div className="additional-title">
-            {/*<Form*/}
-            {/*rowClassName={[{'form-group': false}, {row: false}, 'row-new-message']}*/}
-            {/*className={['new-messages-form']}*/}
-            {/*>*/}
-            {/**/}
-            {/*<Input*/}
-            {/*name="to"*/}
-            {/*value=""*/}
-            {/*// label="To:"*/}
-            {/*labelClassName={[{'col-sm-3': false}, 'disabled-label']}*/}
-            {/*elementWrapperClassName={[{'col-sm-9': false}, 'new-messages']}*/}
-            {/*type="text"*/}
-            {/*onChange={() => this.searchUser(value)}*/}
-            {/*placeholder="Type the name of person"*/}
-            {/*/>*/}
-            {/*</Form>*/}
-            <span>To:</span>
+
+            <div style={{display: this.state.checkedUsersID.fullName.length > 0 ? 'flex' : 'inline-flex'}}>
+              <span>To:</span>
+              <div className="list-of-found-users">
+                { this.state.checkedUsersID && this.state.checkedUsersID.fullName.map((user, index) => (
+                  <span key={index}>{user}</span>
+               ))}
+              </div>
+            </div>
+
             <input
               type="text"
               className="messages-input"
               placeholder="Type the name of person"
               onChange={this.handleSearchUser}
               ref={el => this.inputMessage = el}
+              style={{position: this.state.checkedUsersID.fullName.length > 0 ? 'relative' : 'static'}}
             />
             { !this.state.hideTypeahead && foundUsers.length > 0 &&
               <div className="wrapper-find-users">
@@ -101,37 +100,58 @@ class NewMessage extends Component {
           </div>
           <div>
             <div className="messages-box">
-              <div className="time-divider">
-                <span>23 March</span>
-              </div>
-              <div className="messages-post">
-                <a href="#">
-                  <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                  <h5>Name Surname</h5>
-                </a>
-                <span>12:00</span>
-                <p>Message text...</p>
-              </div>
-              <div className="messages-post">
-                <a href="#">
-                  <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                  <h5>Name Surname</h5>
-                </a>
-                <span>12:01</span>
-                <p>Message text...</p>
-              </div>
+              {/*<div className="time-divider">*/}
+              {/*<span>23 March</span>*/}
+              {/*</div>*/}
+              {/*<div className="messages-post">*/}
+              {/*<a href="#">*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+              {/*<h5>Name Surname</h5>*/}
+              {/*</a>*/}
+              {/*<span>12:00</span>*/}
+              {/*<p>Message text...</p>*/}
+              {/*</div>*/}
+              {/*<div className="messages-post">*/}
+              {/*<a href="#">*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+              {/*<h5>Name Surname</h5>*/}
+              {/*</a>*/}
+              {/*<span>12:01</span>*/}
+              {/*<p>Message text...</p>*/}
+              {/*</div>*/}
 
               { conversation.messages && conversation.messages.map(message => (
                 <div key={message.id}>
+                  {/*message.date.substring(0, 2) ===  it's a day*/}
+                  { (i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
                   <div className="time-divider">
-                    <span>{message.date}</span>
+                    <span>{message.date.substring(0, 11)}</span>
                   </div>
+                  }
+
                   <div className="messages-post">
-                    <Link to={`/${message.user.slug}`}>
-                      <img src={message.user.avatar32} alt=""/>
-                      <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
-                    </Link>
-                    <span>12:00</span>
+                    <div>
+                      <Link to={`/${message.user.slug}`}>
+                        <img src={message.user.avatar32} alt=""/>
+                      </Link>
+                      <Link to={`/${message.user.slug}`}>
+                        <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
+                      </Link>
+                    </div>
+                    <span>{message.date.substring(11, 17)}</span>
+                    <div
+                      className="message-settings"
+                      onClick={this.openMessageSettings}
+                    >
+                      <i>...</i>
+                      <div
+                        style={{ display: this.state.messageSetting ? 'block' : 'none'}}
+                      >
+                        <ul>
+                          <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
+                        </ul>
+                      </div>
+                    </div>
                     <p>{message.text}</p>
                   </div>
                 </div>
@@ -159,6 +179,7 @@ NewMessage.propTypes = {
   newSearchUser: PropTypes.func,
   getConversationByUser: PropTypes.func,
   createMessage: PropTypes.func,
+  deleteMessage: PropTypes.func,
   conversation: PropTypes.object,
 };
 

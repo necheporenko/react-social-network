@@ -60,7 +60,7 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
   loadedPage: state.reduxAsyncConnect.loaded,
 }), ({
   logoutUser,
-  hideLoading
+  hideLoading,
 }))
 
 class App extends Component {

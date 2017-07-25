@@ -1,5 +1,27 @@
 @import "../../theme/vars";
 
+/* -=== ScrollBar ===- */
+.scrollBar {
+  &::-webkit-scrollbar {
+    width:7px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    border-color: #555;
+    background-color: #777;
+  }
+  &::-webkit-scrollbar-track {
+    border-width:0;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-track:hover {
+    background-color: #cecece;
+  }
+}
+/* -=== ScrollBar ===- */
+
 .header {
   background: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .15);
@@ -320,6 +342,13 @@
     overflow-y: auto;
     overflow-x: hidden;
     margin: 0 -10px;
+
+    &:hover {
+      &::-webkit-scrollbar-thumb {
+        background-color: #aaa;
+      }
+    }
+    @extend .scrollBar;
   }
 
   li {
@@ -340,7 +369,7 @@
     img {
       width: 45px;
       height: 45px;
-      border-radius: 50%;
+      border-radius: 2px;
     }
 
     h6 {

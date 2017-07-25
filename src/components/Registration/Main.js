@@ -25,6 +25,7 @@ export default class New extends Component {
 
   onSubmitSignInForm(data) {
     this.props.loginUser(data.email, data.password)
+      .then(() => this.props.openWebsocket())
       .then(() => this.props.showChannel())
       .then(() => this.props.loadWhoToFollow())
       .then(() => this.props.loadBookTree(this.props.authorizedUser.slug))
@@ -33,12 +34,14 @@ export default class New extends Component {
 
   onSubmitRegisterForm(data) {
     const { email, password, firstName, lastName } = data;
-    this.props.registerUser(email, password, firstName, lastName);
+    this.props.registerUser(email, password, firstName, lastName)
+      .then(() => this.props.openWebsocket());
   }
 
   responseFacebook(response) {
     // console.log('Facebook API login', response.picture.data.url, response.accessToken);
     this.props.loginSocial('facebook', response.picture.data.url, response.accessToken)
+      .then(() => this.props.openWebsocket())
       .then(() => this.props.showChannel())
       .then(() => this.props.loadChannels(this.props.authorizedUser.slug))
       .then(() => this.props.loadBookTree(this.props.authorizedUser.slug))
@@ -183,7 +186,7 @@ New.propTypes = {
   activeForm: PropTypes.string,
   showActiveForm: PropTypes.func,
   loginUser: PropTypes.func,
-  loadAuth: PropTypes.func,
+  openWebsocket: PropTypes.func,
   registerUser: PropTypes.func,
   loginSocial: PropTypes.func,
   loading: PropTypes.bool,

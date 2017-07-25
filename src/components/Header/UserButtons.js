@@ -88,7 +88,7 @@ class UserButtons extends Component {
                       {/*</li>*/}
                     {/*</a>*/}
                   </ul>
-                  <div style={{paddingTop: '7px'}}>
+                  <div style={{paddingTop: '7px', justifyContent: 'center'}}>
                     <Link to="/messages">See all</Link>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ class UserButtons extends Component {
                 <div className="notification-box">
                   <div>
                     <h4>Notifications</h4>
-                    <a href="#">Mark as Read</a>
+                    <a href="#">Mark All Read</a>
                   </div>
                   <hr/>
                   <ul>
