@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Form, Input, } from 'formsy-react-components';
 import Textarea from 'react-textarea-autosize';
 import { getConversationByUser, createMessage } from '../../redux/modules/profile';
 import { newSearchUser } from '../../redux/modules/search';

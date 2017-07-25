@@ -33,7 +33,7 @@ export default function bookReducer(state = initialState, action) {
       return {
         ...state,
         searching: false,
-        foundUsers: action.result.data
+        foundUsers: action.result.data.users
       };
     case SEARCH_USER_FAIL:
       return {
