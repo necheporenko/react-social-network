@@ -191,6 +191,10 @@
       position: absolute;
       top: 35px;
       left: 70px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 275px;
     }
 
     a:hover {

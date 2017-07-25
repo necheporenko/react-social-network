@@ -69,6 +69,7 @@ export default () => {
 
       <Route path="/messages" component={MessagesContainer}>
         <IndexRoute component={Messages} />
+        {/*<IndexRedirect to="new" />*/}
         <Route path="new" component={NewMessage} />
         <Route path=":conversationID" component={Messages} />
       </Route>

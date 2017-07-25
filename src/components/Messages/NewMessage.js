@@ -9,6 +9,7 @@ import './index.scss';
 @connect((state) => ({
   foundUsers: state.search.foundUsers,
   conversation: state.profile.conversation,
+  authorizedUser: state.user.authorizedUser,
 }), {
   getConversationByUser,
   newSearchUser,
@@ -56,14 +57,14 @@ class NewMessage extends Component {
       this.props.createMessage(
         event.target.value,
         null,
-        Array.from(this.state.checkedUsersID, item => parseInt(item, 10))  // str -> number
+        Array.from(this.state.checkedUsersID.id, item => parseInt(item, 10))  // str -> number
       )
         .then(event.target.value = '');
     }
   }
 
   render() {
-    const { foundUsers, conversation } = this.props;
+    const { foundUsers, conversation, authorizedUser } = this.props;
     return (
       <div className="messages-content">
         <div className="wrapper">
@@ -99,27 +100,7 @@ class NewMessage extends Component {
           </div>
           <div>
             <div className="messages-box">
-              {/*<div className="time-divider">*/}
-              {/*<span>23 March</span>*/}
-              {/*</div>*/}
-              {/*<div className="messages-post">*/}
-              {/*<a href="#">*/}
-              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-              {/*<h5>Name Surname</h5>*/}
-              {/*</a>*/}
-              {/*<span>12:00</span>*/}
-              {/*<p>Message text...</p>*/}
-              {/*</div>*/}
-              {/*<div className="messages-post">*/}
-              {/*<a href="#">*/}
-              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-              {/*<h5>Name Surname</h5>*/}
-              {/*</a>*/}
-              {/*<span>12:01</span>*/}
-              {/*<p>Message text...</p>*/}
-              {/*</div>*/}
-
-              { conversation.messages && conversation.messages.map(message => (
+              { conversation.messages && conversation.messages.map((message, i, arr) => (
                 <div key={message.id}>
                   {/*message.date.substring(0, 2) ===  it's a day*/}
                   { (i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
@@ -128,10 +109,10 @@ class NewMessage extends Component {
                   </div>
                   }
 
-                  <div className="messages-post">
+                  <div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
                     <div>
                       <Link to={`/${message.user.slug}`}>
-                        <img src={message.user.avatar32} alt=""/>
+                        <img src={message.user.avatar} alt=""/>
                       </Link>
                       <Link to={`/${message.user.slug}`}>
                         <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
@@ -180,6 +161,7 @@ NewMessage.propTypes = {
   createMessage: PropTypes.func,
   deleteMessage: PropTypes.func,
   conversation: PropTypes.object,
+  authorizedUser: PropTypes.object,
 };
 
 export default NewMessage;

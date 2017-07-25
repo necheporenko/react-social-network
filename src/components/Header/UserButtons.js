@@ -67,9 +67,9 @@ class UserButtons extends Component {
                     { conversations && conversations.map(conversation => (
                       <Link to={`/messages/${conversation.conversation_id}`} key={conversation.conversation_id}>
                         <li>
-                          <img src={conversation.receivers[0].avatar32} alt=""/>
-                          <h6>{`${conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>
-                          <span>{conversation.messages[0].text}</span>
+                          <img src={conversation.receivers[0].avatar} alt=""/>
+                          <h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>
+                          <span>{conversation.messages && conversation.messages[0].text}</span>
                         </li>
                       </Link>
                     ))}

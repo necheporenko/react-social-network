@@ -176,7 +176,7 @@ export default function profileReducer(state = initialState, action) {
             id: 'new',
             first_name: 'New',
             last_name: 'Conversation',
-            avatar32: 'https://s3-us-west-2.amazonaws.com/dev.validbook/200x200.png',
+            avatar: 'https://s3-us-west-2.amazonaws.com/dev.validbook/200x200.png',
           }],
           new: true,
         });
@@ -186,7 +186,7 @@ export default function profileReducer(state = initialState, action) {
         conversation: newConversationByUser,
         conversations: state.conversations[0].new
           ?
-          [state.conversations[0] = addTemporaryConversation]
+          [state.conversations[0] = addTemporaryConversation, ...state.conversations]
           :
           [addTemporaryConversation, ...state.conversations]
       };

@@ -9,13 +9,17 @@ import './index.scss';
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
     const promises = [];
-    promises.push(dispatch(getConversationByID(getConversationID(getState()))));
+    if (getConversationID(getState())) {
+      promises.push(dispatch(getConversationByID(getConversationID(getState()))));
+    }
+
     return Promise.all(promises);
   }
 }])
 
 @connect((state) => ({
-  conversation: state.profile.conversation
+  conversation: state.profile.conversation,
+  authorizedUser: state.user.authorizedUser,
 }), {
   getConversationByID,
   createMessage,
@@ -64,7 +68,7 @@ class Messages extends Component {
   }
 
   render() {
-    const { conversation } = this.props;
+    const { conversation, authorizedUser } = this.props;
     return (
       <div className="messages-content">
         <div className="wrapper">
@@ -80,10 +84,10 @@ class Messages extends Component {
                   </div>
                 }
 
-                <div className="messages-post">
+                <div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
                   <div>
                     <Link to={`/${message.user.slug}`}>
-                      <img src={message.user.avatar32} alt=""/>
+                      <img src={message.user.avatar} alt=""/>
                     </Link>
                     <Link to={`/${message.user.slug}`}>
                       <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
@@ -129,49 +133,80 @@ class Messages extends Component {
             {/*</div>*/}
 
             {/*<div className="time-divider">*/}
-              {/*<span>Today</span>*/}
+            {/*<span>Today</span>*/}
             {/*</div>*/}
             {/*<div className="messages-post">*/}
-              {/*<a href="#">*/}
-                {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-                {/*<h5>Name Surname</h5>*/}
-              {/*</a>*/}
-              {/*<span>14:00</span>*/}
-              {/*<div*/}
-                {/*className="message-settings"*/}
-                {/*onClick={this.openMessageSettings}*/}
-              {/*>*/}
-                {/*<i>...</i>*/}
-                {/*<div*/}
-                  {/*style={{ display: this.state.messageSetting ? 'block' : 'none'}}*/}
-                {/*>*/}
-                  {/*<ul>*/}
-                    {/*<li>Delete</li>*/}
-                  {/*</ul>*/}
-                {/*</div>*/}
-              {/*</div>*/}
-              {/*<p>Message text...3</p>*/}
+            {/*<div>*/}
+            {/*<a href="#">*/}
+            {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/></a>*/}
+            {/*<a>*/}
+            {/*<h5>Name Surname</h5>*/}
+            {/*</a>*/}
             {/*</div>*/}
-            {/*<div className="messages-post">*/}
-              {/*<a href="#">*/}
-                {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-                {/*<h5>Name Surname</h5>*/}
-              {/*</a>*/}
-              {/*<span>14:00</span>*/}
-              {/*<div*/}
-                {/*className="message-settings"*/}
-                {/*onClick={this.openMessageSettings}*/}
-              {/*>*/}
-                {/*<i>...</i>*/}
-                {/*<div*/}
-                  {/*style={{ display: this.state.messageSetting ? 'block' : 'none'}}*/}
-                {/*>*/}
-                  {/*<ul>*/}
-                    {/*<li>Delete</li>*/}
-                  {/*</ul>*/}
-                {/*</div>*/}
-              {/*</div>*/}
-              {/*<p>Message text...3</p>*/}
+            {/*<span>14:00</span>*/}
+            {/*<div*/}
+            {/*className="message-settings"*/}
+            {/*onClick={this.openMessageSettings}*/}
+            {/*>*/}
+            {/*<i>...</i>*/}
+            {/*<div*/}
+            {/*style={{ display: this.state.messageSetting ? 'block' : 'none'}}*/}
+            {/*>*/}
+            {/*<ul>*/}
+            {/*<li>Delete</li>*/}
+            {/*</ul>*/}
+            {/*</div>*/}
+            {/*</div>*/}
+            {/*<p>Message text...3</p>*/}
+            {/*</div>*/}
+
+            {/*<div className="messages-post messages-post-reverse">*/}
+            {/*<div>*/}
+            {/*<a href="#">*/}
+            {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/></a>*/}
+            {/*<a>*/}
+            {/*<h5>Name Surname</h5>*/}
+            {/*</a>*/}
+            {/*</div>*/}
+            {/*<span>14:00</span>*/}
+            {/*<div*/}
+            {/*className="message-settings"*/}
+            {/*onClick={this.openMessageSettings}*/}
+            {/*>*/}
+            {/*<i>...</i>*/}
+            {/*<div*/}
+            {/*style={{ display: this.state.messageSetting ? 'block' : 'none'}}*/}
+            {/*>*/}
+            {/*<ul>*/}
+            {/*<li>Delete</li>*/}
+            {/*</ul>*/}
+            {/*</div>*/}
+            {/*</div>*/}
+            {/*<p>Message text...3</p>*/}
+            {/*</div>*/}
+            {/*<div className="messages-post messages-post-reverse">*/}
+            {/*<div>*/}
+            {/*<a href="#">*/}
+            {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/></a>*/}
+            {/*<a>*/}
+            {/*<h5>Name Surname</h5>*/}
+            {/*</a>*/}
+            {/*</div>*/}
+            {/*<span>14:00</span>*/}
+            {/*<div*/}
+            {/*className="message-settings"*/}
+            {/*onClick={this.openMessageSettings}*/}
+            {/*>*/}
+            {/*<i>...</i>*/}
+            {/*<div*/}
+            {/*style={{ display: this.state.messageSetting ? 'block' : 'none'}}*/}
+            {/*>*/}
+            {/*<ul>*/}
+            {/*<li>Delete</li>*/}
+            {/*</ul>*/}
+            {/*</div>*/}
+            {/*</div>*/}
+            {/*<p>Message text...3</p>*/}
             {/*</div>*/}
 
           </div>
@@ -195,6 +230,7 @@ Messages.propTypes = {
   conversation: PropTypes.object,
   createMessage: PropTypes.func,
   deleteMessage: PropTypes.func,
+  authorizedUser: PropTypes.object,
 };
 
 export default Messages;

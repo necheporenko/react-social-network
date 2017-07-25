@@ -67,11 +67,11 @@ class ListMessage extends Component {
             <div key={conversation.conversation_id}>
               <Link to={`/messages/${conversation.conversation_id}`} >
                 <li>
-                  <img src={conversation.receivers[0].avatar32} alt=""/>
+                  <img src={conversation.receivers[0].avatar} alt=""/>
                   <h5>{this.getReceivers(conversation.receivers)}</h5>
                 </li>
-                <span>{conversation.messages[0] && conversation.messages[0].date.substring(11, 17)}</span>
-                <p>{conversation.messages[0] && conversation.messages[0].text}</p>
+                <span>{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
+                <p>{conversation.messages && conversation.messages[0].text}</p>
               </Link>
               <div className="conversation-settings">
                 <i/>
