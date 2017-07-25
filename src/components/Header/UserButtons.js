@@ -108,7 +108,7 @@ class UserButtons extends Component {
                   </div>
                   <hr/>
                   <ul>
-                    {notifications && notifications.map((notification) => (
+                    { notifications && notifications.map((notification) => (
                       <li key={notification.id}>
                         <div>
                           <img src={notification.user.avatar} alt=""/>

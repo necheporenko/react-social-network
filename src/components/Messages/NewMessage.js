@@ -98,56 +98,56 @@ class NewMessage extends Component {
               </div>
             }
           </div>
-          <div>
-            <div className="messages-box">
-              { conversation.messages && conversation.messages.map((message, i, arr) => (
-                <div key={message.id}>
-                  {/*message.date.substring(0, 2) ===  it's a day*/}
-                  { (i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
+
+          <div className="messages-box">
+            { conversation.messages && conversation.messages.map((message, i, arr) => (
+              <div key={message.id}>
+                {/*message.date.substring(0, 2) ===  it's a day*/}
+                { (i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
                   <div className="time-divider">
                     <span>{message.date.substring(0, 11)}</span>
                   </div>
                   }
 
-                  <div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
-                    <div>
-                      <Link to={`/${message.user.slug}`}>
-                        <img src={message.user.avatar} alt=""/>
-                      </Link>
-                      <Link to={`/${message.user.slug}`}>
-                        <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
-                      </Link>
-                    </div>
-                    <span>{message.date.substring(11, 17)}</span>
-                    <div
-                      className="message-settings"
-                      onClick={this.openMessageSettings}
-                    >
-                      <i>...</i>
+                <div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
+                  <div>
+                    <Link to={`/${message.user.slug}`}>
+                      <img src={message.user.avatar} alt=""/>
+                    </Link>
+                    <Link to={`/${message.user.slug}`}>
+                      <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
+                    </Link>
+                    <div className="wrapper-time-settings">
+                      <span>{message.date.substring(11, 17)}</span>
                       <div
-                        style={{ display: this.state.messageSetting ? 'block' : 'none'}}
-                      >
-                        <ul>
-                          <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
-                        </ul>
+                        className="message-settings"
+                        onClick={this.openMessageSettings}
+                        >
+                        <i>...</i>
+                        <div style={{ display: this.state.messageSetting ? 'block' : 'none'}}>
+                          <ul>
+                            <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                    <p>{message.text}</p>
                   </div>
+
+                  <p>{message.text}</p>
                 </div>
-              ))}
-            </div>
-
-            <div className="messages-send">
-              <div className="wrapper">
-                <Textarea
-                  placeholder="Enter your message..."
-                  onKeyDown={this.handleKeyPress}
-                />
               </div>
-            </div>
-
+              ))}
           </div>
+
+          <div className="messages-send">
+            <div className="wrapper">
+              <Textarea
+                placeholder="Enter your message..."
+                onKeyDown={this.handleKeyPress}
+                />
+            </div>
+          </div>
+
         </div>
       </div>
     );

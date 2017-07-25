@@ -9,7 +9,6 @@ import { getUserNotifications } from '../../../redux/modules/profile';
 import uploadImageCallBack from './uploadImageCallBack';
 import { create as createStory } from '../../../redux/modules/story';
 import BookTreeForSboxContainer from '../../../containers/BookTreeForSboxContainer';
-// import { socket } from '../../../client';
 import './draft-wysiwyg.scss';
 import './index.scss';
 

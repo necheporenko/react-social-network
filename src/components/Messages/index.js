@@ -72,7 +72,11 @@ class Messages extends Component {
     return (
       <div className="messages-content">
         <div className="wrapper">
-          <div className="additional-title">New Private Messages</div>
+          <div className="additional-title">
+            { conversation.receivers && conversation.receivers.map(receiver => (
+              `${receiver.first_name} ${receiver.last_name} `
+            ))}
+          </div>
           <div className="messages-box" ref={(el) => this.messageBlock = el} >
 
             { conversation.messages && conversation.messages.map((message, i, arr) => (
@@ -92,21 +96,22 @@ class Messages extends Component {
                     <Link to={`/${message.user.slug}`}>
                       <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
                     </Link>
-                  </div>
-                  <span>{message.date.substring(11, 17)}</span>
-                  <div
-                    className="message-settings"
-                    onClick={this.openMessageSettings}
-                  >
-                    <i>...</i>
-                    <div
-                      style={{ display: this.state.messageSetting ? 'block' : 'none'}}
-                    >
-                      <ul>
-                        <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
-                      </ul>
+                    <div className="wrapper-time-settings">
+                      <span>{message.date.substring(11, 17)}</span>
+                      <div
+                        className="message-settings"
+                        onClick={this.openMessageSettings}
+                      >
+                        <i>...</i>
+                        <div style={{ display: this.state.messageSetting ? 'block' : 'none'}}>
+                          <ul>
+                            <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
+                          </ul>
+                        </div>
+                      </div>
                     </div>
                   </div>
+
                   <p>{message.text}</p>
                 </div>
               </div>
