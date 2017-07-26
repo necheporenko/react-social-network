@@ -34,6 +34,7 @@ class Messages extends Component {
       messageSetting: false,
       test: false,
     };
+    this.getReceivers = this.getReceivers.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.openMessageSettings = this.openMessageSettings.bind(this);
   }
@@ -67,15 +68,29 @@ class Messages extends Component {
     return this.state.messageSetting;
   }
 
+  getReceivers(receivers) {
+    let result;
+    const receiversArr = [];
+
+    if (receivers.length === 1) {
+      result = `${receivers[0].first_name} ${receivers[0].last_name}`;
+    } else if (receivers.length > 1) {
+      receivers.map(receiver => {
+        receiversArr.push(` ${receiver.first_name}`);
+      });
+      result = receiversArr.toString();
+    }
+
+    return result;
+  }
+
   render() {
     const { conversation, authorizedUser } = this.props;
     return (
       <div className="messages-content">
         <div className="wrapper">
           <div className="additional-title">
-            { conversation.receivers && conversation.receivers.map(receiver => (
-              `${receiver.first_name} ${receiver.last_name} `
-            ))}
+            { conversation.receivers && this.getReceivers(conversation.receivers)}
           </div>
           <div className="messages-box" ref={(el) => this.messageBlock = el} >
 

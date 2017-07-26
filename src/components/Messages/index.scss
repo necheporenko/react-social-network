@@ -99,6 +99,9 @@
       }
     }
   }
+  a.active {
+    background: #efefef;
+  }
 
   a {
     display: block;
@@ -205,8 +208,8 @@
   }
 
   img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
   }
 
@@ -218,7 +221,7 @@
   p {
     position: relative;
     top: -15px;
-    left: 55px;
+    left: 46px;
     width: 400px;
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -287,9 +290,8 @@
 
   p {
     float: right;
-    flex-direction: row-reverse;
-    display: flex;
-    left: -55px;
+    text-align: right;
+    left: -46px;
   }
 
   span {
@@ -308,6 +310,7 @@
 }
 
 .messages-send {
+  background: #fff;
   border-top: 1px solid $border-color;
   box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
   position: absolute;

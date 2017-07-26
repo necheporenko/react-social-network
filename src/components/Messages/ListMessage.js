@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { clearConversation, deleteConversation, leftConversation } from '../../redux/modules/profile';
+import { clearConversation, deleteConversation, leftConversation, searchConversation } from '../../redux/modules/profile';
 import './index.scss';
 
 @connect((state) => ({
 }), {
   clearConversation,
   deleteConversation,
-  leftConversation
+  leftConversation,
+  searchConversation
 })
 
 class ListMessage extends Component {
@@ -18,6 +19,7 @@ class ListMessage extends Component {
       checkedUsersID: [],
     };
     this.getReceivers = this.getReceivers.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   getReceivers(receivers) {
@@ -32,32 +34,26 @@ class ListMessage extends Component {
       });
       result = receiversArr.toString();
     }
-
     return result;
   }
+
+  handleSearch(event) {
+    this.props.searchConversation(event.target.value);
+  }
+
   render() {
     const { conversations } = this.props;
+
     return (
       <div className="messages-mnu">
-        <div className="additional-title">Messanger
+        <div className="additional-title">Conversations
          <Link to="/messages/new" className="new-message" onClick={() => this.props.clearConversation()}><i/></Link>
         </div>
         <ul className="conversations-list">
           <div className="messages-search">
-            <input type="text" placeholder="Search"/>
+            <input type="text" placeholder="Search" onChange={this.handleSearch}/>
             <i/>
           </div>
-
-          {/*<Form rowClassName={[{'form-group': false}, {row: false}, 'messages-form']} >*/}
-            {/*<Input*/}
-              {/*name="to"*/}
-              {/*value=""*/}
-              {/*labelClassName={[{'col-sm-3': false}, 'disabled-label']}*/}
-              {/*elementWrapperClassName={[{'col-sm-9': false}, 'messages-search']}*/}
-              {/*type="text"*/}
-              {/*placeholder="Search"*/}
-           {/*/>*/}
-          {/*</Form>*/}
 
           { !conversations &&
             <li style={{padding: '10px 15px'}}>No conversations yet.</li>
@@ -65,7 +61,7 @@ class ListMessage extends Component {
 
           { conversations && conversations.map(conversation => (
             <div key={conversation.conversation_id}>
-              <Link to={`/messages/${conversation.conversation_id}`} >
+              <Link to={`/messages/${conversation.conversation_id}`} onlyActiveOnIndex={true} activeClassName="active">
                 <li>
                   <img src={conversation.receivers[0].avatar} alt=""/>
                   <h5>{this.getReceivers(conversation.receivers)}</h5>
@@ -90,20 +86,20 @@ class ListMessage extends Component {
 
           {/*/!*<Link to="/messages">*!/*/}
           {/*<a href="#">*/}
-            {/*<li>*/}
-              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-              {/*<h5>Name Surname</h5>*/}
-            {/*</li>*/}
-            {/*<p>Message text...</p>*/}
+          {/*<li>*/}
+          {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+          {/*<h5>Name Surname</h5>*/}
+          {/*</li>*/}
+          {/*<p>Message text...</p>*/}
           {/*</a>*/}
           {/*/!*</Link>*!/*/}
 
           {/*<a href="#">*/}
-            {/*<li>*/}
-              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-              {/*<h5>Name Surname</h5>*/}
-            {/*</li>*/}
-            {/*<p>Message text...</p>*/}
+          {/*<li>*/}
+          {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+          {/*<h5>Name Surname</h5>*/}
+          {/*</li>*/}
+          {/*<p>Message text...</p>*/}
           {/*</a>*/}
         </ul>
       </div>
@@ -116,6 +112,7 @@ ListMessage.propTypes = {
   clearConversation: PropTypes.func,
   deleteConversation: PropTypes.func,
   leftConversation: PropTypes.func,
+  searchConversation: PropTypes.func,
 };
 
 export default ListMessage;

@@ -34,6 +34,7 @@ const DELETE_CONVERSATION_FAIL = 'DELETE_CONVERSATION_FAIL';
 const LEFT_CONVERSATION = 'LEFT_CONVERSATION';
 const LEFT_CONVERSATION_SUCCESS = 'LEFT_CONVERSATION_SUCCESS';
 const LEFT_CONVERSATION_FAIL = 'LEFT_CONVERSATION_FAIL';
+const SEARCH_CONVERSATION = 'SEARCH_CONVERSATION';
 
 const initialState = {
   notificationSettings: {},
@@ -208,9 +209,12 @@ export default function profileReducer(state = initialState, action) {
       const newConversations = action.result.data;
       newConversations.map(conversation => {
         conversation.receiversID = [];
+        const receiversName = [];
         conversation.receivers.map(receiver => {
-          conversation.receiversID.push(receiver);
+          conversation.receiversID.push(receiver.id);
+          receiversName.push(receiver.first_name, receiver.last_name);
         });
+        conversation.receiversName = receiversName.toString();
       });
 
       newConversations.sort((a, b) => {
@@ -225,7 +229,8 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         gettingConversationList: false,
-        conversations: newConversations
+        conversations: newConversations,
+        copyConversations: newConversations,
       };
     case GET_CONVERSATION_LIST_FAIL:
       return {
@@ -372,6 +377,14 @@ export default function profileReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case SEARCH_CONVERSATION:
+      const searchPhrase = new RegExp(action.text, 'i');
+      const foundConversation = state.copyConversations.filter(conversation => conversation.receiversName.match(searchPhrase));
+      return {
+        ...state,
+        conversations: foundConversation
+      };
+
     default:
       return state;
   }
@@ -425,6 +438,13 @@ export function socketUserNotification(data) {
   return {
     type: SOCKET_SEND_USER_NOTIFICATION,
     data
+  };
+}
+
+export function searchConversation(text) {
+  return {
+    type: SEARCH_CONVERSATION,
+    text
   };
 }
 
