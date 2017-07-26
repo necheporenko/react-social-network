@@ -72,11 +72,18 @@ class App extends Component {
 
   componentDidMount() {
     this.props.hideLoading();
+    this.favicon = document.getElementById('favicon');
   }
 
   componentDidUpdate() {
     if (this.props.loadedPage) {
       this.props.hideLoading();
+    }
+
+    if (this.props.bubbleCommon > 0) {
+      this.favicon.href = 'favicon-active.ico';
+    } else {
+      this.favicon.href = 'favicon.ico';
     }
   }
 
@@ -86,7 +93,7 @@ class App extends Component {
     return (
       <div className="App">
         <Helmet
-          titleTemplate={(bubbleCommon) > 0 ? `(${bubbleCommon}) %s` : '%s'}
+          titleTemplate={bubbleCommon > 0 ? `(${bubbleCommon}) %s` : '%s'}
           {...config.app.head}
         />
         { this.props.isAuthenticated &&

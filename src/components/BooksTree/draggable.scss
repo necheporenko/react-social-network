@@ -1,3 +1,5 @@
+@import '../../theme/vars';
+
 .draggable-demo {
 	.draggable-container {
 		width: 100%;
@@ -401,8 +403,6 @@ $valid_color: #1976d2;
 }
 
 /* === Add new style ===*/
-$sprite: url('http://validbook.org/images/main_sprite.png') no-repeat;
-
 
 .not_show {										//disable parent
   display: block;
@@ -458,11 +458,9 @@ $sprite: url('http://validbook.org/images/main_sprite.png') no-repeat;
   }
   a {
     &:before {
-      background: $sprite;
+      background: $sprite -74px -282px;
       content: '';
       display: inline-block;
-      position: relative;
-      background-position: -74px -282px;
       height: 14px;
       width: 15px;
       top: 2px;
@@ -479,8 +477,7 @@ $sprite: url('http://validbook.org/images/main_sprite.png') no-repeat;
     margin-top: 3px;
     a:before {
       content: '';
-      background: $sprite;
-      background-position: -86px -515px;
+      background: $sprite  -86px -515px;
       display: inline-block;
       position: relative;
       height: 15px;
