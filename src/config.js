@@ -10,27 +10,28 @@ const environment = {
 }[process.env.NODE_ENV || 'development'];
 
 module.exports = Object.assign({
-  host: process.env.HOST || 'localhost',
+  host: process.env.HOST || 'local',
   port: process.env.PORT,
   //apiHost: process.env.APIHOST || 'localhost',
   //apiPort: process.env.APIPORT,
   apiHost: 'api.validbook.org/v1',
   app: {
-    title: 'React Redux Example',
-    description: 'All the modern best practices in one example.',
+    title: 'React Validbook',
+    description: 'Validbook – a universal platform for cooperation.',
     head: {
-      titleTemplate: 'React Redux Example: %s',
+      title: 'React Validbook',
+      // titleTemplate: 'React Redux Example: %s',
       meta: [
-        { name: 'description', content: 'All the modern best practices in one example.' },
+        { name: 'description', content: 'Validbook – a universal platform for cooperation' },
         { charset: 'utf-8' },
-        { property: 'og:site_name', content: 'React Redux Example' },
-        { property: 'og:image', content: 'https://react-redux.herokuapp.com/logo.jpg' },
+        { property: 'og:site_name', content: 'React Validbook' },
+        { property: 'og:image', content: 'https://react-redux.herokuapp.com/logo.jpg' },                                 //todo fix
         { property: 'og:locale', content: 'en_US' },
-        { property: 'og:title', content: 'React Redux Example' },
-        { property: 'og:description', content: 'All the modern best practices in one example.' },
+        { property: 'og:title', content: 'React Validbook' },
+        { property: 'og:description', content: 'Validbook – a universal platform for cooperation.' },
         { property: 'og:card', content: 'summary' },
-        { property: 'og:site', content: '@erikras' },
-        { property: 'og:creator', content: '@erikras' },
+        { property: 'og:site', content: '@erikras' },                                                                   //todo fix
+        { property: 'og:creator', content: '@erikras' },                                                                //todo fix
         { property: 'og:image:width', content: '200' },
         { property: 'og:image:height', content: '200' }
       ]

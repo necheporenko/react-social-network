@@ -42,6 +42,7 @@ const initialState = {
   conversations: [],
   bubbleMessage: 0,
   bubbleNotification: 0,
+  bubbleCommon: 0
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -122,7 +123,8 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         socketUserNotification: true,
         notifications: [action.data, ...state.notifications],
-        bubbleNotification: state.bubbleNotification + 1
+        bubbleNotification: state.bubbleNotification + 1,
+        bubbleCommon: state.bubbleNotification + 1 + state.bubbleMessage
       };
 
     case CLEAR_NOTIFICATIONS_COUNTER:
@@ -297,6 +299,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         bubbleMessage: 0,
+        bubbleCommon: state.bubbleNotification
       };
 
     case SOCKET_GET_MESSAGE:
@@ -326,7 +329,8 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         conversations: newSocketLastMessage,
-        bubbleMessage: state.bubbleMessage + 1
+        bubbleMessage: state.bubbleMessage + 1,
+        bubbleCommon: state.bubbleMessage + 1 + state.bubbleNotification
       };
 
     case DELETE_CONVERSATION:

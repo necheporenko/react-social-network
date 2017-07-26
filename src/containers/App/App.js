@@ -58,12 +58,18 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
   requestedUser: state.user.requestedUser,
   locationBeforeTransitions: state.routing.locationBeforeTransitions,
   loadedPage: state.reduxAsyncConnect.loaded,
+  bubbleCommon: state.profile.bubbleCommon,
 }), ({
   logoutUser,
   hideLoading,
 }))
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   componentDidMount() {
     this.props.hideLoading();
   }
@@ -75,11 +81,14 @@ class App extends Component {
   }
 
   render() {
-    const { children } = this.props;
+    const { children, bubbleCommon } = this.props;
 
     return (
       <div className="App">
-        <Helmet {...config.app.head} />
+        <Helmet
+          titleTemplate={(bubbleCommon) > 0 ? `(${bubbleCommon}) %s` : '%s'}
+          {...config.app.head}
+        />
         { this.props.isAuthenticated &&
           <div style={{ marginTop: '52px' }}>
             <Header
@@ -109,6 +118,7 @@ App.propTypes = {
   logoutUser: PropTypes.func,
   hideLoading: PropTypes.func,
   loadedPage: PropTypes.bool,
+  bubbleCommon: PropTypes.number,
   // userLogin: PropTypes.func,
   // userSignOut: PropTypes.func
 };

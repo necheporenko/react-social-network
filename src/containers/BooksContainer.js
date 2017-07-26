@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { getUser, getUserSlug, isPolling } from '../redux/modules/user';
+import Helmet from 'react-helmet';
+import { getUser, getUserSlug } from '../redux/modules/user';
 import { create as createBook, load as loadBookTree } from '../redux/modules/book';
 import Navigation from '../components/Navigation';
 import Books from '../components/Books';
@@ -29,8 +30,13 @@ import SubHeader from '../components/StoryLine/SubHeader';
 
 export default class BooksContainer extends Component {
   render() {
+    const { requestedUser } = this.props;
+
     return (
       <div>
+        <Helmet
+          title={`${requestedUser.first_name} ${requestedUser.last_name} - Books`}
+        />
         <SubHeader
           requestedUser={this.props.requestedUser}
         />
