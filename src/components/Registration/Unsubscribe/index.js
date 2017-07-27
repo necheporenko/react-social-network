@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Helmet from 'react-helmet';
 import InformationFooter from '../../Information&Profile/Information/InformationFooter';
 import './index.scss';
 
@@ -7,6 +8,7 @@ class Unsubscribe extends Component {
   render() {
     return (
       <div>
+        <Helmet title="Unsubscribe"/>
         <div className="unsubscribe">
           <h3 className="registration-xs-title">Would you like to unsubscribe from this email notification?</h3>
           <hr/>

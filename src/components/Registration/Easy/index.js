@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import Helmet from 'react-helmet';
 import { FacebookLogin } from 'react-facebook-login-component';
 import { Form } from 'formsy-react-components';
 import FormSignUp from '../FormSignUp';
@@ -36,6 +37,7 @@ class Easy extends Component {
   render() {
     return (
       <div>
+        <Helmet title="Sign Up – it’s free"/>
         <MinHeader />
 
         <div className="easy registration-xs">

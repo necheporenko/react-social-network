@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Select, Input } from 'formsy-react-components';
+import Helmet from 'react-helmet';
 
 const selectReason = [
   {value: '', label: 'Why you decided to leave?'},
@@ -23,7 +24,8 @@ class DeleteAccount extends React.Component {
   render() {
     return (
       <div className="additional-content delete-account-content">
-        <div className="additional-title">Change Password</div>
+        <Helmet title="Delete Account"/>
+        <div className="additional-title">Delete Account</div>
 
         <div className="delete-account-regret">
           <p>Hello, <b>Name Surname</b></p>

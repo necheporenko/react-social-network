@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
+import Helmet from 'react-helmet';
 import { getNotificationSettings, setNotificationSettings } from '../../../redux/modules/profile';
 import './index.scss';
 
@@ -68,6 +69,7 @@ class Notifications extends Component {
     const { settings, updates } = this.props.notificationSettings;
     return (
       <div className="additional-content">
+        <Helmet title="Notification Settings"/>
         <div className="additional-title">Notification Settings</div>
 
         <div className="notification-head">

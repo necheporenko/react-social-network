@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
+import Helmet from 'react-helmet';
 import ListMessage from '../components/Messages/ListMessage';
 import { getConversationList } from '../redux/modules/profile';
 
@@ -22,6 +23,7 @@ class MessagesContainer extends Component {
   render() {
     return (
       <div className="additional-wrap">
+        <Helmet title="Conversations"/>
         <ListMessage
           conversations={this.props.conversations}
         />

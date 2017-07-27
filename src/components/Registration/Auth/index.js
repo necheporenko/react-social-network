@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
+import Helmet from 'react-helmet';
 import { FacebookLogin } from 'react-facebook-login-component';
 import { Form } from 'formsy-react-components';
 import FormSignIn from '../FormSignIn';
@@ -42,6 +43,7 @@ class Auth extends Component {
   render() {
     return (
       <div>
+        <Helmet title="Sign in to Validbook"/>
         <MinHeader />
 
         <div className="auth registration-xs">

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Helmet from 'react-helmet';
 import InformationMenu from './InformationMenu';
 import InformationFooter from './InformationFooter';
 import './index.scss';
@@ -7,6 +8,7 @@ class About extends Component {
   render() {
     return (
       <div className="additional-wrap">
+        <Helmet title="About"/>
         <InformationMenu />
 
         <div className="additional-content">

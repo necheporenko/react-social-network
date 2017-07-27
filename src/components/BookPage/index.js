@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
+import Helmet from 'react-helmet';
 import { Form, RadioGroup } from 'formsy-react-components';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import { getUser, getUserSlug } from '../../redux/modules/user';
@@ -88,6 +89,7 @@ export default class BookPage extends Component {
     const { slug, first_name, last_name, avatar32 } = this.props.requestedUser;
     return (
       <div>
+        <Helmet title={`${first_name} ${last_name} - Books - ${bookPageName}`}/>
         <SubHeader
           requestedUser={this.props.requestedUser}
         />
@@ -97,7 +99,7 @@ export default class BookPage extends Component {
               <li><Link to={`/${slug}/books`}>Books</Link></li>
               <li>
                 <svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">
-                  <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
+                  <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
                 </svg>
               </li>
               <li>
@@ -137,7 +139,7 @@ export default class BookPage extends Component {
                 <div className="infobloks-book">
                   <div className="title">
                     <h5>{bookPageName}</h5>
-                    <div className="btn-following">Following <span></span></div>
+                    <div className="btn-following">Following <span/></div>
                   </div>
                   <div className="book-info">
                     <ul>
@@ -164,7 +166,7 @@ export default class BookPage extends Component {
                   <div className="book-settings">
                     <div className="book-settings-access">
 
-                      <i></i>
+                      <i/>
                       <ButtonToolbar>
                         <DropdownButton className="bootstrap-pure-btn" title="Access settings" >
 
@@ -195,7 +197,7 @@ export default class BookPage extends Component {
                     </div>
                     <div className="book-settings-edit">
                       <a href="#">
-                        <i></i>
+                        <i/>
                         Edit book
                       </a>
                     </div>

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
-import { getUser, getUserSlug, isPolling } from '../redux/modules/user';
+import { getUser, getUserSlug } from '../redux/modules/user';
 import Navigation from '../components/Navigation';
 import SubHeader from '../components/StoryLine/SubHeader';
 

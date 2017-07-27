@@ -21,7 +21,6 @@ import TokensExchange from 'components/Caches/TokensExchange';
 import MessagesContainer from 'containers/MessagesContainer';
 import Messages from 'components/Messages';
 import NewMessage from 'components/Messages/NewMessage';
-import Notification from 'components/Notification';
 import ProfileContainer from 'containers/ProfileContainer';
 import Profile from 'components/Information&Profile/Profile';
 import Password from 'components/Information&Profile/Profile/Password';
@@ -63,8 +62,6 @@ export default () => {
       <Route path="users" getComponent={() => System.import('./containers/Users')} />
 
       {/*<Route path="/bookpage" component={BookPage} />*/}
-
-      {/*<Route path="/notification" component={Notification} />*/}
 
       <Route path="/engagement" component={EngagementContainer} />
 

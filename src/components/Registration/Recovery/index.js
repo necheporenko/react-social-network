@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import Helmet from 'react-helmet';
 import { Form, Input } from 'formsy-react-components';
 import InformationFooter from '../../Information&Profile/Information/InformationFooter';
 import MinHeader from '../../Header/MinHeader';
@@ -9,6 +10,7 @@ class Recovery extends Component {
   render() {
     return (
       <div>
+        <Helmet title="Recovery Password"/>
         <MinHeader />
 
         <div className="recovery registration-xs">

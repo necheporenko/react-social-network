@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Form, Input } from 'formsy-react-components';
+import Helmet from 'react-helmet';
 import './index.scss';
 
 
@@ -10,16 +11,17 @@ class Password extends React.Component {
   }
 
   submitForm(data) {
-    console.log(data); // eslint-disable-line no-console
+    console.log(data);
   }
 
   invalid() {
-    console.log('error');// eslint-disable-line no-console
+    console.log('error');
   }
 
   render() {
     return (
       <div className="additional-content">
+        <Helmet title="Change Password"/>
         <div className="additional-title">Change Password</div>
 
         <Form

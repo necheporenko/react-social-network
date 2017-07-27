@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 import { save as saveProfile } from '../../../redux/modules/user';
 import ProfileForm from './ProfileForm';
 import './index.scss';
@@ -45,6 +46,7 @@ export default class Profile extends Component {
   render() {
     return (
       <div className="additional-content">
+        <Helmet title="Edit profile"/>
         <div className="additional-title">Edit profile</div>
 
         <ProfileForm

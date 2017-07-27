@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import BooksTreeContainer from '../../../containers/BooksTreeContainer';
 import './index.scss';
@@ -7,6 +8,7 @@ class Privacy extends Component {
   render() {
     return (
       <div className="additional-content">
+        <Helmet title="Privicy Control Center"/>
         <div className="additional-title">Privicy Control Center</div>
 
         <div className="privacy-wrap">
