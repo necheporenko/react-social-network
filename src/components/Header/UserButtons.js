@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import { getConversationList, clearMailCounter, clearNotificationsCounter } from '../../redux/modules/profile';
+import { getConversationList, getUserNotifications, clearMailCounter, clearNotificationsCounter } from '../../redux/modules/profile';
 
 @connect((state) => ({
   conversations: state.profile.conversations,
@@ -11,7 +11,8 @@ import { getConversationList, clearMailCounter, clearNotificationsCounter } from
 }), {
   getConversationList,
   clearMailCounter,
-  clearNotificationsCounter
+  clearNotificationsCounter,
+  getUserNotifications
 })
 
 class UserButtons extends Component {
@@ -28,6 +29,7 @@ class UserButtons extends Component {
   }
 
   clickNotification() {
+    this.props.getUserNotifications();
     this.props.clearNotificationsCounter();
   }
 
@@ -73,20 +75,6 @@ class UserButtons extends Component {
                         </li>
                       </Link>
                     ))}
-                    {/*<a href="#">*/}
-                      {/*<li>*/}
-                        {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-                        {/*<h6>Name Surname</h6>*/}
-                        {/*<span>Message text...</span>*/}
-                      {/*</li>*/}
-                    {/*</a>*/}
-                    {/*<a href="#">*/}
-                      {/*<li>*/}
-                        {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-                        {/*<h6>Name Surname</h6>*/}
-                        {/*<span>Message text...</span>*/}
-                      {/*</li>*/}
-                    {/*</a>*/}
                   </ul>
                   <div style={{paddingTop: '7px', justifyContent: 'center'}}>
                     <Link to="/messages">See all</Link>
@@ -95,6 +83,7 @@ class UserButtons extends Component {
               </DropdownButton>
             </ButtonToolbar>
           </div>
+
           <div className="wrap-icon-bell" onClick={this.clickNotification}>
             { bubbleNotification > 0 &&
               <div className="bubble"><span>{ bubbleNotification }</span></div>
@@ -104,7 +93,7 @@ class UserButtons extends Component {
                 <div className="notification-box">
                   <div>
                     <h4>Notifications</h4>
-                    <a href="#">Mark All Read</a>
+                    <a href="#">Mark All as Read</a>
                   </div>
                   <hr/>
                   <ul>
@@ -178,7 +167,9 @@ UserButtons.propTypes = {
   clearMailCounter: PropTypes.func,
   clearNotificationsCounter: PropTypes.func,
   getConversationList: PropTypes.func,
+  getUserNotifications: PropTypes.func,
   bubbleMessage: PropTypes.number,
+  bubbleNotification: PropTypes.number,
   conversations: PropTypes.array,
   notifications: PropTypes.array,
 };

@@ -25,13 +25,13 @@ module.exports = Object.assign({
         { name: 'description', content: 'Validbook – a universal platform for cooperation' },
         { charset: 'utf-8' },
         { property: 'og:site_name', content: 'React Validbook' },
-        { property: 'og:image', content: 'https://react-redux.herokuapp.com/logo.jpg' },                                 //todo fix
+        { property: 'og:image', content: 'https://react-redux.herokuapp.com/logo.jpg' },                                //todo fix
         { property: 'og:locale', content: 'en_US' },
         { property: 'og:title', content: 'React Validbook' },
         { property: 'og:description', content: 'Validbook – a universal platform for cooperation.' },
         { property: 'og:card', content: 'summary' },
-        { property: 'og:site', content: '@erikras' },                                                                   //todo fix
-        { property: 'og:creator', content: '@erikras' },                                                                //todo fix
+        { property: 'og:site', content: '@necheporenko' },
+        { property: 'og:creator', content: '@necheporenko' },
         { property: 'og:image:width', content: '200' },
         { property: 'og:image:height', content: '200' }
       ]

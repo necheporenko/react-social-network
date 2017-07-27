@@ -64,7 +64,8 @@ export default () => {
 
       {/*<Route path="/bookpage" component={BookPage} />*/}
 
-      <Route path="/notification" component={Notification} />
+      {/*<Route path="/notification" component={Notification} />*/}
+
       <Route path="/engagement" component={EngagementContainer} />
 
       <Route path="/messages" component={MessagesContainer}>

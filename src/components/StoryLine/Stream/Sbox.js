@@ -5,7 +5,6 @@ import draftToHtml from 'draftjs-to-html';
 import { convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import { getUserNotifications } from '../../../redux/modules/profile';
 import uploadImageCallBack from './uploadImageCallBack';
 import { create as createStory } from '../../../redux/modules/story';
 import BookTreeForSboxContainer from '../../../containers/BookTreeForSboxContainer';
@@ -21,7 +20,6 @@ let step = 0;
   bookTreeArr: state.book.bookTreeArr,
 }), {
   createStory,
-  getUserNotifications
 })
 
 class Sbox extends Component {
@@ -291,17 +289,6 @@ class Sbox extends Component {
       })
       // 'test'
       );
-    // socket.onmessage = function (event) {
-    //   console.log('onmessage', event.data);
-    // };
-    // this.props.getUserNotifications();
-    // console.log({
-    //   employees: [
-    //     {firstName: 'John', lastName: 'Doe'},
-    //     {firstName: 'Anna', lastName: 'Smith'},
-    //     {firstName: 'Peter', lastName: 'Jones'}
-    //   ]
-    // });
   }
 
   render() {

@@ -7,6 +7,15 @@ const SET_NOTIFICATION_SETTINGS_FAIL = 'SET_NOTIFICATION_SETTINGS_FAIL';
 const GET_USER_NOTIFICATIONS = 'GET_USER_NOTIFICATIONS';
 const GET_USER_NOTIFICATIONS_SUCCESS = 'GET_USER_NOTIFICATIONS_SUCCESS';
 const GET_USER_NOTIFICATIONS_FAIL = 'GET_USER_NOTIFICATIONS_FAIL';
+const SEEN_ALL_NOTIFICATIONS = 'SEEN_ALL_NOTIFICATIONS';
+const SEEN_ALL_NOTIFICATION_SUCCESS = 'SEEN_ALL_NOTIFICATION_SUCCESS';
+const SEEN_ALL_NOTIFICATIONS_FAIL = 'SEEN_ALL_NOTIFICATIONS_FAIL';
+const READ_ALL_NOTIFICATIONS = 'READ_ALL_NOTIFICATIONS';
+const READ_ALL_NOTIFICATION_SUCCESS = 'READ_ALL_NOTIFICATION_SUCCESS';
+const READ_ALL_NOTIFICATIONS_FAIL = 'READ_ALL_NOTIFICATIONS_FAIL';
+const READ_NOTIFICATION = 'READ_NOTIFICATION';
+const READ_NOTIFICATION_SUCCESS = 'READ_NOTIFICATION_SUCCESS';
+const READ_NOTIFICATION_FAIL = 'READ_NOTIFICATION_FAIL';
 const SOCKET_SEND_USER_NOTIFICATION = 'SOCKET_SEND_USER_NOTIFICATION';
 const GET_CONVERSATION = 'GET_CONVERSATION';
 const GET_CONVERSATION_SUCCESS = 'GET_CONVERSATION_SUCCESS';
@@ -119,6 +128,60 @@ export default function profileReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case SEEN_ALL_NOTIFICATIONS:
+      return {
+        ...state,
+        seeingAllNotifications: true,
+      };
+    case SEEN_ALL_NOTIFICATION_SUCCESS:
+      return {
+        ...state,
+        seeingAllNotifications: false,
+        // notifications: action.result.data
+      };
+    case SEEN_ALL_NOTIFICATIONS_FAIL:
+      return {
+        ...state,
+        seeingAllNotifications: false,
+        error: action.error,
+      };
+
+    case READ_ALL_NOTIFICATIONS:
+      return {
+        ...state,
+        readingAllNotifications: true,
+      };
+    case READ_ALL_NOTIFICATION_SUCCESS:
+      return {
+        ...state,
+        readingAllNotifications: false,
+        // notifications: action.result.data
+      };
+    case READ_ALL_NOTIFICATIONS_FAIL:
+      return {
+        ...state,
+        readingAllNotifications: false,
+        error: action.error,
+      };
+
+    case READ_NOTIFICATION:
+      return {
+        ...state,
+        readingNotification: true,
+      };
+    case READ_NOTIFICATION_SUCCESS:
+      return {
+        ...state,
+        readingNotification: false,
+        // notifications: action.result.data
+      };
+    case READ_NOTIFICATION_FAIL:
+      return {
+        ...state,
+        readingNotification: false,
+        error: action.error,
+      };
+
     case SOCKET_SEND_USER_NOTIFICATION:
       return {
         ...state,
@@ -177,8 +240,8 @@ export default function profileReducer(state = initialState, action) {
           conversation_id: action.result.data.conversation_id ? action.result.data.conversation_id : 'new',
           receivers: [{
             id: 'new',
-            first_name: 'New',
-            last_name: 'Conversation',
+            first_name: action.user_name,
+            last_name: '',
             avatar: 'https://s3-us-west-2.amazonaws.com/dev.validbook/200x200.png',
           }],
           new: true,
@@ -455,6 +518,27 @@ export function getNotificationSettings() {
   };
 }
 
+export function seenAllNotification() {
+  return {
+    types: [SEEN_ALL_NOTIFICATIONS, SEEN_ALL_NOTIFICATION_SUCCESS, SEEN_ALL_NOTIFICATIONS_FAIL],
+    promise: (client) => client.post('/notifications/seen-all')
+  };
+}
+
+export function readAllNotification() {
+  return {
+    types: [READ_ALL_NOTIFICATIONS, READ_ALL_NOTIFICATION_SUCCESS, READ_ALL_NOTIFICATIONS_FAIL],
+    promise: (client) => client.post('/notifications/read-all')
+  };
+}
+
+export function readNotification(notification_id) {
+  return {
+    types: [READ_NOTIFICATION, READ_NOTIFICATION_SUCCESS, READ_NOTIFICATION_FAIL],
+    promise: (client) => client.post(`/notifications/read/${notification_id}`)
+  };
+}
+
 export function setNotificationSettings(settings, notification_type) {
   console.log('setNotificationSettings', settings, notification_type);
   return {
@@ -479,10 +563,11 @@ export function getConversationByID(id) {
   };
 }
 
-export function getConversationByUser(user_ids) {
+export function getConversationByUser(user_ids, user_name) {
   return {
     types: [GET_CONVERSATION_BY_USER, GET_CONVERSATION_BY_USER_SUCCESS, GET_CONVERSATION_BY_USER_FAIL],
-    promise: (client) => client.get('/conversations/by-users', { params: { user_ids }})
+    promise: (client) => client.get('/conversations/by-users', { params: { user_ids }}),
+    user_name
   };
 }
 

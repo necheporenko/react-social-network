@@ -41,12 +41,11 @@ class NewMessage extends Component {
 
   addCheckedUser(user) {
     const currentCheckedUsersID = this.state.checkedUsersID;
-    currentCheckedUsersID.fullName.push(`${user.first_name} ${user.last_name}`);
+    currentCheckedUsersID.fullName.push(` ${user.first_name} ${user.last_name}`);
     currentCheckedUsersID.id.push(user.id);
 
     this.setState({ checkedUsersID: currentCheckedUsersID, hideTypeahead: true });
-    console.log('this.state.checkedUsersID', this.state.checkedUsersID.id);
-    this.props.getConversationByUser(this.state.checkedUsersID.id.toString());
+    this.props.getConversationByUser(this.state.checkedUsersID.id.toString(), currentCheckedUsersID.fullName.toString());
     this.inputMessage.value = '';
   }
 
