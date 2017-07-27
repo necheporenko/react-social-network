@@ -8,7 +8,7 @@ import { getChannelName } from '../../redux/modules/channel';
 import Header from '../../components/Header';
 import MinHeader from '../../components/Header/MinHeader';
 import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from '../../redux/modules/user';
-
+import { isCountSeenNotification, getCountSeenNotification } from '../../redux/modules/profile';
 // @asyncConnect([{
 //   promise: ({store: { dispatch, getState }}) => {
 //     // const promises = [];
@@ -44,6 +44,9 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
     if (!isAuthLoaded(getState())) {
       promises.push(dispatch(loadAuth()));
     }
+    // else if (!isCountSeenNotification(getState())) {
+    //   promises.push(dispatch(getCountSeenNotification(authUserState(getState()))));
+    // }
 
     dispatch(showLoading());
     promises.push(dispatch(getChannelName(getState())));
@@ -62,6 +65,7 @@ import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from
 }), ({
   logoutUser,
   hideLoading,
+  getCountSeenNotification
 }))
 
 class App extends Component {
@@ -72,6 +76,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.hideLoading();
+    this.props.getCountSeenNotification(this.props.authorizedUser.id);
     this.favicon = document.getElementById('favicon');
   }
 
@@ -126,6 +131,7 @@ App.propTypes = {
   hideLoading: PropTypes.func,
   loadedPage: PropTypes.bool,
   bubbleCommon: PropTypes.number,
+  getCountSeenNotification: PropTypes.func,
   // userLogin: PropTypes.func,
   // userSignOut: PropTypes.func
 };

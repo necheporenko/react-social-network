@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import { getConversationList, getUserNotifications, clearMailCounter, clearNotificationsCounter } from '../../redux/modules/profile';
+import { getConversationList, getUserNotifications, clearMailCounter, seenAllNotification, readAllNotification } from '../../redux/modules/profile';
 
 @connect((state) => ({
   conversations: state.profile.conversations,
@@ -11,8 +11,9 @@ import { getConversationList, getUserNotifications, clearMailCounter, clearNotif
 }), {
   getConversationList,
   clearMailCounter,
-  clearNotificationsCounter,
-  getUserNotifications
+  seenAllNotification,
+  getUserNotifications,
+  readAllNotification
 })
 
 class UserButtons extends Component {
@@ -30,7 +31,7 @@ class UserButtons extends Component {
 
   clickNotification() {
     this.props.getUserNotifications();
-    this.props.clearNotificationsCounter();
+    this.props.seenAllNotification();
   }
 
   closeDropdown() {
@@ -62,7 +63,11 @@ class UserButtons extends Component {
                 <div className="notification-box">
                   <div>
                     <h4>Messages</h4>
-                    <a href="#">Mark as Read</a>
+                    <div style={{display: 'flex'}}>
+                      <a href="#">Mark All Read</a>
+                      <i>.</i>
+                      <Link to="/messages/new">New Message</Link>
+                    </div>
                   </div>
                   <hr/>
                   <ul>
@@ -93,12 +98,12 @@ class UserButtons extends Component {
                 <div className="notification-box">
                   <div>
                     <h4>Notifications</h4>
-                    <a href="#">Mark All as Read</a>
+                    <a onClick={this.props.readAllNotification}>Mark All as Read</a>
                   </div>
                   <hr/>
                   <ul>
                     { notifications && notifications.map((notification) => (
-                      <li key={notification.id}>
+                      <li key={notification.id} style={{background: notification.is_new ? '#eff6ff' : '#fff'}}>
                         <div>
                           <img src={notification.user.avatar} alt=""/>
                           <h6 dangerouslySetInnerHTML={{__html: notification.text}}/>
@@ -107,27 +112,27 @@ class UserButtons extends Component {
                       </li>
                     ))}
 
-                    <li>
-                      <div>
-                        <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                        <h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>
-                      </div>
-                      <p>21 Mar 2017</p>
-                    </li>
-                    <li>
-                      <div>
-                        <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                        <h6><a href="#"><b>Name Surname</b></a> liked your <a href="#"> story</a></h6>
-                      </div>
-                      <p>21 Mar 2017</p>
-                    </li>
-                    <li>
-                      <div>
-                        <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                        <h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>
-                      </div>
-                      <p>21 Mar 2017</p>
-                    </li>
+                    {/*<li>*/}
+                    {/*<div>*/}
+                    {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                    {/*<h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>*/}
+                    {/*</div>*/}
+                    {/*<p>21 Mar 2017</p>*/}
+                    {/*</li>*/}
+                    {/*<li>*/}
+                    {/*<div>*/}
+                    {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                    {/*<h6><a href="#"><b>Name Surname</b></a> liked your <a href="#"> story</a></h6>*/}
+                    {/*</div>*/}
+                    {/*<p>21 Mar 2017</p>*/}
+                    {/*</li>*/}
+                    {/*<li>*/}
+                    {/*<div>*/}
+                    {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                    {/*<h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>*/}
+                    {/*</div>*/}
+                    {/*<p>21 Mar 2017</p>*/}
+                    {/*</li>*/}
                   </ul>
                   <div style={{paddingTop: '7px'}}>
                     <Link to="/notifications">See all</Link>
@@ -165,9 +170,10 @@ UserButtons.propTypes = {
   authorizedUser: PropTypes.object,
   logoutUser: PropTypes.func,
   clearMailCounter: PropTypes.func,
-  clearNotificationsCounter: PropTypes.func,
+  seenAllNotification: PropTypes.func,
   getConversationList: PropTypes.func,
   getUserNotifications: PropTypes.func,
+  readAllNotification: PropTypes.func,
   bubbleMessage: PropTypes.number,
   bubbleNotification: PropTypes.number,
   conversations: PropTypes.array,

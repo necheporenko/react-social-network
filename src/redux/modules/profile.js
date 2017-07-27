@@ -1,3 +1,6 @@
+const GET_COUNT_NOTIFICATIONS = 'GET_COUNT_NOTIFICATIONS';
+const GET_COUNT_NOTIFICATIONS_SUCCESS = 'GET_COUNT_NOTIFICATIONS_SUCCESS';
+const GET_COUNT_NOTIFICATIONS_FAIL = 'GET_COUNT_NOTIFICATIONS_FAIL';
 const GET_NOTIFICATION_SETTINGS = 'GET_NOTIFICATION_SETTINGS';
 const GET_NOTIFICATION_SETTINGS_SUCCESS = 'GET_NOTIFICATION_SETTINGS_SUCCESS';
 const GET_NOTIFICATION_SETTINGS_FAIL = 'GET_NOTIFICATION_SETTINGS_FAIL';
@@ -11,7 +14,7 @@ const SEEN_ALL_NOTIFICATIONS = 'SEEN_ALL_NOTIFICATIONS';
 const SEEN_ALL_NOTIFICATION_SUCCESS = 'SEEN_ALL_NOTIFICATION_SUCCESS';
 const SEEN_ALL_NOTIFICATIONS_FAIL = 'SEEN_ALL_NOTIFICATIONS_FAIL';
 const READ_ALL_NOTIFICATIONS = 'READ_ALL_NOTIFICATIONS';
-const READ_ALL_NOTIFICATION_SUCCESS = 'READ_ALL_NOTIFICATION_SUCCESS';
+const READ_ALL_NOTIFICATIONS_SUCCESS = 'READ_ALL_NOTIFICATIONS_SUCCESS';
 const READ_ALL_NOTIFICATIONS_FAIL = 'READ_ALL_NOTIFICATIONS_FAIL';
 const READ_NOTIFICATION = 'READ_NOTIFICATION';
 const READ_NOTIFICATION_SUCCESS = 'READ_NOTIFICATION_SUCCESS';
@@ -34,7 +37,6 @@ const DELETE_MESSAGE_SUCCESS = 'DELETE_MESSAGE_SUCCESS';
 const DELETE_MESSAGE_FAIL = 'DELETE_MESSAGE_FAIL';
 const CLEAR_CONVERSATION = 'CLEAR_CONVERSATION';
 const CLEAR_MAIL_COUNTER = 'CLEAR_MAIL_COUNTER';
-const CLEAR_NOTIFICATIONS_COUNTER = 'CLEAR_NOTIFICATIONS_COUNTER';
 const SOCKET_GET_MESSAGE = 'SOCKET_GET_MESSAGE';
 const SOCKET_LAST_MESSAGE = 'SOCKET_LAST_MESSAGE';
 const DELETE_CONVERSATION = 'DELETE_CONVERSATION';
@@ -52,7 +54,8 @@ const initialState = {
   conversations: [],
   bubbleMessage: 0,
   bubbleNotification: 0,
-  bubbleCommon: 0
+  bubbleCommon: 0,
+  gotNotificationBubble: false,
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -137,7 +140,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         seeingAllNotifications: false,
-        // notifications: action.result.data
+        bubbleNotification: 0,
       };
     case SEEN_ALL_NOTIFICATIONS_FAIL:
       return {
@@ -151,11 +154,17 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         readingAllNotifications: true,
       };
-    case READ_ALL_NOTIFICATION_SUCCESS:
+    case READ_ALL_NOTIFICATIONS_SUCCESS:
+      const readAllNotifications = state.notifications.map(conversation => {
+        return {
+          ...conversation,
+          is_new: 0
+        };
+      });
       return {
         ...state,
         readingAllNotifications: false,
-        // notifications: action.result.data
+        notifications: readAllNotifications,
       };
     case READ_ALL_NOTIFICATIONS_FAIL:
       return {
@@ -191,10 +200,25 @@ export default function profileReducer(state = initialState, action) {
         bubbleCommon: state.bubbleNotification + 1 + state.bubbleMessage
       };
 
-    case CLEAR_NOTIFICATIONS_COUNTER:
+    case GET_COUNT_NOTIFICATIONS:
       return {
         ...state,
-        bubbleNotification: 0,
+        gotNotificationsBubble: false,
+      };
+    case GET_COUNT_NOTIFICATIONS_SUCCESS:
+      console.log('GET_COUNT_NOTIFICATIONS_SUCCESS', action.result.data);
+      return {
+        ...state,
+        gotNotificationsBubble: true,
+        bubbleNotification: action.result.data.countNewNotification,
+        bubbleMessage: action.result.data.countNewConversation,
+        bubbleCommon: action.result.data.countNewConversation + action.result.data.countNewNotification,
+      };
+    case GET_COUNT_NOTIFICATIONS_FAIL:
+      return {
+        ...state,
+        gotNotificationsBubble: false,
+        error: action.error,
       };
 
     case GET_CONVERSATION:
@@ -302,6 +326,53 @@ export default function profileReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case DELETE_CONVERSATION:
+      return {
+        ...state,
+        deletingConversation: true,
+      };
+    case DELETE_CONVERSATION_SUCCESS:
+      const deletingConversations = state.conversations.filter(conversation => (conversation.conversation_id !== action.id));
+
+      return {
+        ...state,
+        deletingConversation: false,
+        conversations: deletingConversations
+      };
+    case DELETE_CONVERSATION_FAIL:
+      return {
+        ...state,
+        deletingConversation: false,
+        error: action.error,
+      };
+
+    case LEFT_CONVERSATION:
+      return {
+        ...state,
+        leavingConversation: true,
+      };
+    case LEFT_CONVERSATION_SUCCESS:
+      const leavingConversation = state.conversations.filter(conversation => (conversation.conversation_id !== action.id));
+      return {
+        ...state,
+        leavingConversation: false,
+        conversations: leavingConversation
+      };
+    case LEFT_CONVERSATION_FAIL:
+      return {
+        ...state,
+        leavingConversation: false,
+        error: action.error,
+      };
+
+    case SEARCH_CONVERSATION:
+      const searchPhrase = new RegExp(action.text, 'i');
+      const foundConversation = state.copyConversations.filter(conversation => conversation.receiversName.match(searchPhrase));
+      return {
+        ...state,
+        conversations: foundConversation
+      };
+
     case CREATE_MESSAGE:
       return {
         ...state,
@@ -401,53 +472,6 @@ export default function profileReducer(state = initialState, action) {
         bubbleCommon: state.bubbleMessage + 1 + state.bubbleNotification
       };
 
-    case DELETE_CONVERSATION:
-      return {
-        ...state,
-        deletingConversation: true,
-      };
-    case DELETE_CONVERSATION_SUCCESS:
-      const deletingConversations = state.conversations.filter(conversation => (conversation.conversation_id !== action.id));
-
-      return {
-        ...state,
-        deletingConversation: false,
-        conversations: deletingConversations
-      };
-    case DELETE_CONVERSATION_FAIL:
-      return {
-        ...state,
-        deletingConversation: false,
-        error: action.error,
-      };
-
-    case LEFT_CONVERSATION:
-      return {
-        ...state,
-        leavingConversation: true,
-      };
-    case LEFT_CONVERSATION_SUCCESS:
-      const leavingConversation = state.conversations.filter(conversation => (conversation.conversation_id !== action.id));
-      return {
-        ...state,
-        leavingConversation: false,
-        conversations: leavingConversation
-      };
-    case LEFT_CONVERSATION_FAIL:
-      return {
-        ...state,
-        leavingConversation: false,
-        error: action.error,
-      };
-
-    case SEARCH_CONVERSATION:
-      const searchPhrase = new RegExp(action.text, 'i');
-      const foundConversation = state.copyConversations.filter(conversation => conversation.receiversName.match(searchPhrase));
-      return {
-        ...state,
-        conversations: foundConversation
-      };
-
     default:
       return state;
   }
@@ -464,21 +488,13 @@ export function getConversationID(globalState) {
   }
 }
 
-export function clearConversation() {
+// export function isCountSeenNotification(globalState) {
+//   return globalState.profile && globalState.profile.gotNotificationBubble;
+// }
+
+export function clearConversation() {        //for clear div in /messages/new
   return {
     type: CLEAR_CONVERSATION
-  };
-}
-
-export function clearMailCounter() {
-  return {
-    type: CLEAR_MAIL_COUNTER
-  };
-}
-
-export function clearNotificationsCounter() {
-  return {
-    type: CLEAR_NOTIFICATIONS_COUNTER
   };
 }
 
@@ -504,10 +520,17 @@ export function socketUserNotification(data) {
   };
 }
 
-export function searchConversation(text) {
+export function clearMailCounter() {
   return {
-    type: SEARCH_CONVERSATION,
-    text
+    type: CLEAR_MAIL_COUNTER
+  };
+}
+
+export function getCountSeenNotification(user_id) {
+  console.log('user_id redux', user_id);
+  return {
+    types: [GET_COUNT_NOTIFICATIONS, GET_COUNT_NOTIFICATIONS_SUCCESS, GET_COUNT_NOTIFICATIONS_FAIL],
+    promise: (client) => client.get('/notifications/count-new', { params: { user_id }})
   };
 }
 
@@ -527,7 +550,7 @@ export function seenAllNotification() {
 
 export function readAllNotification() {
   return {
-    types: [READ_ALL_NOTIFICATIONS, READ_ALL_NOTIFICATION_SUCCESS, READ_ALL_NOTIFICATIONS_FAIL],
+    types: [READ_ALL_NOTIFICATIONS, READ_ALL_NOTIFICATIONS_SUCCESS, READ_ALL_NOTIFICATIONS_FAIL],
     promise: (client) => client.post('/notifications/read-all')
   };
 }
@@ -553,6 +576,13 @@ export function getUserNotifications() {
   return {
     types: [GET_USER_NOTIFICATIONS, GET_USER_NOTIFICATIONS_SUCCESS, GET_USER_NOTIFICATIONS_FAIL],
     promise: (client) => client.get('/notifications')
+  };
+}
+
+export function searchConversation(text) {
+  return {
+    type: SEARCH_CONVERSATION,
+    text
   };
 }
 

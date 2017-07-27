@@ -309,6 +309,11 @@
       }
     }
 
+    i {
+      padding: 0 5px;
+      line-height: 12px;
+    }
+
     h4 {
       font-weight: 500;
     }
@@ -342,7 +347,7 @@
     display: flex;
 
     &:hover {
-      background: $bg-hover;
+      background: $bg-hover !important;
     }
 
     div {
