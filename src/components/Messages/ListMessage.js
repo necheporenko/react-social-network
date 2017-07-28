@@ -47,7 +47,7 @@ class ListMessage extends Component {
     return (
       <div className="messages-mnu">
         <div className="additional-title">Conversations
-         <Link to="/messages/new" className="new-message" onClick={() => this.props.clearConversation()}><i/></Link>
+         <Link to="/messages/new" className="new-message" onClick={this.props.clearConversation}><i/></Link>
         </div>
         <ul className="conversations-list">
           <div className="messages-search">
@@ -55,8 +55,8 @@ class ListMessage extends Component {
             <i/>
           </div>
 
-          { !conversations &&
-            <li style={{padding: '10px 15px'}}>No conversations yet.</li>
+          { conversations.length === 0 &&
+            <li style={{padding: '10px 15px'}}>No conversations found</li>
           }
 
           { conversations && conversations.map(conversation => (

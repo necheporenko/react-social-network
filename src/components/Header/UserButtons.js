@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import { getConversationList, getUserNotifications, clearMailCounter, seenAllNotification, readAllNotification } from '../../redux/modules/profile';
+import { getConversationList, getUserNotifications, seenAllNotification, seenAllConversations, clearConversation,
+  readAllNotification, readAllConversations, readConversation, readNotification } from '../../redux/modules/profile';
 
 @connect((state) => ({
   conversations: state.profile.conversations,
@@ -10,10 +11,14 @@ import { getConversationList, getUserNotifications, clearMailCounter, seenAllNot
   bubbleNotification: state.profile.bubbleNotification,
 }), {
   getConversationList,
-  clearMailCounter,
   seenAllNotification,
+  seenAllConversations,
   getUserNotifications,
-  readAllNotification
+  readAllNotification,
+  readAllConversations,
+  readConversation,
+  readNotification,
+  clearConversation,
 })
 
 class UserButtons extends Component {
@@ -26,7 +31,7 @@ class UserButtons extends Component {
 
   clickMail() {
     this.props.getConversationList();
-    this.props.clearMailCounter();
+    this.props.seenAllConversations();
   }
 
   clickNotification() {
@@ -64,15 +69,20 @@ class UserButtons extends Component {
                   <div>
                     <h4>Messages</h4>
                     <div style={{display: 'flex'}}>
-                      <a href="#">Mark All Read</a>
+                      <a onClick={this.props.readAllConversations}>Mark All Read</a>
                       <i>.</i>
-                      <Link to="/messages/new">New Message</Link>
+                      <Link to="/messages/new" onClick={this.props.clearConversation} >New Message</Link>
                     </div>
                   </div>
                   <hr/>
                   <ul>
                     { conversations && conversations.map(conversation => (
-                      <Link to={`/messages/${conversation.conversation_id}`} key={conversation.conversation_id}>
+                      <Link
+                        to={`/messages/${conversation.conversation_id}`}
+                        key={conversation.conversation_id}
+                        style={{background: conversation.is_seen ? '#fff' : '#eff6ff'}}
+                        onClick={() => this.props.readConversation(conversation.conversation_id)}
+                      >
                         <li>
                           <img src={conversation.receivers[0].avatar} alt=""/>
                           <h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>
@@ -90,6 +100,7 @@ class UserButtons extends Component {
           </div>
 
           <div className="wrap-icon-bell" onClick={this.clickNotification}>
+            {/*<div className="clickNotification" onClick={this.clickNotification}></div>*/}
             { bubbleNotification > 0 &&
               <div className="bubble"><span>{ bubbleNotification }</span></div>
             }
@@ -103,22 +114,29 @@ class UserButtons extends Component {
                   <hr/>
                   <ul>
                     { notifications && notifications.map((notification) => (
-                      <li key={notification.id} style={{background: notification.is_new ? '#eff6ff' : '#fff'}}>
-                        <div>
-                          <img src={notification.user.avatar} alt=""/>
-                          <h6 dangerouslySetInnerHTML={{__html: notification.text}}/>
-                        </div>
-                        <p>{notification.created}</p>
-                      </li>
+                      <Link
+                        to={notification.link}
+                        key={notification.id}
+                        onClick={() => this.props.readNotification(notification.id)}
+                      >
+                        <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#eff6ff'}}>
+                          <div>
+                            <img src={notification.user.avatar} alt=""/>
+                            <h6 dangerouslySetInnerHTML={{__html: notification.text}}/>
+                          </div>
+                          <p>{notification.created}</p>
+                        </li>
+                      </Link>
                     ))}
-
+                    {/*<a href="#">*/}
                     {/*<li>*/}
                     {/*<div>*/}
                     {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-                    {/*<h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>*/}
+                    {/*<h6><a><b>Name Surna1</b></a>commented on your story</h6>*/}
                     {/*</div>*/}
                     {/*<p>21 Mar 2017</p>*/}
                     {/*</li>*/}
+                    {/*</a>*/}
                     {/*<li>*/}
                     {/*<div>*/}
                     {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
@@ -169,7 +187,7 @@ class UserButtons extends Component {
 UserButtons.propTypes = {
   authorizedUser: PropTypes.object,
   logoutUser: PropTypes.func,
-  clearMailCounter: PropTypes.func,
+  seenAllConversations: PropTypes.func,
   seenAllNotification: PropTypes.func,
   getConversationList: PropTypes.func,
   getUserNotifications: PropTypes.func,
@@ -178,6 +196,10 @@ UserButtons.propTypes = {
   bubbleNotification: PropTypes.number,
   conversations: PropTypes.array,
   notifications: PropTypes.array,
+  readAllConversations: PropTypes.func,
+  readNotification: PropTypes.func,
+  readConversation: PropTypes.func,
+  clearConversation: PropTypes.func,
 };
 
 export default UserButtons;

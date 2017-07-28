@@ -19,6 +19,17 @@ const READ_ALL_NOTIFICATIONS_FAIL = 'READ_ALL_NOTIFICATIONS_FAIL';
 const READ_NOTIFICATION = 'READ_NOTIFICATION';
 const READ_NOTIFICATION_SUCCESS = 'READ_NOTIFICATION_SUCCESS';
 const READ_NOTIFICATION_FAIL = 'READ_NOTIFICATION_FAIL';
+
+const SEEN_ALL_CONVERSATIONS = 'SEEN_ALL_CONVERSATIONS';
+const SEEN_ALL_CONVERSATIONS_SUCCESS = 'SEEN_ALL_CONVERSATIONS_SUCCESS';
+const SEEN_ALL_CONVERSATIONS_FAIL = 'SEEN_ALL_CONVERSATIONS_FAIL';
+const READ_ALL_CONVERSATIONS = 'READ_ALL_CONVERSATIONS';
+const READ_ALL_CONVERSATIONS_SUCCESS = 'READ_ALL_CONVERSATIONS_SUCCESS';
+const READ_ALL_CONVERSATIONS_FAIL = 'READ_ALL_CONVERSATIONS_FAIL';
+const READ_CONVERSATION = 'READ_CONVERSATION';
+const READ_CONVERSATION_SUCCESS = 'READ_CONVERSATION_SUCCESS';
+const READ_CONVERSATION_FAIL = 'READ_CONVERSATION_FAIL';
+
 const SOCKET_SEND_USER_NOTIFICATION = 'SOCKET_SEND_USER_NOTIFICATION';
 const GET_CONVERSATION = 'GET_CONVERSATION';
 const GET_CONVERSATION_SUCCESS = 'GET_CONVERSATION_SUCCESS';
@@ -36,7 +47,6 @@ const DELETE_MESSAGE = 'DELETE_MESSAGE';
 const DELETE_MESSAGE_SUCCESS = 'DELETE_MESSAGE_SUCCESS';
 const DELETE_MESSAGE_FAIL = 'DELETE_MESSAGE_FAIL';
 const CLEAR_CONVERSATION = 'CLEAR_CONVERSATION';
-const CLEAR_MAIL_COUNTER = 'CLEAR_MAIL_COUNTER';
 const SOCKET_GET_MESSAGE = 'SOCKET_GET_MESSAGE';
 const SOCKET_LAST_MESSAGE = 'SOCKET_LAST_MESSAGE';
 const DELETE_CONVERSATION = 'DELETE_CONVERSATION';
@@ -141,11 +151,31 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         seeingAllNotifications: false,
         bubbleNotification: 0,
+        bubbleCommon: state.bubbleMessage
       };
     case SEEN_ALL_NOTIFICATIONS_FAIL:
       return {
         ...state,
         seeingAllNotifications: false,
+        error: action.error,
+      };
+
+    case SEEN_ALL_CONVERSATIONS:
+      return {
+        ...state,
+        seeingAllConversations: true,
+      };
+    case SEEN_ALL_CONVERSATIONS_SUCCESS:
+      return {
+        ...state,
+        seeingAllConversations: false,
+        bubbleMessage: 0,
+        bubbleCommon: state.bubbleNotification
+      };
+    case SEEN_ALL_CONVERSATIONS_FAIL:
+      return {
+        ...state,
+        seeingAllConversations: false,
         error: action.error,
       };
 
@@ -155,10 +185,11 @@ export default function profileReducer(state = initialState, action) {
         readingAllNotifications: true,
       };
     case READ_ALL_NOTIFICATIONS_SUCCESS:
-      const readAllNotifications = state.notifications.map(conversation => {
+      const readAllNotifications = state.notifications.map(notification => {
         return {
-          ...conversation,
-          is_new: 0
+          ...notification,
+          // is_new: 0,
+          is_seen: 1
         };
       });
       return {
@@ -170,6 +201,30 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         readingAllNotifications: false,
+        error: action.error,
+      };
+
+    case READ_ALL_CONVERSATIONS:
+      return {
+        ...state,
+        readingAllConversations: true,
+      };
+    case READ_ALL_CONVERSATIONS_SUCCESS:
+      const readAllConversations = state.conversations.map(conversation => {
+        return {
+          ...conversation,
+          is_new: 0,
+        };
+      });
+      return {
+        ...state,
+        readingAllConversations: false,
+        conversations: readAllConversations,
+      };
+    case READ_ALL_CONVERSATIONS_FAIL:
+      return {
+        ...state,
+        readingAllConversations: false,
         error: action.error,
       };
 
@@ -188,6 +243,24 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         readingNotification: false,
+        error: action.error,
+      };
+
+    case READ_CONVERSATION:
+      return {
+        ...state,
+        readingConversation: true,
+      };
+    case READ_CONVERSATION_SUCCESS:
+      return {
+        ...state,
+        readingConversation: false,
+        // notifications: action.result.data
+      };
+    case READ_CONVERSATION_FAIL:
+      return {
+        ...state,
+        readingConversation: false,
         error: action.error,
       };
 
@@ -434,14 +507,8 @@ export default function profileReducer(state = initialState, action) {
         conversation: [],
       };
 
-    case CLEAR_MAIL_COUNTER:
-      return {
-        ...state,
-        bubbleMessage: 0,
-        bubbleCommon: state.bubbleNotification
-      };
-
     case SOCKET_GET_MESSAGE:
+      console.log('SOCKET_GET_MESSAGE', action);
       const newSocketMessage = Object.assign({}, state.conversation, {
         messages: [...state.conversation.messages, action.msg]
       });
@@ -451,14 +518,14 @@ export default function profileReducer(state = initialState, action) {
       };
 
     case SOCKET_LAST_MESSAGE:
-      console.log('newSocketLastMessage');
+      console.log('newSocketLastMessage', action);
+      const newBubbleMessage = action.isMessengerOpen ? state.bubbleMessage : action.msg.countNewConversation;
       const newSocketLastMessage = state.conversations.map(conversation => {
         if (conversation.conversation_id === action.msg.conversation_id) {
-          let conversationMessages = conversation.messages;
-          conversationMessages = action.msg;
+          const conversationMessages = action.msg.message;
           return {
             ...conversation,
-            messages: [conversationMessages]
+            messages: [conversationMessages],
           };
         }
         return {
@@ -468,8 +535,8 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         conversations: newSocketLastMessage,
-        bubbleMessage: state.bubbleMessage + 1,
-        bubbleCommon: state.bubbleMessage + 1 + state.bubbleNotification
+        bubbleMessage: newBubbleMessage,
+        bubbleCommon: newBubbleMessage + state.bubbleNotification
       };
 
     default:
@@ -483,7 +550,7 @@ export function getConversationID(globalState) {
   if (id) {
     return id;
   }
-  if (globalState.profile.conversations) {
+  if (globalState.profile.conversations.length > 0) {
     return globalState.profile.conversations[0].conversation_id;
   }
 }
@@ -505,10 +572,11 @@ export function socketGetMessage(msg) {
   };
 }
 
-export function socketLastMessage(msg) {
+export function socketLastMessage(msg, isMessengerOpen) {
   return {
     type: SOCKET_LAST_MESSAGE,
-    msg
+    msg,
+    isMessengerOpen
   };
 }
 
@@ -517,12 +585,6 @@ export function socketUserNotification(data) {
   return {
     type: SOCKET_SEND_USER_NOTIFICATION,
     data
-  };
-}
-
-export function clearMailCounter() {
-  return {
-    type: CLEAR_MAIL_COUNTER
   };
 }
 
@@ -548,6 +610,13 @@ export function seenAllNotification() {
   };
 }
 
+export function seenAllConversations() {
+  return {
+    types: [SEEN_ALL_CONVERSATIONS, SEEN_ALL_CONVERSATIONS_SUCCESS, SEEN_ALL_CONVERSATIONS_FAIL],
+    promise: (client) => client.post('/conversations/seen-all')
+  };
+}
+
 export function readAllNotification() {
   return {
     types: [READ_ALL_NOTIFICATIONS, READ_ALL_NOTIFICATIONS_SUCCESS, READ_ALL_NOTIFICATIONS_FAIL],
@@ -555,10 +624,24 @@ export function readAllNotification() {
   };
 }
 
+export function readAllConversations() {
+  return {
+    types: [READ_ALL_CONVERSATIONS, READ_ALL_CONVERSATIONS_SUCCESS, READ_ALL_CONVERSATIONS_FAIL],
+    promise: (client) => client.post('/conversations/read-all')
+  };
+}
+
 export function readNotification(notification_id) {
   return {
     types: [READ_NOTIFICATION, READ_NOTIFICATION_SUCCESS, READ_NOTIFICATION_FAIL],
     promise: (client) => client.post(`/notifications/read/${notification_id}`)
+  };
+}
+
+export function readConversation(conversation_id) {
+  return {
+    types: [READ_CONVERSATION, READ_CONVERSATION_SUCCESS, READ_CONVERSATION_FAIL],
+    promise: (client) => client.post(`/conversation/read/${conversation_id}`)
   };
 }
 

@@ -89,9 +89,8 @@ class Messages extends Component {
     return (
       <div className="messages-content">
         <div className="wrapper">
-          <div className="additional-title">
-            { conversation.receivers && this.getReceivers(conversation.receivers)}
-          </div>
+          { conversation.receivers && (<div className="additional-title">{this.getReceivers(conversation.receivers)}</div>)}
+
           <div className="messages-box" ref={(el) => this.messageBlock = el} >
 
             { conversation.messages && conversation.messages.map((message, i, arr) => (
@@ -230,16 +229,16 @@ class Messages extends Component {
             {/*</div>*/}
 
           </div>
-
-          <div className="messages-send">
-            <div className="wrapper">
-              <Textarea
-                placeholder="Type a message..."
-                onKeyDown={this.handleKeyPress}
-              />
+          { conversation.conversation_id && (
+            <div className="messages-send">
+              <div className="wrapper">
+                <Textarea
+                  placeholder="Type a message..."
+                  onKeyDown={this.handleKeyPress}
+                />
+              </div>
             </div>
-          </div>
-
+          )}
         </div>
       </div>
     );

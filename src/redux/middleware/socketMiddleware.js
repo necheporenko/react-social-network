@@ -5,14 +5,21 @@ export default function socketMiddleware() {
     //Parse the JSON message received on the websocket
     const msg = JSON.parse(evt.data);
     const currentState = store.getState();
+    console.log('socket msg', msg);
 
     switch (msg.type) {
       case 'message':
-        console.log('msg:', msg.conversation_id, currentState.profile.conversation.conversation_id);
-        if (currentState.profile.conversation.conversation_id === msg.conversation_id) {
-          store.dispatch(socketGetMessage(msg));
-        } else if (currentState.profile.conversation.conversation_id !== msg.conversation_id) {
-          store.dispatch(socketLastMessage(msg));
+        const path = currentState.routing.locationBeforeTransitions.pathname;
+        // console.log('msg:', msg.conversation_id, currentState.profile.conversation.conversation_id);
+        //currentState.profile.conversation.conversation_id === msg.conversation_id
+
+        //if (currentState.profile.conversation.conversation_id !== msg.conversation_id)
+        if (path === `/messages/${msg.conversation_id}`) {
+          store.dispatch(socketGetMessage(msg.message));
+        } else if ((path.indexOf('messages') === 1) && (path !== `/messages/${msg.conversation_id}`)) {
+          store.dispatch(socketLastMessage(msg, true));
+        } else {
+          store.dispatch(socketLastMessage(msg, false));
         }
         break;
       case 'notification':

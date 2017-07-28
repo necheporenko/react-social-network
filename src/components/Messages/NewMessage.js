@@ -53,9 +53,11 @@ class NewMessage extends Component {
     if (event.keyCode === 13 && !event.shiftKey) {
       event.preventDefault();
 
+      const conversationID = this.props.conversation.conversation_id || null;
+
       this.props.createMessage(
         event.target.value,
-        null,
+        conversationID,
         Array.from(this.state.checkedUsersID.id, item => parseInt(item, 10))  // str -> number
       )
         .then(event.target.value = '');
