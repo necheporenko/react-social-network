@@ -31,6 +31,10 @@ class NewMessage extends Component {
     this.addCheckedUser = this.addCheckedUser.bind(this);
   }
 
+  componentDidMount() {
+    this.inputMessage.focus();
+  }
+
   handleSearchUser(event) {
     // console.log('this.state.hideTypeahead', this.state.hideTypeahead);
     if (this.state.hideTypeahead) {

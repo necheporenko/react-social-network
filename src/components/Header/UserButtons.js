@@ -85,7 +85,9 @@ class UserButtons extends Component {
                       >
                         <li>
                           <img src={conversation.receivers[0].avatar} alt=""/>
-                          <h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>
+                          <h6>{conversation.receiversName.toString()}</h6>
+                          {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
+                          {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
                           <span>{conversation.messages && conversation.messages[0].text}</span>
                         </li>
                       </Link>
@@ -152,7 +154,7 @@ class UserButtons extends Component {
                     {/*<p>21 Mar 2017</p>*/}
                     {/*</li>*/}
                   </ul>
-                  <div style={{paddingTop: '7px'}}>
+                  <div style={{padding: '7px 5px 0'}}>
                     <Link to="/notifications">See all</Link>
                     <Link to="/settings/notifications">Settings</Link>
                   </div>

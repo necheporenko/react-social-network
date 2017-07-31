@@ -372,7 +372,7 @@ export default function profileReducer(state = initialState, action) {
         const receiversName = [];
         conversation.receivers.map(receiver => {
           conversation.receiversID.push(receiver.id);
-          receiversName.push(receiver.first_name, receiver.last_name);
+          receiversName.push(` ${receiver.first_name}`);
         });
         conversation.receiversName = receiversName.toString();
       });
@@ -526,6 +526,7 @@ export default function profileReducer(state = initialState, action) {
           return {
             ...conversation,
             messages: [conversationMessages],
+            is_seen: 0,
           };
         }
         return {
@@ -641,7 +642,7 @@ export function readNotification(notification_id) {
 export function readConversation(conversation_id) {
   return {
     types: [READ_CONVERSATION, READ_CONVERSATION_SUCCESS, READ_CONVERSATION_FAIL],
-    promise: (client) => client.post(`/conversation/read/${conversation_id}`)
+    promise: (client) => client.post(`/conversations/read/${conversation_id}`)
   };
 }
 

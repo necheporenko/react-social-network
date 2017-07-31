@@ -309,6 +309,7 @@
 
     a {
       color: $link-color;
+      font-size: 12px;
 
       &:hover {
         color: $link-color;
@@ -354,7 +355,7 @@
     display: flex;
 
     &:hover {
-      background: $bg-hover !important;
+      background: #EEE !important;
     }
 
     div {
@@ -400,7 +401,7 @@
       color: $gray-light-hover;
       font-size: 12px;
       top: 40px;
-      left: 75px;
+      left: 70px;
     }
   }
 }

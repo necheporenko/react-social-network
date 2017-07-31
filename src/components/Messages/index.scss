@@ -113,6 +113,11 @@
       color: #333;
     }
 
+    &:focus {
+      color: #333;
+      text-decoration: none;
+    }
+
     li {
       display: flex;
     }
@@ -421,7 +426,7 @@
 // === New Message ===
 .new-message {
   i {
-    background: url('../../img/Icons/new-message.png');
+    background: url('../../img/Icons/plus.svg');
     display: inline-block;
     width: 24px;
     height: 24px;

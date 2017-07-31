@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { clearConversation, deleteConversation, leftConversation, searchConversation } from '../../redux/modules/profile';
+import { clearConversation, deleteConversation, leftConversation, searchConversation, readConversation } from '../../redux/modules/profile';
 import './index.scss';
 
 @connect((state) => ({
@@ -9,7 +9,8 @@ import './index.scss';
   clearConversation,
   deleteConversation,
   leftConversation,
-  searchConversation
+  searchConversation,
+  readConversation
 })
 
 class ListMessage extends Component {
@@ -60,8 +61,16 @@ class ListMessage extends Component {
           }
 
           { conversations && conversations.map(conversation => (
-            <div key={conversation.conversation_id}>
-              <Link to={`/messages/${conversation.conversation_id}`} onlyActiveOnIndex={true} activeClassName="active">
+            <div
+              key={conversation.conversation_id}
+              onClick={() => this.props.readConversation(conversation.conversation_id)}
+            >
+              <Link
+                to={`/messages/${conversation.conversation_id}`}
+                onlyActiveOnIndex={true}
+                activeClassName="active"
+                style={{background: conversation.is_seen ? '#fff' : '#eff6ff'}}
+              >
                 <li>
                   <img src={conversation.receivers[0].avatar} alt=""/>
                   <h5>{this.getReceivers(conversation.receivers)}</h5>
@@ -113,6 +122,7 @@ ListMessage.propTypes = {
   deleteConversation: PropTypes.func,
   leftConversation: PropTypes.func,
   searchConversation: PropTypes.func,
+  readConversation: PropTypes.func,
 };
 
 export default ListMessage;

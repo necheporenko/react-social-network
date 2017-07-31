@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { Link } from 'react-router';
-import { followRequestedUser, unfollowRequestedUser } from '../../../redux/modules/user';
+import {  } from '../../../redux/modules/profile';
 import { showPopUp } from '../../../redux/modules/form';
-import { uploadAvatar, uploadAvatarBase64, uploadUserCover, uploadUserCoverBase64, getUser, getUserSlug, } from '../../../redux/modules/user';
+import { uploadAvatar, uploadAvatarBase64, uploadUserCover, uploadUserCoverBase64, getUser, getUserSlug,
+  followRequestedUser, unfollowRequestedUser } from '../../../redux/modules/user';
 import ChangeCoverImage from '../../Popup/ChangeCoverImage';
 import ChangeAvatar from '../../Popup/ChangeAvatar';
 import './index.scss';
@@ -34,6 +35,7 @@ import './index.scss';
   uploadUserCoverBase64,
   getUser,
   getUserSlug,
+  getConversationByUser,
 })
 
 export default class SubHeader extends Component {
@@ -133,6 +135,11 @@ export default class SubHeader extends Component {
           <div className="subHeader-userName">
             <Link to={`/${slug}`}>{first_name} {last_name}</Link>
           </div>
+        </div>
+        <div className="btn-following btn-message">
+          <Link to="/messages" onClick={() => this.getConversationByUser(id, first_name)}>
+            <div><i/>Message</div>
+          </Link>
         </div>
         <div
           className="btn-following"
