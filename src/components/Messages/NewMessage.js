@@ -49,7 +49,35 @@ class NewMessage extends Component {
 
   componentDidUpdate() {
     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+
+    // console.log('componentDidUpdate', this.props.conversation.conversation_id);
+    // if (this.props.conversation.conversation_id) {
+    //   browserHistory.push(`/messages/${this.props.conversation.conversation_id}`);
+    // }
   }
+
+  // componentWillUpdate() {
+  //   console.log('componentWillUpdate', this.props.conversation.conversation_id);
+  //   if (this.props.conversation.conversation_id) {
+  //     console.log('1111111111111111111111111111111111111');
+  //     // browserHistory.push(`/messages/${this.props.conversation.conversation_id}`);
+  //   }
+  // }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (nextProps.conversation.conversation_id === this.props.conversation.conversation_id) {
+  //     // this.setState({showReply: false});
+  //     console.log('shouldComponentUpdate', nextProps.conversation.conversation_id)
+  //     return true;
+  //   }
+  // }
+
+  // componentWillReceiveProps() {
+  //   console.log('componentWillReceiveProps', this.props.conversation.conversation_id);
+  //   if (this.props.conversation.conversation_id) {
+  //     console.log('22222222222222222222222222');
+  //   }
+  // }
 
   handleSearchUser(event) {
     // console.log('this.state.hideTypeahead', this.state.hideTypeahead);
@@ -125,6 +153,7 @@ class NewMessage extends Component {
 
           <div className="messages-box" ref={(el) => this.messageBlock = el}>
             { conversation.messages && conversation.messages.map((message, i, arr) => (
+              (message.is_tech === 0 &&
               <div key={message.id}>
                 {/*message.date.substring(0, 2) ===  it's a day*/}
                 { (i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
@@ -157,6 +186,18 @@ class NewMessage extends Component {
                     </div>
                   </div>
 
+                  <p>{message.text}</p>
+                </div>
+              </div>
+              )
+              ||
+              <div key={message.id}>
+                { (i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
+                <div className="time-divider">
+                  <span>{message.date.substring(0, 11)}</span>
+                </div>
+                }
+                <div className="messages-post-tech">
                   <p>{message.text}</p>
                 </div>
               </div>

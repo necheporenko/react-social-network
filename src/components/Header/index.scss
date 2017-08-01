@@ -345,6 +345,12 @@
       }
     }
     @extend .scrollBar;
+
+    a {
+       &:link {
+        text-decoration: none;
+      }
+    }
   }
 
   li {

@@ -58,6 +58,9 @@ const GET_CONVERSATION_BY_USER_PAGE = 'GET_CONVERSATION_BY_USER_PAGE';
 const GET_CONVERSATION_BY_USER_PAGE_SUCCESS = 'GET_CONVERSATION_BY_USER_PAGE_SUCCESS';
 const GET_CONVERSATION_BY_USER_PAGE_FAIL = 'GET_CONVERSATION_BY_USER_PAGE_FAIL';
 const ADD_TEMPORARY_CONVERSATION = 'ADD_TEMPORARY_CONVERSATION';
+const ADD_MEMBER_TO_CONVERSATION = 'ADD_MEMBER_TO_CONVERSATION';
+const ADD_MEMBER_TO_CONVERSATION_SUCCESS = 'ADD_MEMBER_TO_CONVERSATION_SUCCESS';
+const ADD_MEMBER_TO_CONVERSATION_FAIL = 'ADD_MEMBER_TO_CONVERSATION_FAIL';
 
 const initialState = {
   notificationSettings: {},
@@ -461,16 +464,52 @@ export default function profileReducer(state = initialState, action) {
     case LEFT_CONVERSATION:
       return {
         ...state,
+
         leavingConversation: true,
       };
     case LEFT_CONVERSATION_SUCCESS:
       const leavingConversation = state.conversations.filter(conversation => (conversation.conversation_id !== action.id));
+      // const leavingReceivers = Object.assign({}, state.conversation, {
+      //   receivers: state.conversation.receivers.filter(receiver => receiver.first_name !== action.first_name)
+      // });
       return {
         ...state,
         leavingConversation: false,
-        conversations: leavingConversation
+        conversations: leavingConversation,
+        // conversation: leavingReceivers
       };
     case LEFT_CONVERSATION_FAIL:
+      return {
+        ...state,
+        leavingConversation: false,
+        error: action.error,
+      };
+
+    case ADD_MEMBER_TO_CONVERSATION:
+      return {
+        ...state,
+        leavingConversation: true,
+      };
+    case ADD_MEMBER_TO_CONVERSATION_SUCCESS:
+      const addMemberConversations = state.conversations.map(conversation => {
+        if (conversation.conversation_id === action.id) {
+          const addNewReceiver = [...conversation.receivers, action.result.data.user];
+          return {
+            ...conversation,
+            receivers: addNewReceiver,
+          };
+        }
+        return {
+          ...conversation
+        };
+      });
+
+      return {
+        ...state,
+        leavingConversation: false,
+        conversations: addMemberConversations
+      };
+    case ADD_MEMBER_TO_CONVERSATION_FAIL:
       return {
         ...state,
         leavingConversation: false,
@@ -495,10 +534,10 @@ export default function profileReducer(state = initialState, action) {
       console.log('state.conversation', state.conversation);
       if (state.conversation.length === 0) {
         console.log('NO CONVERSATION');
-        newMessage = {
+        newMessage = Object.assign({}, {
           conversation_id: action.result.data.conversation_id,
           messages: [action.result.data]
-        };
+        });
       } else {
         console.log('CONVERSATION');
         newMessage = Object.assign({}, state.conversation, {
@@ -757,10 +796,18 @@ export function deleteConversation(id) {
   };
 }
 
-export function leftConversation(id) {
+export function leftConversation(id, first_name) {
   return {
     types: [LEFT_CONVERSATION, LEFT_CONVERSATION_SUCCESS, LEFT_CONVERSATION_FAIL],
-    promise: (client) => client.patch(`/conversations/${id}`),
+    promise: (client) => client.patch(`/conversations/left/${id}`),
+    id, first_name
+  };
+}
+
+export function addMember(id, user_id) {
+  return {
+    types: [ADD_MEMBER_TO_CONVERSATION, ADD_MEMBER_TO_CONVERSATION_SUCCESS, ADD_MEMBER_TO_CONVERSATION_FAIL],
+    promise: (client) => client.patch(`/conversations/add-member/${id}`, { data: { user_id }}),
     id
   };
 }

@@ -5,6 +5,7 @@ import { clearConversation, deleteConversation, leftConversation, searchConversa
 import './index.scss';
 
 @connect((state) => ({
+  authorizedUser: state.user.authorizedUser,
 }), {
   clearConversation,
   deleteConversation,
@@ -43,7 +44,7 @@ class ListMessage extends Component {
   }
 
   render() {
-    const { conversations } = this.props;
+    const { conversations, authorizedUser } = this.props;
 
     return (
       <div className="messages-mnu">
@@ -83,7 +84,7 @@ class ListMessage extends Component {
                 <div>
                   <ul>
                     { conversation.receivers.length > 1 &&
-                      <li onClick={() => this.props.leftConversation(conversation.conversation_id)}>Leave Group</li>
+                      <li onClick={() => this.props.leftConversation(conversation.conversation_id, authorizedUser.first_name)}>Leave Group</li>
                     }
                     <li onClick={() => this.props.deleteConversation(conversation.conversation_id)}>Delete</li>
                     <li>Report Spam or Abuse...</li>
@@ -123,6 +124,7 @@ ListMessage.propTypes = {
   leftConversation: PropTypes.func,
   searchConversation: PropTypes.func,
   readConversation: PropTypes.func,
+  authorizedUser: PropTypes.object,
 };
 
 export default ListMessage;

@@ -36,7 +36,7 @@
   }
   @extend .scrollBar;
 
-  > div {
+  > div:not(.messages-search) {
     position: relative;
 
     &:hover {
@@ -93,6 +93,10 @@
         height: 20px;
         padding: 2px 24px;
         cursor: pointer;
+
+        &:hover {
+          background: $default-bg;
+        }
       }
     }
   }
@@ -140,6 +144,7 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      width: 190px;
     }
 
     p {
@@ -308,6 +313,16 @@
     > div {
       left: -60px;
     }
+  }
+}
+
+.messages-post-tech {
+  min-height: 32px;
+  text-align: center;
+
+  p {
+    font-size: 13px;
+    color: #656565;
   }
 }
 

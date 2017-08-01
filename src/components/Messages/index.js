@@ -3,7 +3,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Textarea from 'react-textarea-autosize';
-import { getConversationByID, createMessage, deleteMessage, getConversationID } from '../../redux/modules/profile';
+import { getConversationByID, createMessage, deleteMessage, getConversationID, addMember } from '../../redux/modules/profile';
+import { newSearchUser } from '../../redux/modules/search';
 import './index.scss';
 
 @asyncConnect([{
@@ -12,30 +13,39 @@ import './index.scss';
     if (getConversationID(getState())) {
       promises.push(dispatch(getConversationByID(getConversationID(getState()))));
     }
-
     return Promise.all(promises);
   }
 }])
 
 @connect((state) => ({
+  foundUsers: state.search.foundUsers,
   conversation: state.profile.conversation,
   authorizedUser: state.user.authorizedUser,
 }), {
   getConversationByID,
   createMessage,
-  deleteMessage
+  deleteMessage,
+  newSearchUser,
+  addMember
 })
 
 class Messages extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedUsersID: [],
+      checkedUsersID: {
+        fullName: [],
+        id: []
+      },
       messageSetting: false,
-      test: false,
+      showAddSearch: false,
+      hideTypeahead: false,
     };
     this.getReceivers = this.getReceivers.bind(this);
+    this.addCheckedUser = this.addCheckedUser.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.toggleAddSearch = this.toggleAddSearch.bind(this);
+    this.handleSearchUser = this.handleSearchUser.bind(this);
     this.openMessageSettings = this.openMessageSettings.bind(this);
   }
 
@@ -45,6 +55,14 @@ class Messages extends Component {
 
   componentDidUpdate() {
     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+  }
+
+  handleSearchUser(event) {
+    // console.log('this.state.hideTypeahead', this.state.hideTypeahead);
+    if (this.state.hideTypeahead) {
+      this.setState({ hideTypeahead: false });
+    }
+    this.props.newSearchUser(event.target.value);
   }
 
   handleKeyPress(event) {
@@ -84,16 +102,69 @@ class Messages extends Component {
     return result;
   }
 
+  addCheckedUser(user, conversation_id) {
+    const currentCheckedUsersID = this.state.checkedUsersID;
+    currentCheckedUsersID.fullName.push(` ${user.first_name} ${user.last_name}`);
+    currentCheckedUsersID.id.push(user.id);
+
+    this.setState({ checkedUsersID: currentCheckedUsersID, hideTypeahead: true });
+    // this.props.getConversationByUser(this.state.checkedUsersID.id.toString(), currentCheckedUsersID.fullName.toString());
+    this.props.addMember(conversation_id, this.state.checkedUsersID.id.toString());
+    this.inputMessage.value = '';
+  }
+
+  toggleAddSearch() {
+    this.setState({
+      showAddSearch: !this.state.showAddSearch
+    });
+  }
+
   render() {
-    const { conversation, authorizedUser } = this.props;
+    const { conversation, authorizedUser, foundUsers } = this.props;
     return (
       <div className="messages-content">
         <div className="wrapper">
-          { conversation.receivers && (<div className="additional-title">{this.getReceivers(conversation.receivers)}</div>)}
+          { conversation.receivers &&
+            <div className="additional-title" style={{display: 'flex', justifyContent: 'space-between'}}>
+              <span style={{display: this.state.showAddSearch ? 'none' : 'block'}}>{this.getReceivers(conversation.receivers)}</span>
 
-          <div className="messages-box" ref={(el) => this.messageBlock = el} >
+              <div style={{display: this.state.showAddSearch ? 'block' : 'none'}}>
+                <div style={{display: this.state.checkedUsersID.fullName.length > 0 ? 'flex' : 'inline-flex'}}>
+                  <span>Add:</span>
+                  <div className="list-of-found-users">
+                    { this.state.checkedUsersID && this.state.checkedUsersID.fullName.map((user, index) => (
+                      <span key={index}>{user}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <input
+                  type="text"
+                  className="messages-input"
+                  placeholder="Type the name of person"
+                  onChange={this.handleSearchUser}
+                  ref={el => this.inputMessage = el}
+                  style={{position: this.state.checkedUsersID.fullName.length > 0 ? 'relative' : 'static'}}
+                />
+                { !this.state.hideTypeahead && foundUsers.length > 0 &&
+                <div className="wrapper-find-users">
+                  { foundUsers && foundUsers.map(user => (
+                    <div key={user.id} className="found-user" onClick={() => this.addCheckedUser(user, conversation.conversation_id)}>
+                      <img src={user.avatar}/>
+                      <p>{user.first_name} {user.last_name}</p>
+                    </div>
+                  ))}
+                </div>
+                }
+              </div>
+              <i onClick={this.toggleAddSearch}>{this.state.showAddSearch ? 'x' : '+'}</i>
+            </div>
+          }
+
+          <div className="messages-box" ref={el => this.messageBlock = el} >
 
             { conversation.messages && conversation.messages.map((message, i, arr) => (
+              (message.is_tech === 0 &&
               <div key={message.id}>
                 {/*message.date.substring(0, 2) ===  it's a day*/}
                 { (i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
@@ -126,6 +197,18 @@ class Messages extends Component {
                     </div>
                   </div>
 
+                  <p>{message.text}</p>
+                </div>
+              </div>
+              )
+              ||
+              <div key={message.id}>
+                { (i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
+                <div className="time-divider">
+                  <span>{message.date.substring(0, 11)}</span>
+                </div>
+                }
+                <div className="messages-post-tech">
                   <p>{message.text}</p>
                 </div>
               </div>
@@ -250,6 +333,7 @@ Messages.propTypes = {
   createMessage: PropTypes.func,
   deleteMessage: PropTypes.func,
   authorizedUser: PropTypes.object,
+  foundUsers: PropTypes.array,
 };
 
 export default Messages;
