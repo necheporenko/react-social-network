@@ -85,7 +85,7 @@ class UserButtons extends Component {
                       >
                         <li>
                           <img src={conversation.receivers[0].avatar} alt=""/>
-                          <h6>{conversation.receiversName.toString()}</h6>
+                          <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
                           {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
                           {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
                           <span>{conversation.messages && conversation.messages[0].text}</span>

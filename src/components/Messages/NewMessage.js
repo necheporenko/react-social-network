@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import Textarea from 'react-textarea-autosize';
 import { getConversationByUser, createMessage } from '../../redux/modules/profile';
@@ -10,6 +10,8 @@ import './index.scss';
   foundUsers: state.search.foundUsers,
   conversation: state.profile.conversation,
   authorizedUser: state.user.authorizedUser,
+  infoAboutTemporaryUser: state.profile.infoAboutTemporaryUser,
+  needLoadTemporaryConversation: state.profile.needLoadTemporaryConversation,
 }), {
   getConversationByUser,
   newSearchUser,
@@ -32,7 +34,21 @@ class NewMessage extends Component {
   }
 
   componentDidMount() {
-    this.inputMessage.focus();
+    this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+    if (this.props.infoAboutTemporaryUser.first_name) {
+      this.setState({
+        checkedUsersID: {
+          fullName: [`${this.props.infoAboutTemporaryUser.first_name} ${this.props.infoAboutTemporaryUser.last_name}`],
+          id: [this.props.infoAboutTemporaryUser.id]
+        }
+      });
+    } else {
+      this.inputMessage.focus();
+    }
+  }
+
+  componentDidUpdate() {
+    this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
   }
 
   handleSearchUser(event) {
@@ -58,6 +74,9 @@ class NewMessage extends Component {
       event.preventDefault();
 
       const conversationID = this.props.conversation.conversation_id || null;
+      if (conversationID === this.props.conversation.conversation_id) {
+        browserHistory.push(`/messages/${conversationID}`);
+      }
 
       this.props.createMessage(
         event.target.value,
@@ -104,7 +123,7 @@ class NewMessage extends Component {
             }
           </div>
 
-          <div className="messages-box">
+          <div className="messages-box" ref={(el) => this.messageBlock = el}>
             { conversation.messages && conversation.messages.map((message, i, arr) => (
               <div key={message.id}>
                 {/*message.date.substring(0, 2) ===  it's a day*/}

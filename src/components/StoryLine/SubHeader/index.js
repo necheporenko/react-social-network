@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { Link } from 'react-router';
-import { getConversationByUser } from '../../../redux/modules/profile';
+import { Link, browserHistory } from 'react-router';
+import { getConversationByUserPage } from '../../../redux/modules/profile';
 import { showPopUp } from '../../../redux/modules/form';
 import { uploadAvatar, uploadAvatarBase64, uploadUserCover, uploadUserCoverBase64, getUser, getUserSlug,
   followRequestedUser, unfollowRequestedUser } from '../../../redux/modules/user';
@@ -25,6 +25,7 @@ import './index.scss';
   visible: state.forms.visible,
   currentImage: state.forms.currentImage,
   activePopUp: state.forms.activePopUp,
+  conversation: state.profile.conversation,
 }), {
   followRequestedUser,
   unfollowRequestedUser,
@@ -35,7 +36,7 @@ import './index.scss';
   uploadUserCoverBase64,
   getUser,
   getUserSlug,
-  getConversationByUser,
+  getConversationByUserPage,
 })
 
 export default class SubHeader extends Component {
@@ -50,6 +51,7 @@ export default class SubHeader extends Component {
     this.unfollowUser = this.unfollowUser.bind(this);
     this.cleanInputAvatar = this.cleanInputAvatar.bind(this);
     this.cleanInputCover = this.cleanInputCover.bind(this);
+    this.openConversation = this.openConversation.bind(this);
   }
 
   handleAvatarChange(e) {
@@ -98,6 +100,19 @@ export default class SubHeader extends Component {
     this.inputCover.value = '';
   }
 
+  openConversation(id, user) {
+    Promise.resolve(this.props.getConversationByUserPage(id, user))
+      .then(value => {
+        if (value.data.conversation_id) {
+          console.log(1);
+          browserHistory.push(`/messages/${value.data.conversation_id}`);
+        } else {
+          console.log(0);
+          browserHistory.push('/messages/new');
+        }
+      });
+  }
+
   render() {
     const { first_name, last_name, slug, isFollowing, id, avatar230, cover } = this.props.requestedUser;
 
@@ -136,8 +151,10 @@ export default class SubHeader extends Component {
             <Link to={`/${slug}`}>{first_name} {last_name}</Link>
           </div>
         </div>
-        <div className="btn-following btn-message">
-          <Link to="/messages" onClick={() => this.getConversationByUser(id, first_name)}>
+        <div className="btn-following btn-message" onClick={() => this.openConversation(id, this.props.requestedUser)}>
+          <Link
+            // to="/messages/new"
+          >
             <div><i/>Message</div>
           </Link>
         </div>

@@ -3,20 +3,30 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import ListMessage from '../components/Messages/ListMessage';
-import { getConversationList } from '../redux/modules/profile';
+import { getConversationList, addTemporaryConversation, isNeedLoadTemporaryConversation, clearConversation } from '../redux/modules/profile';
 
 @asyncConnect([{
   promise: ({ store: { dispatch, getState } }) => {
-    const promises = [];
-    promises.push(dispatch(getConversationList()));
-    return Promise.all(promises);
+    // const promises = [];
+    // promises.push(dispatch(getConversationList()))
+    //   .then(dispatch(addTemporaryConversation()));
+    // dispatch(getConversationList());
+    return Promise.resolve(dispatch(getConversationList()))
+      .then(() => {
+        if (isNeedLoadTemporaryConversation(getState())) {
+          dispatch(clearConversation());
+          dispatch(addTemporaryConversation());
+        }
+      });
+    // return Promise.all(promises);
   }
 }])
 
 @connect((state) => ({
   conversations: state.profile.conversations,
 }), {
-  getConversationList
+  getConversationList,
+  addTemporaryConversation
 })
 
 class MessagesContainer extends Component {

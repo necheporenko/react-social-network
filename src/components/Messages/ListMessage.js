@@ -64,12 +64,12 @@ class ListMessage extends Component {
             <div
               key={conversation.conversation_id}
               onClick={() => this.props.readConversation(conversation.conversation_id)}
+              style={{background: conversation.is_seen ? '#fff' : '#eff6ff'}}
             >
               <Link
                 to={`/messages/${conversation.conversation_id}`}
                 onlyActiveOnIndex={true}
                 activeClassName="active"
-                style={{background: conversation.is_seen ? '#fff' : '#eff6ff'}}
               >
                 <li>
                   <img src={conversation.receivers[0].avatar} alt=""/>

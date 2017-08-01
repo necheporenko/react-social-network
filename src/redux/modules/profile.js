@@ -19,7 +19,6 @@ const READ_ALL_NOTIFICATIONS_FAIL = 'READ_ALL_NOTIFICATIONS_FAIL';
 const READ_NOTIFICATION = 'READ_NOTIFICATION';
 const READ_NOTIFICATION_SUCCESS = 'READ_NOTIFICATION_SUCCESS';
 const READ_NOTIFICATION_FAIL = 'READ_NOTIFICATION_FAIL';
-
 const SEEN_ALL_CONVERSATIONS = 'SEEN_ALL_CONVERSATIONS';
 const SEEN_ALL_CONVERSATIONS_SUCCESS = 'SEEN_ALL_CONVERSATIONS_SUCCESS';
 const SEEN_ALL_CONVERSATIONS_FAIL = 'SEEN_ALL_CONVERSATIONS_FAIL';
@@ -29,7 +28,6 @@ const READ_ALL_CONVERSATIONS_FAIL = 'READ_ALL_CONVERSATIONS_FAIL';
 const READ_CONVERSATION = 'READ_CONVERSATION';
 const READ_CONVERSATION_SUCCESS = 'READ_CONVERSATION_SUCCESS';
 const READ_CONVERSATION_FAIL = 'READ_CONVERSATION_FAIL';
-
 const SOCKET_SEND_USER_NOTIFICATION = 'SOCKET_SEND_USER_NOTIFICATION';
 const GET_CONVERSATION = 'GET_CONVERSATION';
 const GET_CONVERSATION_SUCCESS = 'GET_CONVERSATION_SUCCESS';
@@ -56,6 +54,10 @@ const LEFT_CONVERSATION = 'LEFT_CONVERSATION';
 const LEFT_CONVERSATION_SUCCESS = 'LEFT_CONVERSATION_SUCCESS';
 const LEFT_CONVERSATION_FAIL = 'LEFT_CONVERSATION_FAIL';
 const SEARCH_CONVERSATION = 'SEARCH_CONVERSATION';
+const GET_CONVERSATION_BY_USER_PAGE = 'GET_CONVERSATION_BY_USER_PAGE';
+const GET_CONVERSATION_BY_USER_PAGE_SUCCESS = 'GET_CONVERSATION_BY_USER_PAGE_SUCCESS';
+const GET_CONVERSATION_BY_USER_PAGE_FAIL = 'GET_CONVERSATION_BY_USER_PAGE_FAIL';
+const ADD_TEMPORARY_CONVERSATION = 'ADD_TEMPORARY_CONVERSATION';
 
 const initialState = {
   notificationSettings: {},
@@ -66,6 +68,7 @@ const initialState = {
   bubbleNotification: 0,
   bubbleCommon: 0,
   gotNotificationBubble: false,
+  needLoadTemporaryConversation: false,
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -310,7 +313,8 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         gettingConversation: false,
-        conversation: newConversation
+        conversation: newConversation,
+        infoAboutTemporaryUser: []
       };
     case GET_CONVERSATION_FAIL:
       return {
@@ -358,6 +362,41 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         gettingConversation: false,
         error: action.error,
+      };
+
+    case GET_CONVERSATION_BY_USER_PAGE:
+      return {
+        ...state,
+      };
+    case GET_CONVERSATION_BY_USER_PAGE_SUCCESS:
+      return {
+        ...state,
+        needLoadTemporaryConversation: !action.result.data.conversation_id,
+        infoAboutTemporaryUser: action.user
+        // conversations: [newConversationByUserPage, ...state.conversations]
+      };
+    case GET_CONVERSATION_BY_USER_PAGE_FAIL:
+      return {
+        ...state,
+        error: action.error,
+      };
+
+    case ADD_TEMPORARY_CONVERSATION:
+      const newConversationByUserPage = Object.assign({}, {
+        conversation_id: 'new',
+        is_seen: 1,
+        receivers: [{
+          id: state.infoAboutTemporaryUser.id,
+          first_name: state.infoAboutTemporaryUser.first_name,
+          last_name: state.infoAboutTemporaryUser.last_name,
+          slug: state.infoAboutTemporaryUser.slug,
+          avatar: state.infoAboutTemporaryUser.avatar230,
+        }],
+      });
+      return {
+        ...state,
+        conversations: [newConversationByUserPage, ...state.conversations],
+        needLoadTemporaryConversation: false,
       };
 
     case GET_CONVERSATION_LIST:
@@ -560,6 +599,10 @@ export function getConversationID(globalState) {
 //   return globalState.profile && globalState.profile.gotNotificationBubble;
 // }
 
+export function isNeedLoadTemporaryConversation(globalState) {
+  return globalState.profile && globalState.profile.needLoadTemporaryConversation;
+}
+
 export function clearConversation() {        //for clear div in /messages/new
   return {
     type: CLEAR_CONVERSATION
@@ -682,6 +725,20 @@ export function getConversationByUser(user_ids, user_name) {
     types: [GET_CONVERSATION_BY_USER, GET_CONVERSATION_BY_USER_SUCCESS, GET_CONVERSATION_BY_USER_FAIL],
     promise: (client) => client.get('/conversations/by-users', { params: { user_ids }}),
     user_name
+  };
+}
+
+export function getConversationByUserPage(user_ids, user) {
+  return {
+    types: [GET_CONVERSATION_BY_USER_PAGE, GET_CONVERSATION_BY_USER_PAGE_SUCCESS, GET_CONVERSATION_BY_USER_PAGE_FAIL],
+    promise: (client) => client.get('/conversations/by-users', { params: { user_ids }}),
+    user
+  };
+}
+
+export function addTemporaryConversation() {
+  return {
+    type: ADD_TEMPORARY_CONVERSATION
   };
 }
 
