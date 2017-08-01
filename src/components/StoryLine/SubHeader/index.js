@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { Link } from 'react-router';
-import {  } from '../../../redux/modules/profile';
+import { getConversationByUser } from '../../../redux/modules/profile';
 import { showPopUp } from '../../../redux/modules/form';
 import { uploadAvatar, uploadAvatarBase64, uploadUserCover, uploadUserCoverBase64, getUser, getUserSlug,
   followRequestedUser, unfollowRequestedUser } from '../../../redux/modules/user';
