@@ -39,6 +39,7 @@ export default class StoryDetailsContainer extends Component {
             books={story.books}
             loudness={story.loudness}
             visibility={story.visibility}
+            comments={story.comments}
             likeFunc={this.like}
             authorizedUser={authorizedUser}
           />

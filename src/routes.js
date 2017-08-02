@@ -53,7 +53,16 @@ import NotFoundPage from 'components/NotFoundPage/NotFoundPage';
 // eslint-disable-next-line import/no-dynamic-require
 if (typeof System.import === 'undefined') System.import = module => Promise.resolve(require(module));
 
-export default () => {
+export default (store) => {
+  const requireLogin = (nextState, replace, cb) => {
+    const { user: { isAuthenticated }} = store.getState();
+    if (!isAuthenticated) {
+      // oops, not logged in, so can't be here!
+      replace('/account/auth');
+    }
+    cb();
+  };
+
   return (
     <Route path="/" component={App}>
       <IndexRoute component={IndexContainer} />
@@ -65,7 +74,7 @@ export default () => {
 
       <Route path="/engagement" component={EngagementContainer} />
 
-      <Route path="/messages" component={MessagesContainer}>
+      <Route path="/messages" component={MessagesContainer} onEnter={requireLogin}>
         <IndexRoute component={Messages} />
         {/*<IndexRedirect to="new" />*/}
         <Route path="new" component={NewMessage} />

@@ -152,7 +152,7 @@ class PostFooter extends Component {
           <span className="reply" onClick={() => this.reply(comment.id)}>Reply Y{comment.right}</span><span> · </span><span
             className="date">{comment.date}</span>
 
-          {/*  REPLY COMMENT */}
+          {/* REPLY COMMENT */}
           { this.state.parent_id === comment.id &&
             <div
               className="reply-comment"
@@ -242,7 +242,9 @@ class PostFooter extends Component {
           </div>
         </div>
 
-        <div className="post-lc" style={{display: (likes.qty === 0) ? 'none' : 'block'}}>
+        <div className="post-lc"
+             // style={{display: (likes.qty === 0) ? 'none' : 'block'}}
+        >
           <div className="post-like-field" onClick={this.Open}>
             <i className="post-action-icon" />
             <OverlayTrigger placement="top" overlay={tooltipLike} id="tooltipLike" arrowOffsetLeft={200} >
@@ -252,7 +254,7 @@ class PostFooter extends Component {
             </OverlayTrigger>
           </div>
 
-          <div className="post-comment-field">
+          <div className="post-comment-field" style={{display: (comments === 0) ? 'none' : 'block'}}>
             <div className="comments">
               {this.replyComments(comments)}
               {/*{ comments && comments.map((comment) => this.replyComments(comment))}*/}
