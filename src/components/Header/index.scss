@@ -164,6 +164,58 @@
   margin-right: 15px;
   position: relative;
 
+  .wrapper-avatars {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 2px;
+    background: white;
+    overflow: hidden;
+
+    .grid-half {
+      height: 45px;
+      width: 22.5px;
+      margin-left: -1px;
+      overflow: hidden;
+      display: block;
+
+      &:first-child {
+        border-right: 1px solid #fff;
+      }
+
+      &:nth-child(2) {
+        margin-left: 0.5px;
+        width: 22px;
+      }
+
+      img {
+        margin-left: -8px;
+      }
+    }
+    .grid-fourth {
+      height: 22.5px;
+      width: 22.5px;
+
+      &:first-child {
+        border-bottom: 1px solid #fff;
+        overflow: hidden;
+        margin-top: -1px;
+      }
+
+      &:nth-child(2) {
+        margin-top: 0.5px;
+        height: 22px;
+      }
+
+      img {
+        width: 22.5px;
+        height: 22.5px;
+        margin-left: 0;
+      }
+    }
+  }
+
   .notification-box {
     span {
       position: absolute;

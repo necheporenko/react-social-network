@@ -23,6 +23,7 @@ class ListMessage extends Component {
     };
     this.getReceivers = this.getReceivers.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.groupAvatars = this.groupAvatars.bind(this);
   }
 
   getReceivers(receivers) {
@@ -42,6 +43,67 @@ class ListMessage extends Component {
 
   handleSearch(event) {
     this.props.searchConversation(event.target.value);
+  }
+
+  groupAvatars(receivers) {
+    switch (receivers.length) {
+      case 1:
+        return (
+          <div className="wrapper-avatars">
+            <img src={receivers[0].avatar} alt=""/>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="wrapper-avatars">
+            <div className="grid-half">
+              <img src={receivers[0].avatar} alt=""/>
+            </div>
+            <div className="grid-half">
+              <img src={receivers[1].avatar} alt=""/>
+            </div>
+          </div>
+        );
+
+      case 3:
+        return (
+          <div className="wrapper-avatars">
+            <div className="grid-half">
+              <img src={receivers[0].avatar} alt=""/>
+            </div>
+            <div className="grid-half">
+              <div className="grid-fourth">
+                <img src={receivers[1].avatar} alt=""/>
+              </div>
+              <div className="grid-fourth">
+                <img src={receivers[2].avatar} alt=""/>
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return (
+          <div className="wrapper-avatars">
+            <div className="grid-half">
+              <div className="grid-fourth">
+                <img src={receivers[0].avatar} alt=""/>
+              </div>
+              <div className="grid-fourth">
+                <img src={receivers[1].avatar} alt=""/>
+              </div>
+            </div>
+            <div className="grid-half">
+              <div className="grid-fourth">
+                <img src={receivers[2].avatar} alt=""/>
+              </div>
+              <div className="grid-fourth">
+                <img src={receivers[3].avatar} alt=""/>
+              </div>
+            </div>
+          </div>
+        );
+    }
   }
 
   render() {
@@ -74,7 +136,8 @@ class ListMessage extends Component {
                 activeClassName="active"
               >
                 <li>
-                  <img src={conversation.receivers[0].avatar} alt=""/>
+                  {this.groupAvatars(conversation.receivers)}
+                  {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
                   <h5>{this.getReceivers(conversation.receivers)}</h5>
                 </li>
                 <span>{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>

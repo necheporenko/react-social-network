@@ -26,6 +26,7 @@ class UserButtons extends Component {
     super(props);
     this.state = {};
     this.clickMail = this.clickMail.bind(this);
+    this.groupAvatars = this.groupAvatars.bind(this);
     this.clickNotification = this.clickNotification.bind(this);
   }
 
@@ -42,6 +43,67 @@ class UserButtons extends Component {
   closeDropdown() {
     console.log('hiiiii');
     return false;
+  }
+
+  groupAvatars(receivers) {
+    switch (receivers.length) {
+      case 1:
+        return (
+          <div className="wrapper-avatars">
+            <img src={receivers[0].avatar} alt=""/>
+          </div>
+        );
+      case 2:
+        return (
+          <div className="wrapper-avatars">
+            <div className="grid-half">
+              <img src={receivers[0].avatar} alt=""/>
+            </div>
+            <div className="grid-half">
+              <img src={receivers[1].avatar} alt=""/>
+            </div>
+          </div>
+        );
+
+      case 3:
+        return (
+          <div className="wrapper-avatars">
+            <div className="grid-half">
+              <img src={receivers[0].avatar} alt=""/>
+            </div>
+            <div className="grid-half">
+              <div className="grid-fourth">
+                <img src={receivers[1].avatar} alt=""/>
+              </div>
+              <div className="grid-fourth">
+                <img src={receivers[2].avatar} alt=""/>
+              </div>
+            </div>
+          </div>
+        );
+
+      default:
+        return (
+          <div className="wrapper-avatars">
+            <div className="grid-half">
+              <div className="grid-fourth">
+                <img src={receivers[0].avatar} alt=""/>
+              </div>
+              <div className="grid-fourth">
+                <img src={receivers[1].avatar} alt=""/>
+              </div>
+            </div>
+            <div className="grid-half">
+              <div className="grid-fourth">
+                <img src={receivers[2].avatar} alt=""/>
+              </div>
+              <div className="grid-fourth">
+                <img src={receivers[3].avatar} alt=""/>
+              </div>
+            </div>
+          </div>
+        );
+    }
   }
 
   render() {
@@ -85,7 +147,8 @@ class UserButtons extends Component {
                         onClick={() => this.props.readConversation(conversation.conversation_id)}
                       >
                         <li>
-                          <img src={conversation.receivers[0].avatar} alt=""/>
+                          {this.groupAvatars(conversation.receivers)}
+                          {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
                           <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
                           {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
                           {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
