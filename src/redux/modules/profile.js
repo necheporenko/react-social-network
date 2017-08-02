@@ -420,10 +420,10 @@ export default function profileReducer(state = initialState, action) {
       });
 
       newConversations.sort((a, b) => {
-        if (a.messages[0].date > b.messages[0].date) {
+        if (Date.parse(a.messages[0].date) > Date.parse(b.messages[0].date)) {
           return -1;
         }
-        if (a.messages[0].date < b.messages[0].date) {
+        if (Date.parse(a.messages[0].date) < Date.parse(b.messages[0].date)) {
           return 1;
         }
         return 0;
@@ -452,7 +452,8 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         deletingConversation: false,
-        conversations: deletingConversations
+        conversations: deletingConversations,
+        conversation: []
       };
     case DELETE_CONVERSATION_FAIL:
       return {
@@ -476,6 +477,7 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         leavingConversation: false,
         conversations: leavingConversation,
+        conversation: []
         // conversation: leavingReceivers
       };
     case LEFT_CONVERSATION_FAIL:
@@ -597,7 +599,7 @@ export default function profileReducer(state = initialState, action) {
 
     case SOCKET_LAST_MESSAGE:
       console.log('newSocketLastMessage', action);
-      const newBubbleMessage = action.isMessengerOpen ? state.bubbleMessage : action.msg.countNewConversation;
+      // const newBubbleMessage = action.isMessengerOpen ? state.bubbleMessage : action.msg.countNewConversation;
       const newSocketLastMessage = state.conversations.map(conversation => {
         if (conversation.conversation_id === action.msg.conversation_id) {
           const conversationMessages = action.msg.message;
@@ -614,8 +616,8 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         conversations: newSocketLastMessage,
-        bubbleMessage: newBubbleMessage,
-        bubbleCommon: newBubbleMessage + state.bubbleNotification
+        bubbleMessage: action.msg.countNewConversation,
+        bubbleCommon: action.msg.countNewConversation + state.bubbleNotification
       };
 
     default:
@@ -655,11 +657,10 @@ export function socketGetMessage(msg) {
   };
 }
 
-export function socketLastMessage(msg, isMessengerOpen) {
+export function socketLastMessage(msg) {
   return {
     type: SOCKET_LAST_MESSAGE,
     msg,
-    isMessengerOpen
   };
 }
 
@@ -800,7 +801,8 @@ export function leftConversation(id, first_name) {
   return {
     types: [LEFT_CONVERSATION, LEFT_CONVERSATION_SUCCESS, LEFT_CONVERSATION_FAIL],
     promise: (client) => client.patch(`/conversations/left/${id}`),
-    id, first_name
+    id,
+    first_name
   };
 }
 

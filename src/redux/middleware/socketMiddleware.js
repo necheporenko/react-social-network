@@ -1,4 +1,4 @@
-import { socketUserNotification, socketGetMessage, socketLastMessage } from '../../redux/modules/profile';
+import { socketUserNotification, socketGetMessage, socketLastMessage, getConversationByID, getConversationList } from '../../redux/modules/profile';
 
 export default function socketMiddleware() {
   const onMessage = (ws, store) => evt => {
@@ -10,17 +10,18 @@ export default function socketMiddleware() {
     switch (msg.type) {
       case 'message':
         const path = currentState.routing.locationBeforeTransitions.pathname;
-        // console.log('msg:', msg.conversation_id, currentState.profile.conversation.conversation_id);
-        //currentState.profile.conversation.conversation_id === msg.conversation_id
 
-        //if (currentState.profile.conversation.conversation_id !== msg.conversation_id)
         if (path === `/messages/${msg.conversation_id}`) {
           store.dispatch(socketGetMessage(msg.message));
-        } else if ((path.indexOf('messages') === 1) && (path !== `/messages/${msg.conversation_id}`)) {
-          store.dispatch(socketLastMessage(msg, true));
         } else {
-          store.dispatch(socketLastMessage(msg, false));
+          store.dispatch(socketLastMessage(msg));
         }
+
+        if (msg.message.is_tech) {
+          store.dispatch(getConversationByID(msg.conversation_id));
+          store.dispatch(getConversationList());
+        }
+
         break;
       case 'notification':
         store.dispatch(socketUserNotification(msg));

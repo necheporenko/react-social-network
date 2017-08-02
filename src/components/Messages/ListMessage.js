@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { clearConversation, deleteConversation, leftConversation, searchConversation, readConversation } from '../../redux/modules/profile';
 import './index.scss';
 
@@ -77,6 +78,7 @@ class ListMessage extends Component {
                   <h5>{this.getReceivers(conversation.receivers)}</h5>
                 </li>
                 <span>{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
+                <div className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
                 <p>{conversation.messages && conversation.messages[0].text}</p>
               </Link>
               <div className="conversation-settings">

@@ -157,7 +157,7 @@ class Messages extends Component {
                 </div>
                 }
               </div>
-              <i onClick={this.toggleAddSearch}>{this.state.showAddSearch ? 'x' : '+'}</i>
+              <i onClick={this.toggleAddSearch} style={{fontStyle: 'normal'}}>{this.state.showAddSearch ? 'x' : '+'}</i>
             </div>
           }
 

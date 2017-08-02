@@ -178,6 +178,40 @@
     a:hover {
       color: #333;
     }
+
+    .date {
+      position: absolute;
+      left: 305px;
+      top: 13px;
+
+      &:hover {
+        ~ .tooltip-date {
+          display: block;
+        }
+      }
+    }
+
+    .tooltip-date {
+      display: none;
+      position: absolute;
+      right: 5px;
+      top: 30px;
+      background: #333;
+      color: #fff;
+      padding: 3px 6px;
+      font-size: 13px;
+      z-index: 2;
+    }
+  }
+
+  .triangle {
+    background-image: url(../../img/Icons/triangle.svg);
+    display: inline-block;
+    height: 10px;
+    width: 20px;
+    position: absolute;
+    top: -10px;
+    left: 277px;
   }
 
     //.icon-mail {
@@ -220,11 +254,11 @@
   }
 
   .dropdown-menu-right {
-    left: -190px;
+    left: -290px;
   }
 
   .dropdown-menu {
-    top: 32px;
+    top: 30px;
     width: 350px;
     box-shadow: none;
     a {
@@ -248,6 +282,16 @@
     right: -4px;
   }
 
+  .triangle {
+    background-image: url(../../img/Icons/triangle.svg);
+    display: inline-block;
+    height: 10px;
+    width: 20px;
+    position: absolute;
+    top: -10px;
+    left: 297px;
+  }
+
   button {
     border: 0;
     padding: 0;
@@ -255,8 +299,7 @@
     padding-left: 5px;
     height: 15px;
     width: 10px;
-    background: $sprite;
-    background-position: -32px -486px;
+    background: $sprite -32px -486px;
 
     &:hover {
       background-position: -46px -486px;
@@ -286,7 +329,7 @@
   }
 
   .dropdown-menu-right {
-    left: -190px;
+    left: -310px;
   }
 
   .dropdown-menu {

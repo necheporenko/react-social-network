@@ -49,35 +49,7 @@ class NewMessage extends Component {
 
   componentDidUpdate() {
     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
-
-    // console.log('componentDidUpdate', this.props.conversation.conversation_id);
-    // if (this.props.conversation.conversation_id) {
-    //   browserHistory.push(`/messages/${this.props.conversation.conversation_id}`);
-    // }
   }
-
-  // componentWillUpdate() {
-  //   console.log('componentWillUpdate', this.props.conversation.conversation_id);
-  //   if (this.props.conversation.conversation_id) {
-  //     console.log('1111111111111111111111111111111111111');
-  //     // browserHistory.push(`/messages/${this.props.conversation.conversation_id}`);
-  //   }
-  // }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (nextProps.conversation.conversation_id === this.props.conversation.conversation_id) {
-  //     // this.setState({showReply: false});
-  //     console.log('shouldComponentUpdate', nextProps.conversation.conversation_id)
-  //     return true;
-  //   }
-  // }
-
-  // componentWillReceiveProps() {
-  //   console.log('componentWillReceiveProps', this.props.conversation.conversation_id);
-  //   if (this.props.conversation.conversation_id) {
-  //     console.log('22222222222222222222222222');
-  //   }
-  // }
 
   handleSearchUser(event) {
     // console.log('this.state.hideTypeahead', this.state.hideTypeahead);
@@ -102,16 +74,18 @@ class NewMessage extends Component {
       event.preventDefault();
 
       const conversationID = this.props.conversation.conversation_id || null;
-      if (conversationID === this.props.conversation.conversation_id) {
-        browserHistory.push(`/messages/${conversationID}`);
-      }
 
-      this.props.createMessage(
+      Promise.resolve(this.props.createMessage(
         event.target.value,
         conversationID,
         Array.from(this.state.checkedUsersID.id, item => parseInt(item, 10))  // str -> number
-      )
-        .then(event.target.value = '');
+      ))
+        .then(event.target.value = '')
+        .then(value => {
+          if (conversationID !== value.data.conversation_id) {
+            browserHistory.push(`/messages/${value.data.conversation_id}`);
+          }
+        });
     }
   }
 

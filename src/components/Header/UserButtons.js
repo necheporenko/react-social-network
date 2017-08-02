@@ -66,6 +66,7 @@ class UserButtons extends Component {
               }
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title={''} id={1} noCaret pullRight>
                 <div className="notification-box">
+                  <div className="triangle"/>
                   <div>
                     <h4>Messages</h4>
                     <div style={{display: 'flex'}}>
@@ -89,6 +90,8 @@ class UserButtons extends Component {
                           {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
                           {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
                           <span>{conversation.messages && conversation.messages[0].text}</span>
+                          <span className="date">{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
+                          <div className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
                         </li>
                       </Link>
                     ))}
@@ -109,6 +112,7 @@ class UserButtons extends Component {
             <ButtonToolbar>
               <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title={''} id={2} noCaret pullRight>
                 <div className="notification-box">
+                  <div className="triangle"/>
                   <div>
                     <h4>Notifications</h4>
                     <a onClick={this.props.readAllNotification}>Mark All as Read</a>
