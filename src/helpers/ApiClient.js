@@ -116,7 +116,7 @@ export default class ApiClient {
             deleteAuthCookie(req);
           }
 
-          if ((path === '/auth/login') && body && body.data.access_token) {
+          if ((path === '/auth/login' || path === '/registration') && body && body.data.access_token) {
             saveAuthCookie(req, body.data.access_token);
           }
 

@@ -72,6 +72,7 @@ const initialState = {
   bubbleCommon: 0,
   gotNotificationBubble: false,
   needLoadTemporaryConversation: false,
+  infoAboutTemporaryUser: {},
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -350,15 +351,22 @@ export default function profileReducer(state = initialState, action) {
           }],
           new: true,
         });
+
+      function newListConversation() {
+        const deleteTemporaryConversation = state.conversations;
+        if (!action.user_name) {
+          return deleteTemporaryConversation.filter(conversation => (conversation.conversation_id !== 'new'));
+        } else if (state.conversations[0].new) {
+          return [state.conversations[0] = addTemporaryConversation, ...state.conversations];
+        }
+        return [addTemporaryConversation, ...state.conversations];
+      }
+
       return {
         ...state,
         gettingConversation: false,
         conversation: newConversationByUser,
-        conversations: state.conversations[0].new
-          ?
-          [state.conversations[0] = addTemporaryConversation, ...state.conversations]
-          :
-          [addTemporaryConversation, ...state.conversations]
+        conversations: newListConversation()
       };
     case GET_CONVERSATION_BY_USER_FAIL:
       return {

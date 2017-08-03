@@ -105,10 +105,9 @@
 }
 
 .extension {
-  margin-right: 45px;
-  margin-top: 8px;
+  margin: 10px 0 5px;
 
-  button {
+  div {
     text-decoration: none;
     cursor: pointer;
     font-size: 13px;
@@ -119,6 +118,10 @@
     box-shadow: 0 0 2px #bebebe;
     color: #736f6f;
     line-height: 18px;
+    text-align: center;
+    width: 120px;
+    margin: 0 auto;
+
   }
 }
 
@@ -537,6 +540,20 @@
 
 .profile-menu {
 
+  .triangle {
+    background-image: url(../../img/Icons/triangle.svg);
+    display: inline-block;
+    height: 10px;
+    width: 20px;
+    position: absolute;
+    top: -10px;
+    left: 158px;
+  }
+
+  hr {
+    margin: 5px 0;
+  }
+
   button {
     background: 0;
     border: 0;
@@ -560,6 +577,7 @@
 
   .dropdown-menu-right {
     top: 43px;
+    right: -10px;
   }
 
   a {

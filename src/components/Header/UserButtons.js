@@ -111,9 +111,9 @@ class UserButtons extends Component {
     const { logoutUser, notifications, conversations, bubbleMessage, bubbleNotification } = this.props;
     return (
       <nav className="header-navigation">
-        <div className="extension">
-          <button>Install extension</button>
-        </div>
+        {/*<div className="extension">*/}
+          {/*<button>Install extension</button>*/}
+        {/*</div>*/}
 
         <div className="icons">
           <div className="wrap-icon-search">
@@ -143,7 +143,7 @@ class UserButtons extends Component {
                       <Link
                         to={`/messages/${conversation.conversation_id}`}
                         key={conversation.conversation_id}
-                        style={{background: conversation.is_seen ? '#fff' : '#eff6ff'}}
+                        style={{background: conversation.is_seen ? '#fff' : '#f3f8ff'}}
                         onClick={() => this.props.readConversation(conversation.conversation_id)}
                       >
                         <li>
@@ -188,7 +188,7 @@ class UserButtons extends Component {
                         key={notification.id}
                         onClick={() => this.props.readNotification(notification.id)}
                       >
-                        <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#eff6ff'}}>
+                        <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#f3f8ff'}}>
                           <div>
                             <img src={notification.user.avatar} alt=""/>
                             <h6 dangerouslySetInnerHTML={{__html: notification.text}}/>
@@ -241,9 +241,14 @@ class UserButtons extends Component {
         <div className="profile-menu">
           <ButtonToolbar>
             <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title={''} id={3} noCaret pullRight>
+              <div className="triangle"/>
               <Link to="/settings">Settings</Link>
               <Link to="/settings/privacy">Privacy Control Center</Link>
               <Link to="/" onClick={logoutUser}>Sign out</Link>
+              <hr/>
+              <div className="extension">
+                <div>Install extension</div>
+              </div>
             </DropdownButton>
           </ButtonToolbar>
         </div>

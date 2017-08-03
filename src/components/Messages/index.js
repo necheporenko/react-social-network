@@ -130,7 +130,7 @@ class Messages extends Component {
 
               <div style={{display: this.state.showAddSearch ? 'block' : 'none'}}>
                 <div style={{display: this.state.checkedUsersID.fullName.length > 0 ? 'flex' : 'inline-flex'}}>
-                  <span>Add more people:</span>
+                  <span style={{color: '#8f8f8f'}}>Add more people:</span>
                   <div className="list-of-found-users">
                     { this.state.checkedUsersID && this.state.checkedUsersID.fullName.map((user, index) => (
                       <span key={index}>{user}</span>
@@ -141,7 +141,7 @@ class Messages extends Component {
                 <input
                   type="text"
                   className="messages-input"
-                  placeholder="Type the name of person"
+                  placeholder="Type the name of a person"
                   onChange={this.handleSearchUser}
                   ref={el => this.inputMessage = el}
                   style={{position: this.state.checkedUsersID.fullName.length > 0 ? 'relative' : 'static'}}
@@ -165,6 +165,7 @@ class Messages extends Component {
           }
 
           <div className="messages-box" ref={el => this.messageBlock = el} >
+            <div>
 
             { conversation.messages && conversation.messages.map((message, i, arr) => (
               (message.is_tech === 0 &&
@@ -184,8 +185,7 @@ class Messages extends Component {
                     <Link to={`/${message.user.slug}`}>
                       <h5>{message.user.first_name}</h5>
                     </Link>
-                    <div className="wrapper-time-settings">
-                      <span>{message.date.substring(11, 17)}</span>
+                    <div className="wrapper-settings">
                       <div
                         className="message-settings"
                         onClick={this.openMessageSettings}
@@ -198,9 +198,9 @@ class Messages extends Component {
                         </div>
                       </div>
                     </div>
-                  </div>
+                                      </div>
 
-                  <p>{message.text}</p>
+                  <p title={message.date.substring(0, 17)}>{message.text}</p>
                 </div>
               </div>
               )
@@ -313,7 +313,7 @@ class Messages extends Component {
             {/*</div>*/}
             {/*<p>Message text...3</p>*/}
             {/*</div>*/}
-
+            </div>
           </div>
           { conversation.conversation_id && (
             <div className="messages-send">
