@@ -183,7 +183,7 @@
       position: absolute;
       right: 13px;
       top: 13px;
-      font-size: 12px;
+      font-size: 10px;
       color: #8C9097;
 
       &:hover {
@@ -327,11 +327,13 @@
     }
 
     i {
-      font-size: 30px;
+      font-size: 34px;
       color: $gray-light-hover;
       line-height: 0;
+      letter-spacing: -2px;
       height: 100%;
       display: block;
+      margin-top: -2px;
     }
 
     > div {

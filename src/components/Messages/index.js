@@ -126,11 +126,11 @@ class Messages extends Component {
         <div className="wrapper">
           { conversation.receivers &&
             <div className="additional-title" style={{display: 'flex', justifyContent: 'space-between'}}>
-              <span style={{display: this.state.showAddSearch ? 'none' : 'block'}}>{this.getReceivers(conversation.receivers)}</span>
+              <span style={{display: this.state.showAddSearch ? 'none' : 'block', width: '100%', textAlign: 'center'}}>{this.getReceivers(conversation.receivers)}</span>
 
               <div style={{display: this.state.showAddSearch ? 'block' : 'none'}}>
                 <div style={{display: this.state.checkedUsersID.fullName.length > 0 ? 'flex' : 'inline-flex'}}>
-                  <span>Add:</span>
+                  <span>Add more people:</span>
                   <div className="list-of-found-users">
                     { this.state.checkedUsersID && this.state.checkedUsersID.fullName.map((user, index) => (
                       <span key={index}>{user}</span>
@@ -157,7 +157,10 @@ class Messages extends Component {
                 </div>
                 }
               </div>
-              <i onClick={this.toggleAddSearch} style={{fontStyle: 'normal'}}>{this.state.showAddSearch ? 'x' : '+'}</i>
+              <i
+                className={!this.state.showAddSearch ? 'add-member' : 'add-member add-member-cross'}
+                onClick={this.toggleAddSearch} style={{fontStyle: 'normal'}}
+              />
             </div>
           }
 
@@ -179,7 +182,7 @@ class Messages extends Component {
                       <img src={message.user.avatar} alt=""/>
                     </Link>
                     <Link to={`/${message.user.slug}`}>
-                      <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
+                      <h5>{message.user.first_name}</h5>
                     </Link>
                     <div className="wrapper-time-settings">
                       <span>{message.date.substring(11, 17)}</span>
@@ -332,6 +335,8 @@ Messages.propTypes = {
   conversation: PropTypes.object,
   createMessage: PropTypes.func,
   deleteMessage: PropTypes.func,
+  addMember: PropTypes.func,
+  newSearchUser: PropTypes.func,
   authorizedUser: PropTypes.object,
   foundUsers: PropTypes.array,
 };

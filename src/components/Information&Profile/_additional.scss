@@ -18,10 +18,22 @@
 
 .additional-title {
   font-size: 20px;
-  font-weight: bold;;
+  font-weight: 500;;
   padding: 12px 20px;
   border: 0 none;
   border-bottom: 1px solid $border-color;
+
+  .add-member {
+    background: url('../../img/Icons/plus1.svg');
+    display: block;
+    width: 15px;
+    height: 15px;
+    margin-top: 7px;
+    cursor: pointer;
+  }
+  .add-member-cross {
+    background: url('../../img/Icons/cross.svg');
+  }
 }
 
 .additional-mnu-ul {

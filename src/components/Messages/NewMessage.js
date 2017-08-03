@@ -142,7 +142,7 @@ class NewMessage extends Component {
                       <img src={message.user.avatar} alt=""/>
                     </Link>
                     <Link to={`/${message.user.slug}`}>
-                      <h5>{`${message.user.first_name} ${message.user.last_name}`}</h5>
+                      <h5>{message.user.first_name}</h5>
                     </Link>
                     <div className="wrapper-time-settings">
                       <span>{message.date.substring(11, 17)}</span>

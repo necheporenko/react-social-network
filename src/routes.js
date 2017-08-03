@@ -1,5 +1,6 @@
 import React from 'react';
 import { IndexRoute, Route, IndexRedirect } from 'react-router';
+import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
 import App from 'containers/App/App';
 import IndexContainer from 'containers/IndexContainer';
 import UserContainer from 'containers/UserContainer';
@@ -55,12 +56,21 @@ if (typeof System.import === 'undefined') System.import = module => Promise.reso
 
 export default (store) => {
   const requireLogin = (nextState, replace, cb) => {
-    const { user: { isAuthenticated }} = store.getState();
-    if (!isAuthenticated) {
-      // oops, not logged in, so can't be here!
-      replace('/account/auth');
+    function checkAuth() {
+      const {user: {isAuthenticated}} = store.getState();
+      if (!isAuthenticated) {
+        // oops, not logged in, so can't be here!
+        replace('/account/auth');
+      }
+      // cb();
     }
-    cb();
+    checkAuth();
+
+    // if (!isAuthLoaded(store.getState())) {
+    //   store.dispatch(loadAuth()).then(checkAuth);
+    // } else {
+    //   checkAuth();
+    // }
   };
 
   return (
