@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
+import { Link, browserHistory } from 'react-router';
 import Textarea from 'react-textarea-autosize';
 import { getConversationByUser, createMessage } from '../../redux/modules/profile';
 import { newSearchUser } from '../../redux/modules/search';
@@ -31,6 +31,7 @@ class NewMessage extends Component {
     this.handleSearchUser = this.handleSearchUser.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.addCheckedUser = this.addCheckedUser.bind(this);
+    this.deleteSearchUser = this.deleteSearchUser.bind(this);
   }
 
   componentDidMount() {
@@ -51,6 +52,19 @@ class NewMessage extends Component {
     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
   }
 
+  deleteSearchUser(event) {
+    if (event.keyCode === 8 && this.state.checkedUsersID.fullName.length > 0 && !event.target.value) {
+      const deleteLastCheckedUsersID = this.state.checkedUsersID;
+      deleteLastCheckedUsersID.fullName.splice(-1, 1);
+      deleteLastCheckedUsersID.id.splice(-1, 1);
+
+      this.setState({ checkedUsersID: deleteLastCheckedUsersID });
+      this.props.getConversationByUser(this.state.checkedUsersID.id.toString(), this.state.checkedUsersID.fullName.toString());
+      console.log('backspace', this.state.checkedUsersID);
+    }
+    // console.log(event.target.value);
+  }
+
   handleSearchUser(event) {
     // console.log('this.state.hideTypeahead', this.state.hideTypeahead);
     if (this.state.hideTypeahead) {
@@ -65,7 +79,7 @@ class NewMessage extends Component {
     currentCheckedUsersID.id.push(user.id);
 
     this.setState({ checkedUsersID: currentCheckedUsersID, hideTypeahead: true });
-    this.props.getConversationByUser(this.state.checkedUsersID.id.toString(), currentCheckedUsersID.fullName.toString());
+    this.props.getConversationByUser(this.state.checkedUsersID.id.toString(), this.state.checkedUsersID.fullName.toString());
     this.inputMessage.value = '';
   }
 
@@ -108,8 +122,9 @@ class NewMessage extends Component {
             <input
               type="text"
               className="messages-input"
-              placeholder="Type the name of person"
+              placeholder="Type the name of a person"
               onChange={this.handleSearchUser}
+              onKeyDown={this.deleteSearchUser}
               ref={el => this.inputMessage = el}
               style={{position: this.state.checkedUsersID.fullName.length > 0 ? 'relative' : 'static'}}
             />
@@ -126,6 +141,7 @@ class NewMessage extends Component {
           </div>
 
           <div className="messages-box" ref={(el) => this.messageBlock = el}>
+
             { conversation.messages && conversation.messages.map((message, i, arr) => (
               (message.is_tech === 0 &&
               <div key={message.id}>
@@ -176,6 +192,7 @@ class NewMessage extends Component {
                 </div>
               </div>
               ))}
+
           </div>
 
           <div className="messages-send">
@@ -201,6 +218,7 @@ NewMessage.propTypes = {
   deleteMessage: PropTypes.func,
   conversation: PropTypes.object,
   authorizedUser: PropTypes.object,
+  infoAboutTemporaryUser: PropTypes.object,
 };
 
 export default NewMessage;

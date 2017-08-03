@@ -38,6 +38,9 @@ const GET_CONVERSATION_BY_USER_FAIL = 'GET_CONVERSATION_BY_USER_FAIL';
 const GET_CONVERSATION_LIST = 'GET_CONVERSATION_LIST';
 const GET_CONVERSATION_LIST_SUCCESS = 'GET_CONVERSATION_LIST_SUCCESS';
 const GET_CONVERSATION_LIST_FAIL = 'GET_CONVERSATION_LIST_FAIL';
+const LOAD_NEXT_CONVERSATIONS = 'LOAD_NEXT_CONVERSATIONS';
+const LOAD_NEXT_CONVERSATIONS_SUCCESS = 'LOAD_NEXT_CONVERSATIONS_SUCCESS';
+const LOAD_NEXT_CONVERSATIONS_FAIL = 'LOAD_NEXT_CONVERSATIONS_FAIL';
 const CREATE_MESSAGE = 'CREATE_MESSAGE';
 const CREATE_MESSAGE_SUCCESS = 'CREATE_MESSAGE_SUCCESS';
 const CREATE_MESSAGE_FAIL = 'CREATE_MESSAGE_FAIL';
@@ -73,6 +76,9 @@ const initialState = {
   gotNotificationBubble: false,
   needLoadTemporaryConversation: false,
   infoAboutTemporaryUser: {},
+  paginationConversations: 2, //pagination conversations
+  hasMoreConversations: true,
+  // loadedConversations: false,
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -441,12 +447,53 @@ export default function profileReducer(state = initialState, action) {
         gettingConversationList: false,
         conversations: newConversations,
         copyConversations: newConversations,
+        paginationConversations: 2,
       };
     case GET_CONVERSATION_LIST_FAIL:
       return {
         ...state,
         gettingConversationList: false,
         error: action.error,
+      };
+
+    case LOAD_NEXT_CONVERSATIONS:
+      return {
+        ...state,
+        gettingConversationList: true,
+      };
+    case LOAD_NEXT_CONVERSATIONS_SUCCESS:
+      const nextConversations = action.result.data;
+      nextConversations.map(conversation => {
+        conversation.receiversID = [];
+        const receiversName = [];
+        conversation.receivers.map(receiver => {
+          conversation.receiversID.push(receiver.id);
+          receiversName.push(` ${receiver.first_name}`);
+        });
+        conversation.receiversName = receiversName.toString();
+      });
+
+      nextConversations.sort((a, b) => {
+        if (Date.parse(a.messages[0].date) > Date.parse(b.messages[0].date)) {
+          return -1;
+        }
+        if (Date.parse(a.messages[0].date) < Date.parse(b.messages[0].date)) {
+          return 1;
+        }
+        return 0;
+      });
+
+      return {
+        ...state,
+        gettingConversationList: true,
+        conversations: [...state.conversations, ...nextConversations],
+        paginationConversations: state.paginationConversations + 1,
+        hasMoreConversations: action.result.data.length > 0,
+      };
+    case LOAD_NEXT_CONVERSATIONS_FAIL:
+      return {
+        ...state,
+        gettingConversationList: true,
       };
 
     case DELETE_CONVERSATION:
@@ -794,6 +841,13 @@ export function getConversationList() {
   return {
     types: [GET_CONVERSATION_LIST, GET_CONVERSATION_LIST_SUCCESS, GET_CONVERSATION_LIST_FAIL],
     promise: (client) => client.get('/conversations')
+  };
+}
+
+export function loadNextConversations(page) {
+  return {
+    types: [LOAD_NEXT_CONVERSATIONS, LOAD_NEXT_CONVERSATIONS_SUCCESS, LOAD_NEXT_CONVERSATIONS_FAIL],
+    promise: (client) => client.get('/conversations', { params: { page }})
   };
 }
 

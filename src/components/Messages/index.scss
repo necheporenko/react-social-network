@@ -92,7 +92,7 @@
     }
   }
 
-  > div:not(.messages-search) {
+  .conversation:not(.messages-search) {
     position: relative;
 
     &:hover {

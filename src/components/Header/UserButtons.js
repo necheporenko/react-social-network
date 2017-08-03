@@ -2,13 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
+import InfiniteScroll from 'react-infinite-scroller';
 import { getConversationList, getUserNotifications, seenAllNotification, seenAllConversations, clearConversation,
-  readAllNotification, readAllConversations, readConversation, readNotification } from '../../redux/modules/profile';
+  readAllNotification, readAllConversations, readConversation, readNotification, loadNextConversations } from '../../redux/modules/profile';
 
 @connect((state) => ({
   conversations: state.profile.conversations,
   bubbleMessage: state.profile.bubbleMessage,
   bubbleNotification: state.profile.bubbleNotification,
+  paginationConversations: state.profile.paginationConversations,
+  hasMoreConversations: state.profile.hasMoreConversations,
 }), {
   getConversationList,
   seenAllNotification,
@@ -19,6 +22,7 @@ import { getConversationList, getUserNotifications, seenAllNotification, seenAll
   readConversation,
   readNotification,
   clearConversation,
+  loadNextConversations,
 })
 
 class UserButtons extends Component {
@@ -28,6 +32,7 @@ class UserButtons extends Component {
     this.clickMail = this.clickMail.bind(this);
     this.groupAvatars = this.groupAvatars.bind(this);
     this.clickNotification = this.clickNotification.bind(this);
+    this.loadConversations = this.loadConversations.bind(this);
   }
 
   clickMail() {
@@ -106,6 +111,10 @@ class UserButtons extends Component {
     }
   }
 
+  loadConversations() {
+    this.props.loadNextConversations(this.props.paginationConversations);
+  }
+
   render() {
     const { slug, first_name, avatar32 } = this.props.authorizedUser;
     const { logoutUser, notifications, conversations, bubbleMessage, bubbleNotification } = this.props;
@@ -139,6 +148,14 @@ class UserButtons extends Component {
                   </div>
                   <hr/>
                   <ul>
+                    <InfiniteScroll
+                      // loadMore={this.loadConversations}
+                      // hasMore={this.props.hasMoreConversations}
+                      hasMore={true}
+                      threshold={75}
+                      // loader={loader}
+                      useWindow={false}
+                    >
                     { conversations && conversations.map(conversation => (
                       <Link
                         to={`/messages/${conversation.conversation_id}`}
@@ -158,6 +175,7 @@ class UserButtons extends Component {
                         </li>
                       </Link>
                     ))}
+                    </InfiniteScroll>
                   </ul>
                   <div style={{paddingTop: '7px', justifyContent: 'center'}}>
                     <Link to="/messages">See all</Link>
@@ -274,6 +292,9 @@ UserButtons.propTypes = {
   readNotification: PropTypes.func,
   readConversation: PropTypes.func,
   clearConversation: PropTypes.func,
+  loadNextConversations: PropTypes.func,
+  paginationConversations: PropTypes.number,
+  hasMoreConversations: PropTypes.boolean,
 };
 
 export default UserButtons;

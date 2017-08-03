@@ -1,18 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { clearConversation, deleteConversation, leftConversation, searchConversation, readConversation } from '../../redux/modules/profile';
+import InfiniteScroll from 'react-infinite-scroller';
+import { clearConversation, deleteConversation, leftConversation, searchConversation, readConversation,
+  loadNextConversations } from '../../redux/modules/profile';
 import './index.scss';
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
+  paginationConversations: state.profile.paginationConversations,
+  hasMoreConversations: state.profile.hasMoreConversations,
 }), {
   clearConversation,
   deleteConversation,
   leftConversation,
   searchConversation,
-  readConversation
+  readConversation,
+  loadNextConversations,
 })
 
 class ListMessage extends Component {
@@ -24,6 +28,7 @@ class ListMessage extends Component {
     this.getReceivers = this.getReceivers.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.groupAvatars = this.groupAvatars.bind(this);
+    this.loadConversations = this.loadConversations.bind(this);
   }
 
   getReceivers(receivers) {
@@ -106,6 +111,10 @@ class ListMessage extends Component {
     }
   }
 
+  loadConversations() {
+    this.props.loadNextConversations(this.props.paginationConversations);
+  }
+
   render() {
     const { conversations, authorizedUser } = this.props;
 
@@ -120,62 +129,70 @@ class ListMessage extends Component {
             <i/>
           </div>
 
-          { conversations.length === 0 &&
-            <li style={{padding: '10px 15px'}}>No conversations found</li>
-          }
+          <InfiniteScroll
+            loadMore={this.loadConversations}
+            hasMore={this.props.hasMoreConversations}
+            threshold={75}
+            // loader={loader}
+            useWindow={false}
+          >
 
-          { conversations && conversations.map(conversation => (
-            <div
-              key={conversation.conversation_id}
-              onClick={() => this.props.readConversation(conversation.conversation_id)}
-              style={{background: conversation.is_seen ? '#fff' : '#eff6ff'}}
-            >
-              <Link
-                to={`/messages/${conversation.conversation_id}`}
-                onlyActiveOnIndex={true}
-                activeClassName="active"
-              >
-                <li>
-                  {this.groupAvatars(conversation.receivers)}
-                  {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
-                  <h5>{this.getReceivers(conversation.receivers)}</h5>
-                </li>
-                <span>{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
-                <div className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
-                <p>{conversation.messages && conversation.messages[0].text}</p>
-              </Link>
-              <div className="conversation-settings">
-                <i/>
-                <div>
-                  <ul>
-                    { conversation.receivers.length > 1 &&
+            { conversations.length === 0 && <li style={{padding: '10px 15px'}}>No conversations found</li> }
+
+            { conversations && conversations.map(conversation => (
+              <div
+                className="conversation"
+                key={conversation.conversation_id}
+                onClick={() => this.props.readConversation(conversation.conversation_id)}
+                style={{background: conversation.is_seen ? '#fff' : '#eff6ff'}}
+               >
+                <Link
+                  to={`/messages/${conversation.conversation_id}`}
+                  onlyActiveOnIndex={true}
+                  activeClassName="active"
+                >
+                  <li>
+                    {this.groupAvatars(conversation.receivers)}
+                    {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
+                    <h5>{this.getReceivers(conversation.receivers)}</h5>
+                  </li>
+                  <span>{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
+                  <div className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
+                  <p>{conversation.messages && conversation.messages[0].text}</p>
+                </Link>
+                <div className="conversation-settings">
+                  <i/>
+                  <div>
+                    <ul>
+                      { conversation.receivers.length > 1 &&
                       <li onClick={() => this.props.leftConversation(conversation.conversation_id, authorizedUser.first_name)}>Leave Group</li>
                     }
-                    <li onClick={() => this.props.deleteConversation(conversation.conversation_id)}>Delete</li>
-                    <li>Report Spam or Abuse...</li>
-                  </ul>
+                      <li onClick={() => this.props.deleteConversation(conversation.conversation_id)}>Delete</li>
+                      <li>Report Spam or Abuse...</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
          ))}
 
-          {/*/!*<Link to="/messages">*!/*/}
-          {/*<a href="#">*/}
-          {/*<li>*/}
-          {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-          {/*<h5>Name Surname</h5>*/}
-          {/*</li>*/}
-          {/*<p>Message text...</p>*/}
-          {/*</a>*/}
-          {/*/!*</Link>*!/*/}
+            {/*/!*<Link to="/messages">*!/*/}
+            {/*<a href="#">*/}
+            {/*<li>*/}
+            {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+            {/*<h5>Name Surname</h5>*/}
+            {/*</li>*/}
+            {/*<p>Message text...</p>*/}
+            {/*</a>*/}
+            {/*/!*</Link>*!/*/}
 
-          {/*<a href="#">*/}
-          {/*<li>*/}
-          {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-          {/*<h5>Name Surname</h5>*/}
-          {/*</li>*/}
-          {/*<p>Message text...</p>*/}
-          {/*</a>*/}
+            {/*<a href="#">*/}
+            {/*<li>*/}
+            {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+            {/*<h5>Name Surname</h5>*/}
+            {/*</li>*/}
+            {/*<p>Message text...</p>*/}
+            {/*</a>*/}
+          </InfiniteScroll>
         </ul>
       </div>
     );
@@ -190,6 +207,9 @@ ListMessage.propTypes = {
   searchConversation: PropTypes.func,
   readConversation: PropTypes.func,
   authorizedUser: PropTypes.object,
+  loadNextConversations: PropTypes.func,
+  paginationConversations: PropTypes.number,
+  hasMoreConversations: PropTypes.boolean,
 };
 
 export default ListMessage;
