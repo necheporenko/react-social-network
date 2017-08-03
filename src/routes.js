@@ -1,6 +1,6 @@
 import React from 'react';
 import { IndexRoute, Route, IndexRedirect } from 'react-router';
-import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/auth';
+import { isLoaded as isAuthLoaded, load as loadAuth } from 'redux/modules/user';
 import App from 'containers/App/App';
 import IndexContainer from 'containers/IndexContainer';
 import UserContainer from 'containers/UserContainer';
@@ -57,20 +57,18 @@ if (typeof System.import === 'undefined') System.import = module => Promise.reso
 export default (store) => {
   const requireLogin = (nextState, replace, cb) => {
     function checkAuth() {
-      const {user: {isAuthenticated}} = store.getState();
-      if (!isAuthenticated) {
+      if (!isAuthLoaded(store.getState())) {
         // oops, not logged in, so can't be here!
         replace('/account/auth');
       }
-      // cb();
+      cb();
     }
-    checkAuth();
 
-    // if (!isAuthLoaded(store.getState())) {
-    //   store.dispatch(loadAuth()).then(checkAuth);
-    // } else {
-    //   checkAuth();
-    // }
+    if (!isAuthLoaded(store.getState())) {
+      store.dispatch(loadAuth()).then(checkAuth, checkAuth);
+    } else {
+      checkAuth();
+    }
   };
 
   return (
@@ -91,7 +89,7 @@ export default (store) => {
         <Route path=":conversationID" component={Messages} />
       </Route>
 
-      <Route path="/settings" component={ProfileContainer}>
+      <Route path="/settings" component={ProfileContainer} onEnter={requireLogin}>
         <IndexRedirect to="profile" />
         <Route path="profile" component={Profile} />
         <Route path="password" component={Password} />
@@ -107,7 +105,7 @@ export default (store) => {
       <Route path="/registration/easy" component={Easy} />
       <Route path="/account/password-recovery" component={Recovery} />
       <Route path="/unsubscribe" component={Unsubscribe} />
-      <Route path="/notifications" component={NotificationList} />
+      <Route path="/notifications" component={NotificationList} onEnter={requireLogin}/>
 
       <Route path="/search" component={SearchContainer} >
         <IndexRoute component={Search} />
@@ -135,14 +133,14 @@ export default (store) => {
       <Route path="/:userName/people" component={PeopleContainer}>
         <IndexRoute component={People} />
         <Route path="followers" component={PeopleFollowers} />
-        <Route path="suggested" component={PeopleSuggested} />
+        <Route path="suggested" component={PeopleSuggested} onEnter={requireLogin}/>
       </Route>
 
       <Route path="/:userName/cache" component={TokensContainer}>
         <IndexRoute component={Tokens} />
-        <Route path="exchange" component={TokensExchange}/>
-        <Route path="public" component={TokensPublic} />
-        <Route path="private" component={TokensPrivate} />
+        <Route path="exchange" component={TokensExchange} onEnter={requireLogin}/>
+        {/*<Route path="public" component={TokensPublic} />*/}
+        {/*<Route path="private" component={TokensPrivate} />*/}
       </Route>
 
       <Route path="/:userName/photos" component={PhotosContainer}>
