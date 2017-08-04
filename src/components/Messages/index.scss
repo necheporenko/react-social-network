@@ -186,7 +186,7 @@
         position: absolute;
         right: 13px;
         top: 15px;
-        font-size: 11px;
+        font-size: 12px;
         color: #8C9097;
 
         &:hover {
@@ -569,6 +569,7 @@
   border: none;
   outline: none;
   left: 10px;
+  width: 200px;
 }
 
 .wrapper-find-users {
@@ -606,6 +607,25 @@
       font-weight: normal;
     }
   }
+}
+
+.participants {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  margin-top: -3px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.quantity-participants {
+  font-size: 10px;
+  color: #999999;
+  text-align: center;
+  display: block;
+  margin-bottom: -6px;
+  margin-top: 3px;
 }
 
 .new-messages-form {

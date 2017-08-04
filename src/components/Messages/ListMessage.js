@@ -129,7 +129,7 @@ class ListMessage extends Component {
     return (
       <div className="messages-mnu">
         <div className="additional-title">Conversations
-         <Link to="/messages/new" className="new-message" onClick={this.clear}><i/></Link>
+         <Link to="/messages/new" className="new-message" onClick={this.clear} title="New Message"><i/></Link>
         </div>
         <ul className="conversations-list">
           <div className="messages-search">

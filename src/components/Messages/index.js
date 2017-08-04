@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Textarea from 'react-textarea-autosize';
+import { Modal } from 'react-bootstrap';
 import { getConversationByID, createMessage, deleteMessage, getConversationID, addMember } from '../../redux/modules/profile';
 import { newSearchUser } from '../../redux/modules/search';
 import './index.scss';
@@ -29,7 +30,7 @@ import './index.scss';
   addMember
 })
 
-class Messages extends Component {
+export default class Messages extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,10 +38,14 @@ class Messages extends Component {
         fullName: [],
         id: []
       },
+      showModal: false,
       messageSetting: false,
       showAddSearch: false,
       hideTypeahead: false,
     };
+
+    this.Open = this.Open.bind(this);
+    this.Close = this.Close.bind(this);
     this.getReceivers = this.getReceivers.bind(this);
     this.addCheckedUser = this.addCheckedUser.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -56,6 +61,13 @@ class Messages extends Component {
 
   componentDidUpdate() {
     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+  }
+
+  Close() {
+    this.setState({ showModal: false });
+  }
+  Open() {
+    this.setState({ showModal: true });
   }
 
   handleSearchUser(event) {
@@ -138,19 +150,29 @@ class Messages extends Component {
       <div className="messages-content">
         <div className="wrapper">
           { conversation.receivers &&
-            <div className="additional-title" style={{display: 'flex', justifyContent: 'space-between'}}>
-              <span style={{display: this.state.showAddSearch ? 'none' : 'block', width: '100%', textAlign: 'center'}}>
-                {this.getReceivers(conversation.receivers)}
-              </span>
+            <div className="additional-title" style={{display: 'flex'}}>
+              <div style={{width: '90%', display: this.state.showAddSearch ? 'none' : 'block', margin: '0 auto'}}>
+                <span className="participants">
+                  {this.getReceivers(conversation.receivers)}
+                </span>
+                <span onClick={this.Open} className="quantity-participants">{`${conversation.receivers.length} Participants`}</span>
+
+               {/* <Participants
+                  Open={this.Open}
+                  Close={this.Close}
+                  showModal={this.state.showModal}
+                />*/}
+
+              </div>
               {conversation.receivers.length !== 1 &&
-                <div>
+                <div style={{display: 'flex', justifyContent: 'space-between', width: this.state.showAddSearch ? '100%' : 'auto'}}>
                   <div style={{display: this.state.showAddSearch ? 'block' : 'none'}}>
                     <div style={{display: this.state.checkedUsersID.fullName.length > 0 ? 'flex' : 'inline-flex'}}>
-                      <span style={{fontWeight: 400, fontSize: '12px'}}>To:</span>
+                      <span style={{fontWeight: 400, fontSize: '13px'}}>To:</span>
                       <div className="list-of-found-users">
                         {this.state.checkedUsersID && this.state.checkedUsersID.fullName.map((user, index) => (
                           <span key={index}>{user}</span>
-                    ))}
+                        ))}
                       </div>
                     </div>
 
@@ -160,9 +182,10 @@ class Messages extends Component {
                       placeholder={this.state.checkedUsersID.fullName.length > 0 ? '' : 'Add more people...'}
                       onChange={this.handleSearchUser}
                       onKeyDown={this.confirmMembers}
+                      autoFocus={true}
                       ref={el => this.inputMessage = el}
                       style={{position: this.state.checkedUsersID.fullName.length > 0 ? 'relative' : 'static'}}
-                />
+                    />
                     {!this.state.hideTypeahead && foundUsers.length > 0 &&
                     <div className="wrapper-find-users">
                       {foundUsers && foundUsers.map(user => (
@@ -170,14 +193,15 @@ class Messages extends Component {
                           <img src={user.avatar}/>
                           <p>{user.first_name} {user.last_name}</p>
                         </div>
-                  ))}
+                       ))}
                     </div>
-                }
+                    }
                   </div>
                   < i
                     className={!this.state.showAddSearch ? 'add-member' : 'add-member add-member-cross'}
                     onClick={this.toggleAddSearch} style={{fontStyle: 'normal'}}
-                />
+                    title="Add People"
+                  />
                 </div>
               }
             </div>
@@ -339,6 +363,7 @@ class Messages extends Component {
               <div className="wrapper">
                 <Textarea
                   placeholder="Type a message..."
+                  autoFocus={true}
                   onKeyDown={this.handleKeyPress}
                 />
               </div>
@@ -360,4 +385,22 @@ Messages.propTypes = {
   foundUsers: PropTypes.array,
 };
 
-export default Messages;
+const Participants = ({Open, Close, showModal}) => {
+  return (
+    <div className="log-popup" onClick={Open}>
+      <Modal show={showModal} onHide={Close} className="modal-log avatar-popup">
+        <Modal.Header closeButton>
+          <Modal.Title>Log Story</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <div>1</div>
+          <div>3</div>
+          <div>2</div>
+        </Modal.Body>
+
+      </Modal>
+    </div>
+  );
+};
+

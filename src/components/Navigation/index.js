@@ -116,7 +116,7 @@ export default class Navigation extends Component {
           <div>
             {!isFollowing ? 'Follow' : 'Following'}
           </div>
-          <span></span>
+          <span/>
         </div>
         {/* {showName &&
           <NavigationInfoUser

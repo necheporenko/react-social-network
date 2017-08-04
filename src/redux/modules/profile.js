@@ -48,6 +48,7 @@ const DELETE_MESSAGE = 'DELETE_MESSAGE';
 const DELETE_MESSAGE_SUCCESS = 'DELETE_MESSAGE_SUCCESS';
 const DELETE_MESSAGE_FAIL = 'DELETE_MESSAGE_FAIL';
 const CLEAR_CONVERSATION = 'CLEAR_CONVERSATION';
+const CLEAR_CONVERSATIONS_LIST = 'CLEAR_CONVERSATIONS_LIST';
 const SOCKET_GET_MESSAGE = 'SOCKET_GET_MESSAGE';
 const SOCKET_LAST_MESSAGE = 'SOCKET_LAST_MESSAGE';
 const DELETE_CONVERSATION = 'DELETE_CONVERSATION';
@@ -667,6 +668,12 @@ export default function profileReducer(state = initialState, action) {
         conversation: [],
       };
 
+    case CLEAR_CONVERSATIONS_LIST:
+      return {
+        ...state,
+        conversations: [],
+      };
+
     case SOCKET_GET_MESSAGE:
       console.log('SOCKET_GET_MESSAGE', action);
       const newSocketMessage = Object.assign({}, state.conversation, {
@@ -727,6 +734,12 @@ export function isNeedLoadTemporaryConversation(globalState) {
 export function clearConversation() {        //for clear div in /messages/new
   return {
     type: CLEAR_CONVERSATION
+  };
+}
+
+export function clearConversionsList() {
+  return {
+    type: CLEAR_CONVERSATIONS_LIST
   };
 }
 

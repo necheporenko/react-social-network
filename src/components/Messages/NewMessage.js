@@ -113,7 +113,7 @@ class NewMessage extends Component {
           <div className="additional-title">
 
             <div style={{display: this.state.checkedUsersID.fullName.length > 0 ? 'flex' : 'inline-flex'}}>
-              <span style={{fontWeight: 400, fontSize: '12px'}}>To:</span>
+              <span style={{fontWeight: 400, fontSize: '13px'}}>To:</span>
               <div className="list-of-found-users">
                 { this.state.checkedUsersID && this.state.checkedUsersID.fullName.map((user, index) => (
                   <span key={index}>{user}</span>
@@ -201,7 +201,7 @@ class NewMessage extends Component {
           <div className="messages-send">
             <div className="wrapper">
               <Textarea
-                placeholder="Enter your message..."
+                placeholder="Type a message"
                 onKeyDown={this.handleKeyPress}
                 />
             </div>

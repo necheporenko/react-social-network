@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroller';
 import { getConversationList, getUserNotifications, seenAllNotification, seenAllConversations, clearConversation,
-  readAllNotification, readAllConversations, readConversation, readNotification, loadNextConversations } from '../../redux/modules/profile';
+  readAllNotification, readAllConversations, readConversation, readNotification, loadNextConversations, clearConversionsList } from '../../redux/modules/profile';
 
 @connect((state) => ({
   conversations: state.profile.conversations,
@@ -23,6 +23,7 @@ import { getConversationList, getUserNotifications, seenAllNotification, seenAll
   readNotification,
   clearConversation,
   loadNextConversations,
+  clearConversionsList,
 })
 
 class UserButtons extends Component {
@@ -36,6 +37,7 @@ class UserButtons extends Component {
   }
 
   clickMail() {
+    // this.props.clearConversionsList();
     this.props.getConversationList();
     this.props.seenAllConversations();
   }
@@ -296,6 +298,7 @@ UserButtons.propTypes = {
   loadNextConversations: PropTypes.func,
   paginationConversations: PropTypes.number,
   hasMoreConversations: PropTypes.boolean,
+  clearConversionsList: PropTypes.func,
 };
 
 export default UserButtons;
