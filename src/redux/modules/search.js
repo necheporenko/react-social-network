@@ -8,6 +8,7 @@ const SEARCH_BOOK_FAIL = 'SEARCH_BOOK_FAIL';
 const SEARCH_STORY = 'SEARCH_STORY';
 const SEARCH_STORY_SUCCESS = 'SEARCH_STORY_SUCCESS';
 const SEARCH_STORY_FAIL = 'SEARCH_STORY_FAIL';
+const CLEAR_USER_RESULT = 'CLEAR_USER_RESULT';
 
 const initialState = {
   query: '',
@@ -79,6 +80,12 @@ export default function bookReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case CLEAR_USER_RESULT:
+      return {
+        ...state,
+        foundUsers: [],
+      };
+
     default:
       return state;
   }
@@ -122,3 +129,10 @@ export function newSearchUser(str) {
     promise: (client) => client.get('/search/users', { params: { q: str }})
   };
 }
+
+export function clearUserResult() {
+  return {
+    type: CLEAR_USER_RESULT
+  };
+}
+

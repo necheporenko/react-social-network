@@ -25,8 +25,8 @@
 .conversations-list {
   list-style: none;
   padding-top: 15px;
-  max-height: calc(92% + 3px);
-  height: calc(92% + 3px);
+  max-height: 92%;
+  height: 92%;
   overflow-y: auto;
 
   &:hover {
@@ -156,42 +156,45 @@
       }
     }
   }
+
   a.active {
     background: #efefef !important;
   }
 
-  a {
-    display: block;
-    padding: 10px 10px 10px 15px;
-    cursor: pointer;
-    position: relative;
-
-    &:hover {
-      color: #333;
-    }
-
-    &:focus {
-      color: #333;
-      text-decoration: none;
-    }
-
-    li {
-      display: flex;
-    }
-
-    span {
-      position: absolute;
-      right: 13px;
-      top: 13px;
-      font-size: 10px;
-      color: #8C9097;
+  .conversation {
+    a {
+      display: block;
+      padding: 10px 10px 10px 15px;
+      cursor: pointer;
+      position: relative;
 
       &:hover {
-        ~ .tooltip-date {
-          display: block;
-        }
+        color: #333;
+      }
+
+      &:focus {
+        color: #333;
+        text-decoration: none;
       }
     }
+
+      li {
+        display: flex;
+      }
+
+      span {
+        position: absolute;
+        right: 13px;
+        top: 15px;
+        font-size: 11px;
+        color: #8C9097;
+
+        &:hover {
+          ~ .tooltip-date {
+            display: block;
+          }
+        }
+      }
 
     .tooltip-date {
       display: none;
@@ -212,13 +215,13 @@
     //}
 
     h5 {
-      font-weight: 500;
+      font-weight: 400;
       margin-top: 5px;
       margin-left: 10px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      width: 190px;
+      width: 180px;
     }
 
     p {
@@ -229,11 +232,25 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      font-weight: 400;
+      font-size: 13px;
+      color: #999999;
     }
   }
 
   .conversation-settings {
     //display: none;
+  }
+
+  .conversation-not-seen {
+    h5, p {
+      font-weight: 500;
+      color: $default-color;
+    }
+
+    span {
+      color: $brand-hover;
+    }
   }
 }
 
@@ -377,7 +394,8 @@
   }
 
   .message-settings {
-    right: 35px;
+    right: -6px;
+    position: relative;
 
     > div {
       left: -60px;
@@ -507,7 +525,7 @@
 // === New Message ===
 .new-message {
   i {
-    background: url('../../img/Icons/plus.svg');
+    background: url('../../img/Icons/add.svg');
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -528,10 +546,10 @@
   //height: 20px;
   position: relative;
   left: 5px;
-  top: 7px;
+  top: 0px;
 
   span {
-    background-color: #76cbef;
+    background-color: #efefef;
     padding: 1px 6px;
     border-radius: 2px;
     margin: 0 3px;
@@ -540,7 +558,7 @@
 
 .messages-input {
   padding: 1px 12px;
-  font-size: 14px;
+  font-size: 12px;
   color: #555555;
   background-image: none;
   //border: 1px solid #ccc;
@@ -550,7 +568,7 @@
   font-weight: normal;
   border: none;
   outline: none;
-  left: 23px;
+  left: 10px;
 }
 
 .wrapper-find-users {

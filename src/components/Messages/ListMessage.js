@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
 import { clearConversation, deleteConversation, leftConversation, searchConversation, readConversation,
   loadNextConversations } from '../../redux/modules/profile';
+import { clearUserResult } from '../../redux/modules/search';
 import './index.scss';
 
 @connect((state) => ({
@@ -17,6 +18,7 @@ import './index.scss';
   searchConversation,
   readConversation,
   loadNextConversations,
+  clearUserResult,
 })
 
 class ListMessage extends Component {
@@ -29,6 +31,7 @@ class ListMessage extends Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.groupAvatars = this.groupAvatars.bind(this);
     this.loadConversations = this.loadConversations.bind(this);
+    this.clear = this.clear.bind(this);
   }
 
   getReceivers(receivers) {
@@ -115,13 +118,18 @@ class ListMessage extends Component {
     this.props.loadNextConversations(this.props.paginationConversations);
   }
 
+  clear() {
+    this.props.clearConversation();
+    this.props.clearUserResult();
+  }
+
   render() {
     const { conversations, authorizedUser } = this.props;
 
     return (
       <div className="messages-mnu">
         <div className="additional-title">Conversations
-         <Link to="/messages/new" className="new-message" onClick={this.props.clearConversation}><i/></Link>
+         <Link to="/messages/new" className="new-message" onClick={this.clear}><i/></Link>
         </div>
         <ul className="conversations-list">
           <div className="messages-search">
@@ -141,10 +149,9 @@ class ListMessage extends Component {
 
             { conversations && conversations.map(conversation => (
               <div
-                className="conversation"
+                className={conversation.is_seen ? 'conversation' : 'conversation conversation-not-seen'}
                 key={conversation.conversation_id}
-                onClick={() => this.props.readConversation(conversation.conversation_id)}
-                style={{background: conversation.is_seen ? '#fff' : '#eff6ff'}}
+                onClick={() => { this.props.readConversation(conversation.conversation_id); this.props.clearUserResult(); }}
                >
                 <Link
                   to={`/messages/${conversation.conversation_id}`}
@@ -210,6 +217,7 @@ ListMessage.propTypes = {
   loadNextConversations: PropTypes.func,
   paginationConversations: PropTypes.number,
   hasMoreConversations: PropTypes.boolean,
+  clearUserResult: PropTypes.func,
 };
 
 export default ListMessage;

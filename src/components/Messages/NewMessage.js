@@ -41,7 +41,8 @@ class NewMessage extends Component {
         checkedUsersID: {
           fullName: [`${this.props.infoAboutTemporaryUser.first_name} ${this.props.infoAboutTemporaryUser.last_name}`],
           id: [this.props.infoAboutTemporaryUser.id]
-        }
+        },
+        hideTypeahead: false
       });
     } else {
       this.inputMessage.focus();
@@ -81,6 +82,7 @@ class NewMessage extends Component {
     this.setState({ checkedUsersID: currentCheckedUsersID, hideTypeahead: true });
     this.props.getConversationByUser(this.state.checkedUsersID.id.toString(), this.state.checkedUsersID.fullName.toString());
     this.inputMessage.value = '';
+    this.inputMessage.focus();
   }
 
   handleKeyPress(event) {
@@ -111,7 +113,7 @@ class NewMessage extends Component {
           <div className="additional-title">
 
             <div style={{display: this.state.checkedUsersID.fullName.length > 0 ? 'flex' : 'inline-flex'}}>
-              <span>To:</span>
+              <span style={{fontWeight: 400, fontSize: '12px'}}>To:</span>
               <div className="list-of-found-users">
                 { this.state.checkedUsersID && this.state.checkedUsersID.fullName.map((user, index) => (
                   <span key={index}>{user}</span>
@@ -122,7 +124,8 @@ class NewMessage extends Component {
             <input
               type="text"
               className="messages-input"
-              placeholder="Type the name of a person"
+              placeholder={this.state.checkedUsersID.fullName.length > 0 ? '' : 'Type the name of a person'}
+              autoFocus={true}
               onChange={this.handleSearchUser}
               onKeyDown={this.deleteSearchUser}
               ref={el => this.inputMessage = el}

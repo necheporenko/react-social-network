@@ -120,9 +120,10 @@ class UserButtons extends Component {
     const { logoutUser, notifications, conversations, bubbleMessage, bubbleNotification } = this.props;
     return (
       <nav className="header-navigation">
-        {/*<div className="extension">*/}
+        <div className="extension">
           {/*<button>Install extension</button>*/}
-        {/*</div>*/}
+          <div>0</div>
+        </div>
 
         <div className="icons">
           <div className="wrap-icon-search">
@@ -156,24 +157,24 @@ class UserButtons extends Component {
                       // loader={loader}
                       useWindow={false}
                     >
-                    { conversations && conversations.map(conversation => (
-                      <Link
-                        to={`/messages/${conversation.conversation_id}`}
-                        key={conversation.conversation_id}
-                        style={{background: conversation.is_seen ? '#fff' : '#f3f8ff'}}
-                        onClick={() => this.props.readConversation(conversation.conversation_id)}
-                      >
-                        <li>
-                          {this.groupAvatars(conversation.receivers)}
-                          {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
-                          <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
-                          {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
-                          {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
-                          <span>{conversation.messages && conversation.messages[0].text}</span>
-                          <span className="date">{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
-                          <div className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
-                        </li>
-                      </Link>
+                      { conversations && conversations.map(conversation => (
+                        <Link
+                          to={`/messages/${conversation.conversation_id}`}
+                          key={conversation.conversation_id}
+                          style={{background: conversation.is_seen ? '#fff' : '#E4F0F6'}}
+                          onClick={() => this.props.readConversation(conversation.conversation_id)}
+                        >
+                          <li>
+                            {this.groupAvatars(conversation.receivers)}
+                            {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
+                            <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
+                            {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
+                            {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
+                            <span>{conversation.messages && conversation.messages[0].text}</span>
+                            <span className="date">{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
+                            <div className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
+                          </li>
+                        </Link>
                     ))}
                     </InfiniteScroll>
                   </ul>
@@ -206,7 +207,7 @@ class UserButtons extends Component {
                         key={notification.id}
                         onClick={() => this.props.readNotification(notification.id)}
                       >
-                        <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#f3f8ff'}}>
+                        <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#E4F0F6'}}>
                           <div>
                             <img src={notification.user.avatar} alt=""/>
                             <h6 dangerouslySetInnerHTML={{__html: notification.text}}/>
@@ -265,7 +266,7 @@ class UserButtons extends Component {
               <Link to="/" onClick={logoutUser}>Sign out</Link>
               <hr/>
               <div className="extension">
-                <div>Install extension</div>
+                <div>Get Browser Log Button</div>
               </div>
             </DropdownButton>
           </ButtonToolbar>

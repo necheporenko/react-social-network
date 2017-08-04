@@ -17,22 +17,22 @@
 }
 
 .additional-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;;
   padding: 12px 20px;
   border: 0 none;
   border-bottom: 1px solid $border-color;
 
   .add-member {
-    background: url('../../img/Icons/plus1.svg');
+    background: url('../../img/Icons/add.svg');
     display: block;
-    width: 15px;
-    height: 15px;
-    margin-top: 7px;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
     cursor: pointer;
   }
   .add-member-cross {
-    background: url('../../img/Icons/cross.svg');
+    background: url('../../img/Icons/clear.svg');
   }
 }
 

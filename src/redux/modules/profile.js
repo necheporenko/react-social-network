@@ -602,10 +602,35 @@ export default function profileReducer(state = initialState, action) {
         });
       }
 
+      const newMessageInConversations = state.conversations.map(conversation => {
+        if (conversation.conversation_id === action.result.data.conversation_id) {
+          const conversationMessage = action.result.data;
+          return {
+            ...conversation,
+            messages: [conversationMessage],
+            is_seen: 1,
+          };
+        }
+        return {
+          ...conversation
+        };
+      });
+
+      newMessageInConversations.sort((a, b) => {
+        if (Date.parse(a.messages[0].date) > Date.parse(b.messages[0].date)) {
+          return -1;
+        }
+        if (Date.parse(a.messages[0].date) < Date.parse(b.messages[0].date)) {
+          return 1;
+        }
+        return 0;
+      });
+
       return {
         ...state,
         sendingMessage: false,
-        conversation: newMessage
+        conversation: newMessage,
+        conversations: newMessageInConversations,
       };
     case CREATE_MESSAGE_FAIL:
       return {
