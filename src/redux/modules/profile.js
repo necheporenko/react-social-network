@@ -420,7 +420,6 @@ export default function profileReducer(state = initialState, action) {
     case GET_CONVERSATION_LIST:
       return {
         ...state,
-        gettingConversationList: true,
       };
     case GET_CONVERSATION_LIST_SUCCESS:
       const newConversations = action.result.data;
@@ -445,15 +444,15 @@ export default function profileReducer(state = initialState, action) {
       });
       return {
         ...state,
-        gettingConversationList: false,
         conversations: newConversations,
         copyConversations: newConversations,
         paginationConversations: 2,
+        firstLoadConversations: true,
+        hasMoreConversations: true
       };
     case GET_CONVERSATION_LIST_FAIL:
       return {
         ...state,
-        gettingConversationList: false,
         error: action.error,
       };
 

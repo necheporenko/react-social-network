@@ -100,6 +100,8 @@ class NewMessage extends Component {
         .then(value => {
           if (conversationID !== value.data.conversation_id) {
             browserHistory.push(`/messages/${value.data.conversation_id}`);
+          } else {
+            browserHistory.push(`/messages/${conversationID}`);
           }
         });
     }
@@ -164,7 +166,6 @@ class NewMessage extends Component {
                       <h5>{message.user.first_name}</h5>
                     </Link>
                     <div className="wrapper-time-settings">
-                      <span>{message.date.substring(11, 17)}</span>
                       <div
                         className="message-settings"
                         onClick={this.openMessageSettings}
@@ -179,13 +180,13 @@ class NewMessage extends Component {
                     </div>
                   </div>
 
-                  <p>{message.text}</p>
+                  <p title={message.date.substring(0, 17)}>{message.text}</p>
                 </div>
               </div>
               )
               ||
               <div key={message.id}>
-                { (i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
+                {(i === 0 || (i > 0 && message.date.substring(0, 2) !== arr[i - 1].date.substring(0, 2))) &&
                 <div className="time-divider">
                   <span>{message.date.substring(0, 11)}</span>
                 </div>
@@ -194,7 +195,7 @@ class NewMessage extends Component {
                   <p>{message.text}</p>
                 </div>
               </div>
-              ))}
+            ))}
 
           </div>
 

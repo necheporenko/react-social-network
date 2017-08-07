@@ -28,6 +28,7 @@ import './index.scss';
   foundUsers: state.search.foundUsers,
   conversation: state.profile.conversation,
   authorizedUser: state.user.authorizedUser,
+  gettingConversation: state.profile.gettingConversation
 }), {
   getConversationByID,
   createMessage,
@@ -52,10 +53,13 @@ export default class Messages extends Component {
 
     this.Open = this.Open.bind(this);
     this.Close = this.Close.bind(this);
+    this.clearMembers = this.clearMembers.bind(this);
     this.getReceivers = this.getReceivers.bind(this);
+    this.filterMembers = this.filterMembers.bind(this);
+    this.confirmMembers = this.confirmMembers.bind(this);
     this.addCheckedUser = this.addCheckedUser.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.confirmMembers = this.confirmMembers.bind(this);
+    this.deleteMembers = this.deleteMembers.bind(this);
     this.toggleAddSearch = this.toggleAddSearch.bind(this);
     this.handleSearchUser = this.handleSearchUser.bind(this);
     this.openMessageSettings = this.openMessageSettings.bind(this);
@@ -67,6 +71,12 @@ export default class Messages extends Component {
 
   componentDidUpdate() {
     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+  }
+
+  componentWillReceiveProps() {
+    if (this.props.gettingConversation) {
+      this.clearMembers();
+    }
   }
 
   Close() {
@@ -106,6 +116,16 @@ export default class Messages extends Component {
     return this.state.messageSetting;
   }
 
+  clearMembers() {
+    const emptyCheckedUsersID = this.state.checkedUsersID;
+    emptyCheckedUsersID.fullName = [];
+    emptyCheckedUsersID.id = [];
+    this.setState({
+      checkedUsersID: emptyCheckedUsersID,
+      showAddSearch: false
+    });
+  }
+
   getReceivers(receivers) {
     let result;
     const receiversArr = [];
@@ -132,11 +152,16 @@ export default class Messages extends Component {
     this.inputAddMember.focus();
   }
 
-  confirmMembers(event) {
-    if (event.keyCode === 13 && !event.shiftKey) {
-      event.preventDefault();
-      this.props.addMember(this.props.conversation.conversation_id, this.state.checkedUsersID.id);
-    }
+  confirmMembers() {
+    this.props.addMember(this.props.conversation.conversation_id, this.state.checkedUsersID.id)
+      .then(this.clearMembers());
+  }
+
+  deleteMembers(event) {
+    // if (event.keyCode === 13 && !event.shiftKey) {
+    //   event.preventDefault();
+    //   this.props.addMember(this.props.conversation.conversation_id, this.state.checkedUsersID.id);
+    // }
     if (event.keyCode === 8 && this.state.checkedUsersID.fullName.length > 0 && !event.target.value) {
       const deleteLastCheckedUsersID = this.state.checkedUsersID;
       deleteLastCheckedUsersID.fullName.splice(-1, 1);
@@ -149,12 +174,26 @@ export default class Messages extends Component {
     this.setState({
       showAddSearch: !this.state.showAddSearch
     });
-    if (!this.state.showAddSearch) {
-      this.inputAddMember.focus();
-      console.log('1');
+  }
+
+  filterMembers(globalUsers, receiversUsers) {
+    function filter(arr, func) {
+      const result = [];
+
+      for (let i = 0; i < arr.length; i++) {
+        if (!func(arr[i].id)) {
+          result.push(arr[i]);
+        }
+      }
+
+      return result;
     }
-    this.inputAddMember.focus();
-    console.log(this.inputAddMember);
+
+    function inArray(arr) {
+      return x => arr.includes(x);
+    }
+
+    return filter(globalUsers, inArray(receiversUsers));
   }
 
   render() {
@@ -165,11 +204,9 @@ export default class Messages extends Component {
           {conversation.receivers &&
           <div className="additional-title" style={{display: 'flex'}}>
             <div style={{width: '90%', display: this.state.showAddSearch ? 'none' : 'block', margin: '0 auto'}}>
-              <span className="participants">
+              <span className="participants" style={{marginTop: conversation.receivers.length !== 1 ? '-5px' : '4px'}}>
                 {this.getReceivers(conversation.receivers)}
               </span>
-              {/*{ conversation.receivers.length !== 1 && <span onClick={this.Open} className="quantity-participants">{`${conversation.receivers.length} Participants`}</span>}*/}
-
               <Participants
                 Open={this.Open}
                 Close={this.Close}
@@ -185,9 +222,7 @@ export default class Messages extends Component {
                 width: this.state.showAddSearch ? '100%' : 'auto'
               }}>
               {this.state.showAddSearch &&
-              <div
-                // style={{display: this.state.showAddSearch ? 'block' : 'none'}}
-              >
+              <div>
                 <div style={{display: this.state.checkedUsersID.fullName.length > 0 ? 'flex' : 'inline-flex'}}>
                   <span style={{fontWeight: 400, fontSize: '13px'}}>To:</span>
                   <div className="list-of-found-users">
@@ -202,14 +237,21 @@ export default class Messages extends Component {
                   className="messages-input"
                   placeholder={this.state.checkedUsersID.fullName.length > 0 ? '' : 'Add more people...'}
                   onChange={this.handleSearchUser}
-                  onKeyDown={this.confirmMembers}
+                  onKeyDown={this.deleteMembers}
                   autoFocus={true}
                   ref={el => this.inputAddMember = el}
                   style={{position: this.state.checkedUsersID.fullName.length > 0 ? 'relative' : 'static'}}
                 />
+                <div
+                  className="add-members"
+                  style={{display: this.state.checkedUsersID.fullName.length > 0 ? 'block' : 'none'}}
+                  onClick={this.confirmMembers}
+                >
+                  Add
+                </div>
                 {!this.state.hideTypeahead && foundUsers.length > 0 &&
                 <div className="wrapper-find-users">
-                  {foundUsers && foundUsers.map(user => (
+                  {foundUsers && this.filterMembers(foundUsers, conversation.receiversID).map(user => (
                     <div key={user.id} className="found-user" onClick={() => this.addCheckedUser(user)}>
                       <img src={user.avatar}/>
                       <p>{user.first_name} {user.last_name}</p>
@@ -227,6 +269,16 @@ export default class Messages extends Component {
             </div>
             }
           </div>
+          }
+
+          {!conversation.conversation_id &&
+            <div className="wrapper-loader">
+              <div className="loader" style={{position: 'static'}}>
+                <svg className="circular" viewBox="25 25 50 50" style={{width: '75px'}}>
+                  <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
+                </svg>
+              </div>
+            </div>
           }
 
           <div className="messages-box" ref={el => this.messageBlock = el}>
@@ -281,103 +333,6 @@ export default class Messages extends Component {
                   </div>
                 </div>
               ))}
-
-              {/*<div className="time-divider">*/}
-              {/*<span>23 March</span>*/}
-              {/*</div>*/}
-              {/*<div className="messages-post">*/}
-              {/*<a href="#">*/}
-              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-              {/*<h5>Name Surname</h5>*/}
-              {/*</a>*/}
-              {/*<span>12:00</span>*/}
-              {/*<p>Message text...</p>*/}
-              {/*</div>*/}
-              {/*<div className="messages-post">*/}
-              {/*<a href="#">*/}
-              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-              {/*<h5>Name Surname</h5>*/}
-              {/*</a>*/}
-              {/*<span>12:01</span>*/}
-              {/*<p>Message text...</p>*/}
-              {/*</div>*/}
-
-              {/*<div className="time-divider">*/}
-              {/*<span>Today</span>*/}
-              {/*</div>*/}
-              {/*<div className="messages-post">*/}
-              {/*<div>*/}
-              {/*<a href="#">*/}
-              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/></a>*/}
-              {/*<a>*/}
-              {/*<h5>Name Surname</h5>*/}
-              {/*</a>*/}
-              {/*</div>*/}
-              {/*<span>14:00</span>*/}
-              {/*<div*/}
-              {/*className="message-settings"*/}
-              {/*onClick={this.openMessageSettings}*/}
-              {/*>*/}
-              {/*<i>...</i>*/}
-              {/*<div*/}
-              {/*style={{ display: this.state.messageSetting ? 'block' : 'none'}}*/}
-              {/*>*/}
-              {/*<ul>*/}
-              {/*<li>Delete</li>*/}
-              {/*</ul>*/}
-              {/*</div>*/}
-              {/*</div>*/}
-              {/*<p>Message text...3</p>*/}
-              {/*</div>*/}
-
-              {/*<div className="messages-post messages-post-reverse">*/}
-              {/*<div>*/}
-              {/*<a href="#">*/}
-              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/></a>*/}
-              {/*<a>*/}
-              {/*<h5>Name Surname</h5>*/}
-              {/*</a>*/}
-              {/*</div>*/}
-              {/*<span>14:00</span>*/}
-              {/*<div*/}
-              {/*className="message-settings"*/}
-              {/*onClick={this.openMessageSettings}*/}
-              {/*>*/}
-              {/*<i>...</i>*/}
-              {/*<div*/}
-              {/*style={{ display: this.state.messageSetting ? 'block' : 'none'}}*/}
-              {/*>*/}
-              {/*<ul>*/}
-              {/*<li>Delete</li>*/}
-              {/*</ul>*/}
-              {/*</div>*/}
-              {/*</div>*/}
-              {/*<p>Message text...3</p>*/}
-              {/*</div>*/}
-              {/*<div className="messages-post messages-post-reverse">*/}
-              {/*<div>*/}
-              {/*<a href="#">*/}
-              {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/></a>*/}
-              {/*<a>*/}
-              {/*<h5>Name Surname</h5>*/}
-              {/*</a>*/}
-              {/*</div>*/}
-              {/*<span>14:00</span>*/}
-              {/*<div*/}
-              {/*className="message-settings"*/}
-              {/*onClick={this.openMessageSettings}*/}
-              {/*>*/}
-              {/*<i>...</i>*/}
-              {/*<div*/}
-              {/*style={{ display: this.state.messageSetting ? 'block' : 'none'}}*/}
-              {/*>*/}
-              {/*<ul>*/}
-              {/*<li>Delete</li>*/}
-              {/*</ul>*/}
-              {/*</div>*/}
-              {/*</div>*/}
-              {/*<p>Message text...3</p>*/}
-              {/*</div>*/}
             </div>
           </div>
           {conversation.conversation_id && (
@@ -385,7 +340,7 @@ export default class Messages extends Component {
               <div className="wrapper">
                 <Textarea
                   placeholder="Type a message..."
-                  // autoFocus={true}
+                  autoFocus={true}
                   onKeyDown={this.handleKeyPress}
                 />
               </div>
@@ -405,13 +360,13 @@ Messages.propTypes = {
   newSearchUser: PropTypes.func,
   authorizedUser: PropTypes.object,
   foundUsers: PropTypes.array,
+  gettingConversation: PropTypes.boolean,
 };
 
 const Participants = ({Open, Close, showModal, participants}) => {
   return (
     <div onClick={Open}>
-      {participants.length !== 1 &&
-      <span className="quantity-participants">{`${participants.length} Participants`}</span>}
+      {participants.length !== 1 && <span className="quantity-participants">{`${participants.length} Participants`}</span>}
 
       <Modal show={showModal} onHide={Close} className="modal-log avatar-popup">
         <Modal.Header closeButton>

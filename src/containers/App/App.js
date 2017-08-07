@@ -86,14 +86,15 @@ class App extends Component {
     }
 
     if (this.props.bubbleCommon > 0) {
-      this.favicon.href = '../../static/favicon-active.ico';
+      this.favicon.href = '../../img/Default/favicon-active.ico';
     } else {
-      this.favicon.href = '../../static/favicon.ico';
+      this.favicon.href = '../../img/Default/favicon.ico';
     }
   }
 
   render() {
     const { children, bubbleCommon } = this.props;
+
 
     return (
       <div className="App">

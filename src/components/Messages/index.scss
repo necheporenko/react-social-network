@@ -24,9 +24,8 @@
 
 .conversations-list {
   list-style: none;
-  padding-top: 15px;
-  max-height: calc(92% + 5px);
-  height: calc(92% + 5px);
+  max-height: calc(100% - 50px);
+  height: calc(100% - 50px);
   overflow-y: auto;
 
   &:hover {
@@ -255,9 +254,10 @@
 }
 
 .messages-box {
-  padding: 20px;
+  padding: 0 20px;
   min-height: 400px;
-  max-height: calc(80% + 35px);
+  max-height: calc(100% - 97px);
+  height: calc(100% - 97px);
   overflow-y: auto;
 
   &:hover {
@@ -480,6 +480,7 @@
 }
 
 .messages-search {
+  padding-top: 15px;
   &:hover {
     background: transparent !important;
   }
@@ -570,6 +571,16 @@
   outline: none;
   left: 10px;
   width: 200px;
+}
+
+.add-members {
+  position: absolute;
+  right: 5px;
+  top: 38px;
+  border: 1px solid #999999;
+  cursor: pointer;
+  padding: 2px 15px;
+  font-size: 13px;
 }
 
 .wrapper-find-users {

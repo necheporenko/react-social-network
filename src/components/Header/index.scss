@@ -312,10 +312,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       width: 275px;
-    }
-
-    a:hover {
-      color: #333;
+      font-size: 13px;
     }
 
     .date {
@@ -323,6 +320,8 @@
       left: 305px;
       top: 13px;
       color: #8C9097;
+      width: 35px;
+      font-size: 13px;
 
       &:hover {
         ~ .tooltip-date {

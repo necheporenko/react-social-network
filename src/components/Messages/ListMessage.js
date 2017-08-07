@@ -151,7 +151,7 @@ class ListMessage extends Component {
               <div
                 className={conversation.is_seen ? 'conversation' : 'conversation conversation-not-seen'}
                 key={conversation.conversation_id}
-                onClick={() => { this.props.readConversation(conversation.conversation_id); this.props.clearUserResult(); }}
+                onClick={() => { this.props.readConversation(conversation.conversation_id); this.clear(); }}
                >
                 <Link
                   to={`/messages/${conversation.conversation_id}`}
@@ -166,15 +166,19 @@ class ListMessage extends Component {
                   <span>{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
                   <div className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
                   {/*<p>{conversation.messages && conversation.messages[0].text}</p>*/}
-                  <p>{ conversation.messages[0].user.id === authorizedUser.id ? `You: ${conversation.messages[0].text}` : conversation.messages[0].text}</p>
+                  <p>{conversation.messages[0].user.id === authorizedUser.id ?
+                    `You: ${conversation.messages[0].text}`
+                    :
+                    `${conversation.messages[0].user.first_name}: ${conversation.messages[0].text}`}
+                  </p>
                 </Link>
                 <div className="conversation-settings">
                   <i/>
                   <div>
                     <ul>
                       { conversation.receivers.length > 1 &&
-                      <li onClick={() => this.props.leftConversation(conversation.conversation_id, authorizedUser.first_name)}>Leave Group</li>
-                    }
+                        <li onClick={() => this.props.leftConversation(conversation.conversation_id, authorizedUser.first_name)}>Leave Group</li>
+                      }
                       <li onClick={() => this.props.deleteConversation(conversation.conversation_id)}>Delete</li>
                       <li>Report Spam or Abuse...</li>
                     </ul>

@@ -1,10 +1,21 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
-import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
+import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {connect} from 'react-redux';
+import {ButtonToolbar, DropdownButton} from 'react-bootstrap';
 import InfiniteScroll from 'react-infinite-scroller';
-import { getConversationList, getUserNotifications, seenAllNotification, seenAllConversations, clearConversation,
-  readAllNotification, readAllConversations, readConversation, readNotification, loadNextConversations, clearConversionsList } from '../../redux/modules/profile';
+import {
+  getConversationList,
+  getUserNotifications,
+  seenAllNotification,
+  seenAllConversations,
+  clearConversation,
+  readAllNotification,
+  readAllConversations,
+  readConversation,
+  readNotification,
+  loadNextConversations,
+  clearConversionsList
+} from '../../redux/modules/profile';
 
 @connect((state) => ({
   conversations: state.profile.conversations,
@@ -12,6 +23,7 @@ import { getConversationList, getUserNotifications, seenAllNotification, seenAll
   bubbleNotification: state.profile.bubbleNotification,
   paginationConversations: state.profile.paginationConversations,
   hasMoreConversations: state.profile.hasMoreConversations,
+  firstLoadConversations: state.profile.firstLoadConversations,
 }), {
   getConversationList,
   seenAllNotification,
@@ -50,7 +62,6 @@ class UserButtons extends Component {
   clickNotification() {
     this.props.getUserNotifications();
     this.props.seenAllNotification();
-    console.log('5658785456');
   }
 
   groupAvatars(receivers) {
@@ -115,7 +126,9 @@ class UserButtons extends Component {
   }
 
   loadConversations() {
-    this.props.loadNextConversations(this.props.paginationConversations);
+    if (this.state.dropdownMessages && this.props.firstLoadConversations) {
+      this.props.loadNextConversations(this.props.paginationConversations);
+    }
   }
 
   showDropdowns(dropdown, allowAction) {
@@ -143,27 +156,10 @@ class UserButtons extends Component {
     }
   }
 
-  onBlur(e, dropdown) {
+  onBlur(e) {
     const currentTarget = e.currentTarget;
-    console.log('yeah', currentTarget)
     setTimeout(() => {
       if (!currentTarget.contains(document.activeElement)) {
-        // switch (dropdown) {
-        //   case 'messages':
-        //     this.setState({
-        //       dropdownMessages: false
-        //     });
-        //     break;
-        //
-        //   case 'notifications':
-        //     this.setState({
-        //       dropdownNotifications: false
-        //     });
-        //     break;
-        //
-        //   default:
-        //     console.log('error');
-        // }
         this.setState({
           dropdownMessages: false,
           dropdownNotifications: false
@@ -173,8 +169,8 @@ class UserButtons extends Component {
   }
 
   render() {
-    const { slug, first_name, avatar32 } = this.props.authorizedUser;
-    const { logoutUser, notifications, conversations, bubbleMessage, bubbleNotification } = this.props;
+    const {slug, first_name, avatar32} = this.props.authorizedUser;
+    const {logoutUser, notifications, conversations, bubbleMessage, bubbleNotification} = this.props;
     return (
       <nav className="header-navigation">
         <div className="icons">
@@ -191,13 +187,14 @@ class UserButtons extends Component {
             className="wrap-icon-mail"
             tabIndex={0}
             onBlur={this.onBlur}
-            // ref={dropdownMessagesRef => dropdownMessagesRef && dropdownMessagesRef.focus()}
           >
             <i
               style={{backgroundPosition: this.state.dropdownMessages ? '-112px -466px' : '-129px -466px'}}
-              onClick={() => { this.showDropdowns('messages', true); }}
+              onClick={() => {
+                this.showDropdowns('messages', true);
+              }}
             />
-            { bubbleMessage > 0 && <div className="bubble"><span>{ bubbleMessage }</span></div> }
+            {bubbleMessage > 0 && <div className="bubble"><span>{bubbleMessage}</span></div>}
 
             <div
               style={{display: this.state.dropdownMessages ? 'block' : 'none'}}
@@ -217,34 +214,38 @@ class UserButtons extends Component {
                 <hr/>
                 <ul>
                   <InfiniteScroll
-                  // loadMore={this.loadConversations}
-                  // hasMore={this.props.hasMoreConversations}
-                  // hasMore={true}
+                    loadMore={this.loadConversations}
+                    hasMore={this.props.hasMoreConversations}
+                    // hasMore={true}
                     threshold={50}
-                  // loader={loader}
+                    // loader={loader}
                     useWindow={false}
-                >
+                  >
                     {conversations && conversations.map(conversation => (
                       <Link
                         to={`/messages/${conversation.conversation_id}`}
                         key={conversation.conversation_id}
                         style={{background: conversation.is_seen ? '#fff' : '#E4F0F6'}}
                         onClick={() => this.props.readConversation(conversation.conversation_id)}
-                    >
+                      >
                         <li>
                           {this.groupAvatars(conversation.receivers)}
                           {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
                           <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
                           {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
                           {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
-                          <span>{conversation.messages && conversation.messages[0].text}</span>
+                          <span>{conversation.messages[0].user.id === this.props.authorizedUser.id ?
+                            `You: ${conversation.messages[0].text}`
+                            :
+                            `${conversation.messages[0].user.first_name}: ${conversation.messages[0].text}`}
+                          </span>
                           <span
                             className="date">{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
                           <div
                             className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
                         </li>
                       </Link>
-                  ))}
+                    ))}
                   </InfiniteScroll>
                 </ul>
                 <div style={{padding: '3px 0 5px', justifyContent: 'center'}}>
@@ -265,14 +266,12 @@ class UserButtons extends Component {
             className="wrap-icon-bell"
             onBlur={this.onBlur}
             tabIndex={0}
-            // onBlur={() => this.onBlur(event, 'notifications')}
-            // ref={dropdownNotificationsRef => dropdownNotificationsRef && dropdownNotificationsRef.focus()}
           >
             <i
               style={{backgroundPosition: this.state.dropdownNotifications ? '-46px -486px' : ' -32px -486px'}}
               onClick={() => this.showDropdowns('notifications', true)}
             />
-            { bubbleNotification > 0 && <div className="bubble"><span>{ bubbleNotification }</span></div> }
+            {bubbleNotification > 0 && <div className="bubble"><span>{bubbleNotification}</span></div>}
 
             <div
               className="dropdown-common dropdown-notifications"
@@ -384,6 +383,7 @@ UserButtons.propTypes = {
   paginationConversations: PropTypes.number,
   hasMoreConversations: PropTypes.boolean,
   clearConversionsList: PropTypes.func,
+  firstLoadConversations: PropTypes.boolean,
 };
 
 export default UserButtons;
