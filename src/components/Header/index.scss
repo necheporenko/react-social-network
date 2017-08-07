@@ -28,8 +28,8 @@
   width: 100%;
   background-color: #ACCBEE;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
 }
 
 /* -- Channel Name Start  -- */
@@ -76,8 +76,7 @@
 
   span {
     display: block;
-    background: $sprite;
-    background-position: -78px -19px;
+    background: $sprite -78px -19px;
     height: 15px;
     width: 15px;
     position: relative;
@@ -120,7 +119,6 @@
     text-align: center;
     width: 140px;
     margin: 0 auto;
-
   }
 }
 
@@ -131,10 +129,8 @@
 }
 
 .wrap-icon-search {
-
   .iconSearch {
-    background: $sprite;
-    background-position: -78px -19px;
+    background: $sprite -78px -19px;
 		height: 15px;
 		width: 15px;
     display: none;
@@ -162,9 +158,94 @@
   }
 }
 
+.wrap-icon-bell,
+.wrap-icon-mail {
+  &:focus {
+    outline: none;
+  }
+}
+
 .wrap-icon-mail {
   margin-right: 15px;
   position: relative;
+
+  > i {
+    display: block;
+    height: 13px;
+    width: 17px;
+    background: $sprite;
+    cursor: pointer;
+
+    &:hover {
+      background-position: -112px -466px;
+    }
+  }
+}
+
+.wrap-icon-bell {
+  margin-right: 30px;
+  position: relative;
+
+  > i {
+    display: block;
+    margin-top: 2px;
+    padding-left: 5px;
+    height: 15px;
+    width: 10px;
+    background: $sprite;
+    cursor: pointer;
+
+    &:hover {
+      background-position: -46px -486px;
+    }
+
+    &::after {
+      content: '';
+      cursor: default;
+      border-left: 1px solid #EEE;
+      height: 16px;
+      position: relative;
+      left: 15px;
+      float: right;
+    }
+  }
+
+  .bubble {
+    top: 9px;
+  }
+
+  .clickNotification {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: -4px;
+  }
+
+  .triangle {
+    left: 297px;
+  }
+}
+
+.triangle {
+  background-image: url(../../img/Icons/triangle.svg);
+  display: inline-block;
+  height: 10px;
+  width: 20px;
+  position: absolute;
+  top: -10px;
+}
+
+.dropdown-common {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 2px;
+  width: 350px;
+  position: absolute;
+}
+
+.dropdown-messages {
+  top: 32px;
+  left: -280px;
 
   .wrapper-avatars {
     width: 45px;
@@ -222,7 +303,6 @@
       }
     }
   }
-
   .notification-box {
     span {
       position: absolute;
@@ -265,141 +345,16 @@
   }
 
   .triangle {
-    background-image: url(../../img/Icons/triangle.svg);
-    display: inline-block;
-    height: 10px;
-    width: 20px;
-    position: absolute;
-    top: -10px;
     left: 277px;
-  }
-
-    //.icon-mail {
-  //  background: $sprite;
-  //  background-position: -129px -466px;
-	//	height: 13px;
-	//	width: 17px;
-  //
-  //  &:hover {
-  //    background-position: -112px -466px;
-  //  }
-  //}
-
-  button {
-    border: 0;
-    border-radius: 0;
-    padding: 0;
-    //margin-top: 2px;
-    //padding-left: 5px;
-    height: 13px;
-    width: 17px;
-    background: $sprite;
-    background-position: -129px -466px;
-
-    &:hover {
-      background-position: -112px -466px;
-    }
-  }
-
-  .btn-default:active,
-  .btn-default.active,
-  .open > .btn-default.dropdown-toggle {
-    background: $sprite;
-    background-position: -129px -466px;
-    box-shadow: none;
-
-    &:hover {
-      background-position: -112px -466px;
-    }
-  }
-
-  .dropdown-menu-right {
-    left: -290px;
-  }
-
-  .dropdown-menu {
-    top: 30px;
-    width: 350px;
-    box-shadow: none;
-    a {
-      padding: 0 !important;
-    }
   }
 }
 
-.wrap-icon-bell {
-  margin-right: 30px;
-  position: relative;
-
-  .bubble {
-    top: 9px;
-  }
-
-  .clickNotification {
-    height: 20px;
-    width: 20px;
-    position: absolute;
-    right: -4px;
-  }
+.dropdown-notifications {
+  top: 34px;
+  left: -283px;
 
   .triangle {
-    background-image: url(../../img/Icons/triangle.svg);
-    display: inline-block;
-    height: 10px;
-    width: 20px;
-    position: absolute;
-    top: -10px;
-    left: 297px;
-  }
-
-  button {
-    border: 0;
-    padding: 0;
-    margin-top: 2px;
-    padding-left: 5px;
-    height: 15px;
-    width: 10px;
-    background: $sprite -32px -486px;
-
-    &:hover {
-      background-position: -46px -486px;
-    }
-
-    &::after {
-      content: '';
-      cursor: default;
-      border-left: 1px solid #EEE;
-      height: 16px;
-      position: relative;
-      left: 15px;
-      float: right;
-    }
-  }
-
-  .btn-default:active,
-  .btn-default.active,
-  .open > .btn-default.dropdown-toggle {
-    background: $sprite;
-    background-position: -32px -486px;
-    box-shadow: none;
-
-    &:hover {
-      background-position: -46px -486px;
-    }
-  }
-
-  .dropdown-menu-right {
-    left: -310px;
-  }
-
-  .dropdown-menu {
-    top: 32px;
-    width: 350px;
-    box-shadow: none;
-
-    a {
-      padding: 0 !important;
-    }
+    left: 280px;
   }
 }
 
@@ -413,6 +368,7 @@
     a {
       color: $link-color;
       font-size: 12px;
+      padding-top: 5px;
 
       &:hover {
         color: $link-color;
@@ -422,11 +378,11 @@
 
     i {
       padding: 0 5px;
-      line-height: 12px;
     }
 
     h4 {
       font-weight: 500;
+      padding-top: 4px;
     }
   }
 
@@ -498,14 +454,8 @@
       }
 
       a {
-        //color: $link-color;
         display: block;
-        //padding-left: 5px;
         font-weight: 500;
-
-        //&:hover {
-        //  color: $link-color;
-        //}
       }
     }
 
@@ -521,7 +471,6 @@
 
 
 .infouser {
-
   a {
     text-decoration: none;
     color: #333;
@@ -543,7 +492,6 @@
 }
 
 .profile-menu {
-
   .triangle {
     background-image: url(../../img/Icons/triangle.svg);
     display: inline-block;
@@ -591,11 +539,7 @@
     }
   }
 }
-
-
-
 /* -- UserButtons End  -- */
-
 
 
 /* -- MinHeader  -- */
@@ -633,9 +577,6 @@
     }
   }
 }
-
-
-
 /* -- MinHeader End  -- */
 
 

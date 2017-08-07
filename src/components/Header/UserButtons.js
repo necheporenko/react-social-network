@@ -30,13 +30,15 @@ class UserButtons extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dropdown: false,
+      dropdownMessages: false,
+      dropdownNotifications: false,
     };
     this.clickMail = this.clickMail.bind(this);
     this.groupAvatars = this.groupAvatars.bind(this);
     this.clickNotification = this.clickNotification.bind(this);
     this.loadConversations = this.loadConversations.bind(this);
-    this.dropdown = this.dropdown.bind(this);
+    this.showDropdowns = this.showDropdowns.bind(this);
+    this.onBlur = this.onBlur.bind(this);
   }
 
   clickMail() {
@@ -48,11 +50,7 @@ class UserButtons extends Component {
   clickNotification() {
     this.props.getUserNotifications();
     this.props.seenAllNotification();
-  }
-
-  closeDropdown() {
-    console.log('hiiiii');
-    return false;
+    console.log('5658785456');
   }
 
   groupAvatars(receivers) {
@@ -120,11 +118,58 @@ class UserButtons extends Component {
     this.props.loadNextConversations(this.props.paginationConversations);
   }
 
-  dropdown() {
-    this.setState({
-      dropdown: !this.state.dropdown
-    });
-    console.log('007');
+  showDropdowns(dropdown, allowAction) {
+    switch (dropdown) {
+      case 'messages':
+        if (allowAction) {
+          this.clickMail();
+          this.setState({
+            dropdownMessages: !this.state.dropdownMessages
+          });
+        }
+        break;
+
+      case 'notifications':
+        if (allowAction) {
+          this.clickNotification();
+          this.setState({
+            dropdownNotifications: !this.state.dropdownNotifications
+          });
+        }
+        break;
+
+      default:
+        console.log('error');
+    }
+  }
+
+  onBlur(e, dropdown) {
+    const currentTarget = e.currentTarget;
+    console.log('yeah', currentTarget)
+    setTimeout(() => {
+      if (!currentTarget.contains(document.activeElement)) {
+        // switch (dropdown) {
+        //   case 'messages':
+        //     this.setState({
+        //       dropdownMessages: false
+        //     });
+        //     break;
+        //
+        //   case 'notifications':
+        //     this.setState({
+        //       dropdownNotifications: false
+        //     });
+        //     break;
+        //
+        //   default:
+        //     console.log('error');
+        // }
+        this.setState({
+          dropdownMessages: false,
+          dropdownNotifications: false
+        });
+      }
+    }, 0);
   }
 
   render() {
@@ -132,143 +177,164 @@ class UserButtons extends Component {
     const { logoutUser, notifications, conversations, bubbleMessage, bubbleNotification } = this.props;
     return (
       <nav className="header-navigation">
-        <div className="extension">
-          {/*<button>Install extension</button>*/}
-          <div tabIndex="-1" onClick={this.dropdown} onBlur={this.dropdown}>0</div>
-        </div>
-        {this.state.dropdown &&
-          <div
-            style={{position: 'absolute', top: '50px', background: '#fff', width: '160px'}}
-          >
-            <p>1</p>
-            <p>2</p>
-            <p>3</p>
-          </div>
-        }
-
         <div className="icons">
           <div className="wrap-icon-search">
             <a href="#">
               <div className="icon-search"/>
             </a>
           </div>
-          <div className="wrap-icon-mail" onClick={this.clickMail}>
-            <ButtonToolbar>
-              { bubbleMessage > 0 &&
-                <div className="bubble"><span>{ bubbleMessage }</span></div>
-              }
-              <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title={''} id={1} noCaret pullRight>
-                <div className="notification-box">
-                  <div className="triangle"/>
-                  <div>
-                    <h4>Messages</h4>
-                    <div style={{display: 'flex'}}>
-                      <a onClick={this.props.readAllConversations}>Mark All Read</a>
-                      <i>.</i>
-                      <Link to="/messages/new" onClick={this.props.clearConversation} >New Message</Link>
-                    </div>
-                  </div>
-                  <hr/>
-                  <ul>
-                    <InfiniteScroll
-                      loadMore={this.loadConversations}
-                      // hasMore={this.props.hasMoreConversations}
-                      // hasMore={true}
-                      threshold={50}
-                      // loader={loader}
-                      useWindow={false}
-                    >
-                      { conversations && conversations.map(conversation => (
-                        <Link
-                          to={`/messages/${conversation.conversation_id}`}
-                          key={conversation.conversation_id}
-                          style={{background: conversation.is_seen ? '#fff' : '#E4F0F6'}}
-                          onClick={() => this.props.readConversation(conversation.conversation_id)}
-                        >
-                          <li>
-                            {this.groupAvatars(conversation.receivers)}
-                            {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
-                            <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
-                            {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
-                            {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
-                            <span>{conversation.messages && conversation.messages[0].text}</span>
-                            <span className="date">{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
-                            <div className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
-                          </li>
-                        </Link>
-                    ))}
-                    </InfiniteScroll>
-                  </ul>
-                  <div style={{paddingTop: '7px', justifyContent: 'center'}}>
-                    <Link to="/messages">See all</Link>
+
+          {/*
+              -==== Start Dropdown Messages ====-
+           */}
+          <div
+            className="wrap-icon-mail"
+            tabIndex={0}
+            onBlur={this.onBlur}
+            // ref={dropdownMessagesRef => dropdownMessagesRef && dropdownMessagesRef.focus()}
+          >
+            <i
+              style={{backgroundPosition: this.state.dropdownMessages ? '-112px -466px' : '-129px -466px'}}
+              onClick={() => { this.showDropdowns('messages', true); }}
+            />
+            { bubbleMessage > 0 && <div className="bubble"><span>{ bubbleMessage }</span></div> }
+
+            <div
+              style={{display: this.state.dropdownMessages ? 'block' : 'none'}}
+              className="dropdown-common dropdown-messages"
+
+            >
+              <div className="notification-box">
+                <div className="triangle"/>
+                <div>
+                  <h4>Messages</h4>
+                  <div style={{display: 'flex'}}>
+                    <a onClick={this.props.readAllConversations}>Mark All Read</a>
+                    <i>.</i>
+                    <Link to="/messages/new" onClick={this.props.clearConversation}>New Message</Link>
                   </div>
                 </div>
-              </DropdownButton>
-            </ButtonToolbar>
-          </div>
-
-          <div className="wrap-icon-bell" onClick={this.clickNotification}>
-            {/*<div className="clickNotification" onClick={this.clickNotification}></div>*/}
-            { bubbleNotification > 0 &&
-              <div className="bubble"><span>{ bubbleNotification }</span></div>
-            }
-            <ButtonToolbar>
-              <DropdownButton className="bootstrap-pure-btn" bsStyle="default" title={''} id={2} noCaret pullRight>
-                <div className="notification-box">
-                  <div className="triangle"/>
-                  <div>
-                    <h4>Notifications</h4>
-                    <a onClick={this.props.readAllNotification}>Mark All as Read</a>
-                  </div>
-                  <hr/>
-                  <ul>
-                    { notifications && notifications.map((notification) => (
+                <hr/>
+                <ul>
+                  <InfiniteScroll
+                  // loadMore={this.loadConversations}
+                  // hasMore={this.props.hasMoreConversations}
+                  // hasMore={true}
+                    threshold={50}
+                  // loader={loader}
+                    useWindow={false}
+                >
+                    {conversations && conversations.map(conversation => (
                       <Link
-                        to={notification.link}
-                        key={notification.id}
-                        onClick={() => this.props.readNotification(notification.id)}
-                      >
-                        <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#E4F0F6'}}>
-                          <div>
-                            <img src={notification.user.avatar} alt=""/>
-                            <h6 dangerouslySetInnerHTML={{__html: notification.text}} style={{display: 'flex'}}/>
-                          </div>
-                          <p>{notification.created}</p>
+                        to={`/messages/${conversation.conversation_id}`}
+                        key={conversation.conversation_id}
+                        style={{background: conversation.is_seen ? '#fff' : '#E4F0F6'}}
+                        onClick={() => this.props.readConversation(conversation.conversation_id)}
+                    >
+                        <li>
+                          {this.groupAvatars(conversation.receivers)}
+                          {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
+                          <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
+                          {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
+                          {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
+                          <span>{conversation.messages && conversation.messages[0].text}</span>
+                          <span
+                            className="date">{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
+                          <div
+                            className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
                         </li>
                       </Link>
-                    ))}
-                    {/*<a href="#">*/}
-                    {/*<li>*/}
-                    {/*<div>*/}
-                    {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-                    {/*<h6><a><b>Name Surna1</b></a>commented on your story</h6>*/}
-                    {/*</div>*/}
-                    {/*<p>21 Mar 2017</p>*/}
-                    {/*</li>*/}
-                    {/*</a>*/}
-                    {/*<li>*/}
-                    {/*<div>*/}
-                    {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-                    {/*<h6><a href="#"><b>Name Surname</b></a> liked your <a href="#"> story</a></h6>*/}
-                    {/*</div>*/}
-                    {/*<p>21 Mar 2017</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                    {/*<div>*/}
-                    {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
-                    {/*<h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>*/}
-                    {/*</div>*/}
-                    {/*<p>21 Mar 2017</p>*/}
-                    {/*</li>*/}
-                  </ul>
-                  <div style={{padding: '7px 5px 0'}}>
-                    <Link to="/notifications">See all</Link>
-                    <Link to="/settings/notifications">Settings</Link>
-                  </div>
+                  ))}
+                  </InfiniteScroll>
+                </ul>
+                <div style={{padding: '3px 0 5px', justifyContent: 'center'}}>
+                  <Link to="/messages">See all</Link>
                 </div>
-              </DropdownButton>
-            </ButtonToolbar>
+              </div>
+            </div>
           </div>
+          {/*
+              -==== End Dropdown Messages ====-
+           */}
+
+
+          {/*
+              -==== Start Dropdown Notifications ====-
+           */}
+          <div
+            className="wrap-icon-bell"
+            onBlur={this.onBlur}
+            tabIndex={0}
+            // onBlur={() => this.onBlur(event, 'notifications')}
+            // ref={dropdownNotificationsRef => dropdownNotificationsRef && dropdownNotificationsRef.focus()}
+          >
+            <i
+              style={{backgroundPosition: this.state.dropdownNotifications ? '-46px -486px' : ' -32px -486px'}}
+              onClick={() => this.showDropdowns('notifications', true)}
+            />
+            { bubbleNotification > 0 && <div className="bubble"><span>{ bubbleNotification }</span></div> }
+
+            <div
+              className="dropdown-common dropdown-notifications"
+              style={{display: this.state.dropdownNotifications ? 'block' : 'none'}}
+            >
+              <div className="notification-box">
+                <div className="triangle"/>
+                <div>
+                  <h4>Notifications</h4>
+                  <a onClick={this.props.readAllNotification}>Mark All as Read</a>
+                </div>
+                <hr/>
+                <ul>
+                  {notifications && notifications.map((notification) => (
+                    <Link
+                      to={notification.link}
+                      key={notification.id}
+                      onClick={() => this.props.readNotification(notification.id)}
+                    >
+                      <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#E4F0F6'}}>
+                        <div>
+                          <img src={notification.user.avatar} alt=""/>
+                          <h6 dangerouslySetInnerHTML={{__html: notification.text}} style={{display: 'flex'}}/>
+                        </div>
+                        <p>{notification.created}</p>
+                      </li>
+                    </Link>
+                  ))}
+                  {/*<a href="#">*/}
+                  {/*<li>*/}
+                  {/*<div>*/}
+                  {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                  {/*<h6><a><b>Name Surna1</b></a>commented on your story</h6>*/}
+                  {/*</div>*/}
+                  {/*<p>21 Mar 2017</p>*/}
+                  {/*</li>*/}
+                  {/*</a>*/}
+                  {/*<li>*/}
+                  {/*<div>*/}
+                  {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                  {/*<h6><a href="#"><b>Name Surname</b></a> liked your <a href="#"> story</a></h6>*/}
+                  {/*</div>*/}
+                  {/*<p>21 Mar 2017</p>*/}
+                  {/*</li>*/}
+                  {/*<li>*/}
+                  {/*<div>*/}
+                  {/*<img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>*/}
+                  {/*<h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>*/}
+                  {/*</div>*/}
+                  {/*<p>21 Mar 2017</p>*/}
+                  {/*</li>*/}
+                </ul>
+                <div style={{padding: '7px 5px 0'}}>
+                  <Link to="/notifications">See all</Link>
+                  <Link to="/settings/notifications">Settings</Link>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/*
+              -==== End Dropdown Notifications ====-
+           */}
         </div>
 
         <div className="infouser">
