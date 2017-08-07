@@ -242,6 +242,7 @@
       position: absolute;
       left: 305px;
       top: 13px;
+      color: #8C9097;
 
       &:hover {
         ~ .tooltip-date {
@@ -493,6 +494,7 @@
 
       span {
         padding: 0 5px;
+        font-weight: 400;
       }
 
       a {

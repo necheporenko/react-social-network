@@ -29,11 +29,14 @@ import { getConversationList, getUserNotifications, seenAllNotification, seenAll
 class UserButtons extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      dropdown: false,
+    };
     this.clickMail = this.clickMail.bind(this);
     this.groupAvatars = this.groupAvatars.bind(this);
     this.clickNotification = this.clickNotification.bind(this);
     this.loadConversations = this.loadConversations.bind(this);
+    this.dropdown = this.dropdown.bind(this);
   }
 
   clickMail() {
@@ -117,6 +120,13 @@ class UserButtons extends Component {
     this.props.loadNextConversations(this.props.paginationConversations);
   }
 
+  dropdown() {
+    this.setState({
+      dropdown: !this.state.dropdown
+    });
+    console.log('007');
+  }
+
   render() {
     const { slug, first_name, avatar32 } = this.props.authorizedUser;
     const { logoutUser, notifications, conversations, bubbleMessage, bubbleNotification } = this.props;
@@ -124,8 +134,17 @@ class UserButtons extends Component {
       <nav className="header-navigation">
         <div className="extension">
           {/*<button>Install extension</button>*/}
-          <div>0</div>
+          <div tabIndex="-1" onClick={this.dropdown} onBlur={this.dropdown}>0</div>
         </div>
+        {this.state.dropdown &&
+          <div
+            style={{position: 'absolute', top: '50px', background: '#fff', width: '160px'}}
+          >
+            <p>1</p>
+            <p>2</p>
+            <p>3</p>
+          </div>
+        }
 
         <div className="icons">
           <div className="wrap-icon-search">
@@ -152,10 +171,10 @@ class UserButtons extends Component {
                   <hr/>
                   <ul>
                     <InfiniteScroll
-                      // loadMore={this.loadConversations}
+                      loadMore={this.loadConversations}
                       // hasMore={this.props.hasMoreConversations}
-                      hasMore={true}
-                      threshold={75}
+                      // hasMore={true}
+                      threshold={50}
                       // loader={loader}
                       useWindow={false}
                     >
@@ -212,7 +231,7 @@ class UserButtons extends Component {
                         <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#E4F0F6'}}>
                           <div>
                             <img src={notification.user.avatar} alt=""/>
-                            <h6 dangerouslySetInnerHTML={{__html: notification.text}}/>
+                            <h6 dangerouslySetInnerHTML={{__html: notification.text}} style={{display: 'flex'}}/>
                           </div>
                           <p>{notification.created}</p>
                         </li>

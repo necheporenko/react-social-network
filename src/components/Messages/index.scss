@@ -25,8 +25,8 @@
 .conversations-list {
   list-style: none;
   padding-top: 15px;
-  max-height: 92%;
-  height: 92%;
+  max-height: calc(92% + 5px);
+  height: calc(92% + 5px);
   overflow-y: auto;
 
   &:hover {
@@ -249,7 +249,7 @@
     }
 
     span {
-      color: $brand-hover;
+      color: #1794f7;
     }
   }
 }
@@ -273,7 +273,7 @@
   text-align: center;
   padding-left: 0;
   width: 100%;
-  border-bottom: 1px solid #D9D9D9;
+  //border-bottom: 1px solid #D9D9D9;
   line-height: .1em;
 
   span {
@@ -612,8 +612,8 @@
 .participants {
   display: block;
   text-align: center;
-  font-size: 12px;
-  margin-top: -3px;
+  font-size: 14px;
+  margin-top: -5px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -626,6 +626,11 @@
   display: block;
   margin-bottom: -6px;
   margin-top: 3px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .new-messages-form {

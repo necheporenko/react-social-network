@@ -165,7 +165,8 @@ class ListMessage extends Component {
                   </li>
                   <span>{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
                   <div className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
-                  <p>{conversation.messages && conversation.messages[0].text}</p>
+                  {/*<p>{conversation.messages && conversation.messages[0].text}</p>*/}
+                  <p>{ conversation.messages[0].user.id === authorizedUser.id ? `You: ${conversation.messages[0].text}` : conversation.messages[0].text}</p>
                 </Link>
                 <div className="conversation-settings">
                   <i/>
