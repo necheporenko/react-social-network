@@ -19,6 +19,9 @@ const READ_ALL_NOTIFICATIONS_FAIL = 'READ_ALL_NOTIFICATIONS_FAIL';
 const READ_NOTIFICATION = 'READ_NOTIFICATION';
 const READ_NOTIFICATION_SUCCESS = 'READ_NOTIFICATION_SUCCESS';
 const READ_NOTIFICATION_FAIL = 'READ_NOTIFICATION_FAIL';
+const LOAD_NEXT_NOTIFICATIONS = 'LOAD_NEXT_NOTIFICATIONS';
+const LOAD_NEXT_NOTIFICATIONS_SUCCESS = 'LOAD_NEXT_NOTIFICATIONS_SUCCESS';
+const LOAD_NEXT_NOTIFICATIONS_FAIL = 'LOAD_NEXT_NOTIFICATIONS_FAIL';
 const SEEN_ALL_CONVERSATIONS = 'SEEN_ALL_CONVERSATIONS';
 const SEEN_ALL_CONVERSATIONS_SUCCESS = 'SEEN_ALL_CONVERSATIONS_SUCCESS';
 const SEEN_ALL_CONVERSATIONS_FAIL = 'SEEN_ALL_CONVERSATIONS_FAIL';
@@ -79,6 +82,8 @@ const initialState = {
   infoAboutTemporaryUser: {},
   paginationConversations: 2, //pagination conversations
   hasMoreConversations: true,
+  paginationNotifications: 2, //pagination notifications
+  hasMoreNotifications: true,
   // loadedConversations: false,
 };
 
@@ -146,12 +151,31 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         gettingUserNotification: false,
+        firstLoadNotifications: true,
         notifications: action.result.data
       };
     case GET_USER_NOTIFICATIONS_FAIL:
       return {
         ...state,
         gettingUserNotification: false,
+        error: action.error,
+      };
+
+    case LOAD_NEXT_NOTIFICATIONS:
+      return {
+        ...state,
+        gettingUserNotification: true,
+      };
+    case LOAD_NEXT_NOTIFICATIONS_SUCCESS:
+      return {
+        ...state,
+        notifications: [...state.notifications, ...action.result.data],
+        paginationNotifications: state.paginationNotifications + 1,
+        hasMoreNotifications: action.result.data.length > 0,
+      };
+    case LOAD_NEXT_NOTIFICATIONS_FAIL:
+      return {
+        ...state,
         error: action.error,
       };
 
@@ -839,6 +863,13 @@ export function getUserNotifications() {
   return {
     types: [GET_USER_NOTIFICATIONS, GET_USER_NOTIFICATIONS_SUCCESS, GET_USER_NOTIFICATIONS_FAIL],
     promise: (client) => client.get('/notifications')
+  };
+}
+
+export function loadNextNotifications(page) {
+  return {
+    types: [LOAD_NEXT_NOTIFICATIONS, LOAD_NEXT_NOTIFICATIONS_SUCCESS, LOAD_NEXT_NOTIFICATIONS_FAIL],
+    promise: (client) => client.get('/notifications', { params: { page }})
   };
 }
 

@@ -14,7 +14,8 @@ import {
   readConversation,
   readNotification,
   loadNextConversations,
-  clearConversionsList
+  clearConversionsList,
+  loadNextNotifications,
 } from '../../redux/modules/profile';
 
 @connect((state) => ({
@@ -24,6 +25,9 @@ import {
   paginationConversations: state.profile.paginationConversations,
   hasMoreConversations: state.profile.hasMoreConversations,
   firstLoadConversations: state.profile.firstLoadConversations,
+  paginationNotifications: state.profile.paginationNotifications,
+  hasMoreNotifications: state.profile.hasMoreNotifications,
+  firstLoadNotifications: state.profile.firstLoadNotifications,
 }), {
   getConversationList,
   seenAllNotification,
@@ -36,6 +40,7 @@ import {
   clearConversation,
   loadNextConversations,
   clearConversionsList,
+  loadNextNotifications,
 })
 
 class UserButtons extends Component {
@@ -48,6 +53,7 @@ class UserButtons extends Component {
     this.clickMail = this.clickMail.bind(this);
     this.groupAvatars = this.groupAvatars.bind(this);
     this.clickNotification = this.clickNotification.bind(this);
+    this.loadNotifications = this.loadNotifications.bind(this);
     this.loadConversations = this.loadConversations.bind(this);
     this.showDropdowns = this.showDropdowns.bind(this);
     this.whoWroteMessage = this.whoWroteMessage.bind(this);
@@ -129,6 +135,12 @@ class UserButtons extends Component {
   loadConversations() {
     if (this.state.dropdownMessages && this.props.firstLoadConversations) {
       this.props.loadNextConversations(this.props.paginationConversations);
+    }
+  }
+
+  loadNotifications() {
+    if (this.state.dropdownNotifications && this.props.firstLoadNotifications) {
+      this.props.loadNextNotifications(this.props.paginationNotifications);
     }
   }
 
@@ -223,7 +235,6 @@ class UserButtons extends Component {
                   <InfiniteScroll
                     loadMore={this.loadConversations}
                     hasMore={this.props.hasMoreConversations}
-                    // hasMore={true}
                     threshold={50}
                     // loader={loader}
                     useWindow={false}
@@ -287,6 +298,13 @@ class UserButtons extends Component {
                 </div>
                 <hr/>
                 <ul>
+                  <InfiniteScroll
+                    loadMore={this.loadNotifications}
+                    hasMore={this.props.hasMoreNotifications}
+                    threshold={50}
+                    // loader={loader}
+                    useWindow={false}
+                  >
                   {notifications && notifications.map((notification) => (
                     <Link
                       to={notification.link}
@@ -305,6 +323,7 @@ class UserButtons extends Component {
                       </li>
                     </Link>
                   ))}
+                  </InfiniteScroll>
                   {/*<a href="#">*/}
                   {/*<li>*/}
                   {/*<div>*/}
