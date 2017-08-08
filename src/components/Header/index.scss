@@ -368,6 +368,7 @@
       color: $link-color;
       font-size: 12px;
       padding-top: 5px;
+      cursor: pointer;
 
       &:hover {
         color: $link-color;
@@ -405,8 +406,11 @@
     @extend .scrollBar;
 
     a {
+      color: #333;
        &:link {
-        text-decoration: none;
+         text-decoration: none;
+         color: #333;
+         display: block;
       }
     }
   }

@@ -390,7 +390,8 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         needLoadTemporaryConversation: !action.result.data.conversation_id,
-        infoAboutTemporaryUser: action.user
+        infoAboutTemporaryUser: action.user,
+
         // conversations: [newConversationByUserPage, ...state.conversations]
       };
     case GET_CONVERSATION_BY_USER_PAGE_FAIL:
@@ -410,11 +411,13 @@ export default function profileReducer(state = initialState, action) {
           slug: state.infoAboutTemporaryUser.slug,
           avatar: state.infoAboutTemporaryUser.avatar230,
         }],
+        messages: [],
       });
       return {
         ...state,
         conversations: [newConversationByUserPage, ...state.conversations],
         needLoadTemporaryConversation: false,
+        activeMessageInput: true
       };
 
     case GET_CONVERSATION_LIST:
@@ -665,6 +668,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         conversation: [],
+        activeMessageInput: false
       };
 
     case CLEAR_CONVERSATIONS_LIST:

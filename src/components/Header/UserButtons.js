@@ -50,6 +50,7 @@ class UserButtons extends Component {
     this.clickNotification = this.clickNotification.bind(this);
     this.loadConversations = this.loadConversations.bind(this);
     this.showDropdowns = this.showDropdowns.bind(this);
+    this.whoWroteMessage = this.whoWroteMessage.bind(this);
     this.onBlur = this.onBlur.bind(this);
   }
 
@@ -156,6 +157,17 @@ class UserButtons extends Component {
     }
   }
 
+  whoWroteMessage(message, receivers) {
+    if (message.user.id === this.props.authorizedUser.id) {
+      return `You: ${message.text}`;
+    }
+    if (receivers.length > 1) {
+      return `${message.user.first_name}: ${message.text}`;
+    } else {
+      return message.text;
+    }
+  }
+
   onBlur(e) {
     const currentTarget = e.currentTarget;
     setTimeout(() => {
@@ -183,11 +195,7 @@ class UserButtons extends Component {
           {/*
               -==== Start Dropdown Messages ====-
            */}
-          <div
-            className="wrap-icon-mail"
-            tabIndex={0}
-            onBlur={this.onBlur}
-          >
+          <div className="wrap-icon-mail" tabIndex={0} onBlur={this.onBlur}>
             <i
               style={{backgroundPosition: this.state.dropdownMessages ? '-112px -466px' : '-129px -466px'}}
               onClick={() => {
@@ -199,7 +207,6 @@ class UserButtons extends Component {
             <div
               style={{display: this.state.dropdownMessages ? 'block' : 'none'}}
               className="dropdown-common dropdown-messages"
-
             >
               <div className="notification-box">
                 <div className="triangle"/>
@@ -234,11 +241,9 @@ class UserButtons extends Component {
                           <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
                           {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
                           {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
-                          <span>{conversation.messages[0].user.id === this.props.authorizedUser.id ?
-                            `You: ${conversation.messages[0].text}`
-                            :
-                            `${conversation.messages[0].user.first_name}: ${conversation.messages[0].text}`}
-                          </span>
+                          {conversation.messages.length > 0 &&
+                            <span>{this.whoWroteMessage(conversation.messages[0], conversation.receivers)}</span>
+                          }
                           <span
                             className="date">{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
                           <div
@@ -262,15 +267,12 @@ class UserButtons extends Component {
           {/*
               -==== Start Dropdown Notifications ====-
            */}
-          <div
-            className="wrap-icon-bell"
-            onBlur={this.onBlur}
-            tabIndex={0}
-          >
+          <div className="wrap-icon-bell" onBlur={this.onBlur} tabIndex={0}>
             <i
               style={{backgroundPosition: this.state.dropdownNotifications ? '-46px -486px' : ' -32px -486px'}}
               onClick={() => this.showDropdowns('notifications', true)}
             />
+
             {bubbleNotification > 0 && <div className="bubble"><span>{bubbleNotification}</span></div>}
 
             <div
@@ -294,7 +296,10 @@ class UserButtons extends Component {
                       <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#E4F0F6'}}>
                         <div>
                           <img src={notification.user.avatar} alt=""/>
-                          <h6 dangerouslySetInnerHTML={{__html: notification.text}} style={{display: 'flex'}}/>
+                          <h6
+                            dangerouslySetInnerHTML={{__html: notification.text}}
+                            style={{display: 'flex', width: '265px', fontWeight: 400}}
+                          />
                         </div>
                         <p>{notification.created}</p>
                       </li>
@@ -324,7 +329,7 @@ class UserButtons extends Component {
                   {/*<p>21 Mar 2017</p>*/}
                   {/*</li>*/}
                 </ul>
-                <div style={{padding: '7px 5px 0'}}>
+                <div style={{padding: '4px 5px 4px'}}>
                   <Link to="/notifications">See all</Link>
                   <Link to="/settings/notifications">Settings</Link>
                 </div>

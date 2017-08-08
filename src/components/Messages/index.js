@@ -53,6 +53,7 @@ export default class Messages extends Component {
 
     this.Open = this.Open.bind(this);
     this.Close = this.Close.bind(this);
+    this.linkify = this.linkify.bind(this);
     this.clearMembers = this.clearMembers.bind(this);
     this.getReceivers = this.getReceivers.bind(this);
     this.filterMembers = this.filterMembers.bind(this);
@@ -196,6 +197,11 @@ export default class Messages extends Component {
     return filter(globalUsers, inArray(receiversUsers));
   }
 
+  linkify(text) {
+    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return `${text.replace(urlRegex, url => `<a href="${url}">${url}</a>`)}`;
+  }
+
   render() {
     const {conversation, authorizedUser, foundUsers} = this.props;
     return (
@@ -293,8 +299,41 @@ export default class Messages extends Component {
                     </div>
                     }
 
-                    <div
-                      className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
+                    {/*{((i === 0 || (i > 0 && message.user.id !== arr[i - 1].user.id)) &&*/}
+                      {/*<div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>*/}
+                        {/*<div>*/}
+                          {/*<Link to={`/${message.user.slug}`}>*/}
+                            {/*<img src={message.user.avatar} alt=""/>*/}
+                          {/*</Link>*/}
+                          {/*<Link to={`/${message.user.slug}`}>*/}
+                            {/*<h5>{message.user.first_name}</h5>*/}
+                          {/*</Link>*/}
+                          {/*<div className="wrapper-settings">*/}
+                            {/*<div*/}
+                              {/*className="message-settings"*/}
+                              {/*onClick={this.openMessageSettings}*/}
+                            {/*>*/}
+                              {/*<i>...</i>*/}
+                              {/*<div style={{display: this.state.messageSetting ? 'block' : 'none'}}>*/}
+                                {/*<ul>*/}
+                                  {/*<li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>*/}
+                                {/*</ul>*/}
+                              {/*</div>*/}
+                            {/*</div>*/}
+                          {/*</div>*/}
+                        {/*</div>*/}
+
+                        {/*<p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>*/}
+                      {/*</div>*/}
+                    {/*)*/}
+                    {/*||*/}
+                    {/*<div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>*/}
+                      {/*<p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}*/}
+                         {/*style={{marginTop: '-5px'}}/>*/}
+                    {/*</div>*/}
+                    {/*}*/}
+
+                    <div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
                       <div>
                         <Link to={`/${message.user.slug}`}>
                           <img src={message.user.avatar} alt=""/>
@@ -317,8 +356,10 @@ export default class Messages extends Component {
                         </div>
                       </div>
 
-                      <p title={message.date.substring(0, 17)}>{message.text}</p>
+                      <p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>
                     </div>
+
+
                   </div>
                 )
                 ||

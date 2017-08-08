@@ -28,6 +28,7 @@ class ListMessage extends Component {
       checkedUsersID: [],
     };
     this.getReceivers = this.getReceivers.bind(this);
+    this.whoWroteMessage = this.whoWroteMessage.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.groupAvatars = this.groupAvatars.bind(this);
     this.loadConversations = this.loadConversations.bind(this);
@@ -118,6 +119,17 @@ class ListMessage extends Component {
     this.props.loadNextConversations(this.props.paginationConversations);
   }
 
+  whoWroteMessage(message, receivers) {
+    if (message.user.id === this.props.authorizedUser.id) {
+      return `You: ${message.text}`;
+    }
+    if (receivers.length > 1) {
+      return `${message.user.first_name}: ${message.text}`;
+    } else {
+      return message.text;
+    }
+  }
+
   clear() {
     this.props.clearConversation();
     this.props.clearUserResult();
@@ -163,14 +175,11 @@ class ListMessage extends Component {
                     {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
                     <h5>{this.getReceivers(conversation.receivers)}</h5>
                   </li>
-                  <span>{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
-                  <div className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
-                  {/*<p>{conversation.messages && conversation.messages[0].text}</p>*/}
-                  <p>{conversation.messages[0].user.id === authorizedUser.id ?
-                    `You: ${conversation.messages[0].text}`
-                    :
-                    `${conversation.messages[0].user.first_name}: ${conversation.messages[0].text}`}
-                  </p>
+                  <span>{conversation.messages.length > 0 && conversation.messages[0].date.substring(11, 17)}</span>
+                  <div className="tooltip-date">{conversation.messages.length > 0 && conversation.messages[0].date.substring(0, 11)}</div>
+                  {conversation.messages.length > 0 &&
+                    <p>{this.whoWroteMessage(conversation.messages[0], conversation.receivers)}</p>
+                  }
                 </Link>
                 <div className="conversation-settings">
                   <i/>

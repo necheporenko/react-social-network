@@ -86,9 +86,9 @@ class App extends Component {
     }
 
     if (this.props.bubbleCommon > 0) {
-      this.favicon.href = '../../img/Default/favicon-active.ico';
+      this.favicon.href = '/favicon-active.ico';
     } else {
-      this.favicon.href = '../../img/Default/favicon.ico';
+      this.favicon.href = '/favicon.ico';
     }
   }
 

@@ -10,6 +10,7 @@ import './index.scss';
   foundUsers: state.search.foundUsers,
   conversation: state.profile.conversation,
   authorizedUser: state.user.authorizedUser,
+  activeMessageInput: state.profile.activeMessageInput,
   infoAboutTemporaryUser: state.profile.infoAboutTemporaryUser,
   needLoadTemporaryConversation: state.profile.needLoadTemporaryConversation,
 }), {
@@ -44,9 +45,12 @@ class NewMessage extends Component {
         },
         hideTypeahead: false
       });
-    } else {
-      this.inputMessage.focus();
     }
+    // if (!this.props.activeMessageInput) {
+      //     this.inputMessage.focus();
+      //   } else {
+      //     this.inputMessagePost.focus();
+      //   }
   }
 
   componentDidUpdate() {
@@ -108,7 +112,7 @@ class NewMessage extends Component {
   }
 
   render() {
-    const { foundUsers, conversation, authorizedUser } = this.props;
+    const { foundUsers, conversation, authorizedUser, activeMessageInput } = this.props;
     return (
       <div className="messages-content">
         <div className="wrapper">
@@ -127,7 +131,7 @@ class NewMessage extends Component {
               type="text"
               className="messages-input"
               placeholder={this.state.checkedUsersID.fullName.length > 0 ? '' : 'Type the name of a person'}
-              autoFocus={true}
+              autoFocus={activeMessageInput === false}
               onChange={this.handleSearchUser}
               onKeyDown={this.deleteSearchUser}
               ref={el => this.inputMessage = el}
@@ -201,8 +205,11 @@ class NewMessage extends Component {
 
           <div className="messages-send">
             <div className="wrapper">
+              {console.log('ha', activeMessageInput)}
               <Textarea
                 placeholder="Type a message"
+                ref={el => this.inputMessagePost = el}
+                autoFocus={activeMessageInput}
                 onKeyDown={this.handleKeyPress}
                 />
             </div>
@@ -223,6 +230,7 @@ NewMessage.propTypes = {
   conversation: PropTypes.object,
   authorizedUser: PropTypes.object,
   infoAboutTemporaryUser: PropTypes.object,
+  activeMessageInput: PropTypes.boolean,
 };
 
 export default NewMessage;

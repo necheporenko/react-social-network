@@ -13,8 +13,10 @@ export default function socketMiddleware() {
 
         if (path === `/messages/${msg.conversation_id}`) {
           store.dispatch(socketGetMessage(msg.message));
+          store.dispatch(getConversationList());
         } else {
           store.dispatch(socketLastMessage(msg));
+          store.dispatch(getConversationList());
         }
 
         if (msg.message.is_tech) {
