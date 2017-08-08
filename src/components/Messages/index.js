@@ -333,19 +333,24 @@ export default class Messages extends Component {
                     {/*</div>*/}
                     {/*}*/}
 
+                    {((i === 0 || (i > 0 && message.user.id !== arr[i - 1].user.id)) &&
                     <div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
-                      <div>
-                        <Link to={`/${message.user.slug}`}>
-                          <img src={message.user.avatar} alt=""/>
-                        </Link>
-                        <Link to={`/${message.user.slug}`}>
-                          <h5>{message.user.first_name}</h5>
-                        </Link>
+                      {message.user.id !== authorizedUser.id &&
+                        <div style={{width: '33px'}}>
+                          <Link to={`/${message.user.slug}`}>
+                            <img src={message.user.avatar} alt=""/>
+                          </Link>
+
+                          <Link to={`/${message.user.slug}`} style={{position: 'relative', top: '-17px'}}>
+                            <h5>{message.user.first_name}</h5>
+                          </Link>
+                        </div>
+                      }
+
+                      <div style={{display: 'flex', marginLeft: '14px'}}>
+                        <p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>
                         <div className="wrapper-settings">
-                          <div
-                            className="message-settings"
-                            onClick={this.openMessageSettings}
-                          >
+                          <div className="message-settings" onClick={this.openMessageSettings}>
                             <i>...</i>
                             <div style={{display: this.state.messageSetting ? 'block' : 'none'}}>
                               <ul>
@@ -355,10 +360,26 @@ export default class Messages extends Component {
                           </div>
                         </div>
                       </div>
-
-                      <p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>
                     </div>
-
+                    )
+                    ||
+                    <div className={message.user.id === authorizedUser.id ?
+                      'messages-post messages-post-reverse messages-post-repeat' : 'messages-post messages-post-repeat'}>
+                      <div style={{display: 'flex', marginLeft: '14px'}}>
+                        <p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>
+                        <div className="wrapper-settings">
+                          <div className="message-settings" onClick={this.openMessageSettings}>
+                            <i>...</i>
+                            <div style={{display: this.state.messageSetting ? 'block' : 'none'}}>
+                              <ul>
+                                <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    }
 
                   </div>
                 )
