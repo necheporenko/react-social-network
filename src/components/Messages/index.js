@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {asyncConnect} from 'redux-connect';
+import InfiniteScroll from 'react-infinite-scroller';
 import Textarea from 'react-textarea-autosize';
 import {Modal} from 'react-bootstrap';
 import {
@@ -9,7 +10,11 @@ import {
   createMessage,
   deleteMessage,
   getConversationID,
-  addMember
+  addMember,
+  firstLoadMessages,
+  hasMoreMessages,
+  paginationMessages,
+  loadNextMessagesByID,
 } from '../../redux/modules/profile';
 import {newSearchUser} from '../../redux/modules/search';
 import './index.scss';
@@ -28,13 +33,17 @@ import './index.scss';
   foundUsers: state.search.foundUsers,
   conversation: state.profile.conversation,
   authorizedUser: state.user.authorizedUser,
-  gettingConversation: state.profile.gettingConversation
+  gettingConversation: state.profile.gettingConversation,
+  paginationMessages: state.profile.paginationMessages,
+  hasMoreMessages: state.profile.hasMoreMessages,
+  firstLoadMessages: state.profile.firstLoadMessages,
 }), {
   getConversationByID,
   createMessage,
   deleteMessage,
   newSearchUser,
-  addMember
+  addMember,
+  loadNextMessagesByID
 })
 
 export default class Messages extends Component {
@@ -49,12 +58,14 @@ export default class Messages extends Component {
       messageSetting: false,
       showAddSearch: false,
       hideTypeahead: false,
+      conversationID: this.props.conversation.conversation_id,
     };
 
     this.Open = this.Open.bind(this);
     this.Close = this.Close.bind(this);
     this.linkify = this.linkify.bind(this);
     this.clearMembers = this.clearMembers.bind(this);
+    this.loadMessages = this.loadMessages.bind(this);
     this.getReceivers = this.getReceivers.bind(this);
     this.filterMembers = this.filterMembers.bind(this);
     this.confirmMembers = this.confirmMembers.bind(this);
@@ -202,6 +213,14 @@ export default class Messages extends Component {
     return `${text.replace(urlRegex, url => `<a href="${url}">${url}</a>`)}`;
   }
 
+  loadMessages() {
+    if (this.props.firstLoadMessages) {
+      this.props.loadNextMessagesByID(this.state.conversationID, this.props.paginationMessages);
+      console.log('it"s true scroll, page:', this.props.paginationMessages);
+    }
+    console.log('it"s scroll', this.props.firstLoadMessages);
+  }
+
   render() {
     const {conversation, authorizedUser, foundUsers} = this.props;
     return (
@@ -288,8 +307,17 @@ export default class Messages extends Component {
           }
 
           <div className="messages-box" ref={el => this.messageBlock = el}>
-            <div>
-              {conversation.messages && conversation.messages.map((message, i, arr) => (
+            <InfiniteScroll
+              loadMore={this.loadMessages}
+              hasMore={this.props.hasMoreMessages}
+              threshold={20}
+              isReverse={true}
+              // loader={loader}
+              useWindow={false}
+            >
+              <div>
+
+                {conversation.messages && conversation.messages.map((message, i, arr) => (
                 (message.is_tech === 0 &&
                   <div key={message.id}>
                     {/*message.date.substring(0, 2) ===  it's a day*/}
@@ -328,7 +356,8 @@ export default class Messages extends Component {
                     </div>
                     )
                     ||
-                    <div className={message.user.id === authorizedUser.id ?
+                    <div
+                      className={message.user.id === authorizedUser.id ?
                       'messages-post messages-post-reverse messages-post-repeat' : 'messages-post messages-post-repeat'}>
                       <div style={{display: 'flex', marginLeft: '14px'}}>
                         <p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>
@@ -360,7 +389,8 @@ export default class Messages extends Component {
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+            </InfiniteScroll>
           </div>
           {conversation.conversation_id && (
             <div className="messages-send">
@@ -388,6 +418,10 @@ Messages.propTypes = {
   authorizedUser: PropTypes.object,
   foundUsers: PropTypes.array,
   gettingConversation: PropTypes.boolean,
+  firstLoadMessages: PropTypes.boolean,
+  hasMoreMessages: PropTypes.boolean,
+  paginationMessages: PropTypes.number,
+  loadNextMessagesByID: PropTypes.func,
 };
 
 const Participants = ({Open, Close, showModal, participants}) => {

@@ -44,6 +44,9 @@ const GET_CONVERSATION_LIST_FAIL = 'GET_CONVERSATION_LIST_FAIL';
 const LOAD_NEXT_CONVERSATIONS = 'LOAD_NEXT_CONVERSATIONS';
 const LOAD_NEXT_CONVERSATIONS_SUCCESS = 'LOAD_NEXT_CONVERSATIONS_SUCCESS';
 const LOAD_NEXT_CONVERSATIONS_FAIL = 'LOAD_NEXT_CONVERSATIONS_FAIL';
+const LOAD_NEXT_MESSAGES = 'LOAD_NEXT_MESSAGES';
+const LOAD_NEXT_MESSAGES_SUCCESS = 'LOAD_NEXT_MESSAGES_SUCCESS';
+const LOAD_NEXT_MESSAGES_FAIL = 'LOAD_NEXT_MESSAGES_FAIL';
 const CREATE_MESSAGE = 'CREATE_MESSAGE';
 const CREATE_MESSAGE_SUCCESS = 'CREATE_MESSAGE_SUCCESS';
 const CREATE_MESSAGE_FAIL = 'CREATE_MESSAGE_FAIL';
@@ -84,6 +87,8 @@ const initialState = {
   hasMoreConversations: true,
   paginationNotifications: 2, //pagination notifications
   hasMoreNotifications: true,
+  paginationMessages: 2,      //pagination messages
+  hasMoreMessages: true,
   // loadedConversations: false,
 };
 
@@ -332,6 +337,30 @@ export default function profileReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case LOAD_NEXT_MESSAGES:
+      return {
+        ...state,
+        gettingConversation: true,
+      };
+    case LOAD_NEXT_MESSAGES_SUCCESS:
+      let nextMessages;
+      if (action.result.data.length > 0) {
+        nextMessages = [...action.result.data, ...state.conversation];
+      } else {
+        nextMessages = state.conversation;
+      }
+      return {
+        ...state,
+        conversation: nextMessages,
+        paginationMessages: state.paginationMessages + 1,
+        hasMoreMessages: action.result.data.length > 0,
+      };
+    case LOAD_NEXT_MESSAGES_FAIL:
+      return {
+        ...state,
+        error: action.error,
+      };
+
     case GET_CONVERSATION:
       return {
         ...state,
@@ -349,7 +378,10 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         gettingConversation: false,
         conversation: newConversation,
-        infoAboutTemporaryUser: []
+        infoAboutTemporaryUser: [],
+        firstLoadMessages: true,
+        paginationMessages: 2,
+        hasMoreMessages: true,
       };
     case GET_CONVERSATION_FAIL:
       return {
@@ -397,7 +429,10 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         gettingConversation: false,
         conversation: newConversationByUser,
-        conversations: newListConversation()
+        conversations: newListConversation(),
+        firstLoadMessages: true,
+        paginationMessages: 2,
+        hasMoreMessages: true,
       };
     case GET_CONVERSATION_BY_USER_FAIL:
       return {
@@ -415,7 +450,6 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         needLoadTemporaryConversation: !action.result.data.conversation_id,
         infoAboutTemporaryUser: action.user,
-
         // conversations: [newConversationByUserPage, ...state.conversations]
       };
     case GET_CONVERSATION_BY_USER_PAGE_FAIL:
@@ -887,10 +921,25 @@ export function getConversationByID(id) {
   };
 }
 
+export function loadNextMessagesByID(id, page) {
+  return {
+    types: [LOAD_NEXT_MESSAGES, LOAD_NEXT_MESSAGES_SUCCESS, LOAD_NEXT_MESSAGES_FAIL],
+    promise: (client) => client.get(`/conversations/${id}`, { params: { page }})
+  };
+}
+
 export function getConversationByUser(user_ids, user_name) {
   return {
     types: [GET_CONVERSATION_BY_USER, GET_CONVERSATION_BY_USER_SUCCESS, GET_CONVERSATION_BY_USER_FAIL],
     promise: (client) => client.get('/conversations/by-users', { params: { user_ids }}),
+    user_name
+  };
+}
+
+export function loadNextMessagesByUser(user_ids, user_name, page) {
+  return {
+    types: [LOAD_NEXT_MESSAGES, LOAD_NEXT_MESSAGES_SUCCESS, LOAD_NEXT_MESSAGES_FAIL],
+    promise: (client) => client.get('/conversations/by-users', { params: { user_ids, page }}),
     user_name
   };
 }

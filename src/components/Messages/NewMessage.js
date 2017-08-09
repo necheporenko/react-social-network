@@ -1,8 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
+import InfiniteScroll from 'react-infinite-scroller';
 import Textarea from 'react-textarea-autosize';
-import { getConversationByUser, createMessage } from '../../redux/modules/profile';
+import {
+  getConversationByUser,
+  createMessage,
+  firstLoadMessages,
+  hasMoreMessages,
+  paginationMessages,
+  loadNextMessagesByUser,
+} from '../../redux/modules/profile';
 import { newSearchUser } from '../../redux/modules/search';
 import './index.scss';
 
@@ -13,10 +21,14 @@ import './index.scss';
   activeMessageInput: state.profile.activeMessageInput,
   infoAboutTemporaryUser: state.profile.infoAboutTemporaryUser,
   needLoadTemporaryConversation: state.profile.needLoadTemporaryConversation,
+  paginationMessages: state.profile.paginationMessages,
+  hasMoreMessages: state.profile.hasMoreMessages,
+  firstLoadMessages: state.profile.firstLoadMessages,
 }), {
   getConversationByUser,
   newSearchUser,
   createMessage,
+  loadNextMessagesByUser,
 })
 
 class NewMessage extends Component {
@@ -31,6 +43,7 @@ class NewMessage extends Component {
     };
     this.linkify = this.linkify.bind(this);
     this.onBlur = this.onBlur.bind(this);
+    this.loadMessages = this.loadMessages.bind(this);
     this.handleSearchUser = this.handleSearchUser.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.addCheckedUser = this.addCheckedUser.bind(this);
@@ -136,6 +149,14 @@ class NewMessage extends Component {
     }, 0);
   }
 
+  loadMessages() {
+    if (this.props.firstLoadMessages) {
+      this.props.loadNextMessagesByUser(
+        this.state.checkedUsersID.id.toString(), this.state.checkedUsersID.fullName.toString(), this.props.paginationMessages);
+      console.log('it"s true scroll, page:', this.props.paginationMessages);
+    }
+    console.log('it"s scroll');
+  }
 
   render() {
     const { foundUsers, conversation, authorizedUser, activeMessageInput } = this.props;
@@ -179,7 +200,14 @@ class NewMessage extends Component {
           </div>
 
           <div className="messages-box" ref={(el) => this.messageBlock = el}>
-
+            <InfiniteScroll
+              loadMore={this.loadMessages}
+              hasMore={this.props.hasMoreMessages}
+              threshold={20}
+              isReverse={true}
+              // loader={loader}
+              useWindow={false}
+            >
             { conversation.messages && conversation.messages.map((message, i, arr) => (
               (message.is_tech === 0 &&
               <div key={message.id}>
@@ -251,7 +279,7 @@ class NewMessage extends Component {
                 </div>
               </div>
             ))}
-
+            </InfiniteScroll>
           </div>
 
           <div className="messages-send">
@@ -281,6 +309,10 @@ NewMessage.propTypes = {
   authorizedUser: PropTypes.object,
   infoAboutTemporaryUser: PropTypes.object,
   activeMessageInput: PropTypes.boolean,
+  firstLoadMessages: PropTypes.boolean,
+  hasMoreMessages: PropTypes.boolean,
+  paginationMessages: PropTypes.number,
+  loadNextMessagesByUser: PropTypes.func,
 };
 
 export default NewMessage;
