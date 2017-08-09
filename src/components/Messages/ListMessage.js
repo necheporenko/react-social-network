@@ -74,40 +74,18 @@ class ListMessage extends Component {
           </div>
         );
 
-      case 3:
-        return (
-          <div className="wrapper-avatars">
-            <div className="grid-half">
-              <img src={receivers[0].avatar} alt=""/>
-            </div>
-            <div className="grid-half">
-              <div className="grid-fourth">
-                <img src={receivers[1].avatar} alt=""/>
-              </div>
-              <div className="grid-fourth">
-                <img src={receivers[2].avatar} alt=""/>
-              </div>
-            </div>
-          </div>
-        );
-
       default:
         return (
           <div className="wrapper-avatars">
-            <div className="grid-half">
-              <div className="grid-fourth">
-                <img src={receivers[0].avatar} alt=""/>
-              </div>
+            <div className="grid-half grid-half-1">
+              <img src={receivers[0].avatar} alt=""/>
+            </div>
+            <div className="grid-half grid-half-2">
               <div className="grid-fourth">
                 <img src={receivers[1].avatar} alt=""/>
               </div>
-            </div>
-            <div className="grid-half">
               <div className="grid-fourth">
                 <img src={receivers[2].avatar} alt=""/>
-              </div>
-              <div className="grid-fourth">
-                <img src={receivers[3].avatar} alt=""/>
               </div>
             </div>
           </div>

@@ -68,6 +68,19 @@
         margin-left: -8px;
       }
     }
+
+    .grid-half-1 {
+      width: 27.5px;
+    }
+
+    .grid-half-2 {
+      width: 17px !important;
+
+      .grid-fourth img {
+        margin-left: -5px;
+      }
+    }
+
     .grid-fourth {
       height: 22.5px;
       width: 22.5px;
@@ -399,7 +412,6 @@
 
   p {
     float: right;
-    text-align: right;
     left: -46px;
     background: #cbeaf7;
     border-radius: 9px 1px 9px 9px;
@@ -598,14 +610,14 @@
   width: 200px;
 }
 
-.add-members {
+.btn-brand.add-members {
   position: absolute;
-  right: 5px;
-  top: 38px;
-  border: 1px solid #999999;
+  right: 55px;
+  top: 15px;
   cursor: pointer;
-  padding: 2px 15px;
-  font-size: 13px;
+  padding: 1px 20px;
+  font-size: 11px;
+  min-width: auto;
 }
 
 .wrapper-find-users {

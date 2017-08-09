@@ -281,6 +281,18 @@
         margin-left: -8px;
       }
     }
+    .grid-half-1 {
+      width: 27.5px;
+    }
+
+    .grid-half-2 {
+      width: 17px !important;
+
+      .grid-fourth img {
+        margin-left: -5px;
+      }
+    }
+
     .grid-fourth {
       height: 22.5px;
       width: 22.5px;
@@ -382,7 +394,8 @@
 
     h4 {
       font-weight: 500;
-      padding-top: 4px;
+      padding-top: 5px;
+      font-size: 16px;
     }
   }
 

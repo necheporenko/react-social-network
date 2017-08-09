@@ -29,6 +29,8 @@ class NewMessage extends Component {
       },
       hideTypeahead: false,
     };
+    this.linkify = this.linkify.bind(this);
+    this.onBlur = this.onBlur.bind(this);
     this.handleSearchUser = this.handleSearchUser.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.addCheckedUser = this.addCheckedUser.bind(this);
@@ -111,6 +113,30 @@ class NewMessage extends Component {
     }
   }
 
+  linkify(text) {
+    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    return `${text.replace(urlRegex, url => `<a href="${url}">${url}</a>`)}`;
+  }
+
+  onBlur(e) {
+    const currentTarget = e.currentTarget;
+    const x = this.findUsers;
+    setTimeout(() => {
+      if (x.contains(document.activeElement)) {
+        console.log('qwerty3');
+        this.setState({
+          hideTypeahead: false,
+        });
+      } else if (!currentTarget.contains(document.activeElement)) {
+        console.log('qwerty2', document.activeElement);
+        this.setState({
+          hideTypeahead: true,
+        });
+      }
+    }, 0);
+  }
+
+
   render() {
     const { foundUsers, conversation, authorizedUser, activeMessageInput } = this.props;
     return (
@@ -132,15 +158,18 @@ class NewMessage extends Component {
               className="messages-input"
               placeholder={this.state.checkedUsersID.fullName.length > 0 ? '' : 'Type the name of a person'}
               autoFocus={activeMessageInput === false}
+              tabIndex={0}
+              onBlur={this.onBlur}
+              // onFocus={this.setState({hideTypeahead: true})}
               onChange={this.handleSearchUser}
               onKeyDown={this.deleteSearchUser}
               ref={el => this.inputMessage = el}
               style={{position: this.state.checkedUsersID.fullName.length > 0 ? 'relative' : 'static'}}
             />
             { !this.state.hideTypeahead && foundUsers.length > 0 &&
-              <div className="wrapper-find-users">
-                { foundUsers && foundUsers.map(user => (
-                  <div key={user.id} className="found-user" onClick={() => this.addCheckedUser(user)}>
+              <div className="wrapper-find-users" ref={el => this.findUsers = el}>
+                { foundUsers && foundUsers.map((user, index) => (
+                  <div key={user.id} tabIndex={index} className="found-user" onClick={() => this.addCheckedUser(user)}>
                     <img src={user.avatar}/>
                     <p>{user.first_name} {user.last_name}</p>
                   </div>
@@ -161,21 +190,44 @@ class NewMessage extends Component {
                   </div>
                   }
 
-                <div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
-                  <div>
-                    <Link to={`/${message.user.slug}`}>
-                      <img src={message.user.avatar} alt=""/>
-                    </Link>
-                    <Link to={`/${message.user.slug}`}>
-                      <h5>{message.user.first_name}</h5>
-                    </Link>
-                    <div className="wrapper-time-settings">
-                      <div
-                        className="message-settings"
-                        onClick={this.openMessageSettings}
-                        >
+                {((i === 0 || (message.is_tech !== arr[i - 1].is_tech) || (i > 0 && message.user.id !== arr[i - 1].user.id)) &&
+                  <div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
+                    {message.user.id !== authorizedUser.id &&
+                    <div style={{width: '33px'}}>
+                      <Link to={`/${message.user.slug}`}>
+                        <img src={message.user.avatar} alt=""/>
+                      </Link>
+
+                      <Link to={`/${message.user.slug}`} style={{position: 'relative', top: '-17px'}}>
+                        <h5>{message.user.first_name}</h5>
+                      </Link>
+                    </div>
+                    }
+
+                    <div style={{display: 'flex', marginLeft: '14px'}}>
+                      <p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>
+                      <div className="wrapper-settings">
+                        <div className="message-settings" onClick={this.openMessageSettings}>
+                          <i>...</i>
+                          <div style={{display: this.state.messageSetting ? 'block' : 'none'}}>
+                            <ul>
+                              <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+                ||
+                <div className={message.user.id === authorizedUser.id ?
+                  'messages-post messages-post-reverse messages-post-repeat' : 'messages-post messages-post-repeat'}>
+                  <div style={{display: 'flex', marginLeft: '14px'}}>
+                    <p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>
+                    <div className="wrapper-settings">
+                      <div className="message-settings" onClick={this.openMessageSettings}>
                         <i>...</i>
-                        <div style={{ display: this.state.messageSetting ? 'block' : 'none'}}>
+                        <div style={{display: this.state.messageSetting ? 'block' : 'none'}}>
                           <ul>
                             <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
                           </ul>
@@ -183,9 +235,8 @@ class NewMessage extends Component {
                       </div>
                     </div>
                   </div>
-
-                  <p title={message.date.substring(0, 17)}>{message.text}</p>
                 </div>
+                }
               </div>
               )
               ||
@@ -205,7 +256,6 @@ class NewMessage extends Component {
 
           <div className="messages-send">
             <div className="wrapper">
-              {console.log('ha', activeMessageInput)}
               <Textarea
                 placeholder="Type a message"
                 ref={el => this.inputMessagePost = el}

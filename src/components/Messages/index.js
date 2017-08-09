@@ -249,7 +249,7 @@ export default class Messages extends Component {
                   style={{position: this.state.checkedUsersID.fullName.length > 0 ? 'relative' : 'static'}}
                 />
                 <div
-                  className="add-members"
+                  className="btn-brand add-members"
                   style={{display: this.state.checkedUsersID.fullName.length > 0 ? 'block' : 'none'}}
                   onClick={this.confirmMembers}
                 >
@@ -298,42 +298,7 @@ export default class Messages extends Component {
                       <span>{message.date.substring(0, 11)}</span>
                     </div>
                     }
-
-                    {/*{((i === 0 || (i > 0 && message.user.id !== arr[i - 1].user.id)) &&*/}
-                      {/*<div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>*/}
-                        {/*<div>*/}
-                          {/*<Link to={`/${message.user.slug}`}>*/}
-                            {/*<img src={message.user.avatar} alt=""/>*/}
-                          {/*</Link>*/}
-                          {/*<Link to={`/${message.user.slug}`}>*/}
-                            {/*<h5>{message.user.first_name}</h5>*/}
-                          {/*</Link>*/}
-                          {/*<div className="wrapper-settings">*/}
-                            {/*<div*/}
-                              {/*className="message-settings"*/}
-                              {/*onClick={this.openMessageSettings}*/}
-                            {/*>*/}
-                              {/*<i>...</i>*/}
-                              {/*<div style={{display: this.state.messageSetting ? 'block' : 'none'}}>*/}
-                                {/*<ul>*/}
-                                  {/*<li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>*/}
-                                {/*</ul>*/}
-                              {/*</div>*/}
-                            {/*</div>*/}
-                          {/*</div>*/}
-                        {/*</div>*/}
-
-                        {/*<p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>*/}
-                      {/*</div>*/}
-                    {/*)*/}
-                    {/*||*/}
-                    {/*<div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>*/}
-                      {/*<p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}*/}
-                         {/*style={{marginTop: '-5px'}}/>*/}
-                    {/*</div>*/}
-                    {/*}*/}
-
-                    {((i === 0 || (i > 0 && message.user.id !== arr[i - 1].user.id)) &&
+                    {((i === 0 || (message.is_tech !== arr[i - 1].is_tech) || (i > 0 && message.user.id !== arr[i - 1].user.id)) &&
                     <div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
                       {message.user.id !== authorizedUser.id &&
                         <div style={{width: '33px'}}>
