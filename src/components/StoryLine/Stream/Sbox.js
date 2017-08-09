@@ -60,7 +60,6 @@ class Sbox extends Component {
     this.focusSboxElement = this.focusSboxElement.bind(this);
     this.handleCheckLoud = this.handleCheckLoud.bind(this);
     this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
-    this.testSocket = this.testSocket.bind(this);
     this.selectedBooks = this.selectedBooks.bind(this);
   }
 
@@ -273,24 +272,6 @@ class Sbox extends Component {
     }
   }
 
-  testSocket() {
-    socket.send(
-      JSON.stringify({
-        type: 'notification',
-        id: 10,
-        text: "<a href='http://devasimov.validbook.org/bohdan.andriyiv'>Bohdan Andriyiv</a> liked your <a href='http://devasimov.validbook.org/story/1440'>story</a>.",
-        created: '06 Jul 2017',
-        user: {
-          id: 4,
-          fullName: 'Bohdan Andriyiv',
-          slug: 'bohdan.andriyiv',
-          avatar: 'https://s3-us-west-2.amazonaws.com/dev.validbook/avatars/2017/06/20/4/7oSnPdcNeVyCaF0Vo2-LA0Sl_7f0aB-C.jpg'
-        }
-      })
-      // 'test'
-      );
-  }
-
   render() {
     const { editorContent } = this.state;
     const { first_name, last_name, avatar32} = this.props.authorizedUser;
@@ -343,9 +324,6 @@ class Sbox extends Component {
               onClick={this.onSubmitStory}
               style={{fontSize: '13px', backgroundColor: this.state.sboxFocusBtn }}
             >Log</div>
-            <button
-              style={{padding: '5px'}} className="btn-brand" type="submit"
-              onClick={() => this.testSocket()}>not press</button>
             <ButtonToolbar>
               <DropdownButton
                 className="bootstrap-pure-btn"

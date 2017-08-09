@@ -30,7 +30,7 @@ export default class TokensContainer extends Component {
     return (
       <div>
         <Helmet
-          title={`${requestedUser.first_name} ${requestedUser.last_name} - Cache`}
+          title={`${requestedUser.first_name} ${requestedUser.last_name} - Caches`}
         />
         <SubHeader
           requestedUser={this.props.requestedUser}

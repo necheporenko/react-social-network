@@ -149,6 +149,10 @@
       }
     }
 
+    .icon_bin.react-tree-treenode-disabled {
+      display: none;
+    }
+
     input[type="checkbox"] {
       position: absolute;
       left: -1px;

@@ -1,39 +1,58 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { connect } from 'react-redux';
+import { Link, browserHistory } from 'react-router';
 import Helmet from 'react-helmet';
 import { FacebookLogin } from 'react-facebook-login-component';
 import { Form } from 'formsy-react-components';
 import FormSignIn from '../FormSignIn';
 import InformationFooter from '../../Information&Profile/Information/InformationFooter';
+import { login as loginUser, loginSocial, openWebsocket } from '../../../redux/modules/user';
+import { show as showChannel, load as loadChannels } from '../../../redux/modules/channel';
+import { loadWhoToFollow } from '../../../redux/modules/follow';
+import { load as loadBookTree } from '../../../redux/modules/book';
 import MinHeader from '../../Header/MinHeader';
 import './index.scss';
 
-class Auth extends Component {
+@connect((state) => ({
+  authorizedUser: state.user.authorizedUser,
+}), {
+  loginUser,
+  loginSocial,
+  showChannel,
+  loadChannels,
+  loadBookTree,
+  loadWhoToFollow,
+  openWebsocket
+})
+
+export default class Auth extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authEmail: '',
-      authPass: '',
       facebook_id: '281599312011088' //got from validbook.org
     };
-
-    this.handleAuth = this.handleAuth.bind(this);
     this.onSubmitSignInForm = this.onSubmitSignInForm.bind(this);
     this.responseFacebook = this.responseFacebook.bind(this);
   }
 
   onSubmitSignInForm(data) {
-    console.log(data);         // eslint-disable-line no-console
-    this.props.userLoginRequest(data.email, data.password);
+    this.props.loginUser(data.email, data.password)
+      .then(() => this.props.openWebsocket())
+      .then(() => this.props.showChannel())
+      .then(() => this.props.loadWhoToFollow())
+      .then(() => this.props.loadBookTree(this.props.authorizedUser.slug))
+      .then(() => this.props.loadChannels(this.props.authorizedUser.slug))
+      .then(browserHistory.push('/'));
   }
 
-  handleAuth(data) {
-    console.log(data);          // eslint-disable-line no-console
-    this.setState({authEmail: data.email, authPass: data.password});
-  }
 
   responseFacebook(response) {
-    console.log('Facebook API login', response); // eslint-disable-line no-console
+    this.props.loginSocial('facebook', response.picture.data.url, response.accessToken)
+      .then(() => this.props.openWebsocket())
+      .then(() => this.props.showChannel())
+      .then(() => this.props.loadChannels(this.props.authorizedUser.slug))
+      .then(() => this.props.loadBookTree(this.props.authorizedUser.slug))
+      .then(() => this.props.loadWhoToFollow());
   }
 
   invalid() {
@@ -85,7 +104,12 @@ class Auth extends Component {
 }
 
 Auth.propTypes = {
-  userLoginRequest: PropTypes.func
+  authorizedUser: PropTypes.object,
+  loginUser: PropTypes.func,
+  openWebsocket: PropTypes.func,
+  loginSocial: PropTypes.func,
+  showChannel: PropTypes.func,
+  loadChannels: PropTypes.func,
+  loadBookTree: PropTypes.func,
+  loadWhoToFollow: PropTypes.func
 };
-
-export default Auth;

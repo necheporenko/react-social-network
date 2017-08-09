@@ -24,8 +24,6 @@ import '../components/BooksTree/index.scss';
 
 export default class BooksTreeForSboxContainer extends Component {
   render() {
-    const { slug } = this.props.authorizedUser;
-
     return (
       <div className="bookstree">
         <div className={this.props.infoBlocksTop}>
@@ -46,4 +44,5 @@ BooksTreeForSboxContainer.propTypes = {
   children: PropTypes.element,
   infoBlocksTop: PropTypes.string,
   authorizedUser: PropTypes.object,
+  bookTreeArr: PropTypes.array,
 };

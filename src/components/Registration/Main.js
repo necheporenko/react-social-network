@@ -93,7 +93,7 @@ export default class New extends Component {
                     responseHandler={this.responseFacebook}
                     xfbml={true}
                     version="v2.5"
-                    buttonText="Continue With Facebook"
+                    buttonText="Continue with Facebook"
                   />
 
                   <button className="registration-btn registration-btn-fb registration-btn-log-in" onClick={() => this.onFormShow('sign-in')}>Log In</button>
