@@ -25,11 +25,10 @@ import MainPage from '../components/MainPage';
       if (!isLoadedChannelList(getState())) {
         promises.push(dispatch(loadChannels(getAuthUserSlug(getState()))));
       }
-      promises.push(dispatch(loadBookTree()));
       promises.push(dispatch(loadWhoToFollow()));
+      promises.push(dispatch(loadBookTree()));
       // promises.push(dispatch(getUser(getAuthSlug(getState()))));
     }
-
     return Promise.all(promises);
   }
 }])

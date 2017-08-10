@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import draftToHtml from 'draftjs-to-html';
@@ -22,7 +22,7 @@ let step = 0;
   createStory,
 })
 
-class Sbox extends Component {
+class Sbox extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

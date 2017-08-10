@@ -28,8 +28,8 @@ export default class New extends Component {
       .then(() => this.props.openWebsocket())
       .then(() => this.props.showChannel())
       .then(() => this.props.loadWhoToFollow())
-      .then(() => this.props.loadBookTree(this.props.authorizedUser.slug))
-      .then(() => this.props.loadChannels(this.props.authorizedUser.slug));
+      .then(() => this.props.loadChannels(this.props.authorizedUser.slug))
+      .then(() => this.props.loadBookTree(this.props.authorizedUser.slug));
   }
 
   onSubmitRegisterForm(data) {
@@ -43,9 +43,9 @@ export default class New extends Component {
     this.props.loginSocial('facebook', response.picture.data.url, response.accessToken)
       .then(() => this.props.openWebsocket())
       .then(() => this.props.showChannel())
+      .then(() => this.props.loadWhoToFollow())
       .then(() => this.props.loadChannels(this.props.authorizedUser.slug))
-      .then(() => this.props.loadBookTree(this.props.authorizedUser.slug))
-      .then(() => this.props.loadWhoToFollow());
+      .then(() => this.props.loadBookTree(this.props.authorizedUser.slug));
   }
 
   // handleAuth(data) {

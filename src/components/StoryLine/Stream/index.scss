@@ -93,6 +93,7 @@
     padding: 5px 25px;
     opacity: 1;
   }
+
   .camera {
     i {
       background: $sprite;
@@ -243,6 +244,7 @@
 
   .btn-group.open .dropdown-toggle {
     box-shadow: none !important;
+    background: #fff;
   }
 
   .btn-default:active, .btn-default.active,

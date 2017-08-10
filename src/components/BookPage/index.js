@@ -15,9 +15,9 @@ import NavigationBookPage from '../Navigation/NavigationBookPage';
 import './index.scss';
 
 const radioOptions = [
-       {value: 'a', label: 'only you'},
-       {value: 'b', label: 'anyone'},
-       {value: 'c', label: 'specific people'}
+       {value: 0, label: 'only you'},
+       {value: 1, label: 'anyone'},
+       {value: 2, label: 'specific people'}
 ];
 
 @asyncConnect([{
@@ -87,6 +87,7 @@ export default class BookPage extends Component {
     const chooseScroll = scroll();
     const bookPageName = this.props.bookPageName;
     const { slug, first_name, last_name, avatar32 } = this.props.requestedUser;
+
     return (
       <div>
         <Helmet title={`${first_name} ${last_name} - Books - ${bookPageName}`}/>
@@ -165,14 +166,13 @@ export default class BookPage extends Component {
 
                   <div className="book-settings">
                     <div className="book-settings-access">
-
                       <i/>
                       <ButtonToolbar>
                         <DropdownButton className="bootstrap-pure-btn" title="Access settings" >
 
                           <Form
                             rowClassName={[{'form-group': false}, {row: false}]}
-                              >
+                          >
                             <RadioGroup
                               name="radioGrp1"
                               value="b"
@@ -180,15 +180,15 @@ export default class BookPage extends Component {
                               labelClassName={[{'col-sm-3': false}, 'book-list-label']}
                               elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
                               options={radioOptions}
-                                />
+                            />
                             <RadioGroup
-                              name="radioGrp1"
+                              name="radioGrp2"
                               value="b"
-                              label="Who can see that book exists?"
+                              label="Who can see the content of the book?"
                               labelClassName={[{'col-sm-3': false}, 'book-list-label']}
                               elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
                               options={radioOptions}
-                                />
+                            />
                           </Form>
 
                         </DropdownButton>

@@ -73,7 +73,8 @@ export default function bookReducer(state = initialState, action) {
         ...state,
         loading: {
           loadingBookStories: true
-        }
+        },
+        bookStories: [],
       };
     case SHOW_BOOK_SUCCESS:
       return {
