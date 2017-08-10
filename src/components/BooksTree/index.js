@@ -1,9 +1,15 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import Tree, { TreeNode } from 'draggable-react-tree-component';
-import { connect } from 'react-redux';
-import { load as loadBookTree, show as showBookStories, move as moveBook } from '../../redux/modules/book';
-import { gData } from './util';
+import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import Tree, {TreeNode} from 'draggable-react-tree-component';
+import {connect} from 'react-redux';
+import {
+  load as loadBookTree,
+  show as showBookStories,
+  move as moveBook,
+  clearBookStories
+} from '../../redux/modules/book';
+import {clearStories} from '../../redux/modules/story';
+import {gData} from './util';
 import './draggable.scss';
 
 @connect((state) => ({
@@ -12,7 +18,9 @@ import './draggable.scss';
   authorizedUserSlug: state.user.authorizedUser.slug,
 }), {
   showBookStories,
-  moveBook
+  moveBook,
+  clearBookStories,
+  clearStories
 })
 
 class BooksTree extends Component {
@@ -23,6 +31,7 @@ class BooksTree extends Component {
       'onDragEnter',
       'onDrop',
       'onExpand',
+      'clearStream',
     ].forEach((name) => (this[name] = this[name].bind(this)));
 
     this.state = {
@@ -36,12 +45,14 @@ class BooksTree extends Component {
   onDragStart(info) {
     console.log('start', info); // eslint-disable-line no-console
   }
+
   onDragEnter(info) {
     // console.log('enter', info)
     this.setState({
       expandedKeys: info.expandedKeys,
     });
   }
+
   onDrop(info) {
     console.log('drop', info);
     const dropKey = info.node.props.eventKey;
@@ -108,6 +119,7 @@ class BooksTree extends Component {
     console.log('MOVE BOOK', dragKey, dropKey, book_before_slug);
     this.props.moveBook(dragKey, dropKey, book_before_slug);
   }
+
   onExpand(expandedKeys) {
     this.setState({
       expandedKeys,
@@ -134,28 +146,33 @@ class BooksTree extends Component {
     return null;
   }
 
+  clearStream() {
+    this.props.clearBookStories();
+    this.props.clearStories();
+  }
+
   render() {
     const slug = this.props.requestedUserSlug || this.props.authorizedUserSlug;
     const loop = data => (
       data.map((item) => {
-        return (
-          <TreeNode
-            key={item.key}
-            items={(item.children && item.children.length) ? loop(item.children) : null}
-            //no_drag = {item.no_drag ? draggable={false} : null}
-            //className={item.show ? 'not_show' : null}
-            className={this.onPick(item)}
-            disabled={item.no_drag}
-          >
-            <Link
-              // to={`/${slug}/books/${item.key}`}
-              to={`/${slug}/books/${item.key}`}
-              draggable={false}
-              // onClick={() => this.showBookStories(item.key)}
+          return (
+            <TreeNode
+              key={item.key}
+              items={(item.children && item.children.length) ? loop(item.children) : null}
+              //no_drag = {item.no_drag ? draggable={false} : null}
+              //className={item.show ? 'not_show' : null}
+              className={this.onPick(item)}
+              disabled={item.no_drag}
             >
-              {item.name}
-            </Link>
-          </TreeNode>);
+              <Link
+                to={`/${slug}/books/${item.key}`}
+                draggable={false}
+                onClick={this.clearStream}
+                // onClick={() => this.showBookStories(item.key)}
+              >
+                {item.name}
+              </Link>
+            </TreeNode>);
         }
       )
     );
@@ -187,4 +204,6 @@ export default BooksTree;
 BooksTree.propTypes = {
   bookTreeArr: PropTypes.array,
   moveBook: PropTypes.func,
+  clearBookStories: PropTypes.func,
+  clearStories: PropTypes.func,
 };

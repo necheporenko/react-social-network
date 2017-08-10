@@ -17,6 +17,9 @@ import {
   clearConversionsList,
   loadNextNotifications,
 } from '../../redux/modules/profile';
+import {clearStories} from '../../redux/modules/story';
+import {clearBookStories} from '../../redux/modules/book';
+
 
 @connect((state) => ({
   conversations: state.profile.conversations,
@@ -41,6 +44,8 @@ import {
   loadNextConversations,
   clearConversionsList,
   loadNextNotifications,
+  clearStories,
+  clearBookStories,
 })
 
 class UserButtons extends Component {
@@ -51,6 +56,7 @@ class UserButtons extends Component {
       dropdownNotifications: false,
     };
     this.clickMail = this.clickMail.bind(this);
+    this.clearStream = this.clearStream.bind(this);
     this.groupAvatars = this.groupAvatars.bind(this);
     this.clickNotification = this.clickNotification.bind(this);
     this.loadNotifications = this.loadNotifications.bind(this);
@@ -169,6 +175,11 @@ class UserButtons extends Component {
         });
       }
     }, 0);
+  }
+
+  clearStream() {
+    this.props.clearBookStories();
+    this.props.clearStories();
   }
 
   render() {
@@ -340,7 +351,7 @@ class UserButtons extends Component {
         </div>
 
         <div className="infouser">
-          <Link to={`/${slug}`}>
+          <Link to={`/${slug}`} onClick={this.clearStream}>
             <span>{first_name}</span>
             <img src={avatar32} alt=""/>
           </Link>
@@ -388,6 +399,8 @@ UserButtons.propTypes = {
   clearConversionsList: PropTypes.func,
   firstLoadConversations: PropTypes.boolean,
   firstLoadNotifications: PropTypes.boolean,
+  clearBookStories: PropTypes.func,
+  clearStories: PropTypes.func,
 };
 
 export default UserButtons;

@@ -35,6 +35,7 @@ const UPDATE_COMMENT_FAIL = 'UPDATE_COMMENT_FAIL';
 const DELETE_COMMENT = 'DELETE_COMMENT';
 const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
 const DELETE_COMMENT_FAIL = 'DELETE_COMMENT_FAIL';
+const CLEAR_STORIES = 'CLEAR_STORIES';
 
 
 const initialState = {
@@ -368,6 +369,11 @@ export default function storyReducer(state = initialState, action) {
       };
     }
 
+    case CLEAR_STORIES:
+      return {
+        ...state,
+        storiesArr: []
+      };
 
     default:
       return state;
@@ -376,6 +382,12 @@ export default function storyReducer(state = initialState, action) {
 
 export function isLoaded(globalState) {
   return globalState.story && globalState.story.loaded;
+}
+
+export function clearStories() {
+  return {
+    type: CLEAR_STORIES
+  };
 }
 
 export function load(user_slug) {

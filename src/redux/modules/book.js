@@ -23,6 +23,7 @@ const LIKE_STORY_FAIL = 'LIKE_STORY_FAIL';
 const UPLOAD_BOOK_COVER = 'UPLOAD_BOOK_COVER';
 const UPLOAD_BOOK_COVER_SUCCESS = 'UPLOAD_BOOK_COVER_SUCCESS';
 const UPLOAD_BOOK_COVER_FAIL = 'UPLOAD_BOOK_COVER_FAIL';
+const CLEAR_BOOKSTORIES = 'CLEAR_BOOKSTORIES';
 // const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
 
 const initialState = {
@@ -74,7 +75,7 @@ export default function bookReducer(state = initialState, action) {
         loading: {
           loadingBookStories: true
         },
-        bookStories: [],
+        // bookStories: [],
       };
     case SHOW_BOOK_SUCCESS:
       return {
@@ -227,6 +228,12 @@ export default function bookReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case CLEAR_BOOKSTORIES:
+      return {
+        ...state,
+        bookStories: []
+      };
+
     default:
       return state;
   }
@@ -235,6 +242,12 @@ export default function bookReducer(state = initialState, action) {
 export function getBookSlug(globalState) {
   const path = globalState.routing.locationBeforeTransitions.pathname;
   return path.substring(path.indexOf('/books/') + 7);           //get book slug after '/books/'
+}
+
+export function clearBookStories() {
+  return {
+    type: CLEAR_BOOKSTORIES
+  };
 }
 
 export function load(user_slug) {

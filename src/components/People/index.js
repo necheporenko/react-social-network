@@ -76,7 +76,7 @@ class People extends Component {
                   <div>
                     {!people.isFollowing ? 'Follow' : 'Following'}
                   </div>
-                  <span></span>
+                  <span/>
                 </div>
 
               </div>
