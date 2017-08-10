@@ -1,17 +1,19 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
-import { Link, browserHistory } from 'react-router';
-import { getConversationByUserPage } from '../../../redux/modules/profile';
-import { showPopUp } from '../../../redux/modules/form';
-import { uploadAvatar, uploadAvatarBase64, uploadUserCover, uploadUserCoverBase64, getUser, getUserSlug,
-  followRequestedUser, unfollowRequestedUser } from '../../../redux/modules/user';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {asyncConnect} from 'redux-connect';
+import {Link, browserHistory} from 'react-router';
+import {getConversationByUserPage} from '../../../redux/modules/profile';
+import {showPopUp} from '../../../redux/modules/form';
+import {
+  uploadAvatar, uploadAvatarBase64, uploadUserCover, uploadUserCoverBase64, getUser, getUserSlug,
+  followRequestedUser, unfollowRequestedUser
+} from '../../../redux/modules/user';
 import ChangeCoverImage from '../../Popup/ChangeCoverImage';
 import ChangeAvatar from '../../Popup/ChangeAvatar';
 import './index.scss';
 
 @asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
+  promise: ({store: {dispatch, getState}}) => {
     const promises = [];
     promises.push(dispatch(getUser(getUserSlug(getState()))));
     return Promise.all(promises);
@@ -114,7 +116,7 @@ export default class SubHeader extends Component {
   }
 
   render() {
-    const { first_name, last_name, slug, isFollowing, id, avatar230, cover } = this.props.requestedUser;
+    const {first_name, last_name, slug, isFollowing, id, avatar230, cover} = this.props.requestedUser;
 
     return (
       <div className="subHeader">
@@ -122,42 +124,43 @@ export default class SubHeader extends Component {
         <div className="wrapper">
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`}>
-              <img src={avatar230} />
+              <img src={avatar230}/>
             </Link>
             <div className="subHeader-add">
-              { this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
-                <div>
-                  <input type="file" onChange={(e) => this.handleAvatarChange(e)} ref={(el) => this.inputAvatar = el}/>
-                  <a href="#">
-                    <i/>
-                    Update Profile Picture
-                  </a>
-                </div>
+              {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
+              <div>
+                <input type="file" onChange={(e) => this.handleAvatarChange(e)} ref={(el) => this.inputAvatar = el}/>
+                <a href="#">
+                  <i/>
+                  Update Profile Picture
+                </a>
+              </div>
               }
             </div>
           </div>
           <div className="subHeader-cover">
-            { this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
-              <div>
-                <i/>
-                <div className="cover-btn">
-                  <input type="file" onChange={(e) => this.handleCoverChange(e)} ref={(el) => this.inputCover = el}/>
-                  <div style={{color: '#fff'}}><i/>Update Cover Photo</div>
-                </div>
+            {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
+            <div>
+              <i/>
+              <div className="cover-btn">
+                <input type="file" onChange={(e) => this.handleCoverChange(e)} ref={(el) => this.inputCover = el}/>
+                <div style={{color: '#fff'}}><i/>Update Cover Photo</div>
               </div>
+            </div>
             }
           </div>
           <div className="subHeader-userName">
             <Link to={`/${slug}`}>{first_name} {last_name}</Link>
           </div>
         </div>
+        {this.props.authorizedUser.id !== this.props.requestedUser.id &&
         <div className="btn-following btn-message" onClick={() => this.openConversation(id, this.props.requestedUser)}>
-          <Link
-            // to="/messages/new"
+          <Link // to="/messages/new"
           >
             <div><i/>Message</div>
           </Link>
         </div>
+        }
         <div
           className="btn-following"
           onClick={
@@ -172,24 +175,24 @@ export default class SubHeader extends Component {
           <span/>
         </div>
 
-        { this.props.activePopUp === 'ChangeCoverImage' &&
-          <ChangeCoverImage
-            showPopUp={this.props.showPopUp}
-            visible={this.props.visible}
-            currentImage={this.props.currentImage}
-            uploadUserCover={this.props.uploadUserCover}
-            uploadUserCoverBase64={this.props.uploadUserCoverBase64}
-          />
+        {this.props.activePopUp === 'ChangeCoverImage' &&
+        <ChangeCoverImage
+          showPopUp={this.props.showPopUp}
+          visible={this.props.visible}
+          currentImage={this.props.currentImage}
+          uploadUserCover={this.props.uploadUserCover}
+          uploadUserCoverBase64={this.props.uploadUserCoverBase64}
+        />
         }
 
-        { this.props.activePopUp === 'ChangeAvatar' &&
-          <ChangeAvatar
-            showPopUp={this.props.showPopUp}
-            visible={this.props.visible}
-            currentImage={this.props.currentImage}
-            uploadAvatar={this.props.uploadAvatar}
-            uploadAvatarBase64={this.props.uploadAvatarBase64}
-          />
+        {this.props.activePopUp === 'ChangeAvatar' &&
+        <ChangeAvatar
+          showPopUp={this.props.showPopUp}
+          visible={this.props.visible}
+          currentImage={this.props.currentImage}
+          uploadAvatar={this.props.uploadAvatar}
+          uploadAvatarBase64={this.props.uploadAvatarBase64}
+        />
         }
 
       </div>

@@ -157,7 +157,8 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         gettingUserNotification: false,
         firstLoadNotifications: true,
-        notifications: action.result.data
+        notifications: action.result.data,
+        hasMoreNotifications: true,
       };
     case GET_USER_NOTIFICATIONS_FAIL:
       return {
@@ -389,7 +390,7 @@ export default function profileReducer(state = initialState, action) {
         conversation: newConversation,
         infoAboutTemporaryUser: [],
         firstLoadMessages: true,
-        paginationMessages: 1,
+        paginationMessages: 2,
         hasMoreMessages: true,
       };
     case GET_CONVERSATION_FAIL:

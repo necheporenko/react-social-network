@@ -67,7 +67,9 @@ class UserButtons extends Component {
   }
 
   clickNotification() {
-    this.props.getUserNotifications();
+    if (!this.props.firstLoadNotifications) {
+      this.props.getUserNotifications();
+    }
     this.props.seenAllNotification();
   }
 
@@ -153,9 +155,8 @@ class UserButtons extends Component {
     }
     if (receivers.length > 1) {
       return `${message.user.first_name}: ${message.text}`;
-    } else {
-      return message.text;
     }
+    return message.text;
   }
 
   onBlur(e) {
@@ -231,7 +232,7 @@ class UserButtons extends Component {
                           {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
                           {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
                           {conversation.messages.length > 0 &&
-                            <span>{this.whoWroteMessage(conversation.messages[0], conversation.receivers)}</span>
+                          <span>{this.whoWroteMessage(conversation.messages[0], conversation.receivers)}</span>
                           }
                           <span
                             className="date">{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
@@ -283,24 +284,24 @@ class UserButtons extends Component {
                     // loader={loader}
                     useWindow={false}
                   >
-                  {notifications && notifications.map((notification) => (
-                    <Link
-                      to={notification.link}
-                      key={notification.id}
-                      onClick={() => this.props.readNotification(notification.id)}
-                    >
-                      <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#E4F0F6'}}>
-                        <div>
-                          <img src={notification.user.avatar} alt=""/>
-                          <h6
-                            dangerouslySetInnerHTML={{__html: notification.text}}
-                            style={{display: 'flex', width: '265px', fontWeight: 400}}
-                          />
-                        </div>
-                        <p>{notification.created}</p>
-                      </li>
-                    </Link>
-                  ))}
+                    {notifications && notifications.map((notification) => (
+                      <Link
+                        to={notification.link}
+                        key={notification.id}
+                        onClick={() => this.props.readNotification(notification.id)}
+                      >
+                        <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#E4F0F6'}}>
+                          <div>
+                            <img src={notification.user.avatar} alt=""/>
+                            <h6
+                              dangerouslySetInnerHTML={{__html: notification.text}}
+                              style={{display: 'flex', width: '265px', fontWeight: 400}}
+                            />
+                          </div>
+                          <p>{notification.created}</p>
+                        </li>
+                      </Link>
+                    ))}
                   </InfiniteScroll>
                   {/*<a href="#">*/}
                   {/*<li>*/}
@@ -386,6 +387,7 @@ UserButtons.propTypes = {
   hasMoreConversations: PropTypes.boolean,
   clearConversionsList: PropTypes.func,
   firstLoadConversations: PropTypes.boolean,
+  firstLoadNotifications: PropTypes.boolean,
 };
 
 export default UserButtons;

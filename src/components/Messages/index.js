@@ -82,24 +82,23 @@ export default class Messages extends Component {
     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
   }
 
-  componentDidUpdate() {
-    // if (this.props.paginationMessages <= 3) {
-    //   this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
-    //   console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
-    // } else {
-    //   this.messageBlock.scrollTop = 300;
-    //   console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
-    // }
-    // console.log('321', this.messageBlock.scrollHeight);
-  }
+  // componentDidUpdate() {
+  //   if (this.props.paginationMessages === 2) {
+  //     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+  //     // this.messageBlock.scrollTop = 800;
+  //     console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+  //   } else {
+  //     this.messageBlock.scrollTop = 250;
+  //     console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+  //   }
+  // }
 
   componentWillUpdate() {
-    if (this.props.paginationMessages < 2) {
+    if (this.props.paginationMessages === 2) {
       this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
       // this.messageBlock.scrollTop = 800;
       console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
-    }
-    else {
+    } else {
       this.messageBlock.scrollTop = 250;
       console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
     }
@@ -234,7 +233,7 @@ export default class Messages extends Component {
   }
 
   loadMessages() {
-    if (this.props.firstLoadMessages && !this.props.gettingConversation) {
+    if (this.props.firstLoadMessages && !this.props.gettingConversation && this.props.conversation.conversation_id) {
       this.props.loadNextMessagesByID(this.props.conversation.conversation_id, this.props.paginationMessages);
       console.log('it"s true scroll, page:', this.props.paginationMessages);
     }
@@ -337,8 +336,7 @@ export default class Messages extends Component {
               useWindow={false}
             >
               {/*<div>*/}
-
-                {conversation.messages && conversation.messages.map((message, i, arr) => (
+              {conversation.messages && conversation.messages.map((message, i, arr) => (
                 (message.is_tech === 0 &&
                   <div key={message.id}>
                     {/*message.date.substring(0, 2) ===  it's a day*/}

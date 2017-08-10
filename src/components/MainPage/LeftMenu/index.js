@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { Link, IndexLink } from 'react-router';
+import React, {Component, PropTypes} from 'react';
+import {Link, IndexLink} from 'react-router';
 import BooksTree from '../../BooksTree';
 import './index.scss';
 
@@ -18,8 +18,8 @@ class LeftMenu extends Component {
   }
 
   render() {
-    const { isOpen } = this.state;
-    const { slug, first_name, last_name, avatar32} = this.props.authorizedUser;
+    const {isOpen} = this.state;
+    const {slug, first_name, last_name, avatar32} = this.props.authorizedUser;
     const showBooktree = () => {
       let arrow;
       let display_state;
@@ -30,7 +30,7 @@ class LeftMenu extends Component {
         arrow = 'booktree booktree-close';
         display_state = 'block';
       }
-      return { arrow, display_state };
+      return {arrow, display_state};
     };
     const navigation = showBooktree();
 
@@ -41,12 +41,12 @@ class LeftMenu extends Component {
           <ul className="nav-ul">
             <IndexLink to={`/${slug}`} className="nav-a nav-storyline">
               <li className="nav-li">
-                <img src={avatar32} />
+                <img src={avatar32}/>
                 <span>{`${first_name} ${last_name}`}</span>
               </li>
             </IndexLink>
 
-            <i className={navigation.arrow} onClick={() => this.openBooktree()}></i>
+            <i className={navigation.arrow} onClick={() => this.openBooktree()}/>
 
             <Link to={`/${slug}/books`} className="nav-a">
               <li className="nav-li nav-books">
@@ -59,9 +59,9 @@ class LeftMenu extends Component {
               />
             </div>
 
-            <Link to={`/${slug}/cache`} className="nav-a">
+            <Link to={`/${slug}/caches`} className="nav-a">
               <li className="nav-li nav-tokens">
-                <span>Cache</span>
+                <span>Caches</span>
               </li>
             </Link>
           </ul>
