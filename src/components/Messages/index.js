@@ -15,6 +15,7 @@ import {
   hasMoreMessages,
   paginationMessages,
   loadNextMessagesByID,
+  gettingConversation,
 } from '../../redux/modules/profile';
 import {newSearchUser} from '../../redux/modules/search';
 import './index.scss';
@@ -58,7 +59,7 @@ export default class Messages extends Component {
       messageSetting: false,
       showAddSearch: false,
       hideTypeahead: false,
-      conversationID: this.props.conversation.conversation_id,
+      // conversationID: this.props.conversation.conversation_id,
     };
 
     this.Open = this.Open.bind(this);
@@ -82,7 +83,26 @@ export default class Messages extends Component {
   }
 
   componentDidUpdate() {
-    this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+    // if (this.props.paginationMessages <= 3) {
+    //   this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+    //   console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+    // } else {
+    //   this.messageBlock.scrollTop = 300;
+    //   console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+    // }
+    // console.log('321', this.messageBlock.scrollHeight);
+  }
+
+  componentWillUpdate() {
+    if (this.props.paginationMessages < 2) {
+      this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+      // this.messageBlock.scrollTop = 800;
+      console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+    }
+    else {
+      this.messageBlock.scrollTop = 250;
+      console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+    }
   }
 
   componentWillReceiveProps() {
@@ -214,8 +234,8 @@ export default class Messages extends Component {
   }
 
   loadMessages() {
-    if (this.props.firstLoadMessages) {
-      this.props.loadNextMessagesByID(this.state.conversationID, this.props.paginationMessages);
+    if (this.props.firstLoadMessages && !this.props.gettingConversation) {
+      this.props.loadNextMessagesByID(this.props.conversation.conversation_id, this.props.paginationMessages);
       console.log('it"s true scroll, page:', this.props.paginationMessages);
     }
     console.log('it"s scroll', this.props.firstLoadMessages);
@@ -310,12 +330,13 @@ export default class Messages extends Component {
             <InfiniteScroll
               loadMore={this.loadMessages}
               hasMore={this.props.hasMoreMessages}
-              threshold={20}
+              threshold={50}
               isReverse={true}
+              initialLoad={false}
               // loader={loader}
               useWindow={false}
             >
-              <div>
+              {/*<div>*/}
 
                 {conversation.messages && conversation.messages.map((message, i, arr) => (
                 (message.is_tech === 0 &&
@@ -389,7 +410,7 @@ export default class Messages extends Component {
                   </div>
                 </div>
               ))}
-              </div>
+              {/*</div>*/}
             </InfiniteScroll>
           </div>
           {conversation.conversation_id && (
