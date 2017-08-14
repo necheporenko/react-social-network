@@ -20,6 +20,7 @@ import {
 import {newSearchUser} from '../../redux/modules/search';
 import './index.scss';
 
+
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
     const promises = [];
@@ -80,26 +81,33 @@ export default class Messages extends Component {
 
   componentDidMount() {
     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+    console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
   }
 
-  // componentDidUpdate() {
-  //   if (this.props.paginationMessages === 2) {
-  //     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
-  //     // this.messageBlock.scrollTop = 800;
-  //     console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
-  //   } else {
-  //     this.messageBlock.scrollTop = 250;
-  //     console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
-  //   }
+  // componentWillMount() {
+  //   this.messageBlock.scrollTop = 200;
   // }
 
-  componentWillUpdate() {
-    if (this.props.paginationMessages === 2) {
+  // componentDidUpdate() {
+  //     console.log('paginationMessages', this.props.paginationMessages);
+  //     if (this.props.paginationMessages === 2) {
+  //       this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+  //       // this.messageBlock.scrollTop = 800;
+  //       console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+  //     } else {
+  //       this.messageBlock.scrollTop = 250;
+  //       console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+  //     }
+  // }
+
+  componentWillUpdate(nextProps) {
+    console.log('paginationMessages2', this.props.paginationMessages, nextProps, 'scroll:', this.messageBlock.scrollTop);
+    if (nextProps.firstLoadMessages) {
       this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
       // this.messageBlock.scrollTop = 800;
       console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
     } else {
-      this.messageBlock.scrollTop = 250;
+      this.messageBlock.scrollTop = 200;
       console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
     }
   }
@@ -234,7 +242,7 @@ export default class Messages extends Component {
 
   loadMessages() {
     if (this.props.firstLoadMessages && !this.props.gettingConversation && this.props.conversation.conversation_id) {
-      this.props.loadNextMessagesByID(this.props.conversation.conversation_id, this.props.paginationMessages);
+      this.props.loadNextMessagesByID(this.props.conversation.conversation_id, this.props.paginationMessages + 1);
       console.log('it"s true scroll, page:', this.props.paginationMessages);
     }
     console.log('it"s scroll', this.props.firstLoadMessages);

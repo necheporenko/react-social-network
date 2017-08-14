@@ -87,7 +87,7 @@ const initialState = {
   hasMoreConversations: true,
   paginationNotifications: 2, //pagination notifications
   hasMoreNotifications: true,
-  paginationMessages: 1,      //pagination messages
+  paginationMessages: 2,      //pagination messages
   hasMoreMessages: true,
   // loadedConversations: false,
 };
@@ -343,6 +343,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         gettingConversation: true,
+        firstLoadMessages: false
       };
     case LOAD_NEXT_MESSAGES_SUCCESS:
       const nextMessages = Object.assign({}, state.conversation, {
@@ -677,10 +678,16 @@ export default function profileReducer(state = initialState, action) {
         if (conversation.conversation_id === action.result.data.conversation_id) {
           const conversationMessage = action.result.data;
           const conversationReceivers = conversation.receivers.filter(receiver => receiver.id !== action.result.data.user.id);
+          let resultReceivers;
+          if (conversation.receivers.length < 2) {
+            resultReceivers = conversation.receivers;
+          } else {
+            resultReceivers = [action.result.data.user, ...conversationReceivers]
+          }
           return {
             ...conversation,
             messages: [conversationMessage],
-            receivers: [action.result.data.user, ...conversationReceivers],
+            receivers: resultReceivers,
             is_seen: 1,
           };
         }
@@ -763,11 +770,17 @@ export default function profileReducer(state = initialState, action) {
       const newSocketLastMessage = state.conversations.map(conversation => {
         if (conversation.conversation_id === action.msg.conversation_id) {
           const conversationMessages = action.msg.message;
-          const conversationReceivers = conversation.receivers.filter(receiver => receiver.id !== action.result.data.user.id);
+          const conversationReceivers = conversation.receivers.filter(receiver => receiver.id !== action.msg.message.user.id);
+          let resultReceivers;
+          if (conversation.receivers.length < 2) {
+            resultReceivers = conversation.receivers;
+          } else {
+            resultReceivers = [action.result.data.user, ...conversationReceivers];
+          }
           return {
             ...conversation,
             messages: [conversationMessages],
-            receivers: [action.result.data.user, ...conversationReceivers],
+            receivers: resultReceivers,
             is_seen: 0,
           };
         }
