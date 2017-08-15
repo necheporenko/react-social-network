@@ -109,7 +109,7 @@ $valid_color: #1976d2;
 
     .react-tree-item-label {
       position: relative;
-      padding: 3px 30px 3px 0;
+      padding: 3px 3px 3px 0;
       //padding-right: 30px;
       &:hover {
         background-color: #E1E1E1;
@@ -455,6 +455,8 @@ $valid_color: #1976d2;
 .icon_bin {
   span {
     margin-left: 3px;
+    display: block;
+    margin-top: 6px;
   }
   a {
     &:before {
@@ -475,6 +477,15 @@ $valid_color: #1976d2;
     margin-left: 3px;
     display: block;
     margin-top: 3px;
+
+    a {
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     a:before {
       content: '';
       background: $sprite  -86px -515px;

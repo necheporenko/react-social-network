@@ -258,7 +258,7 @@ export default function profileReducer(state = initialState, action) {
       const readAllConversations = state.conversations.map(conversation => {
         return {
           ...conversation,
-          is_new: 0,
+          is_seen: 1,
         };
       });
       return {
@@ -300,7 +300,6 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         readingConversation: false,
-        // notifications: action.result.data
       };
     case READ_CONVERSATION_FAIL:
       return {

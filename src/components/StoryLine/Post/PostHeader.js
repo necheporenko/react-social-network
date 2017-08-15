@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
-import { Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import { setVisibilityStory, deleteStory, pinStory } from '../../../redux/modules/story';
+import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {connect} from 'react-redux';
+import {Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton} from 'react-bootstrap';
+import {setVisibilityStory, deleteStory, pinStory} from '../../../redux/modules/story';
 import DeleteStory from '../../Popup/DeleteStory';
 import PinStory from '../../Popup/PinStory';
 
@@ -15,8 +15,7 @@ import PinStory from '../../Popup/PinStory';
 class PostHeader extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
     this.loadBookInfo = this.loadBookInfo.bind(this);
     this.chooseLoudnessIcon = this.chooseLoudnessIcon.bind(this);
     this.chooseLoudnessTooltip = this.chooseLoudnessTooltip.bind(this);
@@ -49,6 +48,7 @@ class PostHeader extends Component {
       return 'loud_book_icon';
     }
   }
+
   chooseLoudnessTooltip(loudness) {
     if (!loudness.inChannels && !loudness.inBooks) {
       return 'Story did not appear in the channels';
@@ -61,11 +61,11 @@ class PostHeader extends Component {
 
   chooseVisibilityIcon(visibility) {
     switch (visibility) {
-      case 'public':
+      case 0:
         return 'public_icon';
-      case 'private':
+      case 1:
         return 'private_icon';
-      case 'custom':
+      case 2:
         return 'custom_icon';
 
       default:
@@ -79,13 +79,13 @@ class PostHeader extends Component {
   }
 
   render() {
-    const { fullName, slug, avatar } = this.props.user;
-    const { authorizedUser, date, visibility, loudness, id, books } = this.props;
+    const {fullName, slug, avatar} = this.props.user;
+    const {authorizedUser, date, visibility, loudness, id, books} = this.props;
 
     const tooltipBooks = (
-      <Tooltip id="tooltipBooks" arrowOffsetLeft={'10%'} placement="left" positionLeft="333" >
+      <Tooltip id="tooltipBooks" arrowOffsetLeft={'10%'} placement="left" positionLeft="333">
         <div>Story location:</div>
-        { books.map((book) => (
+        {books.map((book) => (
           <div key={book.id}>{book.name}</div>
         ))}
       </Tooltip>
@@ -95,7 +95,7 @@ class PostHeader extends Component {
       <div className="post-header">
 
         <div className="wrap-post-user-avatar">
-          <Link to={`/${slug}`}><img className="post-user-avatar" src={avatar} /></Link>
+          <Link to={`/${slug}`}><img className="post-user-avatar" src={avatar}/></Link>
         </div>
 
         <div className="wrap-post-user-info">
@@ -107,22 +107,22 @@ class PostHeader extends Component {
               <div className="block-additional block-additional-date">
                 <div>{`Created on: ${date.exactCreated}`}</div>
                 <div>{`Started on: ${date.startedOn}`}</div>
-                <div>{ date.completedOn && `Completed on: ${date.completedOn}`}</div>
+                <div>{date.completedOn && `Completed on: ${date.completedOn}`}</div>
               </div>
             </div>
 
-            { authorizedUser.slug === slug &&
+            {authorizedUser.slug === slug &&
             <div className="post-delimiter" style={{display: 'flex'}}><span> · </span>
               <div className="post-details-loud-icon">
                 <span className={this.chooseLoudnessIcon(loudness)}/>
                 <div className="block-additional block-additional-loud">{this.chooseLoudnessTooltip(loudness)}</div>
               </div>
             </div>
-          }
+            }
             <div className="post-delimiter"><span> · </span></div>
             <div className="post-details-visibility">
               <div className="post-details-visibility-icon">
-                <span className={this.chooseVisibilityIcon(visibility.status)}/>
+                <span className={this.chooseVisibilityIcon(visibility.value)}/>
               </div>
               <div className="post-details-visibility-menu">
                 {/* <i className="caret"></i> */}
@@ -131,10 +131,10 @@ class PostHeader extends Component {
                     <div className="sbox-visibility">
                       <ul>
                         <li>
-                          <div onClick={() => this.setVisibility('public', id)}>
+                          <div onClick={() => this.setVisibility(0, id)}>
                             <input
                               type="checkbox" name="public_visibility_story" id="public_visibility_story"
-                              checked={visibility.status === 'public'} />
+                              checked={visibility.value === 0}/>
                             <label htmlFor={'public_visibility_story'}><span/></label>
                             <div>
                               <i className="public_icon"/>
@@ -143,10 +143,10 @@ class PostHeader extends Component {
                           </div>
                         </li>
                         <li>
-                          <div onClick={() => this.setVisibility('private', id)}>
+                          <div onClick={() => this.setVisibility(1, id)}>
                             <input
                               type="checkbox" name="private_visibility_story" id="private_visibility_story"
-                              checked={visibility.status === 'private'} />
+                              checked={visibility.value === 1}/>
                             <label htmlFor={'private_visibility_story'}><span/></label>
                             <div>
                               <i className="private_icon"/>
@@ -155,11 +155,11 @@ class PostHeader extends Component {
                           </div>
                         </li>
                         <li>
-                          <div onClick={() => this.setVisibility('custom', id)}>
+                          <div onClick={() => this.setVisibility(2, id)}>
                             <input
                               type="checkbox" name="custom_visibility_story" id="custom_visibility_story"
-                              checked={visibility.status === 'custom'} />
-                            <label htmlFor={'custom_visibility_story'} ><span/></label>
+                              checked={visibility.value === 2}/>
+                            <label htmlFor={'custom_visibility_story'}><span/></label>
                             <div>
                               <i className="custom_icon"/>
                               <p>Custom</p>
@@ -178,7 +178,7 @@ class PostHeader extends Component {
                             </div>
                           </div>
                         </li>
-                        <span className="divider" />
+                        <span className="divider"/>
                         <li>
                           <div>
                             <p>History of Story Visibility</p>
@@ -193,7 +193,7 @@ class PostHeader extends Component {
 
             <div className="post-delimiter"><span> · </span></div>
             <div className="post-details-location">
-              <OverlayTrigger placement="top" overlay={tooltipBooks} id="tooltipBooks" >
+              <OverlayTrigger placement="top" overlay={tooltipBooks} id="tooltipBooks">
                 <div>{this.loadBookInfo(books)}</div>
               </OverlayTrigger>
 
@@ -214,21 +214,23 @@ class PostHeader extends Component {
 
         <div className="wrap-post-story-dropdown">
           <ButtonToolbar>
-            <DropdownButton className="profileMenu-btn" title={''} id={4} noCaret pullRight >
+            <DropdownButton className="profileMenu-btn" title={''} id={4} noCaret pullRight>
               <Link>
                 <li>Pin story
-                <div className="wrapper-popup-story">
-                  <PinStory
-                    pinStory={this.props.pinStory}
-                    books={books}
-                    id={id}
-                  />
-                </div>
+                  <div className="wrapper-popup-story">
+                    <PinStory
+                      pinStory={this.props.pinStory}
+                      books={books}
+                      id={id}
+                    />
+                  </div>
                 </li>
 
               </Link>
               <hr/>
-              <Link to={`/story/${id}`}><li>Story Details</li></Link>
+              <Link to={`/story/${id}`}>
+                <li>Story Details</li>
+              </Link>
 
               <Link>
                 <li>Delete Story

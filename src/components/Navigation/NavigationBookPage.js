@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
-const NavigationBookPage = ({ link, userName, displayUser, avatar32}) => {
+const NavigationBookPage = ({link, userName, displayUser, avatar32}) => {
   return (
     <div className={displayUser}>
       <Link to={link}>
