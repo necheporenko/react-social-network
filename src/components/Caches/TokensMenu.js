@@ -14,7 +14,6 @@ export default class TokensMenu extends Component {
     return (
       <div className="sidebar tokens-nav">
         <div className={this.props.sidebar}>
-          <div className="title">Caches</div>
           <ul>
             <Link onlyActiveOnIndex={true} to={`/${slug}/caches`} activeClassName="active">
               <li className="tokens-mnu-sash">Sash</li>
@@ -30,7 +29,7 @@ export default class TokensMenu extends Component {
             {/*</Link>*/}
           </ul>
           <div className="create-new-item">
-            <a href="#">+ Create new cache</a>
+            <a href="#">+ Create new drawer</a>
           </div>
         </div>
       </div>

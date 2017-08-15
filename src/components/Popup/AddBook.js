@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { create as createBook, load as loadBookTree } from '../../redux/modules/book';
 import { showPopUp } from '../../redux/modules/form';
-import ChangeBookCoverImage from '../Popup/ChangeBookCoverImage';
-import './index.scss';
+import ChangeBookCoverImage from './ChangeBookCoverImage';
+import '../BooksTree/index.scss';
 import coverBook from '../../img/Default/cover-book.png';
 
 //for test

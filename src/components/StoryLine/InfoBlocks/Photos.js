@@ -10,11 +10,6 @@ const Photos = () => {
       </div>
 
       <div className="photos-gallery">
-
-        <div className="photos-image">
-          <a href="#"><img src="https://images.pexels.com/photos/27986/pexels-photo-27986.jpg?h=350&auto=compress&cs=tinysrgb" /></a>
-        </div>
-
         <div className="photos-image">
           <a href="#"><img src="//unsplash.it/800/600?image=20" /></a>
         </div>
@@ -32,9 +27,6 @@ const Photos = () => {
         </div>
         <div className="photos-image">
           <a href="#"><img src="//unsplash.it/800/600?image=180" /></a>
-        </div>
-        <div className="photos-image">
-          <a href="#"><img src="//unsplash.it/800/600?image=96" /></a>
         </div>
         {/* <div className="photos-image">
           <a href="#"><img src="//unsplash.it/800/600?image=24" /></a>

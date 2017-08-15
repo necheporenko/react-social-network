@@ -94,11 +94,11 @@ export default class Navigation extends Component {
             Photos
           </Link>
           <Link
-            to={`/${slug}/caches`}
+            to={`/${slug}/chest`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
-            Caches
+            Chest
           </Link>
         </div>
         <div

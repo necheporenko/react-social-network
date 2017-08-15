@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import StackGrid from 'react-stack-grid';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import EditBook from '../../components/BooksTree/EditBook';
-import AddBook from '../../components/BooksTree/AddBook';
+import AddBook from '../Popup/AddBook';
 import './index.scss';
 
 const BookCard = ({ name, bookTreeArr, book_slug, icon, requestedUser }) => {
