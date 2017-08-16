@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Modal } from 'react-bootstrap';
-import { Form, Input, Select, RadioGroup, Checkbox } from 'formsy-react-components';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {Modal} from 'react-bootstrap';
+import {Form, Input, Select, RadioGroup, Checkbox} from 'formsy-react-components';
 import {ButtonToolbar, DropdownButton} from 'react-bootstrap';
-import { load as loadBookTree } from '../../redux/modules/book';
+import {load as loadBookTree} from '../../redux/modules/book';
 import BookTree from '../BooksTree';
 import coverBook from '../../img/Default/cover-book.png';
 import './index.scss';
@@ -31,9 +31,7 @@ const radioOptions2 = [
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
   uploadingImage: state.user.uploadingImage,
-}), {
-
-})
+}), {})
 
 export default class EditBook extends Component {
   constructor(props) {
@@ -41,6 +39,7 @@ export default class EditBook extends Component {
     this.state = {
       showModal: false,
       loading: false,
+      settings: this.props.bookSettings,
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
@@ -48,17 +47,53 @@ export default class EditBook extends Component {
   }
 
   Close() {
-    this.setState({ showModal: false });
-  }
-  Open() {
-    this.setState({ showModal: true });
+    this.setState({showModal: false});
   }
 
-  handleSave() {
+  Open() {
+    this.setState({showModal: true});
+  }
+
+  handleSave(options, index) {
+    const newSettings = this.state.settings;
+    newSettings[`${options}`] = index;
+
+    this.setState({
+      settings: newSettings
+    });
+
+    console.log(this.state.settings);
   }
 
   render() {
-    const { book_name, book_description } = this.props;
+    const {book_name, book_description} = this.props;
+
+    const radioAccessSettings = [
+      {
+        label: 'Who can see the content of the book?',
+        type: 'can_see_content',
+        radio: ['only you', 'anyone', 'specific people'],
+        selectedOptions: this.state.settings.can_see_content
+      },
+      {
+        label: 'Who can add stories to the book?',
+        type: 'can_add_stories',
+        radio: ['only you', 'anyone', 'specific people'],
+        selectedOptions: this.state.settings.can_add_stories
+      },
+      {
+        label: 'Who can delete stories from the book?',
+        type: 'can_delete_stories',
+        radio: ['only you', 'anyone', 'specific people'],
+        selectedOptions: this.state.settings.can_delete_stories
+      },
+      {
+        label: 'Who can manage access settings to the book??',
+        type: 'can_manage_settings',
+        radio: ['only you', 'specific people'],
+        selectedOptions: this.state.settings.can_manage_settings
+      }
+    ];
 
     return (
       <div className="editBook-popup" onClick={this.Open}>
@@ -118,55 +153,32 @@ export default class EditBook extends Component {
               <div className="book-settings-access book-settings-access-dropdown">
                 <ButtonToolbar>
                   <DropdownButton className="bootstrap-pure-btn" title="Access settings">
-                    <RadioGroup
-                      name="radioGrp1"
-                      value="0"
-                      label="Who can see that book exists?"
-                      labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                      elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                      options={radioOptions}
-                      onChange={(name, value) => (console.log(name, value))}
-                    />
-                    <RadioGroup
-                      name="radioGrp2"
-                      value="1"
-                      label="Who can see the content of the book?"
-                      labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                      elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                      options={radioOptions}
-                    />
-                    <RadioGroup
-                      name="radioGrp3"
-                      value="1"
-                      label="Who can add stories to the book?"
-                      labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                      elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                      options={radioOptions}
-                    />
-                    <RadioGroup
-                      name="radioGrp4"
-                      value="1"
-                      label="Who can delete stories from the book?"
-                      labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                      elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                      options={radioOptions}
-                    />
-                    <RadioGroup
-                      name="radioGrp5"
-                      value="1"
-                      label="Who can manage access settings to the book?"
-                      labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                      elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                      options={radioOptions2}
-                    />
-                    <RadioGroup
-                      name="radioGrp6"
-                      value="1"
-                      label="Who is the owner of the book?"
-                      labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                      elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                      options={radioOptions2}
-                    />
+                    <div>
+                      <form>
+                        {radioAccessSettings.map((element, index) => (
+                          <div className="wrapper-block-radio" style={{padding: '4px 0'}}>
+                            <div className="block-radio">
+                              <div>{element.label}</div>
+                              <div>{element.radio.map((radioInput, indexRadio) => (
+                                <div>
+                                  {console.log(element.selectedOptions, indexRadio, index, 'BOT', element.radio.length)}
+                                  <input
+                                    type="radio" value={element.type} name={index} id={`${indexRadio}${index}`}
+                                    checked={element.selectedOptions === indexRadio}
+                                    onChange={(event) => this.handleSave(event.target.value, indexRadio)}
+                                  />
+                                  <label htmlFor={`${indexRadio}${index}`}><span/><p>{radioInput}</p></label>
+                                </div>
+                              ))}
+                              </div>
+                            </div>
+                            {element.selectedOptions === element.radio.length - 1 &&
+                            <input type="text" placeholder="Type name or email address"/>
+                            }
+                          </div>
+                        ))}
+                      </form>
+                    </div>
                   </DropdownButton>
                 </ButtonToolbar>
               </div>
@@ -174,57 +186,35 @@ export default class EditBook extends Component {
               <div className="book-settings-access book-settings-access-dropdown book-other-settings-dropdown">
                 <ButtonToolbar>
                   <DropdownButton className="bootstrap-pure-btn" title="Other settings">
-                    <Checkbox
-                      name="exportCheckbo1x"
-                      value={false}
-                      label="Automatically export stories from the book into its parent book"
-                      labelClassName={[{'col-sm-3': false}, 'book-list-label checkboxStyles']}
-                      className="export-checkbox"
-                    />
-                    <input
-                      type="checkbox" name="exportCheckbox" id="exportCheckbox"
-                    />
-                    <label className="export-checkbox-label" htmlFor={'exportCheckbox'}><span/></label>
-                    <Checkbox
-                      name="importCheckbox"
-                      value={true}
-                      label="Automatically import stories into the book from its subbooks"
-                      labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                      className="import-checkbox checkboxStyles"
-                    />
+                    {/*<Checkbox*/}
+                      {/*name="exportCheckbo1x"*/}
+                      {/*value={false}*/}
+                      {/*label="Automatically export stories from the book into its parent book"*/}
+                      {/*labelClassName={[{'col-sm-3': false}, 'book-list-label checkboxStyles']}*/}
+                      {/*className="export-checkbox"*/}
+                    {/*/>*/}
+                    <div className="wrapper-checkbox">
+                      <input type="checkbox" name="exportCheckbox" id="exportCheckbox"/>
+                      <label className="export-checkbox-label" htmlFor={'exportCheckbox'}><span/></label>
+                      <i className="export-checkbox" />
+                      <p>Automatically export stories from the book into its parent book</p>
+                    </div>
+
+                    <div className="wrapper-checkbox">
+                      <input type="checkbox" name="importCheckbox" id="importCheckbox"/>
+                      <label htmlFor={'importCheckbox'}><span/></label>
+                      <i className="import-checkbox" />
+                      <p>Automatically import stories into the book from its subbooks</p>
+                    </div>
+
+                    {/*<Checkbox*/}
+                      {/*name="importCheckbox"*/}
+                      {/*value={true}*/}
+                      {/*label="Automatically import stories into the book from its subbooks"*/}
+                      {/*labelClassName={[{'col-sm-3': false}, 'book-list-label']}*/}
+                      {/*className="import-checkbox checkboxStyles"*/}
+                    {/*/>*/}
                     <br/>
-
-                    <div>
-                      <form>
-                        <div>Who can see that book exists?</div>
-                        <div>
-                          <input type="radio" name="id1" id="id1" checked="true" />
-                          <label htmlFor={'id1'}><span/><p>Only you</p></label>
-
-                          <input type="radio" name="id1" id="id2" />
-                          <label htmlFor={'id2'}><span/><p>Anyone</p></label>
-
-                          <input type="radio" name="id1" id="id3"/>
-                          <label htmlFor={'id3'}><span/><p>Specific people</p></label>
-                        </div>
-                      </form>
-                    </div>
-
-                    <div>
-                      <form>
-                        <div>Who can see the content of the book?</div>
-                        <div>
-                          <input type="radio" name="id2" id="id4" checked={false} />
-                          <label htmlFor={'id4'}><span/><p>Only you</p></label>
-
-                          <input type="radio" name="id2" id="id5" checked={true} />
-                          <label htmlFor={'id5'}><span/><p>Anyone</p></label>
-
-                          <input type="radio" name="id2" id="id6" checked={false}/>
-                          <label htmlFor={'id6'}><span/><p>Specific people</p></label>
-                        </div>
-                      </form>
-                    </div>
 
                   </DropdownButton>
                 </ButtonToolbar>

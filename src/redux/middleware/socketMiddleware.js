@@ -12,7 +12,7 @@ export default function socketMiddleware() {
         const path = currentState.routing.locationBeforeTransitions.pathname;
 
         if (path === `/messages/${msg.conversation_id}`) {
-          store.dispatch(socketGetMessage(msg.message));
+          store.dispatch(socketGetMessage(msg));
           store.dispatch(getConversationList());
         } else {
           store.dispatch(socketLastMessage(msg));

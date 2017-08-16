@@ -49,6 +49,7 @@ const radioOptions2 = [
   bookStories: state.book.bookStories,
   bookPage: state.book.bookPage,
   book_slug: state.book.book_slug,
+  bookSettings: state.book.bookSettings,
 }), {
   nextBookStories,
   showBookStories
@@ -58,9 +59,11 @@ export default class BookPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      scrollTop: 0
+      scrollTop: 0,
+      settings: this.props.bookSettings,
     };
     this.handleScroll = this.handleScroll.bind(this);
+    this.handleSaveSettings = this.handleSaveSettings.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +78,17 @@ export default class BookPage extends Component {
     const scrollTop = e.srcElement.body.scrollTop;
     //console.log(scrollTop);
     this.setState({scrollTop: scrollTop});
+  }
+
+  handleSaveSettings(options, index) {
+    const newSettings = this.state.settings;
+    newSettings[`${options}`] = index;
+
+    this.setState({
+      settings: newSettings
+    });
+
+    console.log(this.state.settings);
   }
 
   render() {
@@ -99,6 +113,33 @@ export default class BookPage extends Component {
     const chooseScroll = scroll();
     const {name, description} = this.props.bookPage;
     const {slug, first_name, last_name, avatar32} = this.props.requestedUser;
+
+    const radioAccessSettings = [
+      {
+        label: 'Who can see the content of the book?',
+        type: 'can_see_content',
+        radio: ['only you', 'anyone', 'specific people'],
+        selectedOptions: this.state.settings.can_see_content
+      },
+      {
+        label: 'Who can add stories to the book?',
+        type: 'can_add_stories',
+        radio: ['only you', 'anyone', 'specific people'],
+        selectedOptions: this.state.settings.can_add_stories
+      },
+      {
+        label: 'Who can delete stories from the book?',
+        type: 'can_delete_stories',
+        radio: ['only you', 'anyone', 'specific people'],
+        selectedOptions: this.state.settings.can_delete_stories
+      },
+      {
+        label: 'Who can manage access settings to the book??',
+        type: 'can_manage_settings',
+        radio: ['only you', 'specific people'],
+        selectedOptions: this.state.settings.can_manage_settings
+      }
+    ];
 
     return (
       <div>
@@ -181,57 +222,31 @@ export default class BookPage extends Component {
                       <i/>
                       <ButtonToolbar>
                         <DropdownButton className="bootstrap-pure-btn" title="Access settings">
-                          <Form rowClassName={[{'form-group': false}, {row: false}]}>
-                            <RadioGroup
-                              name="radioGrp1"
-                              value="0"
-                              label="Who can see that book exists?"
-                              labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                              elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                              options={radioOptions}
-                              onChange={(name, value) => (console.log(name, value))}
-                            />
-                            <RadioGroup
-                              name="radioGrp2"
-                              value="1"
-                              label="Who can see the content of the book?"
-                              labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                              elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                              options={radioOptions}
-                            />
-                            <RadioGroup
-                              name="radioGrp3"
-                              value="1"
-                              label="Who can add stories to the book?"
-                              labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                              elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                              options={radioOptions}
-                            />
-                            <RadioGroup
-                              name="radioGrp4"
-                              value="1"
-                              label="Who can delete stories from the book?"
-                              labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                              elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                              options={radioOptions}
-                            />
-                            <RadioGroup
-                              name="radioGrp5"
-                              value="1"
-                              label="Who can manage access settings to the book?"
-                              labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                              elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                              options={radioOptions2}
-                            />
-                            <RadioGroup
-                              name="radioGrp6"
-                              value="1"
-                              label="Who is the owner of the book?"
-                              labelClassName={[{'col-sm-3': false}, 'book-list-label']}
-                              elementWrapperClassName={[{'col-sm-9': false}, 'book-element-wrapper']}
-                              options={radioOptions2}
-                            />
-                          </Form>
+                          <div>
+                            <form>
+                              {radioAccessSettings.map((element, index) => (
+                                <div className="wrapper-block-radio" style={{padding: '4px 0'}}>
+                                  <div className="block-radio">
+                                    <div>{element.label}</div>
+                                    <div>{element.radio.map((radioInput, indexRadio) => (
+                                      <div>
+                                        <input
+                                          type="radio" value={element.type} name={index} id={`${indexRadio}${index}`}
+                                          checked={element.selectedOptions === indexRadio}
+                                          onChange={(event) => this.handleSaveSettings(event.target.value, indexRadio)}
+                                        />
+                                        <label htmlFor={`${indexRadio}${index}`}><span/><p>{radioInput}</p></label>
+                                      </div>
+                                    ))}
+                                    </div>
+                                  </div>
+                                  {element.selectedOptions === element.radio.length - 1 &&
+                                  <input type="text" placeholder="Type name or email address"/>
+                                  }
+                                </div>
+                              ))}
+                            </form>
+                          </div>
                         </DropdownButton>
                       </ButtonToolbar>
 
@@ -241,6 +256,7 @@ export default class BookPage extends Component {
                         book_name={name}
                         book_description={description}
                         bookTreeArr={this.props.bookTreeArr}
+                        bookSettings={this.props.bookSettings}
                       />
                     </div>
                   </div>
@@ -260,4 +276,5 @@ BookPage.propTypes = {
   authorizedUser: PropTypes.object,
   requestedUser: PropTypes.object,
   bookTreeArr: PropTypes.array,
+  bookSettings: PropTypes.object,
 };

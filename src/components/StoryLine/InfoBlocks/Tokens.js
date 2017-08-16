@@ -13,14 +13,14 @@ export default class Tokens extends Component {
       <div className="infoblocks-tokens">
 
         <div className="title-infoblocks">
-          <Link to={`/${slug}/caches`}><span className="token-icon"/>Caches</Link>
+          <Link to={`/${slug}/caches`}><span className="token-icon"/>Chest</Link>
         </div>
 
         <ul className="tokens-mnu">
-          <Link to={`/${slug}/caches/exchange`}>
+          <Link to={`/${slug}/chest/exchange`}>
             <li className="tokens-mnu-exchange tokens-list">Exchange</li>
           </Link>
-          <Link to={`/${slug}/caches`}>
+          <Link to={`/${slug}/chest`}>
             <li className="tokens-mnu-sash tokens-list">Sash</li>
           </Link>
           {/*<a href="#">*/}

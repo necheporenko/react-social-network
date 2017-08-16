@@ -90,6 +90,7 @@ const initialState = {
   paginationMessages: 2,      //pagination messages
   hasMoreMessages: true,
   // loadedConversations: false,
+  sendingMessage: false,
 };
 
 export default function profileReducer(state = initialState, action) {
@@ -707,14 +708,12 @@ export default function profileReducer(state = initialState, action) {
 
       return {
         ...state,
-        sendingMessage: false,
         conversation: newMessage,
         conversations: newMessageInConversations,
       };
     case CREATE_MESSAGE_FAIL:
       return {
         ...state,
-        sendingMessage: false,
         error: action.error,
       };
 
@@ -756,11 +755,14 @@ export default function profileReducer(state = initialState, action) {
     case SOCKET_GET_MESSAGE:
       console.log('SOCKET_GET_MESSAGE', action);
       const newSocketMessage = Object.assign({}, state.conversation, {
-        messages: [...state.conversation.messages, action.msg]
+        messages: [...state.conversation.messages, action.msg.message]
       });
       return {
         ...state,
         conversation: newSocketMessage,
+        bubbleMessage: action.msg.countNewConversation,
+        bubbleCommon: action.msg.countNewConversation + state.bubbleNotification,
+        sendingMessage: true,
       };
 
     case SOCKET_LAST_MESSAGE:
@@ -791,7 +793,8 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         conversations: newSocketLastMessage,
         bubbleMessage: action.msg.countNewConversation,
-        bubbleCommon: action.msg.countNewConversation + state.bubbleNotification
+        bubbleCommon: action.msg.countNewConversation + state.bubbleNotification,
+        sendingMessage: true,
       };
 
     default:

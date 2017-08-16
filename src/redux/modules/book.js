@@ -89,7 +89,8 @@ export default function bookReducer(state = initialState, action) {
           description: action.result.data.description,
         },
         book_slug: action.book_slug,
-        bookStories: action.result.data.stories
+        bookStories: action.result.data.stories,
+        bookSettings: action.result.data.settings,
       };
     case SHOW_BOOK_FAIL:
       return {

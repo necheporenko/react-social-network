@@ -286,7 +286,7 @@ export function follow(user_id, choiceFollow) {
     types: [FOLLOW_USER, FOLLOW_USER_SUCCESS, FOLLOW_USER_FAIL],
     user_id,
     choiceFollow,
-    promise: (client) => client.post('/follow/connect-user', { data: { user_id, channel_id: '' }})                       //todo:  add channel_id
+    promise: (client) => client.post('/follows/simple-user-follow', { data: { user_id, channel_id: '' }})                       //todo:  add channel_id
   };
 }
 
@@ -296,7 +296,7 @@ export function unfollow(user_id, choiceFollow) {
     types: [UNFOLLOW_USER, UNFOLLOW_USER_SUCCESS, UNFOLLOW_USER_FAIL],
     user_id,
     choiceFollow,
-    promise: (client) => client.post('/follow/disconnect-user', { data: { user_id, channel_id: '' }})
+    promise: (client) => client.post('/follows/simple-user-unfollow', { data: { user_id, channel_id: '' }})
   };
 }
 
@@ -327,7 +327,7 @@ export function loadPeopleSuggested(slug) {
 export function loadWhoToFollow() {
   return {
     types: [LOAD_WHO_TO_FOLLOW_PEOPLE, LOAD_WHO_TO_FOLLOW_PEOPLE_SUCCESS, LOAD_WHO_TO_FOLLOW_PEOPLE_FAIL],
-    promise: (client) => client.get('/follow/who-to-follow')
+    promise: (client) => client.get('/follows/who-to-follow')
   };
 }
 

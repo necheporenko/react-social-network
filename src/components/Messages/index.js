@@ -39,6 +39,7 @@ import './index.scss';
   paginationMessages: state.profile.paginationMessages,
   hasMoreMessages: state.profile.hasMoreMessages,
   firstLoadMessages: state.profile.firstLoadMessages,
+  sendingMessage: state.profile.sendingMessage,
 }), {
   getConversationByID,
   createMessage,
@@ -88,7 +89,7 @@ export default class Messages extends Component {
   //   this.messageBlock.scrollTop = 200;
   // }
 
-  // componentDidUpdate() {
+  componentDidUpdate() {
   //     console.log('paginationMessages', this.props.paginationMessages);
   //     if (this.props.paginationMessages === 2) {
   //       this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
@@ -98,15 +99,18 @@ export default class Messages extends Component {
   //       this.messageBlock.scrollTop = 250;
   //       console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
   //     }
-  // }
+    if (this.props.sendingMessage) {
+      this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+    }
+  }
 
   componentWillUpdate(nextProps) {
     console.log('paginationMessages2', this.props.paginationMessages, nextProps, 'scroll:', this.messageBlock.scrollTop);
-    if (nextProps.firstLoadMessages) {
+    if (nextProps.firstLoadMessages && !nextProps.sendingMessage) {
       this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
       // this.messageBlock.scrollTop = 800;
-      console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
-    } else {
+      console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop, this.props.sendingMessage);
+    } else if (!nextProps.firstLoadMessages) {
       this.messageBlock.scrollTop = 200;
       console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
     }
@@ -116,6 +120,7 @@ export default class Messages extends Component {
     if (this.props.gettingConversation) {
       this.clearMembers();
     }
+    // console.log(this.props, 'hahah')
   }
 
   Close() {
@@ -143,7 +148,8 @@ export default class Messages extends Component {
         this.props.conversation.conversation_id,
         this.props.conversation.receiversID
       )
-        .then(event.target.value = '');
+        .then(event.target.value = '')
+        // .then(this.messageBlock.scrollTop = 200);
     }
   }
 
@@ -449,6 +455,7 @@ Messages.propTypes = {
   hasMoreMessages: PropTypes.boolean,
   paginationMessages: PropTypes.number,
   loadNextMessagesByID: PropTypes.func,
+  sendingMessage: PropTypes.boolean,
 };
 
 const Participants = ({Open, Close, showModal, participants}) => {
