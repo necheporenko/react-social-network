@@ -22,11 +22,15 @@ import '../components/BooksTree/index.scss';
 
 export default class BooksTreeContainer extends Component {
   render() {
+    console.log('Booktree');
     const { slug } = this.props.requestedUser;
 
     return (
       <div className="bookstree">
-        <div className={this.props.booksTreeTop}>
+        <div
+          // className={this.props.booksTreeTop}
+          className="wrapper"
+        >
           <div className="bookstree-title"><Link to={`/${slug}/books`}>BOOKS</Link></div>
           <BooksTree
             bookTreeArr={this.props.bookTreeArr}

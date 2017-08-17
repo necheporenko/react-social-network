@@ -1,8 +1,35 @@
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { getUser, getUserSlug } from '../../redux/modules/user';
+import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../../redux/modules/story';
+import { create as createBook, load as loadBookTree } from '../../redux/modules/book';
+import { loadPeopleFollowers, loadPeopleFollowing, loadUserPeople } from '../../redux/modules/follow';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import Stream from './Stream/index';
 import InfoBloks from './InfoBlocks/index';
 import './index.scss';
+
+@connect((state) => ({
+  authorizedUser: state.user.authorizedUser,
+  requestedUser: state.user.requestedUser,
+  isAuthenticated: state.user.isAuthenticated,
+  storiesArr: state.story.storiesArr,
+  bookTreeArr: state.book.bookTreeArr,
+  following: state.follow.following,
+  followers: state.follow.followers,
+  people: state.follow.people,
+  path: state.routing.locationBeforeTransitions.pathname,
+}), {
+  loadStories,
+  createStory,
+  getUser,
+  getUserSlug,
+  loadBookTree,
+  loadNextStories,
+  loadPeopleFollowing,
+  loadPeopleFollowers,
+  loadUserPeople,
+})
 
 class StoryLine extends Component {
   constructor(props) {
@@ -16,9 +43,24 @@ class StoryLine extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    const height = this.infoBlock.clientHeight;
-    this.setState({ height });
+    // const height = this.infoBlock.clientHeight;
+    // this.setState({ height });
     // console.log('height', height)
+    const {path} = this.props;
+    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+
+    // this.props.loadStories(findSlug)
+    //   .then(this.props.loadBookTree(findSlug))
+    //   .then(this.props.loadUserPeople(findSlug))
+    //   .then(this.props.loadPeopleFollowing(findSlug))
+    //   .then(this.props.loadPeopleFollowers(findSlug));
+    // console.log('componentDidMount', this.props);
+  }
+
+  componentWillMount() {
+    const {path} = this.props;
+    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+    // this.props.getUser(findSlug);
   }
 
   componentWillUnmount() {
@@ -54,14 +96,14 @@ class StoryLine extends Component {
       const result = {booksTree: booksTreeTop, infoBloks: infoBlocksTop};
       return result;
     };
-    const chooseScroll = scroll();
+    // const chooseScroll = scroll();
 
     return (
       <div className="storyLine">
         <div className="wrap-storyLine">
           <div style={{display: 'flex', width: '860px'}}>
             <BooksTreeContainer
-              booksTreeTop={chooseScroll.booksTree}
+              // booksTreeTop={chooseScroll.booksTree}
               requestedUser={this.props.requestedUser}
               bookTreeArr={this.props.bookTreeArr}
             />
@@ -75,23 +117,23 @@ class StoryLine extends Component {
             />
           </div>
 
-          <div
-            style={{
-              left: 'calc(50% + 275px)',
-              width: '322px',
-              flex: '0 0 320px',
-              top: `calc(354px - ${chooseScroll.infoBloks}px)`,
-              position: 'fixed',
-            }}
-            ref={(c) => { this.infoBlock = c; }}
-            >
-            <InfoBloks
-              requestedUser={this.props.requestedUser}
-              following={this.props.following}
-              followers={this.props.followers}
-              people={this.props.people}
-              />
-          </div>
+          {/*<div*/}
+            {/*style={{*/}
+              {/*left: 'calc(50% + 275px)',*/}
+              {/*width: '322px',*/}
+              {/*flex: '0 0 320px',*/}
+              {/*top: `calc(354px - ${chooseScroll.infoBloks}px)`,*/}
+              {/*position: 'fixed',*/}
+            {/*}}*/}
+            {/*ref={(c) => { this.infoBlock = c; }}*/}
+            {/*>*/}
+            {/*<InfoBloks*/}
+              {/*requestedUser={this.props.requestedUser}*/}
+              {/*following={this.props.following}*/}
+              {/*followers={this.props.followers}*/}
+              {/*people={this.props.people}*/}
+              {/*/>*/}
+          {/*</div>*/}
 
         </div>
       </div>

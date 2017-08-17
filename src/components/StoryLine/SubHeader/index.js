@@ -120,11 +120,11 @@ export default class SubHeader extends Component {
 
     return (
       <div className="subHeader">
-        <div className="imageCover" style={{backgroundImage: `url(${cover})`}}/>
+        <div className="imageCover" style={{backgroundColor: '#fff', backgroundImage: `url(${cover})`}}/>
         <div className="wrapper">
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`}>
-              <img src={avatar230}/>
+              { avatar230 && <img src={avatar230}/> }
             </Link>
             <div className="subHeader-add">
               {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&

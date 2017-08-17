@@ -9,9 +9,9 @@ class InfoBloks extends Component {
   render() {
     return (
       <div className="infobloks">
-        <Cutaway
-          requestedUser={this.props.requestedUser}
-        />
+        {/*<Cutaway*/}
+          {/*requestedUser={this.props.requestedUser}*/}
+        {/*/>*/}
         <Tokens />
         <Photos />
         <Peoples

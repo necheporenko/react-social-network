@@ -273,6 +273,7 @@ class Sbox extends PureComponent {
   }
 
   render() {
+    console.log('Sbox');
     const { editorContent } = this.state;
     const { first_name, last_name, avatar32} = this.props.authorizedUser;
     const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;

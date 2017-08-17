@@ -38,6 +38,7 @@ class Stream extends Component {
   }
 
   render() {
+    console.log('Stream');
     const { storiesArr, authorizedUser, requestedUser, isAuthenticated } = this.props;
     const loader = (
       <div className="wrapper-loader">
@@ -61,7 +62,7 @@ class Stream extends Component {
 
         <InfiniteScroll
           loadMore={this.load}
-          hasMore={true}
+          hasMore={false}
           threshold={50}
           loader={loader}
         >
