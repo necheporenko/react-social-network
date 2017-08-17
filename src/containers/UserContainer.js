@@ -18,7 +18,6 @@ import StoryLine from '../components/StoryLine';
     promises.push(dispatch(loadPeopleFollowers(getUserSlug(getState()))));
     promises.push(dispatch(loadStories(getUserSlug(getState()))));
     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
-    // promises.push(dispatch(loadProfile(getUserSlug(getState()))));
     promises.push(dispatch(loadUserPeople(getUserSlug(getState()))));
     return Promise.all(promises);
   }
@@ -31,7 +30,6 @@ import StoryLine from '../components/StoryLine';
   isAuthenticated: state.user.isAuthenticated,
   storiesArr: state.story.storiesArr,
   bookTreeArr: state.book.bookTreeArr,
-  // userProfile: state.profile.userProfile,
   following: state.follow.following,
   followers: state.follow.followers,
   people: state.follow.people
