@@ -32,7 +32,8 @@ import StoryLine from '../components/StoryLine';
   bookTreeArr: state.book.bookTreeArr,
   following: state.follow.following,
   followers: state.follow.followers,
-  people: state.follow.people
+  people: state.follow.people,
+  path: state.routing.locationBeforeTransitions.pathname,
 }), {
   loadStories,
   createStory,
@@ -46,11 +47,12 @@ export default class UserContainer extends Component {
   componentDidMount() {
     // (function () { document.body.scrollTop = 0; }());
     const {path} = this.props;
-    // const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-    const findSlug = 'jimbo.fry';
+    console.log(path, '<---path');
+    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+    // const findSlug = 'jimbo.fry';
     this.props.getUser(findSlug)
       .then(this.props.loadStories(findSlug))
-      .then(this.props.loadBookTree(findSlug))
+      .then(this.props.loadBookTree(findSlug));
       // .then(this.props.loadUserPeople(findSlug))
       // .then(this.props.loadPeopleFollowing(findSlug))
       // .then(this.props.loadPeopleFollowers(findSlug));
@@ -91,6 +93,7 @@ export default class UserContainer extends Component {
 UserContainer.propTypes = {
   authorizedUser: PropTypes.object,           //user
   requestedUser: PropTypes.object,
+  path: PropTypes.boolean,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,

@@ -377,7 +377,7 @@ export function getUser(slug) {
   const user_slug = slug || '';
   return {
     types: [SHOW_USER, SHOW_USER_SUCCESS, SHOW_USER_FAIL],
-    promise: (client) => client.get('/users/requested-user', { params: { user_slug }})
+    promise: (client) => client.get(`/users/${user_slug}/requested-user`)
   };
 }
 

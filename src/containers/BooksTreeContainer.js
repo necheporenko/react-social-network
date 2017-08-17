@@ -31,7 +31,7 @@ export default class BooksTreeContainer extends Component {
           // className={this.props.booksTreeTop}
           className="wrapper"
         >
-          <div className="bookstree-title"><Link to={`/${slug}/books`}>BOOKS</Link></div>
+          {this.props.bookTreeArr.length > 0 && <div className="bookstree-title"><Link to={`/${slug}/books`}>BOOKS</Link></div>}
           <BooksTree
             bookTreeArr={this.props.bookTreeArr}
           />

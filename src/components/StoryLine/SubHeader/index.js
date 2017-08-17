@@ -124,7 +124,7 @@ export default class SubHeader extends Component {
         <div className="wrapper">
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`}>
-              { avatar230 && <img src={avatar230}/> }
+              {avatar230 && <img src={avatar230}/>}
             </Link>
             <div className="subHeader-add">
               {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
@@ -153,27 +153,31 @@ export default class SubHeader extends Component {
             <Link to={`/${slug}`}>{first_name} {last_name}</Link>
           </div>
         </div>
-        {this.props.authorizedUser.id !== this.props.requestedUser.id &&
-        <div className="btn-following btn-message" onClick={() => this.openConversation(id, this.props.requestedUser)}>
-          <Link // to="/messages/new"
-          >
-            <div><i/>Message</div>
-          </Link>
+        {this.props.requestedUser.id &&
+        <div>
+          {this.props.authorizedUser.id !== this.props.requestedUser.id &&
+          <div className="btn-following btn-message" onClick={() => this.openConversation(id, this.props.requestedUser)}>
+            <Link // to="/messages/new"
+            >
+              <div><i/>Message</div>
+            </Link>
+          </div>
+          }
+          <div
+            className="btn-following"
+            onClick={
+              !isFollowing ?
+                () => this.followUser(id)
+                :
+                () => this.unfollowUser(id)
+            }>
+            <div>
+              {!isFollowing ? 'Follow' : 'Following'}
+            </div>
+            <span/>
+          </div>
         </div>
         }
-        <div
-          className="btn-following"
-          onClick={
-            !isFollowing ?
-              () => this.followUser(id)
-              :
-              () => this.unfollowUser(id)
-          }>
-          <div>
-            {!isFollowing ? 'Follow' : 'Following'}
-          </div>
-          <span/>
-        </div>
 
         {this.props.activePopUp === 'ChangeCoverImage' &&
         <ChangeCoverImage
