@@ -134,7 +134,7 @@ class PostHeader extends Component {
                           <div onClick={() => this.setVisibility(0, id)}>
                             <input
                               type="checkbox" name="public_visibility_story" id="public_visibility_story"
-                              checked={visibility.value === 0}/>
+                              defaultChecked={visibility.value === 0}/>
                             <label htmlFor={'public_visibility_story'}><span/></label>
                             <div>
                               <i className="public_icon"/>
@@ -146,7 +146,7 @@ class PostHeader extends Component {
                           <div onClick={() => this.setVisibility(1, id)}>
                             <input
                               type="checkbox" name="private_visibility_story" id="private_visibility_story"
-                              checked={visibility.value === 1}/>
+                              defaultChecked={visibility.value === 1}/>
                             <label htmlFor={'private_visibility_story'}><span/></label>
                             <div>
                               <i className="private_icon"/>
@@ -158,7 +158,7 @@ class PostHeader extends Component {
                           <div onClick={() => this.setVisibility(2, id)}>
                             <input
                               type="checkbox" name="custom_visibility_story" id="custom_visibility_story"
-                              checked={visibility.value === 2}/>
+                              defaultChecked={visibility.value === 2}/>
                             <label htmlFor={'custom_visibility_story'}><span/></label>
                             <div>
                               <i className="custom_icon"/>

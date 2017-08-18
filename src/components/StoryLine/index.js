@@ -9,6 +9,8 @@ import Stream from './Stream/index';
 import InfoBloks from './InfoBlocks/index';
 import './index.scss';
 
+let documentHeight;
+
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
@@ -43,24 +45,16 @@ class StoryLine extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    // const height = this.infoBlock.clientHeight;
-    // this.setState({ height });
-    // console.log('height', height)
-    const {path} = this.props;
-    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-
-    // this.props.loadStories(findSlug)
-    //   .then(this.props.loadBookTree(findSlug))
-    //   .then(this.props.loadUserPeople(findSlug))
-    //   .then(this.props.loadPeopleFollowing(findSlug))
-    //   .then(this.props.loadPeopleFollowers(findSlug));
-    // console.log('componentDidMount', this.props);
+    this.setState({height: this.infoBlock.clientHeight});
+    documentHeight = document.documentElement.clientHeight;
   }
 
-  componentWillMount() {
-    const {path} = this.props;
-    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-    // this.props.getUser(findSlug);
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.height !== this.infoBlock.clientHeight) {
+      this.setState({height: this.infoBlock.clientHeight});
+      console.log('opaaa', this.infoBlock.clientHeight);
+    }
+    // console.log(prevProps, prevState);
   }
 
   componentWillUnmount() {
@@ -78,7 +72,6 @@ class StoryLine extends Component {
     const scroll = () => {
       let booksTreeTop;
       let infoBlocksTop;
-      const clientHeight = document.documentElement.clientHeight;
 
       if (scrollTop <= 275) {
         booksTreeTop = 'wrapper';
@@ -86,24 +79,28 @@ class StoryLine extends Component {
         booksTreeTop = 'wrapper wrapper-fixed';
       }
 
-      if (scrollTop < (this.state.height - (clientHeight - 350))) {
-        infoBlocksTop = scrollTop;
-      } else if (this.state.height - (clientHeight - 350)) {
-        infoBlocksTop = this.state.height - (clientHeight - 350);
+      if (scrollTop < 276) {
+        infoBlocksTop = 354 - scrollTop;
+        // console.log('<!---result:', infoBlocksTop, scrollTop, 'clientHeight:', documentHeight, this.state.height, this.state.height - (documentHeight - 350));
+      } else if (documentHeight - this.state.height > 110) {
+        infoBlocksTop = 115;
+        // console.log('<!---result2:', infoBlocksTop, scrollTop, 'clientHeight:', documentHeight, this.state.height, this.state.height - (documentHeight - 350));
+      } else if (this.state.height - (documentHeight - 350)) {
+        infoBlocksTop = (this.state.height - documentHeight) - ((this.state.height - documentHeight) * 1.75);
+        // console.log('<!---result3:', infoBlocksTop, scrollTop, 'clientHeight:', documentHeight, this.state.height, this.state.height - (documentHeight - 350));
       }
-      // console.log('result', this.state.height - (clientHeight - 350));
 
       const result = {booksTree: booksTreeTop, infoBloks: infoBlocksTop};
       return result;
     };
-    // const chooseScroll = scroll();
+    const chooseScroll = scroll();
 
     return (
       <div className="storyLine">
         <div className="wrap-storyLine">
           <div style={{display: 'flex', width: '860px'}}>
             <BooksTreeContainer
-              // booksTreeTop={chooseScroll.booksTree}
+              booksTreeTop={chooseScroll.booksTree}
               requestedUser={this.props.requestedUser}
               bookTreeArr={this.props.bookTreeArr}
             />
@@ -117,23 +114,25 @@ class StoryLine extends Component {
             />
           </div>
 
-          {/*<div*/}
-            {/*style={{*/}
-              {/*left: 'calc(50% + 275px)',*/}
-              {/*width: '322px',*/}
-              {/*flex: '0 0 320px',*/}
-              {/*top: `calc(354px - ${chooseScroll.infoBloks}px)`,*/}
-              {/*position: 'fixed',*/}
-            {/*}}*/}
-            {/*ref={(c) => { this.infoBlock = c; }}*/}
-            {/*>*/}
-            {/*<InfoBloks*/}
-              {/*requestedUser={this.props.requestedUser}*/}
-              {/*following={this.props.following}*/}
-              {/*followers={this.props.followers}*/}
-              {/*people={this.props.people}*/}
-              {/*/>*/}
-          {/*</div>*/}
+          <div
+            style={{
+              left: 'calc(50% + 275px)',
+              width: '322px',
+              flex: '0 0 320px',
+              top: chooseScroll.infoBloks,
+              position: 'fixed',
+            }}
+            ref={(c) => {
+              this.infoBlock = c;
+            }}
+          >
+            <InfoBloks
+              requestedUserProfile={this.props.requestedUserProfile}
+              following={this.props.following}
+              followers={this.props.followers}
+              people={this.props.people}
+            />
+          </div>
 
         </div>
       </div>
@@ -144,14 +143,19 @@ class StoryLine extends Component {
 StoryLine.propTypes = {
   authorizedUser: PropTypes.object,
   requestedUser: PropTypes.object,
+  requestedUserProfile: PropTypes.object,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
   bookTreeArr: PropTypes.array,
   // userProfile: PropTypes.object,
-  followers: PropTypes.object,
-  following: PropTypes.object,
+  followers: PropTypes.shape({
+    users: PropTypes.array
+  }),
+  following: PropTypes.shape({
+    users: PropTypes.array
+  }),
   people: PropTypes.array
 };
 

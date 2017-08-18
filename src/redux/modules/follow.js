@@ -249,7 +249,7 @@ export default function followReducer(state = initialState, action) {
     case LOAD_USER_PEOPLE:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case LOAD_USER_PEOPLE_SUCCESS:
       return {

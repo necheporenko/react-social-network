@@ -9,9 +9,9 @@ class InfoBloks extends Component {
   render() {
     return (
       <div className="infobloks">
-        {/*<Cutaway*/}
-          {/*requestedUser={this.props.requestedUser}*/}
-        {/*/>*/}
+        <Cutaway
+          requestedUserProfile={this.props.requestedUserProfile}
+        />
         <Tokens />
         <Photos />
         <Peoples
@@ -19,17 +19,21 @@ class InfoBloks extends Component {
           followers={this.props.followers}
           people={this.props.people}
         />
-        {this.props.children}
+        {/*{this.props.children}*/}
       </div>
     );
   }
 }
 
 InfoBloks.propTypes = {
-  children: PropTypes.element,
-  requestedUser: PropTypes.object,
-  followers: PropTypes.object,
-  following: PropTypes.object,
+  // children: PropTypes.element,
+  requestedUserProfile: PropTypes.object,
+  followers: PropTypes.shape({
+    users: PropTypes.array
+  }),
+  following: PropTypes.shape({
+    users: PropTypes.array
+  }),
   people: PropTypes.array
 };
 

@@ -20,7 +20,6 @@ import {
 import {clearStories} from '../../redux/modules/story';
 import {clearBookStories} from '../../redux/modules/book';
 
-
 @connect((state) => ({
   conversations: state.profile.conversations,
   bubbleMessage: state.profile.bubbleMessage,
@@ -395,10 +394,10 @@ UserButtons.propTypes = {
   clearConversation: PropTypes.func,
   loadNextConversations: PropTypes.func,
   paginationConversations: PropTypes.number,
-  hasMoreConversations: PropTypes.boolean,
+  hasMoreConversations: PropTypes.bool,
   clearConversionsList: PropTypes.func,
-  firstLoadConversations: PropTypes.boolean,
-  firstLoadNotifications: PropTypes.boolean,
+  firstLoadConversations: PropTypes.bool,
+  firstLoadNotifications: PropTypes.bool,
   clearBookStories: PropTypes.func,
   clearStories: PropTypes.func,
 };

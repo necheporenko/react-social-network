@@ -34,11 +34,15 @@ const SAVE_PROFILE = 'SAVE_PROFILE';
 const SAVE_PROFILE_SUCCESS = 'SAVE_PROFILE_SUCCESS';
 const SAVE_PROFILE_FAIL = 'SAVE_PROFILE_FAIL';
 export const OPEN_SOCKET = 'OPEN_SOCKET';
+const GET_USER_PROFILE = 'GET_USER_PROFILE';
+const GET_USER_PROFILE_SUCCESS = 'GET_USER_PROFILE_SUCCESS';
+const GET_USER_PROFILE_FAIL = 'GET_USER_PROFILE_FAIL';
 
 const initialState = {
   isAuthenticated: false,
   authorizedUser: {},
   requestedUser: {},
+  requestedUserProfile: {},
   loaded: false,
   uploadingImageImage: false,
 };
@@ -168,10 +172,16 @@ export default function signReducer(state = initialState, action) {
       };
 
     case SHOW_USER:
-      console.log('SHOW_USER:', action);
+      const preUser = Object.assign({}, state.requestedUser, {
+        avatar32: null,
+        avatar230: null,
+        first_name: null,
+        last_name: null,
+      });
       return {
         ...state,
         loadingUser: true,
+        requestedUser: action.user_slug !== state.requestedUser.slug ? preUser : state.requestedUser,
       };
     case SHOW_USER_SUCCESS:
       // console.log('SHOW_USER_SUCCESS:', action.result);
@@ -186,6 +196,23 @@ export default function signReducer(state = initialState, action) {
         ...state,
         loadingUser: false,
         requestedUser: {}
+      };
+
+    case GET_USER_PROFILE:
+      return {
+        ...state,
+        requestedUserProfile: {},
+      };
+    case GET_USER_PROFILE_SUCCESS:
+      return {
+        ...state,
+        requestedUserProfile: action.result.data,
+      };
+    case GET_USER_PROFILE_FAIL:
+      return {
+        ...state,
+        requestedUserProfile: {},
+        error: action.errors,
       };
 
     case FOLLOW_REQUESTED_USER:
@@ -337,14 +364,14 @@ export function load() {
 export function register(email, password, first_name, last_name) {
   return {
     types: [REGISTER, REGISTER_SUCCESS, REGISTER_FAIL],
-    promise: (client) => client.post('/registration', { data: { email, password, first_name, last_name }})
+    promise: (client) => client.post('/registration', {data: {email, password, first_name, last_name}})
   };
 }
 
 export function login(email, password) {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.post('/auth/login', { data: { email, password }})
+    promise: (client) => client.post('/auth/login', {data: {email, password}})
   };
 }
 
@@ -358,7 +385,7 @@ export function logout() {
 export function loginSocial(provider, avatar, token) {
   return {
     types: [LOGIN_FB, LOGIN_FB_SUCCESS, LOGIN_FB_FAIL],
-    promise: (client) => client.post('/auth/connect', { data: { provider, avatar, token }})
+    promise: (client) => client.post('/auth/connect', {data: {provider, avatar, token}})
   };
 }
 
@@ -369,7 +396,6 @@ export function getAuthSlug(globalState) {
 export function getUserSlug(globalState) {
   const path = globalState.routing.locationBeforeTransitions.pathname;
   console.log('PATH in reducer Function getUserSlug(test):', path);
-  // const getSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
   return path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));     // get user slug in pathname between / or after first /
 }
 
@@ -377,28 +403,36 @@ export function getUser(slug) {
   const user_slug = slug || '';
   return {
     types: [SHOW_USER, SHOW_USER_SUCCESS, SHOW_USER_FAIL],
-    promise: (client) => client.get(`/users/${user_slug}/requested-user`)
+    promise: (client) => client.get(`/users/${user_slug}/requested-user`),
+    user_slug
+  };
+}
+
+export function getUserProfile(slug) {
+  return {
+    types: [GET_USER_PROFILE, GET_USER_PROFILE_SUCCESS, GET_USER_PROFILE_FAIL],
+    promise: (client) => client.get(`/users/${slug}/profile`),
   };
 }
 
 export function followRequestedUser(user_id) {
   return {
     types: [FOLLOW_REQUESTED_USER, FOLLOW_REQUESTED_USER_SUCCESS, FOLLOW_REQUESTED_USER_FAIL],
-    promise: (client) => client.post('/follow/connect-user', { data: { user_id, channel_id: '' }})
+    promise: (client) => client.post('/follow/connect-user', {data: {user_id, channel_id: ''}})
   };
 }
 
 export function unfollowRequestedUser(user_id) {
   return {
     types: [UNFOLLOW_REQUESTED_USER, UNFOLLOW_REQUESTED_USER_SUCCESS, UNFOLLOW_REQUESTED_USER_FAIL],
-    promise: (client) => client.post('/follow/disconnect-user', { data: { user_id, channel_id: '' }})
+    promise: (client) => client.post('/follow/disconnect-user', {data: {user_id, channel_id: ''}})
   };
 }
 
 export function uploadUserCover(img) {
   return {
     types: [UPLOAD_USER_COVER, UPLOAD_USER_COVER_SUCCESS, UPLOAD_USER_COVER_FAIL],
-    promise: (client) => client.post('/upload/user-cover', { data: { img }})
+    promise: (client) => client.post('/upload/user-cover', {data: {img}})
   };
 }
 
@@ -412,7 +446,7 @@ export function uploadUserCoverBase64(userCoverBase64) {
 export function uploadAvatar(img) {
   return {
     types: [UPLOAD_AVATAR, UPLOAD_AVATAR_SUCCESS, UPLOAD_AVATAR_FAIL],
-    promise: (client) => client.post('/upload/avatar', { data: { img }})
+    promise: (client) => client.post('/upload/avatar', {data: {img}})
   };
 }
 
@@ -427,7 +461,7 @@ export function save(profile) {
   return {
     types: [SAVE_PROFILE, SAVE_PROFILE_SUCCESS, SAVE_PROFILE_FAIL],
     profile,
-    promise: (client) => client.post('/engagment/profile', { data: profile })
+    promise: (client) => client.post('/engagment/profile', {data: profile})
   };
 }
 

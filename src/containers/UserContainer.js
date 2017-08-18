@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
-import { getUser, getUserSlug } from '../redux/modules/user';
+import {getUser, getUserSlug, getUserProfile} from '../redux/modules/user';
 import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../redux/modules/story';
-import { create as createBook, load as loadBookTree } from '../redux/modules/book';
+import {load as loadBookTree} from '../redux/modules/book';
 import { loadPeopleFollowers, loadPeopleFollowing, loadUserPeople } from '../redux/modules/follow';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
@@ -23,10 +23,10 @@ import StoryLine from '../components/StoryLine';
 //   }
 // }])
 
-
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
+  requestedUserProfile: state.user.requestedUserProfile,
   isAuthenticated: state.user.isAuthenticated,
   storiesArr: state.story.storiesArr,
   bookTreeArr: state.book.bookTreeArr,
@@ -39,8 +39,12 @@ import StoryLine from '../components/StoryLine';
   createStory,
   getUser,
   getUserSlug,
+  getUserProfile,
   loadBookTree,
   loadNextStories,
+  loadPeopleFollowers,
+  loadPeopleFollowing,
+  loadUserPeople
 })
 
 export default class UserContainer extends Component {
@@ -52,10 +56,11 @@ export default class UserContainer extends Component {
     // const findSlug = 'jimbo.fry';
     this.props.getUser(findSlug)
       .then(this.props.loadStories(findSlug))
-      .then(this.props.loadBookTree(findSlug));
-      // .then(this.props.loadUserPeople(findSlug))
-      // .then(this.props.loadPeopleFollowing(findSlug))
-      // .then(this.props.loadPeopleFollowers(findSlug));
+      .then(this.props.loadBookTree(findSlug))
+      .then(this.props.getUserProfile(findSlug))
+      .then(this.props.loadUserPeople(findSlug))
+      .then(this.props.loadPeopleFollowing(findSlug))
+      .then(this.props.loadPeopleFollowers(findSlug));
   }
 
   render() {
@@ -75,6 +80,7 @@ export default class UserContainer extends Component {
         <StoryLine
           authorizedUser={this.props.authorizedUser}
           requestedUser={this.props.requestedUser}
+          requestedUserProfile={this.props.requestedUserProfile}
           storiesArr={this.props.storiesArr}
           createStory={this.props.createStory}
           loadStories={this.props.loadStories}
@@ -93,14 +99,21 @@ export default class UserContainer extends Component {
 UserContainer.propTypes = {
   authorizedUser: PropTypes.object,           //user
   requestedUser: PropTypes.object,
-  path: PropTypes.boolean,
+  path: PropTypes.bool,
+  getUser: PropTypes.func,
+  getUserProfile: PropTypes.func,
+  requestedUserProfile: PropTypes.object,
   createStory: PropTypes.func,                //story
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
   bookTreeArr: PropTypes.array,               //book
+  loadBookTree: PropTypes.func,
   // userProfile: PropTypes.object,
   followers: PropTypes.object,                //follow
   following: PropTypes.object,
-  people: PropTypes.array,                   //profile
+  people: PropTypes.array,                    //profile
+  loadUserPeople: PropTypes.func,
+  loadPeopleFollowing: PropTypes.func,
+  loadPeopleFollowers: PropTypes.func,
 };

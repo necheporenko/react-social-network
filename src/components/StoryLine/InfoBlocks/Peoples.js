@@ -9,14 +9,12 @@ import { showActivePeopleTab } from '../../../redux/modules/form';
   showActivePeopleTab,
 })
 
-
 export default class Peoples extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 'people'
     };
-
     this.showPeopleTab = this.showPeopleTab.bind(this);
   }
 
@@ -31,7 +29,7 @@ export default class Peoples extends Component {
     return (
       <div className="infoblocks-peoples">
         <div className="title-infoblocks">
-          <span className="peoples-icon"></span>
+          <span className="peoples-icon"/>
           <div>
             <div
               className={this.state.activeTab === 'people' ? 'people-tab-active' : ''}
@@ -99,8 +97,14 @@ export default class Peoples extends Component {
 
 Peoples.propTypes = {
   people: PropTypes.array,
-  followers: PropTypes.object,
-  following: PropTypes.object,
+  followers: PropTypes.shape({
+    count: PropTypes.number,
+    users: PropTypes.array
+  }),
+  following: PropTypes.shape({
+    count: PropTypes.number,
+    users: PropTypes.array
+  }),
   activePeopleTab: PropTypes.string,
   showActivePeopleTab: PropTypes.func,
 };

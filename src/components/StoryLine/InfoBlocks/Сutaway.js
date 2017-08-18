@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import React, {PropTypes} from 'react';
+import {Link} from 'react-router';
 
-const Cutaway = ({ requestedUser }) => {
+const Cutaway = ({requestedUserProfile}) => {
   const {
     first_name,
     last_name,
@@ -19,7 +19,7 @@ const Cutaway = ({ requestedUser }) => {
     twitter,
     linkedin,
     skype,
-  } = requestedUser.profile;
+  } = requestedUserProfile;
   return (
     <div className="infoblocks-cutaway">
       <div className="title-infoblocks">
@@ -28,8 +28,8 @@ const Cutaway = ({ requestedUser }) => {
         <Link to="/settings" className="settings-edit"><i/></Link>
       </div>
       <div className="wrapper">
-        { bio &&
-          <div className="bio">{bio}</div>
+        {bio &&
+        <div className="bio">{bio}</div>
         }
         <div className="occupation">
           <b>Occupation:</b>
@@ -52,25 +52,25 @@ const Cutaway = ({ requestedUser }) => {
           <p>January 18, {`${birthYear}`}</p>
         </div>
 
-        { phone &&
-          <div className="phone">
-            <b>Phone:</b>
-            <p>{phone}</p>
-          </div>
+        {phone &&
+        <div className="phone">
+          <b>Phone:</b>
+          <p>{phone}</p>
+        </div>
         }
 
-        { website &&
-          <div className="websites">
-            <b>Websites:</b>
-            <p><Link to={website}>{website}</Link></p>
-          </div>
+        {website &&
+        <div className="websites">
+          <b>Websites:</b>
+          <p><Link to={website}>{website}</Link></p>
+        </div>
         }
 
         <div className="social-network">
-          { facebook && <a href={facebook} className="facebook"/> }
-          { twitter && <a href={twitter} className="twitter"/> }
-          { linkedin && <a href={linkedin} className="linkedin"/> }
-          { skype && <a href={skype} className="skype"/> }
+          {facebook && <a href={facebook} className="facebook"/>}
+          {twitter && <a href={twitter} className="twitter"/>}
+          {linkedin && <a href={linkedin} className="linkedin"/>}
+          {skype && <a href={skype} className="skype"/>}
         </div>
 
       </div>
@@ -79,7 +79,7 @@ const Cutaway = ({ requestedUser }) => {
 };
 
 Cutaway.propTypes = {
-  requestedUser: PropTypes.object
+  requestedUserProfile: PropTypes.object
 };
 
 export default Cutaway;
