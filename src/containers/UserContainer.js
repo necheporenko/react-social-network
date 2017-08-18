@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
+// import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import {getUser, getUserSlug, getUserProfile} from '../redux/modules/user';
 import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../redux/modules/story';
@@ -51,9 +51,7 @@ export default class UserContainer extends Component {
   componentDidMount() {
     // (function () { document.body.scrollTop = 0; }());
     const {path} = this.props;
-    console.log(path, '<---path');
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-    // const findSlug = 'jimbo.fry';
     this.props.getUser(findSlug)
       .then(this.props.loadStories(findSlug))
       .then(this.props.loadBookTree(findSlug))

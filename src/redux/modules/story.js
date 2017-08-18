@@ -40,7 +40,9 @@ const CLEAR_STORIES = 'CLEAR_STORIES';
 
 const initialState = {
   isAuthenticated: false,
-  loaded: false,
+  loaded: {
+    stories: false,
+  },
   storiesArr: [],
   singleStory: {},
   over: false,
@@ -56,14 +58,22 @@ export default function storyReducer(state = initialState, action) {
         loading: true
       };
     case LOAD_SHOW_USER_STORIES_SUCCESS:
+      let loaded = Object.assign({}, state.loaded, {
+        stories: true,
+      });
+
       return {
         ...state,
         loading: false,
-        loaded: action.result.status === 'success' && true,       // or just true
+        loaded,
         storiesArr: action.result.data,
         paginationStory: 1,
       };
     case LOAD_SHOW_USER_STORIES_FAIL:
+      loaded = Object.assign({}, state.loaded, {
+        stories: false,
+      });
+
       return {
         ...state,
         loading: false,
@@ -81,7 +91,7 @@ export default function storyReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        loaded: action.result.status === 'success' && true,       // or just true
+        // loaded: action.result.status === 'success' && true,       // or just true
         over: action.result.data.length === 0 && true,
         storiesArr: [...state.storiesArr, ...action.result.data],
         paginationStory: action.paginationStory + 1,
@@ -91,7 +101,7 @@ export default function storyReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        loaded: false,
+        // loaded: false,
         error: action.error,
         storiesArr: [],
         over: true
@@ -400,7 +410,7 @@ export function load(user_slug) {
 export function loadNext(user_slug, paginationStory) {
   return {
     types: [LOAD_NEXT_SHOW_USER_STORIES, LOAD_NEXT_SHOW_USER_STORIES_SUCCESS, LOAD_NEXT_SHOW_USER_STORIES_FAIL],
-    promise: (client) => client.get(`/users/${user_slug}/stories`, { params: { page: paginationStory } }),
+    promise: (client) => client.get(`/users/${user_slug}/stories`, {params: {page: paginationStory}}),
     paginationStory
   };
 }
@@ -412,15 +422,17 @@ export function create(description, books, in_storyline, loud_type, visibility_t
   const users_ids = [];
   return {
     types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
-    promise: (client) => client.post('/stories', { data: {
-      description,
-      books,
-      in_storyline,
-      in_channels,
-      in_books,
-      visibility_type,
-      users_ids
-    }})
+    promise: (client) => client.post('/stories', {
+      data: {
+        description,
+        books,
+        in_storyline,
+        in_channels,
+        in_books,
+        visibility_type,
+        users_ids
+      }
+    })
   };
 }
 
@@ -434,8 +446,8 @@ export function deleteStory(id) {
 export function like(story_id) {
   return {
     types: [LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_FAIL],
-    story_id,
-    promise: (client) => client.post('/like/story', { data: { story_id }})
+    promise: (client) => client.post('/like/story', {data: {story_id}}),
+    story_id
   };
 }
 
@@ -448,16 +460,16 @@ export function clearPagination() {
 export function relogStory(story_id, books) {
   return {
     types: [RELOG_STORY, RELOG_STORY_SUCCESS, RELOG_STORY_FAIL],
-    promise: (client) => client.post('/story/relog', { data: { story_id, books }})
+    promise: (client) => client.post('/story/relog', {data: {story_id, books}})
   };
 }
 
 export function setVisibilityStory(visibility_type, story_id) {
   return {
     types: [SET_VISIBILITY_STORY, SET_VISIBILITY_STORY_SUCCESS, SET_VISIBILITY_STORY_FAIL],
+    promise: (client) => client.post('/stories/visibility', {data: {visibility_type, story_id}}),
     visibility_type,
-    story_id,
-    promise: (client) => client.post('/stories/visibility', { data: { visibility_type, story_id }})
+    story_id
   };
 }
 
@@ -477,7 +489,7 @@ export function pinStory(pins, id) {
   console.log(pins);
   return {
     types: [PIN_STORY, PIN_STORY_SUCCESS, PIN_STORY_FAIL],
-    promise: (client) => client.post(`/stories/pin/${id}`, { data: { pins }})
+    promise: (client) => client.post(`/stories/pin/${id}`, {data: {pins}})
   };
 }
 
@@ -485,20 +497,22 @@ export function createComment(entity_id, content, parent_id, created_by) {
   return {
     types: [CREATE_NEW_COMMENT, CREATE_NEW_COMMENT_SUCCESS, CREATE_NEW_COMMENT_FAIL],
     entity_id,    //story id
-    promise: (client) => client.post('/comments', { data: {
-      entity: 'story',
-      entity_id,  //story id
-      content,    //text
-      parent_id,  //default 0
-      created_by  //auth_id
-    }})
+    promise: (client) => client.post('/comments', {
+      data: {
+        entity: 'story',
+        entity_id,  //story id
+        content,    //text
+        parent_id,  //default 0
+        created_by  //auth_id
+      }
+    })
   };
 }
 
 export function updateComment(id, content) {
   return {
     types: [UPDATE_COMMENT, UPDATE_COMMENT_SUCCESS, UPDATE_COMMENT_FAIL],
-    promise: (client) => client.patch(`/comments/${id}`, { data: { content }})
+    promise: (client) => client.patch(`/comments/${id}`, {data: {content}})
   };
 }
 

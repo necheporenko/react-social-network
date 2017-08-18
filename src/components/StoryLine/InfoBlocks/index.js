@@ -19,14 +19,12 @@ class InfoBloks extends Component {
           followers={this.props.followers}
           people={this.props.people}
         />
-        {/*{this.props.children}*/}
       </div>
     );
   }
 }
 
 InfoBloks.propTypes = {
-  // children: PropTypes.element,
   requestedUserProfile: PropTypes.object,
   followers: PropTypes.shape({
     users: PropTypes.array

@@ -184,14 +184,12 @@ export default function signReducer(state = initialState, action) {
         requestedUser: action.user_slug !== state.requestedUser.slug ? preUser : state.requestedUser,
       };
     case SHOW_USER_SUCCESS:
-      // console.log('SHOW_USER_SUCCESS:', action.result);
       return {
         ...state,
         loadingUser: false,
         requestedUser: action.result.data,
       };
     case SHOW_USER_FAIL:
-      console.log('SHOW_USER_FAIL:', action.result);
       return {
         ...state,
         loadingUser: false,
@@ -201,7 +199,7 @@ export default function signReducer(state = initialState, action) {
     case GET_USER_PROFILE:
       return {
         ...state,
-        requestedUserProfile: {},
+        requestedUserProfile: state.requestedUser.id !== state.requestedUserProfile.user_id ? {} : state.requestedUserProfile,
       };
     case GET_USER_PROFILE_SUCCESS:
       return {
@@ -412,6 +410,7 @@ export function getUserProfile(slug) {
   return {
     types: [GET_USER_PROFILE, GET_USER_PROFILE_SUCCESS, GET_USER_PROFILE_FAIL],
     promise: (client) => client.get(`/users/${slug}/profile`),
+    slug
   };
 }
 

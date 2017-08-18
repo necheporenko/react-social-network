@@ -41,31 +41,33 @@ const initialState = {
 export default function bookReducer(state = initialState, action) {
   switch (action.type) {
     case LOAD_BOOKTREE:
-      console.log('LOAD_BOOKTREE:', action);
       return {
         ...state,
         loading: true,
       };
     case LOAD_BOOKTREE_SUCCESS:
+      let loaded = Object.assign({}, state.loaded, {
+        loadedBookTree: true,
+      });
+
       return {
         ...state,
         loading: false,
-        loaded: {
-          loadedBookTree: action.result.status === 'success' && true,
-        },
+        loaded,
         bookTreeArr: action.result.data,
         pagination: 1,
         over: false,
       };
     case LOAD_BOOKTREE_FAIL:
-      console.log('LOAD_BOOKTREE_FAIL:', action.result);
+      loaded = Object.assign({}, state.loaded, {
+        loadedBookTree: false,
+      });
+
       return {
         ...state,
         loading: false,
         error: action.error,
-        loaded: {
-          loadedBookTree: false
-        },
+        loaded,
         bookTreeArr: []
       };
 
@@ -78,11 +80,13 @@ export default function bookReducer(state = initialState, action) {
         // bookStories: [],
       };
     case SHOW_BOOK_SUCCESS:
+      loaded = Object.assign({}, state.loaded, {
+        loadedBookStories: true,
+      });
+
       return {
         ...state,
-        loaded: {
-          loadedBookStories: action.result.status === 'success' && true
-        },
+        loaded,
         // book_slug: action.book_slug,
         bookPage: {
           name: action.result.data.name,
@@ -93,11 +97,13 @@ export default function bookReducer(state = initialState, action) {
         bookSettings: action.result.data.settings,
       };
     case SHOW_BOOK_FAIL:
+      loaded = Object.assign({}, state.loaded, {
+        loadedBookStories: false,
+      });
+
       return {
         ...state,
-        loaded: {
-          loadedBookStories: false
-        },
+        loaded,
         error: action.error,
         bookStories: []
       };

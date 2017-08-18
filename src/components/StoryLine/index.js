@@ -52,7 +52,6 @@ class StoryLine extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.height !== this.infoBlock.clientHeight) {
       this.setState({height: this.infoBlock.clientHeight});
-      console.log('opaaa', this.infoBlock.clientHeight);
     }
     // console.log(prevProps, prevState);
   }

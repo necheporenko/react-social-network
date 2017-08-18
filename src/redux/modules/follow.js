@@ -30,6 +30,7 @@ const initialState = {
     loadedFollowing: false,
     loadedFollowers: false,
     loadedSuggested: false,
+    loadedPeopleBlock: false,
   },
   over: {
     overFollowing: false,
@@ -49,7 +50,7 @@ export default function followReducer(state = initialState, action) {
     case FOLLOW_USER_SUCCESS:
       let followFollowing;
       let followInWhoToFollowList;
-      console.log('action.choiceFollow FOLLOW_USER_SUCCESS', action.choiceFollow);
+      // console.log('action.choiceFollow FOLLOW_USER_SUCCESS', action.choiceFollow);
 
       switch (action.choiceFollow) {
         case 'whoToFollow':
@@ -161,21 +162,25 @@ export default function followReducer(state = initialState, action) {
         loading: true
       };
     case LOAD_PEOPLE_FOLLOWING_SUCCESS:
+      let loaded = Object.assign({}, state.loaded, {
+        loadedFollowing: true,
+      });
+
       return {
         ...state,
         loading: false,
-        loaded: {
-          loadedFollowing: true
-        },
+        loaded,
         following: action.result.data,
       };
     case LOAD_PEOPLE_FOLLOWING_FAIL:
+      loaded = Object.assign({}, state.loaded, {
+        loadedFollowing: false,
+      });
+
       return {
         ...state,
         loading: false,
-        loaded: {
-          loadedFollowing: false
-        },
+        loaded,
         error: action.error,
       };
 
@@ -185,21 +190,25 @@ export default function followReducer(state = initialState, action) {
         loading: true
       };
     case LOAD_PEOPLE_FOLLOWERS_SUCCESS:
+      loaded = Object.assign({}, state.loaded, {
+        loadedFollowers: true,
+      });
+
       return {
         ...state,
         loading: false,
-        loaded: {
-          loadedFollowers: true
-        },
+        loaded,
         followers: action.result.data,
       };
     case LOAD_PEOPLE_FOLLOWERS_FAIL:
+      loaded = Object.assign({}, state.loaded, {
+        loadedFollowers: false,
+      });
+
       return {
         ...state,
         loading: false,
-        loaded: {
-          loadedFollowers: false
-        },
+        loaded,
         error: action.error,
       };
 
@@ -209,15 +218,21 @@ export default function followReducer(state = initialState, action) {
         loading: true
       };
     case LOAD_PEOPLE_SUGGESTED_SUCCESS:
+      loaded = Object.assign({}, state.loaded, {
+        loadedSuggested: true,
+      });
+
       return {
         ...state,
         loading: false,
-        loaded: {
-          loadedSuggested: true
-        },
+        loaded,
         suggested: action.result.data,
       };
     case LOAD_PEOPLE_SUGGESTED_FAIL:
+      loaded = Object.assign({}, state.loaded, {
+        loadedSuggested: false,
+      });
+
       return {
         ...state,
         loading: false,
@@ -245,19 +260,27 @@ export default function followReducer(state = initialState, action) {
         error: action.error,
       };
 
-
     case LOAD_USER_PEOPLE:
       return {
         ...state,
         loading: true,
       };
     case LOAD_USER_PEOPLE_SUCCESS:
+      loaded = Object.assign({}, state.loaded, {
+        loadedPeopleBlock: true,
+      });
+
       return {
         ...state,
         loading: false,
+        loaded,
         people: action.result.data,
       };
     case LOAD_USER_PEOPLE_FAIL:
+      loaded = Object.assign({}, state.loaded, {
+        loadedPeopleBlock: false,
+      });
+
       return {
         ...state,
         loading: false,
