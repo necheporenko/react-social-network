@@ -217,7 +217,7 @@ export default function signReducer(state = initialState, action) {
       };
     case FOLLOW_REQUESTED_USER_SUCCESS:
       const followRequestedUser = Object.assign({}, state.requestedUser, {
-        isFollowing: true
+        is_follow: true
       });
       return {
         ...state,
@@ -235,7 +235,7 @@ export default function signReducer(state = initialState, action) {
       };
     case UNFOLLOW_REQUESTED_USER_SUCCESS:
       const unfollowRequestedUser = Object.assign({}, state.requestedUser, {
-        isFollowing: false
+        is_follow: false
       });
       return {
         ...state,

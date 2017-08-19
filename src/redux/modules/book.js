@@ -24,6 +24,7 @@ const UPLOAD_BOOK_COVER = 'UPLOAD_BOOK_COVER';
 const UPLOAD_BOOK_COVER_SUCCESS = 'UPLOAD_BOOK_COVER_SUCCESS';
 const UPLOAD_BOOK_COVER_FAIL = 'UPLOAD_BOOK_COVER_FAIL';
 const CLEAR_BOOKSTORIES = 'CLEAR_BOOKSTORIES';
+const CLEAR_BOOKTREE = 'CLEAR_BOOKTREE';
 // const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
 
 const initialState = {
@@ -241,6 +242,12 @@ export default function bookReducer(state = initialState, action) {
         bookStories: []
       };
 
+    case CLEAR_BOOKTREE:
+      return {
+        ...state,
+        bookTreeArr: []
+      };
+
     default:
       return state;
   }
@@ -257,10 +264,16 @@ export function clearBookStories() {
   };
 }
 
+export function clearBookTree() {
+  return {
+    type: CLEAR_BOOKTREE
+  };
+}
+
 export function load(user_slug) {
   return {
     types: [LOAD_BOOKTREE, LOAD_BOOKTREE_SUCCESS, LOAD_BOOKTREE_FAIL],
-    promise: (client) => client.get('/books', { params: { user_slug }})
+    promise: (client) => client.get('/books', { params: { user_slug }}),
   };
 }
 

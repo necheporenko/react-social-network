@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
 import {getUser, getUserSlug, getUserProfile} from '../redux/modules/user';
-import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../redux/modules/story';
-import {load as loadBookTree} from '../redux/modules/book';
-import { loadPeopleFollowers, loadPeopleFollowing, loadUserPeople } from '../redux/modules/follow';
+import {create as createStory, load as loadStories, loadNext as loadNextStories, clearStories} from '../redux/modules/story';
+import {load as loadBookTree, clearBookTree} from '../redux/modules/book';
+import {loadPeopleFollowers, loadPeopleFollowing, loadUserPeople} from '../redux/modules/follow';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 import StoryLine from '../components/StoryLine';
@@ -21,12 +21,14 @@ import StoryLine from '../components/StoryLine';
   people: state.follow.people,
   path: state.routing.locationBeforeTransitions.pathname,
 }), {
-  loadStories,
-  createStory,
   getUser,
   getUserSlug,
   getUserProfile,
   loadBookTree,
+  clearBookTree,
+  loadStories,
+  createStory,
+  clearStories,
   loadNextStories,
   loadPeopleFollowers,
   loadPeopleFollowing,
@@ -47,8 +49,26 @@ export default class UserContainer extends Component {
       .then(this.props.loadPeopleFollowers(findSlug));
   }
 
+  componentDidUpdate(prevProps) {
+    const {path} = this.props;
+    if (prevProps.path !== path) {
+      const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+      if (findSlug) {
+        this.props.getUser(findSlug)
+          .then(this.props.clearStories)
+          .then(this.props.clearBookTree)
+          .then(this.props.loadStories(findSlug))
+          .then(this.props.loadBookTree(findSlug))
+          .then(this.props.getUserProfile(findSlug))
+          .then(this.props.loadUserPeople(findSlug))
+          .then(this.props.loadPeopleFollowing(findSlug))
+          .then(this.props.loadPeopleFollowers(findSlug));
+      }
+    }
+  }
+
   render() {
-    const { requestedUser } = this.props;
+    const {requestedUser} = this.props;
 
     return (
       <div>
@@ -91,8 +111,10 @@ UserContainer.propTypes = {
   storiesArr: PropTypes.array,
   loadStories: PropTypes.func,
   loadNextStories: PropTypes.func,
+  clearStories: PropTypes.func,
   bookTreeArr: PropTypes.array,               //book
   loadBookTree: PropTypes.func,
+  clearBookTree: PropTypes.func,
   // userProfile: PropTypes.object,
   followers: PropTypes.object,                //follow
   following: PropTypes.object,
