@@ -1,20 +1,26 @@
 export const PHOTOS = [
   {
-    url: 'http://devianmbanks.validbook.org/cdn/stories_images/706/498.jpg'
+    url: 'https://images.pexels.com/photos/297755/pexels-photo-297755.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
   },
   {
-    url: 'http://devianmbanks.validbook.org/cdn/stories_images/706/498.jpg'
+    url: 'https://images.pexels.com/photos/297755/pexels-photo-297755.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
   },
   {
-    url: 'http://devianmbanks.validbook.org/cdn/stories_images/706/498.jpg'
+    url: 'https://images.pexels.com/photos/297755/pexels-photo-297755.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
   },
   {
-    url: 'http://devianmbanks.validbook.org/cdn/stories_images/706/498.jpg'
+    url: 'https://images.pexels.com/photos/297755/pexels-photo-297755.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
   },
   {
-    url: 'http://devianmbanks.validbook.org/cdn/stories_images/706/498.jpg'
+    url: 'https://images.pexels.com/photos/297755/pexels-photo-297755.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
   },
   {
-    url: 'http://devianmbanks.validbook.org/cdn/stories_images/706/498.jpg'
-  }
+    url: 'https://images.pexels.com/photos/297755/pexels-photo-297755.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
+  },
+  {
+    url: 'https://images.pexels.com/photos/297755/pexels-photo-297755.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
+  },
+  {
+    url: 'https://images.pexels.com/photos/297755/pexels-photo-297755.jpeg?w=940&h=650&auto=compress&cs=tinysrgb'
+  },
 ];

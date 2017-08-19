@@ -120,7 +120,7 @@ export default class UserContainer extends Component {
 UserContainer.propTypes = {
   authorizedUser: PropTypes.object,           //user
   requestedUser: PropTypes.object,
-  path: PropTypes.bool,
+  path: PropTypes.string,
   getUser: PropTypes.func,
   getUserProfile: PropTypes.func,
   requestedUserProfile: PropTypes.object,

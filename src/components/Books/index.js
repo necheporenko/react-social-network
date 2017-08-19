@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
+import React, {Component} from 'react';
+import {Link} from 'react-router';
 import StackGrid from 'react-stack-grid';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import EditBook from '../../components/BooksTree/EditBook';
 import AddBook from '../Popup/AddBook';
 import './index.scss';
 
-const BookCard = ({ name, bookTreeArr, book_slug, icon, requestedUser }) => {
+const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
   return (
     <div className="book">
       <div className="title-infoblocks-book">
-        <h5>{ name }</h5>
+        <h5>{name}</h5>
       </div>
 
       {/*<div className="book-btn" style={{position: 'relative'}}>Edit*/}
-        {/*<EditBook*/}
-          {/*book_name={name}*/}
-          {/*book_slug={book_slug}*/}
-        {/*/>*/}
+      {/*<EditBook*/}
+      {/*book_name={name}*/}
+      {/*book_slug={book_slug}*/}
+      {/*/>*/}
       {/*</div>*/}
 
       <div className="book-edit">
@@ -30,28 +30,28 @@ const BookCard = ({ name, bookTreeArr, book_slug, icon, requestedUser }) => {
       </div>
 
       {/*<div className="book-description">*/}
-        {/*<p>Description...</p>*/}
+      {/*<p>Description...</p>*/}
       {/*</div>*/}
       {/*<div className="book-quantity">*/}
-        {/*<span>2 subbooks</span>*/}
+      {/*<span>2 subbooks</span>*/}
       {/*</div>*/}
       <div className="book-subbooks">
-        { bookTreeArr && bookTreeArr.length > 0 &&
-          <BooksTreeContainer
-            bookTreeArr={bookTreeArr}
-          />
+        {bookTreeArr && bookTreeArr.length > 0 &&
+        <BooksTreeContainer
+          bookTreeArr={bookTreeArr}
+        />
         }
 
-        { bookTreeArr && bookTreeArr.length === 0 &&
-          <ul className="react-tree">
-            <li className={`icon_${icon}`}>
-              <div className="react-tree-item-label">
-                <span className=" draggable " draggable="true">
-                  <Link to={`/${requestedUser.slug}/books/${book_slug}`}>{name}</Link>
-                </span>
-              </div>
-            </li>
-          </ul>
+        {bookTreeArr && bookTreeArr.length === 0 &&
+        <ul className="react-tree">
+          <li className={`icon_${icon}`}>
+            <div className="react-tree-item-label">
+              <span className=" draggable " draggable="true">
+                <Link to={`/${requestedUser.slug}/books/${book_slug}`}>{name}</Link>
+              </span>
+            </div>
+          </li>
+        </ul>
         }
       </div>
 
@@ -71,16 +71,17 @@ const BookCard = ({ name, bookTreeArr, book_slug, icon, requestedUser }) => {
 
 class Books extends Component {
   render() {
-    const bookTreeArr = this.props.bookTreeArr;
-    const requestedUser = this.props.requestedUser;
+    const {bookTreeArr, requestedUser, loaded} = this.props;
+
     return (
+      loaded.loadedBookTree &&
       <div className="books contents">
         <div className="sidebar-books">
           <BooksTreeContainer
-            bookTreeArr={this.props.bookTreeArr}
+            bookTreeArr={bookTreeArr}
           />
           <div className="title-new-book" style={{marginLeft: '26px'}}>+ Create new book
-            <AddBook />
+            <AddBook/>
           </div>
 
         </div>
@@ -100,7 +101,7 @@ class Books extends Component {
             // entered={transition.entered}
             //leaved={transition.leaved}
           >
-            { bookTreeArr[0].children.map((book) => (
+            {bookTreeArr[0].children.map((book) => (
               <BookCard
                 key={book.key}
                 name={book.name}
@@ -109,7 +110,7 @@ class Books extends Component {
                 bookTreeArr={book.children}
                 requestedUser={requestedUser}
               />
-              ))
+            ))
             }
           </StackGrid>
         </div>

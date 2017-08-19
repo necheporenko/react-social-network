@@ -1,31 +1,29 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
-import { getUser, getUserSlug } from '../redux/modules/user';
+import {getUser} from '../redux/modules/user';
 import Navigation from '../components/Navigation';
 import SubHeader from '../components/StoryLine/SubHeader';
 
-@asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
-    const promises = [];
-
-    promises.push(dispatch(getUser(getUserSlug(getState()))));
-
-    return Promise.all(promises);
-  }
-}])
-
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
+  path: state.routing.locationBeforeTransitions.pathname,
 }), {
   getUser,
-  getUserSlug,
 })
 
 export default class TokensContainer extends Component {
+  componentDidMount() {
+    const {path, requestedUser} = this.props;
+    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+
+    if (findSlug !== requestedUser.slug) {
+      this.props.getUser(findSlug);
+    }
+  }
+
   render() {
-    const { requestedUser } = this.props;
+    const {requestedUser} = this.props;
 
     return (
       <div>
@@ -46,5 +44,7 @@ export default class TokensContainer extends Component {
 
 TokensContainer.propTypes = {
   children: PropTypes.element,
-  requestedUser: PropTypes.object
+  requestedUser: PropTypes.object,
+  getUser: PropTypes.func,
+  path: PropTypes.string,
 };

@@ -1,24 +1,20 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
-import { getUserSlug } from '../../redux/modules/user';
-import { loadPeopleSuggested, isLoadedSuggested, follow as followUser, unfollow as unfollowUser } from '../../redux/modules/follow';
+import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {connect} from 'react-redux';
+import {getUserSlug} from '../../redux/modules/user';
+import {
+  loadPeopleSuggested,
+  isLoadedSuggested,
+  follow as followUser,
+  unfollow as unfollowUser
+} from '../../redux/modules/follow';
 import PeopleMenu from './PeopleMenu';
 import './index.scss';
 
-@asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
-    const promises = [];
-    if (!isLoadedSuggested(getState())) {
-      promises.push(dispatch(loadPeopleSuggested(getUserSlug(getState()))));
-    }
-    return Promise.all(promises);
-  }
-}])
-
 @connect((state) => ({
   suggested: state.follow.suggested,
+  requestedUser: state.user.requestedUser,
+  path: state.routing.locationBeforeTransitions.pathname,
 }), {
   loadPeopleSuggested,
   isLoadedSuggested,
@@ -27,12 +23,20 @@ import './index.scss';
   getUserSlug,
 })
 
-
 class PeopleSuggested extends Component {
   constructor(props) {
     super(props);
     this.follow = this.follow.bind(this);
     this.unfollow = this.unfollow.bind(this);
+  }
+
+  componentDidMount() {
+    const {path, requestedUser} = this.props;
+    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+
+    if (findSlug === requestedUser.slug) {
+      this.props.loadPeopleSuggested(findSlug);
+    }
   }
 
   follow(id) {
@@ -46,12 +50,12 @@ class PeopleSuggested extends Component {
   }
 
   render() {
-    const { suggested } = this.props;
+    const {suggested} = this.props;
 
     return (
       <div className="people contents">
 
-        <PeopleMenu />
+        <PeopleMenu/>
 
         <div className="common-lists people-lists">
           <div className="wrapper">
@@ -59,7 +63,7 @@ class PeopleSuggested extends Component {
             {suggested && suggested.map((people) => (
               <div key={people.id} className="people-card">
                 <Link to={`/${people.slug}`}>
-                  <img src={people.avatar} />
+                  <img src={people.avatar}/>
                   <div>{`${people.first_name} ${people.last_name}`}</div>
                 </Link>
                 <div
@@ -77,7 +81,7 @@ class PeopleSuggested extends Component {
                   <div>
                     {!people.isFollowing ? 'Follow' : 'Following'}
                   </div>
-                  <span></span>
+                  <span/>
                 </div>
               </div>
             ))}
@@ -94,6 +98,8 @@ PeopleSuggested.propTypes = {
   followUser: PropTypes.func,
   unfollowUser: PropTypes.func,
   loadPeopleSuggested: PropTypes.func,
+  path: PropTypes.string,
+  requestedUser: PropTypes.object,
 };
 
 export default PeopleSuggested;

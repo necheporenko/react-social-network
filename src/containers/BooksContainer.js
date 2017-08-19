@@ -1,36 +1,38 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
-import { getUser, getUserSlug } from '../redux/modules/user';
-import { create as createBook, load as loadBookTree } from '../redux/modules/book';
+import {getUser} from '../redux/modules/user';
+import {load as loadBookTree, clearBookTree} from '../redux/modules/book';
 import Navigation from '../components/Navigation';
 import Books from '../components/Books';
 import SubHeader from '../components/StoryLine/SubHeader';
 
-@asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
-    const promises = [];
-
-    promises.push(dispatch(getUser(getUserSlug(getState()))));
-    promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
-
-    return Promise.all(promises);
-  }
-}])
-
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
   bookTreeArr: state.book.bookTreeArr,
+  path: state.routing.locationBeforeTransitions.pathname,
+  loaded: state.book.loaded,
 }), {
   getUser,
-  getUserSlug,
   loadBookTree,
+  clearBookTree
 })
 
 export default class BooksContainer extends Component {
+  componentDidMount() {
+    const {path, requestedUser} = this.props;
+    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+
+    if (findSlug !== requestedUser.slug) {
+      this.props.clearBookTree();
+      this.props.getUser(findSlug);
+    }
+
+    this.props.loadBookTree(findSlug);
+  }
+
   render() {
-    const { requestedUser } = this.props;
+    const {requestedUser} = this.props;
 
     return (
       <div>
@@ -46,6 +48,7 @@ export default class BooksContainer extends Component {
         <Books
           bookTreeArr={this.props.bookTreeArr}
           requestedUser={this.props.requestedUser}
+          loaded={this.props.loaded}
         />
       </div>
     );
@@ -55,4 +58,9 @@ export default class BooksContainer extends Component {
 BooksContainer.propTypes = {
   requestedUser: PropTypes.object,
   bookTreeArr: PropTypes.array,
+  loadBookTree: PropTypes.func,
+  clearBookTree: PropTypes.func,
+  loaded: PropTypes.object,
+  getUser: PropTypes.func,
+  path: PropTypes.string,
 };

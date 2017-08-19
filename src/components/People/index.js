@@ -1,24 +1,20 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
-import { getUserSlug } from '../../redux/modules/user';
-import { loadPeopleFollowing, isLoadedFollowing, follow as followUser, unfollow as unfollowUser } from '../../redux/modules/follow';
+import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {connect} from 'react-redux';
+import {getUserSlug} from '../../redux/modules/user';
+import {
+  loadPeopleFollowing,
+  isLoadedFollowing,
+  follow as followUser,
+  unfollow as unfollowUser
+} from '../../redux/modules/follow';
 import PeopleMenu from './PeopleMenu';
 import './index.scss';
 
-@asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
-    const promises = [];
-    // if (!isLoadedFollowing(getState())) {
-    promises.push(dispatch(loadPeopleFollowing(getUserSlug(getState()))));
-    // }
-    return Promise.all(promises);
-  }
-}])
-
 @connect((state) => ({
   following: state.follow.following,
+  requestedUser: state.user.requestedUser,
+  path: state.routing.locationBeforeTransitions.pathname,
 }), {
   loadPeopleFollowing,
   isLoadedFollowing,
@@ -34,23 +30,32 @@ class People extends Component {
     this.unfollow = this.unfollow.bind(this);
   }
 
+  componentDidMount() {
+    const {path, requestedUser} = this.props;
+    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+
+    if (findSlug === requestedUser.slug) {
+      this.props.loadPeopleFollowing(findSlug);
+    }
+  }
+
   follow(id) {
     this.props.followUser(id, 'people');
-      // .then(() => this.props.loadPeopleFollowing());
+    // .then(() => this.props.loadPeopleFollowing());
   }
 
   unfollow(id) {
     this.props.unfollowUser(id, 'people');
-      // .then(() => this.props.loadPeopleFollowing());
+    // .then(() => this.props.loadPeopleFollowing());
   }
 
   render() {
-    const { following } = this.props;
+    const {following} = this.props;
 
     return (
       <div className="people contents">
 
-        <PeopleMenu />
+        <PeopleMenu/>
 
         <div className="common-lists people-lists">
           <div className="wrapper">
@@ -58,21 +63,21 @@ class People extends Component {
             {following.users && following.users.map((people) => (
               <div key={people.id} className="people-card">
                 <Link to={`/${people.slug}`}>
-                  <img src={people.avatar} />
+                  <img src={people.avatar}/>
                   <div>{`${people.first_name} ${people.last_name}`}</div>
                 </Link>
                 <div
                   className="btn-following"
                   onClick={
-                          !people.isFollowing ?
-                            () => {
-                              this.follow(people.id);
-                            }
-                            :
-                            () => {
-                              this.unfollow(people.id);
-                            }
-                        }>
+                    !people.isFollowing ?
+                      () => {
+                        this.follow(people.id);
+                      }
+                      :
+                      () => {
+                        this.unfollow(people.id);
+                      }
+                  }>
                   <div>
                     {!people.isFollowing ? 'Follow' : 'Following'}
                   </div>
@@ -94,6 +99,8 @@ People.propTypes = {
   followUser: PropTypes.func,
   unfollowUser: PropTypes.func,
   loadPeopleFollowing: PropTypes.func,
+  path: PropTypes.string,
+  requestedUser: PropTypes.object,
 };
 
 export default People;

@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router';
 import './index.scss';
 
 @connect((state) => ({
@@ -10,7 +10,7 @@ import './index.scss';
 
 export default class PeopleMenu extends Component {
   render() {
-    const { slug } = this.props.requestedUser;
+    const {slug} = this.props.requestedUser;
 
     return (
       <div className="sidebar people-nav">
@@ -21,10 +21,10 @@ export default class PeopleMenu extends Component {
           <Link onlyActiveOnIndex={true} to={`/${slug}/people/followers`} activeClassName="active">
             <li>Followers</li>
           </Link>
-          { this.props.authorizedUser.id === this.props.requestedUser.id &&
-            <Link onlyActiveOnIndex={true} to={`/${slug}/people/suggested`} activeClassName="active">
-              <li>Suggested</li>
-            </Link>
+          {this.props.authorizedUser.id === this.props.requestedUser.id &&
+          <Link onlyActiveOnIndex={true} to={`/${slug}/people/suggested`} activeClassName="active">
+            <li>Suggested</li>
+          </Link>
           }
         </ul>
       </div>
