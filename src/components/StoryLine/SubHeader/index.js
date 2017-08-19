@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {asyncConnect} from 'redux-connect';
 import {Link, browserHistory} from 'react-router';
 import {getConversationByUserPage} from '../../../redux/modules/profile';
 import {showPopUp} from '../../../redux/modules/form';
@@ -11,14 +10,6 @@ import {
 import ChangeCoverImage from '../../Popup/ChangeCoverImage';
 import ChangeAvatar from '../../Popup/ChangeAvatar';
 import './index.scss';
-
-@asyncConnect([{
-  promise: ({store: {dispatch, getState}}) => {
-    const promises = [];
-    promises.push(dispatch(getUser(getUserSlug(getState()))));
-    return Promise.all(promises);
-  }
-}])
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
@@ -116,7 +107,7 @@ export default class SubHeader extends Component {
   }
 
   render() {
-    const {first_name, last_name, slug, isFollowing, id, avatar230, cover} = this.props.requestedUser;
+    const {first_name, last_name, slug, is_follow, id, avatar230, cover} = this.props.requestedUser;
 
     return (
       <div className="subHeader">
@@ -156,23 +147,27 @@ export default class SubHeader extends Component {
         {this.props.requestedUser.id &&
         <div>
           {this.props.authorizedUser.id !== this.props.requestedUser.id &&
-          <div className="btn-following btn-message" onClick={() => this.openConversation(id, this.props.requestedUser)}>
+          <div
+            className="btn-following btn-message"
+            onClick={() => this.openConversation(id, this.props.requestedUser)}
+          >
             <Link // to="/messages/new"
             >
               <div><i/>Message</div>
             </Link>
           </div>
           }
+
           <div
             className="btn-following"
             onClick={
-              !isFollowing ?
+              !is_follow ?
                 () => this.followUser(id)
                 :
                 () => this.unfollowUser(id)
             }>
             <div>
-              {!isFollowing ? 'Follow' : 'Following'}
+              {!is_follow ? 'Follow' : 'Following'}
             </div>
             <span/>
           </div>
@@ -217,5 +212,6 @@ SubHeader.propTypes = {
   isAuthenticated: PropTypes.bool,
   followRequestedUser: PropTypes.func,
   unfollowRequestedUser: PropTypes.func,
+  getConversationByUserPage: PropTypes.func,
   showPopUp: PropTypes.func,
 };

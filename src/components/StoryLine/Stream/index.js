@@ -45,8 +45,6 @@ class Stream extends Component {
 
     return (
       <div className="stream">
-        {requestedUser.id ? null : <Loader marginTop="52px"/>}
-
         {isAuthenticated && authorizedUser.id === requestedUser.id &&
         <Sbox
           authorizedUser={this.props.authorizedUser}

@@ -85,11 +85,9 @@ export default function signReducer(state = initialState, action) {
         loading: false,
         loaded: true,
         authorizedUser: action.result.data,
-        // isAuthenticated: !!action.result.data.access_token,
         isAuthenticated: true
       };
     case LOAD_FAIL:
-      console.log('LOAD_FAIL:', action);
       return {
         ...state,
         loading: false,
@@ -280,9 +278,11 @@ export default function signReducer(state = initialState, action) {
       };
     }
     case UPLOAD_AVATAR_SUCCESS: {
-      const updateAvatar = state.authorizedUser;
-      updateAvatar.avatar230 = action.result.data.avatar230;
-      updateAvatar.avatar32 = action.result.data.avatar32;
+      const updateAvatar = Object.assign({}, state.authorizedUser, {
+        avatar230: action.result.data.avatar230,
+        avatar32: action.result.data.avatar32
+      });
+
       return {
         ...state,
         uploadingImage: false,
@@ -298,8 +298,11 @@ export default function signReducer(state = initialState, action) {
     }
 
     case UPLOAD_AVATAR_BASE64: {
-      const updateAvatarBase64 = state.authorizedUser;
-      updateAvatarBase64.avatar230 = action.avatarBase64;
+      const updateAvatarBase64 = Object.assign({}, state.authorizedUser, {
+        avatar230: action.avatarBase64
+      });
+      // const updateAvatarBase64 = state.authorizedUser;
+      // updateAvatarBase64.avatar230 = action.avatarBase64;
 
       return {
         ...state,
@@ -308,8 +311,11 @@ export default function signReducer(state = initialState, action) {
     }
 
     case UPLOAD_USER_COVER_BASE64: {
-      const updateUserCoverBase64 = state.authorizedUser;
-      updateUserCoverBase64.cover = action.userCoverBase64;
+      const updateUserCoverBase64 = Object.assign({}, state.authorizedUser, {
+        cover: action.userCoverBase64
+      });
+      // const updateUserCoverBase64 = state.authorizedUser;
+      // updateUserCoverBase64.cover = action.userCoverBase64;
 
       return {
         ...state,
@@ -417,14 +423,14 @@ export function getUserProfile(slug) {
 export function followRequestedUser(user_id) {
   return {
     types: [FOLLOW_REQUESTED_USER, FOLLOW_REQUESTED_USER_SUCCESS, FOLLOW_REQUESTED_USER_FAIL],
-    promise: (client) => client.post('/follow/connect-user', {data: {user_id, channel_id: ''}})
+    promise: (client) => client.post('/follows/simple-user-follow', {data: {user_id}})
   };
 }
 
 export function unfollowRequestedUser(user_id) {
   return {
     types: [UNFOLLOW_REQUESTED_USER, UNFOLLOW_REQUESTED_USER_SUCCESS, UNFOLLOW_REQUESTED_USER_FAIL],
-    promise: (client) => client.post('/follow/disconnect-user', {data: {user_id, channel_id: ''}})
+    promise: (client) => client.post('/follows/simple-user-unfollow', {data: {user_id}})
   };
 }
 

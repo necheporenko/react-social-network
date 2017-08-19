@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {create as createBook, load as loadBookTree} from '../redux/modules/book';
 import BooksTree from '../components/BooksTree/index';
-import Loader from '../components/Common/Loader';
 import '../components/BooksTree/index.scss';
 
 @connect((state) => ({
@@ -21,7 +20,7 @@ export default class BooksTreeContainer extends Component {
 
     return (
       <div className="bookstree">
-        {loaded.loadedBookTree ?
+        {loaded.loadedBookTree &&
           <div className={this.props.booksTreeTop}>
             <div className="bookstree-title"><Link to={`/${slug}/books`}>BOOKS</Link></div>
             <BooksTree
@@ -32,8 +31,6 @@ export default class BooksTreeContainer extends Component {
             {/*// createBook={this.props.createBook}*/}
             {/*/>*/}
           </div>
-          :
-          <Loader marginTop="36px"/>
         }
       </div>
     );

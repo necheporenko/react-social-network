@@ -42,7 +42,7 @@ export default class Navigation extends Component {
   }
 
   render() {
-    const { first_name, last_name, slug, avatar32, isFollowing } = this.props.requestedUser;
+    const {first_name, last_name, slug, avatar32, isFollowing, id} = this.props.requestedUser;
     const { scrollTop } = this.state;
 
     const chooseNav = () => {
@@ -94,11 +94,11 @@ export default class Navigation extends Component {
             Photos
           </Link>
           <Link
-            to={`/${slug}/chest`}
+            to={`/${slug}/documents`}
             onlyActiveOnIndex={true}
             activeClassName="active"
           >
-            Chest
+            Documents
           </Link>
         </div>
         <div

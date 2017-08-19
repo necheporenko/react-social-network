@@ -1,6 +1,5 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
-import Loader from '../../Common/Loader';
 
 const Cutaway = ({requestedUserProfile}) => {
   const {
@@ -23,7 +22,7 @@ const Cutaway = ({requestedUserProfile}) => {
   } = requestedUserProfile;
   return (
     <div className="infoblocks-cutaway">
-      {requestedUserProfile.first_name ?
+      {requestedUserProfile.first_name &&
         <div>
           <div className="title-infoblocks">
             <span className="cutaway-icon"/>
@@ -84,8 +83,6 @@ const Cutaway = ({requestedUserProfile}) => {
           </div>
 
         </div>
-        :
-        <Loader marginTop="36px"/>
       }
     </div>
   );

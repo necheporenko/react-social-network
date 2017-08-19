@@ -12,8 +12,8 @@ class InfoBloks extends Component {
         <Cutaway
           requestedUserProfile={this.props.requestedUserProfile}
         />
-        <Tokens />
-        <Photos />
+        {/*<Tokens />*/}
+        {/*<Photos />*/}
         <Peoples
           following={this.props.following}
           followers={this.props.followers}

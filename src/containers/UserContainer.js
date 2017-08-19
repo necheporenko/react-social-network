@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-// import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import {getUser, getUserSlug, getUserProfile} from '../redux/modules/user';
 import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../redux/modules/story';
@@ -9,19 +8,6 @@ import { loadPeopleFollowers, loadPeopleFollowing, loadUserPeople } from '../red
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 import StoryLine from '../components/StoryLine';
-
-// @asyncConnect([{
-//   promise: ({ store: { dispatch, getState } }) => {
-//     const promises = [];
-//     // promises.push(dispatch(getUser(getUserSlug(getState()))));
-//     // promises.push(dispatch(loadPeopleFollowing(getUserSlug(getState()))));
-//     // promises.push(dispatch(loadPeopleFollowers(getUserSlug(getState()))));
-//     // promises.push(dispatch(loadStories(getUserSlug(getState()))));
-//     // promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
-//     // promises.push(dispatch(loadUserPeople(getUserSlug(getState()))));
-//     return Promise.all(promises);
-//   }
-// }])
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,

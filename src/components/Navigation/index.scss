@@ -4,7 +4,7 @@
   width: 100%;
   height: 46px;
   margin: 0;
-  //box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
   position: relative;
   display: flex;
   background: #fafafa;
@@ -58,9 +58,11 @@
   z-index: 10;
   left: 15px;
   top: 3px;
+
   a {
     display: flex;
   }
+
   img {
     margin: 6px 5px;
     width: 32px;
@@ -68,6 +70,7 @@
     cursor: pointer;
     border-radius: 2px;
   }
+
   span {
     font-size: 18px;
     color: #444;

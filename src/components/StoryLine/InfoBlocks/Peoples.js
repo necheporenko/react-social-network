@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {showActivePeopleTab} from '../../../redux/modules/form';
-import Loader from '../../Common/Loader';
 
 @connect((state) => ({
   activePeopleTab: state.forms.activePeopleTab,
@@ -30,7 +29,7 @@ export default class Peoples extends Component {
 
     return (
       <div className="infoblocks-peoples">
-        {loaded.loadedPeopleBlock ?
+        {loaded.loadedPeopleBlock &&
           <div>
             <div className="title-infoblocks">
               <span className="peoples-icon"/>
@@ -97,8 +96,6 @@ export default class Peoples extends Component {
             </div>
             }
           </div>
-          :
-          <Loader/>
         }
       </div>
     );

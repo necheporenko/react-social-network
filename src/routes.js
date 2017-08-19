@@ -136,7 +136,7 @@ export default (store) => {
         <Route path="suggested" component={PeopleSuggested} onEnter={requireLogin}/>
       </Route>
 
-      <Route path="/:userName/chest" component={TokensContainer}>
+      <Route path="/:userName/documents" component={TokensContainer}>
         <IndexRoute component={Tokens} />
         <Route path="exchange" component={TokensExchange} onEnter={requireLogin}/>
         {/*<Route path="public" component={TokensPublic} />*/}

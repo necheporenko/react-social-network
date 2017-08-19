@@ -1,21 +1,24 @@
-import React, { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
-import { } from '../redux/modules/user';
-import { login as loginUser, load as loadAuth, register as registerUser, loginSocial, isLoaded, getUser,
-  getAuthSlug, openWebsocket } from '../redux/modules/user';
-import { showActiveForm } from '../redux/modules/form';
-import { isLoadedChannelList, isLoadedChannelStories, create as createChannel, show as showChannel,
-  load as loadChannels, isMashUp, loadNext as loadNextChannelStories, getAuthUserSlug } from '../redux/modules/channel';
-import { load as loadBookTree } from '../redux/modules/book';
-import { create as createStory } from '../redux/modules/story';
-import { loadWhoToFollow } from '../redux/modules/follow';
+import React, {PropTypes, Component} from 'react';
+import {connect} from 'react-redux';
+import {asyncConnect} from 'redux-connect';
+import {
+  login as loginUser, load as loadAuth, register as registerUser, loginSocial, isLoaded, getUser,
+  getAuthSlug, openWebsocket
+} from '../redux/modules/user';
+import {showActiveForm} from '../redux/modules/form';
+import {
+  isLoadedChannelList, isLoadedChannelStories, create as createChannel, show as showChannel,
+  load as loadChannels, isMashUp, loadNext as loadNextChannelStories, getAuthUserSlug
+} from '../redux/modules/channel';
+import {load as loadBookTree} from '../redux/modules/book';
+import {create as createStory} from '../redux/modules/story';
+import {loadWhoToFollow} from '../redux/modules/follow';
 import NewUser from '../components/Registration/Main';
 import MainPage from '../components/MainPage';
 
 
 @asyncConnect([{
-  promise: ({ store: { dispatch, getState }}) => {
+  promise: ({store: {dispatch, getState}}) => {
     const promises = [];
 
     if (isLoaded(getState())) {
@@ -71,36 +74,36 @@ export default class IndexContainer extends Component {
     return (
       <div>
         {this.props.isAuthenticated &&
-          <MainPage
-            authorizedUser={this.props.authorizedUser}
-            requestedUser={this.props.requestedUser}
-            createStory={this.props.createStory}
-            channelsArr={this.props.channelsArr}
-            loadChannels={this.props.loadChannels}
-            showChannel={this.props.showChannel}
-            createChannel={this.props.createChannel}
-            channelStories={this.props.channelStories}
-            loadNextChannelStories={this.props.loadNextChannelStories}
-            bookTreeArr={this.props.bookTreeArr}
-            whoToFollowList={this.props.whoToFollowList}
-          />
+        <MainPage
+          authorizedUser={this.props.authorizedUser}
+          requestedUser={this.props.requestedUser}
+          createStory={this.props.createStory}
+          channelsArr={this.props.channelsArr}
+          loadChannels={this.props.loadChannels}
+          showChannel={this.props.showChannel}
+          createChannel={this.props.createChannel}
+          channelStories={this.props.channelStories}
+          loadNextChannelStories={this.props.loadNextChannelStories}
+          bookTreeArr={this.props.bookTreeArr}
+          whoToFollowList={this.props.whoToFollowList}
+        />
         }
         {!this.props.isAuthenticated &&
-          <NewUser
-            authorizedUser={this.props.authorizedUser}
-            activeForm={this.props.activeForm}
-            showActiveForm={this.props.showActiveForm}
-            loginUser={this.props.loginUser}
-            loadAuth={this.props.loadAuth}
-            registerUser={this.props.registerUser}
-            loginSocial={this.props.loginSocial}
-            loading={this.props.loading}
-            showChannel={this.props.showChannel}
-            loadChannels={this.props.loadChannels}
-            loadBookTree={this.props.loadBookTree}
-            loadWhoToFollow={this.props.loadWhoToFollow}
-            openWebsocket={this.props.openWebsocket}
-          />
+        <NewUser
+          authorizedUser={this.props.authorizedUser}
+          activeForm={this.props.activeForm}
+          showActiveForm={this.props.showActiveForm}
+          loginUser={this.props.loginUser}
+          // loadAuth={this.props.loadAuth}
+          registerUser={this.props.registerUser}
+          loginSocial={this.props.loginSocial}
+          loading={this.props.loading}
+          showChannel={this.props.showChannel}
+          loadChannels={this.props.loadChannels}
+          loadBookTree={this.props.loadBookTree}
+          loadWhoToFollow={this.props.loadWhoToFollow}
+          openWebsocket={this.props.openWebsocket}
+        />
         }
       </div>
     );
@@ -112,7 +115,7 @@ IndexContainer.propTypes = {
   authorizedUser: PropTypes.object,
   requestedUser: PropTypes.object,
   loginUser: PropTypes.func,
-  loadAuth: PropTypes.func,
+  // loadAuth: PropTypes.func,
   registerUser: PropTypes.func,
   loginSocial: PropTypes.func,
   loading: PropTypes.bool,

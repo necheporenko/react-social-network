@@ -1,14 +1,15 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
 import config from 'config';
-import { asyncConnect } from 'redux-connect';
-import { showLoading, hideLoading } from 'react-redux-loading-bar';
-import { getChannelName } from '../../redux/modules/channel';
+import {asyncConnect} from 'redux-connect';
+import {showLoading, hideLoading} from 'react-redux-loading-bar';
+import {getChannelName} from '../../redux/modules/channel';
+import {logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth} from '../../redux/modules/user';
+import {getCountSeenNotification} from '../../redux/modules/profile';
 import Header from '../../components/Header';
 import MinHeader from '../../components/Header/MinHeader';
-import { logout as logoutUser, isLoaded as isAuthLoaded, load as loadAuth } from '../../redux/modules/user';
-import { isCountSeenNotification, getCountSeenNotification } from '../../redux/modules/profile';
+
 // @asyncConnect([{
 //   promise: ({store: { dispatch, getState }}) => {
 //     // const promises = [];
@@ -38,11 +39,12 @@ import { isCountSeenNotification, getCountSeenNotification } from '../../redux/m
 // }])
 
 @asyncConnect([{
-  promise: ({ store: { dispatch, getState } }) => {
+  promise: ({store: {dispatch, getState}}) => {
     const promises = [];
-
+    console.log('<!======  loadAuth ========!>', isAuthLoaded(getState()));
     if (!isAuthLoaded(getState())) {
       promises.push(dispatch(loadAuth()));
+      console.log('<!======  loadAuth2 ========!>', isAuthLoaded(getState()));
     }
     // else if (!isCountSeenNotification(getState())) {
     //   promises.push(dispatch(getCountSeenNotification(authUserState(getState()))));
@@ -93,8 +95,7 @@ class App extends Component {
   }
 
   render() {
-    const { children, bubbleCommon } = this.props;
-
+    const {children, bubbleCommon} = this.props;
 
     return (
       <div className="App">
@@ -102,19 +103,20 @@ class App extends Component {
           titleTemplate={bubbleCommon > 0 ? `(${bubbleCommon}) %s` : '%s'}
           {...config.app.head}
         />
-        { this.props.isAuthenticated &&
-          <div style={{ marginTop: '52px' }}>
-            <Header
-              authorizedUser={this.props.authorizedUser}
-              logoutUser={this.props.logoutUser}
-              // onSignOut={this.props.userSignOut}
-            />
-          </div>
+
+        {this.props.isAuthenticated &&
+        <div style={{marginTop: '52px'}}>
+          <Header
+            authorizedUser={this.props.authorizedUser}
+            logoutUser={this.props.logoutUser}
+          />
+        </div>
         }
-        { !this.props.isAuthenticated && this.props.locationBeforeTransitions.pathname !== '/' &&
-          <div style={{ marginTop: '52px' }}>
-            <MinHeader/>
-          </div>
+
+        {!this.props.isAuthenticated && this.props.locationBeforeTransitions.pathname !== '/' &&
+        <div style={{marginTop: '52px'}}>
+          <MinHeader/>
+        </div>
         }
         {children}
       </div>
@@ -126,7 +128,6 @@ App.propTypes = {
   children: PropTypes.element,
   isAuthenticated: PropTypes.bool,
   authorizedUser: PropTypes.object,
-  requestedUser: PropTypes.object,
   locationBeforeTransitions: PropTypes.object,
   logoutUser: PropTypes.func,
   hideLoading: PropTypes.func,
@@ -136,17 +137,5 @@ App.propTypes = {
   // userLogin: PropTypes.func,
   // userSignOut: PropTypes.func
 };
-
-// function mapStateToProps(state) {
-//   return {
-//     isAuthenticated: state.user.isAuthenticated,
-//     user: state.user.user
-//   };
-// }
-//
-// export default connect(mapStateToProps, {
-//   // userLogin,
-//   // userSignOut
-// })(App);
 
 export default App;

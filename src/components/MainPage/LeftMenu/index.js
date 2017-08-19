@@ -59,9 +59,9 @@ class LeftMenu extends Component {
               />
             </div>
 
-            <Link to={`/${slug}/chest`} className="nav-a">
+            <Link to={`/${slug}/documents`} className="nav-a">
               <li className="nav-li nav-tokens">
-                <span>Chest</span>
+                <span>Documents</span>
               </li>
             </Link>
           </ul>
