@@ -262,7 +262,9 @@ export default class BookPage extends Component {
                   </div>
 
                 </div>
-                <Photos/>
+
+                {/*<Photos/>*/}
+
               </div>
             </div>
           </div>

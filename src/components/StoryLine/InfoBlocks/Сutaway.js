@@ -21,8 +21,8 @@ const Cutaway = ({requestedUserProfile}) => {
     skype,
   } = requestedUserProfile;
   return (
-    <div className="infoblocks-cutaway">
-      {requestedUserProfile.first_name &&
+    requestedUserProfile.first_name ?
+      <div className="infoblocks-cutaway">
         <div>
           <div className="title-infoblocks">
             <span className="cutaway-icon"/>
@@ -83,8 +83,9 @@ const Cutaway = ({requestedUserProfile}) => {
           </div>
 
         </div>
-      }
-    </div>
+      </div>
+      :
+      null
   );
 };
 

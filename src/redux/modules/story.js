@@ -380,9 +380,14 @@ export default function storyReducer(state = initialState, action) {
     }
 
     case CLEAR_STORIES:
+      loaded = Object.assign({}, state.loaded, {
+        stories: false,
+      });
+
       return {
         ...state,
-        storiesArr: []
+        storiesArr: [],
+        loaded
       };
 
     default:

@@ -29,7 +29,7 @@ export default class TokensMenu extends Component {
             {/*</Link>*/}
           </ul>
           <div className="create-new-item">
-            <a href="#">+ Create new drawer</a>
+            <a href="#">+ Create new box</a>
           </div>
         </div>
       </div>

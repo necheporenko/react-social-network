@@ -19,6 +19,7 @@ const LOAD_WHO_TO_FOLLOW_PEOPLE_FAIL = 'LOAD_WHO_TO_FOLLOW_PEOPLE_FAIL';
 const LOAD_USER_PEOPLE = 'LOAD_USER_PEOPLE';
 const LOAD_USER_PEOPLE_SUCCESS = 'LOAD_USER_PEOPLE_SUCCESS';
 const LOAD_USER_PEOPLE_FAIL = 'LOAD_USER_PEOPLE_FAIL';
+const CLEAR_PEOPLE_BLOCK = 'CLEAR_PEOPLE_BLOCK';
 
 
 const initialState = {
@@ -287,6 +288,17 @@ export default function followReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case CLEAR_PEOPLE_BLOCK:
+      loaded = Object.assign({}, state.loaded, {
+        loadedPeopleBlock: false,
+        loadedFollowing: false,
+        loadedFollowers: false
+      });
+      return {
+        ...state,
+        loaded
+      };
+
     default:
       return state;
   }
@@ -302,6 +314,12 @@ export function isLoadedFollowers(globalState) {
 
 export function isLoadedSuggested(globalState) {
   return globalState.follow && globalState.follow.loaded.loadedSuggested;
+}
+
+export function clearPeopleBlock() {
+  return {
+    type: CLEAR_PEOPLE_BLOCK
+  };
 }
 
 export function follow(user_id, choiceFollow) {

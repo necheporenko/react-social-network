@@ -28,75 +28,75 @@ export default class Peoples extends Component {
     const {people, following, followers, loaded} = this.props;
 
     return (
+      loaded.loadedPeopleBlock &&
       <div className="infoblocks-peoples">
-        {loaded.loadedPeopleBlock &&
-          <div>
-            <div className="title-infoblocks">
-              <span className="peoples-icon"/>
-              <div>
-                <div
-                  className={this.state.activeTab === 'people' ? 'people-tab-active' : ''}
-                  onClick={() => this.showPeopleTab('people')}
-                >
-                  People
-                </div>
-                |
-                <div
-                  className={this.state.activeTab === 'following' ? 'people-tab-active' : ''}
-                  onClick={() => this.showPeopleTab('following')}
-                >
-                  Following<span>{` ${following.count}`}</span>
-                </div>
-                |
-                <div
-                  className={this.state.activeTab === 'followers' ? 'people-tab-active' : ''}
-                  onClick={() => this.showPeopleTab('followers')}
-                >
-                  Followers<span>{` ${followers.count}`}</span>
-                </div>
+        <div>
+          <div className="title-infoblocks">
+            <span className="peoples-icon"/>
+            <div>
+              <div
+                className={this.state.activeTab === 'people' ? 'people-tab-active' : ''}
+                onClick={() => this.showPeopleTab('people')}
+              >
+                People
+              </div>
+              |
+              <div
+                className={this.state.activeTab === 'following' ? 'people-tab-active' : ''}
+                onClick={() => this.showPeopleTab('following')}
+              >
+                Following<span>{` ${following.count}`}</span>
+              </div>
+              |
+              <div
+                className={this.state.activeTab === 'followers' ? 'people-tab-active' : ''}
+                onClick={() => this.showPeopleTab('followers')}
+              >
+                Followers<span>{` ${followers.count}`}</span>
               </div>
             </div>
-
-            {this.props.activePeopleTab === 'people' &&
-            <div className="people-gallery">
-              {people && people.map((friend) => (
-                <div className="people-avatar" key={friend.id}>
-                  <Link to={`/${friend.slug}`}>
-                    <img src={friend.avatar}/>
-                    <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-            }
-
-            {this.props.activePeopleTab === 'following' &&
-            <div className="people-gallery">
-              {following.users && following.users.map((friend) => (
-                <div className="people-avatar" key={friend.id}>
-                  <Link to={`/${friend.slug}`}>
-                    <img src={friend.avatar}/>
-                    <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-            }
-
-            {this.props.activePeopleTab === 'followers' &&
-            <div className="people-gallery">
-              {followers.users && followers.users.map((friend) => (
-                <div className="people-avatar" key={friend.id}>
-                  <Link to={`/${friend.slug}`}>
-                    <img src={friend.avatar}/>
-                    <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-            }
           </div>
-        }
+
+          {this.props.activePeopleTab === 'people' &&
+          <div className="people-gallery">
+            {people && people.map((friend) => (
+              <div className="people-avatar" key={friend.id}>
+                <Link to={`/${friend.slug}`}>
+                  <img src={friend.avatar}/>
+                  <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
+                </Link>
+              </div>
+            ))}
+          </div>
+          }
+
+          {this.props.activePeopleTab === 'following' &&
+          <div className="people-gallery">
+            {following.users && following.users.map((friend) => (
+              <div className="people-avatar" key={friend.id}>
+                <Link to={`/${friend.slug}`}>
+                  <img src={friend.avatar}/>
+                  <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
+                </Link>
+              </div>
+            ))}
+          </div>
+          }
+
+          {this.props.activePeopleTab === 'followers' &&
+          <div className="people-gallery">
+            {followers.users && followers.users.map((friend) => (
+              <div className="people-avatar" key={friend.id}>
+                <Link to={`/${friend.slug}`}>
+                  <img src={friend.avatar}/>
+                  <div className="people-avatar-user-name">{`${friend.first_name} ${friend.last_name}`}</div>
+                </Link>
+              </div>
+            ))}
+          </div>
+          }
+        </div>
+
       </div>
     );
   }

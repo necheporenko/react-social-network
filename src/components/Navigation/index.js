@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router';
 import NavigationUserInfo from './NavigationUserInfo';
 import './index.scss';
 
@@ -33,17 +33,17 @@ export default class Navigation extends Component {
   handleScroll(e) {
     const scrollTop = document.documentElement.scrollTop || (e.target || e.srcElement).body.scrollTop;
     savePositionTop = scrollTop;
-    this.setState({ scrollTop });
+    this.setState({scrollTop});
   }
 
   saveScroll() {
     // console.log(`saveScroll:${savePositionTop}`);
-    this.setState({ scrollTop: savePositionTop });
+    this.setState({scrollTop: savePositionTop});
   }
 
   render() {
     const {first_name, last_name, slug, avatar32, isFollowing, id} = this.props.requestedUser;
-    const { scrollTop } = this.state;
+    const {scrollTop} = this.state;
 
     const chooseNav = () => {
       let Nav;
@@ -56,14 +56,14 @@ export default class Navigation extends Component {
         Nav = 'navigation navigation-fixed';
         displayUser = 'navigation-infouser';
       }
-      const result = { posTop: Nav, show: displayUser };
+      const result = {posTop: Nav, show: displayUser};
       return result;
     };
 
     const navigation = chooseNav();
 
     return (
-      <div className={navigation.posTop}>
+      <div className={navigation.posTop} style={{boxShadow: id ? '0 2px 4px 0 rgba(0, 0, 0, 0.1)' : 'none'}}>
         <div className="navigation-wrap">
           <Link
             to={`/${slug}`}

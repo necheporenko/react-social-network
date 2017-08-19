@@ -243,9 +243,14 @@ export default function bookReducer(state = initialState, action) {
       };
 
     case CLEAR_BOOKTREE:
+      loaded = Object.assign({}, state.loaded, {
+        loadedBookTree: false,
+      });
+
       return {
         ...state,
-        bookTreeArr: []
+        bookTreeArr: [],
+        loaded
       };
 
     default:

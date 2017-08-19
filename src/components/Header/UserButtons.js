@@ -177,8 +177,8 @@ class UserButtons extends Component {
   }
 
   clearStream() {
-    this.props.clearBookStories();
-    this.props.clearStories();
+    // this.props.clearBookStories();
+    // this.props.clearStories();
   }
 
   render() {

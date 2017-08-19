@@ -171,10 +171,12 @@ export default function signReducer(state = initialState, action) {
 
     case SHOW_USER:
       const preUser = Object.assign({}, state.requestedUser, {
+        cover: null,
         avatar32: null,
         avatar230: null,
         first_name: null,
         last_name: null,
+        id: null,
       });
       return {
         ...state,
@@ -197,7 +199,7 @@ export default function signReducer(state = initialState, action) {
     case GET_USER_PROFILE:
       return {
         ...state,
-        requestedUserProfile: state.requestedUser.id !== state.requestedUserProfile.user_id ? {} : state.requestedUserProfile,
+        requestedUserProfile: state.requestedUser.slug !== action.slug ? {} : state.requestedUserProfile,
       };
     case GET_USER_PROFILE_SUCCESS:
       return {
@@ -347,6 +349,7 @@ export default function signReducer(state = initialState, action) {
         saved: false,
         error: action.error,
       };
+
 
     default:
       return state;
