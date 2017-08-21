@@ -1,14 +1,17 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {connect} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
-import { clearConversation, deleteConversation, leftConversation, searchConversation, readConversation,
-  loadNextConversations } from '../../redux/modules/profile';
-import { clearUserResult } from '../../redux/modules/search';
+import {
+  clearConversation, deleteConversation, leftConversation, searchConversation, readConversation,
+  loadNextConversations, getConversationByID
+} from '../../redux/modules/profile';
+import {clearUserResult} from '../../redux/modules/search';
 import './index.scss';
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
+  conversation: state.profile.conversation,
   paginationConversations: state.profile.paginationConversations,
   hasMoreConversations: state.profile.hasMoreConversations,
 }), {
@@ -19,6 +22,7 @@ import './index.scss';
   readConversation,
   loadNextConversations,
   clearUserResult,
+  getConversationByID
 })
 
 class ListMessage extends Component {
@@ -33,6 +37,7 @@ class ListMessage extends Component {
     this.groupAvatars = this.groupAvatars.bind(this);
     this.loadConversations = this.loadConversations.bind(this);
     this.clear = this.clear.bind(this);
+    this.openConversation = this.openConversation.bind(this);
   }
 
   getReceivers(receivers) {
@@ -103,24 +108,33 @@ class ListMessage extends Component {
     }
     if (receivers.length > 1) {
       return `${message.user.first_name}: ${message.text}`;
-    } else {
-      return message.text;
     }
+    return message.text;
   }
 
-  clear() {
-    this.props.clearConversation();
+  clear(id) {
+    // this.props.clearConversation();
+    this.props.getConversationByID(id);
+    this.props.clearUserResult();
+  }
+
+  openConversation(id) {
+    if (this.props.conversation.conversation_id !== id) {
+      this.props.readConversation(id);
+      this.props.getConversationByID(id);
+    }
     this.props.clearUserResult();
   }
 
   render() {
-    const { conversations, authorizedUser } = this.props;
+    const {conversations, authorizedUser} = this.props;
 
     return (
       <div className="messages-mnu">
         <div className="additional-title">Conversations
-         <Link to="/messages/new" className="new-message" onClick={this.clear} title="New Message"><i/></Link>
+          <Link to="/messages/new" className="new-message" onClick={this.clear} title="New Message"><i/></Link>
         </div>
+
         <ul className="conversations-list">
           <div className="messages-search">
             <input type="text" placeholder="Search" onChange={this.handleSearch}/>
@@ -134,15 +148,14 @@ class ListMessage extends Component {
             // loader={loader}
             useWindow={false}
           >
+            {conversations.length === 0 && <li style={{padding: '10px 15px'}}>No conversations found</li>}
 
-            { conversations.length === 0 && <li style={{padding: '10px 15px'}}>No conversations found</li> }
-
-            { conversations && conversations.map(conversation => (
+            {conversations && conversations.map(conversation => (
               <div
                 className={conversation.is_seen ? 'conversation' : 'conversation conversation-not-seen'}
                 key={conversation.conversation_id}
-                onClick={() => { this.props.readConversation(conversation.conversation_id); this.clear(); }}
-               >
+                onClick={() => this.openConversation(conversation.conversation_id)}
+              >
                 <Link
                   to={`/messages/${conversation.conversation_id}`}
                   onlyActiveOnIndex={true}
@@ -150,21 +163,24 @@ class ListMessage extends Component {
                 >
                   <li>
                     {this.groupAvatars(conversation.receivers)}
-                    {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
                     <h5>{this.getReceivers(conversation.receivers)}</h5>
                   </li>
                   <span>{conversation.messages.length > 0 && conversation.messages[0].date.substring(11, 17)}</span>
-                  <div className="tooltip-date">{conversation.messages.length > 0 && conversation.messages[0].date.substring(0, 11)}</div>
+                  <div className="tooltip-date">
+                    {conversation.messages.length > 0 && conversation.messages[0].date.substring(0, 11)}
+                  </div>
                   {conversation.messages.length > 0 &&
-                    <p>{this.whoWroteMessage(conversation.messages[0], conversation.receivers)}</p>
+                  <p>{this.whoWroteMessage(conversation.messages[0], conversation.receivers)}</p>
                   }
                 </Link>
                 <div className="conversation-settings">
                   <i/>
                   <div>
                     <ul>
-                      { conversation.receivers.length > 1 &&
-                        <li onClick={() => this.props.leftConversation(conversation.conversation_id, authorizedUser.first_name)}>Leave Group</li>
+                      {conversation.receivers.length > 1 &&
+                      <li
+                        onClick={() => this.props.leftConversation(conversation.conversation_id, authorizedUser.first_name)}>
+                        Leave Group</li>
                       }
                       <li onClick={() => this.props.deleteConversation(conversation.conversation_id)}>Delete</li>
                       <li>Report Spam or Abuse...</li>
@@ -172,7 +188,7 @@ class ListMessage extends Component {
                   </div>
                 </div>
               </div>
-         ))}
+            ))}
 
             {/*/!*<Link to="/messages">*!/*/}
             {/*<a href="#">*/}
@@ -199,6 +215,7 @@ class ListMessage extends Component {
 }
 
 ListMessage.propTypes = {
+  conversation: PropTypes.object,
   conversations: PropTypes.array,
   clearConversation: PropTypes.func,
   deleteConversation: PropTypes.func,
@@ -210,6 +227,7 @@ ListMessage.propTypes = {
   paginationConversations: PropTypes.number,
   hasMoreConversations: PropTypes.boolean,
   clearUserResult: PropTypes.func,
+  getConversationByID: PropTypes.func,
 };
 
 export default ListMessage;

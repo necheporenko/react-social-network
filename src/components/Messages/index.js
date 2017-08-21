@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import {asyncConnect} from 'redux-connect';
 import InfiniteScroll from 'react-infinite-scroller';
 import Textarea from 'react-textarea-autosize';
 import {Modal} from 'react-bootstrap';
@@ -11,37 +10,25 @@ import {
   deleteMessage,
   getConversationID,
   addMember,
-  firstLoadMessages,
-  hasMoreMessages,
-  paginationMessages,
   loadNextMessagesByID,
-  gettingConversation,
 } from '../../redux/modules/profile';
 import {newSearchUser} from '../../redux/modules/search';
 import './index.scss';
 
-
-@asyncConnect([{
-  promise: ({store: {dispatch, getState}}) => {
-    const promises = [];
-    if (getConversationID(getState())) {
-      promises.push(dispatch(getConversationByID(getConversationID(getState()))));
-    }
-    return Promise.all(promises);
-  }
-}])
-
 @connect((state) => ({
   foundUsers: state.search.foundUsers,
   conversation: state.profile.conversation,
+  conversations: state.profile.conversations,
   authorizedUser: state.user.authorizedUser,
   gettingConversation: state.profile.gettingConversation,
   paginationMessages: state.profile.paginationMessages,
   hasMoreMessages: state.profile.hasMoreMessages,
   firstLoadMessages: state.profile.firstLoadMessages,
   sendingMessage: state.profile.sendingMessage,
+  path: state.routing.locationBeforeTransitions.pathname,
 }), {
   getConversationByID,
+  getConversationID,
   createMessage,
   deleteMessage,
   newSearchUser,
@@ -81,46 +68,63 @@ export default class Messages extends Component {
   }
 
   componentDidMount() {
+    const {path, conversations, getConversationByID} = this.props;
+
+    function getConversationID(path) {
+      const id = path.substring(path.indexOf('/messages') + 10);
+      if (id) {
+        return id;
+      }
+      if (conversations.length > 0) {
+        return conversations[0].conversation_id;
+      }
+    }
+
+    if (getConversationID(path)) {
+      getConversationByID(getConversationID(path));
+    }
+    // console.log('<!----', getConversationID(path));
+
     this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
-    console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+    // console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
   }
 
   // componentWillMount() {
   //   this.messageBlock.scrollTop = 200;
   // }
 
-  componentDidUpdate() {
-  //     console.log('paginationMessages', this.props.paginationMessages);
-  //     if (this.props.paginationMessages === 2) {
-  //       this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
-  //       // this.messageBlock.scrollTop = 800;
-  //       console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
-  //     } else {
-  //       this.messageBlock.scrollTop = 250;
-  //       console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
-  //     }
-    if (this.props.sendingMessage) {
-      this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
-    }
-  }
-
-  componentWillUpdate(nextProps) {
-    console.log('paginationMessages2', this.props.paginationMessages, nextProps, 'scroll:', this.messageBlock.scrollTop);
-    if (nextProps.firstLoadMessages && !nextProps.sendingMessage) {
-      this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
-      // this.messageBlock.scrollTop = 800;
-      console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop, this.props.sendingMessage);
-    } else if (!nextProps.firstLoadMessages) {
-      this.messageBlock.scrollTop = 200;
-      console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
-    }
-  }
-
   componentWillReceiveProps() {
     if (this.props.gettingConversation) {
       this.clearMembers();
     }
-    // console.log(this.props, 'hahah')
+  }
+
+  componentWillUpdate(nextProps) {
+    // console.log('paginationMessages2', this.props.paginationMessages, nextProps, 'scroll:', this.messageBlock.scrollTop);
+    if (nextProps.firstLoadMessages && !nextProps.sendingMessage) {
+      this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+      // this.messageBlock.scrollTop = 800;
+      // console.log('123', this.messageBlock.scrollHeight, this.messageBlock.scrollTop, this.props.sendingMessage);
+    } else if (!nextProps.firstLoadMessages) {
+      this.messageBlock.scrollTop = 200;
+      // console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.sendingMessage || this.props.firstLoadMessages) {
+      this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+    }
+    //     console.log('paginationMessages', this.props.paginationMessages);
+    //     if (this.props.firstLoadMessages) {
+    //       this.messageBlock.scrollTop = this.messageBlock.scrollHeight;
+    //       // this.messageBlock.scrollTop = 800;
+    //       console.log('12345', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+    //     }
+    // else {
+    //       this.messageBlock.scrollTop = 250;
+    //       console.log('3215', this.messageBlock.scrollHeight, this.messageBlock.scrollTop);
+    //     }
   }
 
   Close() {
@@ -148,8 +152,8 @@ export default class Messages extends Component {
         this.props.conversation.conversation_id,
         this.props.conversation.receiversID
       )
-        .then(event.target.value = '')
-        // .then(this.messageBlock.scrollTop = 200);
+        .then(event.target.value = '');
+      // .then(this.messageBlock.scrollTop = 200);
     }
   }
 
@@ -330,13 +334,13 @@ export default class Messages extends Component {
           }
 
           {!conversation.conversation_id &&
-            <div className="wrapper-loader">
-              <div className="loader" style={{position: 'static'}}>
-                <svg className="circular" viewBox="25 25 50 50" style={{width: '75px'}}>
-                  <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
-                </svg>
-              </div>
+          <div className="wrapper-loader">
+            <div className="loader" style={{position: 'static'}}>
+              <svg className="circular" viewBox="25 25 50 50" style={{width: '75px'}}>
+                <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
+              </svg>
             </div>
+          </div>
           }
 
           <div className="messages-box" ref={el => this.messageBlock = el}>
@@ -360,8 +364,9 @@ export default class Messages extends Component {
                     </div>
                     }
                     {((i === 0 || (message.is_tech !== arr[i - 1].is_tech) || (i > 0 && message.user.id !== arr[i - 1].user.id)) &&
-                    <div className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
-                      {message.user.id !== authorizedUser.id &&
+                      <div
+                        className={message.user.id === authorizedUser.id ? 'messages-post messages-post-reverse' : 'messages-post'}>
+                        {message.user.id !== authorizedUser.id &&
                         <div style={{width: '33px'}}>
                           <Link to={`/${message.user.slug}`}>
                             <img src={message.user.avatar} alt=""/>
@@ -371,29 +376,32 @@ export default class Messages extends Component {
                             <h5>{message.user.first_name}</h5>
                           </Link>
                         </div>
-                      }
+                        }
 
-                      <div style={{display: 'flex', marginLeft: '14px'}}>
-                        <p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>
-                        <div className="wrapper-settings">
-                          <div className="message-settings" onClick={this.openMessageSettings}>
-                            <i>...</i>
-                            <div style={{display: this.state.messageSetting ? 'block' : 'none'}}>
-                              <ul>
-                                <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
-                              </ul>
+                        <div style={{display: 'flex', marginLeft: '14px'}}>
+                          <p title={message.date.substring(0, 17)}
+                             dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}
+                          />
+                          <div className="wrapper-settings">
+                            <div className="message-settings" onClick={this.openMessageSettings}>
+                              <i>...</i>
+                              <div style={{display: this.state.messageSetting ? 'block' : 'none'}}>
+                                <ul>
+                                  <li onClick={() => this.props.deleteMessage(message.id)}>Delete</li>
+                                </ul>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
                     )
                     ||
                     <div
                       className={message.user.id === authorizedUser.id ?
-                      'messages-post messages-post-reverse messages-post-repeat' : 'messages-post messages-post-repeat'}>
+                        'messages-post messages-post-reverse messages-post-repeat' : 'messages-post messages-post-repeat'}>
                       <div style={{display: 'flex', marginLeft: '14px'}}>
-                        <p title={message.date.substring(0, 17)} dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>
+                        <p title={message.date.substring(0, 17)}
+                           dangerouslySetInnerHTML={{__html: this.linkify(message.text)}}/>
                         <div className="wrapper-settings">
                           <div className="message-settings" onClick={this.openMessageSettings}>
                             <i>...</i>
@@ -456,12 +464,16 @@ Messages.propTypes = {
   paginationMessages: PropTypes.number,
   loadNextMessagesByID: PropTypes.func,
   sendingMessage: PropTypes.boolean,
+  getConversationByID: PropTypes.func,
+  conversations: PropTypes.array,
+  path: PropTypes.string,
 };
 
 const Participants = ({Open, Close, showModal, participants}) => {
   return (
     <div onClick={Open}>
-      {participants.length !== 1 && <span className="quantity-participants">{`${participants.length} Participants`}</span>}
+      {participants.length !== 1 &&
+      <span className="quantity-participants">{`${participants.length} Participants`}</span>}
 
       <Modal show={showModal} onHide={Close} className="modal-log avatar-popup">
         <Modal.Header closeButton>

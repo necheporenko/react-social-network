@@ -1,37 +1,43 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { save as saveProfile } from '../../../redux/modules/user';
+import {save as saveProfile, getUserProfile} from '../../../redux/modules/user';
 import ProfileForm from './ProfileForm';
 import './index.scss';
 
 @connect((state) => ({
-  first_name: state.user.authorizedUser.profile.first_name,
-  last_name: state.user.authorizedUser.profile.last_name,
-  bio: state.user.authorizedUser.profile.bio,
-  occupation: state.user.authorizedUser.profile.occupation,
-  company: state.user.authorizedUser.profile.company,
-  country: state.user.authorizedUser.profile.country,
-  location: state.user.authorizedUser.profile.location,
-  birthDate: state.user.authorizedUser.profile.birthDate,
-  birthMonth: state.user.authorizedUser.profile.birthMonth,
-  birthDateVisibility: state.user.authorizedUser.profile.birthDateVisibility,
-  birthYear: state.user.authorizedUser.profile.birthYear,
-  birthYearVisibility: state.user.authorizedUser.profile.birthYearVisibility,
-  twitter: state.user.authorizedUser.profile.twitter,
-  facebook: state.user.authorizedUser.profile.facebook,
-  linkedin: state.user.authorizedUser.profile.linkedin,
-  website: state.user.authorizedUser.profile.website,
-  phone: state.user.authorizedUser.profile.phone,
-  skype: state.user.authorizedUser.profile.skype
+  authSlug: state.user.authorizedUser.slug,
+  first_name: state.user.requestedUserProfile.first_name,
+  last_name: state.user.requestedUserProfile.last_name,
+  bio: state.user.requestedUserProfile.bio,
+  occupation: state.user.requestedUserProfile.occupation,
+  company: state.user.requestedUserProfile.company,
+  country: state.user.requestedUserProfile.country_id,
+  location: state.user.requestedUserProfile.location,
+  birthDate: state.user.requestedUserProfile.birthDay,
+  birthMonth: state.user.requestedUserProfile.birthMonth,
+  birthDateVisibility: state.user.requestedUserProfile.birthDateVisibility,
+  birthYear: state.user.requestedUserProfile.birthYear,
+  birthYearVisibility: state.user.requestedUserProfile.birthYearVisibility,
+  twitter: state.user.requestedUserProfile.twitter,
+  facebook: state.user.requestedUserProfile.facebook,
+  linkedin: state.user.requestedUserProfile.linkedin,
+  website: state.user.requestedUserProfile.website,
+  phone: state.user.requestedUserProfile.phone,
+  skype: state.user.requestedUserProfile.skype
 }), {
-  saveProfile
+  saveProfile,
+  getUserProfile
 })
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.submitForm = this.submitForm.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getUserProfile(this.props.authSlug);
   }
 
   submitForm(data) {
@@ -79,6 +85,7 @@ export default class Profile extends Component {
 }
 
 Profile.propTypes = {
+  authSlug: PropTypes.string,
   children: PropTypes.element,
   first_name: PropTypes.string,
   last_name: PropTypes.string,
@@ -99,4 +106,5 @@ Profile.propTypes = {
   phone: PropTypes.string,
   skype: PropTypes.string,
   saveProfile: PropTypes.func,
+  getUserProfile: PropTypes.func,
 };

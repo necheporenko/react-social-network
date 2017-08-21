@@ -45,6 +45,7 @@ const initialState = {
   requestedUserProfile: {},
   loaded: false,
   uploadingImageImage: false,
+  userProfile: {}
 };
 
 export default function signReducer(state = initialState, action) {
@@ -331,17 +332,17 @@ export default function signReducer(state = initialState, action) {
         saved: false,
       };
     case SAVE_PROFILE_SUCCESS:
-      const userProfile = Object.assign({}, state.authorizedUser, {
-        profile: action.profile,
-        first_name: action.profile.first_name,
-        last_name: action.profile.last_name,
-        slug: action.result.data.slug
-      });
+      // const userProfile = Object.assign({}, state.requestedUserProfile, {
+      //   profile: action.profile,
+      //   first_name: action.profile.first_name,
+      //   last_name: action.profile.last_name,
+      //   slug: action.result.data.slug
+      // });
 
       return {
         ...state,
         saved: true,
-        authorizedUser: userProfile
+        requestedUserProfile: action.result.data
       };
     case SAVE_PROFILE_FAIL:
       return {

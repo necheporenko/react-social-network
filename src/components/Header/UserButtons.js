@@ -16,11 +16,13 @@ import {
   loadNextConversations,
   clearConversionsList,
   loadNextNotifications,
+  getConversationByID,
 } from '../../redux/modules/profile';
 import {clearStories} from '../../redux/modules/story';
 import {clearBookStories} from '../../redux/modules/book';
 
 @connect((state) => ({
+  conversation: state.profile.conversation,
   conversations: state.profile.conversations,
   bubbleMessage: state.profile.bubbleMessage,
   bubbleNotification: state.profile.bubbleNotification,
@@ -32,6 +34,7 @@ import {clearBookStories} from '../../redux/modules/book';
   firstLoadNotifications: state.profile.firstLoadNotifications,
 }), {
   getConversationList,
+  getConversationByID,
   seenAllNotification,
   seenAllConversations,
   getUserNotifications,
@@ -63,6 +66,7 @@ class UserButtons extends Component {
     this.showDropdowns = this.showDropdowns.bind(this);
     this.whoWroteMessage = this.whoWroteMessage.bind(this);
     this.onBlur = this.onBlur.bind(this);
+    this.openConversation = this.openConversation.bind(this);
   }
 
   clickMail() {
@@ -181,6 +185,13 @@ class UserButtons extends Component {
     // this.props.clearStories();
   }
 
+  openConversation(id) {
+    if (this.props.conversation.conversation_id !== id) {
+      this.props.readConversation(id);
+      this.props.getConversationByID(id);
+    }
+  }
+
   render() {
     const {slug, first_name, avatar32} = this.props.authorizedUser;
     const {logoutUser, notifications, conversations, bubbleMessage, bubbleNotification} = this.props;
@@ -233,21 +244,20 @@ class UserButtons extends Component {
                         to={`/messages/${conversation.conversation_id}`}
                         key={conversation.conversation_id}
                         style={{background: conversation.is_seen ? '#fff' : '#E4F0F6'}}
-                        onClick={() => this.props.readConversation(conversation.conversation_id)}
+                        onClick={() => this.openConversation(conversation.conversation_id)}
                       >
                         <li>
                           {this.groupAvatars(conversation.receivers)}
-                          {/*<img src={conversation.receivers[0].avatar} alt=""/>*/}
                           <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
-                          {/*<h6>{ conversation.messages && conversation.receivers.map(receiver => receiver.first_name)}</h6>*/}
-                          {/*<h6>{`${conversation.messages && conversation.receivers[0].first_name} ${conversation.receivers[0].last_name}`}</h6>*/}
                           {conversation.messages.length > 0 &&
                           <span>{this.whoWroteMessage(conversation.messages[0], conversation.receivers)}</span>
                           }
-                          <span
-                            className="date">{conversation.messages && conversation.messages[0].date.substring(11, 17)}</span>
-                          <div
-                            className="tooltip-date">{conversation.messages && conversation.messages[0].date.substring(0, 11)}</div>
+                          <span className="date">
+                            {conversation.messages && conversation.messages[0].date.substring(11, 17)}
+                          </span>
+                          <div className="tooltip-date">
+                            {conversation.messages && conversation.messages[0].date.substring(0, 11)}
+                          </div>
                         </li>
                       </Link>
                     ))}
@@ -386,20 +396,23 @@ UserButtons.propTypes = {
   readAllNotification: PropTypes.func,
   bubbleMessage: PropTypes.number,
   bubbleNotification: PropTypes.number,
+  conversation: PropTypes.object,
   conversations: PropTypes.array,
   notifications: PropTypes.array,
   readAllConversations: PropTypes.func,
   readNotification: PropTypes.func,
+  loadNextNotifications: PropTypes.func,
   readConversation: PropTypes.func,
   clearConversation: PropTypes.func,
   loadNextConversations: PropTypes.func,
   paginationConversations: PropTypes.number,
   hasMoreConversations: PropTypes.bool,
-  clearConversionsList: PropTypes.func,
+  // clearConversionsList: PropTypes.func,
   firstLoadConversations: PropTypes.bool,
   firstLoadNotifications: PropTypes.bool,
-  clearBookStories: PropTypes.func,
-  clearStories: PropTypes.func,
+  // clearBookStories: PropTypes.func,
+  // clearStories: PropTypes.func,
+  getConversationByID: PropTypes.func,
 };
 
 export default UserButtons;

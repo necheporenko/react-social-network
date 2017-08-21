@@ -41,10 +41,10 @@ import MinHeader from '../../components/Header/MinHeader';
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
     const promises = [];
-    console.log('<!======  loadAuth ========!>', isAuthLoaded(getState()));
+    // console.log('<!======  loadAuth ========!>', isAuthLoaded(getState()));
     if (!isAuthLoaded(getState())) {
       promises.push(dispatch(loadAuth()));
-      console.log('<!======  loadAuth2 ========!>', isAuthLoaded(getState()));
+      // console.log('<!======  loadAuth2 ========!>', isAuthLoaded(getState()));
     }
     // else if (!isCountSeenNotification(getState())) {
     //   promises.push(dispatch(getCountSeenNotification(authUserState(getState()))));

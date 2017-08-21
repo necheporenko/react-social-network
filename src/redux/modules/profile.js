@@ -376,6 +376,7 @@ export default function profileReducer(state = initialState, action) {
       return {
         ...state,
         gettingConversation: true,
+        conversation: {}
       };
     case GET_CONVERSATION_SUCCESS:
       const newConversation = action.result.data;
@@ -385,6 +386,7 @@ export default function profileReducer(state = initialState, action) {
           newConversation.receiversID.push(receiver.id);
         });
       }
+
       return {
         ...state,
         gettingConversation: false,
@@ -592,7 +594,6 @@ export default function profileReducer(state = initialState, action) {
     case LEFT_CONVERSATION:
       return {
         ...state,
-
         leavingConversation: true,
       };
     case LEFT_CONVERSATION_SUCCESS:
@@ -946,7 +947,8 @@ export function searchConversation(text) {
 export function getConversationByID(id) {
   return {
     types: [GET_CONVERSATION, GET_CONVERSATION_SUCCESS, GET_CONVERSATION_FAIL],
-    promise: (client) => client.get(`/conversations/${id}`, { params: { page: 1 }})
+    promise: (client) => client.get(`/conversations/${id}`, {params: {page: 1}}),
+    id
   };
 }
 
