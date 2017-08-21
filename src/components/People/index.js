@@ -31,12 +31,13 @@ class People extends Component {
   }
 
   componentDidMount() {
-    const {path, requestedUser} = this.props;
+    const {path} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+    this.props.loadPeopleFollowing(findSlug);
 
-    if (findSlug === requestedUser.slug) {
-      this.props.loadPeopleFollowing(findSlug);
-    }
+    // if (findSlug !== requestedUser.slug) {
+    //   this.props.loadPeopleFollowing(findSlug);
+    // }
   }
 
   follow(id) {
@@ -69,7 +70,7 @@ class People extends Component {
                 <div
                   className="btn-following"
                   onClick={
-                    !people.isFollowing ?
+                    !people.is_follow ?
                       () => {
                         this.follow(people.id);
                       }
@@ -79,7 +80,7 @@ class People extends Component {
                       }
                   }>
                   <div>
-                    {!people.isFollowing ? 'Follow' : 'Following'}
+                    {!people.is_follow ? 'Follow' : 'Following'}
                   </div>
                   <span/>
                 </div>

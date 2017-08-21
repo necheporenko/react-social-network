@@ -1,41 +1,31 @@
 import React, {PropTypes, Component} from 'react';
 import {connect} from 'react-redux';
-import {asyncConnect} from 'redux-connect';
 import {
-  login as loginUser, load as loadAuth, register as registerUser, loginSocial, isLoaded, getUser,
-  getAuthSlug, openWebsocket
+  login as loginUser,
+  load as loadAuth,
+  register as registerUser,
+  loginSocial,
+  isLoaded,
+  getUser,
+  getAuthSlug,
+  openWebsocket
 } from '../redux/modules/user';
 import {showActiveForm} from '../redux/modules/form';
 import {
-  isLoadedChannelList, isLoadedChannelStories, create as createChannel, show as showChannel,
-  load as loadChannels, isMashUp, loadNext as loadNextChannelStories, getAuthUserSlug
+  isLoadedChannelList,
+  isLoadedChannelStories,
+  create as createChannel,
+  show as showChannel,
+  load as loadChannels,
+  isMashUp,
+  loadNext as loadNextChannelStories,
+  getAuthUserSlug
 } from '../redux/modules/channel';
 import {load as loadBookTree} from '../redux/modules/book';
 import {create as createStory} from '../redux/modules/story';
 import {loadWhoToFollow} from '../redux/modules/follow';
 import NewUser from '../components/Registration/Main';
 import MainPage from '../components/MainPage';
-
-
-@asyncConnect([{
-  promise: ({store: {dispatch, getState}}) => {
-    const promises = [];
-
-    if (isLoaded(getState())) {
-      if (!isLoadedChannelStories(getState())) {
-        promises.push(dispatch(showChannel(isMashUp(getState()))));
-      }
-      if (!isLoadedChannelList(getState())) {
-        promises.push(dispatch(loadChannels(getAuthUserSlug(getState()))));
-      }
-      promises.push(dispatch(loadWhoToFollow()));
-      promises.push(dispatch(loadBookTree()));
-      // promises.push(dispatch(getUser(getAuthSlug(getState()))));
-    }
-    return Promise.all(promises);
-  }
-}])
-
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
@@ -49,6 +39,7 @@ import MainPage from '../components/MainPage';
   channelStories: state.channel.channelStories,
   bookTreeArr: state.book.bookTreeArr,
   whoToFollowList: state.follow.whoToFollowList,
+  path: state.routing.locationBeforeTransitions.pathname,
 }), {
   loginUser,
   loginSocial,
@@ -66,44 +57,55 @@ import MainPage from '../components/MainPage';
   loadBookTree,
   loadWhoToFollow,
   getAuthUserSlug,
-  openWebsocket
+  openWebsocket,
 })
 
 export default class IndexContainer extends Component {
+  componentDidMount() {
+    this.props.showChannel(this.isMashUp())
+      .then(this.props.loadChannels())
+      .then(this.props.loadWhoToFollow())
+      .then(this.props.loadBookTree());
+  }
+
+  isMashUp() {
+    const {path} = this.props;
+    return path === '/' || path === '/channel/mashup' ? '' : path.substring(9);  // get slug in pathname after /channel/
+  }
+
   render() {
     return (
       <div>
-        {this.props.isAuthenticated &&
-        <MainPage
-          authorizedUser={this.props.authorizedUser}
-          requestedUser={this.props.requestedUser}
-          createStory={this.props.createStory}
-          channelsArr={this.props.channelsArr}
-          loadChannels={this.props.loadChannels}
-          showChannel={this.props.showChannel}
-          createChannel={this.props.createChannel}
-          channelStories={this.props.channelStories}
-          loadNextChannelStories={this.props.loadNextChannelStories}
-          bookTreeArr={this.props.bookTreeArr}
-          whoToFollowList={this.props.whoToFollowList}
-        />
-        }
-        {!this.props.isAuthenticated &&
-        <NewUser
-          authorizedUser={this.props.authorizedUser}
-          activeForm={this.props.activeForm}
-          showActiveForm={this.props.showActiveForm}
-          loginUser={this.props.loginUser}
-          // loadAuth={this.props.loadAuth}
-          registerUser={this.props.registerUser}
-          loginSocial={this.props.loginSocial}
-          loading={this.props.loading}
-          showChannel={this.props.showChannel}
-          loadChannels={this.props.loadChannels}
-          loadBookTree={this.props.loadBookTree}
-          loadWhoToFollow={this.props.loadWhoToFollow}
-          openWebsocket={this.props.openWebsocket}
-        />
+        {this.props.isAuthenticated ?
+          <MainPage
+            authorizedUser={this.props.authorizedUser}
+            requestedUser={this.props.requestedUser}
+            createStory={this.props.createStory}
+            channelsArr={this.props.channelsArr}
+            loadChannels={this.props.loadChannels}
+            showChannel={this.props.showChannel}
+            createChannel={this.props.createChannel}
+            channelStories={this.props.channelStories}
+            loadNextChannelStories={this.props.loadNextChannelStories}
+            bookTreeArr={this.props.bookTreeArr}
+            whoToFollowList={this.props.whoToFollowList}
+          />
+          :
+          <NewUser
+            authorizedUser={this.props.authorizedUser}
+            activeForm={this.props.activeForm}
+            showActiveForm={this.props.showActiveForm}
+            loginUser={this.props.loginUser}
+            // loadAuth={this.props.loadAuth}
+            registerUser={this.props.registerUser}
+            loginSocial={this.props.loginSocial}
+            loading={this.props.loading}
+            showChannel={this.props.showChannel}
+            loadChannels={this.props.loadChannels}
+            loadBookTree={this.props.loadBookTree}
+            loadWhoToFollow={this.props.loadWhoToFollow}
+            openWebsocket={this.props.openWebsocket}
+          />
         }
       </div>
     );
@@ -131,5 +133,7 @@ IndexContainer.propTypes = {
   bookTreeArr: PropTypes.array,               //book
   loadBookTree: PropTypes.func,
   whoToFollowList: PropTypes.array,           //follow
-  loadWhoToFollow: PropTypes.func
+  loadWhoToFollow: PropTypes.func,
+  openWebsocket: PropTypes.func,              //other
+  path: PropTypes.string,
 };

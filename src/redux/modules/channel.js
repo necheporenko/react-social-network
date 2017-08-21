@@ -197,10 +197,10 @@ export function isMashUp(globalState) {
     globalState.routing.locationBeforeTransitions.pathname.substring(9);               // get slug in pathname after /channel/
 }
 
-export function load(user_slug) {
+export function load() {
   return {
     types: [LOAD_CHANNELS_LIST, LOAD_CHANNELS_LIST_SUCCESS, LOAD_CHANNELS_LIST_FAIL],
-    promise: (client) => client.get(`/users/${user_slug}/channels`)
+    promise: (client) => client.get('/channels')
   };
 }
 

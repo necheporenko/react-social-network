@@ -31,12 +31,9 @@ class PeopleSuggested extends Component {
   }
 
   componentDidMount() {
-    const {path, requestedUser} = this.props;
+    const {path} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-
-    if (findSlug === requestedUser.slug) {
-      this.props.loadPeopleSuggested(findSlug);
-    }
+    this.props.loadPeopleSuggested(findSlug);
   }
 
   follow(id) {
@@ -69,7 +66,7 @@ class PeopleSuggested extends Component {
                 <div
                   className="btn-following"
                   onClick={
-                    !people.isFollowing ?
+                    !people.is_follow ?
                       () => {
                         this.follow(people.id);
                       }
@@ -79,7 +76,7 @@ class PeopleSuggested extends Component {
                       }
                   }>
                   <div>
-                    {!people.isFollowing ? 'Follow' : 'Following'}
+                    {!people.is_follow ? 'Follow' : 'Following'}
                   </div>
                   <span/>
                 </div>
