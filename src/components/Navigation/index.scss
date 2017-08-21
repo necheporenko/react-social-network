@@ -23,8 +23,8 @@
   .btn-following {
     display: block;
     position: absolute;
-    right: 167px;
-    top: -3px;
+    right: calc(50% - 545px);
+    top: -5px;
   }
 }
 
@@ -56,7 +56,7 @@
 .navigation-infouser {
   position: absolute;
   z-index: 10;
-  left: 120px;
+  left: calc(50% - 590px);
   top: 1px;
 
   a {

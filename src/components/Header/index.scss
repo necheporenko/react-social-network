@@ -15,7 +15,7 @@
 
 /* -- Logo Start  -- */
   .logo {
-    margin-left: 100px;
+    margin-left: calc(50% - 590px);
     img {
       width: 135px;
       height: 35px;
@@ -57,7 +57,7 @@
 .search-field {
   margin-left: 40px;
   margin-top: 1px;
-  width: 50%;
+  width: 45%;
 
   input {
     border: none;
@@ -90,7 +90,7 @@
 /* -- UserButtons Start  -- */
 .header-navigation {
   display: flex;
-  right: 160px;
+  right: calc(50% - 550px);
   position: absolute;
 
   .bootstrap-pure-btn {
