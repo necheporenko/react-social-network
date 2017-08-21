@@ -50,7 +50,7 @@ export default class ChannelStream extends Component {
     );
 
     return (
-      <div className="stream">
+      <div className="stream" style={{marginLeft: 0}}>
         <Sbox
           authorizedUser={this.props.authorizedUser}
           createStory={this.props.createStory}

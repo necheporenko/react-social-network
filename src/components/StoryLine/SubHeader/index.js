@@ -114,7 +114,7 @@ export default class SubHeader extends Component {
         <div className="imageCover" style={{backgroundColor: '#fff', backgroundImage: `url(${cover})`}}/>
         <div className="wrapper">
           <div className="subHeader-userAvatar">
-            <Link to={`/${slug}`}>
+            <Link to={`/${slug}`} style={{boxShadow: id ? '0px 1px 3px 0px rgba(0, 0, 0, 0.15)' : 'none'}}>
               {avatar230 && <img src={avatar230}/>}
             </Link>
             <div className="subHeader-add">

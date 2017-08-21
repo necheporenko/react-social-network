@@ -20,7 +20,7 @@
   .wrapper {
     position: absolute;
     top: 30px;
-    left: calc(50% - 580px);
+    left: calc(50% - 584px);
     display: flex;
   }
 
@@ -28,13 +28,13 @@
     height: 25px;
     position: absolute;
     top: 230px;
-    right: calc(50% - 543px);
+    right: calc(50% - 581px);
     background: #fafafa;
     z-index: 1;
   }
 
   .btn-message {
-    right: calc(50% - 475px);
+    right: calc(50% - 465px);
 
     a {
       width: 100%;
@@ -147,8 +147,8 @@
 .subHeader-userName {
   align-self: center;
   margin-top: 128px;
-  margin-left: 30px;
-  display: none;
+  margin-left: 105px;
+  //display: none;
 
   a {
     font-size: 22px;

@@ -175,21 +175,9 @@ export default class BookPage extends Component {
         <div className="book-page">
           <div className="storyLine">
             <div className="wrap-storyLine">
-
-              <BooksTreeContainer
-                bookTreeArr={this.props.bookTreeArr}
-                booksTreeTop={chooseScroll.booksTree}
-              />
-              <BookStream
-                authorizedUser={this.props.authorizedUser}
-                requestedUser={this.props.requestedUser}
-                book_slug={this.props.book_slug}
-                bookStories={this.props.bookStories}
-                nextBookStories={this.props.nextBookStories}
-                showBookStories={this.props.showBookStories}
-              />
-
-              <div className="infobloks" style={{marginLeft: '70px'}}>
+              <div className="infobloks"
+                // style={{marginLeft: '70px'}}
+              >
                 <div className="infobloks-book">
                   <div className="title">
                     <h5>{name}</h5>
@@ -266,6 +254,19 @@ export default class BookPage extends Component {
                 {/*<Photos/>*/}
 
               </div>
+              <BookStream
+                authorizedUser={this.props.authorizedUser}
+                requestedUser={this.props.requestedUser}
+                book_slug={this.props.book_slug}
+                bookStories={this.props.bookStories}
+                nextBookStories={this.props.nextBookStories}
+                showBookStories={this.props.showBookStories}
+              />
+              <BooksTreeContainer
+                bookTreeArr={this.props.bookTreeArr}
+                booksTreeTop={chooseScroll.booksTree}
+              />
+
             </div>
           </div>
         </div>

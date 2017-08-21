@@ -57,7 +57,7 @@
 .search-field {
   margin-left: 40px;
   margin-top: 1px;
-  width: 45%;
+  width: 30%;
 
   input {
     border: none;
@@ -90,7 +90,7 @@
 /* -- UserButtons Start  -- */
 .header-navigation {
   display: flex;
-  right: calc(50% - 550px);
+  right: calc(50% - 585px);
   position: absolute;
 
   .bootstrap-pure-btn {

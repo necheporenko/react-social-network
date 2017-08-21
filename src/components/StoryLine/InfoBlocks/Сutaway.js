@@ -26,7 +26,8 @@ const Cutaway = ({requestedUserProfile}) => {
         <div>
           <div className="title-infoblocks">
             <span className="cutaway-icon"/>
-            {`${first_name} ${last_name}`}
+            {/*{`${first_name} ${last_name}`}*/}
+            Info
             <Link to="/settings" className="settings-edit"><i/></Link>
           </div>
 
