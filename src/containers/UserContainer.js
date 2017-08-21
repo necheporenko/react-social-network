@@ -45,6 +45,7 @@ export default class UserContainer extends Component {
   constructor(props) {
     super(props);
     this.requests = this.requests.bind(this);
+    this.clearState = this.clearState.bind(this);
   }
 
   componentDidMount() {
@@ -52,23 +53,17 @@ export default class UserContainer extends Component {
     const {path, requestedUser} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
     if (findSlug !== requestedUser.slug) {
-      this.props.clearBookTree();
-      this.props.clearStories();
-      this.props.clearPeopleBlock();
+      this.clearState();
+      this.requests(findSlug);
     }
-    this.requests(findSlug);
   }
 
   componentDidUpdate(prevProps) {
     const {path, requestedUser} = this.props;
     if (prevProps.path !== path) {
       const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-      if (findSlug) {
-        if (findSlug !== requestedUser.slug) {
-          this.props.clearBookTree();
-          this.props.clearStories();
-          this.props.clearPeopleBlock();
-        }
+      if (findSlug && (findSlug !== requestedUser.slug)) {
+        this.clearState();
         this.requests(findSlug);
       }
     }
@@ -82,6 +77,12 @@ export default class UserContainer extends Component {
       .then(this.props.loadUserPeople(findSlug))
       .then(this.props.loadPeopleFollowing(findSlug))
       .then(this.props.loadPeopleFollowers(findSlug));
+  }
+
+  clearState() {
+    this.props.clearBookTree();
+    this.props.clearStories();
+    this.props.clearPeopleBlock();
   }
 
   render() {
