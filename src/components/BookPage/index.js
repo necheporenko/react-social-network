@@ -189,7 +189,7 @@ export default class BookPage extends Component {
                 showBookStories={this.props.showBookStories}
               />
 
-              <div className="infobloks">
+              <div className="infobloks" style={{marginLeft: '70px'}}>
                 <div className="infobloks-book">
                   <div className="title">
                     <h5>{name}</h5>

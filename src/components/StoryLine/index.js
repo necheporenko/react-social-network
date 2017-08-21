@@ -97,25 +97,10 @@ class StoryLine extends Component {
     return (
       <div className="storyLine">
         <div className="wrap-storyLine">
-          <div style={{display: 'flex', width: '860px'}}>
-            <BooksTreeContainer
-              booksTreeTop={chooseScroll.booksTree}
-              requestedUser={this.props.requestedUser}
-              bookTreeArr={this.props.bookTreeArr}
-            />
-            <Stream
-              authorizedUser={this.props.authorizedUser}
-              requestedUser={this.props.requestedUser}
-              storiesArr={this.props.storiesArr}
-              createStory={this.props.createStory}
-              loadStories={this.props.loadStories}
-              loadNextStories={this.props.loadNextStories}
-            />
-          </div>
-
           <div
             style={{
-              left: 'calc(50% + 275px)',
+              // left: 'calc(50% + 275px)',
+              // left: '160px',
               width: '322px',
               flex: '0 0 320px',
               top: chooseScroll.infoBloks,
@@ -132,7 +117,19 @@ class StoryLine extends Component {
               people={this.props.people}
             />
           </div>
-
+          <Stream
+            authorizedUser={this.props.authorizedUser}
+            requestedUser={this.props.requestedUser}
+            storiesArr={this.props.storiesArr}
+            createStory={this.props.createStory}
+            loadStories={this.props.loadStories}
+            loadNextStories={this.props.loadNextStories}
+          />
+          <BooksTreeContainer
+            booksTreeTop={chooseScroll.booksTree}
+            requestedUser={this.props.requestedUser}
+            bookTreeArr={this.props.bookTreeArr}
+          />
         </div>
       </div>
     );

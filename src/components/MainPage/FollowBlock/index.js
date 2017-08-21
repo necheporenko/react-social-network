@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
-import { follow as followUser, unfollow as unfollowUser } from '../../../redux/modules/follow';
+import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {connect} from 'react-redux';
+import {follow as followUser, unfollow as unfollowUser} from '../../../redux/modules/follow';
 import './index.scss';
 
 @connect((state) => ({}), {
@@ -25,14 +25,15 @@ export default class FollowBlock extends Component {
   }
 
   render() {
-    const { whoToFollowList } = this.props;
+    const {whoToFollowList} = this.props;
 
     return (
+      whoToFollowList.length > 0 &&
       <div className="follow-block">
         <div className="wrapper">
           <h3 className="title">Who to follow</h3>
 
-          { whoToFollowList && whoToFollowList.map((people) => (
+          {whoToFollowList && whoToFollowList.map((people) => (
             <div key={people.id} className="follow-people">
               <Link to={`/${people.slug}`} className="follow-people-link-img">
                 <img src={people.avatar}/>
@@ -44,15 +45,15 @@ export default class FollowBlock extends Component {
                 <div
                   className="follow-people-text-btn"
                   onClick={
-                     !people.isFollowing ?
-                       () => {
-                         this.follow(people.id);
-                       }
-                       :
-                       () => {
-                         this.unfollow(people.id);
-                       }
-                   }>
+                    !people.isFollowing ?
+                      () => {
+                        this.follow(people.id);
+                      }
+                      :
+                      () => {
+                        this.unfollow(people.id);
+                      }
+                  }>
                   {!people.isFollowing ? 'Follow' : 'Following'}
                 </div>
               </div>

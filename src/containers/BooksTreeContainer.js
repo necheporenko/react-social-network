@@ -19,7 +19,9 @@ export default class BooksTreeContainer extends Component {
     const {loaded} = this.props;
 
     return (
-      <div className="bookstree">
+      <div className="bookstree"
+        // style={{position: 'absolute', left: '980px'}}
+      >
         {loaded.loadedBookTree &&
           <div className={this.props.booksTreeTop}>
             <div className="bookstree-title"><Link to={`/${slug}/books`}>BOOKS</Link></div>
