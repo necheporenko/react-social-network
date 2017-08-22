@@ -99,9 +99,9 @@ export default class BookPage extends Component {
       let displayUser;
 
       if (scrollTop <= 275) {
-        Nav = 'navigation';
+        Nav = 'navigation ';
         booksTreeTop = 'wrapper';
-        displayUser = 'navigation-infouser-none';
+        displayUser = 'navigation-infouser';
       } else {
         Nav = 'navigation navigation-fixed';
         booksTreeTop = 'wrapper wrapper-fixed';
@@ -146,6 +146,7 @@ export default class BookPage extends Component {
         <Helmet title={`${first_name} ${last_name} - Books - ${name}`}/>
         <SubHeader
           requestedUser={this.props.requestedUser}
+          bookPage={true}
         />
         <div className={chooseScroll.posTop}>
           <div className="navigation-wrap book-nav">

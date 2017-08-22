@@ -107,16 +107,20 @@ export default class SubHeader extends Component {
   }
 
   render() {
-    const {first_name, last_name, slug, is_follow, id, avatar230, cover} = this.props.requestedUser;
+    const {first_name, last_name, slug, is_follow, id, avatar250, cover} = this.props.requestedUser;
+    const {bookPage} = this.props;
 
     return (
       <div className="subHeader">
         <div className="imageCover" style={{backgroundColor: '#fff', backgroundImage: `url(${cover})`}}/>
+        {!bookPage &&
         <div className="wrapper">
+
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`} style={{boxShadow: id ? '0px 1px 3px 0px rgba(0, 0, 0, 0.15)' : 'none'}}>
-              {avatar230 && <img src={avatar230}/>}
+              {avatar250 && <img src={avatar250}/>}
             </Link>
+
             <div className="subHeader-add">
               {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
               <div>
@@ -129,6 +133,7 @@ export default class SubHeader extends Component {
               }
             </div>
           </div>
+
           <div className="subHeader-cover">
             {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
             <div>
@@ -144,6 +149,14 @@ export default class SubHeader extends Component {
             <Link to={`/${slug}`}>{first_name} {last_name}</Link>
           </div>
         </div>
+        }
+
+        {bookPage &&
+        <div className="subHeader-bookName">
+          <Link to={`/${slug}`}>Book Name</Link>
+        </div>
+        }
+
         {this.props.requestedUser.id &&
         <div>
           {this.props.authorizedUser.id !== this.props.requestedUser.id &&
@@ -214,4 +227,8 @@ SubHeader.propTypes = {
   unfollowRequestedUser: PropTypes.func,
   getConversationByUserPage: PropTypes.func,
   showPopUp: PropTypes.func,
+};
+
+SubHeader.defaultProps = {
+  bookPage: false
 };

@@ -2,18 +2,18 @@
 @import "../../../theme/mixins";
 
 .channels {
-  &::before {
-    content: '';
-    display: block;
-    width: auto;
-    border-top: 1px solid #ddd;
-    margin: 10px 10px 5px 20px;
-  }
+  //&::before {
+  //  content: '';
+  //  display: block;
+  //  width: auto;
+  //  border-top: 1px solid #ddd;
+  //  margin: 10px 10px 5px 20px;
+  //}
 
   .title {
     @include title-nav;
     padding-top: 15px;
-    padding-left: 30px;
+    //padding-left: 30px;
     padding-bottom: 10px;
   }
   .sidebar {

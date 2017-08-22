@@ -40,14 +40,15 @@ class LeftMenu extends Component {
 
           <ul className="nav-ul">
             <img src={cover} className="cover" alt=""/>
-            <IndexLink to={`/${slug}`} className="nav-a nav-storyline">
+            <IndexLink to={`/${slug}`} className="nav-storyline">
               <img src={avatar230}/>
+              <br/>
               <span>{`${first_name} ${last_name}`}</span>
             </IndexLink>
 
             {/*<i className={navigation.arrow} onClick={() => this.openBooktree()}/>*/}
             <div className="nav-menu">
-              <Link to={`/${slug}/books`} className="nav-a">
+              <Link to={`/${slug}/books`} className="nav-a nav-books">
                 <li className="nav-li">
                   <span>Books</span>
                 </li>
@@ -58,15 +59,33 @@ class LeftMenu extends Component {
               {/*/>*/}
               {/*</div>*/}
 
-              <Link to={`/${slug}/documents`} className="nav-a">
+              <Link to={`/${slug}/documents`} className="nav-a nav-books">
                 <li className="nav-li">
                   <span>Documents</span>
                 </li>
               </Link>
 
-              <Link to={'/messages'} className="nav-a">
+              <Link to={'/messages'} className="nav-a nav-books">
                 <li className="nav-li">
                   <span>Messages</span>
+                </li>
+              </Link>
+
+              <Link to={`/${slug}/people`} className="nav-a nav-books">
+                <li className="nav-li">
+                  <span>People</span>
+                </li>
+              </Link>
+
+              <Link to={`/${slug}/photos`} className="nav-a nav-books">
+                <li className="nav-li">
+                  <span>Photos</span>
+                </li>
+              </Link>
+
+              <Link to={`/${slug}/documents`} className="nav-a nav-books">
+                <li className="nav-li">
+                  <span>Settings</span>
                 </li>
               </Link>
             </div>

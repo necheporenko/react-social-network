@@ -55,10 +55,11 @@
 
 .nav-menu {
   display: flex;
-  margin-top: -20px;
+  //margin-top: -20px;
   margin-bottom: 20px;
   padding-bottom: 5px;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .nav-li {
@@ -82,6 +83,8 @@
   color: $default-color;
   position: relative;
   text-decoration: none;
+  width: 75px;
+  text-align: center;
 
   &:hover,
   &:focus {
@@ -93,7 +96,9 @@
 .nav-storyline {
   padding: 0 10px;
   position: relative;
-  top: -30px;
+  top: -38px;
+  display: block;
+  text-align: center;
 
   img {
     width: 72px;
@@ -101,6 +106,8 @@
     //padding-right: 12px;
     position: relative;
     border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   }
 
   span {
@@ -108,6 +115,7 @@
     top: 15px;
     font-size: 16px;
     padding-left: 12px;
+    font-weight: 500;
   }
 }
 
@@ -117,7 +125,7 @@
     content: '';
     display: inline-block;
     vertical-align: middle;
-    padding-right: 32px;
+    //padding-right: 32px;
     width: 16px;
   }
 }

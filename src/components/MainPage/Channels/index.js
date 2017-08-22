@@ -32,11 +32,11 @@ class Channels extends Component {
               </Link>
             ))}
           </ul>
-          <AddChannel
-            authorizedUser={this.props.authorizedUser}
-            createChannel={this.props.createChannel}
-            loadChannels={this.props.loadChannels}
-          />
+          {/*<AddChannel*/}
+          {/*authorizedUser={this.props.authorizedUser}*/}
+          {/*createChannel={this.props.createChannel}*/}
+          {/*loadChannels={this.props.loadChannels}*/}
+          {/*/>*/}
         </div>
       </div>
     );
