@@ -3,7 +3,7 @@
 // import SearchField from './SearchField';
 // import UserButtons from './UserButtons';
 //
-// import './index.scss';
+// import './index.scss';padding: 15px 20px;
 //
 // class Header extends Component {
 //   render() {

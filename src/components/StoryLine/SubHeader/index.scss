@@ -19,8 +19,8 @@
 
   .wrapper {
     position: absolute;
-    top: 30px;
-    left: calc(50% - 584px);
+    top: 12px;
+    left: calc(50% - 550px);
     display: flex;
   }
 
@@ -81,14 +81,14 @@
   }
 
   > a {
-    width: 230px;
-    height: 230px;
+    width: 250px;
+    height: 250px;
     background: #fff;
   }
 
   img {
-    width: 230px;
-    height: 230px;
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
     cursor: pointer;
     background: #fff;
@@ -146,8 +146,8 @@
 
 .subHeader-userName {
   align-self: center;
-  margin-top: 128px;
-  margin-left: 105px;
+  margin-top: 140px;
+  margin-left: 52px;
   //display: none;
 
   a {

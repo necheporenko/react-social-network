@@ -24,7 +24,8 @@ export default class BooksTreeContainer extends Component {
       >
         {loaded.loadedBookTree &&
           <div className={this.props.booksTreeTop}>
-            <div className="bookstree-title"><Link to={`/${slug}/books`}>BOOKS</Link></div>
+            <div className="bookstree-title"><span className="cutaway-icon"/><Link to={`/${slug}/books`}>BOOKS</Link>
+            </div>
             <BooksTree
               bookTreeArr={this.props.bookTreeArr}
             />

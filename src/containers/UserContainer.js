@@ -49,7 +49,9 @@ export default class UserContainer extends Component {
   }
 
   componentDidMount() {
-    // (function () { document.body.scrollTop = 0; }());
+    (function () {
+      document.body.scrollTop = 0;
+    }());
     const {path, requestedUser, requestedUserProfile} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
     if (findSlug !== requestedUser.slug) {

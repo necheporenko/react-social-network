@@ -537,9 +537,9 @@
     margin-right: 5px;
 
     &::before {
-      background: url('../../img/Icons/gear.svg');
-      width: 15px;
-      height: 15px;
+      background: $sprite -62px -221px;
+      width: 6px;
+      height: 19px;
       display: block;
       content: '';
     }
