@@ -314,7 +314,12 @@ class Sbox extends PureComponent {
         />
 
         <div className="sbox-user-avatar32" style={{top: this.state.jump, position: 'absolute', left: '20px'}}>
-          <Link to={link}><img src={avatar32} style={{width: '32px', height: '32px', border: '1px solid #dddddd'}} /></Link>
+          <Link to={link}><img src={avatar32} style={{
+            width: '32px',
+            height: '32px',
+            border: '1px solid #dddddd',
+            borderRadius: '50%'
+          }}/></Link>
         </div>
         {/*<form onSubmit={this.test}>*/}
         <div className="sbox-footer">

@@ -2,8 +2,8 @@
 @import "../../../theme/mixins";
 
 .follow-block {
-  width: 202px;
-  height: 224px;
+  width: 287px;
+  height: 260px;
   align-self: baseline;
   background: #fff;
   //border: 1px solid $border-color;
@@ -11,7 +11,7 @@
   @include material();
 
   .wrapper {
-    padding: 10px;
+    padding: 15px;
     padding-bottom: 20px;
   }
 
@@ -29,18 +29,22 @@
 
 .follow-people-link-img {
   cursor: pointer;
-  border: 1px solid $border-color;
+  //border: 1px solid $border-color;
   height: 100%;
 
   img {
-    width: 32px;
-    height: 32px;
+    //width: 32px;
+    //height: 32px;
     display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
   }
 }
 
 .follow-people-text {
-  padding-left: 10px;
+  padding-left: 13px;
+  padding-top: 7px;
 }
 
 .follow-people-text-user {

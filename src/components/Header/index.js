@@ -98,11 +98,11 @@ class Header extends Component {
         </div>
 
         <Logo />
-        { this.props.header_channel_name &&
-          <div className="channel-name">
-            {this.props.header_channel_name}
-          </div>
-        }
+        {/*{ this.props.header_channel_name &&*/}
+        {/*<div className="channel-name">*/}
+        {/*{this.props.header_channel_name}*/}
+        {/*</div>*/}
+        {/*}*/}
         <SearchField />
         <UserButtons
           // onSignIn={this.props.onSignIn}
