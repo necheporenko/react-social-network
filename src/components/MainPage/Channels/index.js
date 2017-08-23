@@ -1,7 +1,12 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {connect} from 'react-redux';
 import AddChannel from './AddChannel';
 import './index.scss';
+
+@connect((state) => ({
+  path: state.routing.locationBeforeTransitions.pathname,
+}), {})
 
 class Channels extends Component {
   constructor(props) {
@@ -14,11 +19,18 @@ class Channels extends Component {
   }
 
   render() {
-    const { channelsArr } = this.props;
+    const {channelsArr, path} = this.props;
     return (
       <div className="channels">
         <div className="sidebar ">
-          <h3 className="title">CHANNELS</h3>
+          <div style={{display: 'flex'}}>
+            <h3 className="title">CHANNELS</h3>
+            <AddChannel
+              authorizedUser={this.props.authorizedUser}
+              createChannel={this.props.createChannel}
+              loadChannels={this.props.loadChannels}
+            />
+          </div>
           <ul>
             {channelsArr && channelsArr.map((channel) => (
               <Link
@@ -27,16 +39,12 @@ class Channels extends Component {
                 onlyActiveOnIndex={true}
                 activeClassName="active"
                 onClick={() => this.showChannelStories(channel.slug)}
+                className={path === '/' ? 'active' : null}
               >
                 <li>{channel.name}</li>
               </Link>
             ))}
           </ul>
-          {/*<AddChannel*/}
-          {/*authorizedUser={this.props.authorizedUser}*/}
-          {/*createChannel={this.props.createChannel}*/}
-          {/*loadChannels={this.props.loadChannels}*/}
-          {/*/>*/}
         </div>
       </div>
     );

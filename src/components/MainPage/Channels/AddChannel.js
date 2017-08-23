@@ -32,7 +32,7 @@ export default class AddChannel extends Component {
 
     return (
       <div className="create-new-item" onClick={this.Open}>
-        <a href="#">+ Create new channel</a>
+        <a>+ Create new channel</a>
 
         <Modal show={this.state.showModal} onHide={this.Close} className="modal-channel">
           <Modal.Header closeButton>

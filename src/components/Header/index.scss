@@ -533,8 +533,8 @@
     cursor: pointer;
     position: relative;
     margin-top: 10px;
-    margin-left: 15px !important;
-    margin-right: 5px;
+    margin-left: 10px !important;
+    //margin-right: 5px;
 
     &::before {
       background: $sprite -62px -221px;
@@ -542,6 +542,8 @@
       height: 19px;
       display: block;
       content: '';
+      position: relative;
+      left: 5px;
     }
   }
 

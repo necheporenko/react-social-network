@@ -3,13 +3,17 @@
 
   > .wrapper {
     display: flex;
+    width: 1170px;
+    margin: 0 auto;
+
     > div {
       //display: block;
       float: left;
     }
+
     .mid-column {
-      position: relative;
-      left: calc(50% - 296px);
+      //position: relative;
+      //left: calc(50% - 296px);
       display: flex;
     }
   }
@@ -20,15 +24,16 @@
   width: 295px;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: calc(100% - 100px);
-  left: calc(50% - 590px);
-  position: fixed;
+  //max-height: calc(100% - 100px);
+  //left: calc(50% - 590px);
+  //position: fixed;
   //margin-top: -10px;
 
   .leftpanel-menu {
     background: #fff;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    margin-bottom: 15px;
   }
 }
 
