@@ -206,9 +206,13 @@ export default class BookPage extends Component {
                 // style={{marginLeft: '70px'}}
               >
                 <div className={chooseScroll.infoblock}>
+                  <div className="coverBook" style={{background: `url(${this.props.requestedUser.cover})`}}/>
                   <div className="title">
                     <h5>{name}</h5>
-                    <div className="btn-following">Following <span/></div>
+                    <div className="btn-following">
+                      <div>Following Book</div>
+                      <span/>
+                    </div>
                   </div>
                   <div className="book-info">
                     <ul>
@@ -217,16 +221,16 @@ export default class BookPage extends Component {
                       <li className="book-icon-subbooks">3</li>
                       <li className="book-icon-followers">1</li>
                     </ul>
-                    <hr/>
+                    {/*<hr/>*/}
                   </div>
 
-                  <div className="book-description">
-                    <p>Description...</p>
-                  </div>
+                  {/*<div className="book-description">*/}
+                  {/*<p>Description...</p>*/}
+                  {/*</div>*/}
 
-                  <div className="book-quantity">
-                    <span>2 subbooks</span>
-                  </div>
+                  {/*<div className="book-quantity">*/}
+                  {/*<span>2 subbooks</span>*/}
+                  {/*</div>*/}
 
                   <div className="book-subbooks">
 

@@ -33,9 +33,17 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   border: none;
 
+  &:hover {
+    .book-settings {
+      display: flex;
+    }
+  }
+
   .title {
     padding-bottom: 12px;
     display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
 
     h5 {
       font-size: 16px;
@@ -50,12 +58,16 @@
 
     .btn-following {
       margin: 0;
-      margin-left: 27px;
-      width: 105px;
+      //margin-left: 27px;
+      width: 125px;
       height: 25px;
 
+      > div {
+        width: 98px;
+      }
+
       span {
-        left: 12px;
+        //left: 12px;
       }
     }
   }
@@ -85,7 +97,11 @@
   }
 }
 
-
+.coverBook {
+  height: 130px;
+  margin: -10px -15px;
+  background-size: cover;
+}
 
 .book-icon-visibility,
 .book-icon-stories,
@@ -141,7 +157,7 @@
 
 
 .book-settings {
-  display: flex;
+  display: none;
   position: relative;
 }
 
