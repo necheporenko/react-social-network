@@ -112,7 +112,7 @@ $valid_color: #1976d2;
       padding: 3px 3px 3px 0;
       //padding-right: 30px;
       &:hover {
-        background-color: #E1E1E1;
+        background-color: #c3c3c3;
       }
 
       .react-tree-expander,
@@ -406,14 +406,20 @@ $valid_color: #1976d2;
 
 .not_show {										//disable parent
   display: block;
+
   .react-tree-item-label {
     display: none;
   }
+
   .react-tree-child-tree {
     .react-tree-item-label {
       display: block;
       height: 26px;
     }
+  }
+
+  .active {
+    background-color: #c3c3c3;
   }
 }
 

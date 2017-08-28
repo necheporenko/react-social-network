@@ -16,6 +16,7 @@ import './draggable.scss';
   // bookTreeArr: state.book.bookTreeArr,
   requestedUserSlug: state.user.requestedUser.slug,
   authorizedUserSlug: state.user.authorizedUser.slug,
+  path: state.routing.locationBeforeTransitions.pathname,
 }), {
   showBookStories,
   moveBook,
@@ -152,6 +153,7 @@ class BooksTree extends Component {
   }
 
   render() {
+    const {path} = this.props;
     const slug = this.props.requestedUserSlug || this.props.authorizedUserSlug;
     const loop = data => (
       data.map((item) => {
@@ -161,7 +163,7 @@ class BooksTree extends Component {
               items={(item.children && item.children.length) ? loop(item.children) : null}
               //no_drag = {item.no_drag ? draggable={false} : null}
               //className={item.show ? 'not_show' : null}
-              className={this.onPick(item)}
+              className={[[`${this.onPick(item)}`], [`${path}` === `${`/${slug}/books/${item.key}`}` ? 'active' : null]]}
               disabled={item.no_drag}
             >
               <Link

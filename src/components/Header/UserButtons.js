@@ -195,6 +195,9 @@ class UserButtons extends Component {
   render() {
     const {slug, first_name, avatar32} = this.props.authorizedUser;
     const {logoutUser, notifications, conversations, bubbleMessage, bubbleNotification} = this.props;
+    const chats = require('../../img/Icons/chat-sm.svg');
+    const chatsHover = require('../../img/Icons/chat-sm-hover.svg');
+
     return (
       <nav className="header-navigation">
         <div className="icons">
@@ -209,7 +212,7 @@ class UserButtons extends Component {
            */}
           <div className="wrap-icon-mail" tabIndex={0} onBlur={this.onBlur}>
             <i
-              style={{backgroundPosition: this.state.dropdownMessages ? '-112px -466px' : '-129px -466px'}}
+              style={{background: this.state.dropdownMessages ? `url(${chatsHover})` : `url(${chats})`}}
               onClick={() => {
                 this.showDropdowns('messages', true);
               }}
@@ -223,11 +226,11 @@ class UserButtons extends Component {
               <div className="notification-box">
                 <div className="triangle"/>
                 <div>
-                  <h4>Messages</h4>
+                  <h4>Chats</h4>
                   <div style={{display: 'flex'}}>
                     <a onClick={this.props.readAllConversations}>Mark All Read</a>
                     <i>.</i>
-                    <Link to="/messages/new" onClick={this.props.clearConversation}>New Message</Link>
+                    <Link to="/messages/new" onClick={this.props.clearConversation}>New Chat</Link>
                   </div>
                 </div>
                 <hr/>

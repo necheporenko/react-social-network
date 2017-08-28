@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Link, IndexLink} from 'react-router';
-import BooksTree from '../../BooksTree';
+// import BooksTree from '../../BooksTree';
 import './index.scss';
 
 class LeftMenu extends Component {
@@ -8,6 +8,7 @@ class LeftMenu extends Component {
     super(props);
     this.state = {
       isOpen: false,
+      isShowMore: false
     };
   }
 
@@ -17,8 +18,14 @@ class LeftMenu extends Component {
     });
   }
 
+  showMore() {
+    this.setState({
+      isShowMore: !this.state.isShowMore
+    });
+  }
+
   render() {
-    const {isOpen} = this.state;
+    const {isOpen, isShowMore} = this.state;
     const {slug, first_name, last_name, avatar32, cover} = this.props.authorizedUser;
     const showBooktree = () => {
       let arrow;
@@ -33,31 +40,30 @@ class LeftMenu extends Component {
       return {arrow, display_state};
     };
     const navigation = showBooktree();
-    const iconApps = require('../../../img/Icons/apps.svg');
 
     return (
       <div className="leftpanel-menu">
         <div className="wrapper">
           <div className="shortcuts">
             {/*<img src={iconApps} alt=""/>*/}
-            <span>SHORTCUTS</span>
+            <span>Shortcuts</span>
           </div>
           <ul className="nav-ul">
             {/*<img src={cover} className="cover" alt=""/>*/}
+
             {/*<IndexLink to={`/${slug}`} className="nav-storyline">*/}
-            {/*<img src={avatar72}/>*/}
-            {/*<br/>*/}
+            {/*<img src={avatar32}/>*/}
             {/*<span>{`${first_name} ${last_name}`}</span>*/}
             {/*</IndexLink>*/}
 
             {/*<i className={navigation.arrow} onClick={() => this.openBooktree()}/>*/}
             <div className="nav-menu">
-              <Link to={`/${slug}`} className="nav-a nav-storyline">
-                <img src={avatar32}/>
-                <li className="nav-li">
-                  <span>Storyline</span>
-                </li>
-              </Link>
+              {/*<Link to={`/${slug}`} className="nav-a nav-storyline">*/}
+              {/*<img src={avatar32}/>*/}
+              {/*<li className="nav-li">*/}
+              {/*<span>Storyline</span>*/}
+              {/*</li>*/}
+              {/*</Link>*/}
 
 
               {/*<div style={{display: navigation.display_state}}>*/}
@@ -78,6 +84,16 @@ class LeftMenu extends Component {
                 </li>
               </Link>
 
+              <Link to={'/messages'} className="nav-a nav-messages">
+                <li className="nav-li">
+                  <span>Chats</span>
+                </li>
+              </Link>
+            </div>
+
+            <div className="more" onClick={() => this.showMore()}>{!isShowMore ? 'More' : 'Less'}</div>
+            {isShowMore &&
+            <div className="nav-menu">
               <Link to={`/${slug}/people`} className="nav-a nav-people">
                 <li className="nav-li">
                   <span>People</span>
@@ -89,16 +105,10 @@ class LeftMenu extends Component {
                   <span>Photos</span>
                 </li>
               </Link>
-
-              <Link to={'/messages'} className="nav-a nav-messages">
-                <li className="nav-li">
-                  <span>Messages</span>
-                </li>
-              </Link>
             </div>
-            <div className="more">More</div>
-          </ul>
+            }
 
+          </ul>
         </div>
       </div>
     );
@@ -107,7 +117,7 @@ class LeftMenu extends Component {
 
 LeftMenu.propTypes = {
   authorizedUser: PropTypes.object,
-  bookTreeArr: PropTypes.array,
+  // bookTreeArr: PropTypes.array,
 };
 
 export default LeftMenu;

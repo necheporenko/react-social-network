@@ -172,13 +172,14 @@
 
   > i {
     display: block;
-    height: 13px;
-    width: 17px;
-    background: $sprite;
+    height: 15px;
+    width: 15px;
+    background: url('../../img/Icons/chat-sm.svg');
     cursor: pointer;
+    margin-top: 2px;
 
     &:hover {
-      background-position: -112px -466px;
+      background: url('../../img/Icons/chat-sm-hover.svg');
     }
   }
 }

@@ -20,6 +20,7 @@ class Channels extends Component {
 
   render() {
     const {channelsArr, path} = this.props;
+
     return (
       <div className="channels">
         <div className="sidebar ">
@@ -39,7 +40,7 @@ class Channels extends Component {
                 onlyActiveOnIndex={true}
                 activeClassName="active"
                 onClick={() => this.showChannelStories(channel.slug)}
-                className={path === '/' ? 'active' : null}
+                className={(path === '/' && channel.name === 'Mashup') ? 'active' : null}
               >
                 <li>{channel.name}</li>
               </Link>
@@ -58,6 +59,7 @@ Channels.propTypes = {
   showChannel: PropTypes.func,
   channelsArr: PropTypes.array,
   authorizedUser: PropTypes.object,
+  path: PropTypes.string,
 };
 
 export default Channels;

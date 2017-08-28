@@ -11,10 +11,6 @@ class MainPage extends Component {
       <div className="main-page">
         <div className="wrapper">
           <div className="left-column">
-            <LeftMenu
-              authorizedUser={this.props.authorizedUser}
-              bookTreeArr={this.props.bookTreeArr}
-            />
             <Channels
               authorizedUser={this.props.authorizedUser}
               channelsArr={this.props.channelsArr}
@@ -33,9 +29,16 @@ class MainPage extends Component {
               showChannel={this.props.showChannel}
               loadNextChannelStories={this.props.loadNextChannelStories}
             />
-            <FollowBlock
-              whoToFollowList={this.props.whoToFollowList}
-            />
+            <div>
+              <LeftMenu
+                authorizedUser={this.props.authorizedUser}
+                bookTreeArr={this.props.bookTreeArr}
+              />
+              <FollowBlock
+                whoToFollowList={this.props.whoToFollowList}
+              />
+            </div>
+
           </div>
         </div>
       </div>

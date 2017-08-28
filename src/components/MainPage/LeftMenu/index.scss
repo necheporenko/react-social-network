@@ -4,6 +4,14 @@
 //   width: 250px;
 // }
 
+.leftpanel-menu {
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  border: none;
+  margin-bottom: 20px;
+}
+
 .nav-ul {
   font-size: 14px;
 
@@ -53,20 +61,25 @@
   }
 
   .more {
-    padding: 0 0 10px;
+    padding: 10px 0;
     text-align: center;
     color: #8F8F8F;
     font-size: 12px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #E1E1E1;
+    }
   }
 }
 
 .nav-menu {
   display: flex;
   //margin-top: -20px;
-  padding: 10px 5px;
-  //justify-content: space-around;
+  padding: 10px 5px 10px 12px;
+  justify-content: space-around;
   flex-wrap: wrap;
-  width: 246px;
+  width: 260px;
   margin: 0 auto;
   //margin-bottom: 20px;
 }
@@ -89,8 +102,7 @@
 }
 
 .shortcuts {
-  padding-left: 15px;
-  padding-top: 20px;
+  padding: 15px 15px 0 15px;
   display: flex;
   align-items: center;
 
@@ -101,11 +113,17 @@
   }
 
   span {
+    //font-weight: 500;
+    //padding-left: 5px;
+    //line-height: 20px;
+    //font-size: 13px;
+    //color: #8F8F8F;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
     font-weight: 500;
-    padding-left: 5px;
-    line-height: 20px;
-    font-size: 13px;
-    color: #8F8F8F;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
   }
 }
 
@@ -132,6 +150,7 @@
 }
 
 .nav-storyline {
+  margin-left: 20px;
   //padding: 0 10px;
   //position: relative;
   //top: -38px;
@@ -139,8 +158,8 @@
   //text-align: center;
 
   img {
-    width: 32px;
-    height: 32px;
+    width: 27px;
+    height: 27px;
     //padding-right: 12px;
     //position: relative;
     border-radius: 50%;
@@ -148,13 +167,15 @@
     //box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
   }
 
-  //span {
-  //  position: relative;
-  //  top: 15px;
-  //  font-size: 16px;
-  //  padding-left: 12px;
-  //  font-weight: 500;
-  //}
+  span {
+    //position: relative;
+    //top: 15px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    padding-left: 12px;
+    //font-weight: 500;
+  }
 }
 
 .nav-books, .nav-tokens, .nav-documents, .nav-people, .nav-photos, .nav-messages {
@@ -199,7 +220,7 @@
 
 .nav-messages {
   &::before {
-    background: url('../../../img/Icons/messages.svg');
-    width: 35px;
+    background: url('../../../img/Icons/chat.svg');
+    width: 27px;
   }
 }
