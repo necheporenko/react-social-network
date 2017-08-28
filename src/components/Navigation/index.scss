@@ -11,7 +11,9 @@
   //z-index: 9;
 
   .btn-following {
-    display: none;
+    position: absolute;
+    right: calc(50% - 581px);
+    top: -5px;
   }
 }
 
@@ -21,7 +23,7 @@
   z-index: 11;
 
   .btn-following {
-    display: block;
+    //display: block;
     position: absolute;
     right: calc(50% - 581px);
     top: -5px;
@@ -52,11 +54,25 @@
   }
 }
 
+.book-nav {
+  left: calc(50% - 50px);
+}
+
+.bookPage-1170 {
+  .btn-following {
+    width: 125px;
+
+    > div {
+      width: 98px;
+    }
+  }
+}
+
 /* === NavigationInfoUser Start === */
 .navigation-infouser {
   position: absolute;
   z-index: 10;
-  left: calc(50% - 590px);
+  left: calc(50% - 585px);
   top: 1px;
 
   a {

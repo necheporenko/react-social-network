@@ -23,12 +23,15 @@
 
 .infobloks-book {
   background: #fff;
-  border: 1px solid $border-color;
+  //border: 1px solid $border-color;
   min-height: 160px;
   font-size: 14px;
   color: #333;
   margin-bottom: 20px;
   padding: 10px 15px 8px;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  border: none;
 
   .title {
     padding-bottom: 12px;
@@ -58,7 +61,10 @@
   }
 }
 
-
+.infobloks-book-fixed {
+  position: fixed;
+  top: 115px;
+}
 
 .book-info {
   ul {
@@ -369,6 +375,11 @@
     display: flex;
   }
 
+}
+
+.bookPage-1170 {
+  width: 1170px;
+  margin: 0 auto;
 }
 
 

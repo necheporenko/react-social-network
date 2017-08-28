@@ -97,17 +97,20 @@ export default class BookPage extends Component {
       let Nav;
       let booksTreeTop;
       let displayUser;
+      let infoblock;
 
       if (scrollTop <= 275) {
         Nav = 'navigation ';
         booksTreeTop = 'wrapper';
         displayUser = 'navigation-infouser';
+        infoblock = 'infobloks-book';
       } else {
         Nav = 'navigation navigation-fixed';
         booksTreeTop = 'wrapper wrapper-fixed';
         displayUser = 'navigation-infouser';
+        infoblock = 'infobloks-book infobloks-book-fixed';
       }
-      const result = {booksTree: booksTreeTop, show: displayUser, posTop: Nav};
+      const result = {booksTree: booksTreeTop, show: displayUser, posTop: Nav, infoblock};
       return result;
     };
     const chooseScroll = scroll();
@@ -144,42 +147,65 @@ export default class BookPage extends Component {
     return (
       <div>
         <Helmet title={`${first_name} ${last_name} - Books - ${name}`}/>
-        <SubHeader
-          requestedUser={this.props.requestedUser}
-          bookPage={true}
-        />
-        <div className={chooseScroll.posTop}>
-          <div className="navigation-wrap book-nav">
-            <ul>
-              <li><Link to={`/${slug}/books`}>Books</Link></li>
-              <li>
-                <svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">
-                  <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
-                </svg>
-              </li>
-              <li>
-                <Link to={`/${slug}/${name}`}>
-                  {name}
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <NavigationBookPage
-            userName={`${first_name} ${last_name}`}
-            avatar32={avatar32}
-            link={`/${slug}`}
-            displayUser={chooseScroll.show}
+        <div className="bookPage-1170">
+          <SubHeader
+            requestedUser={this.props.requestedUser}
+            bookPage={true}
           />
+          <div className={chooseScroll.posTop} style={{width: '1170px'}}>
+            <div className="navigation-wrap book-nav">
+              <ul>
+                {/*<li><Link to={`/${slug}/books`}>Books</Link></li>*/}
+                {/*<li>*/}
+                {/*<svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">*/}
+                {/*<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>*/}
+                {/*</svg>*/}
+                {/*</li>*/}
+                <li>
+                  <Link to={`/${slug}/${name}`}>
+                    {name}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div
+              className="btn-following"
+              // onClick={
+              //   !isFollowing ?
+              //     () => {
+              //       this.follow(id);
+              //     }
+              //     :
+              //     () => {
+              //       this.unfollow(id);
+              //     }
+              // }
+            >
+              <div>
+                Following Book
+              </div>
+              <span/>
+            </div>
+
+            <NavigationBookPage
+              userName={`${first_name} ${last_name}`}
+              avatar32={avatar32}
+              link={`/${slug}`}
+              displayUser={chooseScroll.show}
+            />
+          </div>
         </div>
 
 
         <div className="book-page">
           <div className="storyLine">
             <div className="wrap-storyLine">
-              <div className="infobloks"
+              <div
+                className="infobloks"
                 // style={{marginLeft: '70px'}}
               >
-                <div className="infobloks-book">
+                <div className={chooseScroll.infoblock}>
                   <div className="title">
                     <h5>{name}</h5>
                     <div className="btn-following">Following <span/></div>

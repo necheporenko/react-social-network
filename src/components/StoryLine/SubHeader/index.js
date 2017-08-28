@@ -151,11 +151,11 @@ export default class SubHeader extends Component {
         </div>
         }
 
-        {bookPage &&
-        <div className="subHeader-bookName">
-          <Link to={`/${slug}`}>Book Name</Link>
-        </div>
-        }
+        {bookPage && null}
+        {/*<div className="subHeader-bookName">*/}
+        {/*<Link to={`/${slug}`}>Book Name</Link>*/}
+        {/*</div>*/}
+
 
         {this.props.requestedUser.id &&
         <div>
@@ -171,19 +171,19 @@ export default class SubHeader extends Component {
           </div>
           }
 
-          <div
-            className="btn-following"
-            onClick={
-              !is_follow ?
-                () => this.followUser(id)
-                :
-                () => this.unfollowUser(id)
-            }>
-            <div>
-              {!is_follow ? 'Follow' : 'Following'}
-            </div>
-            <span/>
-          </div>
+          {/*<div*/}
+          {/*className="btn-following"*/}
+          {/*onClick={*/}
+          {/*!is_follow ?*/}
+          {/*() => this.followUser(id)*/}
+          {/*:*/}
+          {/*() => this.unfollowUser(id)*/}
+          {/*}>*/}
+          {/*<div>*/}
+          {/*{!is_follow ? 'Follow' : 'Following'}*/}
+          {/*</div>*/}
+          {/*<span/>*/}
+          {/*</div>*/}
         </div>
         }
 
