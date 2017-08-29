@@ -56,18 +56,13 @@
       line-height: 30px;
     }
 
-    .btn-following {
+    .btn-following-book {
       margin: 0;
-      //margin-left: 27px;
       width: 125px;
       height: 25px;
 
       > div {
         width: 98px;
-      }
-
-      span {
-        //left: 12px;
       }
     }
   }
@@ -76,6 +71,8 @@
 .infobloks-book-fixed {
   position: fixed;
   top: 115px;
+  width: 320px;
+  box-sizing: border-box;
 }
 
 .book-info {

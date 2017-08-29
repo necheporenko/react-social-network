@@ -51,7 +51,7 @@ export default class BookStream extends Component {
     );
 
     return (
-      <div className="stream" style={{marginLeft: 0}}>
+      <div className="stream" style={{marginLeft: 0, marginTop: '43px'}}>
         { isAuthenticated && authorizedUser.id === requestedUser.id &&
           <Sbox
             authorizedUser={this.props.authorizedUser}

@@ -94,22 +94,22 @@ export default class BookPage extends Component {
   render() {
     const {scrollTop} = this.state;
     const scroll = () => {
-      let Nav;
-      let booksTreeTop;
-      let displayUser;
-      let infoblock;
+      let Nav = 'navigation navigation-fixed';
+      let booksTreeTop = 'wrapper wrapper-fixed';
+      let displayUser = 'navigation-infouser navigation-bookpage';
+      let infoblock = 'infobloks-book infobloks-book-fixed';
 
-      if (scrollTop <= 275) {
-        Nav = 'navigation ';
-        booksTreeTop = 'wrapper';
-        displayUser = 'navigation-infouser';
-        infoblock = 'infobloks-book';
-      } else {
-        Nav = 'navigation navigation-fixed';
-        booksTreeTop = 'wrapper wrapper-fixed';
-        displayUser = 'navigation-infouser';
-        infoblock = 'infobloks-book infobloks-book-fixed';
-      }
+      // if (scrollTop <= 275) {
+      //   Nav = 'navigation ';
+      //   booksTreeTop = 'wrapper';
+      //   displayUser = 'navigation-infouser';
+      //   infoblock = 'infobloks-book';
+      // } else {
+      //   Nav = 'navigation navigation-fixed';
+      //   booksTreeTop = 'wrapper wrapper-fixed';
+      //   displayUser = 'navigation-infouser';
+      //   infoblock = 'infobloks-book infobloks-book-fixed';
+      // }
       const result = {booksTree: booksTreeTop, show: displayUser, posTop: Nav, infoblock};
       return result;
     };
@@ -147,12 +147,12 @@ export default class BookPage extends Component {
     return (
       <div>
         <Helmet title={`${first_name} ${last_name} - Books - ${name}`}/>
-        <div className="bookPage-1170">
-          <SubHeader
-            requestedUser={this.props.requestedUser}
-            bookPage={true}
-          />
-          <div className={chooseScroll.posTop} style={{width: '1170px'}}>
+        {/*<div className="bookPage-1170">*/}
+        {/*<SubHeader*/}
+        {/*requestedUser={this.props.requestedUser}*/}
+        {/*bookPage={true}*/}
+        {/*/>*/}
+        <div className={chooseScroll.posTop}>
             <div className="navigation-wrap book-nav">
               <ul>
                 {/*<li><Link to={`/${slug}/books`}>Books</Link></li>*/}
@@ -162,7 +162,7 @@ export default class BookPage extends Component {
                 {/*</svg>*/}
                 {/*</li>*/}
                 <li>
-                  <Link to={`/${slug}/${name}`}>
+                  <Link to={`/${slug}/${name}`} style={{fontSize: '18px'}}>
                     {name}
                   </Link>
                 </li>
@@ -170,7 +170,7 @@ export default class BookPage extends Component {
             </div>
 
             <div
-              className="btn-following"
+              className="btn-following btn-following-book"
               // onClick={
               //   !isFollowing ?
               //     () => {
@@ -195,7 +195,7 @@ export default class BookPage extends Component {
               displayUser={chooseScroll.show}
             />
           </div>
-        </div>
+        {/*</div>*/}
 
 
         <div className="book-page">
@@ -209,7 +209,7 @@ export default class BookPage extends Component {
                   <div className="coverBook" style={{background: `url(${this.props.requestedUser.cover})`}}/>
                   <div className="title">
                     <h5>{name}</h5>
-                    <div className="btn-following">
+                    <div className="btn-following btn-following-book">
                       <div>Following Book</div>
                       <span/>
                     </div>

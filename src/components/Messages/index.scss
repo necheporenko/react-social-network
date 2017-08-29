@@ -36,8 +36,8 @@
   @extend .scrollBar;
 
   .wrapper-avatars {
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
     display: flex;
     flex-wrap: wrap;
     border-radius: 50%;
@@ -45,13 +45,13 @@
     overflow: hidden;
 
     img {
-      height: 45px;
-      width: 45px;
+      height: 48px;
+      width: 48px;
     }
 
     .grid-half {
-      height: 45px;
-      width: 22.5px;
+      height: 48px;
+      width: 24px;
       margin-left: -1px;
       overflow: hidden;
 
@@ -60,8 +60,12 @@
       }
 
       &:nth-child(2) {
-        margin-left: 0.5px;
-        width: 22px;
+        margin-left: 1px;
+        width: 23px;
+
+        img {
+          margin-left: -12px;
+        }
       }
 
       img {
@@ -74,7 +78,7 @@
     }
 
     .grid-half-2 {
-      width: 17px !important;
+      width: 19px !important;
 
       .grid-fourth img {
         margin-left: -5px;
@@ -82,8 +86,8 @@
     }
 
     .grid-fourth {
-      height: 22.5px;
-      width: 22.5px;
+      height: 24px;
+      width: 24px;
 
       &:first-child {
         border-bottom: 1px solid #fff;
@@ -97,8 +101,8 @@
       }
 
       img {
-        width: 22.5px;
-        height: 22.5px;
+        width: 24px;
+        height: 24px;
         margin-left: 0;
       }
     }
