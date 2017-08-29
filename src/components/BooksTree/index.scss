@@ -22,13 +22,22 @@
 }
 
 .bookstree-title {
-  margin-left: 38px;
+  //margin-left: 38px;
   //padding: 10px 0;
+  padding: 10px 0;
+  margin-left: 10px;
+  display: flex;
+
+  &:hover {
+    .title-new-book {
+      display: block;
+    }
+  }
 
   a {
-  font-weight: bold;;
-  font-size: 15px;
-  color: $gray;
+    font-weight: bold;;
+    font-size: 15px;
+    color: $gray;
   }
 }
 
@@ -37,10 +46,11 @@
 }
 
 .title-new-book {
-  font-size: 10px;
+  font-size: 12px;
   cursor: pointer;
   color: $gray;
   position: relative;
+  display: none;
 }
 
 .wrapper-popup {
@@ -96,6 +106,7 @@
     height: 100%;
   }
 }
+
 .book-form {
   .control-label {
     padding-top: 0 !important;
@@ -115,8 +126,6 @@
     }
   }
 }
-
-
 
 @media only screen and (max-width: 1200px) {
   .bookstree {

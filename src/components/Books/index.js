@@ -81,16 +81,16 @@ class Books extends Component {
           <BooksTreeContainer
             bookTreeArr={bookTreeArr}
           />
-          <div className="title-new-book" style={{marginLeft: '26px'}}>+ Create new book
-            <AddBook/>
-          </div>
+          {/*<div className="title-new-book" style={{marginLeft: '26px'}}>+ Create new book*/}
+          {/*<AddBook/>*/}
+          {/*</div>*/}
 
         </div>
 
         <div className="wrapper">
           <StackGrid
             //monitorImagesLoaded
-            columnWidth={340}
+            columnWidth={300}
             duration={600}
             gutterWidth={10}
             gutterHeight={10}

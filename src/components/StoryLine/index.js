@@ -101,7 +101,7 @@ class StoryLine extends Component {
             style={{
               // left: 'calc(50% + 275px)',
               // left: '160px',
-              width: '322px',
+              width: '320px',
               flex: '0 0 320px',
               top: chooseScroll.infoBloks,
               position: 'fixed',

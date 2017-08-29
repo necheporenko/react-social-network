@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {create as createBook, load as loadBookTree} from '../redux/modules/book';
 import BooksTree from '../components/BooksTree/index';
+import AddBook from '../components/Popup/AddBook';
 import '../components/BooksTree/index.scss';
 
 @connect((state) => ({
@@ -19,21 +20,23 @@ export default class BooksTreeContainer extends Component {
     const {loaded} = this.props;
 
     return (
-      <div className="bookstree"
-        // style={{position: 'absolute', left: '980px'}}
-      >
+      <div className="bookstree">
         {loaded.loadedBookTree &&
-          <div className={this.props.booksTreeTop}>
-            <div className="bookstree-title"><span className="cutaway-icon"/><Link to={`/${slug}/books`}>BOOKS</Link>
+        <div className={this.props.booksTreeTop}>
+          <div className="bookstree-title"><span className="booktree-icon"/><Link to={`/${slug}/books`}>BOOKS</Link>
+            <div className="title-new-book" style={{marginLeft: '10px', marginTop: '2px'}}>+ Create new book
+              <AddBook/>
             </div>
-            <BooksTree
-              bookTreeArr={this.props.bookTreeArr}
-            />
-            {/*<AddBook*/}
-            {/*// loadBookTree={this.props.loadBookTree}*/}
-            {/*// createBook={this.props.createBook}*/}
-            {/*/>*/}
+
           </div>
+          <BooksTree
+            bookTreeArr={this.props.bookTreeArr}
+          />
+          {/*<AddBook*/}
+          {/*// loadBookTree={this.props.loadBookTree}*/}
+          {/*// createBook={this.props.createBook}*/}
+          {/*/>*/}
+        </div>
         }
       </div>
     );

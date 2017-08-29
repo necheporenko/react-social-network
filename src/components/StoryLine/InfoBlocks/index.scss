@@ -26,10 +26,20 @@
   }
 }
 
-.cutaway-icon, .token-icon, .photos-icon, .peoples-icon {
+.cutaway-icon, .token-icon, .photos-icon, .peoples-icon, .booktree-icon {
   content: '';
   display: inline-block;
   position: relative;
+}
+
+.booktree-icon {
+  background: url('../../../img/Icons/book-icon-white.svg') no-repeat;
+  height: 22px;
+  width: 22px;
+  content: '';
+  display: inline-block;
+  margin-right: 10px;
+  //top: 5px;
 }
 
 .cutaway-icon {
