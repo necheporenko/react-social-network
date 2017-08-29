@@ -11,6 +11,25 @@ import ChangeCoverImage from '../../Popup/ChangeCoverImage';
 import ChangeAvatar from '../../Popup/ChangeAvatar';
 import './index.scss';
 
+const coverColors = [
+  '#e53936',
+  '#eb3f79',
+  '#ff6f41',
+  '#f8a724',
+  '#a900f1',
+  '#7d56c2',
+  '#5b6ab1',
+  '#1d87e3',
+  '#029ae5',
+  '#00abcf',
+  '#00887b',
+  '#378d3c',
+  '#679e38',
+  '#8c6d63',
+  '#778f9c',
+  '#414141'
+];
+
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
@@ -37,6 +56,8 @@ export default class SubHeader extends Component {
     super(props);
     this.state = {
       file: '',
+      dropdownUserCover: false,
+      currentUserCoverColor: '',
     };
     this.handleAvatarChange = this.handleAvatarChange.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
@@ -45,6 +66,31 @@ export default class SubHeader extends Component {
     this.cleanInputAvatar = this.cleanInputAvatar.bind(this);
     this.cleanInputCover = this.cleanInputCover.bind(this);
     this.openConversation = this.openConversation.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.showDropdown = this.showDropdown.bind(this);
+    this.setCoverColor = this.setCoverColor.bind(this);
+  }
+
+  setCoverColor(color) {
+    this.setState({currentUserCoverColor: color});
+    this.props.uploadUserCover(null, color.substring(1));
+  }
+
+  onBlur(e) {
+    const currentTarget = e.currentTarget;
+    setTimeout(() => {
+      if (!currentTarget.contains(document.activeElement)) {
+        this.setState({
+          dropdownUserCover: false
+        });
+      }
+    }, 0);
+  }
+
+  showDropdown() {
+    this.setState({
+      dropdownUserCover: !this.state.dropdownUserCover
+    });
   }
 
   handleAvatarChange(e) {
@@ -108,12 +154,14 @@ export default class SubHeader extends Component {
 
   render() {
     const {first_name, last_name, slug, is_follow, id, avatar250, cover} = this.props.requestedUser;
-    const {bookPage} = this.props;
 
     return (
       <div className="subHeader">
-        <div className="imageCover" style={{backgroundColor: '#fff', backgroundImage: `url(${cover})`}}/>
-        {!bookPage &&
+        <div
+          className="imageCover" style={{
+          backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
+          backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null
+        }}/>
         <div className="wrapper">
 
           <div className="subHeader-userAvatar">
@@ -136,11 +184,39 @@ export default class SubHeader extends Component {
 
           <div className="subHeader-cover">
             {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
-            <div>
+            <div tabIndex={0} onBlur={this.onBlur}>
               <i/>
-              <div className="cover-btn">
-                <input type="file" onChange={(e) => this.handleCoverChange(e)} ref={(el) => this.inputCover = el}/>
+              <div
+                className="cover-btn" onClick={() => this.showDropdown()}
+                style={{opacity: this.state.dropdownUserCover ? 1 : 0}}
+              >
+                {/*<input type="file" onChange={(e) => this.handleCoverChange(e)} ref={el => this.inputCover = el}/>*/}
                 <div style={{color: '#fff'}}><i/>Update Cover Photo</div>
+              </div>
+              <div className="cover-dropdown" style={{display: this.state.dropdownUserCover ? 'block' : 'none'}}>
+                <div className="triangle"/>
+                <ul>
+                  <li>
+                    <div className="wrapper-upload-cover">
+                      <h5>Upload a photo</h5>
+                    </div>
+                    <input type="file" onChange={(e) => this.handleCoverChange(e)} ref={el => this.inputCover = el}/>
+                  </li>
+                  <hr/>
+                  <li style={{fontSize: '12px'}}>
+                    Set a color
+                    <div className="wrapper-colors">
+                      {coverColors.map((color, index) => (
+                        <div
+                          key={index}
+                          style={{backgroundColor: color}}
+                          className={this.state.currentUserCoverColor === color ? 'active' : null}
+                          onClick={() => this.setCoverColor(color)}
+                        />
+                      ))}
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
             }
@@ -149,13 +225,6 @@ export default class SubHeader extends Component {
             <Link to={`/${slug}`}>{first_name} {last_name}</Link>
           </div>
         </div>
-        }
-
-        {bookPage && null}
-        {/*<div className="subHeader-bookName">*/}
-        {/*<Link to={`/${slug}`}>Book Name</Link>*/}
-        {/*</div>*/}
-
 
         {this.props.requestedUser.id &&
         <div>
@@ -227,8 +296,4 @@ SubHeader.propTypes = {
   unfollowRequestedUser: PropTypes.func,
   getConversationByUserPage: PropTypes.func,
   showPopUp: PropTypes.func,
-};
-
-SubHeader.defaultProps = {
-  bookPage: false
 };

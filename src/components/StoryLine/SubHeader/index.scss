@@ -204,6 +204,12 @@
     }
   }
 
+  > div {
+    &:focus {
+      outline: none;
+    }
+  }
+
   .cover-btn {
     background: $default-color;
     position: absolute;
@@ -238,6 +244,55 @@
       width: 19px;
       height: 19px;
       background-size: contain;
+    }
+  }
+
+  .cover-dropdown {
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    border: none;
+    margin-top: 15px;
+    padding: 10px 15px;
+    position: relative;
+    width: 325px;
+
+    ul {
+      text-align: center;
+    }
+
+    hr {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    .wrapper-upload-cover {
+      position: absolute;
+      width: 325px;
+    }
+
+    input {
+      opacity: 0;
+      width: 325px;
+    }
+  }
+
+  .wrapper-colors {
+    display: flex;
+    flex-wrap: wrap;
+
+    div {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin: 8px;
+      cursor: pointer;
+    }
+
+    .active {
+      border: solid 6px #9e9e9e;
+      margin: 2px;
+      display: inline-block;
     }
   }
 }

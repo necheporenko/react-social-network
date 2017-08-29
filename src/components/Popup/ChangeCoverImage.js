@@ -41,7 +41,7 @@ export default class ChangeCoverImage extends Component {
       picture: newImage,
     });
     this.props.uploadUserCoverBase64(newImage);
-    this.props.uploadUserCover(newImage)
+    this.props.uploadUserCover(newImage, null)
     .then(() => this.props.getUser(this.props.requestedUser.slug))
     .then(() => this.Close());
   }

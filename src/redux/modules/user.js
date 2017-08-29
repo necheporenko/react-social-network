@@ -257,13 +257,14 @@ export default function signReducer(state = initialState, action) {
       };
     }
     case UPLOAD_USER_COVER_SUCCESS: {
-      const updateUserCoverImg = state.authorizedUser;
-      updateUserCoverImg.cover = action.result.data.url;
+      const updateUserCoverImg = Object.assign({}, state.requestedUser, {
+        cover: action.result.data
+      });
 
       return {
         ...state,
         uploadingImage: false,
-        authorizedUser: updateUserCoverImg,
+        requestedUser: updateUserCoverImg,
       };
     }
     case UPLOAD_USER_COVER_FAIL: {
@@ -438,10 +439,10 @@ export function unfollowRequestedUser(user_id) {
   };
 }
 
-export function uploadUserCover(img) {
+export function uploadUserCover(picture, color) {
   return {
     types: [UPLOAD_USER_COVER, UPLOAD_USER_COVER_SUCCESS, UPLOAD_USER_COVER_FAIL],
-    promise: (client) => client.post('/upload/user-cover', {data: {img}})
+    promise: (client) => client.post('/upload/user-cover', {data: {picture, color}})
   };
 }
 
