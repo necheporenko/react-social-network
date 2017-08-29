@@ -96,26 +96,26 @@ export default class BookPage extends Component {
     const scroll = () => {
       let Nav = 'navigation navigation-fixed';
       let booksTreeTop = 'wrapper wrapper-fixed';
-      let displayUser = 'navigation-infouser navigation-bookpage';
+      let displayUser = 'navigation-infouser';
       let infoblock = 'infobloks-book infobloks-book-fixed';
 
-      // if (scrollTop <= 275) {
-      //   Nav = 'navigation ';
-      //   booksTreeTop = 'wrapper';
-      //   displayUser = 'navigation-infouser';
-      //   infoblock = 'infobloks-book';
-      // } else {
-      //   Nav = 'navigation navigation-fixed';
-      //   booksTreeTop = 'wrapper wrapper-fixed';
-      //   displayUser = 'navigation-infouser';
-      //   infoblock = 'infobloks-book infobloks-book-fixed';
-      // }
+      if (scrollTop <= 150) {
+        Nav = 'navigation navigation-bookpage';
+        booksTreeTop = 'wrapper';
+        displayUser = 'navigation-infouser navigation-infouser-book';
+        infoblock = 'infobloks-book';
+      } else {
+        Nav = 'navigation navigation-fixed';
+        booksTreeTop = 'wrapper wrapper-fixed';
+        displayUser = 'navigation-infouser navigation-infouser-book-fixed';
+        infoblock = 'infobloks-book infobloks-book-fixed';
+      }
       const result = {booksTree: booksTreeTop, show: displayUser, posTop: Nav, infoblock};
       return result;
     };
     const chooseScroll = scroll();
     const {name, description} = this.props.bookPage;
-    const {slug, first_name, last_name, avatar32} = this.props.requestedUser;
+    const {slug, first_name, last_name, avatar32, cover} = this.props.requestedUser;
 
     const radioAccessSettings = [
       {
@@ -153,48 +153,48 @@ export default class BookPage extends Component {
         {/*bookPage={true}*/}
         {/*/>*/}
         <div className={chooseScroll.posTop}>
-            <div className="navigation-wrap book-nav">
-              <ul>
-                {/*<li><Link to={`/${slug}/books`}>Books</Link></li>*/}
-                {/*<li>*/}
-                {/*<svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">*/}
-                {/*<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>*/}
-                {/*</svg>*/}
-                {/*</li>*/}
-                <li>
-                  <Link to={`/${slug}/${name}`} style={{fontSize: '18px'}}>
-                    {name}
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div
-              className="btn-following btn-following-book"
-              // onClick={
-              //   !isFollowing ?
-              //     () => {
-              //       this.follow(id);
-              //     }
-              //     :
-              //     () => {
-              //       this.unfollow(id);
-              //     }
-              // }
-            >
-              <div>
-                Following Book
-              </div>
-              <span/>
-            </div>
-
-            <NavigationBookPage
-              userName={`${first_name} ${last_name}`}
-              avatar32={avatar32}
-              link={`/${slug}`}
-              displayUser={chooseScroll.show}
-            />
+          <div className="navigation-wrap book-nav">
+            <ul>
+              {/*<li><Link to={`/${slug}/books`}>Books</Link></li>*/}
+              {/*<li>*/}
+              {/*<svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">*/}
+              {/*<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>*/}
+              {/*</svg>*/}
+              {/*</li>*/}
+              <li>
+                <Link to={`/${slug}/${name}`}>
+                  {name}
+                </Link>
+              </li>
+            </ul>
           </div>
+
+          <div
+            className="btn-following btn-following-book"
+            // onClick={
+            //   !isFollowing ?
+            //     () => {
+            //       this.follow(id);
+            //     }
+            //     :
+            //     () => {
+            //       this.unfollow(id);
+            //     }
+            // }
+          >
+            <div>
+              Following Book
+            </div>
+            <span/>
+          </div>
+
+          <NavigationBookPage
+            userName={`${first_name} ${last_name}`}
+            avatar32={avatar32}
+            link={`/${slug}`}
+            displayUser={chooseScroll.show}
+          />
+        </div>
         {/*</div>*/}
 
 
@@ -206,7 +206,13 @@ export default class BookPage extends Component {
                 // style={{marginLeft: '70px'}}
               >
                 <div className={chooseScroll.infoblock}>
-                  <div className="coverBook" style={{background: `url(${this.props.requestedUser.cover})`}}/>
+                  <div
+                    className="coverBook"
+                    style={{
+                      backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
+                      backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null
+                    }}
+                  />
                   <div className="title">
                     <h5>{name}</h5>
                     <div className="btn-following btn-following-book">

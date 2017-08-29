@@ -6,7 +6,7 @@ const NavigationBookPage = ({link, userName, displayUser, avatar32}) => {
     <div className={displayUser}>
       <Link to={link}>
         <img src={avatar32} alt={userName} />
-        <span style={{fontSize: '16px'}}>{userName}</span>
+        <span>{userName}</span>
       </Link>
     </div>
   );

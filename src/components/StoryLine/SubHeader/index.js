@@ -158,10 +158,12 @@ export default class SubHeader extends Component {
     return (
       <div className="subHeader">
         <div
-          className="imageCover" style={{
-          backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
-          backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null
-        }}/>
+          className="imageCover"
+          style={{
+            backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
+            backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null
+          }}
+        />
         <div className="wrapper">
 
           <div className="subHeader-userAvatar">

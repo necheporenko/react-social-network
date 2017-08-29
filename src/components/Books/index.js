@@ -9,7 +9,13 @@ import './index.scss';
 const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
   return (
     <div className="book">
-      <div className="coverBook" style={{background: `url(${requestedUser.cover})`}}/>
+      <div
+        className="coverBook"
+        style={{
+          backgroundColor: requestedUser.cover && requestedUser.cover.color ? `#${requestedUser.cover.color}` : '#fff',
+          backgroundImage: requestedUser.cover && requestedUser.cover.picture ? `url(${requestedUser.cover.picture})` : null
+        }}
+      />
       {/*<div className="authorUser">*/}
       {/*<img src={requestedUser.avatar72} alt=""/>*/}
       {/*<h5>{`${requestedUser.first_name} ${requestedUser.last_name}`}</h5>*/}
