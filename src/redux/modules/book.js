@@ -37,6 +37,7 @@ const initialState = {
   },
   pagination: 1,
   uploading: false,
+  bookPage: {},
 };
 
 export default function bookReducer(state = initialState, action) {

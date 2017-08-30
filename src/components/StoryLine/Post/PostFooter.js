@@ -218,26 +218,26 @@ class PostFooter extends Component {
             <div className="wrapper" style={{position: 'relative'}}>
               <i className="post-action-icon" />
               <span>Share</span>
-              <div className="list-of-social-share">
-                <FacebookShareButton
-                  url={`http://devasimov.validbook.org/story/${id}`}
-                  title={post.replace(/<[^>]*>?/g, '')}
-                  picture="http://i.imgur.com/gu5Ia4D.jpg"
-                  // picture={`${String(window.location)}/${exampleImage}`}
-                  className="Demo__some-network__share-button"
-                >
-                  <div className="share-facebook"><i className="fa fa-facebook" aria-hidden="true"/></div>
-                </FacebookShareButton>
+              {/*<div className="list-of-social-share">*/}
+              {/*<FacebookShareButton*/}
+              {/*url={`http://devasimov.validbook.org/story/${id}`}*/}
+              {/*title={post.replace(/<[^>]*>?/g, '')}*/}
+              {/*picture="http://i.imgur.com/gu5Ia4D.jpg"*/}
+              {/*// picture={`${String(window.location)}/${exampleImage}`}*/}
+              {/*className="Demo__some-network__share-button"*/}
+              {/*>*/}
+              {/*<div className="share-facebook"><i className="fa fa-facebook" aria-hidden="true"/></div>*/}
+              {/*</FacebookShareButton>*/}
 
-                <TwitterShareButton
-                  url={`http://devasimov.validbook.org/story/${id}`}
-                  title={post.replace(/<[^>]*>?/g, '')}
-                  picture="http://i.imgur.com/gu5Ia4D.jpg"
-                  className="Demo__some-network__share-button"
-                >
-                  <div className="share-twitter"><i className="fa fa-twitter" aria-hidden="true"/></div>
-                </TwitterShareButton>
-              </div>
+              {/*<TwitterShareButton*/}
+              {/*url={`http://devasimov.validbook.org/story/${id}`}*/}
+              {/*title={post.replace(/<[^>]*>?/g, '')}*/}
+              {/*picture="http://i.imgur.com/gu5Ia4D.jpg"*/}
+              {/*className="Demo__some-network__share-button"*/}
+              {/*>*/}
+              {/*<div className="share-twitter"><i className="fa fa-twitter" aria-hidden="true"/></div>*/}
+              {/*</TwitterShareButton>*/}
+              {/*</div>*/}
             </div>
           </div>
         </div>

@@ -4,14 +4,15 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { like as likePostBook } from '../../../redux/modules/book';
 import Sbox from './Sbox';
 import Post from '../Post/index';
+import Loader from '../../Common/Loader';
 import './index.scss';
-
 
 @connect((state) => ({
   over: state.book.over,
   pagination: state.book.pagination,
   book_slug: state.book.book_slug,
   isAuthenticated: state.user.isAuthenticated,
+  loaded: state.book.loaded,
 }), {
   likePostBook
 })
@@ -39,7 +40,7 @@ export default class BookStream extends Component {
   }
 
   render() {
-    const { bookStories, authorizedUser, requestedUser, isAuthenticated } = this.props;
+    const {bookStories, authorizedUser, requestedUser, isAuthenticated, loaded} = this.props;
     const loader = (
       <div className="wrapper-loader">
         <div className="loader">
@@ -59,31 +60,36 @@ export default class BookStream extends Component {
             reloadStream={this.reloadStreamBook}
           />
         }
-        <InfiniteScroll
-          loadMore={this.load}
-          hasMore={true}
-          threshold={50}
-          loader={loader}
-        >
-          { bookStories && bookStories.map((story) => (
-            <Post
-              key={story.id}
-              id={story.id}
-              post={story.text}
-              user={story.user}
-              date={story.date}
-              images={story.images}
-              likes={story.likes}
-              books={story.books}
-              loudness={story.loudness}
-              visibility={story.visibility}
-              comments={story.comments}
-              likeFunc={this.like}
-              authorizedUser={this.props.authorizedUser}
-              requestedUser={this.props.requestedUser}
-            />
-          ))}
-        </InfiniteScroll>
+
+        {loaded.loadedBookStories ?
+          <InfiniteScroll
+            loadMore={this.load}
+            hasMore={true}
+            threshold={50}
+            loader={loader}
+          >
+            {bookStories && bookStories.map((story) => (
+              <Post
+                key={story.id}
+                id={story.id}
+                post={story.text}
+                user={story.user}
+                date={story.date}
+                images={story.images}
+                likes={story.likes}
+                books={story.books}
+                loudness={story.loudness}
+                visibility={story.visibility}
+                comments={story.comments}
+                likeFunc={this.like}
+                authorizedUser={this.props.authorizedUser}
+                requestedUser={this.props.requestedUser}
+              />
+            ))}
+          </InfiniteScroll>
+          :
+          <Loader marginTop="52px"/>
+        }
       </div>
     );
   }

@@ -32,15 +32,15 @@ import './index.scss';
 //   {value: '1', label: 'specific people'}
 // ];
 
-@asyncConnect([{
-  promise: ({store: {dispatch, getState}}) => {
-    const promises = [];
-    promises.push(dispatch(getUser(getUserSlug(getState()))));
-    promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
-    promises.push(dispatch(showBookStories(getBookSlug(getState()))));
-    return Promise.all(promises);
-  }
-}])
+// @asyncConnect([{
+//   promise: ({store: {dispatch, getState}}) => {
+//     const promises = [];
+//     promises.push(dispatch(getUser(getUserSlug(getState()))));
+//     promises.push(dispatch(loadBookTree(getUserSlug(getState()))));
+//     promises.push(dispatch(showBookStories(getBookSlug(getState()))));
+//     return Promise.all(promises);
+//   }
+// }])
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
@@ -63,7 +63,7 @@ export default class BookPage extends Component {
     super(props);
     this.state = {
       scrollTop: 0,
-      settings: this.props.bookSettings,
+      // settings: this.props.bookSettings,
     };
     this.handleScroll = this.handleScroll.bind(this);
     this.handleSaveSettings = this.handleSaveSettings.bind(this);
@@ -71,6 +71,34 @@ export default class BookPage extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
+    console.log('<---- componentDidMount start');
+    const {path, requestedUser} = this.props;
+    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+    const bookSlug = path.substring(path.indexOf('/books/') + 7);
+    // if (findSlug !== requestedUser.slug) {
+    // this.clearState();
+    this.props.getUser(findSlug)
+      .then(this.props.loadBookTree(findSlug))
+      .then(this.props.showBookStories(bookSlug));
+    // }
+    // this.setState({
+    //   settings: this.props.bookSettings
+    // });
+    console.log('<---- componentDidMount end');
+  }
+
+  componentDidUpdate(prevProps) {
+    const {path, requestedUser, book_slug} = this.props;
+    if (prevProps.path !== path) {
+      const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+      const bookSlug = path.substring(path.indexOf('/books/') + 7);
+      if (bookSlug && (bookSlug !== book_slug)) {
+        this.props.getUser(findSlug)
+          .then(this.props.loadBookTree(findSlug))
+          .then(this.props.showBookStories(bookSlug));
+      }
+    }
+    console.log('<---- componentDidUpdate');
   }
 
   componentWillUnmount() {
@@ -100,7 +128,7 @@ export default class BookPage extends Component {
       let Nav = 'navigation navigation-fixed';
       let booksTreeTop = 'wrapper wrapper-fixed';
       let displayUser = 'navigation-infouser';
-      let infoblock = 'infobloks-book infobloks-book-fixed';
+      const infoblock = 'infobloks-book infobloks-book-fixed';
 
       if (scrollTop <= 290) {
         Nav = 'navigation navigation-bookpage';
@@ -120,32 +148,32 @@ export default class BookPage extends Component {
     const {name, description} = this.props.bookPage;
     const {slug, first_name, last_name, avatar32, cover} = this.props.requestedUser;
 
-    const radioAccessSettings = [
-      {
-        label: 'Who can see the content of the book?',
-        type: 'can_see_content',
-        radio: ['only you', 'anyone', 'specific people'],
-        selectedOptions: this.state.settings.can_see_content
-      },
-      {
-        label: 'Who can add stories to the book?',
-        type: 'can_add_stories',
-        radio: ['only you', 'anyone', 'specific people'],
-        selectedOptions: this.state.settings.can_add_stories
-      },
-      {
-        label: 'Who can delete stories from the book?',
-        type: 'can_delete_stories',
-        radio: ['only you', 'anyone', 'specific people'],
-        selectedOptions: this.state.settings.can_delete_stories
-      },
-      {
-        label: 'Who can manage access settings to the book??',
-        type: 'can_manage_settings',
-        radio: ['only you', 'specific people'],
-        selectedOptions: this.state.settings.can_manage_settings
-      }
-    ];
+    // const radioAccessSettings = [
+    //   {
+    //     label: 'Who can see the content of the book?',
+    //     type: 'can_see_content',
+    //     radio: ['only you', 'anyone', 'specific people'],
+    //     selectedOptions: this.state.settings.can_see_content
+    //   },
+    //   {
+    //     label: 'Who can add stories to the book?',
+    //     type: 'can_add_stories',
+    //     radio: ['only you', 'anyone', 'specific people'],
+    //     selectedOptions: this.state.settings.can_add_stories
+    //   },
+    //   {
+    //     label: 'Who can delete stories from the book?',
+    //     type: 'can_delete_stories',
+    //     radio: ['only you', 'anyone', 'specific people'],
+    //     selectedOptions: this.state.settings.can_delete_stories
+    //   },
+    //   {
+    //     label: 'Who can manage access settings to the book??',
+    //     type: 'can_manage_settings',
+    //     radio: ['only you', 'specific people'],
+    //     selectedOptions: this.state.settings.can_manage_settings
+    //   }
+    // ];
 
     return (
       <div>
@@ -227,7 +255,7 @@ export default class BookPage extends Component {
                   {/*}}*/}
                   {/*/>*/}
                   <div className="title">
-                    <h5>{name}</h5>
+                    <h5>{name && name}</h5>
                     <div className="btn-following btn-following-book">
                       <div>Following Book</div>
                       <span/>
@@ -261,41 +289,41 @@ export default class BookPage extends Component {
                       <ButtonToolbar>
                         <DropdownButton className="bootstrap-pure-btn" title="Access settings">
                           <div>
-                            <form>
-                              {radioAccessSettings.map((element, index) => (
-                                <div className="wrapper-block-radio" style={{padding: '4px 0'}}>
-                                  <div className="block-radio">
-                                    <div>{element.label}</div>
-                                    <div>{element.radio.map((radioInput, indexRadio) => (
-                                      <div>
-                                        <input
-                                          type="radio" value={element.type} name={index} id={`${indexRadio}${index}`}
-                                          checked={element.selectedOptions === indexRadio}
-                                          onChange={(event) => this.handleSaveSettings(event.target.value, indexRadio)}
-                                        />
-                                        <label htmlFor={`${indexRadio}${index}`}><span/><p>{radioInput}</p></label>
-                                      </div>
-                                    ))}
-                                    </div>
-                                  </div>
-                                  {element.selectedOptions === element.radio.length - 1 &&
-                                  <input type="text" placeholder="Type name or email address"/>
-                                  }
-                                </div>
-                              ))}
-                            </form>
+                            {/*<form>*/}
+                            {/*{radioAccessSettings.map((element, index) => (*/}
+                            {/*<div className="wrapper-block-radio" style={{padding: '4px 0'}}>*/}
+                            {/*<div className="block-radio">*/}
+                            {/*<div>{element.label}</div>*/}
+                            {/*<div>{element.radio.map((radioInput, indexRadio) => (*/}
+                            {/*<div>*/}
+                            {/*<input*/}
+                            {/*type="radio" value={element.type} name={index} id={`${indexRadio}${index}`}*/}
+                            {/*checked={element.selectedOptions === indexRadio}*/}
+                            {/*onChange={(event) => this.handleSaveSettings(event.target.value, indexRadio)}*/}
+                            {/*/>*/}
+                            {/*<label htmlFor={`${indexRadio}${index}`}><span/><p>{radioInput}</p></label>*/}
+                            {/*</div>*/}
+                            {/*))}*/}
+                            {/*</div>*/}
+                            {/*</div>*/}
+                            {/*{element.selectedOptions === element.radio.length - 1 &&*/}
+                            {/*<input type="text" placeholder="Type name or email address"/>*/}
+                            {/*}*/}
+                            {/*</div>*/}
+                            {/*))}*/}
+                            {/*</form>*/}
                           </div>
                         </DropdownButton>
                       </ButtonToolbar>
 
                     </div>
                     <div className="book-settings-edit">
-                      <EditBook
-                        book_name={name}
-                        book_description={description}
-                        bookTreeArr={this.props.bookTreeArr}
-                        bookSettings={this.props.bookSettings}
-                      />
+                      {/*<EditBook*/}
+                      {/*book_name={name}*/}
+                      {/*book_description={description}*/}
+                      {/*bookTreeArr={this.props.bookTreeArr}*/}
+                      {/*bookSettings={this.props.bookSettings}*/}
+                      {/*/>*/}
                     </div>
                   </div>
 
@@ -330,4 +358,8 @@ BookPage.propTypes = {
   requestedUser: PropTypes.object,
   bookTreeArr: PropTypes.array,
   bookSettings: PropTypes.object,
+};
+
+BookPage.defaultProps = {
+  name: 'Book name'
 };
