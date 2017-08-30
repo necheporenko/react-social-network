@@ -90,10 +90,7 @@ export default function bookReducer(state = initialState, action) {
         ...state,
         loaded,
         // book_slug: action.book_slug,
-        bookPage: {
-          name: action.result.data.name,
-          description: action.result.data.description,
-        },
+        bookPage: action.result.data,
         book_slug: action.book_slug,
         bookStories: action.result.data.stories,
         bookSettings: action.result.data.settings,

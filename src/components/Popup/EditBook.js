@@ -68,36 +68,36 @@ export default class EditBook extends Component {
   render() {
     const {book_name, book_description} = this.props;
 
-    const radioAccessSettingsDropdown = [
-      {
-        label: 'Who can see the content of the book?',
-        type: 'can_see_content',
-        radio: ['only you', 'anyone', 'specific people'],
-        selectedOptions: this.state.settingsInDropdown.can_see_content
-      },
-      {
-        label: 'Who can add stories to the book?',
-        type: 'can_add_stories',
-        radio: ['only you', 'anyone', 'specific people'],
-        selectedOptions: this.state.settingsInDropdown.can_add_stories
-      },
-      {
-        label: 'Who can delete stories from the book?',
-        type: 'can_delete_stories',
-        radio: ['only you', 'anyone', 'specific people'],
-        selectedOptions: this.state.settingsInDropdown.can_delete_stories
-      },
-      {
-        label: 'Who can manage access settings to the book??',
-        type: 'can_manage_settings',
-        radio: ['only you', 'specific people'],
-        selectedOptions: this.state.settingsInDropdown.can_manage_settings
-      }
-    ];
+    // const radioAccessSettingsDropdown = [
+    //   {
+    //     label: 'Who can see the content of the book?',
+    //     type: 'can_see_content',
+    //     radio: ['only you', 'anyone', 'specific people'],
+    //     selectedOptions: this.state.settingsInDropdown.can_see_content
+    //   },
+    //   {
+    //     label: 'Who can add stories to the book?',
+    //     type: 'can_add_stories',
+    //     radio: ['only you', 'anyone', 'specific people'],
+    //     selectedOptions: this.state.settingsInDropdown.can_add_stories
+    //   },
+    //   {
+    //     label: 'Who can delete stories from the book?',
+    //     type: 'can_delete_stories',
+    //     radio: ['only you', 'anyone', 'specific people'],
+    //     selectedOptions: this.state.settingsInDropdown.can_delete_stories
+    //   },
+    //   {
+    //     label: 'Who can manage access settings to the book??',
+    //     type: 'can_manage_settings',
+    //     radio: ['only you', 'specific people'],
+    //     selectedOptions: this.state.settingsInDropdown.can_manage_settings
+    //   }
+    // ];
 
     return (
       <div className="editBook-popup" onClick={this.Open}>
-        <a><i/>Edit book</a>
+        <a><i/></a>
         <Modal show={this.state.showModal} onHide={this.Close} className="modal-channel">
           <Modal.Header closeButton>
             <Modal.Title>Edit Book</Modal.Title>
@@ -155,30 +155,30 @@ export default class EditBook extends Component {
               <ButtonToolbar>
                 <DropdownButton className="bootstrap-pure-btn" title="Access settings" id={'settings1'}>
                   {/*<div>*/}
-                  <form>
-                    {radioAccessSettingsDropdown.map((element, index) => (
-                      <div className="wrapper-block-radio" style={{padding: '4px 0'}}>
-                        <div className="block-radio">
-                          <div>{element.label}</div>
-                          <div>{element.radio.map((radioInput, indexRadio) => (
-                            <div>
-                              {console.log(element.selectedOptions, indexRadio, index, 'BOT', element.radio.length)}
-                              <input
-                                type="radio" value={element.type} name={index} id={`${indexRadio}${index}drop`}
-                                checked={element.selectedOptions === indexRadio}
-                                onChange={(event) => this.handleSaveSettingsInDropdown(event.target.value, indexRadio)}
-                              />
-                              <label htmlFor={`${indexRadio}${index}drop`}><span/><p>{radioInput}</p></label>
-                            </div>
-                          ))}
-                          </div>
-                        </div>
-                        {element.selectedOptions === element.radio.length - 1 &&
-                        <input type="text" placeholder="Type name or email address"/>
-                        }
-                      </div>
-                    ))}
-                  </form>
+                  {/*<form>*/}
+                  {/*{radioAccessSettingsDropdown.map((element, index) => (*/}
+                  {/*<div className="wrapper-block-radio" style={{padding: '4px 0'}}>*/}
+                  {/*<div className="block-radio">*/}
+                  {/*<div>{element.label}</div>*/}
+                  {/*<div>{element.radio.map((radioInput, indexRadio) => (*/}
+                  {/*<div>*/}
+                  {/*{console.log(element.selectedOptions, indexRadio, index, 'BOT', element.radio.length)}*/}
+                  {/*<input*/}
+                  {/*type="radio" value={element.type} name={index} id={`${indexRadio}${index}drop`}*/}
+                  {/*checked={element.selectedOptions === indexRadio}*/}
+                  {/*onChange={(event) => this.handleSaveSettingsInDropdown(event.target.value, indexRadio)}*/}
+                  {/*/>*/}
+                  {/*<label htmlFor={`${indexRadio}${index}drop`}><span/><p>{radioInput}</p></label>*/}
+                  {/*</div>*/}
+                  {/*))}*/}
+                  {/*</div>*/}
+                  {/*</div>*/}
+                  {/*{element.selectedOptions === element.radio.length - 1 &&*/}
+                  {/*<input type="text" placeholder="Type name or email address"/>*/}
+                  {/*}*/}
+                  {/*</div>*/}
+                  {/*))}*/}
+                  {/*</form>*/}
                   {/*</div>*/}
                 </DropdownButton>
               </ButtonToolbar>

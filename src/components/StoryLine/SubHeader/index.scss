@@ -32,34 +32,6 @@
     background: #fafafa;
     z-index: 1;
   }
-
-  .btn-message {
-    right: calc(50% - 465px);
-
-    a {
-      width: 100%;
-
-      &:hover {
-        color: #333;
-      }
-    }
-
-    div {
-      //width: 100%;
-      position: relative;
-      padding-left: 25px;
-    }
-
-    i {
-      background: $sprite -129px -466px;
-      height: 13px;
-      width: 17px;
-      display: inline-block;
-      position: absolute;
-      left: 10px;
-      top: 6px;
-    }
-  }
 }
 
 .subHeader-userAvatar {

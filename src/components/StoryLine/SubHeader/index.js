@@ -14,8 +14,6 @@ import './index.scss';
 const coverColors = [
   '#e53936',
   '#eb3f79',
-  '#ff6f41',
-  '#f8a724',
   '#a900f1',
   '#7d56c2',
   '#5b6ab1',
@@ -25,6 +23,8 @@ const coverColors = [
   '#00887b',
   '#378d3c',
   '#679e38',
+  '#f8a724',
+  '#ff6f41',
   '#8c6d63',
   '#778f9c',
   '#414141'
@@ -227,36 +227,6 @@ export default class SubHeader extends Component {
             <Link to={`/${slug}`}>{first_name} {last_name}</Link>
           </div>
         </div>
-
-        {this.props.requestedUser.id &&
-        <div>
-          {this.props.authorizedUser.id !== this.props.requestedUser.id &&
-          <div
-            className="btn-following btn-message"
-            onClick={() => this.openConversation(id, this.props.requestedUser)}
-          >
-            <Link // to="/messages/new"
-            >
-              <div><i/>Message</div>
-            </Link>
-          </div>
-          }
-
-          {/*<div*/}
-          {/*className="btn-following"*/}
-          {/*onClick={*/}
-          {/*!is_follow ?*/}
-          {/*() => this.followUser(id)*/}
-          {/*:*/}
-          {/*() => this.unfollowUser(id)*/}
-          {/*}>*/}
-          {/*<div>*/}
-          {/*{!is_follow ? 'Follow' : 'Following'}*/}
-          {/*</div>*/}
-          {/*<span/>*/}
-          {/*</div>*/}
-        </div>
-        }
 
         {this.props.activePopUp === 'ChangeCoverImage' &&
         <ChangeCoverImage

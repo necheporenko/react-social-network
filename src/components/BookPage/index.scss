@@ -37,23 +37,43 @@
     .book-settings {
       display: flex;
     }
+    .book-settings-edit {
+      display: block;
+    }
+  }
+
+  .user {
+    img {
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      width: 27px;
+      height: 27px;
+    }
+
+    span {
+      padding-left: 10px;
+      font-weight: 500;
+      font-size: 12px;
+    }
   }
 
   .title {
-    padding-bottom: 12px;
+    padding: 12px 0;
     display: flex;
     //margin-top: 20px;
     justify-content: space-between;
 
     h5 {
-      font-size: 16px;
+      font-size: 30px;
       font-weight: 500;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      width: 155px;
+      width: 290px;
       display: inline-block;
       line-height: 30px;
+      color: #555;
     }
 
     .btn-following-book {
@@ -64,6 +84,48 @@
       > div {
         width: 98px;
       }
+    }
+  }
+
+  .book-description {
+    div {
+      font-size: 14px;
+      overflow: hidden;
+      width: 290px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #555;
+    }
+  }
+
+  .book-counter {
+    padding: 3px 3px 0 3px;
+    margin-right: 5px;
+    color: #555;
+
+    span {
+      font-weight: 500;
+    }
+  }
+
+  .infobook-icon-visibility {
+    background: $sprite -86px -515px;
+    display: inline-block;
+    position: relative;
+    height: 15px;
+    width: 16px;
+    //top: 4px;
+    margin-right: 5px;
+  }
+
+  .btn-following-book {
+    width: 135px;
+    height: 25px;
+    margin: 0;
+    margin-top: 10px;
+
+    > div {
+      width: 110px;
     }
   }
 }
@@ -194,7 +256,8 @@
 
 .book-settings-edit {
   position: absolute;
-  right: 0;
+  right: 5px;
+  display: none;
 
   a {
     color: $gray;
@@ -399,6 +462,18 @@
   width: 830px;
   height: 281px;
   float: right;
+
+  &:hover {
+    .subHeader-cover {
+      opacity: 1;
+    }
+  }
+
+  .subHeader-cover {
+    left: calc(50% - 220px);
+    opacity: 0;
+    top: 70px;
+  }
 }
 
 .wrapper-bookpage-fixed {
@@ -409,6 +484,8 @@
 
 .book-subbooks {
   margin: 8px 0;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 

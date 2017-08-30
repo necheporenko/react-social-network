@@ -7,6 +7,7 @@ import './index.scss';
 let savePositionTop;
 
 @connect((state) => ({
+  authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
 }), {})
 
@@ -101,23 +102,39 @@ export default class Navigation extends Component {
             Documents
           </Link>
         </div>
-        <div
-          className="btn-following"
-          onClick={
-            !isFollowing ?
-              () => {
-                this.follow(id);
-              }
-              :
-              () => {
-                this.unfollow(id);
-              }
-          }>
-          <div>
-            {!isFollowing ? 'Follow' : 'Following'}
+
+        {this.props.requestedUser.id &&
+        <div>
+          {this.props.authorizedUser.id !== this.props.requestedUser.id &&
+          <div
+            className="btn-following btn-message"
+            onClick={() => this.openConversation(id, this.props.requestedUser)}
+          >
+            <Link // to="/messages/new"
+            >
+              <div><i/>Chat</div>
+            </Link>
           </div>
-          <span/>
+          }
+          <div
+            className="btn-following"
+            onClick={
+              !isFollowing ?
+                () => {
+                  this.follow(id);
+                }
+                :
+                () => {
+                  this.unfollow(id);
+                }
+            }>
+            <div>
+              {!isFollowing ? 'Follow' : 'Following'}
+            </div>
+            <span/>
+          </div>
         </div>
+        }
         {/* {showName &&
           <NavigationInfoUser
             userName={`${first_name} ${last_name}`}
