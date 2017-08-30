@@ -24,7 +24,7 @@
 .infobloks-book {
   background: #fff;
   //border: 1px solid $border-color;
-  min-height: 160px;
+  min-height: 80px;
   font-size: 14px;
   color: #333;
   margin-bottom: 20px;
@@ -42,7 +42,7 @@
   .title {
     padding-bottom: 12px;
     display: flex;
-    margin-top: 20px;
+    //margin-top: 20px;
     justify-content: space-between;
 
     h5 {
@@ -70,7 +70,7 @@
 
 .infobloks-book-fixed {
   position: fixed;
-  top: 115px;
+  top: 72px;
   width: 320px;
   box-sizing: border-box;
 }
@@ -393,6 +393,17 @@
 .bookPage-1170 {
   width: 1170px;
   margin: 0 auto;
+}
+
+.subheader-bookpage {
+  width: 830px;
+  height: 281px;
+  float: right;
+}
+
+.wrapper-bookpage-fixed {
+  position: fixed;
+  top: 72px;
 }
 
 

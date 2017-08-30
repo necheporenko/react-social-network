@@ -262,18 +262,29 @@
     }
 
     hr {
-      margin-top: 5px;
-      margin-bottom: 5px;
+      margin: 5px -15px;
     }
 
     .wrapper-upload-cover {
-      position: absolute;
+      position: relative;
       width: 325px;
+      height: 20px;
+      cursor: pointer;
+
+      h5 {
+        color: $link-color;
+        font-weight: 400;
+      }
     }
 
-    input {
+    input[type="file"] {
+      cursor: pointer;
       opacity: 0;
-      width: 325px;
+      font-size: 24px;
+      height: 20px;
+      position: absolute;
+      top: 0;
+      right: 0;
     }
   }
 

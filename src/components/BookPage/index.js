@@ -21,16 +21,16 @@ import NavigationBookPage from '../Navigation/NavigationBookPage';
 import EditBook from '../Popup/EditBook';
 import './index.scss';
 
-const radioOptions = [
-  {value: '0', label: 'only you'},
-  {value: '1', label: 'anyone'},
-  {value: '2', label: 'specific people'}
-];
-
-const radioOptions2 = [
-  {value: '0', label: 'only you'},
-  {value: '1', label: 'specific people'}
-];
+// const radioOptions = [
+//   {value: '0', label: 'only you'},
+//   {value: '1', label: 'anyone'},
+//   {value: '2', label: 'specific people'}
+// ];
+//
+// const radioOptions2 = [
+//   {value: '0', label: 'only you'},
+//   {value: '1', label: 'specific people'}
+// ];
 
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
@@ -50,7 +50,10 @@ const radioOptions2 = [
   bookPage: state.book.bookPage,
   book_slug: state.book.book_slug,
   bookSettings: state.book.bookSettings,
+  path: state.routing.locationBeforeTransitions.pathname,
 }), {
+  getUser,
+  loadBookTree,
   nextBookStories,
   showBookStories
 })
@@ -99,16 +102,16 @@ export default class BookPage extends Component {
       let displayUser = 'navigation-infouser';
       let infoblock = 'infobloks-book infobloks-book-fixed';
 
-      if (scrollTop <= 150) {
+      if (scrollTop <= 290) {
         Nav = 'navigation navigation-bookpage';
         booksTreeTop = 'wrapper';
         displayUser = 'navigation-infouser navigation-infouser-book';
-        infoblock = 'infobloks-book';
+        // infoblock = 'infobloks-book';
       } else {
         Nav = 'navigation navigation-fixed';
-        booksTreeTop = 'wrapper wrapper-fixed';
+        booksTreeTop = 'wrapper wrapper-bookpage-fixed';
         displayUser = 'navigation-infouser navigation-infouser-book-fixed';
-        infoblock = 'infobloks-book infobloks-book-fixed';
+        // infoblock = 'infobloks-book infobloks-book-fixed';
       }
       const result = {booksTree: booksTreeTop, show: displayUser, posTop: Nav, infoblock};
       return result;
@@ -147,54 +150,64 @@ export default class BookPage extends Component {
     return (
       <div>
         <Helmet title={`${first_name} ${last_name} - Books - ${name}`}/>
-        {/*<div className="bookPage-1170">*/}
         {/*<SubHeader*/}
         {/*requestedUser={this.props.requestedUser}*/}
         {/*bookPage={true}*/}
         {/*/>*/}
-        <div className={chooseScroll.posTop}>
-          <div className="navigation-wrap book-nav">
-            <ul>
-              {/*<li><Link to={`/${slug}/books`}>Books</Link></li>*/}
-              {/*<li>*/}
-              {/*<svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">*/}
-              {/*<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>*/}
-              {/*</svg>*/}
-              {/*</li>*/}
-              <li>
-                <Link to={`/${slug}/${name}`}>
-                  {name}
-                </Link>
-              </li>
-            </ul>
-          </div>
-
+        <div className="bookPage-1170">
           <div
-            className="btn-following btn-following-book"
-            // onClick={
-            //   !isFollowing ?
-            //     () => {
-            //       this.follow(id);
-            //     }
-            //     :
-            //     () => {
-            //       this.unfollow(id);
-            //     }
-            // }
+            className="subheader-bookpage"
+            style={{
+              backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
+              backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null
+            }}
           >
-            <div>
-              Following Book
-            </div>
-            <span/>
           </div>
-
-          <NavigationBookPage
-            userName={`${first_name} ${last_name}`}
-            avatar32={avatar32}
-            link={`/${slug}`}
-            displayUser={chooseScroll.show}
-          />
         </div>
+
+        {/*<div className={chooseScroll.posTop}>*/}
+        {/*<div className="navigation-wrap book-nav">*/}
+        {/*<ul>*/}
+        {/*/!*<li><Link to={`/${slug}/books`}>Books</Link></li>*!/*/}
+        {/*/!*<li>*!/*/}
+        {/*/!*<svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">*!/*/}
+        {/*/!*<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>*!/*/}
+        {/*/!*</svg>*!/*/}
+        {/*/!*</li>*!/*/}
+        {/*<li>*/}
+        {/*<Link to={`/${slug}/${name}`}>*/}
+        {/*{name}*/}
+        {/*</Link>*/}
+        {/*</li>*/}
+        {/*</ul>*/}
+        {/*</div>*/}
+
+        {/*<div*/}
+        {/*className="btn-following btn-following-book"*/}
+        {/*// onClick={*/}
+        {/*//   !isFollowing ?*/}
+        {/*//     () => {*/}
+        {/*//       this.follow(id);*/}
+        {/*//     }*/}
+        {/*//     :*/}
+        {/*//     () => {*/}
+        {/*//       this.unfollow(id);*/}
+        {/*//     }*/}
+        {/*// }*/}
+        {/*>*/}
+        {/*<div>*/}
+        {/*Following Book*/}
+        {/*</div>*/}
+        {/*<span/>*/}
+        {/*</div>*/}
+
+        {/*<NavigationBookPage*/}
+        {/*userName={`${first_name} ${last_name}`}*/}
+        {/*avatar32={avatar32}*/}
+        {/*link={`/${slug}`}*/}
+        {/*displayUser={chooseScroll.show}*/}
+        {/*/>*/}
+        {/*</div>*/}
         {/*</div>*/}
 
 
@@ -206,13 +219,13 @@ export default class BookPage extends Component {
                 // style={{marginLeft: '70px'}}
               >
                 <div className={chooseScroll.infoblock}>
-                  <div
-                    className="coverBook"
-                    style={{
-                      backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
-                      backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null
-                    }}
-                  />
+                  {/*<div*/}
+                  {/*className="coverBook"*/}
+                  {/*style={{*/}
+                  {/*backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',*/}
+                  {/*backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null*/}
+                  {/*}}*/}
+                  {/*/>*/}
                   <div className="title">
                     <h5>{name}</h5>
                     <div className="btn-following btn-following-book">

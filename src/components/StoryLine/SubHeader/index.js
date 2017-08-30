@@ -190,7 +190,7 @@ export default class SubHeader extends Component {
               <i/>
               <div
                 className="cover-btn" onClick={() => this.showDropdown()}
-                style={{opacity: this.state.dropdownUserCover ? 1 : 0}}
+                style={{opacity: this.state.dropdownUserCover ? 1 : null}}
               >
                 {/*<input type="file" onChange={(e) => this.handleCoverChange(e)} ref={el => this.inputCover = el}/>*/}
                 <div style={{color: '#fff'}}><i/>Update Cover Photo</div>
@@ -198,15 +198,15 @@ export default class SubHeader extends Component {
               <div className="cover-dropdown" style={{display: this.state.dropdownUserCover ? 'block' : 'none'}}>
                 <div className="triangle"/>
                 <ul>
-                  <li>
+                  <li style={{marginTop: '5px'}}>
                     <div className="wrapper-upload-cover">
                       <h5>Upload a photo</h5>
+                      <input type="file" onChange={(e) => this.handleCoverChange(e)} ref={el => this.inputCover = el}/>
                     </div>
-                    <input type="file" onChange={(e) => this.handleCoverChange(e)} ref={el => this.inputCover = el}/>
                   </li>
                   <hr/>
                   <li style={{fontSize: '12px'}}>
-                    Set a color
+                    or set a color
                     <div className="wrapper-colors">
                       {coverColors.map((color, index) => (
                         <div
