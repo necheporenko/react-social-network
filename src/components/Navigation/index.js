@@ -43,7 +43,7 @@ export default class Navigation extends Component {
   }
 
   render() {
-    const {first_name, last_name, slug, avatar32, isFollowing, id} = this.props.requestedUser;
+    const {first_name, last_name, slug, avatar32, isFollowing, id, cover} = this.props.requestedUser;
     const {scrollTop} = this.state;
 
     const chooseNav = () => {
@@ -65,7 +65,7 @@ export default class Navigation extends Component {
 
     return (
       <div className={navigation.posTop} style={{boxShadow: id ? '0 2px 4px 0 rgba(0, 0, 0, 0.1)' : 'none'}}>
-        <div className="navigation-wrap">
+        <div className="navigation-wrap" style={{borderColor: cover && cover.color ? `#${cover.color}` : '#1976d2'}}>
           <Link
             to={`/${slug}`}
             onlyActiveOnIndex={true}

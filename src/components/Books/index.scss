@@ -19,7 +19,7 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
   border-radius: 6px;
   padding: 10px 10px;
-  margin: 0 0 20px 20px;
+  margin: 0 0 10px 10px;
   align-self: baseline;
 
   &:hover {
@@ -103,6 +103,7 @@
 
 .sidebar-books {
   width: 252px;
+  min-width: 250px;
 
   .wrap-bookstree {
     left: 0;

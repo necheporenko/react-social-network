@@ -36,30 +36,38 @@ const Cutaway = ({requestedUserProfile}) => {
             <div className="bio">{bio}</div>
             }
 
+            {occupation &&
             <div className="occupation">
               <b>Occupation:</b>
               <p>{occupation}</p>
             </div>
+            }
 
+            {company &&
             <div className="company">
               <b>Company:</b>
               <p>{company}</p>
             </div>
+            }
 
-            <div className="country">
-              <b>Country:</b>
-              <p>United States</p>
-            </div>
+            {/*<div className="country">*/}
+            {/*<b>Country:</b>*/}
+            {/*<p>United States</p>*/}
+            {/*</div>*/}
 
+            {location &&
             <div className="location">
               <b>Location:</b>
               <p>{location}</p>
             </div>
+            }
 
+            {birthYear &&
             <div className="birthday">
               <b>Birthday:</b>
               <p>January 18, {`${birthYear}`}</p>
             </div>
+            }
 
             {phone &&
             <div className="phone">

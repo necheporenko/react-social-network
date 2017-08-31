@@ -21,6 +21,16 @@
   }
 }
 
+.subbooks-icon {
+  background: url('../../img/Icons/subbooks.svg');
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin-right: 5px;
+}
+
 .infobloks-book {
   background: #fff;
   //border: 1px solid $border-color;
@@ -32,6 +42,7 @@
   border-radius: 2px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   border: none;
+  box-sizing: border-box;
 
   &:hover {
     .book-settings {
@@ -42,7 +53,17 @@
     }
   }
 
+  .title-infoblocks {
+    padding: 15px 0;
+  }
+
+  .photos-gallery {
+    margin: 0 -15px;
+  }
+
   .user {
+    display: flex;
+
     img {
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
@@ -52,9 +73,14 @@
     }
 
     span {
-      padding-left: 10px;
-      font-weight: 500;
-      font-size: 12px;
+      padding-left: 8px;
+      font-size: 14px;
+      line-height: 28px;
+    }
+
+    &:focus {
+      text-decoration: none;
+      color: #333;
     }
   }
 
@@ -88,6 +114,7 @@
   }
 
   .book-description {
+    margin-top: 10px;
     div {
       font-size: 14px;
       overflow: hidden;
@@ -99,30 +126,52 @@
   }
 
   .book-counter {
-    padding: 3px 3px 0 3px;
-    margin-right: 5px;
+    //padding: 3px 3px 0 3px;
+    //margin-right: 5px;
+    margin-top: 10px;
     color: #555;
 
-    span {
-      font-weight: 500;
+    li {
+      font-size: 12px;
+      margin-top: 20px;
+      padding-bottom: 5px;
+    }
+
+    .followers {
+      a {
+        display: inline-block;
+        padding-right: 5px;
+
+        img {
+          width: 23px;
+          height: 23px;
+        }
+      }
+    }
+
+    .photos {
+      img {
+        padding-right: 5px;
+        width: 48px;
+        height: 48px;
+      }
     }
   }
 
   .infobook-icon-visibility {
-    background: $sprite -86px -515px;
+    background: url('../../img/Icons/book.svg');
     display: inline-block;
     position: relative;
-    height: 15px;
-    width: 16px;
-    //top: 4px;
+    height: 10px;
+    width: 12px;
+    top: 1px;
     margin-right: 5px;
   }
 
   .btn-following-book {
     width: 135px;
     height: 25px;
-    margin: 0;
-    margin-top: 10px;
+    margin: 10px 0px;
 
     > div {
       width: 110px;
@@ -130,11 +179,26 @@
   }
 }
 
+.infobloks-book-others {
+  padding-top: 0;
+}
+
+.navigation-bookpage-fixed {
+  width: 1170px;
+  left: calc(50% - 585px);
+}
+
 .infobloks-book-fixed {
   position: fixed;
-  top: 72px;
+  top: 52px;
   width: 320px;
   box-sizing: border-box;
+}
+
+.wrapper-infoblock {
+  width: 320px;
+  position: fixed;
+  top: 112px;
 }
 
 .book-info {
@@ -456,6 +520,8 @@
 .bookPage-1170 {
   width: 1170px;
   margin: 0 auto;
+  display: flex;
+  background: #fff;
 }
 
 .subheader-bookpage {
@@ -478,7 +544,7 @@
 
 .wrapper-bookpage-fixed {
   position: fixed;
-  top: 72px;
+  top: 112px;
 }
 
 

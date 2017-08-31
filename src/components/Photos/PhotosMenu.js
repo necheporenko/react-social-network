@@ -16,18 +16,19 @@ export default class PhotosMenu extends Component {
         <ul>
           {/* <Link onlyActiveOnIndex={true} to={link + '/photos'} activeClassName="active"> */}
           <Link onlyActiveOnIndex={true} to={`/${slug}/photos`} activeClassName="active">
-            <li>Original</li>
+            <li>All Photos</li>
           </Link>
-          <Link onlyActiveOnIndex={true} to={`/${slug}/photos/external`} activeClassName="active">
-            <li>External</li>
+          {/*<Link onlyActiveOnIndex={true} to={`/${slug}/photos/external`} activeClassName="active">*/}
+          {/*<li>External</li>*/}
+          {/*</Link>*/}
+          <Link onlyActiveOnIndex={true} to={`/${slug}/photos/profile`} activeClassName="active">
+            <li>Profile Images</li>
           </Link>
           <Link onlyActiveOnIndex={true} to={`/${slug}/photos/covers`} activeClassName="active">
-            <li>Covers</li>
-          </Link>
-          <Link onlyActiveOnIndex={true} to={`/${slug}/photos/profile`} activeClassName="active">
-            <li>Profile</li>
+            <li>Covers Images</li>
           </Link>
         </ul>
+        <p style={{padding: '10px 10px 10px 30px', color: '#8f8f8f'}}>Photos from books:</p>
       </div>
     );
   }

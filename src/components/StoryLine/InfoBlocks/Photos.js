@@ -6,8 +6,7 @@ const Photos = ({loaded}) => {
     <div className="infoblocks-photos">
       <div className="title-infoblocks">
         <span className="photos-icon"/>
-        <a href="#">Original Photos </a> |
-        <a href="#">  From Stories</a>
+        <a href="#">Photos </a>
       </div>
 
       <div className="photos-gallery">

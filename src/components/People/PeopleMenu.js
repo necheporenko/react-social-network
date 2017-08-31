@@ -23,7 +23,7 @@ export default class PeopleMenu extends Component {
           </Link>
           {this.props.authorizedUser.id === this.props.requestedUser.id &&
           <Link onlyActiveOnIndex={true} to={`/${slug}/people/suggested`} activeClassName="active">
-            <li>Suggested</li>
+            <li>Find People</li>
           </Link>
           }
         </ul>

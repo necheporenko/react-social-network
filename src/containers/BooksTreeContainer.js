@@ -17,13 +17,13 @@ import '../components/BooksTree/index.scss';
 export default class BooksTreeContainer extends Component {
   render() {
     const {slug} = this.props.requestedUser;
-    const {loaded} = this.props;
+    const {loaded, title} = this.props;
 
     return (
       <div className="bookstree">
         {loaded.loadedBookTree &&
         <div className={this.props.booksTreeTop}>
-          <div className="bookstree-title"><span className="booktree-icon"/><Link to={`/${slug}/books`}>BOOKS</Link>
+          <div className="bookstree-title"><span className="booktree-icon"/><Link to={`/${slug}/books`}>{title}</Link>
             <div className="title-new-book" style={{marginLeft: '10px', marginTop: '2px'}}>+ Create new book
               <AddBook/>
             </div>
@@ -50,4 +50,9 @@ BooksTreeContainer.propTypes = {
   bookTreeArr: PropTypes.array,
   // loadBookTree: PropTypes.func,
   // createBook: PropTypes.func,
+};
+
+
+BooksTreeContainer.defaultProps = {
+  title: 'BOOKS'
 };

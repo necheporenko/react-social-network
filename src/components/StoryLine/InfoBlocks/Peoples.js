@@ -6,6 +6,7 @@ import {showActivePeopleTab} from '../../../redux/modules/form';
 @connect((state) => ({
   activePeopleTab: state.forms.activePeopleTab,
   loaded: state.follow.loaded,
+  requestedUser: state.user.requestedUser,
 }), {
   showActivePeopleTab,
 })
@@ -25,7 +26,7 @@ export default class Peoples extends Component {
   }
 
   render() {
-    const {people, following, followers, loaded} = this.props;
+    const {people, following, followers, loaded, requestedUser} = this.props;
 
     return (
       loaded.loadedPeopleBlock &&
@@ -36,18 +37,20 @@ export default class Peoples extends Component {
             <div>
               <div
                 className={this.state.activeTab === 'people' ? 'people-tab-active' : ''}
-                onClick={() => this.showPeopleTab('people')}
+                // onClick={() => this.showPeopleTab('people')}
               >
-                People
+                <Link to={`/${requestedUser.slug}/people`}>
+                  People
+                </Link>
               </div>
-              |
+              ·
               <div
                 className={this.state.activeTab === 'following' ? 'people-tab-active' : ''}
                 onClick={() => this.showPeopleTab('following')}
               >
                 Following<span>{` ${following.count}`}</span>
               </div>
-              |
+              ·
               <div
                 className={this.state.activeTab === 'followers' ? 'people-tab-active' : ''}
                 onClick={() => this.showPeopleTab('followers')}

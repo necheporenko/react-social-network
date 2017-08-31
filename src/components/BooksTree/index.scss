@@ -38,6 +38,11 @@
     font-weight: bold;;
     font-size: 15px;
     color: $gray;
+
+    &:hover, &:focus {
+      color: $gray;
+      text-decoration: none;
+    }
   }
 }
 

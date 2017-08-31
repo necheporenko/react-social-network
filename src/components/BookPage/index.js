@@ -197,20 +197,22 @@ export default class BookPage extends Component {
       let Nav = 'navigation navigation-fixed';
       let booksTreeTop = 'wrapper wrapper-fixed';
       let displayUser = 'navigation-infouser';
-      const infoblock = 'infobloks-book infobloks-book-fixed';
+      const infoblock = 'infobloks-book';
+      let wrapperInfoBlock;
 
-      if (scrollTop <= 290) {
+      if (scrollTop <= 250) {
         Nav = 'navigation navigation-bookpage';
         booksTreeTop = 'wrapper';
         displayUser = 'navigation-infouser navigation-infouser-book';
         // infoblock = 'infobloks-book';
       } else {
-        Nav = 'navigation navigation-fixed';
+        Nav = 'navigation navigation-fixed navigation-bookpage-fixed';
         booksTreeTop = 'wrapper wrapper-bookpage-fixed';
         displayUser = 'navigation-infouser navigation-infouser-book-fixed';
+        wrapperInfoBlock = 'wrapper-infoblock';
         // infoblock = 'infobloks-book infobloks-book-fixed';
       }
-      const result = {booksTree: booksTreeTop, show: displayUser, posTop: Nav, infoblock};
+      const result = {booksTree: booksTreeTop, show: displayUser, posTop: Nav, infoblock, wrapperInfoBlock};
       return result;
     };
     const chooseScroll = scroll();
@@ -247,12 +249,133 @@ export default class BookPage extends Component {
 
     return (
       <div>
-        <Helmet title={`${first_name} ${last_name} - Books - ${name}`}/>
+        <Helmet title={`${name} - ${first_name} ${last_name}`}/>
         {/*<SubHeader*/}
         {/*requestedUser={this.props.requestedUser}*/}
         {/*bookPage={true}*/}
         {/*/>*/}
         <div className="bookPage-1170">
+
+          {book_slug &&
+          <div className={chooseScroll.infoblock}
+               style={{minHeight: '280px', maxHeight: '261px', width: '340px', marginBottom: 0}}>
+            <div className="book-settings-edit">
+              <EditBook
+                book_name={name}
+                book_description={description}
+                bookTreeArr={this.props.bookTreeArr}
+                bookSettings={this.props.bookSettings}
+              />
+            </div>
+
+            <div className="title">
+              <h5>{name}</h5>
+            </div>
+
+            <div className="book-description">
+              <div>Description bla blabla bla bla bla blablabla bla!</div>
+            </div>
+
+            <div className="book-counter">
+              <ul>
+                {/*<li className="infobook-icon-visibility"> - content is public</li>*/}
+                <li><i className="infobook-icon-visibility"/> · {counters.stories} stories</li>
+                <li>
+                  <div className="btn-following btn-following-book">
+                    <div>Following Book</div>
+                    <span/>
+                  </div>
+                </li>
+
+                <hr style={{margin: '35px -15px 10px -20px'}}/>
+
+                <Link to={`/${slug}`} className="user">
+                  <img src={avatar32} alt={`${first_name} ${last_name}`}/>
+                  <span>{`${first_name} ${last_name}`}</span>
+                </Link>
+
+                {/*<li><span>{counters.follows_book}</span> followers</li>*/}
+                {/*<div className="followers">*/}
+                {/*<Link to={`/${slug}`} className="user">*/}
+                {/*<img src={avatar32} alt={`${first_name} ${last_name}`}/>*/}
+                {/*</Link>*/}
+                {/*<Link to={`/${slug}`} className="user">*/}
+                {/*<img src={avatar32} alt={`${first_name} ${last_name}`}/>*/}
+                {/*</Link>*/}
+                {/*<Link to={`/${slug}`} className="user">*/}
+                {/*<img src={avatar32} alt={`${first_name} ${last_name}`}/>*/}
+                {/*</Link>*/}
+                {/*</div>*/}
+
+                {/*<li><span>0</span> photos</li>*/}
+                {/*<div className="photos">*/}
+                {/*<img src={avatar32} alt={`${first_name} ${last_name}`}/>*/}
+                {/*</div>*/}
+
+
+                {/*<li><span>{counters.sub_books}</span> subbooks</li>*/}
+                {/*<div>*/}
+                {/*<p>Book 1</p>*/}
+                {/*</div>*/}
+              </ul>
+              {/*<hr/>*/}
+            </div>
+
+
+            {/*<div className="book-quantity">*/}
+            {/*<span>2 subbooks</span>*/}
+            {/*</div>*/}
+
+            {/*<div className="book-subbooks">*/}
+            {/*Subbooks*/}
+            {/*</div>*/}
+
+            {/*<div className="book-settings">*/}
+            {/*<div className="book-settings-access">*/}
+            {/*<i/>*/}
+            {/*<ButtonToolbar>*/}
+            {/*<DropdownButton className="bootstrap-pure-btn" title="Access settings">*/}
+            {/*<div>*/}
+            {/*<form>*/}
+            {/*{radioAccessSettings.map((element, index) => (*/}
+            {/*<div className="wrapper-block-radio" style={{padding: '4px 0'}}>*/}
+            {/*<div className="block-radio">*/}
+            {/*<div>{element.label}</div>*/}
+            {/*<div>{element.radio.map((radioInput, indexRadio) => (*/}
+            {/*<div>*/}
+            {/*<input*/}
+            {/*type="radio" value={element.type} name={index} id={`${indexRadio}${index}`}*/}
+            {/*checked={element.selectedOptions === indexRadio}*/}
+            {/*onChange={(event) => this.handleSaveSettings(event.target.value, indexRadio)}*/}
+            {/*/>*/}
+            {/*<label htmlFor={`${indexRadio}${index}`}><span/><p>{radioInput}</p></label>*/}
+            {/*</div>*/}
+            {/*))}*/}
+            {/*</div>*/}
+            {/*</div>*/}
+            {/*{element.selectedOptions === element.radio.length - 1 &&*/}
+            {/*<input type="text" placeholder="Type name or email address"/>*/}
+            {/*}*/}
+            {/*</div>*/}
+            {/*))}*/}
+            {/*</form>*/}
+            {/*</div>*/}
+            {/*</DropdownButton>*/}
+            {/*</ButtonToolbar>*/}
+            {/*</div>*/}
+            {/*</div>*/}
+
+            {this.props.activePopUp === 'ChangeBookCoverImage' &&
+            <ChangeBookCoverImage
+              showPopUp={this.props.showPopUp}
+              visible={this.props.visible}
+              currentImage={this.props.currentImage}
+            />
+            }
+
+          </div>
+          }
+
           <div
             className="subheader-bookpage"
             style={{
@@ -302,155 +425,150 @@ export default class BookPage extends Component {
           </div>
         </div>
 
-        {/*<div className={chooseScroll.posTop}>*/}
-        {/*<div className="navigation-wrap book-nav">*/}
-        {/*<ul>*/}
-        {/*/!*<li><Link to={`/${slug}/books`}>Books</Link></li>*!/*/}
-        {/*/!*<li>*!/*/}
-        {/*/!*<svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">*!/*/}
-        {/*/!*<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>*!/*/}
-        {/*/!*</svg>*!/*/}
-        {/*/!*</li>*!/*/}
-        {/*<li>*/}
-        {/*<Link to={`/${slug}/${name}`}>*/}
-        {/*{name}*/}
-        {/*</Link>*/}
-        {/*</li>*/}
-        {/*</ul>*/}
-        {/*</div>*/}
+        <div className={chooseScroll.posTop}>
+          <div className="navigation-wrap book-nav">
+            <ul>
+              {/*<li><Link to={`/${slug}/books`}>Books</Link></li>*/}
+              {/*<li>*/}
+              {/*<svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">*/}
+              {/*<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>*/}
+              {/*</svg>*/}
+              {/*</li>*/}
+              <li>
+                <Link to={`/${slug}/${name}`}>
+                  {name}
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-        {/*<div*/}
-        {/*className="btn-following btn-following-book"*/}
-        {/*// onClick={*/}
-        {/*//   !isFollowing ?*/}
-        {/*//     () => {*/}
-        {/*//       this.follow(id);*/}
-        {/*//     }*/}
-        {/*//     :*/}
-        {/*//     () => {*/}
-        {/*//       this.unfollow(id);*/}
-        {/*//     }*/}
-        {/*// }*/}
-        {/*>*/}
-        {/*<div>*/}
-        {/*Following Book*/}
-        {/*</div>*/}
-        {/*<span/>*/}
-        {/*</div>*/}
+          <div
+            className="btn-following btn-following-book"
+            // onClick={
+            //   !isFollowing ?
+            //     () => {
+            //       this.follow(id);
+            //     }
+            //     :
+            //     () => {
+            //       this.unfollow(id);
+            //     }
+            // }
+          >
+            <div>
+              Following Book
+            </div>
+            <span/>
+          </div>
 
-        {/*<NavigationBookPage*/}
-        {/*userName={`${first_name} ${last_name}`}*/}
-        {/*avatar32={avatar32}*/}
-        {/*link={`/${slug}`}*/}
-        {/*displayUser={chooseScroll.show}*/}
-        {/*/>*/}
-        {/*</div>*/}
+          <NavigationBookPage
+            userName={`${first_name} ${last_name}`}
+            avatar32={avatar32}
+            link={`/${slug}`}
+            displayUser={chooseScroll.show}
+          />
+        </div>
         {/*</div>*/}
 
 
         <div className="book-page">
           <div className="storyLine">
             <div className="wrap-storyLine">
-              {book_slug &&
               <div className="infobloks">
-                <div className={chooseScroll.infoblock}>
-                  <div className="book-settings-edit">
-                    <EditBook
-                      book_name={name}
-                      book_description={description}
-                      bookTreeArr={this.props.bookTreeArr}
-                      bookSettings={this.props.bookSettings}
-                    />
+                <div className={chooseScroll.wrapperInfoBlock}>
+                  <div className="infobloks-book infobloks-book-others">
+                    <div className="title-infoblocks">
+                      <span className="subbooks-icon"/>
+                      <a> Subbooks · 0</a>
+                    </div>
+                    <div className="book-counter">
+                      <ul>
+                        {/*<li style={{marginTop: 0}}>0 subbooks</li>*/}
+                        <div>
+                          <p>Book 1</p>
+                          <p>Book 1</p>
+                          <p>Book 1</p>
+                          <p>Book 1</p>
+                        </div>
+                      </ul>
+                      {/*<hr/>*/}
+                    </div>
                   </div>
 
-                  <Link to={`/${slug}`} className="user">
-                    <img src={avatar32} alt={`${first_name} ${last_name}`}/>
-                    <span>{`${first_name} ${last_name}`}</span>
-                  </Link>
-
-                  <div className="title">
-                    <h5><i className="infobook-icon-visibility"/>{name && name}</h5>
+                  <div className="infobloks-book infobloks-book-others" style={{paddingBottom: 0}}>
+                    <div className="title-infoblocks">
+                      <span className="peoples-icon"/>
+                      <a> Book Followers · 0</a>
+                    </div>
+                    {/*<div className="book-counter">*/}
+                    {/*<ul>*/}
+                    {/*<li style={{marginTop: 0}}>0 followers</li>*/}
+                    {/*<div className="followers">*/}
+                    {/*<Link to={`/${slug}`} className="user">*/}
+                    {/*<img src={avatar32} alt={`${first_name} ${last_name}`}/>*/}
+                    {/*</Link>*/}
+                    {/*<Link to={`/${slug}`} className="user">*/}
+                    {/*<img src={avatar32} alt={`${first_name} ${last_name}`}/>*/}
+                    {/*</Link>*/}
+                    {/*<Link to={`/${slug}`} className="user">*/}
+                    {/*<img src={avatar32} alt={`${first_name} ${last_name}`}/>*/}
+                    {/*</Link>*/}
+                    {/*</div>*/}
+                    {/*</ul>*/}
+                    {/*/!*<hr/>*!/*/}
+                    {/*</div>*/}
+                    <div className="photos-gallery">
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=20"/></a>
+                      </div>
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=42"/></a>
+                      </div>
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=48"/></a>
+                      </div>
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=60"/></a>
+                      </div>
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=7"/></a>
+                      </div>
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=180"/></a>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="book-description">
-                    <div>Description</div>
+                  <div className="infobloks-book infobloks-book-others" style={{paddingBottom: 0}}>
+                    <div className="title-infoblocks">
+                      <span className="photos-icon"/>
+                      <a>Book Photos · 0</a>
+                    </div>
+                    <div className="photos-gallery">
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=20"/></a>
+                      </div>
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=42"/></a>
+                      </div>
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=48"/></a>
+                      </div>
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=60"/></a>
+                      </div>
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=7"/></a>
+                      </div>
+                      <div className="photos-image">
+                        <a href="#"><img src="//unsplash.it/800/600?image=180"/></a>
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="book-counter">
-                    <ul>
-                      {/*<li className="infobook-icon-visibility"> - content is public</li>*/}
-                      <li><span>{counters.stories}</span> - stories</li>
-                      <li><span>{counters.follows_book}</span> - followers</li>
-                      <li><span>{counters.sub_books}</span> - subbooks</li>
-                    </ul>
-                    {/*<hr/>*/}
-                  </div>
-
-                  <div className="btn-following btn-following-book">
-                    <div>Following Book</div>
-                    <span/>
-                  </div>
-
-
-                  <hr/>
-
-                  {/*<div className="book-quantity">*/}
-                  {/*<span>2 subbooks</span>*/}
-                  {/*</div>*/}
-
-                  <div className="book-subbooks">
-                    Subbooks
-                  </div>
-
-                  {/*<div className="book-settings">*/}
-                  {/*<div className="book-settings-access">*/}
-                  {/*<i/>*/}
-                  {/*<ButtonToolbar>*/}
-                  {/*<DropdownButton className="bootstrap-pure-btn" title="Access settings">*/}
-                  {/*<div>*/}
-                  {/*<form>*/}
-                  {/*{radioAccessSettings.map((element, index) => (*/}
-                  {/*<div className="wrapper-block-radio" style={{padding: '4px 0'}}>*/}
-                  {/*<div className="block-radio">*/}
-                  {/*<div>{element.label}</div>*/}
-                  {/*<div>{element.radio.map((radioInput, indexRadio) => (*/}
-                  {/*<div>*/}
-                  {/*<input*/}
-                  {/*type="radio" value={element.type} name={index} id={`${indexRadio}${index}`}*/}
-                  {/*checked={element.selectedOptions === indexRadio}*/}
-                  {/*onChange={(event) => this.handleSaveSettings(event.target.value, indexRadio)}*/}
-                  {/*/>*/}
-                  {/*<label htmlFor={`${indexRadio}${index}`}><span/><p>{radioInput}</p></label>*/}
-                  {/*</div>*/}
-                  {/*))}*/}
-                  {/*</div>*/}
-                  {/*</div>*/}
-                  {/*{element.selectedOptions === element.radio.length - 1 &&*/}
-                  {/*<input type="text" placeholder="Type name or email address"/>*/}
-                  {/*}*/}
-                  {/*</div>*/}
-                  {/*))}*/}
-                  {/*</form>*/}
-                  {/*</div>*/}
-                  {/*</DropdownButton>*/}
-                  {/*</ButtonToolbar>*/}
-                  {/*</div>*/}
-                  {/*</div>*/}
-
-                  {this.props.activePopUp === 'ChangeBookCoverImage' &&
-                  <ChangeBookCoverImage
-                    showPopUp={this.props.showPopUp}
-                    visible={this.props.visible}
-                    currentImage={this.props.currentImage}
-                  />
-                  }
-
                 </div>
 
-                {/*<Photos/>*/}
-
               </div>
-              }
+
 
               <BookStream
                 authorizedUser={this.props.authorizedUser}
@@ -463,8 +581,8 @@ export default class BookPage extends Component {
               <BooksTreeContainer
                 bookTreeArr={this.props.bookTreeArr}
                 booksTreeTop={chooseScroll.booksTree}
+                title="ALL BOOKS"
               />
-
             </div>
 
           </div>

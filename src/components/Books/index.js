@@ -96,7 +96,7 @@ class Books extends Component {
         <div className="wrapper">
           <StackGrid
             //monitorImagesLoaded
-            columnWidth={300}
+            columnWidth={290}
             duration={600}
             gutterWidth={10}
             gutterHeight={10}

@@ -29,7 +29,7 @@ export default class FollowBlock extends Component {
 
     return (
       whoToFollowList.length > 0 &&
-      <div className="follow-block">
+      <div className="follow-block" style={{marginBottom: '20px'}}>
         <div className="wrapper">
           <h3 className="title">Who to follow</h3>
 
