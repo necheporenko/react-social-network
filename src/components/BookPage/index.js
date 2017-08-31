@@ -526,7 +526,7 @@ export default class BookPage extends Component {
                     {/*</ul>*/}
                     {/*/!*<hr/>*!/*/}
                     {/*</div>*/}
-                    <div className="photos-gallery">
+                    <div className="photos-gallery books-followers-gallery">
                       <div className="photos-image">
                         <a href="#"><img src="//unsplash.it/800/600?image=20"/></a>
                       </div>
@@ -553,7 +553,7 @@ export default class BookPage extends Component {
                       <span className="photos-icon"/>
                       <a>Book Photos · 0</a>
                     </div>
-                    <div className="photos-gallery">
+                    <div className="photos-gallery books-photos-gallery">
                       <div className="photos-image">
                         <a href="#"><img src="//unsplash.it/800/600?image=20"/></a>
                       </div>

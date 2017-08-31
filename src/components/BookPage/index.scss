@@ -212,6 +212,23 @@
   display: inline-block;
 }
 
+.books-photos-gallery {
+  img {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.books-followers-gallery {
+  img {
+    width: 32px;
+    height: 32px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+  }
+}
+
 .infobloks-book-others {
   padding-top: 0;
 }
