@@ -131,10 +131,15 @@
     margin-top: 10px;
     color: #555;
 
+    ul {
+      display: flex;
+    }
+
     li {
       font-size: 12px;
-      margin-top: 20px;
-      padding-bottom: 5px;
+      padding: 0 5px;
+      //margin-top: 20px;
+      //padding-bottom: 5px;
     }
 
     .followers {
@@ -177,6 +182,34 @@
       width: 110px;
     }
   }
+}
+
+.subbooks-icon-sm {
+  background: url('../../img/Icons/subbooks-sm.svg');
+  height: 10px;
+  width: 13px;
+  display: inline-block;
+}
+
+.photos-icon-sm {
+  background: url('../../img/Icons/photos-sm.svg');
+  height: 10px;
+  width: 13px;
+  display: inline-block;
+}
+
+.followers-icon-sm {
+  background: url('../../img/Icons/people-sm.svg');
+  height: 10px;
+  width: 14px;
+  display: inline-block;
+}
+
+.stories-icon-sm {
+  background: url('../../img/Icons/stories-sm.svg');
+  height: 10px;
+  width: 8px;
+  display: inline-block;
 }
 
 .infobloks-book-others {
@@ -522,6 +555,16 @@
   margin: 0 auto;
   display: flex;
   background: #fff;
+
+  .infobloks-book {
+    position: relative;
+
+    footer {
+      bottom: 10px;
+      position: absolute;
+      width: 310px;
+    }
+  }
 }
 
 .subheader-bookpage {

@@ -99,6 +99,7 @@ export default class BookPage extends Component {
     this.showDropdown = this.showDropdown.bind(this);
     this.setCoverColor = this.setCoverColor.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
+    this.zeroTop = this.zeroTop.bind(this);
   }
 
   componentDidMount() {
@@ -172,6 +173,10 @@ export default class BookPage extends Component {
   setCoverColor(color) {
     this.setState({currentUserCoverColor: color});
     this.props.uploadUserCover(null, color.substring(1));
+  }
+
+  zeroTop() {
+    document.body.scrollTop = 0;
   }
 
   onBlur(e) {
@@ -257,8 +262,9 @@ export default class BookPage extends Component {
         <div className="bookPage-1170">
 
           {book_slug &&
-          <div className={chooseScroll.infoblock}
-               style={{minHeight: '280px', maxHeight: '261px', width: '340px', marginBottom: 0}}>
+          <div
+            className={chooseScroll.infoblock}
+            style={{minHeight: '280px', maxHeight: '261px', width: '340px', marginBottom: 0}}>
             <div className="book-settings-edit">
               <EditBook
                 book_name={name}
@@ -278,23 +284,13 @@ export default class BookPage extends Component {
 
             <div className="book-counter">
               <ul>
-                {/*<li className="infobook-icon-visibility"> - content is public</li>*/}
-                <li><i className="infobook-icon-visibility"/> · {counters.stories} stories</li>
-                <li>
-                  <div className="btn-following btn-following-book">
-                    <div>Following Book</div>
-                    <span/>
-                  </div>
+                <li><i className="infobook-icon-visibility"/> · {counters.stories} · <i className="stories-icon-sm"/>
                 </li>
+                <li><span>{counters.sub_books}</span>· <i className="subbooks-icon-sm"/></li>
+                <li><span>{counters.follows_book}</span>· <i className="followers-icon-sm"/></li>
+                <li><span>0</span>· <i className="photos-icon-sm"/></li>
 
-                <hr style={{margin: '35px -15px 10px -20px'}}/>
 
-                <Link to={`/${slug}`} className="user">
-                  <img src={avatar32} alt={`${first_name} ${last_name}`}/>
-                  <span>{`${first_name} ${last_name}`}</span>
-                </Link>
-
-                {/*<li><span>{counters.follows_book}</span> followers</li>*/}
                 {/*<div className="followers">*/}
                 {/*<Link to={`/${slug}`} className="user">*/}
                 {/*<img src={avatar32} alt={`${first_name} ${last_name}`}/>*/}
@@ -318,6 +314,19 @@ export default class BookPage extends Component {
                 {/*<p>Book 1</p>*/}
                 {/*</div>*/}
               </ul>
+              <footer>
+                <div className="btn-following btn-following-book">
+                  <div>Following Book</div>
+                  <span/>
+                </div>
+
+                <hr style={{margin: '15px -15px 10px -20px'}}/>
+
+                <Link to={`/${slug}`} className="user">
+                  <img src={avatar32} alt={`${first_name} ${last_name}`}/>
+                  <span>{`${first_name} ${last_name}`}</span>
+                </Link>
+              </footer>
               {/*<hr/>*/}
             </div>
 
@@ -435,7 +444,7 @@ export default class BookPage extends Component {
               {/*</svg>*/}
               {/*</li>*/}
               <li>
-                <Link to={`/${slug}/${name}`}>
+                <Link onClick={() => this.zeroTop()}>
                   {name}
                 </Link>
               </li>
