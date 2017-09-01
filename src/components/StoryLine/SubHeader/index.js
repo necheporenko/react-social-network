@@ -153,7 +153,7 @@ export default class SubHeader extends Component {
   }
 
   render() {
-    const {first_name, last_name, slug, is_follow, id, avatar250, cover} = this.props.requestedUser;
+    const {first_name, last_name, slug, is_follow, id, avatar230, cover} = this.props.requestedUser;
 
     return (
       <div className="subHeader">
@@ -168,7 +168,7 @@ export default class SubHeader extends Component {
 
           <div className="subHeader-userAvatar">
             <Link to={`/${slug}`} style={{boxShadow: id ? '0px 1px 3px 0px rgba(0, 0, 0, 0.15)' : 'none'}}>
-              {avatar250 && <img src={avatar250}/>}
+              {avatar230 && <img src={avatar230}/>}
             </Link>
 
             <div className="subHeader-add">
