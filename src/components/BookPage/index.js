@@ -1,23 +1,24 @@
 import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-// import {asyncConnect} from 'redux-connect';
 import Helmet from 'react-helmet';
-import {Form, RadioGroup} from 'formsy-react-components';
-import {ButtonToolbar, DropdownButton} from 'react-bootstrap';
-import {getUser, getUserSlug} from '../../redux/modules/user';
+// import {Form, RadioGroup} from 'formsy-react-components';
+// import {ButtonToolbar, DropdownButton} from 'react-bootstrap';
+import {getUser} from '../../redux/modules/user';
 import {
   create as createBook,
   load as loadBookTree,
   show as showBookStories,
   next as nextBookStories,
-  getBookSlug
+  // getBookSlug,
+  upload as uploadBookCover,
+  uploadBookCoverBase64
 } from '../../redux/modules/book';
 import {showPopUp} from '../../redux/modules/form';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import BookStream from '../StoryLine/Stream/BookStream';
-import Photos from '../StoryLine/InfoBlocks/Photos';
-import SubHeader from '../StoryLine/SubHeader/index';
+// import Photos from '../StoryLine/InfoBlocks/Photos';
+// import SubHeader from '../StoryLine/SubHeader/index';
 import NavigationBookPage from '../Navigation/NavigationBookPage';
 import EditBook from '../Popup/EditBook';
 import ChangeBookCoverImage from '../Popup/ChangeBookCoverImage';
@@ -66,6 +67,7 @@ const coverColors = [
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
+  isAuthenticated: state.user.isAuthenticated,
   bookTreeArr: state.book.bookTreeArr,
   bookStories: state.book.bookStories,
   bookPage: state.book.bookPage,
@@ -80,7 +82,9 @@ const coverColors = [
   loadBookTree,
   nextBookStories,
   showBookStories,
-  showPopUp
+  showPopUp,
+  uploadBookCoverBase64,
+  uploadBookCover,
 })
 
 export default class BookPage extends Component {
@@ -100,11 +104,12 @@ export default class BookPage extends Component {
     this.setCoverColor = this.setCoverColor.bind(this);
     this.handleCoverChange = this.handleCoverChange.bind(this);
     this.zeroTop = this.zeroTop.bind(this);
+    this.cleanInputCover = this.cleanInputCover.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    console.log('<---- componentDidMount start');
+    // console.log('<---- componentDidMount start');
     const {path, requestedUser} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
     const bookSlug = path.substring(path.indexOf('/books/') + 7);
@@ -117,7 +122,7 @@ export default class BookPage extends Component {
     // this.setState({
     //   settings: this.props.bookSettings
     // });
-    console.log('<---- componentDidMount end');
+    // console.log('<---- componentDidMount end');
   }
 
   componentDidUpdate(prevProps) {
@@ -131,7 +136,6 @@ export default class BookPage extends Component {
           .then(this.props.showBookStories(bookSlug));
       }
     }
-    console.log('<---- componentDidUpdate');
   }
 
   componentWillUnmount() {
@@ -170,9 +174,13 @@ export default class BookPage extends Component {
     reader.readAsDataURL(file);
   }
 
+  cleanInputCover() {
+    this.inputBookCover.value = '';
+  }
+
   setCoverColor(color) {
     this.setState({currentUserCoverColor: color});
-    this.props.uploadUserCover(null, color.substring(1));
+    this.props.uploadBookCover(null, color.substring(1), this.props.bookPage.id);
   }
 
   zeroTop() {
@@ -380,6 +388,9 @@ export default class BookPage extends Component {
               showPopUp={this.props.showPopUp}
               visible={this.props.visible}
               currentImage={this.props.currentImage}
+              uploadUserCover={this.props.uploadBookCover}
+              uploadBookCoverBase64={this.props.uploadBookCoverBase64}
+              bookPage={this.props.bookPage}
             />
             }
 
@@ -394,43 +405,42 @@ export default class BookPage extends Component {
             }}
           >
             <div className="subHeader-cover">
-              {/*{this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&*/}
-                <div tabIndex={0} onBlur={this.onBlur}>
+              {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
+              <div tabIndex={0} onBlur={this.onBlur}>
                 <i/>
                 <div
-                className="cover-btn" onClick={() => this.showDropdown()}
-                style={{opacity: this.state.dropdownUserCover ? 1 : null}}
+                  className="cover-btn" onClick={() => this.showDropdown()}
+                  style={{opacity: this.state.dropdownUserCover ? 1 : null}}
                 >
-                {/*<input type="file" onChange={(e) => this.handleCoverChange(e)} ref={el => this.inputCover = el}/>*/}
-                <div style={{color: '#fff'}}><i/>Update Cover Photo</div>
+                  <div style={{color: '#fff'}}><i/>Update Cover Photo</div>
                 </div>
                 <div className="cover-dropdown" style={{display: this.state.dropdownUserCover ? 'block' : 'none'}}>
-                <div className="triangle"/>
-                <ul>
-                <li style={{marginTop: '5px'}}>
-                <div className="wrapper-upload-cover">
-                <h5>Upload a photo</h5>
-                <input type="file" onChange={(e) => this.handleCoverChange(e)} ref={el => this.inputCover = el}/>
+                  <div className="triangle"/>
+                  <ul>
+                    <li style={{marginTop: '5px'}}>
+                      <div className="wrapper-upload-cover">
+                        <h5>Upload a photo</h5>
+                        <input type="file" onChange={(e) => this.handleCoverChange(e)}
+                               ref={el => this.inputBookCover = el}/>
+                      </div>
+                    </li>
+                    <hr/>
+                    <li style={{fontSize: '12px'}}>or set a color
+                      <div className="wrapper-colors">
+                        {coverColors.map((color, index) => (
+                          <div
+                            key={index}
+                            style={{backgroundColor: color}}
+                            className={this.state.currentUserCoverColor === color ? 'active' : null}
+                            onClick={() => this.setCoverColor(color)}
+                          />
+                        ))}
+                      </div>
+                    </li>
+                  </ul>
                 </div>
-                </li>
-                <hr/>
-                <li style={{fontSize: '12px'}}>
-                or set a color
-                <div className="wrapper-colors">
-                {coverColors.map((color, index) => (
-                  <div
-                    key={index}
-                    style={{backgroundColor: color}}
-                    className={this.state.currentUserCoverColor === color ? 'active' : null}
-                    onClick={() => this.setCoverColor(color)}
-                  />
-                ))}
-                </div>
-                </li>
-                </ul>
-                </div>
-                </div>
-              {/*}*/}
+              </div>
+              }
             </div>
           </div>
         </div>
@@ -438,12 +448,6 @@ export default class BookPage extends Component {
         <div className={chooseScroll.posTop}>
           <div className="navigation-wrap book-nav">
             <ul>
-              {/*<li><Link to={`/${slug}/books`}>Books</Link></li>*/}
-              {/*<li>*/}
-              {/*<svg x="0px" y="0px" width="20px" height="20px" viewBox="0 0 24 24" focusable="false" fill="#7d7d7d">*/}
-              {/*<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>*/}
-              {/*</svg>*/}
-              {/*</li>*/}
               <li>
                 <Link onClick={() => this.zeroTop()}>
                   {name}
@@ -583,7 +587,7 @@ export default class BookPage extends Component {
               <BookStream
                 authorizedUser={this.props.authorizedUser}
                 requestedUser={this.props.requestedUser}
-                book_slug={this.props.book_slug}
+                book_slug={this.props.bookPage.slug}
                 bookStories={this.props.bookStories}
                 nextBookStories={this.props.nextBookStories}
                 showBookStories={this.props.showBookStories}
@@ -606,5 +610,15 @@ BookPage.propTypes = {
   authorizedUser: PropTypes.object,
   requestedUser: PropTypes.object,
   bookTreeArr: PropTypes.array,
+  bookStories: PropTypes.array,
   bookSettings: PropTypes.object,
+  visible: PropTypes.bool,
+  currentImage: PropTypes.string,
+  uploadBookCover: PropTypes.func,
+  uploadBookCoverBase64: PropTypes.func,
+  bookPage: PropTypes.object,
+  showPopUp: PropTypes.func,
+  isAuthenticated: PropTypes.bool,
+  showBookStories: PropTypes.func,
+  nextBookStories: PropTypes.func,
 };

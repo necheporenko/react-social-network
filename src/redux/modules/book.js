@@ -240,15 +240,15 @@ export default function bookReducer(state = initialState, action) {
       };
 
     case UPLOAD_BOOK_COVER_BASE64: {
-      const updateUserCoverBase64 = Object.assign({}, state.authorizedUser, {
-        cover: action.userCoverBase64
+      const updateBookCoverBase64 = Object.assign({}, state.bookPage, {
+        cover: action.bookCoverBase64
       });
       // const updateUserCoverBase64 = state.authorizedUser;
       // updateUserCoverBase64.cover = action.userCoverBase64;
 
       return {
         ...state,
-        authorizedUser: updateUserCoverBase64
+        bookPage: updateBookCoverBase64
       };
     }
 
@@ -353,9 +353,16 @@ export function like(story_id) {
   };
 }
 
-export function upload(img) {
+export function upload(picture, color, book_id) {
   return {
     types: [UPLOAD_BOOK_COVER, UPLOAD_BOOK_COVER_SUCCESS, UPLOAD_BOOK_COVER_FAIL],
-    promise: (client) => client.post('/upload/book-cover', { data: { img }})
+    promise: (client) => client.post('/upload/book-cover', {data: {picture, color, book_id}})
+  };
+}
+
+export function uploadBookCoverBase64(bookCoverBase64) {
+  return {
+    type: UPLOAD_BOOK_COVER_BASE64,
+    bookCoverBase64
   };
 }

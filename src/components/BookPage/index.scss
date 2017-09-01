@@ -592,7 +592,8 @@
 .subheader-bookpage {
   width: 830px;
   height: 281px;
-  float: right;
+  //float: right;
+  background-size: cover;
 
   &:hover {
     .subHeader-cover {

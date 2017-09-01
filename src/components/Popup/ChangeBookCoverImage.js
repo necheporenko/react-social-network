@@ -1,14 +1,11 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import AvatarEditor from 'react-avatar-editor';
-import { Modal } from 'react-bootstrap';
-import { upload as uploadBookCover } from '../../redux/modules/book';
+import {Modal} from 'react-bootstrap';
+import {upload as uploadBookCover} from '../../redux/modules/book';
 import './index.scss';
-import coverBook from '../../img/Default/cover-book.png';
-
 
 @connect((state) => ({
-  // bookTreeArr: state.book.bookTreeArr,
   bookCover: state.book.bookCover,
   uploading: state.book.uploading,
 }), {
@@ -16,22 +13,10 @@ import coverBook from '../../img/Default/cover-book.png';
 })
 
 export default class ChangeBookCoverImage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showPopup: false,
-      file: '',
-      coverBook: coverBook,
-      preview: null,
-      picture: '',
-      // qwerty,
-    };
-    this.Close = this.Close.bind(this);
-    this.Open = this.Open.bind(this);
-    this.handleCoverChange = this.handleCoverChange.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-    this.handleScale = this.handleScale.bind(this);
-  }
+  handleScale = (e) => {
+    const scale = parseFloat(e.target.value);
+    this.setState({scale});
+  };
 
   Close() {
     this.props.showPopUp(false, '');
@@ -41,43 +26,38 @@ export default class ChangeBookCoverImage extends Component {
     this.props.showPopUp(true);
   }
 
-  handleCoverChange(e) {
-    e.preventDefault();
-    const reader = new FileReader();
-    const file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        coverBook: reader.result
-      });
+  constructor(props) {
+    super(props);
+    this.state = {
+      showPopup: false,
+      file: '',
+      scale: 1.2,
+      preview: null,
+      picture: '',
     };
-    reader.readAsDataURL(file);
-  }
-
-  handleSave() {
-    const resized = this.editor.getImageScaledToCanvas().toDataURL();
-    this.props.uploadBookCover(resized)
-     .then(() => this.props.updateCoverImage())
-      .then(() => this.props.showPopUp(false, ''));
-    this.setState({
-      test: resized,
-    });
+    this.Close = this.Close.bind(this);
+    this.Open = this.Open.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleScale = this.handleScale.bind(this);
   }
 
   setEditorRef = (editor) => {
     this.editor = editor;
   };
 
-  handleScale = (e) => {
-    const scale = parseFloat(e.target.value);
-    this.setState({ scale });
-  };
+  handleSave() {
+    const newImage = this.editor.getImage().toDataURL();
+    this.setState({
+      picture: newImage,
+    });
+    this.props.uploadBookCoverBase64(newImage);
+    this.props.uploadBookCover(newImage, null, this.props.bookPage.id)
+    // .then(() => this.props.getUser(this.props.bookCover.id))
+      .then(() => this.Close());
+  }
 
   render() {
-    const visible = this.props.visible;
-    const currentImage = this.props.currentImage;
-    const { bookCover, uploading } = this.props;
+    const {uploading, visible, currentImage} = this.props;
 
     return (
       <div className="create-new-book" onClick={this.Open}>
@@ -86,62 +66,52 @@ export default class ChangeBookCoverImage extends Component {
             <Modal.Title>Edit cover image</Modal.Title>
           </Modal.Header>
 
-          {/*<Form*/}
-          {/*rowClassName={[{'form-group': false}, {row: false}, 'channel-form']}*/}
-          {/*onSubmit={this.onSubmitBook}*/}
-          {/*>*/}
           <Modal.Body>
             <div className="wrapper-popup">
               <h4>Crop it</h4>
-              {/*<img src={coverBook} alt=""/>*/}
               <AvatarEditor
                 ref={this.setEditorRef}
                 image={currentImage}
-                width={568}
+                width={540}
                 height={200}
                 border={20}
                 color={[255, 255, 255, 0.6]} // RGBA
                 scale={parseFloat(this.state.scale)}
                 rotate={0}
                 onSave={this.handleSave}
+                style={uploading ? {opacity: 0.3} : {opacity: 1}}
               />
+              {uploading &&
+              <div className="wrapper-loader">
+                <div className="loader">
+                  <svg className="circular" viewBox="25 25 50 50">
+                    <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
+                  </svg>
+                </div>
+              </div>
+              }
             </div>
 
-
-              Zoom:
-              <br />
-              <input
-                name="scale"
-                type="range"
-                onChange={this.handleScale}
-                min="1"
-                max="2"
-                step="0.01"
-                defaultValue="1.2"
-              />
-            {/*<div style={{display: 'none'}}>*/}
-            {/*<br />*/}
-            {/*<input type="button" onClick={this.handleSave} value="Preview" />*/}
-            {/*<br />*/}
-            {/*<p>IMG</p>*/}
-            {/*<img src={bookCover} />*/}
-            {/*</div>*/}
-
+            Zoom:
+            <br/>
+            <input
+              name="scale"
+              type="range"
+              onChange={this.handleScale}
+              min="1"
+              max="2"
+              step="0.01"
+              defaultValue="1.2"
+            />
           </Modal.Body>
 
           <Modal.Footer>
             <div style={{float: 'right'}}>
               <button className="btn-brand btn-cancel" onClick={this.Close}>Cancel</button>
-              <button className="btn-brand" style={{marginLeft: '10px'}} type="submit" onClick={this.handleSave}>Crop and Save</button>
+              <button className="btn-brand" style={{marginLeft: '10px'}} type="submit" onClick={this.handleSave}>Crop
+                and Save
+              </button>
             </div>
-
-            {uploading && (
-              <div className="spinner-bg">
-                <div className="spinner">
-                  <i className="fa fa-pulse fa-spinner"/>
-                </div>
-              </div>
-            )}
           </Modal.Footer>
 
         </Modal>
@@ -152,4 +122,10 @@ export default class ChangeBookCoverImage extends Component {
 
 ChangeBookCoverImage.propTypes = {
   showPopUp: PropTypes.func,
+  visible: PropTypes.bool,
+  currentImage: PropTypes.string,
+  uploading: PropTypes.bool,
+  uploadBookCover: PropTypes.func,
+  uploadBookCoverBase64: PropTypes.func,
+  bookPage: PropTypes.object,
 };
