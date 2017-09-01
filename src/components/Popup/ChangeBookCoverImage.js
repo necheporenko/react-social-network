@@ -22,14 +22,8 @@ export default class ChangeBookCoverImage extends Component {
       showPopup: false,
       file: '',
       coverBook: coverBook,
-      scale: 1.2,
-      rotate: 0,
-      border: 0,
       preview: null,
-      width: 460,
-      height: 200,
-      picture: 'http://devianmbanks.validbook.org/cdn/stories_images/713/original.jpg',
-      test: '',
+      picture: '',
       // qwerty,
     };
     this.Close = this.Close.bind(this);
@@ -105,12 +99,12 @@ export default class ChangeBookCoverImage extends Component {
                 image={currentImage}
                 width={568}
                 height={200}
-                border={0}
+                border={20}
                 color={[255, 255, 255, 0.6]} // RGBA
                 scale={parseFloat(this.state.scale)}
                 rotate={0}
                 onSave={this.handleSave}
-                />
+              />
             </div>
 
 
@@ -123,15 +117,15 @@ export default class ChangeBookCoverImage extends Component {
                 min="1"
                 max="2"
                 step="0.01"
-                defaultValue="1"
+                defaultValue="1.2"
               />
-            <div style={{display: 'none'}}>
-              <br />
-              <input type="button" onClick={this.handleSave} value="Preview" />
-              <br />
-              <p>IMG</p>
-              <img src={bookCover} />
-            </div>
+            {/*<div style={{display: 'none'}}>*/}
+            {/*<br />*/}
+            {/*<input type="button" onClick={this.handleSave} value="Preview" />*/}
+            {/*<br />*/}
+            {/*<p>IMG</p>*/}
+            {/*<img src={bookCover} />*/}
+            {/*</div>*/}
 
           </Modal.Body>
 
@@ -157,5 +151,5 @@ export default class ChangeBookCoverImage extends Component {
 }
 
 ChangeBookCoverImage.propTypes = {
-
+  showPopUp: PropTypes.func,
 };

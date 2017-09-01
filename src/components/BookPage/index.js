@@ -284,11 +284,12 @@ export default class BookPage extends Component {
 
             <div className="book-counter">
               <ul>
-                <li><i className="infobook-icon-visibility"/> · {counters.stories} · <i className="stories-icon-sm"/>
+                <li><i className="infobook-icon-visibility"/> · <span
+                  style={{padding: '0 4px'}}>{counters.stories}</span><i className="stories-icon-sm"/>·
                 </li>
-                <li><span>{counters.sub_books}</span>· <i className="subbooks-icon-sm"/></li>
-                <li><span>{counters.follows_book}</span>· <i className="followers-icon-sm"/></li>
-                <li><span>0</span>· <i className="photos-icon-sm"/></li>
+                <li><span>{counters.sub_books}</span><i className="subbooks-icon-sm"/>·</li>
+                <li><span>{counters.follows_book}</span><i className="followers-icon-sm"/>·</li>
+                <li><span>0</span><i className="photos-icon-sm"/></li>
 
 
                 {/*<div className="followers">*/}
@@ -606,8 +607,4 @@ BookPage.propTypes = {
   requestedUser: PropTypes.object,
   bookTreeArr: PropTypes.array,
   bookSettings: PropTypes.object,
-};
-
-BookPage.defaultProps = {
-  name: 'Book name'
 };

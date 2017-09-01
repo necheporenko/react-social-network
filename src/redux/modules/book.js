@@ -25,6 +25,7 @@ const UPLOAD_BOOK_COVER_SUCCESS = 'UPLOAD_BOOK_COVER_SUCCESS';
 const UPLOAD_BOOK_COVER_FAIL = 'UPLOAD_BOOK_COVER_FAIL';
 const CLEAR_BOOKSTORIES = 'CLEAR_BOOKSTORIES';
 const CLEAR_BOOKTREE = 'CLEAR_BOOKTREE';
+const UPLOAD_BOOK_COVER_BASE64 = 'UPLOAD_BOOK_COVER_BASE64';
 // const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
 
 const initialState = {
@@ -222,10 +223,14 @@ export default function bookReducer(state = initialState, action) {
         uploading: true,
       };
     case UPLOAD_BOOK_COVER_SUCCESS:
+      const updateBookCoverImg = Object.assign({}, state.bookPage, {
+        cover: action.result.data
+      });
+
       return {
         ...state,
         uploading: false,
-        bookCover: action.result.data.url,
+        bookPage: updateBookCoverImg,
       };
     case UPLOAD_BOOK_COVER_FAIL:
       return {
@@ -233,6 +238,19 @@ export default function bookReducer(state = initialState, action) {
         uploading: false,
         error: action.error,
       };
+
+    case UPLOAD_BOOK_COVER_BASE64: {
+      const updateUserCoverBase64 = Object.assign({}, state.authorizedUser, {
+        cover: action.userCoverBase64
+      });
+      // const updateUserCoverBase64 = state.authorizedUser;
+      // updateUserCoverBase64.cover = action.userCoverBase64;
+
+      return {
+        ...state,
+        authorizedUser: updateUserCoverBase64
+      };
+    }
 
     case CLEAR_BOOKSTORIES:
       return {
