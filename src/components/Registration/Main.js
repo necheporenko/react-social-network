@@ -48,10 +48,10 @@ export default class New extends Component {
       .then(() => this.props.loadBookTree(this.props.authorizedUser.slug));
   }
 
-  // handleAuth(data) {
-  //   console.log(data);
-  //   this.setState({ authEmail: data.email, authPass: data.password });
-  // }
+  handleAuth(data) {
+    console.log(data);
+    this.setState({authEmail: data.email, authPass: data.password});
+  }
 
   invalid() {
     console.log('error');
