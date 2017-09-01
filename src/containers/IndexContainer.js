@@ -62,10 +62,12 @@ import MainPage from '../components/MainPage';
 
 export default class IndexContainer extends Component {
   componentDidMount() {
-    this.props.showChannel(this.isMashUp())
-      .then(this.props.loadChannels())
-      .then(this.props.loadWhoToFollow())
-      .then(this.props.loadBookTree());
+    if (this.props.isAuthenticated) {
+      this.props.showChannel(this.isMashUp())
+        .then(this.props.loadChannels())
+        .then(this.props.loadWhoToFollow())
+        .then(this.props.loadBookTree());
+    }
   }
 
   isMashUp() {

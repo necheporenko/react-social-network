@@ -112,7 +112,7 @@ export default class Navigation extends Component {
           >
             <Link // to="/messages/new"
             >
-              <div><i/>Chat</div>
+              <div>Chat<i/></div>
             </Link>
           </div>
           }

@@ -22,9 +22,11 @@ class InfoBloks extends Component {
           following={this.props.following}
           followers={this.props.followers}
           people={this.props.people}
+          requestedUser={this.props.requestedUser}
         />
         <Photos
           loaded={this.props.loaded}
+          requestedUser={this.props.requestedUser}
         />
       </div>
     );
@@ -32,6 +34,7 @@ class InfoBloks extends Component {
 }
 
 InfoBloks.propTypes = {
+  requestedUser: PropTypes.object,
   requestedUserProfile: PropTypes.object,
   followers: PropTypes.shape({
     users: PropTypes.array

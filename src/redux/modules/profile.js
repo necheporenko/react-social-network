@@ -857,7 +857,7 @@ export function socketUserNotification(data) {
 }
 
 export function getCountSeenNotification(user_id) {
-  console.log('user_id redux', user_id);
+  // console.log('user_id redux', user_id);
   return {
     types: [GET_COUNT_NOTIFICATIONS, GET_COUNT_NOTIFICATIONS_SUCCESS, GET_COUNT_NOTIFICATIONS_FAIL],
     promise: (client) => client.get('/notifications/count-new', { params: { user_id }})

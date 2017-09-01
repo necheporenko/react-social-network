@@ -78,7 +78,7 @@ class App extends Component {
 
   componentDidMount() {
     this.props.hideLoading();
-    this.props.getCountSeenNotification(this.props.authorizedUser.id);
+    this.props.isAuthenticated && this.props.getCountSeenNotification(this.props.authorizedUser.id);
     this.favicon = document.getElementById('favicon');
   }
 

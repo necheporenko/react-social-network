@@ -1,12 +1,13 @@
 import React from 'react';
+import {Link} from 'react-router';
 
-const Photos = ({loaded}) => {
+const Photos = ({loaded, requestedUser}) => {
   return (
     loaded.loadedPeopleBlock &&
     <div className="infoblocks-photos">
       <div className="title-infoblocks">
         <span className="photos-icon"/>
-        <a href="#">Photos </a>
+        <Link to={`/${requestedUser.slug}/photos`}>Photos</Link>
       </div>
 
       <div className="photos-gallery">

@@ -111,6 +111,7 @@ class StoryLine extends Component {
             }}
           >
             <InfoBloks
+              requestedUser={this.props.requestedUser}
               requestedUserProfile={this.props.requestedUserProfile}
               following={this.props.following}
               followers={this.props.followers}
