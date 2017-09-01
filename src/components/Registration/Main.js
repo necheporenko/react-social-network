@@ -11,6 +11,10 @@ const facebook_id = '562706323765481';
 export default class New extends Component {
   constructor(props) {
     super(props);
+    // this.state = {
+    //   authEmail: '',
+    //   authPass: ''
+    // };
 
     this.onFormShow = this.onFormShow.bind(this);
     // this.handleAuth = this.handleAuth.bind(this);
@@ -48,10 +52,10 @@ export default class New extends Component {
       .then(() => this.props.loadBookTree(this.props.authorizedUser.slug));
   }
 
-  handleAuth(data) {
-    console.log(data);
-    this.setState({authEmail: data.email, authPass: data.password});
-  }
+  // handleAuth(data) {
+  //   console.log(data);
+  //   this.setState({authEmail: data.email, authPass: data.password});
+  // }
 
   invalid() {
     console.log('error');
@@ -110,7 +114,7 @@ export default class New extends Component {
                   <Form
                     onValidSubmit={this.onSubmitSignInForm}
                     onInvalidSubmit={this.invalid}
-                    onChange={this.handleAuth}
+                    // onChange={this.handleAuth}
                     rowClassName={[{'form-group': false}, {row: false}, 'registration-wrap-form']}
                   >
                     <FormSignIn
