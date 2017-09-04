@@ -26,6 +26,9 @@ const UPLOAD_BOOK_COVER_FAIL = 'UPLOAD_BOOK_COVER_FAIL';
 const CLEAR_BOOKSTORIES = 'CLEAR_BOOKSTORIES';
 const CLEAR_BOOKTREE = 'CLEAR_BOOKTREE';
 const UPLOAD_BOOK_COVER_BASE64 = 'UPLOAD_BOOK_COVER_BASE64';
+const VIEW_MORE_COMMENTS = 'VIEW_MORE_COMMENTS';
+const VIEW_MORE_COMMENTS_SUCCESS = 'VIEW_MORE_COMMENTS_SUCCESS';
+const VIEW_MORE_COMMENTS_FAIL = 'VIEW_MORE_COMMENTS_FAIL';
 // const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
 
 const initialState = {
@@ -87,13 +90,15 @@ export default function bookReducer(state = initialState, action) {
         loadedBookStories: true,
       });
 
+      const dataStories = action.result.data.stories;
+      dataStories.map(story => story.paginationComment = 2);
+
       return {
         ...state,
         loaded,
-        // book_slug: action.book_slug,
         bookPage: action.result.data,
         book_slug: action.book_slug,
-        bookStories: action.result.data.stories,
+        bookStories: dataStories,
         bookSettings: action.result.data.settings,
       };
     case SHOW_BOOK_FAIL:
@@ -269,6 +274,38 @@ export default function bookReducer(state = initialState, action) {
         loaded
       };
 
+    case VIEW_MORE_COMMENTS: {
+      return {
+        ...state,
+      };
+    }
+    case VIEW_MORE_COMMENTS_SUCCESS: {
+      const viewNextComments = state.bookStories.map(story => {
+        if (story.id === action.entity_id) {
+          return {
+            ...story,
+            comments: [...action.result.data, ...story.comments],
+            paginationComment: story.paginationComment + 1,
+            counts: {
+              comments: story.counts.comments - 4
+            },
+          };
+        }
+        return {
+          ...story
+        };
+      });
+      return {
+        ...state,
+        bookStories: viewNextComments
+      };
+    }
+    case VIEW_MORE_COMMENTS_FAIL: {
+      return {
+        ...state,
+      };
+    }
+
     default:
       return state;
   }
@@ -364,5 +401,13 @@ export function uploadBookCoverBase64(bookCoverBase64) {
   return {
     type: UPLOAD_BOOK_COVER_BASE64,
     bookCoverBase64
+  };
+}
+
+export function viewMoreComments(entity_id, paginationComment) {
+  return {
+    types: [VIEW_MORE_COMMENTS, VIEW_MORE_COMMENTS_SUCCESS, VIEW_MORE_COMMENTS_FAIL],
+    promise: (client) => client.get('/comments/story', {params: {page: paginationComment, entity_id}}),
+    entity_id
   };
 }

@@ -35,6 +35,9 @@ const UPDATE_COMMENT_FAIL = 'UPDATE_COMMENT_FAIL';
 const DELETE_COMMENT = 'DELETE_COMMENT';
 const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
 const DELETE_COMMENT_FAIL = 'DELETE_COMMENT_FAIL';
+const VIEW_MORE_COMMENTS = 'VIEW_MORE_COMMENTS';
+const VIEW_MORE_COMMENTS_SUCCESS = 'VIEW_MORE_COMMENTS_SUCCESS';
+const VIEW_MORE_COMMENTS_FAIL = 'VIEW_MORE_COMMENTS_FAIL';
 const CLEAR_STORIES = 'CLEAR_STORIES';
 
 
@@ -62,11 +65,14 @@ export default function storyReducer(state = initialState, action) {
         stories: true,
       });
 
+      const dataStories = action.result.data;
+      dataStories.map(story => story.paginationComment = 2);
+
       return {
         ...state,
         loading: false,
         loaded,
-        storiesArr: action.result.data,
+        storiesArr: dataStories,
         paginationStory: 1,
       };
     case LOAD_SHOW_USER_STORIES_FAIL:
@@ -198,11 +204,18 @@ export default function storyReducer(state = initialState, action) {
     case SET_VISIBILITY_STORY_SUCCESS: {
       const visibilityStory = state.storiesArr.map((story) => {
         if (story.id === action.story_id) {
-          const visibilityObject = Object.assign(story);
-          visibilityObject.status = action.visibility_type;
+          // const visibilityObject = Object.assign({}, story, {
+          //   visibility: {
+          //     value: action.visibility_type
+          //   }
+          // });
           return {
             ...story,
-            visibility: visibilityObject
+            visibility: {
+              value: action.visibility_type,
+              users_custom_visibility: []
+            }
+            // visibility: visibilityObject
           };
         }
         return {
@@ -341,6 +354,38 @@ export default function storyReducer(state = initialState, action) {
       };
     }
 
+    case VIEW_MORE_COMMENTS: {
+      return {
+        ...state,
+      };
+    }
+    case VIEW_MORE_COMMENTS_SUCCESS: {
+      const viewNextComments = state.storiesArr.map(story => {
+        if (story.id === action.entity_id) {
+          return {
+            ...story,
+            comments: [...action.result.data, ...story.comments],
+            paginationComment: story.paginationComment + 1,
+            counts: {
+              comments: story.counts.comments - 4
+            },
+          };
+        }
+        return {
+          ...story
+        };
+      });
+      return {
+        ...state,
+        storiesArr: viewNextComments
+      };
+    }
+    case VIEW_MORE_COMMENTS_FAIL: {
+      return {
+        ...state,
+      };
+    }
+
     case UPDATE_COMMENT: {
       return {
         ...state,
@@ -420,11 +465,11 @@ export function loadNext(user_slug, paginationStory) {
   };
 }
 
-export function create(description, books, in_storyline, loud_type, visibility_type) {
+export function create(description, books, in_storyline, loud_type, visibility) {
   in_storyline = in_storyline ? 1 : 0;
   const in_channels = loud_type.in_channels;
   const in_books = loud_type.in_books;
-  const users_ids = [];
+  const users_custom_visibility = [];
   return {
     types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
     promise: (client) => client.post('/stories', {
@@ -434,8 +479,8 @@ export function create(description, books, in_storyline, loud_type, visibility_t
         in_storyline,
         in_channels,
         in_books,
-        visibility_type,
-        users_ids
+        visibility,
+        users_custom_visibility
       }
     })
   };
@@ -470,9 +515,15 @@ export function relogStory(story_id, books) {
 }
 
 export function setVisibilityStory(visibility_type, story_id) {
+  const users_custom_visibility = [];
   return {
     types: [SET_VISIBILITY_STORY, SET_VISIBILITY_STORY_SUCCESS, SET_VISIBILITY_STORY_FAIL],
-    promise: (client) => client.post('/stories/visibility', {data: {visibility_type, story_id}}),
+    promise: (client) => client.post(`/stories/${story_id}/update-visibility`, {
+      data: {
+        visibility: visibility_type,
+        users_custom_visibility
+      }
+    }),
     visibility_type,
     story_id
   };
@@ -511,6 +562,14 @@ export function createComment(entity_id, content, parent_id, created_by) {
         created_by  //auth_id
       }
     })
+  };
+}
+
+export function viewMoreComments(entity_id, paginationComment) {
+  return {
+    types: [VIEW_MORE_COMMENTS, VIEW_MORE_COMMENTS_SUCCESS, VIEW_MORE_COMMENTS_FAIL],
+    promise: (client) => client.get('/comments/story', {params: {page: paginationComment, entity_id}}),
+    entity_id
   };
 }
 

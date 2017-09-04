@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
-import { like as likePostBook } from '../../../redux/modules/book';
+import {like as likePostBook, viewMoreComments as viewMoreCommentsBook} from '../../../redux/modules/book';
 import Sbox from './Sbox';
 import Post from '../Post/index';
 import Loader from '../../Common/Loader';
@@ -14,7 +14,8 @@ import './index.scss';
   isAuthenticated: state.user.isAuthenticated,
   loaded: state.book.loaded,
 }), {
-  likePostBook
+  likePostBook,
+  viewMoreCommentsBook
 })
 
 export default class BookStream extends Component {
@@ -22,6 +23,7 @@ export default class BookStream extends Component {
     super(props);
     this.load = this.load.bind(this);
     this.like = this.like.bind(this);
+    this.showMoreComments = this.showMoreComments.bind(this);
     this.reloadStreamBook = this.reloadStreamBook.bind(this);
   }
 
@@ -37,6 +39,10 @@ export default class BookStream extends Component {
 
   like(id) {
     this.props.likePostBook(id);
+  }
+
+  showMoreComments(id, paginationComment) {
+    this.props.viewMoreCommentsBook(id, paginationComment);
   }
 
   render() {
@@ -81,7 +87,10 @@ export default class BookStream extends Component {
                 loudness={story.loudness}
                 visibility={story.visibility}
                 comments={story.comments}
+                paginationComment={story.paginationComment}
+                counts={story.counts}
                 likeFunc={this.like}
+                showMoreCommentsFunc={this.showMoreComments}
                 authorizedUser={this.props.authorizedUser}
                 requestedUser={this.props.requestedUser}
               />
@@ -107,4 +116,5 @@ BookStream.propTypes = {
   pagination: PropTypes.number,
   likePostBook: PropTypes.func,
   showBookStories: PropTypes.func,
+  viewMoreCommentsBook: PropTypes.func,
 };

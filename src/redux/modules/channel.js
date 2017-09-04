@@ -14,6 +14,9 @@ const HEADER_CHANNEL_NAME = 'HEADER_CHANNEL_NAME';
 const LIKE_STORY = 'LIKE_STORY';
 const LIKE_STORY_SUCCESS = 'LIKE_STORY_SUCCESS';
 const LIKE_STORY_FAIL = 'LIKE_STORY_FAIL';
+const VIEW_MORE_COMMENTS = 'VIEW_MORE_COMMENTS';
+const VIEW_MORE_COMMENTS_SUCCESS = 'VIEW_MORE_COMMENTS_SUCCESS';
+const VIEW_MORE_COMMENTS_FAIL = 'VIEW_MORE_COMMENTS_FAIL';
 
 
 const initialState = {
@@ -69,6 +72,9 @@ export default function channelReducer(state = initialState, action) {
         }
       };
     case LOAD_CHANNEL_SUCCESS:
+      const dataStories = action.result.data.stories;
+      dataStories.map(story => story.paginationComment = 2);
+
       return {
         ...state,
         loading: {
@@ -78,7 +84,7 @@ export default function channelReducer(state = initialState, action) {
           loadedChannelStories: action.result.status === 'success' && true
         },
         channel_slug: action.channel_slug,
-        channelStories: action.result.data.stories,
+        channelStories: dataStories,
       };
     case LOAD_CHANNEL_FAIL:
       return {
@@ -172,6 +178,38 @@ export default function channelReducer(state = initialState, action) {
       };
     }
 
+    case VIEW_MORE_COMMENTS: {
+      return {
+        ...state,
+      };
+    }
+    case VIEW_MORE_COMMENTS_SUCCESS: {
+      const viewNextComments = state.channelStories.map(story => {
+        if (story.id === action.entity_id) {
+          return {
+            ...story,
+            comments: [...action.result.data, ...story.comments],
+            paginationComment: story.paginationComment + 1,
+            counts: {
+              comments: story.counts.comments - 4
+            },
+          };
+        }
+        return {
+          ...story
+        };
+      });
+      return {
+        ...state,
+        channelStories: viewNextComments
+      };
+    }
+    case VIEW_MORE_COMMENTS_FAIL: {
+      return {
+        ...state,
+      };
+    }
+
     default:
       return state;
   }
@@ -253,5 +291,13 @@ export function like(story_id) {
     types: [LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_FAIL],
     story_id,
     promise: (client) => client.post('/like/story', { data: { story_id }})
+  };
+}
+
+export function viewMoreComments(entity_id, paginationComment) {
+  return {
+    types: [VIEW_MORE_COMMENTS, VIEW_MORE_COMMENTS_SUCCESS, VIEW_MORE_COMMENTS_FAIL],
+    promise: (client) => client.get('/comments/story', {params: {page: paginationComment, entity_id}}),
+    entity_id
   };
 }

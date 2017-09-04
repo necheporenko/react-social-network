@@ -60,6 +60,8 @@
     "camelcase": "off", //add
     "object-shorthand": "off", //add
     "object-curly-spacing": "off", //add
+    "no-return-assign": "off"
+    //add
   },
   "plugins": [
     "react",

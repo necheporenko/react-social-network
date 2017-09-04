@@ -1,18 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
-import { like as likePostChannel } from '../../../redux/modules/channel';
+import {like as likePostChannel, viewMoreComments as viewMoreCommentsChannel} from '../../../redux/modules/channel';
 import Sbox from './Sbox';
 import Post from '../Post/index';
 import './index.scss';
-
 
 @connect((state) => ({
   over: state.channel.over,
   channel_slug: state.channel.channel_slug,
   pagination: state.channel.pagination
 }), {
-  likePostChannel
+  likePostChannel,
+  viewMoreCommentsChannel
 })
 
 export default class ChannelStream extends Component {
@@ -20,6 +20,7 @@ export default class ChannelStream extends Component {
     super(props);
     this.load = this.load.bind(this);
     this.like = this.like.bind(this);
+    this.showMoreComments = this.showMoreComments.bind(this);
     this.reloadStreamChannel = this.reloadStreamChannel.bind(this);
   }
 
@@ -35,6 +36,10 @@ export default class ChannelStream extends Component {
 
   like(id) {
     this.props.likePostChannel(id);
+  }
+
+  showMoreComments(id, paginationComment) {
+    this.props.viewMoreCommentsChannel(id, paginationComment);
   }
 
   render() {
@@ -75,7 +80,10 @@ export default class ChannelStream extends Component {
               loudness={story.loudness}
               visibility={story.visibility}
               comments={story.comments}
+              paginationComment={story.paginationComment}
+              counts={story.counts}
               likeFunc={this.like}
+              showMoreCommentsFunc={this.showMoreComments}
               authorizedUser={this.props.authorizedUser}
               requestedUser={this.props.requestedUser}
             />
@@ -88,6 +96,7 @@ export default class ChannelStream extends Component {
 
 ChannelStream.propTypes = {
   authorizedUser: PropTypes.object,
+  requestedUser: PropTypes.object,
   createStory: PropTypes.func,
   channelStories: PropTypes.array,
   over: PropTypes.bool,
@@ -95,4 +104,6 @@ ChannelStream.propTypes = {
   channel_slug: PropTypes.string,
   pagination: PropTypes.number,
   likePostChannel: PropTypes.func,
+  viewMoreCommentsChannel: PropTypes.func,
+  showChannel: PropTypes.func,
 };

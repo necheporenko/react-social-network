@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
-import {like as likePostStoryline} from '../../../redux/modules/story';
+import {like as likePostStoryline, viewMoreComments as viewMoreCommentsStoryline} from '../../../redux/modules/story';
 import Sbox from './Sbox';
 import Post from '../Post/index';
 import Loader from '../../Common/Loader';
@@ -14,7 +14,8 @@ import './index.scss';
   paginationStory: state.story.paginationStory,
   loaded: state.story.loaded,
 }), {
-  likePostStoryline
+  likePostStoryline,
+  viewMoreCommentsStoryline
 })
 
 class Stream extends Component {
@@ -22,6 +23,7 @@ class Stream extends Component {
     super(props);
     this.load = this.load.bind(this);
     this.like = this.like.bind(this);
+    this.showMoreComments = this.showMoreComments.bind(this);
     this.reloadStreamStoryline = this.reloadStreamStoryline.bind(this);
   }
 
@@ -37,6 +39,10 @@ class Stream extends Component {
 
   like(id) {
     this.props.likePostStoryline(id);
+  }
+
+  showMoreComments(id, paginationComment) {
+    this.props.viewMoreCommentsStoryline(id, paginationComment);
   }
 
   render() {
@@ -73,7 +79,10 @@ class Stream extends Component {
                 loudness={story.loudness}
                 visibility={story.visibility}
                 comments={story.comments}
+                paginationComment={story.paginationComment}
+                counts={story.counts}
                 likeFunc={this.like}
+                showMoreCommentsFunc={this.showMoreComments}
                 authorizedUser={this.props.authorizedUser}
                 requestedUser={this.props.requestedUser}
               />
@@ -99,7 +108,7 @@ Stream.propTypes = {
   requestedUser: PropTypes.object,
   likePostStoryline: PropTypes.func,
   isAuthenticated: PropTypes.bool,
-  paginationStory: PropTypes.number,
+  viewMoreCommentsStoryline: PropTypes.func,
 };
 
 export default Stream;

@@ -1,11 +1,10 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { like as likePost, setVisibilityStory, deleteStory, pinStory, createComment } from '../../../redux/modules/story';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {like as likePost, setVisibilityStory, deleteStory, pinStory, createComment} from '../../../redux/modules/story';
 import PostHeader from './PostHeader';
 import PostFooter from './PostFooter';
 
-@connect((state) => ({
-}), {
+@connect((state) => ({}), {
   likePost,
   setVisibilityStory,
   deleteStory,
@@ -28,7 +27,7 @@ export default class Post extends Component {
   }
 
   render() {
-    const { post, images } = this.props;
+    const {post, images} = this.props;
 
     // const tooltip = (props) => (
     //
@@ -76,10 +75,10 @@ export default class Post extends Component {
             </div> */}
             {/*{ images && images.map}*/}
 
-            { images &&
-              <div className="post-content-type-image">
-                <img src={images[0]}/>
-              </div>
+            {images &&
+            <div className="post-content-type-image">
+              <img src={images[0]}/>
+            </div>
             }
 
             {/*<div className="post-content-type-link">
@@ -139,8 +138,11 @@ export default class Post extends Component {
           likes={this.props.likes}
           id={this.props.id}
           comments={this.props.comments}
+          paginationComment={this.props.paginationComment}
+          counts={this.props.counts}
           post={this.props.post}
           likeFunc={this.props.likeFunc}
+          showMoreCommentsFunc={this.props.showMoreCommentsFunc}
         />
 
       </div>
@@ -162,4 +164,7 @@ Post.propTypes = {
   visibility: PropTypes.object,
   createComment: PropTypes.func,
   likeFunc: PropTypes.func,
+  paginationComment: PropTypes.number,
+  counts: PropTypes.object,
+  showMoreCommentsFunc: PropTypes.func,
 };

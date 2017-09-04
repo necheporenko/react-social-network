@@ -1,19 +1,20 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {connect} from 'react-redux';
 import Textarea from 'react-textarea-autosize';
-import { ShareButtons } from 'react-share';
-import { Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton } from 'react-bootstrap';
-import { like as likePost, createComment } from '../../../redux/modules/story';
+import {ShareButtons} from 'react-share';
+import {Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton} from 'react-bootstrap';
+import {like as likePost, createComment, viewMoreComments} from '../../../redux/modules/story';
 import LogStory from '../../Popup/Log';
 
-const { FacebookShareButton, TwitterShareButton } = ShareButtons;
+const {FacebookShareButton, TwitterShareButton} = ShareButtons;
 
 @connect((state) => ({
   creatingNewComment: state.story.creatingNewComment
 }), {
   likePost,
   createComment,
+  viewMoreComments
 })
 
 class PostFooter extends Component {
@@ -30,6 +31,7 @@ class PostFooter extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.reply = this.reply.bind(this);
     this.replyComments = this.replyComments.bind(this);
+    // this.showMoreComments = this.showMoreComments.bind(this);
   }
 
   // componentWillUpdate(nextProps, nextState) {}
@@ -43,10 +45,11 @@ class PostFooter extends Component {
   }
 
   Close() {
-    this.setState({ showModal: false });
+    this.setState({showModal: false});
   }
+
   Open() {
-    this.setState({ showModal: true });
+    this.setState({showModal: true});
   }
 
   loadLikeInfo(people_list) {
@@ -108,7 +111,7 @@ class PostFooter extends Component {
     // } else {
     //   this.setState({ parent_id: id, showReply: !this.state.showReply });
     // }
-    this.setState({ parent_id: id, showReply: !this.state.showReply });
+    this.setState({parent_id: id, showReply: !this.state.showReply});
   }
 
   replyComments(comments) {
@@ -143,27 +146,30 @@ class PostFooter extends Component {
 
     treeOfComments(comments);
     // console.log(obj)
-
     return arrResult.map((comment) => (
       <div className="comment" key={comment.id} style={{marginLeft: comment.right}}>
         <img src={comment.user.avatar32} alt=""/>
         <div className="text-block" style={{width: `calc(100% - ${comment.right}px)`}}>
           <p><Link>{`${comment.user.first_name} ${comment.user.last_name}`}</Link>{comment.content}</p>
-          <span className="reply" onClick={() => this.reply(comment.id)}>Reply Y{comment.right}</span><span> · </span><span
-            className="date">{comment.date}</span>
+          <span
+            className="reply"
+            onClick={() => this.reply(comment.id)}>Reply{comment.right}
+          </span>
+          <span> · </span>
+          <span className="date">{comment.date}</span>
 
           {/* REPLY COMMENT */}
-          { this.state.parent_id === comment.id &&
-            <div
-              className="reply-comment"
-              style={{display: this.state.showReply ? 'flex' : 'none', width: `calc(100% - ${comment.right}px)`}}
-            >
-              <img src={this.props.authorizedUser.avatar32} alt=""/>
-              <Textarea
-                placeholder="Write a reply..."
-                onKeyDown={this.handleKeyPress}
-              />
-            </div>
+          {this.state.parent_id === comment.id &&
+          <div
+            className="reply-comment"
+            style={{display: this.state.showReply ? 'flex' : 'none', width: `calc(100% - ${comment.right}px)`}}
+          >
+            <img src={this.props.authorizedUser.avatar32} alt=""/>
+            <Textarea
+              placeholder="Write a reply..."
+              onKeyDown={this.handleKeyPress}
+            />
+          </div>
           }
 
         </div>
@@ -185,11 +191,11 @@ class PostFooter extends Component {
   }
 
   render() {
-    const { likes, id, comments, post, authorizedUser } = this.props;
+    const {likes, id, comments, post, authorizedUser, paginationComment, counts} = this.props;
 
     const tooltipLike = (
-      <Tooltip id="tooltipLike" arrowOffsetLeft={10} >
-        { likes.people_list && likes.people_list.map((people) => (
+      <Tooltip id="tooltipLike" arrowOffsetLeft={10}>
+        {likes.people_list && likes.people_list.map((people) => (
           <div key={people.user.id}>{people.user.fullName}</div>
         ))}
       </Tooltip>
@@ -199,16 +205,18 @@ class PostFooter extends Component {
       <div>
         <div className="post-footer">
           {/*<div className="post-like post-like-active" onClick={() => this.like(id)}>*/}
-          <div className={!likes.is_liked ? 'post-like' : 'post-like post-like-active'} onClick={() => this.props.likeFunc(id)}>
-            <i className="post-action-icon" />
+          <div
+            className={!likes.is_liked ? 'post-like' : 'post-like post-like-active'}
+            onClick={() => this.props.likeFunc(id)}>
+            <i className="post-action-icon"/>
             <span>Like</span>
           </div>
           <div className="post-comment">
-            <i className="post-action-icon" />
+            <i className="post-action-icon"/>
             <span>Comment</span>
           </div>
           <div className="post-log">
-            <i className="post-action-icon" />
+            <i className="post-action-icon"/>
             <span>Log</span>
             <LogStory
               storyID={id}
@@ -216,7 +224,7 @@ class PostFooter extends Component {
           </div>
           <div className="post-share">
             <div className="wrapper" style={{position: 'relative'}}>
-              <i className="post-action-icon" />
+              <i className="post-action-icon"/>
               <span>Share</span>
               {/*<div className="list-of-social-share">*/}
               {/*<FacebookShareButton*/}
@@ -242,12 +250,10 @@ class PostFooter extends Component {
           </div>
         </div>
 
-        <div className="post-lc"
-             // style={{display: (likes.qty === 0) ? 'none' : 'block'}}
-        >
-          <div className="post-like-field" onClick={this.Open}>
-            <i className="post-action-icon" />
-            <OverlayTrigger placement="top" overlay={tooltipLike} id="tooltipLike" arrowOffsetLeft={200} >
+        <div className="post-lc">
+          <div className="post-like-field" onClick={this.Open} style={{display: likes.qty !== 0 ? 'block' : 'none'}}>
+            <i className="post-action-icon"/>
+            <OverlayTrigger placement="top" overlay={tooltipLike} id="tooltipLike" arrowOffsetLeft={200}>
               <span>
                 {this.loadLikeInfo(likes.people_list)}
               </span>
@@ -256,6 +262,14 @@ class PostFooter extends Component {
 
           <div className="post-comment-field" style={{display: (comments === 0) ? 'none' : 'block'}}>
             <div className="comments">
+              {counts.comments > 4 &&
+              <div
+                className="show-more-comments"
+                onClick={() => this.props.showMoreCommentsFunc(id, paginationComment)}
+              >
+                {`View ${counts.comments - 4} more comments`}
+              </div>
+              }
               {this.replyComments(comments)}
               {/*{ comments && comments.map((comment) => this.replyComments(comment))}*/}
               {/*<div className="comment" key={comment.id}>*/}
@@ -281,137 +295,137 @@ class PostFooter extends Component {
               {/*</div>*/}
 
               {/*<div className="comment" style={{paddingLeft: '30px'}}>*/}
-                {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
-                {/*<div className="text-block">*/}
-                  {/*<p><Link>User1 User2</Link>random text</p>*/}
-                  {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
-                {/*</div>*/}
-                {/*<ButtonToolbar>*/}
-                  {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
-                    {/*<li>*/}
-                      {/*<p>Edit Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Delete Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Report Comment</p>*/}
-                    {/*</li>*/}
-                  {/*</DropdownButton>*/}
-                {/*</ButtonToolbar>*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
+              {/*<div className="text-block">*/}
+              {/*<p><Link>User1 User2</Link>random text</p>*/}
+              {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
+              {/*</div>*/}
+              {/*<ButtonToolbar>*/}
+              {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
+              {/*<li>*/}
+              {/*<p>Edit Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Delete Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Report Comment</p>*/}
+              {/*</li>*/}
+              {/*</DropdownButton>*/}
+              {/*</ButtonToolbar>*/}
               {/*</div>*/}
               {/*<div className="comment" style={{paddingLeft: '60px'}}>*/}
-                {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
-                {/*<div className="text-block">*/}
-                  {/*<p><Link>User1 User2</Link>random text</p>*/}
-                  {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
-                {/*</div>*/}
-                {/*<ButtonToolbar>*/}
-                  {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
-                    {/*<li>*/}
-                      {/*<p>Edit Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Delete Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Report Comment</p>*/}
-                    {/*</li>*/}
-                  {/*</DropdownButton>*/}
-                {/*</ButtonToolbar>*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
+              {/*<div className="text-block">*/}
+              {/*<p><Link>User1 User2</Link>random text</p>*/}
+              {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
+              {/*</div>*/}
+              {/*<ButtonToolbar>*/}
+              {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
+              {/*<li>*/}
+              {/*<p>Edit Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Delete Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Report Comment</p>*/}
+              {/*</li>*/}
+              {/*</DropdownButton>*/}
+              {/*</ButtonToolbar>*/}
               {/*</div>*/}
               {/*<div className="comment" style={{paddingLeft: '90px'}}>*/}
-                {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
-                {/*<div className="text-block">*/}
-                  {/*<p><Link>User1 User2</Link>random text</p>*/}
-                  {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
+              {/*<div className="text-block">*/}
+              {/*<p><Link>User1 User2</Link>random text</p>*/}
+              {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
 
 
-                  {/*/!*  REPLY COMMENT *!/*/}
+              {/*/!*  REPLY COMMENT *!/*/}
 
 
-                  {/*<div className="reply-comment">*/}
-                    {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
-                    {/*<Textarea*/}
-                      {/*placeholder="Write a reply..."*/}
-                      {/*onKeyDown={this.handleKeyPress}*/}
-                  {/*/>*/}
-                  {/*</div>*/}
+              {/*<div className="reply-comment">*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
+              {/*<Textarea*/}
+              {/*placeholder="Write a reply..."*/}
+              {/*onKeyDown={this.handleKeyPress}*/}
+              {/*/>*/}
+              {/*</div>*/}
 
-                {/*</div>*/}
-                {/*<ButtonToolbar>*/}
-                  {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
-                    {/*<li>*/}
-                      {/*<p>Edit Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Delete Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Report Comment</p>*/}
-                    {/*</li>*/}
-                  {/*</DropdownButton>*/}
-                {/*</ButtonToolbar>*/}
+              {/*</div>*/}
+              {/*<ButtonToolbar>*/}
+              {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
+              {/*<li>*/}
+              {/*<p>Edit Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Delete Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Report Comment</p>*/}
+              {/*</li>*/}
+              {/*</DropdownButton>*/}
+              {/*</ButtonToolbar>*/}
               {/*</div>*/}
               {/*<div className="comment" style={{paddingLeft: '120px'}}>*/}
-                {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
-                {/*<div className="text-block">*/}
-                  {/*<p><Link>User1 User2</Link>random textrandom textrandom</p>*/}
-                  {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
-                {/*</div>*/}
-                {/*<ButtonToolbar>*/}
-                  {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
-                    {/*<li>*/}
-                      {/*<p>Edit Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Delete Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Report Comment</p>*/}
-                    {/*</li>*/}
-                  {/*</DropdownButton>*/}
-                {/*</ButtonToolbar>*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
+              {/*<div className="text-block">*/}
+              {/*<p><Link>User1 User2</Link>random textrandom textrandom</p>*/}
+              {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
+              {/*</div>*/}
+              {/*<ButtonToolbar>*/}
+              {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
+              {/*<li>*/}
+              {/*<p>Edit Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Delete Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Report Comment</p>*/}
+              {/*</li>*/}
+              {/*</DropdownButton>*/}
+              {/*</ButtonToolbar>*/}
               {/*</div>*/}
               {/*<div className="comment" style={{paddingLeft: '150px'}}>*/}
-                {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
-                {/*<div className="text-block">*/}
-                  {/*<p><Link>User1 User2</Link>random textrandom textrandom </p>*/}
-                  {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
-                {/*</div>*/}
-                {/*<ButtonToolbar>*/}
-                  {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
-                    {/*<li>*/}
-                      {/*<p>Edit Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Delete Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Report Comment</p>*/}
-                    {/*</li>*/}
-                  {/*</DropdownButton>*/}
-                {/*</ButtonToolbar>*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
+              {/*<div className="text-block">*/}
+              {/*<p><Link>User1 User2</Link>random textrandom textrandom </p>*/}
+              {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
+              {/*</div>*/}
+              {/*<ButtonToolbar>*/}
+              {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
+              {/*<li>*/}
+              {/*<p>Edit Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Delete Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Report Comment</p>*/}
+              {/*</li>*/}
+              {/*</DropdownButton>*/}
+              {/*</ButtonToolbar>*/}
               {/*</div>*/}
               {/*<div className="comment" style={{paddingLeft: '180px'}}>*/}
-                {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
-                {/*<div className="text-block">*/}
-                  {/*<p><Link>User1 User2</Link>random textrandom</p>*/}
-                  {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
-                {/*</div>*/}
-                {/*<ButtonToolbar>*/}
-                  {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
-                    {/*<li>*/}
-                      {/*<p>Edit Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Delete Comment</p>*/}
-                    {/*</li>*/}
-                    {/*<li>*/}
-                      {/*<p>Report Comment</p>*/}
-                    {/*</li>*/}
-                  {/*</DropdownButton>*/}
-                {/*</ButtonToolbar>*/}
+              {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
+              {/*<div className="text-block">*/}
+              {/*<p><Link>User1 User2</Link>random textrandom</p>*/}
+              {/*<span className="reply">Reply</span><span> · </span><span className="date">10 Jul 2017</span>*/}
+              {/*</div>*/}
+              {/*<ButtonToolbar>*/}
+              {/*<DropdownButton className="profileMenu-btn" title={''} id={7} noCaret pullRight >*/}
+              {/*<li>*/}
+              {/*<p>Edit Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Delete Comment</p>*/}
+              {/*</li>*/}
+              {/*<li>*/}
+              {/*<p>Report Comment</p>*/}
+              {/*</li>*/}
+              {/*</DropdownButton>*/}
+              {/*</ButtonToolbar>*/}
               {/*</div>*/}
             </div>
 
@@ -431,10 +445,10 @@ class PostFooter extends Component {
           </Modal.Header>
 
           <Modal.Body>
-            { likes.people_list.map((people) => (
+            {likes.people_list.map((people) => (
               <div key={people.user.id} className="people-like-card">
                 <Link to={people.user.slug}>
-                  <img src={people.user.avatar} />
+                  <img src={people.user.avatar}/>
                   <div>{people.user.fullName}</div>
                 </Link>
               </div>
@@ -456,6 +470,9 @@ PostFooter.propTypes = {
   comments: PropTypes.array,
   authorizedUser: PropTypes.object,
   creatingNewComment: PropTypes.bool,
+  showMoreCommentsFunc: PropTypes.func,
+  paginationComment: PropTypes.number,
+  counts: PropTypes.object,
 };
 
 export default PostFooter;

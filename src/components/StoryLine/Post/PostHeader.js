@@ -74,7 +74,6 @@ class PostHeader extends Component {
   }
 
   setVisibility(visibility_type, story_id) {
-    console.log('setVisibility11111', visibility_type, story_id);
     this.props.setVisibilityStory(visibility_type, story_id);
   }
 
@@ -106,8 +105,8 @@ class PostHeader extends Component {
             <div className="post-details-date">{date.created}
               <div className="block-additional block-additional-date">
                 <div>{`Created on: ${date.exactCreated}`}</div>
-                <div>{`Started on: ${date.startedOn}`}</div>
-                <div>{date.completedOn && `Completed on: ${date.completedOn}`}</div>
+                {/*<div>{`Started on: ${date.startedOn}`}</div>*/}
+                {/*<div>{date.completedOn && `Completed on: ${date.completedOn}`}</div>*/}
               </div>
             </div>
 
@@ -134,7 +133,7 @@ class PostHeader extends Component {
                           <div onClick={() => this.setVisibility(0, id)}>
                             <input
                               type="checkbox" name="public_visibility_story" id="public_visibility_story"
-                              defaultChecked={visibility.value === 0}/>
+                              checked={visibility.value === 0}/> {/*not defaultChecked*/}
                             <label htmlFor={'public_visibility_story'}><span/></label>
                             <div>
                               <i className="public_icon"/>
@@ -146,7 +145,7 @@ class PostHeader extends Component {
                           <div onClick={() => this.setVisibility(1, id)}>
                             <input
                               type="checkbox" name="private_visibility_story" id="private_visibility_story"
-                              defaultChecked={visibility.value === 1}/>
+                              checked={visibility.value === 1}/>
                             <label htmlFor={'private_visibility_story'}><span/></label>
                             <div>
                               <i className="private_icon"/>
@@ -158,7 +157,7 @@ class PostHeader extends Component {
                           <div onClick={() => this.setVisibility(2, id)}>
                             <input
                               type="checkbox" name="custom_visibility_story" id="custom_visibility_story"
-                              defaultChecked={visibility.value === 2}/>
+                              checked={visibility.value === 2}/>
                             <label htmlFor={'custom_visibility_story'}><span/></label>
                             <div>
                               <i className="custom_icon"/>
