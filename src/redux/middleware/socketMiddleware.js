@@ -1,4 +1,10 @@
-import { socketUserNotification, socketGetMessage, socketLastMessage, getConversationByID, getConversationList } from '../../redux/modules/profile';
+import {
+  socketUserNotification,
+  socketGetMessage,
+  socketLastMessage,
+  getConversationByID,
+  getConversationList
+} from '../../redux/modules/profile';
 
 export default function socketMiddleware() {
   const onMessage = (ws, store) => evt => {

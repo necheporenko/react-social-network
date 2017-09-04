@@ -1,12 +1,12 @@
-import React, { PureComponent, PropTypes } from 'react';
-import { Link } from 'react-router';
-import { connect } from 'react-redux';
+import React, {PureComponent, PropTypes} from 'react';
+import {Link} from 'react-router';
+import {connect} from 'react-redux';
 import draftToHtml from 'draftjs-to-html';
-import { convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import { ButtonToolbar, DropdownButton } from 'react-bootstrap';
+import {convertToRaw} from 'draft-js';
+import {Editor} from 'react-draft-wysiwyg';
+import {ButtonToolbar, DropdownButton} from 'react-bootstrap';
 import uploadImageCallBack from './uploadImageCallBack';
-import { create as createStory } from '../../../redux/modules/story';
+import {create as createStory} from '../../../redux/modules/story';
 import BookTreeForSboxContainer from '../../../containers/BookTreeForSboxContainer';
 import './draft-wysiwyg.scss';
 import './index.scss';
@@ -50,7 +50,7 @@ class Sbox extends PureComponent {
         private: false,
         custom: false
       },
-      visibility_type: 'public',
+      visibility_type: 0,
       visibilityIcon: 'public_icon'
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
@@ -216,7 +216,7 @@ class Sbox extends PureComponent {
               custom: false
             },
             visibilityIcon: 'public_icon',
-            visibility_type: 'public'
+            visibility_type: 0
           });
         }
         break;
@@ -230,7 +230,7 @@ class Sbox extends PureComponent {
               custom: false
             },
             visibilityIcon: 'private_icon',
-            visibility_type: 'private'
+            visibility_type: 1
           });
         }
         break;
@@ -244,7 +244,7 @@ class Sbox extends PureComponent {
               custom: true
             },
             visibilityIcon: 'custom_icon',
-            visibility_type: 'custom'
+            visibility_type: 2
           });
         }
         break;
@@ -274,8 +274,8 @@ class Sbox extends PureComponent {
 
   render() {
     console.log('Sbox');
-    const { editorContent } = this.state;
-    const { first_name, last_name, avatar32} = this.props.authorizedUser;
+    const {editorContent} = this.state;
+    const {first_name, last_name, avatar32} = this.props.authorizedUser;
     const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
 
     return (
@@ -314,12 +314,17 @@ class Sbox extends PureComponent {
         />
 
         <div className="sbox-user-avatar32" style={{top: this.state.jump, position: 'absolute', left: '20px'}}>
-          <Link to={link}><img src={avatar32} style={{
-            width: '32px',
-            height: '32px',
-            border: '1px solid #dddddd',
-            borderRadius: '50%'
-          }}/></Link>
+          <Link to={link}>
+            <img
+              src={avatar32}
+              style={{
+                width: '32px',
+                height: '32px',
+                border: '1px solid #dddddd',
+                borderRadius: '50%'
+              }}
+            />
+          </Link>
         </div>
         {/*<form onSubmit={this.test}>*/}
         <div className="sbox-footer">
@@ -328,8 +333,9 @@ class Sbox extends PureComponent {
               className="btn-brand"
               type="submit"
               onClick={this.onSubmitStory}
-              style={{fontSize: '13px', backgroundColor: this.state.sboxFocusBtn }}
-            >Log</div>
+              style={{fontSize: '13px', backgroundColor: this.state.sboxFocusBtn}}
+            >Log
+            </div>
             <ButtonToolbar>
               <DropdownButton
                 className="bootstrap-pure-btn"

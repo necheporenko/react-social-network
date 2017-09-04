@@ -129,6 +129,12 @@
       padding: 0;
     }
 
+    .bookstree {
+      .draggable-demo {
+        margin-left: 0;
+      }
+    }
+
     a {
       padding: 0 !important;
       padding-left: 15px !important;
@@ -452,7 +458,7 @@
 	border: 1px solid #D8D8D8;
 	border-radius: 1px;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
-  min-height: 200px;
+  min-height: 100px;
   margin-bottom: 20px;
   padding: 15px 20px;
   @include material;
@@ -857,7 +863,7 @@
   i {
     height: 13px;
     width: 16px;
-    background: url('http://devianmbanks.validbook.org/images/svg-icons/log.svg') center no-repeat;
+    background: url('../../../img/Icons/log.svg') center no-repeat;
     position: relative;
     top: 1px;
   }
@@ -878,7 +884,7 @@
     width: 14px;
     margin: 0 3px 0 0;
     vertical-align: middle;
-    background: url('http://devianmbanks.validbook.org/images/svg-icons/share.svg') center no-repeat;
+    background: url('../../../img/Icons/share.svg') center no-repeat;
   }
 
   .share-facebook {
@@ -946,9 +952,10 @@
   border-top: 1px solid rgba(217, 217, 217, 0.6);
 
   .post-like-field {
-    padding: 9px 0 0 20px;
+    margin: 9px 20px 0 20px;
     color: #1E88E5;
     height: 30px;
+    border-bottom: 1px solid #ddd;
 
     i {
       background: url("../../../img/Icons/like-active-sm.svg");
@@ -967,8 +974,19 @@
     padding: 0 20px;
 
     .comments {
-      border-top: 1px solid #ddd;
+      //border-top: 1px solid #ddd;
       //width: calc(100% - 13px);
+
+      .show-more-comments {
+        color: #1E88E5;
+        font-size: 12px;
+        padding-top: 8px;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
     .reply-comment {
