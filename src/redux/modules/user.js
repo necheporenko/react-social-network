@@ -174,7 +174,7 @@ export default function signReducer(state = initialState, action) {
       const preUser = Object.assign({}, state.requestedUser, {
         cover: null,
         avatar32: null,
-        avatar250: null,
+        avatar230: null,
         first_name: null,
         last_name: null,
         id: null,

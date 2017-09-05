@@ -267,7 +267,8 @@ class PostFooter extends Component {
                 className="show-more-comments"
                 onClick={() => this.props.showMoreCommentsFunc(id, paginationComment)}
               >
-                {`View ${counts.comments - 4} more comments`}
+                <p>View previous comments</p>
+                <p style={{color: '#90949d'}}>{`4 of ${counts.comments}`}</p>
               </div>
               }
               {this.replyComments(comments)}

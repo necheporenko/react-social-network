@@ -982,6 +982,8 @@
         font-size: 12px;
         padding-top: 8px;
         cursor: pointer;
+        display: flex;
+        justify-content: space-between;
 
         &:hover {
           text-decoration: underline;

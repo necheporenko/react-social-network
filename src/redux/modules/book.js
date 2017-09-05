@@ -78,11 +78,25 @@ export default function bookReducer(state = initialState, action) {
       };
 
     case SHOW_BOOK:
+      const preBook = Object.assign({}, state.bookPage, {
+        name: null,
+        description: null,
+        cover: {},
+        counters: {
+          stories: 0,
+          sub_books: 0,
+          follows_book: 0,
+          knockers: 0,
+        },
+        slug: null,
+      });
+
       return {
         ...state,
         loading: {
           loadingBookStories: true
         },
+        bookPage: action.book_slug !== state.bookPage.slug ? preBook : state.bookPage,
         // bookStories: [],
       };
     case SHOW_BOOK_SUCCESS:

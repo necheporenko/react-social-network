@@ -287,7 +287,8 @@ export default class BookPage extends Component {
             </div>
 
             <div className="book-description">
-              <div>Description bla blabla bla bla bla blablabla bla!</div>
+              {/*<div>Description bla blabla bla bla bla blablabla bla!</div>*/}
+              <div>{description}</div>
             </div>
 
             <div className="book-counter">
