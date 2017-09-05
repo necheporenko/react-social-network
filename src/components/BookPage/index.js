@@ -286,10 +286,12 @@ export default class BookPage extends Component {
               <h5>{name}</h5>
             </div>
 
+            {description !== '' &&
             <div className="book-description">
               {/*<div>Description bla blabla bla bla bla blablabla bla!</div>*/}
               <div>{description}</div>
             </div>
+            }
 
             <div className="book-counter">
               <ul>
@@ -324,12 +326,11 @@ export default class BookPage extends Component {
                 {/*<p>Book 1</p>*/}
                 {/*</div>*/}
               </ul>
+              <div className="btn-following btn-following-book">
+                <div>Following Book</div>
+                <span/>
+              </div>
               <footer>
-                <div className="btn-following btn-following-book">
-                  <div>Following Book</div>
-                  <span/>
-                </div>
-
                 <hr style={{margin: '15px -15px 10px -20px'}}/>
 
                 <Link to={`/${slug}`} className="user">

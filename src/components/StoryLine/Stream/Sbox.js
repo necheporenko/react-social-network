@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import draftToHtml from 'draftjs-to-html';
 import {convertToRaw} from 'draft-js';
 import {Editor} from 'react-draft-wysiwyg';
+import Files from 'react-files';
 import {ButtonToolbar, DropdownButton} from 'react-bootstrap';
 import uploadImageCallBack from './uploadImageCallBack';
 import {create as createStory} from '../../../redux/modules/story';
@@ -23,45 +24,21 @@ let step = 0;
 })
 
 class Sbox extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorContent: '',
-      data: '',
-      toolbarHidden: true,
-      sboxVisibleElements: 'none',
-      sboxFocusBtn: '#5c96d0',
-      jump: '20px',
-      loud: {
-        quiet_log: false,
-        loud_log: true,
-        loud_book: true,
-        post_fb: false,
-        post_twitter: false,
-        storyline: true
-      },
-      loud_type: {
-        in_channels: 1,
-        in_books: 1,
-      },
-      loudIcon: 'loud_log_icon',
-      visibility: {
-        public: true,
-        private: false,
-        custom: false
-      },
-      visibility_type: 0,
-      visibilityIcon: 'public_icon'
+  onFilesChange = (files) => {
+    this.setState({
+      files
+    }, () => {
+      console.log(this.state.files);
+    });
+
+    var reader = new FileReader();
+    reader.readAsDataURL(this.state.files[0]);
+    reader.onloadend = function () {
+      var base64data = reader.result;
+      console.log(this.state.files);
+      console.log(base64data);
     };
-    this.onEditorStateChange = this.onEditorStateChange.bind(this);
-    this.showToolbar = this.showToolbar.bind(this);
-    this.onSubmitStory = this.onSubmitStory.bind(this);
-    this.test = this.test.bind(this);
-    this.focusSboxElement = this.focusSboxElement.bind(this);
-    this.handleCheckLoud = this.handleCheckLoud.bind(this);
-    this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
-    this.selectedBooks = this.selectedBooks.bind(this);
-  }
+  };
 
   onEditorStateChange = (editorContent) => {
     this.setState({
@@ -272,6 +249,54 @@ class Sbox extends PureComponent {
     }
   }
 
+  onFilesError = (error, file) => {
+    console.log(`error code ${error.code}: ${error.message}`);
+  }
+  filesRemoveAll = () => {
+    this.refs.files.removeFiles();
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorContent: '',
+      data: '',
+      toolbarHidden: true,
+      sboxVisibleElements: 'none',
+      sboxFocusBtn: '#5c96d0',
+      jump: '20px',
+      loud: {
+        quiet_log: false,
+        loud_log: true,
+        loud_book: true,
+        post_fb: false,
+        post_twitter: false,
+        storyline: true
+      },
+      loud_type: {
+        in_channels: 1,
+        in_books: 1,
+      },
+      loudIcon: 'loud_log_icon',
+      visibility: {
+        public: true,
+        private: false,
+        custom: false
+      },
+      visibility_type: 0,
+      visibilityIcon: 'public_icon',
+      files: []
+    };
+    this.onEditorStateChange = this.onEditorStateChange.bind(this);
+    this.showToolbar = this.showToolbar.bind(this);
+    this.onSubmitStory = this.onSubmitStory.bind(this);
+    this.test = this.test.bind(this);
+    this.focusSboxElement = this.focusSboxElement.bind(this);
+    this.handleCheckLoud = this.handleCheckLoud.bind(this);
+    this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
+    this.selectedBooks = this.selectedBooks.bind(this);
+  }
+
   render() {
     console.log('Sbox');
     const {editorContent} = this.state;
@@ -312,6 +337,29 @@ class Sbox extends PureComponent {
             }
           }}
         />
+
+        <div className="files">
+          <Files
+            ref="files"
+            className="files-dropzone-gallery"
+            onChange={this.onFilesChange}
+            onError={this.onFilesError}
+            accepts={['image/*']}
+            multiple
+            clickable
+          >
+            {
+              this.state.files.length > 0
+                ? <div className="files-gallery">
+                  {this.state.files.map((file) =>
+                    <img className="files-gallery-item" src={file.preview.url} key={file.id}
+                         style={{width: '100px', height: '100px'}}/>
+                  )}
+                </div>
+                : <div>Drop images here</div>
+            }
+          </Files>
+        </div>
 
         <div className="sbox-user-avatar32" style={{top: this.state.jump, position: 'absolute', left: '20px'}}>
           <Link to={link}>

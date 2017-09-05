@@ -19,11 +19,11 @@ export default class TokensMenu extends Component {
               <li className="tokens-mnu-sash">Board</li>
             </Link>
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/exchange`} activeClassName="active">
-              <li className="tokens-mnu-exchange">Exchange</li>
+              <li className="tokens-mnu-exchange">Inbox</li>
             </Link>
-            {/*<Link onlyActiveOnIndex={true} to={`/${slug}/tokens/public`} activeClassName="active">*/}
-              {/*<li className="tokens-mnu-public">Public cache</li>*/}
-            {/*</Link>*/}
+            <Link onlyActiveOnIndex={true} to={`/${slug}/tokens/public`} activeClassName="active">
+              <li className="tokens-mnu-public">Wallet</li>
+            </Link>
             {/*<Link onlyActiveOnIndex={true} to={`/${slug}/tokens/private`} activeClassName="active">*/}
               {/*<li className="tokens-mnu-private">Private cache</li>*/}
             {/*</Link>*/}
