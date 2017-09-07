@@ -272,7 +272,7 @@ export default class BookPage extends Component {
           {book_slug &&
           <div
             className={chooseScroll.infoblock}
-            style={{minHeight: '280px', maxHeight: '261px', width: '340px', marginBottom: 0}}>
+            style={{minHeight: '280px', maxHeight: '261px', width: '320px', marginBottom: 0}}>
             <div className="book-settings-edit">
               <EditBook
                 book_name={name}

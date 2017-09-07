@@ -27,13 +27,13 @@ export default class Peoples extends Component {
               </div>
               ·
               <div>
-                <Link to={`/${requestedUser.slug}/people`}>
+                <Link to={`/${requestedUser.slug}/people`} style={{color: '#999', fontSize: '14px'}}>
                   Following<span>{` ${following.count}`}</span>
                 </Link>
               </div>
               ·
               <div>
-                <Link to={`/${requestedUser.slug}/people/followers`}>
+                <Link to={`/${requestedUser.slug}/people/followers`} style={{color: '#999', fontSize: '14px'}}>
                   Followers<span>{` ${followers.count}`}</span>
                 </Link>
               </div>

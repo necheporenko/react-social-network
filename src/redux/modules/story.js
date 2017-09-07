@@ -39,6 +39,9 @@ const VIEW_MORE_COMMENTS = 'VIEW_MORE_COMMENTS';
 const VIEW_MORE_COMMENTS_SUCCESS = 'VIEW_MORE_COMMENTS_SUCCESS';
 const VIEW_MORE_COMMENTS_FAIL = 'VIEW_MORE_COMMENTS_FAIL';
 const CLEAR_STORIES = 'CLEAR_STORIES';
+const UPLOAD_FILE = 'UPLOAD_FILE';
+const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS';
+const UPLOAD_FILE_FAIL = 'UPLOAD_FILE_FAIL';
 
 
 const initialState = {
@@ -465,23 +468,32 @@ export function loadNext(user_slug, paginationStory) {
   };
 }
 
-export function create(description, books, in_storyline, loud_type, visibility) {
-  in_storyline = in_storyline ? 1 : 0;
-  const in_channels = loud_type.in_channels;
-  const in_books = loud_type.in_books;
-  const users_custom_visibility = [];
+// export function create(description, books, in_storyline, loud_type, visibility) {
+//   in_storyline = in_storyline ? 1 : 0;
+//   const in_channels = loud_type.in_channels;
+//   const in_books = loud_type.in_books;
+//   const users_custom_visibility = [];
+//   return {
+//     types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
+//     promise: (client) => client.post('/stories', {
+//       data: {
+//         description,
+//         books,
+//         in_storyline,
+//         in_channels,
+//         in_books,
+//         visibility,
+//         users_custom_visibility
+//       }
+//     })
+//   };
+// }
+
+export function create(formData) {
   return {
     types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
     promise: (client) => client.post('/stories', {
-      data: {
-        description,
-        books,
-        in_storyline,
-        in_channels,
-        in_books,
-        visibility,
-        users_custom_visibility
-      }
+      data: formData
     })
   };
 }

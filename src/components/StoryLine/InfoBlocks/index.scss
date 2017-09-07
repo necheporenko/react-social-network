@@ -13,15 +13,18 @@
 /* === Title Start === */
 .title-infoblocks {
   padding: 15px;
-  font-size: 15px;
+  font-size: 16px;
 
   a {
-    text-decoration: none;
     color: $default-color;
+
+    &:hover {
+      text-decoration: underline;
+    }
 
     span  {
       color: #999;
-      font-size: 12px;
+      font-size: 14px;
     }
   }
 }

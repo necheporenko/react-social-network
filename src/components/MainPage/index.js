@@ -30,15 +30,14 @@ class MainPage extends Component {
               loadNextChannelStories={this.props.loadNextChannelStories}
             />
             <div>
-              <FollowBlock
-                whoToFollowList={this.props.whoToFollowList}
-              />
               <LeftMenu
                 authorizedUser={this.props.authorizedUser}
                 bookTreeArr={this.props.bookTreeArr}
               />
+              <FollowBlock
+                whoToFollowList={this.props.whoToFollowList}
+              />
             </div>
-
           </div>
         </div>
       </div>
@@ -48,6 +47,7 @@ class MainPage extends Component {
 
 MainPage.propTypes = {
   authorizedUser: PropTypes.object,
+  requestedUser: PropTypes.object,
   createStory: PropTypes.func,                //story
   createChannel: PropTypes.func,              //channel
   loadChannels: PropTypes.func,

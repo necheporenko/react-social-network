@@ -30,28 +30,8 @@ class Sbox extends PureComponent {
     }, () => {
       const file = this.state.files[0];
       console.log(file);
-
-      // function create_blob(file, callback) {
-      //   const reader = new FileReader();
-      //   reader.readAsDataURL(file);
-      //   reader.onload = function () { callback(reader); };
-      // }
-      //
-      // create_blob(file, (blob_string) => {
-      //   console.log('work');
-      //   // console.log(blob_string.result);
-      // });
     });
-
-    // const reader = new FileReader();
-    // reader.readAsDataURL(this.state.files[0]);
-    // reader.onloadend = function () {
-    //   const base64data = reader.result;
-    //   console.log('hello', this.state.files[0], this.state.files);
-    //   // console.log(base64data);
-    // };
   };
-
 
   onEditorStateChange = (editorContent) => {
     this.setState({
@@ -64,19 +44,45 @@ class Sbox extends PureComponent {
     this.setState({sboxVisibleElements: 'flex', sboxFocusBtn: '#1870C8'});
   }
 
-  onSubmitStory() {
-    console.log('onSubmitStory', this.state.data, this.state.loud.storyline, this.state.loud_type, this.state.visibility_type);
-    this.props.createStory(
-      this.state.data,
-      this.props.arrCheckbox,
-      this.state.loud.storyline,
-      this.state.loud_type,
-      this.state.visibility_type
-    )
-      .then(() => this.props.reloadStream());
-    this.setState({
-      editorContent: '',        //  cleaning input
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorContent: '',
+      data: '',
+      toolbarHidden: true,
+      sboxVisibleElements: 'none',
+      sboxFocusBtn: '#5c96d0',
+      jump: '20px',
+      loud: {
+        quiet_log: false,
+        loud_log: true,
+        loud_book: true,
+        post_fb: false,
+        post_twitter: false,
+        storyline: true
+      },
+      loud_type: {
+        in_channels: 1,
+        in_books: 1,
+      },
+      loudIcon: 'loud_log_icon',
+      visibility: {
+        public: true,
+        private: false,
+        custom: false
+      },
+      visibility_type: 0,
+      visibilityIcon: 'public_icon',
+      files: []
+    };
+    this.onEditorStateChange = this.onEditorStateChange.bind(this);
+    this.showToolbar = this.showToolbar.bind(this);
+    this.onSubmitStory = this.onSubmitStory.bind(this);
+    this.test = this.test.bind(this);
+    this.focusSboxElement = this.focusSboxElement.bind(this);
+    this.handleCheckLoud = this.handleCheckLoud.bind(this);
+    this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
+    this.selectedBooks = this.selectedBooks.bind(this);
   }
 
   showToolbar() {
@@ -261,86 +267,69 @@ class Sbox extends PureComponent {
       return `${quantity} books`;
     }
   }
+
+
   onFilesError = (error, file) => {
     console.log(`error code ${error.code}: ${error.message}`);
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorContent: '',
-      data: '',
-      toolbarHidden: true,
-      sboxVisibleElements: 'none',
-      sboxFocusBtn: '#5c96d0',
-      jump: '20px',
-      loud: {
-        quiet_log: false,
-        loud_log: true,
-        loud_book: true,
-        post_fb: false,
-        post_twitter: false,
-        storyline: true
-      },
-      loud_type: {
-        in_channels: 1,
-        in_books: 1,
-      },
-      loudIcon: 'loud_log_icon',
-      visibility: {
-        public: true,
-        private: false,
-        custom: false
-      },
-      visibility_type: 0,
-      visibilityIcon: 'public_icon',
+  onSubmitStory() {
+    const formData = new FormData();
+    const obj = {};
+    formData.append('description', this.state.data);
+    formData.append('books', JSON.stringify(this.props.arrCheckbox));
+    formData.append('in_storyline', this.state.loud.storyline);
+    formData.append('in_channels', this.state.loud_type.in_channels);
+    formData.append('in_books', this.state.loud_type.in_books);
+    formData.append('visibility', this.state.visibility_type);
+    formData.append('users_custom_visibility', []);
+
+    if (this.state.files.length > 0) {
+      Object.keys(this.state.files).forEach((key) => {
+        const file = this.state.files[key];
+        formData.append('file', new Blob([file], {type: file.type}), file.name || 'file');
+      });
+    } else {
+      formData.append('file', []);
+    }
+    console.log(formData);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/', true);
+    xhr.send(formData);
+    for (const pair of formData.entries()) {
+      obj[pair[0]] = pair[1];
+    }
+    console.log(obj);
+    // console.log('onSubmitStory', this.state.data, this.state.loud.storyline, this.state.loud_type, this.state.visibility_type);
+    this.props.createStory(
+      // this.state.data,
+      // this.props.arrCheckbox,
+      // this.state.loud.storyline,
+      // this.state.loud_type,
+      // this.state.visibility_type
+      obj
+    )
+      .then(() => this.props.reloadStream());
+    this.setState({
+      editorContent: '',        //  cleaning input
       files: []
-    };
-    this.onEditorStateChange = this.onEditorStateChange.bind(this);
-    this.showToolbar = this.showToolbar.bind(this);
-    this.onSubmitStory = this.onSubmitStory.bind(this);
-    this.test = this.test.bind(this);
-    this.focusSboxElement = this.focusSboxElement.bind(this);
-    this.handleCheckLoud = this.handleCheckLoud.bind(this);
-    this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
-    this.selectedBooks = this.selectedBooks.bind(this);
+    });
   }
+
 
   filesUpload() {
     const formData = new FormData();
     Object.keys(this.state.files).forEach((key) => {
       const file = this.state.files[key];
       formData.append('file', new Blob([file], {type: file.type}), file.name || 'file');
-      // formData.append('key', 'Groucho');
     });
-
-    // for (const pair of formData.entries()) {
-    //   console.log(`${pair[0]}, ${pair[1]}`);
-    // }
-    // for (var value of formData.values()) {
-    //   console.log(value);
-    //   function create_blob(value, callback) {
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(value);
-    //     reader.onload = function () { callback(reader); };
-    //   }
-    //
-    //   create_blob(value, (blob_string) => {
-    //     console.log('work');
-    //     console.log(blob_string.result);
-    //   });
-    // }
-    // console.log(formData.getAll('key'));
-
     console.log(formData);
-
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://api.validbook.org/v1/upload/story-image?&access_token=RCEqGhqnani8jMQF56cBeXs_-t_-5fHZ', true);
     xhr.send(formData);
   }
 
   render() {
-    console.log('Sbox');
     const {editorContent} = this.state;
     const {first_name, last_name, avatar32} = this.props.authorizedUser;
     const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
