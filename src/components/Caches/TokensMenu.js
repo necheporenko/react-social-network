@@ -24,6 +24,7 @@ export default class TokensMenu extends Component {
             <Link onlyActiveOnIndex={true} to={`/${slug}/tokens/public`} activeClassName="active">
               <li className="tokens-mnu-public">Wallet</li>
             </Link>
+            <hr/>
             {/*<Link onlyActiveOnIndex={true} to={`/${slug}/tokens/private`} activeClassName="active">*/}
               {/*<li className="tokens-mnu-private">Private cache</li>*/}
             {/*</Link>*/}

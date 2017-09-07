@@ -16,15 +16,21 @@
     //padding-left: 30px;
     padding-bottom: 10px;
 
-    &:hover {
-      ~ .create-new-item {
-        display: block;
-      }
-    }
+    //&:hover {
+    //  ~ .create-new-item {
+    //    display: block;
+    //  }
+    //}
   }
 
   .sidebar {
     width: 295px;
+
+    &:hover {
+      .create-new-item {
+        display: block;
+      }
+    }
 
     ul > a.active > li {
       padding-left: 15px;

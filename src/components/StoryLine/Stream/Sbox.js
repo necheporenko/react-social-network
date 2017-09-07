@@ -28,17 +28,30 @@ class Sbox extends PureComponent {
     this.setState({
       files
     }, () => {
-      console.log(this.state.files);
+      const file = this.state.files[0];
+      console.log(file);
+
+      // function create_blob(file, callback) {
+      //   const reader = new FileReader();
+      //   reader.readAsDataURL(file);
+      //   reader.onload = function () { callback(reader); };
+      // }
+      //
+      // create_blob(file, (blob_string) => {
+      //   console.log('work');
+      //   // console.log(blob_string.result);
+      // });
     });
 
-    var reader = new FileReader();
-    reader.readAsDataURL(this.state.files[0]);
-    reader.onloadend = function () {
-      var base64data = reader.result;
-      console.log(this.state.files);
-      console.log(base64data);
-    };
+    // const reader = new FileReader();
+    // reader.readAsDataURL(this.state.files[0]);
+    // reader.onloadend = function () {
+    //   const base64data = reader.result;
+    //   console.log('hello', this.state.files[0], this.state.files);
+    //   // console.log(base64data);
+    // };
   };
+
 
   onEditorStateChange = (editorContent) => {
     this.setState({
@@ -248,13 +261,9 @@ class Sbox extends PureComponent {
       return `${quantity} books`;
     }
   }
-
   onFilesError = (error, file) => {
     console.log(`error code ${error.code}: ${error.message}`);
-  }
-  filesRemoveAll = () => {
-    this.refs.files.removeFiles();
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -295,6 +304,39 @@ class Sbox extends PureComponent {
     this.handleCheckLoud = this.handleCheckLoud.bind(this);
     this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
     this.selectedBooks = this.selectedBooks.bind(this);
+  }
+
+  filesUpload() {
+    const formData = new FormData();
+    Object.keys(this.state.files).forEach((key) => {
+      const file = this.state.files[key];
+      formData.append('file', new Blob([file], {type: file.type}), file.name || 'file');
+      // formData.append('key', 'Groucho');
+    });
+
+    // for (const pair of formData.entries()) {
+    //   console.log(`${pair[0]}, ${pair[1]}`);
+    // }
+    // for (var value of formData.values()) {
+    //   console.log(value);
+    //   function create_blob(value, callback) {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(value);
+    //     reader.onload = function () { callback(reader); };
+    //   }
+    //
+    //   create_blob(value, (blob_string) => {
+    //     console.log('work');
+    //     console.log(blob_string.result);
+    //   });
+    // }
+    // console.log(formData.getAll('key'));
+
+    console.log(formData);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://api.validbook.org/v1/upload/story-image?&access_token=RCEqGhqnani8jMQF56cBeXs_-t_-5fHZ', true);
+    xhr.send(formData);
   }
 
   render() {
@@ -344,7 +386,7 @@ class Sbox extends PureComponent {
             className="files-dropzone-gallery"
             onChange={this.onFilesChange}
             onError={this.onFilesError}
-            accepts={['image/*']}
+            accepts={['image/*', 'text/*']}
             multiple
             clickable
           >
@@ -352,13 +394,15 @@ class Sbox extends PureComponent {
               this.state.files.length > 0
                 ? <div className="files-gallery">
                   {this.state.files.map((file) =>
-                    <img className="files-gallery-item" src={file.preview.url} key={file.id}
-                         style={{width: '100px', height: '100px'}}/>
+                    <img
+                      className="files-gallery-item" src={file.preview.url} key={file.id}
+                      style={{width: '100px', height: '100px'}}/>
                   )}
                 </div>
                 : <div>Drop images here</div>
             }
           </Files>
+          <button onClick={() => this.filesUpload()}>Upload</button>
         </div>
 
         <div className="sbox-user-avatar32" style={{top: this.state.jump, position: 'absolute', left: '20px'}}>
