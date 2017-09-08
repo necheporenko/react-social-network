@@ -14,6 +14,13 @@ export default class TokensMenu extends Component {
     return (
       <div className="sidebar tokens-nav">
         <div className={this.props.sidebar}>
+          <div className="doc-buttons">
+            <button>New Box</button>
+            <Link to={`/${slug}/documents/document`}>
+              <button>New document</button>
+            </Link>
+          </div>
+
           <ul>
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents`} activeClassName="active">
               <li className="tokens-mnu-sash">Board</li>
@@ -21,13 +28,13 @@ export default class TokensMenu extends Component {
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/exchange`} activeClassName="active">
               <li className="tokens-mnu-exchange">Inbox</li>
             </Link>
-            <Link onlyActiveOnIndex={true} to={`/${slug}/tokens/public`} activeClassName="active">
+            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/public`} activeClassName="active">
               <li className="tokens-mnu-public">Wallet</li>
             </Link>
             <hr/>
-            {/*<Link onlyActiveOnIndex={true} to={`/${slug}/tokens/private`} activeClassName="active">*/}
-              {/*<li className="tokens-mnu-private">Private cache</li>*/}
-            {/*</Link>*/}
+            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/private`} activeClassName="active">
+              <li className="tokens-mnu-private">Box 1</li>
+            </Link>
           </ul>
           <div className="create-new-item">
             <a href="#">+ Create new box</a>
@@ -40,4 +47,5 @@ export default class TokensMenu extends Component {
 
 TokensMenu.propTypes = {
   authorizedUser: PropTypes.object,
+  sidebar: PropTypes.string,
 };

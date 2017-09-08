@@ -333,13 +333,13 @@ class Sbox extends PureComponent {
             link: {
               inDropdown: true
             },
-            image: {
-              uploadCallback: uploadImageCallBack,
-              defaultSize: {
-                width: '100%',
-                height: '100%'
-              }
-            }
+            // image: {
+            //   uploadCallback: uploadImageCallBack,
+            //   defaultSize: {
+            //     width: '100%',
+            //     height: '100%'
+            //   }
+            // }
           }}
         />
 

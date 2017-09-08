@@ -19,6 +19,7 @@ import Tokens from 'components/Caches';
 import TokensPrivate from 'components/Caches/TokensPrivate';
 import TokensPublic from 'components/Caches/TokensPublic';
 import TokensExchange from 'components/Caches/TokensExchange';
+import NewDocument from 'components/Caches/NewDocument';
 import MessagesContainer from 'containers/MessagesContainer';
 import Messages from 'components/Messages';
 import NewMessage from 'components/Messages/NewMessage';
@@ -139,9 +140,12 @@ export default (store) => {
       <Route path="/:userName/documents" component={TokensContainer}>
         <IndexRoute component={Tokens} />
         <Route path="exchange" component={TokensExchange} onEnter={requireLogin}/>
-        {/*<Route path="public" component={TokensPublic} />*/}
-        {/*<Route path="private" component={TokensPrivate} />*/}
+        <Route path="public" component={TokensPublic}/>
+        <Route path="private" component={TokensPrivate}/>
+        {/*<Route path="document" component={NewDocument} />*/}
       </Route>
+
+      <Route path="/:userName/documents/document" component={NewDocument}/>
 
       <Route path="/:userName/photos" component={PhotosContainer}>
         <IndexRoute component={Photos} />

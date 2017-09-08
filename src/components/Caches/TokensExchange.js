@@ -10,34 +10,34 @@ class TokensExchange extends Component {
 
         <div className="common-lists tokens-lists exchange">
 
-          <div className="input">
-            <div className="wrapper">
-              <h3>Incoming Tokens</h3>
-              <div className="token">
-                <a href=""><i></i></a>
-              </div>
-              <div className="token">
-                <a href=""><i></i></a>
-              </div>
-              <div className="token">
-                <a href=""><i></i></a>
-              </div>
-              <div className="token">
-                <a href=""><i></i></a>
-              </div>
-              <div className="token">
-                <a href=""><i></i></a>
-              </div>
-            </div>
-          </div>
-          <div className="output">
-            <div className="wrapper">
-              <h3>Outcoming Tokens</h3>
-              <div className="token">
-                <a href=""><i></i></a>
-              </div>
-            </div>
-          </div>
+          {/*<div className="input">*/}
+          {/*<div className="wrapper">*/}
+          {/*<h3>Incoming Tokens</h3>*/}
+          {/*<div className="token">*/}
+          {/*<a href=""><i></i></a>*/}
+          {/*</div>*/}
+          {/*<div className="token">*/}
+          {/*<a href=""><i></i></a>*/}
+          {/*</div>*/}
+          {/*<div className="token">*/}
+          {/*<a href=""><i></i></a>*/}
+          {/*</div>*/}
+          {/*<div className="token">*/}
+          {/*<a href=""><i></i></a>*/}
+          {/*</div>*/}
+          {/*<div className="token">*/}
+          {/*<a href=""><i></i></a>*/}
+          {/*</div>*/}
+          {/*</div>*/}
+          {/*</div>*/}
+          {/*<div className="output">*/}
+          {/*<div className="wrapper">*/}
+          {/*<h3>Outcoming Tokens</h3>*/}
+          {/*<div className="token">*/}
+          {/*<a href=""><i></i></a>*/}
+          {/*</div>*/}
+          {/*</div>*/}
+          {/*</div>*/}
 
         </div>
       </div>

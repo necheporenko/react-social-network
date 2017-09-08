@@ -25,7 +25,7 @@ export default class PhotosMenu extends Component {
             <li>Profile Pictures</li>
           </Link>
           <Link onlyActiveOnIndex={true} to={`/${slug}/photos/covers`} activeClassName="active">
-            <li>Covers Photos</li>
+            <li>Cover Photos</li>
           </Link>
         </ul>
         <p style={{padding: '10px 10px 10px 30px', color: '#8f8f8f'}}>Photos from books:</p>
