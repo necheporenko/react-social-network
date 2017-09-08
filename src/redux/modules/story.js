@@ -43,7 +43,6 @@ const UPLOAD_FILE = 'UPLOAD_FILE';
 const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS';
 const UPLOAD_FILE_FAIL = 'UPLOAD_FILE_FAIL';
 
-
 const initialState = {
   isAuthenticated: false,
   loaded: {
@@ -489,7 +488,23 @@ export function loadNext(user_slug, paginationStory) {
 //   };
 // }
 
-export function create(formData) {
+export function create(data, books, files) {
+  const formData = new FormData();
+  formData.append('description', data);
+  formData.append('books', JSON.stringify(books));
+  // formData.append('file', files[0]);
+  // console.log(JSON.stringify(files));
+  // console.log(files);
+  // formData.append('file[]', files[0]);
+  // formData.append('file[]', files[1]);
+  // console.log(files[0], files[1]);
+
+  Object.keys(files).forEach((key) => {
+    const file = files[key];
+    formData.append('file[]', file);
+  });
+
+
   return {
     types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
     promise: (client) => client.post('/stories', {

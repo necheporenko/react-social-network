@@ -96,6 +96,9 @@
   }
 
   .camera {
+    height: 20px;
+    cursor: pointer;
+
     i {
       background: $sprite;
       display: inline-block;
@@ -1265,7 +1268,7 @@
 
   img {
     width: 100%;
-    height: auto;
+    height: 100%;
   }
 }
 

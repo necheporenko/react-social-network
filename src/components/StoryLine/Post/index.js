@@ -75,11 +75,11 @@ export default class Post extends Component {
             </div> */}
             {/*{ images && images.map}*/}
 
-            {images &&
-            <div className="post-content-type-image">
-              <img src={images[0]}/>
-            </div>
-            }
+            {/*{images &&*/}
+            {/*<div className="post-content-type-image">*/}
+            {/*<img src={images[0]}/>*/}
+            {/*</div>*/}
+            {/*}*/}
 
             {/*<div className="post-content-type-link">
               <a href="#">
@@ -107,25 +107,18 @@ export default class Post extends Component {
                   </div>
                 </div>
               </a>
-            </div>
-
-            <div className="post-content-type-gallery">
-              <div className="content-gallery-image">
-                <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/960w/AEI66HEQ25.jpg" alt/>
-              </div>
-              <div className="content-gallery-image">
-                <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/TXHI5TTAYX.jpg" alt/>
-              </div>
-              <div className="content-gallery-image">
-                <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/P84KG21CDH.jpg" alt/>
-              </div>
-              <div className="content-gallery-image">
-                <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/DYNEU4SJQ5.jpg" alt/>
-              </div>
-              <div className="content-gallery-image">
-                <img src="https://d2lm6fxwu08ot6.cloudfront.net/img-thumbs/280h/FYZBN8FDKT.jpg" alt/>
-              </div>
             </div>*/}
+
+            {images &&
+            <div className="post-content-type-gallery">
+              {images.map((image, index) => (
+                <div key={index} className="content-gallery-image">
+                  <img src={image}/>
+                </div>
+              ))}
+            </div>
+            }
+
           </div>
         </div>
 

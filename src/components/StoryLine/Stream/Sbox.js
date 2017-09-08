@@ -24,26 +24,6 @@ let step = 0;
 })
 
 class Sbox extends PureComponent {
-  onFilesChange = (files) => {
-    this.setState({
-      files
-    }, () => {
-      const file = this.state.files[0];
-      console.log(file);
-    });
-  };
-
-  onEditorStateChange = (editorContent) => {
-    this.setState({
-      editorContent,
-      data: draftToHtml(convertToRaw(editorContent.getCurrentContent()))
-    });
-  };
-
-  focusSboxElement() {
-    this.setState({sboxVisibleElements: 'flex', sboxFocusBtn: '#1870C8'});
-  }
-
   constructor(props) {
     super(props);
     this.state = {
@@ -84,6 +64,19 @@ class Sbox extends PureComponent {
     this.handleCheckVisibility = this.handleCheckVisibility.bind(this);
     this.selectedBooks = this.selectedBooks.bind(this);
   }
+
+
+  onEditorStateChange = (editorContent) => {
+    this.setState({
+      editorContent,
+      data: draftToHtml(convertToRaw(editorContent.getCurrentContent()))
+    });
+  };
+
+  focusSboxElement() {
+    this.setState({sboxVisibleElements: 'flex', sboxFocusBtn: '#1870C8'});
+  }
+
 
   showToolbar() {
     ++step;
@@ -274,40 +267,15 @@ class Sbox extends PureComponent {
   };
 
   onSubmitStory() {
-    const formData = new FormData();
-    const obj = {};
-    formData.append('description', this.state.data);
-    formData.append('books', JSON.stringify(this.props.arrCheckbox));
-    formData.append('in_storyline', this.state.loud.storyline);
-    formData.append('in_channels', this.state.loud_type.in_channels);
-    formData.append('in_books', this.state.loud_type.in_books);
-    formData.append('visibility', this.state.visibility_type);
-    formData.append('users_custom_visibility', []);
-
-    if (this.state.files.length > 0) {
-      Object.keys(this.state.files).forEach((key) => {
-        const file = this.state.files[key];
-        formData.append('file', new Blob([file], {type: file.type}), file.name || 'file');
-      });
-    } else {
-      formData.append('file', []);
-    }
-    console.log(formData);
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/', true);
-    xhr.send(formData);
-    for (const pair of formData.entries()) {
-      obj[pair[0]] = pair[1];
-    }
-    console.log(obj);
     // console.log('onSubmitStory', this.state.data, this.state.loud.storyline, this.state.loud_type, this.state.visibility_type);
     this.props.createStory(
-      // this.state.data,
-      // this.props.arrCheckbox,
+      this.state.data,
+      this.props.arrCheckbox,
+      this.state.files
       // this.state.loud.storyline,
       // this.state.loud_type,
       // this.state.visibility_type
-      obj
+      // obj
     )
       .then(() => this.props.reloadStream());
     this.setState({
@@ -316,18 +284,24 @@ class Sbox extends PureComponent {
     });
   }
 
-
-  filesUpload() {
-    const formData = new FormData();
-    Object.keys(this.state.files).forEach((key) => {
-      const file = this.state.files[key];
-      formData.append('file', new Blob([file], {type: file.type}), file.name || 'file');
+  onFilesChange = (files) => {
+    this.setState({
+      files
     });
-    console.log(formData);
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://api.validbook.org/v1/upload/story-image?&access_token=RCEqGhqnani8jMQF56cBeXs_-t_-5fHZ', true);
-    xhr.send(formData);
-  }
+  };
+
+
+  // filesUpload() {
+  //   const formData = new FormData();
+  //   Object.keys(this.state.files).forEach((key) => {
+  //     const file = this.state.files[key];
+  //     formData.append('file', new Blob([file], {type: file.type}), file.name || 'file');
+  //   });
+  //   console.log(formData);
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.open('POST', 'http://api.validbook.org/v1/upload/story-image?&access_token=RCEqGhqnani8jMQF56cBeXs_-t_-5fHZ', true);
+  //   xhr.send(formData);
+  // }
 
   render() {
     const {editorContent} = this.state;
@@ -377,21 +351,19 @@ class Sbox extends PureComponent {
             onError={this.onFilesError}
             accepts={['image/*', 'text/*']}
             multiple
-            clickable
+            clickable={false}
           >
             {
-              this.state.files.length > 0
-                ? <div className="files-gallery">
-                  {this.state.files.map((file) =>
-                    <img
-                      className="files-gallery-item" src={file.preview.url} key={file.id}
-                      style={{width: '100px', height: '100px'}}/>
-                  )}
-                </div>
-                : <div>Drop images here</div>
+              this.state.files.length > 0 &&
+              <div className="files-gallery">
+                {this.state.files.map((file) =>
+                  <img
+                    className="files-gallery-item" src={file.preview.url} key={file.id}
+                    style={{width: '100px', height: '100px'}}/>
+                )}
+              </div>
             }
           </Files>
-          <button onClick={() => this.filesUpload()}>Upload</button>
         </div>
 
         <div className="sbox-user-avatar32" style={{top: this.state.jump, position: 'absolute', left: '20px'}}>
@@ -569,12 +541,23 @@ class Sbox extends PureComponent {
               </DropdownButton>
             </ButtonToolbar>
           </div>
-          <div
-            className="camera" style={{height: '20px', marginTop: '3px', display: this.state.sboxVisibleElements}}
-            onClick={this.showToolbar}>
-            <span style={{marginTop: '4px'}}>More Options</span>
-            <i/>
+          <div style={{display: this.state.sboxVisibleElements}}>
+            <span style={{marginTop: '4px'}} onClick={this.showToolbar}>More Options</span>
+            <Files
+              ref="files"
+              className="files-dropzone-gallery"
+              onChange={this.onFilesChange}
+              onError={this.onFilesError}
+              accepts={['image/*', 'text/*']}
+              multiple
+              clickable
+            >
+              <div className="camera">
+                <i/>
+              </div>
+            </Files>
           </div>
+
         </div>
         {/*</form>*/}
       </div>
