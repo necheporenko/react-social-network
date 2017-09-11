@@ -16,6 +16,9 @@ export default class PeopleMenu extends Component {
       <div className="sidebar people-nav">
         <ul>
           <Link onlyActiveOnIndex={true} to={`/${slug}/people`} activeClassName="active">
+            <li>All people</li>
+          </Link>
+          <Link onlyActiveOnIndex={true} to={`/${slug}/people/following`} activeClassName="active">
             <li>Following</li>
           </Link>
           <Link onlyActiveOnIndex={true} to={`/${slug}/people/followers`} activeClassName="active">

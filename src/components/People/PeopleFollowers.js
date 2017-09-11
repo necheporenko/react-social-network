@@ -57,7 +57,7 @@ class PeopleFollowers extends Component {
         <div className="common-lists people-lists">
           <div className="wrapper">
 
-            {followers && followers.users.map((people) => (
+            {followers.users && followers.users.map((people) => (
               <div key={people.id} className="people-card">
                 <Link to={`/${people.slug}`}>
                   <img src={people.avatar}/>

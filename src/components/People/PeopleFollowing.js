@@ -3,10 +3,10 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {getUserSlug} from '../../redux/modules/user';
 import {
+  loadPeopleFollowing,
   isLoadedFollowing,
   follow as followUser,
-  unfollow as unfollowUser,
-  loadUserPeople
+  unfollow as unfollowUser
 } from '../../redux/modules/follow';
 import PeopleMenu from './PeopleMenu';
 import './index.scss';
@@ -15,16 +15,15 @@ import './index.scss';
   following: state.follow.following,
   requestedUser: state.user.requestedUser,
   path: state.routing.locationBeforeTransitions.pathname,
-  people: state.follow.people,
 }), {
+  loadPeopleFollowing,
   isLoadedFollowing,
   followUser,
   unfollowUser,
   getUserSlug,
-  loadUserPeople
 })
 
-class People extends Component {
+class PeopleFollowing extends Component {
   constructor(props) {
     super(props);
     this.follow = this.follow.bind(this);
@@ -34,7 +33,7 @@ class People extends Component {
   componentDidMount() {
     const {path} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-    this.props.loadUserPeople(findSlug);
+    this.props.loadPeopleFollowing(findSlug);
 
     // if (findSlug !== requestedUser.slug) {
     //   this.props.loadPeopleFollowing(findSlug);
@@ -52,7 +51,7 @@ class People extends Component {
   }
 
   render() {
-    const {people} = this.props;
+    const {following} = this.props;
 
     return (
       <div className="people contents">
@@ -62,7 +61,7 @@ class People extends Component {
         <div className="common-lists people-lists">
           <div className="wrapper">
 
-            {people && people.map((people) => (
+            {following.users && following.users.map((people) => (
               <div key={people.id} className="people-card">
                 <Link to={`/${people.slug}`}>
                   <img src={people.avatar}/>
@@ -96,13 +95,13 @@ class People extends Component {
   }
 }
 
-People.propTypes = {
-  people: PropTypes.array,
+PeopleFollowing.propTypes = {
+  following: PropTypes.array,
   followUser: PropTypes.func,
   unfollowUser: PropTypes.func,
-  loadUserPeople: PropTypes.func,
+  loadPeopleFollowing: PropTypes.func,
   path: PropTypes.string,
   requestedUser: PropTypes.object,
 };
 
-export default People;
+export default PeopleFollowing;
