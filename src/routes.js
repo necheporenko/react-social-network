@@ -12,6 +12,7 @@ import PhotosProfile from 'components/Photos/PhotosProfile';
 import Photos from 'components/Photos';
 import PeopleContainer from 'containers/PeopleContainer';
 import People from 'components/People';
+import PeopleFollowing from 'components/People/PeopleFollowing';
 import PeopleFollowers from 'components/People/PeopleFollowers';
 import PeopleSuggested from 'components/People/PeopleSuggested';
 import TokensContainer from 'containers/TokensContainer';
@@ -133,6 +134,7 @@ export default (store) => {
 
       <Route path="/:userName/people" component={PeopleContainer}>
         <IndexRoute component={People} />
+        <Route path="following" component={PeopleFollowing}/>
         <Route path="followers" component={PeopleFollowers} />
         <Route path="suggested" component={PeopleSuggested} onEnter={requireLogin}/>
       </Route>

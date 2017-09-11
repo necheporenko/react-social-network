@@ -10,6 +10,7 @@ import follow from './modules/follow';
 import book from './modules/book';
 import profile from './modules/profile';
 import search from './modules/search';
+import document from './modules/document';
 
 export default function createReducers(asyncReducers) {
   return {
@@ -25,6 +26,7 @@ export default function createReducers(asyncReducers) {
     book,
     profile,
     search,
+    document,
     ...asyncReducers
   };
 }

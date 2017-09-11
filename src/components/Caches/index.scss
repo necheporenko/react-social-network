@@ -28,7 +28,7 @@
   .doc-buttons {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
 
     button {
       font-size: 13px;
@@ -39,7 +39,7 @@
       cursor: pointer;
       text-align: center;
       line-height: 25px;
-      background: #eee;
+      background: #fff;
       padding: 0 15px;
     }
   }
@@ -73,6 +73,19 @@
     &:focus {
       text-decoration: none;
     }
+
+    > div {
+      display: block;
+      background: $default-bg;
+      border: 1px solid #dadada;
+      //border-radius: 50%;
+      -webkit-box-shadow: 0 0 2px #fff inset;
+      box-shadow: 0 0 2px #fff inset;
+      height: 190px;
+      width: 150px;
+      overflow: hidden;
+      position: relative;
+    }
   }
 
   span {
@@ -86,16 +99,31 @@
     font-style: normal;
   }
 
-  i {
+  .doc-icon {
+    background: url('../../img/Icons/doc.svg');
+    height: 60px;
+    width: 51px;
     display: block;
-    background: $default-bg;
-    border: 1px solid #dadada;
-    //border-radius: 50%;
-    -webkit-box-shadow: 0 0 2px #fff inset;
-    box-shadow: 0 0 2px #fff inset;
-    height: 160px;
-    width: 135px;
-    overflow: hidden;
+    margin: 40px auto;
+  }
+
+  p {
+    text-align: center;
+    color: #8F8F8F;
+    font-size: 15px;
+  }
+
+  .doc-sign {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+
+    i {
+      display: block;
+      width: 9px;
+      height: 10px;
+      background: url('../../img/Icons/pencil.svg');
+    }
   }
 }
 
@@ -104,7 +132,7 @@
     border: 1px dashed $border-hover-color;
   }
 
-  i {
+  div {
     border: 1px dashed $border-hover-color;
 
     &::before {
@@ -119,7 +147,6 @@
     }
   }
 }
-
 
 /* === TokensExchange ===*/
 
@@ -160,8 +187,6 @@
 /* === TokensExchange End ===*/
 
 /* === AddToken ===*/
-
-
 
 .modal-token {
   .token {
@@ -245,7 +270,6 @@
   }
 }
 
-
 .modal-small-token {
   .modal-content {
     height: 215px;
@@ -310,11 +334,69 @@
   }
 }
 
-
 /* === AddToken End ===*/
 
 /* === Document ===*/
 .docs {
+  .docs-input {
+    position: fixed;
+    z-index: 12;
+    top: 61px;
+    left: 15px;
+    font-size: 18px;
+
+    .input-buffer {
+      position: absolute;
+      top: -1000px;
+      left: -1000px;
+      visibility: hidden;
+      white-space: nowrap;
+    }
+
+    input {
+      border: 1px solid transparent;
+      border-radius: 2px;
+      background: #fafafa;
+      height: 20px;
+      line-height: 22px;
+      min-width: 1px;
+      padding: 2px 7px;
+
+      &:hover {
+        border-color: #e5e5e5;
+      }
+
+      &:focus {
+        border: 1px solid #4d90fe;
+        box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.1);
+        color: #000;
+        outline: none;
+      }
+    }
+  }
+
+  .docs-btn {
+    position: fixed;
+    z-index: 12;
+    right: 20px;
+    top: 63px;
+    width: 120px;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      cursor: pointer;
+      background: #4280ff;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 2px;
+      border: 0;
+      text-align: center;
+      padding: 6px 12px;
+      line-height: 16px;
+      font-weight: 500;
+    }
+  }
 
   .wrapper-document {
     margin: 0 auto 20px;
@@ -327,19 +409,25 @@
     position: fixed;
     z-index: 11;
     padding-left: calc(50% - 250px);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px 0px;
   }
 
   .editor-document {
     width: 816px;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     height: 1056px;
-    margin: 60px auto 100px;
+    margin: 70px auto 100px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
     position: absolute;
     left: calc(50% - 400px);
+    padding: 25px 20px;
+    box-sizing: content-box;
+
+    .DraftEditor-root {
+      margin-top: -20px;
+    }
   }
 }
-
 
 @media only screen and (max-width: 1200px) {
   .token > a {
