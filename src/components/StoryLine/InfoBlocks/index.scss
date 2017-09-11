@@ -256,22 +256,21 @@
 
 .tokens-mnu-exchange {
   &:before {
-    background-position: 2px -72px;
-    background-size: 150px;
-    height: 16px;
-    width: 16px;
+    background: url('../../../img/Icons/inbox.svg');
+    height: 14px;
+    width: 15px;
     top: 2px;
-    margin-right: 8px;
+    margin-right: 10px;
   }
 }
 
 .tokens-mnu-sash {
   &:before {
-    background-position: -79px -88px;;
-    height: 16px;
-    width: 16px;
-    top: 9px;
-    margin-right: 10px;
+    background: url('../../../img/Icons/board.svg');
+    height: 13px;
+    width: 17px;
+    top: 1px;
+    margin-right: 8px;
   }
 }
 
@@ -286,10 +285,11 @@
 
 .tokens-mnu-private {
   &:before {
-    background-position: -93px -311px;
+    background: url('../../../img/Icons/private-box.svg');
     height: 14px;
-    width: 19px;
+    width: 14px;
     top: 3px;
+    margin-right: 11px;
   }
 }
 /* === Caches End === */

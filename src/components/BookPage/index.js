@@ -495,7 +495,7 @@ export default class BookPage extends Component {
                   <div className="infobloks-book infobloks-book-others">
                     <div className="title-infoblocks">
                       <span className="subbooks-icon"/>
-                      <a> Subbooks · 0</a>
+                      <a> Subbooks <span>· 0</span></a>
                     </div>
                     <div className="book-counter">
                       <ul>
@@ -514,7 +514,7 @@ export default class BookPage extends Component {
                   <div className="infobloks-book infobloks-book-others" style={{paddingBottom: 0}}>
                     <div className="title-infoblocks">
                       <span className="peoples-icon"/>
-                      <a> Book Followers · 0</a>
+                      <a> Book Followers <span>· 0</span></a>
                     </div>
                     {/*<div className="book-counter">*/}
                     {/*<ul>*/}
@@ -558,7 +558,7 @@ export default class BookPage extends Component {
                   <div className="infobloks-book infobloks-book-others" style={{paddingBottom: 0}}>
                     <div className="title-infoblocks">
                       <span className="photos-icon"/>
-                      <a>Book Photos · 0</a>
+                      <a>Book Photos <span>· 0</span></a>
                     </div>
                     <div className="photos-gallery books-photos-gallery">
                       <div className="photos-image">

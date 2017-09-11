@@ -84,8 +84,16 @@ class Books extends Component {
       loaded.loadedBookTree &&
       <div className="books contents">
         <div className="sidebar-books">
+          <div className="sidebar">
+            <ul>
+              <Link onlyActiveOnIndex={true} to={`/${requestedUser.slug}/books`} activeClassName="active">
+                <li>All books</li>
+              </Link>
+            </ul>
+          </div>
           <BooksTreeContainer
             bookTreeArr={bookTreeArr}
+            title="ALL BOOKS"
           />
           {/*<div className="title-new-book" style={{marginLeft: '26px'}}>+ Create new book*/}
           {/*<AddBook/>*/}
