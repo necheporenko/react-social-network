@@ -135,6 +135,8 @@ export default (store) => {
         <Route path="suggested" component={PeopleSuggested} onEnter={requireLogin}/>
       </Route>
 
+      <Route path="/:userName/documents/document" component={NewDocument}/>
+      <Route path="/:userName/documents/:box/:document" component={NewDocument}/>
       <Route path="/:userName/documents" component={DocumentsContainer}>
         <IndexRoute component={Box}/>
         <Route path="inbox" component={Inbox} onEnter={requireLogin}/>
@@ -142,8 +144,6 @@ export default (store) => {
         <Route path="private" component={TokensPrivate}/>
         <Route path="/:userName/documents(/:box)" component={Box}/>
       </Route>
-      <Route path="/:userName/documents/document" component={NewDocument}/>
-      <Route path="/:userName/documents/:box/:document" component={NewDocument}/>
 
       <Route path="/:userName/photos" component={PhotosContainer}>
         <IndexRoute component={Photos}/>

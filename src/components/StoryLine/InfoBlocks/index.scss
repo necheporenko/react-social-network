@@ -8,6 +8,7 @@
   flex-direction: column;
   flex: 0 0 320px;
 }
+
 /* -- InfoBloks End -- */
 
 /* === Title Start === */
@@ -22,7 +23,7 @@
       text-decoration: underline;
     }
 
-    span  {
+    span {
       color: #999;
       font-size: 14px;
     }
@@ -79,6 +80,7 @@
   width: 25px;
   //margin-right: 5px;
 }
+
 /* === Title End === */
 
 /* === Common Tokensa Start === */
@@ -93,6 +95,7 @@
   // display: flex;
   @include material;
 }
+
 /* === Common End === */
 
 .infoblocks-cutaway {
@@ -241,7 +244,12 @@
   padding: 5px 0;
 }
 
-.infoblocks-documents, .documents-mnu-inbox, .documents-mnu-board, .documents-mnu-wallet, .documents-mnu-box-private {
+.infoblocks-documents,
+.documents-mnu-inbox,
+.documents-mnu-board,
+.documents-mnu-wallet,
+.documents-mnu-box-private,
+.documents-mnu-box-bin {
   padding-left: 12px;
 
   &:before {
@@ -292,8 +300,18 @@
   }
 }
 
-/* === Documents End === */
+.documents-mnu-box-bin {
+  &:before {
+    background-position: -74px -282px;
+    height: 14px;
+    width: 15px;
+    top: 2px;
+    margin-right: 5px;
+    margin-left: 1px;
+  }
+}
 
+/* === Documents End === */
 
 /* === Photos Start === */
 .photos-gallery {
@@ -310,6 +328,7 @@
     padding-bottom: 5px;
   }
 }
+
 /* === Photos End === */
 
 /* === Peoples Start === */
@@ -376,8 +395,8 @@
     font-family: "Roboto", Arial, sans-serif;
   }
 }
-/* === Peoples End === */
 
+/* === Peoples End === */
 
 @media (max-width: 1200px) {
   .infobloks {

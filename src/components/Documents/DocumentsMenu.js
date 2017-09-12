@@ -16,7 +16,7 @@ import './index.scss';
   loadBoxes
 })
 
-export default class TokensMenu extends Component {
+export default class DocumentsMenu extends Component {
   componentDidMount() {
     const {path} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
@@ -25,37 +25,52 @@ export default class TokensMenu extends Component {
   }
 
   render() {
+    const {boxes} = this.props;
     const {slug} = this.props.authorizedUser;
 
     return (
       <div className="sidebar documents-nav">
         <div className={this.props.sidebar}>
           <ul>
-            <Link onlyActiveOnIndex={true} to={`/${slug}/documents`} activeClassName="active">
-              <li className="documents-mnu-board">Board</li>
-            </Link>
+            {/*{console.log('boxes', boxBin)}*/}
+            {boxes.length > 0 && boxes[0].children.filter(box => box.key === 'board').map(box => (
+              <Link onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
+                <li className="documents-mnu-board">{box.name}</li>
+              </Link>
+            ))}
+
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">
               <li className="documents-mnu-inbox">Inbox</li>
             </Link>
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/wallet`} activeClassName="active">
               <li className="documents-mnu-wallet">Wallet</li>
             </Link>
-            <hr/>
-            <div className="doc-buttons">
-              <button>New Box</button>
-              <Link to={`/${slug}/documents/document`}>
-                <button>New document</button>
-              </Link>
-            </div>
+
+            {/*<div className="doc-buttons">*/}
+            {/*<button>New Box</button>*/}
+            {/*<Link to={`/${slug}/documents/document`}>*/}
+            {/*<button>New document</button>*/}
+            {/*</Link>*/}
+            {/*</div>*/}
+
             <hr/>
 
-            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/private`} activeClassName="active">
-              <li className="documents-mnu-box-private">Box 1</li>
-            </Link>
+            {boxes.length > 0 && boxes[0].children.filter(box => ((box.key !== 'bin') && (box.key !== 'board'))).map(box => (
+              <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`}
+                    activeClassName="active">
+                <li className="documents-mnu-box-private">{box.name}</li>
+              </Link>
+            ))}
+
+            {boxes.length > 0 && boxes[0].children.filter(box => box.key === 'bin').map(box => (
+              <Link onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
+                <li className="documents-mnu-box-bin">{box.name}</li>
+              </Link>
+            ))}
           </ul>
-          {/*<div className="create-new-item">*/}
-          {/*<a href="#">+ Create new box</a>*/}
-          {/*</div>*/}
+          <div className="create-new-item">
+            <a href="#">+ Create new box</a>
+          </div>
 
           {/*<BoxesTree*/}
           {/*boxes={this.props.boxes}*/}
@@ -66,7 +81,7 @@ export default class TokensMenu extends Component {
   }
 }
 
-TokensMenu.propTypes = {
+DocumentsMenu.propTypes = {
   authorizedUser: PropTypes.object,
   sidebar: PropTypes.string,
   path: PropTypes.string,
