@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import TokensMenu from './TokensMenu';
+import TokensMenu from './DocumentsMenu';
 import AddToken from './AddToken';
 import './index.scss';
 

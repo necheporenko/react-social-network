@@ -54,8 +54,8 @@ export default class NewDocument extends Component {
         </div>
 
         <div className="docs-btn">
-          <button>Save</button>
-          <button style={{background: '#f6e312'}}>Sign</button>
+          <button className="btn-brand">Save</button>
+          <button className="btn-brand btn-sign">Sign</button>
         </div>
 
         <Editor

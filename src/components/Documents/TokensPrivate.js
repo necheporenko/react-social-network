@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TokensMenu from './TokensMenu';
+import TokensMenu from './DocumentsMenu';
 import AddToken from './AddToken';
 import './index.scss';
 

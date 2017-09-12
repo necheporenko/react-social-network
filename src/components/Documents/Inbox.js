@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {default as Web3} from 'web3';
-import TokensMenu from './TokensMenu';
+import TokensMenu from './DocumentsMenu';
 import './index.scss';
 
 class TokensExchange extends Component {

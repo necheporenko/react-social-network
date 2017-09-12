@@ -34,10 +34,10 @@ export default class TokensMenu extends Component {
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents`} activeClassName="active">
               <li className="tokens-mnu-sash">Board</li>
             </Link>
-            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/exchange`} activeClassName="active">
+            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">
               <li className="tokens-mnu-exchange">Inbox</li>
             </Link>
-            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/public`} activeClassName="active">
+            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/wallet`} activeClassName="active">
               <li className="tokens-mnu-public">Wallet</li>
             </Link>
             <hr/>

@@ -342,7 +342,7 @@
     position: fixed;
     z-index: 12;
     top: 61px;
-    left: 15px;
+    left: calc(50% - 595px);
     font-size: 18px;
 
     .input-buffer {
@@ -378,23 +378,31 @@
   .docs-btn {
     position: fixed;
     z-index: 12;
-    right: 20px;
-    top: 63px;
-    width: 120px;
+    right: calc(50% - 580px);
+    top: 60px;
+    width: 180px;
     display: flex;
     justify-content: space-between;
 
-    button {
-      cursor: pointer;
-      background: #4280ff;
-      color: #fff;
-      font-size: 14px;
-      border-radius: 2px;
-      border: 0;
-      text-align: center;
-      padding: 6px 12px;
-      line-height: 16px;
-      font-weight: 500;
+    //button {
+    //  cursor: pointer;
+    //  background: #4280ff;
+    //  color: #fff;
+    //  font-size: 14px;
+    //  border-radius: 2px;
+    //  border: 0;
+    //  text-align: center;
+    //  padding: 6px 12px;
+    //  line-height: 16px;
+    //  font-weight: 500;
+    //}
+
+    .btn-sign {
+      //font-size: 16px;
+      color: #333;
+      background-color: #f6e312;
+      border-color: #e9ac1a;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
     }
   }
 
