@@ -10,18 +10,18 @@ export default class Tokens extends Component {
   render() {
     const { slug } = this.props.requestedUser;
     return (
-      <div className="infoblocks-tokens">
+      <div className="infoblocks-documents">
 
         <div className="title-infoblocks">
           <Link to={`/${slug}/caches`}><span className="token-icon"/>Chest</Link>
         </div>
 
-        <ul className="tokens-mnu">
+        <ul className="documents-mnu">
           <Link to={`/${slug}/chest/exchange`}>
-            <li className="tokens-mnu-exchange tokens-list">Exchange</li>
+            <li className="documents-mnu-inbox documents-list">Exchange</li>
           </Link>
           <Link to={`/${slug}/chest`}>
-            <li className="tokens-mnu-sash tokens-list">Sash</li>
+            <li className="documents-mnu-board documents-list">Sash</li>
           </Link>
           {/*<a href="#">*/}
           {/*<li className="tokens-mnu-public tokens-list">Public cache</li>*/}

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {default as Web3} from 'web3';
-import TokensMenu from './DocumentsMenu';
+import DocumentsMenu from './DocumentsMenu';
 import './index.scss';
 
 class TokensExchange extends Component {
@@ -35,12 +35,14 @@ class TokensExchange extends Component {
     const {signature} = this.state;
     return (
       <div className="tokens contents">
-        <TokensMenu/>
+        <DocumentsMenu/>
 
         <div className="common-lists tokens-lists exchange">
           <div>
-            <textarea ref={c => this.msg = c} name="eth" id="" cols="30" rows="5" placeholder="Message..."
-                      style={{width: '500px'}}/>
+            <textarea
+              ref={c => this.msg = c} name="eth" id="" cols="30" rows="5" placeholder="Message..."
+              style={{width: '500px'}}
+            />
             <br/>
             <input ref={c => this.key = c} type="text" placeholder="Key..." style={{width: '500px'}}/>
             <br/>

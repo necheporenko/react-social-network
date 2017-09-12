@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TokensMenu from './DocumentsMenu';
+import DocumentsMenu from './DocumentsMenu';
 import AddToken from './AddToken';
 import './index.scss';
 
@@ -9,7 +9,7 @@ class TokensPublic extends Component {
   render() {
     return (
       <div className="tokens contents">
-        <TokensMenu />
+        <DocumentsMenu/>
 
         <div className="common-lists tokens-lists">
           {/*<AddToken />*/}

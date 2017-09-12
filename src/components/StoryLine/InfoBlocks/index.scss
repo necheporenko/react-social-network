@@ -82,7 +82,7 @@
 /* === Title End === */
 
 /* === Common Tokensa Start === */
-.infoblocks-cutaway, .infoblocks-peoples, .infoblocks-photos, .infoblocks-tokens {
+.infoblocks-cutaway, .infoblocks-peoples, .infoblocks-photos, .infoblocks-documents {
   background: #fff;
   border: 1px solid $border-color;
   min-height: 200px;
@@ -215,12 +215,12 @@
 }
 
 /* === Documents Start === */
-.infoblocks-tokens {
+.infoblocks-documents {
   min-height: 100px;
   padding-bottom: 5px;
 }
 
-.tokens-mnu {
+.documents-mnu {
   padding: 0;
   margin: 0;
   list-style: none;
@@ -237,11 +237,11 @@
   }
 }
 
-.tokens-list {
+.documents-list {
   padding: 5px 0;
 }
 
-.infoblocks-token, .tokens-mnu-exchange, .tokens-mnu-sash, .tokens-mnu-public, .tokens-mnu-private {
+.infoblocks-documents, .documents-mnu-inbox, .documents-mnu-board, .documents-mnu-wallet, .documents-mnu-box-private {
   padding-left: 12px;
 
   &:before {
@@ -253,8 +253,7 @@
   }
 }
 
-
-.tokens-mnu-exchange {
+.documents-mnu-inbox {
   &:before {
     background: url('../../../img/Icons/inbox.svg');
     height: 14px;
@@ -264,7 +263,7 @@
   }
 }
 
-.tokens-mnu-sash {
+.documents-mnu-board {
   &:before {
     background: url('../../../img/Icons/board.svg');
     height: 13px;
@@ -274,7 +273,7 @@
   }
 }
 
-.tokens-mnu-public {
+.documents-mnu-wallet {
   &:before {
     background-position: 0 -210px;
     height: 14px;
@@ -283,7 +282,7 @@
   }
 }
 
-.tokens-mnu-private {
+.documents-mnu-box-private {
   &:before {
     background: url('../../../img/Icons/private-box.svg');
     height: 14px;

@@ -1,8 +1,7 @@
 @import "../../theme/vars";
 @import "../../theme/mixins";
 
-.tokens-nav {
-
+.documents-nav {
   .create-new-item {
     padding-left: 30px;
     padding-top: 10px;
@@ -53,7 +52,7 @@
 //   width: 900px;
 // }
 
-.token {
+.document {
   > a {
     overflow: hidden;
     border: 1px solid #dadada;
@@ -189,7 +188,7 @@
 /* === AddToken ===*/
 
 .modal-token {
-  .token {
+  .document {
     i {
       width: 84px;
       height: 84px;
@@ -438,7 +437,7 @@
 }
 
 @media only screen and (max-width: 1200px) {
-  .token > a {
-    margin: 0px 35px 30px 35px;
+  .document > a {
+    margin: 0 35px 30px 35px;
   }
 }

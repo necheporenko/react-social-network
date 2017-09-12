@@ -28,17 +28,17 @@ export default class TokensMenu extends Component {
     const {slug} = this.props.authorizedUser;
 
     return (
-      <div className="sidebar tokens-nav">
+      <div className="sidebar documents-nav">
         <div className={this.props.sidebar}>
           <ul>
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents`} activeClassName="active">
-              <li className="tokens-mnu-sash">Board</li>
+              <li className="documents-mnu-board">Board</li>
             </Link>
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">
-              <li className="tokens-mnu-exchange">Inbox</li>
+              <li className="documents-mnu-inbox">Inbox</li>
             </Link>
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/wallet`} activeClassName="active">
-              <li className="tokens-mnu-public">Wallet</li>
+              <li className="documents-mnu-wallet">Wallet</li>
             </Link>
             <hr/>
             <div className="doc-buttons">
@@ -50,7 +50,7 @@ export default class TokensMenu extends Component {
             <hr/>
 
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/private`} activeClassName="active">
-              <li className="tokens-mnu-private">Box 1</li>
+              <li className="documents-mnu-box-private">Box 1</li>
             </Link>
           </ul>
           {/*<div className="create-new-item">*/}

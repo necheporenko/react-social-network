@@ -39,14 +39,14 @@ class AddToken extends Component {
 
   render() {
     return (
-      <div className="token add-token" onClick={this.Open}>
+      <div className="document add-token" onClick={this.Open}>
         <a href="#">
           <div><span>Create <br/> New Document</span></div>
         </a>
 
         <Modal show={this.state.showModal} onHide={this.Close} className="modal-token">
           <div className="popup-body">
-            <div className="token">
+            <div className="document">
               <a href="">
                 <i><span>Upload <br/> Cover Image</span></i>
               </a>

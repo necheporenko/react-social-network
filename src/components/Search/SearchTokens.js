@@ -9,29 +9,29 @@ class SearchTokens extends Component {
         <div className="tokens-lists">
           <div className="wrapper">
 
-            <div className="token">
+            <div className="document">
               <a href=""><i></i></a>
             </div>
-            <div className="token">
+            <div className="document">
               <a href=""><i></i></a>
             </div>
-            <div className="token">
+            <div className="document">
               <a href=""><i></i></a>
             </div>
-            <div className="token">
+            <div className="document">
               <a href=""><i></i></a>
             </div>
 
-            <div className="token">
+            <div className="document">
               <a href=""><i></i></a>
             </div>
-            <div className="token">
+            <div className="document">
               <a href=""><i></i></a>
             </div>
-            <div className="token">
+            <div className="document">
               <a href=""><i></i></a>
             </div>
-            <div className="token">
+            <div className="document">
               <a href=""><i></i></a>
             </div>
 

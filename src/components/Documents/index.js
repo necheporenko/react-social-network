@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import TokensMenu from './DocumentsMenu';
+import DocumentsMenu from './DocumentsMenu';
 import AddToken from './AddToken';
 import './index.scss';
 
@@ -61,14 +61,14 @@ export default class Tokens extends Component {
     const navigation = chooseNav();
     return (
       <div className={navigation.posTop}>
-        <TokensMenu
+        <DocumentsMenu
           sidebar={navigation.sidebar}
         />
 
         <div className="common-lists tokens-lists">
 
           {doc.map((document, index) => (
-            <div key={index} className="token">
+            <div key={index} className="document">
               <a href="">
                 <div>
                   <i className="doc-icon"/>
