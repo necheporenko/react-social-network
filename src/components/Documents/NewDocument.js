@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {convertToRaw} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import {Editor} from 'react-draft-wysiwyg';
@@ -6,7 +7,14 @@ import AutosizeInput from 'react-input-autosize';
 import {Form, Select, Input} from 'formsy-react-components';
 import {Modal, ButtonToolbar, DropdownButton} from 'react-bootstrap';
 import SBox from '../StoryLine/Stream/Sbox';
+import {createDocument} from '../../redux/modules/document';
 import './index.scss';
+
+@connect((state) => ({
+  authorizedUser: state.user.authorizedUser,
+}), {
+  createDocument
+})
 
 export default class NewDocument extends Component {
   constructor(props) {
@@ -17,6 +25,7 @@ export default class NewDocument extends Component {
     };
     this.onEditorStateChange = this.onEditorStateChange.bind(this);
     this.handleDocTitle = this.handleDocTitle.bind(this);
+    this.save = this.save.bind(this);
   }
 
   onEditorStateChange = (editorContent) => {
@@ -30,6 +39,23 @@ export default class NewDocument extends Component {
     this.setState({
       title: event.target.value
     });
+  }
+
+  save() {
+    const file =
+      `<!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width">
+        </head>
+        <body>
+         ${this.state.data}
+        </body>
+        </html>`
+    ;
+
+    this.props.createDocument('board', this.props.authorizedUser.id, this.state.title, file);
   }
 
   render() {
@@ -54,7 +80,7 @@ export default class NewDocument extends Component {
         </div>
 
         <div className="docs-btn">
-          <button className="btn-brand">Save</button>
+          <button className="btn-brand" onClick={() => this.save()}>Save</button>
           <button className="btn-brand btn-sign">Sign</button>
         </div>
 

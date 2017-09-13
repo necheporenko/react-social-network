@@ -28,6 +28,7 @@ export default class Box extends Component {
     };
     this.handleScroll = this.handleScroll.bind(this);
     this.saveScroll = this.saveScroll.bind(this);
+    this.httpGet = this.httpGet.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +57,59 @@ export default class Box extends Component {
     this.setState({scrollTop: savePositionTop});
   }
 
+  httpGet() {
+    // const theUrl = 'https://s3-us-west-2.amazonaws.com/dev.validbook/documents/2017/09/13/53/6bq42106.html';
+    // const theUrl = 'http://localhost:3000/darth.vader/documents/board';
+    const theUrl = 'https://sinoptik.ua/';
+    // const theUrl = 'http://api.github.com';
+
+    // const myHeaders = new Headers();
+    //
+    const myInit = {
+      method: 'GET',
+      headers: new Headers(),
+      mode: 'no-cors',
+      cache: 'default'
+    };
+
+    // fetch(theUrl, myInit)
+    //   .then((response) => {
+    //     console.log(response);
+    //     return response.text();
+    //   }).then((body) => {
+    //     console.log(body, 'hey');
+    //   }).catch(error => {
+    //     console.log('error', error);
+    //   });
+
+    const result = fetch(theUrl, myInit);
+    result.then((response) => {
+      console.log('response', response);
+      console.log('header', response.headers.get('Content-Type'));
+      return response.text();
+    }).then((text) => {
+      console.log('got text', text);
+    }).catch((ex) => {
+      console.log('failed', ex);
+    });
+
+
+    // let xmlhttp;
+    //
+    // if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+    //   xmlhttp = new XMLHttpRequest();
+    // } else { // code for IE6, IE5
+    //   xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+    // }
+    // xmlhttp.onreadystatechange = function () {
+    //   if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+    //     console.log('hey', xmlhttp.responseText);
+    //   }
+    // };
+    // xmlhttp.open('GET', theUrl, false);
+    // xmlhttp.send();
+  }
+
   render() {
     const {scrollTop} = this.state;
     const {box} = this.props;
@@ -82,50 +136,40 @@ export default class Box extends Component {
           sidebar={navigation.sidebar}
         />
 
-        <div className="wrapper-document-lists">
-          {slug === this.props.authorizedUser.slug &&
-          <Link
-            to={`/${this.props.authorizedUser.slug}/documents/document`}
-            style={{marginLeft: '20px', marginBottom: '20px', display: 'block'}}
-          >
-            <button className="btn-brand">New document</button>
-          </Link>
-          }
-
-          <div className="common-lists tokens-lists">
-            {box.id && box.children && box.children.map(document => (
-              <div key={document.id} className="document">
-                <Link to={`/${slug}/documents/${box.key}/${document.id}`}>
-                  <div>
-                    <i className="doc-icon"/>
-                    {/*<div className="doc-sign">*/}
-                    {/*<i/>*/}
-                    {/*</div>*/}
-                    <p>{document.title}</p>
-                  </div>
-                </Link>
-              </div>
+        <div className="common-lists tokens-lists">
+          {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
+          {box.id && box.documents && box.documents.map(document => (
+            <div key={document.id} className="document">
+              <Link to={`/${slug}/documents/${box.key}/${document.id}`}>
+                <div>
+                  <i className="doc-icon"/>
+                  {/*<div className="doc-sign">*/}
+                  {/*<i/>*/}
+                  {/*</div>*/}
+                  <p>{document.title}</p>
+                </div>
+              </Link>
+            </div>
             ))}
 
-            {/*{doc.map((document, index) => (*/}
-            {/*<div key={index} className="document">*/}
-            {/*<a href="">*/}
-            {/*<div>*/}
-            {/*<i className="doc-icon"/>*/}
-            {/*/!*<div className="doc-sign">*!/*/}
-            {/*/!*<i/>*!/*/}
-            {/*/!*</div>*!/*/}
-            {/*<p>Document 1</p>*/}
-            {/*</div>*/}
-            {/*</a>*/}
-            {/*</div>*/}
-            {/*))}*/}
+          {/*{doc.map((document, index) => (*/}
+          {/*<div key={index} className="document">*/}
+          {/*<a href="">*/}
+          {/*<div>*/}
+          {/*<i className="doc-icon"/>*/}
+          {/*/!*<div className="doc-sign">*!/*/}
+          {/*/!*<i/>*!/*/}
+          {/*/!*</div>*!/*/}
+          {/*<p>Document 1</p>*/}
+          {/*</div>*/}
+          {/*</a>*/}
+          {/*</div>*/}
+          {/*))}*/}
 
-            {/*<AddToken*/}
-            {/*authorizedUser={this.props.authorizedUser}*/}
-            {/*/>*/}
+          {/*<AddToken*/}
+          {/*authorizedUser={this.props.authorizedUser}*/}
+          {/*/>*/}
 
-          </div>
         </div>
       </div>
     );

@@ -8,7 +8,7 @@ import './index.scss';
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
-  // requestedUser: state.user.requestedUser,
+  requestedUser: state.user.requestedUser,
   boxes: state.document.boxes,
   path: state.routing.locationBeforeTransitions.pathname,
 }), {
@@ -26,13 +26,23 @@ export default class DocumentsMenu extends Component {
 
   render() {
     const {boxes} = this.props;
-    const {slug} = this.props.authorizedUser;
+    const {slug} = this.props.requestedUser;
 
     return (
       <div className="sidebar documents-nav">
         <div className={this.props.sidebar}>
           <ul>
             {/*{console.log('boxes', boxBin)}*/}
+
+            {slug === this.props.authorizedUser.slug &&
+            <Link
+              to={`/${this.props.authorizedUser.slug}/documents/document`}
+              style={{marginLeft: '20px', marginBottom: '20px', display: 'block'}}
+            >
+              <button className="btn-brand">New document</button>
+            </Link>
+            }
+
             {boxes.length > 0 && boxes[0].children.filter(box => box.key === 'board').map(box => (
               <Link onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
                 <li className="documents-mnu-board">{box.name}</li>
@@ -83,6 +93,7 @@ export default class DocumentsMenu extends Component {
 
 DocumentsMenu.propTypes = {
   authorizedUser: PropTypes.object,
+  requestedUser: PropTypes.object,
   sidebar: PropTypes.string,
   path: PropTypes.string,
   // getUser: PropTypes.func,
