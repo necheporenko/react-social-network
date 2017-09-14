@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
+import ReactMarkdown from 'react-markdown';
 import {getUser} from '../../redux/modules/user';
 import {getBox} from '../../redux/modules/document';
 import DocumentsMenu from './DocumentsMenu';
@@ -58,17 +59,18 @@ export default class Box extends Component {
   }
 
   httpGet() {
-    // const theUrl = 'https://s3-us-west-2.amazonaws.com/dev.validbook/documents/2017/09/13/53/6bq42106.html';
+    // const theUrl = 'https://s3-us-west-2.amazonaws.com/dev.validbook/documents/2017/09/13/53/4CEA4106.html';
+    const theUrl = 'https://s3-us-west-2.amazonaws.com/dev.validbook/human_card/2017/09/14/1/hc_Jimbo_Fry.md';
     // const theUrl = 'http://localhost:3000/darth.vader/documents/board';
-    const theUrl = 'https://sinoptik.ua/';
-    // const theUrl = 'http://api.github.com';
+    // const theUrl = 'http://api.validbook.org';
+    // const theUrl = 'https://api.github.com';
 
     // const myHeaders = new Headers();
     //
     const myInit = {
       method: 'GET',
       headers: new Headers(),
-      mode: 'no-cors',
+      mode: 'cors',
       cache: 'default'
     };
 
@@ -83,6 +85,7 @@ export default class Box extends Component {
     //   });
 
     const result = fetch(theUrl, myInit);
+    console.log(result);
     result.then((response) => {
       console.log('response', response);
       console.log('header', response.headers.get('Content-Type'));
@@ -93,6 +96,17 @@ export default class Box extends Component {
       console.log('failed', ex);
     });
 
+    const XHR = ('onload' in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+    const xhr = new XHR();
+// (2) запрос на другой домен :)
+    xhr.open('GET', theUrl, true);
+    xhr.onload = function () {
+      alert(this.responseText);
+    };
+    xhr.onerror = function () {
+      alert(`Ошибка ${this.status}`);
+    };
+    xhr.send();
 
     // let xmlhttp;
     //
@@ -130,46 +144,98 @@ export default class Box extends Component {
     };
 
     const navigation = chooseNav();
+    const input = `
+<?--- START HUMAN CARD ---?>  
+ 
+# Human Card
+------------------------------------------------------------
+**Public Address** - e3954b59340b92a01a2258251c56098cc6c485cc
+
+This public address has been established for:
+
+## Jimbo Fry
+
+Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9
+
+------------------------------------------------------------
+
+<?--- END HUMAN CARD ---?>
+
+
+<?--- START SELF SIGNATURE ---?>
+
+
+<?--- END SELF SIGNATURE ---?>
+
+
+<?--- START LINKED DIGITAL PROPERTY 1 ---?>
+
+<?--- END LINKED DIGITAL PROPERTY 1 ---?>
+
+
+
+<?--- START VALIDATORS SIGNATURE 1  ---?>
+
+<?--- END VALIDATORS SIGNATURE 1 ---?>`;
     return (
       <div className={navigation.posTop}>
         <DocumentsMenu
           sidebar={navigation.sidebar}
         />
+        <div>
+          <div
+            style={{
+              border: '1px solid #ccc',
+              width: '510px',
+              padding: '15px',
+              margin: '0 0 20px 20px',
+              background: '#fff'
+            }}
+          >
+            {/*<h1>Human card</h1>*/}
+            {/*<hr/>*/}
+            {/*<p><b>Public Address </b>- e0909fdjfoj4ru84uf498u0d2jd032d4ry79420fj4097fh4792</p>*/}
+            {/*<p>This public address has been established for:</p>*/}
+            {/*<h2>FirstName LastName</h2>*/}
+            {/*<p>Digital Signature: fkii48jf489jf934ujcf034h0f0y40yhrf340fhy3480gft34fh348f34y8</p>*/}
+            <ReactMarkdown source={input} />
+          </div>
 
-        <div className="common-lists tokens-lists">
-          {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
-          {box.id && box.documents && box.documents.map(document => (
-            <div key={document.id} className="document">
-              <Link to={`/${slug}/documents/${box.key}/${document.id}`}>
-                <div>
-                  <i className="doc-icon"/>
-                  {/*<div className="doc-sign">*/}
-                  {/*<i/>*/}
-                  {/*</div>*/}
-                  <p>{document.title}</p>
-                </div>
-              </Link>
-            </div>
+          <div className="common-lists tokens-lists">
+            {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
+            {box.id && box.documents && box.documents.map(document => (
+              <div key={document.id} className="document">
+                <Link to={`/${slug}/documents/${box.key}/${document.id}`}>
+                  <div>
+                    <i className="doc-icon"/>
+                    {/*<div className="doc-sign">*/}
+                    {/*<i/>*/}
+                    {/*</div>*/}
+                    <p>{document.title}</p>
+                  </div>
+                </Link>
+              </div>
             ))}
 
-          {/*{doc.map((document, index) => (*/}
-          {/*<div key={index} className="document">*/}
-          {/*<a href="">*/}
-          {/*<div>*/}
-          {/*<i className="doc-icon"/>*/}
-          {/*/!*<div className="doc-sign">*!/*/}
-          {/*/!*<i/>*!/*/}
-          {/*/!*</div>*!/*/}
-          {/*<p>Document 1</p>*/}
-          {/*</div>*/}
-          {/*</a>*/}
-          {/*</div>*/}
-          {/*))}*/}
+            {/*{doc.map((document, index) => (*/}
+            {/*<div key={index} className="document">*/}
+            {/*<a href="">*/}
+            {/*<div>*/}
+            {/*<i className="doc-icon"/>*/}
+            {/*/!*<div className="doc-sign">*!/*/}
+            {/*/!*<i/>*!/*/}
+            {/*/!*</div>*!/*/}
+            {/*<p>Document 1</p>*/}
+            {/*</div>*/}
+            {/*</a>*/}
+            {/*</div>*/}
+            {/*))}*/}
 
-          {/*<AddToken*/}
-          {/*authorizedUser={this.props.authorizedUser}*/}
-          {/*/>*/}
+            {/*<AddToken*/}
+            {/*authorizedUser={this.props.authorizedUser}*/}
+            {/*/>*/}
 
+          </div>
         </div>
       </div>
     );
