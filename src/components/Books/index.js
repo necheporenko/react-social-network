@@ -16,13 +16,13 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
           backgroundImage: requestedUser.cover && requestedUser.cover.picture ? `url(${requestedUser.cover.picture})` : null
         }}
       />
-      {/*<div className="authorUser">*/}
-      {/*<img src={requestedUser.avatar72} alt=""/>*/}
-      {/*<h5>{`${requestedUser.first_name} ${requestedUser.last_name}`}</h5>*/}
-      {/*</div>*/}
+      <div className="authorUser">
+        <img src={requestedUser.avatar32} alt=""/>
+      </div>
 
       <div className="title-infoblocks-book">
         <h5>{name}</h5>
+        <h6 style={{margin: '5px 0'}}>{`${requestedUser.first_name} ${requestedUser.last_name}`}</h6>
       </div>
 
       <div className="book-edit">
@@ -38,14 +38,18 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
       {/*<span>2 subbooks</span>*/}
       {/*</div>*/}
 
-      <div className="book-info">
-        <ul className="book-info-list">
-          <li className="book-icon-visibility"></li>
-          <li className="book-icon-stories">5</li>
-          <li className="book-icon-subbooks">3</li>
-          <li className="book-icon-followers">1</li>
+      <div className="book-info" style={{margin: '5px 0'}}>
+        <ul className="book-info-list" style={{marginLeft: '-3px'}}>
+          <li><i className="infobook-icon-visibility"/><span>0</span><i className="stories-icon-sm"/>·</li>
+          <li><span>0</span><i className="subbooks-icon-sm"/>·</li>
+          <li><span>0</span><i className="followers-icon-sm"/>·</li>
+          <li><span>0</span><i className="photos-icon-sm"/></li>
         </ul>
         {/*<hr />*/}
+      </div>
+      <div className="btn-following btn-following-book" style={{margin: '5px 0'}}>
+        <div>Following Book</div>
+        <span/>
       </div>
 
       {/*<div className="book-description">*/}

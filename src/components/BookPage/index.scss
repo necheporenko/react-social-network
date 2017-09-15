@@ -106,16 +106,6 @@
       line-height: 30px;
       color: #555;
     }
-
-    .btn-following-book {
-      margin: 0;
-      width: 125px;
-      height: 25px;
-
-      > div {
-        width: 98px;
-      }
-    }
   }
 
   .book-description {
@@ -266,8 +256,8 @@
     list-style: none;
 
     li {
-      background: $gray;
-      color: #fff;
+      //background: $gray;
+      //color: #fff;
       display: inline-block;
       padding: 3px 3px 0 3px;
       margin-right: 5px;

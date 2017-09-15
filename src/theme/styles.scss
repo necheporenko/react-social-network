@@ -114,6 +114,16 @@ b {
   }
 }
 
+.btn-following-book {
+  margin: 0;
+  width: 125px;
+  height: 25px;
+
+  > div {
+    width: 98px;
+  }
+}
+
 .btn-cancel {
   //background: #f5f5f5;
   background: linear-gradient(to top, #f5f5f5, #f1f1f1);
