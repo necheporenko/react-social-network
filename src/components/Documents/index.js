@@ -183,7 +183,7 @@ Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd9
         />
         <div>
           <div style={{display: 'flex'}}>
-            <div className="human-card-preview">
+            <div className="human-card human-card-preview">
               <h1>Human card</h1>
               <hr/>
               <p>

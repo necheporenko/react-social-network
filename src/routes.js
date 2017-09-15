@@ -21,6 +21,7 @@ import TokensPrivate from 'components/Documents/TokensPrivate';
 import Wallet from 'components/Documents/Wallet';
 import Inbox from 'components/Documents/Inbox';
 import NewDocument from 'components/Documents/NewDocument';
+import HumanCard from 'components/Documents/HumanCard';
 import MessagesContainer from 'containers/MessagesContainer';
 import Messages from 'components/Messages';
 import NewMessage from 'components/Messages/NewMessage';
@@ -136,6 +137,7 @@ export default (store) => {
       </Route>
 
       <Route path="/:userName/documents/document" component={NewDocument}/>
+      <Route path="/:userName/documents/human-card/:humanCard" component={HumanCard}/>
       <Route path="/:userName/documents/:box/:document" component={NewDocument}/>
       <Route path="/:userName/documents" component={DocumentsContainer}>
         <IndexRoute component={Box}/>

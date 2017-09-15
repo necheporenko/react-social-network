@@ -433,10 +433,10 @@
 
 
 /* === Human Card Start === */
-.human-card-preview {
+.human-card {
   width: 510px;
   padding: 0 15px;
-  margin: 0 0 20px 20px;
+  margin: 70px auto;
   background: rgb(255, 255, 255);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
   border: 1px solid #dadada;
@@ -461,8 +461,6 @@
   }
 
   input {
-    //border: 0;
-    //border-bottom: 1px solid #ccc;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 2px;
@@ -476,6 +474,10 @@
     border-top: 1px solid #e7e7e7;
     margin: 7px 0;
   }
+}
+
+.human-card-preview {
+  margin: 0 0 20px 20px;
 }
 
 .human-card-btn {
