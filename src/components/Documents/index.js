@@ -190,7 +190,7 @@ Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd9
                 <strong>Public Address:</strong>
                 <input
                   type="text" placeholder="Paste your public address here"
-                  style={{width: '406px', height: '37px', marginLeft: '5px'}}
+                  style={{width: '406px', height: '34px', marginLeft: '5px'}}
                 />
               </p>
               <p>This public address has been established for:</p>
