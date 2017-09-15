@@ -27,7 +27,7 @@ export default class Peoples extends Component {
               </div>
               <i style={{color: '#999', fontSize: '14px', lineHeight: '22px'}}>·</i>
               <div>
-                <Link to={`/${requestedUser.slug}/people`} style={{color: '#999', fontSize: '14px'}}>
+                <Link to={`/${requestedUser.slug}/people/following`} style={{color: '#999', fontSize: '14px'}}>
                   Following<span>{` ${following.count}`}</span>
                 </Link>
               </div>
