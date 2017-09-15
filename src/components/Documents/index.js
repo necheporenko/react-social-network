@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import {getUser} from '../../redux/modules/user';
 import {getBox} from '../../redux/modules/document';
 import DocumentsMenu from './DocumentsMenu';
-import AddToken from './AddToken';
+import SignHumanCard from '../Popup/SignHumanCard';
 import './index.scss';
 
 let savePositionTop;
@@ -146,7 +146,6 @@ export default class Box extends Component {
     const navigation = chooseNav();
     const input = `
 <?--- START HUMAN CARD ---?>  
- 
 # Human Card
 ------------------------------------------------------------
 **Public Address** - e3954b59340b92a01a2258251c56098cc6c485cc
@@ -154,27 +153,13 @@ export default class Box extends Component {
 This public address has been established for:
 
 ## Jimbo Fry
-
 Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd94kf94kf94kk9f49
-
-
 <?--- END HUMAN CARD ---?>
-
-
 <?--- START SELF SIGNATURE ---?>
-
-
 <?--- END SELF SIGNATURE ---?>
-
-
 <?--- START LINKED DIGITAL PROPERTY 1 ---?>
-
 <?--- END LINKED DIGITAL PROPERTY 1 ---?>
-
-
-
 <?--- START VALIDATORS SIGNATURE 1  ---?>
-
 <?--- END VALIDATORS SIGNATURE 1 ---?>`;
     return (
       <div className={navigation.posTop}>
@@ -203,7 +188,7 @@ Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd9
             </div>
             <div className="human-card-btn">
               <button className="btn-brand">Save</button>
-              <button className="btn-brand btn-sign">Sign</button>
+              <SignHumanCard/>
             </div>
           </div>
 
