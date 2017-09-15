@@ -155,9 +155,8 @@ This public address has been established for:
 
 ## Jimbo Fry
 
-Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9
+Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd94kf94kf94kk9f49
 
-------------------------------------------------------------
 
 <?--- END HUMAN CARD ---?>
 
@@ -183,22 +182,29 @@ Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9
           sidebar={navigation.sidebar}
         />
         <div>
-          <div
-            style={{
-              border: '1px solid #ccc',
-              width: '510px',
-              padding: '15px',
-              margin: '0 0 20px 20px',
-              background: '#fff'
-            }}
-          >
-            {/*<h1>Human card</h1>*/}
-            {/*<hr/>*/}
-            {/*<p><b>Public Address </b>- e0909fdjfoj4ru84uf498u0d2jd032d4ry79420fj4097fh4792</p>*/}
-            {/*<p>This public address has been established for:</p>*/}
-            {/*<h2>FirstName LastName</h2>*/}
-            {/*<p>Digital Signature: fkii48jf489jf934ujcf034h0f0y40yhrf340fhy3480gft34fh348f34y8</p>*/}
-            <ReactMarkdown source={input} />
+          <div style={{display: 'flex'}}>
+            <div className="human-card-preview">
+              <h1>Human card</h1>
+              <hr/>
+              <p>
+                <strong>Public Address:</strong>
+                <input
+                  type="text" placeholder="Paste your public address here"
+                  style={{width: '406px', height: '37px', marginLeft: '5px'}}
+                />
+              </p>
+              <p>This public address has been established for:</p>
+              <h2>
+                <input type="text" placeholder="Paste your name here" defaultValue="FirstName LastName" />
+              </h2>
+              <p>Digital Signature: <span style={{color: '#8F8F8F'}}>Here will be your signature</span></p>
+
+              {/*<ReactMarkdown source={input}/>*/}
+            </div>
+            <div className="human-card-btn">
+              <button className="btn-brand">Save</button>
+              <button className="btn-brand btn-sign">Sign</button>
+            </div>
           </div>
 
           <div className="common-lists tokens-lists">
