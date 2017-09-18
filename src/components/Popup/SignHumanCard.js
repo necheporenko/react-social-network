@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Modal} from 'react-bootstrap';
-// import {default as Web3} from 'web3';
+import Web3 from 'web3';
 import './index.scss';
 
 export default class SignHumanCard extends Component {
@@ -8,9 +8,12 @@ export default class SignHumanCard extends Component {
     super(props);
     this.state = {
       showModal: false,
+      file: null
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
+    this.test = this.test.bind(this);
+    this.readKeystore = this.readKeystore.bind(this);
   }
 
   Close() {
@@ -19,6 +22,41 @@ export default class SignHumanCard extends Component {
 
   Open() {
     this.setState({showModal: true});
+  }
+
+  test() {
+    let web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546');
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    }
+
+    console.log(JSON.parse(this.state.file.toLowerCase()));
+    console.log(x, 2);
+    console.log(web3.eth.accounts.decrypt(JSON.parse(this.state.file.toLowerCase()), '1234567890'));
+    // console.log(web3.eth.accounts.decrypt(x, 'test!'));
+  }
+
+  readKeystore(e) {
+    let web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546');
+    if (typeof web3 !== 'undefined') {
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    }
+
+    e.preventDefault();
+    const reader = new FileReader();
+    const file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file: reader.result,
+      });
+      console.log(web3.eth.accounts.decrypt(JSON.parse(this.state.file.toLowerCase()), '1234567890'));
+    };
+    reader.readAsText(file);
   }
 
   render() {
@@ -39,7 +77,8 @@ export default class SignHumanCard extends Component {
                 </div>
               </div>
               <div>
-                <input type="file"/>
+                <input type="file" onChange={(e) => this.readKeystore(e)} ref={el => this.inputKeystore = el}/>
+                <button onClick={() => this.test()}>click</button>
               </div>
             </div>
           </Modal.Body>
@@ -51,8 +90,6 @@ export default class SignHumanCard extends Component {
               </button>
             </div>
           </Modal.Footer>
-
-
         </Modal>
       </div>
     );

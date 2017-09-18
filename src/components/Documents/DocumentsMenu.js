@@ -49,6 +49,8 @@ export default class DocumentsMenu extends Component {
               </Link>
             ))}
 
+            <hr/>
+
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">
               <li className="documents-mnu-inbox">Inbox</li>
             </Link>

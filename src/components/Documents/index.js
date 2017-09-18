@@ -127,7 +127,7 @@ export default class Box extends Component {
   render() {
     const {scrollTop} = this.state;
     const {box} = this.props;
-    const {slug} = this.props.requestedUser;
+    const {slug, first_name, last_name} = this.props.requestedUser;
 
     const chooseNav = () => {
       let Nav;
@@ -169,20 +169,20 @@ Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd9
         <div>
           <div style={{display: 'flex'}}>
             <div className="human-card human-card-preview">
-              <h1>Human card</h1>
+              <h1>Human Card</h1>
               <hr/>
               <p>
                 <strong>Public Address:</strong>
                 <input
                   type="text" placeholder="Paste your public address here"
-                  style={{width: '406px', height: '34px', marginLeft: '5px'}}
+                  style={{width: '400px', marginLeft: '10px'}}
                 />
               </p>
               <p>This public address has been established for:</p>
-              <h2>
-                <input type="text" placeholder="Paste your name here" defaultValue="FirstName LastName" />
-              </h2>
-              <p>Digital Signature: <span style={{color: '#8F8F8F'}}>Here will be your signature</span></p>
+              <p>
+                <input type="text" placeholder="Paste your name here" defaultValue={`${first_name} ${last_name}`}/>
+              </p>
+              <p>Digital Signature: <span style={{color: '#8F8F8F'}}>  your signature will be here</span></p>
 
               {/*<ReactMarkdown source={input}/>*/}
             </div>
