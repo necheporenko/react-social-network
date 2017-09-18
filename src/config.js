@@ -14,7 +14,7 @@ module.exports = Object.assign({
   port: process.env.PORT,
   //apiHost: process.env.APIHOST || 'localhost',
   //apiPort: process.env.APIPORT,
-  apiHost: 'api.validbook.org/v1',
+  apiHost: 'apifuturama11001111.validbook.org/v1',
   app: {
     title: 'React Validbook',
     description: 'Validbook – a universal platform for cooperation.',

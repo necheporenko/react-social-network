@@ -52,7 +52,7 @@ function formatUrl(path) {
   // }
   // Prepend `/api` to relative URL, to proxy to API server.
   //return `/api${adjustedPath}`;
-  const apiURL = 'http://api.validbook.org/v1';
+  const apiURL = 'http://apifuturama11001111.validbook.org/v1';
   console.log('apiURL', apiURL + adjustedPath);
   return apiURL + adjustedPath;
 }
