@@ -1,1 +1,1 @@
-export const apiURL = 'http://api.validbook.org/v1';
+export const apiURL = 'http://api-test.validbook.org/v1';

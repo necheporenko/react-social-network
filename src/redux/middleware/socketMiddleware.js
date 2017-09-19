@@ -46,7 +46,7 @@ export default function socketMiddleware() {
     switch (action.type) {
       case 'PERSIST':
         if (currentState.user.authorizedUser.id) {
-          const socket = new WebSocket(`ws://api.validbook.org:8000/?user=${currentState.user.authorizedUser.id}`);
+          const socket = new WebSocket(`ws://api-test.validbook.org:8000/?user=${currentState.user.authorizedUser.id}`);
           // console.log('this is store', currentState.user.authorizedUser);
           global.socket = socket;
           socket.onopen = () => console.log('Connection established!');
@@ -54,7 +54,7 @@ export default function socketMiddleware() {
         }
         break;
       case 'OPEN_SOCKET':
-        const socket = new WebSocket(`ws://api.validbook.org:8000/?user=${currentState.user.authorizedUser.id}`);
+        const socket = new WebSocket(`ws://api-test.validbook.org:8000/?user=${currentState.user.authorizedUser.id}`);
         // console.log('this is store', currentState.user.authorizedUser);
         global.socket = socket;
         socket.onopen = () => console.log('Connection established!');
