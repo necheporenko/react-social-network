@@ -3,6 +3,8 @@ import {Modal} from 'react-bootstrap';
 import Web3 from 'web3';
 import './index.scss';
 
+const web3 = new Web3(Web3.givenProvider);
+
 export default class SignHumanCard extends Component {
   constructor(props) {
     super(props);
@@ -12,8 +14,8 @@ export default class SignHumanCard extends Component {
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
-    this.test = this.test.bind(this);
     this.readKeystore = this.readKeystore.bind(this);
+    this.sign = this.sign.bind(this);
   }
 
   Close() {
@@ -24,28 +26,13 @@ export default class SignHumanCard extends Component {
     this.setState({showModal: true});
   }
 
-  test() {
-    let web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546');
-    if (typeof web3 !== 'undefined') {
-      web3 = new Web3(web3.currentProvider);
-    } else {
-      web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-    }
-
-    console.log(JSON.parse(this.state.file.toLowerCase()));
-    console.log(x, 2);
-    console.log(web3.eth.accounts.decrypt(JSON.parse(this.state.file.toLowerCase()), '1234567890'));
-    // console.log(web3.eth.accounts.decrypt(x, 'test!'));
+  sign(msg, keystore, password) {
+    const DECRYPT = web3.eth.accounts.decrypt(JSON.parse(keystore.toLowerCase()), password);
+    console.log(DECRYPT);
+    console.log(web3.eth.accounts.sign(msg, DECRYPT.privateKey));
   }
 
   readKeystore(e) {
-    let web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546');
-    if (typeof web3 !== 'undefined') {
-      web3 = new Web3(web3.currentProvider);
-    } else {
-      web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-    }
-
     e.preventDefault();
     const reader = new FileReader();
     const file = e.target.files[0];
@@ -54,7 +41,6 @@ export default class SignHumanCard extends Component {
       this.setState({
         file: reader.result,
       });
-      console.log(web3.eth.accounts.decrypt(JSON.parse(this.state.file.toLowerCase()), '1234567890'));
     };
     reader.readAsText(file);
   }
@@ -72,13 +58,25 @@ export default class SignHumanCard extends Component {
                   <input type="radio" id="keystoreKey" value="File"/>
                   <label htmlFor="keystoreKey">Keystore File (UTC / JSON)</label>
                   <br/>
-                  <input type="radio" id="privateKey" value="File"/>
-                  <label htmlFor="privateKey">Private Key</label>
+                  {/*<input type="radio" id="privateKey" value="File"/>*/}
+                  {/*<label htmlFor="privateKey">Private Key</label>*/}
                 </div>
               </div>
               <div>
-                <input type="file" onChange={(e) => this.readKeystore(e)} ref={el => this.inputKeystore = el}/>
-                <button onClick={() => this.test()}>click</button>
+                <div className="keystore-file">
+                  <input type="file" name="keystore" id="keystore" onChange={(e) => this.readKeystore(e)}/>
+                  <label htmlFor="keystore">Choose a file</label>
+                </div>
+                {/*<input type="file" onChange={(e) => this.readKeystore(e)} ref={el => this.inputKeystore = el}/>*/}
+                {this.state.file &&
+                <div>
+                  <p>Please enter your password</p>
+                  <input type="text" ref={el => this.inputKeystorePassword = el}/>
+                  <br/>
+                </div>
+                }
+                <button onClick={() => this.sign('data', this.state.file, this.inputKeystorePassword.value)}>Sign
+                </button>
               </div>
             </div>
           </Modal.Body>

@@ -14,16 +14,20 @@ class TokensExchange extends Component {
 
   test() {
     const privateKey = '6015d764ec8d2f209e335ed2b83f23aa4919a8594a37e5173e441848ec872a1e';
-    let web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546');
+    let web3 = new Web3(Web3.givenProvider);
 
-    if (typeof web3 !== 'undefined') {
-      web3 = new Web3(web3.currentProvider);
-    } else {
-      web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
-    }
+    // if (typeof web3 !== 'undefined') {
+    //   web3 = new Web3(web3.currentProvider);
+    // } else {
+    //   web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    // }
 
     // this.setState({signature: web3.eth.accounts.sign(this.msg.value, this.key.value)});
     console.log(web3.eth.accounts.sign('data', privateKey));
+    // console.log('connect:', web3.isConnected());
+    // web3.isConnected();
+    console.log(web3);
+
     // web3.eth.personal.sign(web3.utils.utf8ToHex("Hello world"), "0x46897638b09B3a3ac21Da64B8FA81aD7d07B143F", "12345678")
     //   .then(console.log);
 

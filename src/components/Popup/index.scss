@@ -110,4 +110,19 @@
 .sign-access-type {
   width: 300px;
 }
+
+.keystore-file {
+  input {
+    display: none;
+  }
+
+  input + label {
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+    color: #f1e5e6;
+    background-color: #989293;
+  }
+}
 /*=== Sign Human Card  End===*/
