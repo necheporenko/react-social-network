@@ -170,24 +170,18 @@ export default class Box extends Component {
 
     const navigation = chooseNav();
 
-    const input =
-      `<?--- START HUMAN CARD ---?>  
-      # Human Card
-      ------------------------------------------------------------
-      **Public Address** - e3954b59340b92a01a2258251c56098cc6c485cc
-      
-      This public address has been established for:
-      
-      ## Darth Vader
-      Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd94kf94kf94kk9f49
-      <?--- END HUMAN CARD ---?>
-      <?--- START SELF SIGNATURE ---?>
-      <?--- END SELF SIGNATURE ---?>
-      <?--- START LINKED DIGITAL PROPERTY 1 ---?>
-      <?--- END LINKED DIGITAL PROPERTY 1 ---?>
-      <?--- START VALIDATORS SIGNATURE 1  ---?>
-      <?--- END VALIDATORS SIGNATURE 1 ---?>
-      `;
+    const input = `<?--- START HUMAN CARD ---?>
+
+# Human Card
+------------------------------------------------------------
+**Public Address** - 0xe3954b59340b92a01a2258251c56098cc6c485cc
+
+This public address has been established for: 
+
+## Jimbo Fry
+Digital Signature: 
+
+<?--- END HUMAN CARD ---?>`;
 
     return (
       <div className={navigation.posTop}>
@@ -229,7 +223,10 @@ export default class Box extends Component {
             </div>
             <div className="human-card-btn">
               <button className="btn-brand" onClick={this.saveDraft}>Save</button>
-              <SignHumanCard/>
+              <SignHumanCard
+                fullName={this.state.fullName || (box.draft_human_card && box.draft_human_card.full_name) || fullName}
+                publicAddress={this.state.publicAddress || (box.draft_human_card && box.draft_human_card.public_address) || ''}
+              />
             </div>
           </div>
 
