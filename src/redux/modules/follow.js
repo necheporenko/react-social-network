@@ -13,6 +13,9 @@ export const LOAD_PEOPLE_FOLLOWERS_FAIL = 'LOAD_PEOPLE_FOLLOWERS_FAIL';
 export const LOAD_PEOPLE_SUGGESTED = 'LOAD_PEOPLE_SUGGESTED';
 export const LOAD_PEOPLE_SUGGESTED_SUCCESS = 'LOAD_PEOPLE_SUGGESTED_SUCCESS';
 export const LOAD_PEOPLE_SUGGESTED_FAIL = 'LOAD_PEOPLE_SUGGESTED_FAIL';
+const LOAD_PEOPLE_ALL = 'LOAD_PEOPLE_ALL';
+const LOAD_PEOPLE_ALL_SUCCESS = 'LOAD_PEOPLE_ALL_SUCCESS';
+const LOAD_PEOPLE_ALL_FAIL = 'LOAD_PEOPLE_ALL_FAIL';
 const LOAD_WHO_TO_FOLLOW_PEOPLE = 'LOAD_WHO_TO_FOLLOW_PEOPLE';
 const LOAD_WHO_TO_FOLLOW_PEOPLE_SUCCESS = 'LOAD_WHO_TO_FOLLOW_PEOPLE_SUCCESS';
 const LOAD_WHO_TO_FOLLOW_PEOPLE_FAIL = 'LOAD_WHO_TO_FOLLOW_PEOPLE_FAIL';
@@ -27,6 +30,7 @@ const initialState = {
   followers: [],
   suggested: [],
   people: [],
+  peopleAll: [],
   loaded: {
     loadedFollowing: false,
     loadedFollowers: false,
@@ -243,6 +247,24 @@ export default function followReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case LOAD_PEOPLE_ALL:
+      return {
+        ...state,
+        loading: true
+      };
+    case LOAD_PEOPLE_ALL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        peopleAll: action.result.data,
+      };
+    case LOAD_PEOPLE_ALL_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+
     case LOAD_WHO_TO_FOLLOW_PEOPLE:
       return {
         ...state,
@@ -338,6 +360,14 @@ export function unfollow(user_id, choiceFollow) {
     user_id,
     choiceFollow,
     promise: (client) => client.post('/follows/simple-user-unfollow', { data: { user_id, channel_id: '' }})
+  };
+}
+
+export function loadPeopleAll(slug) {
+  const user_slug = slug || '';
+  return {
+    types: [LOAD_PEOPLE_ALL, LOAD_PEOPLE_ALL_SUCCESS, LOAD_PEOPLE_ALL_FAIL],
+    promise: (client) => client.get('/people/all', {params: {user_slug}})
   };
 }
 

@@ -6,7 +6,7 @@ import {
   isLoadedFollowing,
   follow as followUser,
   unfollow as unfollowUser,
-  loadUserPeople
+  loadPeopleAll
 } from '../../redux/modules/follow';
 import PeopleMenu from './PeopleMenu';
 import './index.scss';
@@ -15,13 +15,13 @@ import './index.scss';
   following: state.follow.following,
   requestedUser: state.user.requestedUser,
   path: state.routing.locationBeforeTransitions.pathname,
-  people: state.follow.people,
+  peopleAll: state.follow.peopleAll,
 }), {
   isLoadedFollowing,
   followUser,
   unfollowUser,
   getUserSlug,
-  loadUserPeople
+  loadPeopleAll
 })
 
 class People extends Component {
@@ -34,7 +34,7 @@ class People extends Component {
   componentDidMount() {
     const {path} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-    this.props.loadUserPeople(findSlug);
+    this.props.loadPeopleAll(findSlug);
 
     // if (findSlug !== requestedUser.slug) {
     //   this.props.loadPeopleFollowing(findSlug);
@@ -52,7 +52,7 @@ class People extends Component {
   }
 
   render() {
-    const {people} = this.props;
+    const {peopleAll} = this.props;
 
     return (
       <div className="people contents">
@@ -62,7 +62,7 @@ class People extends Component {
         <div className="common-lists people-lists">
           <div className="wrapper">
 
-            {people && people.map((people) => (
+            {peopleAll && peopleAll.map((people) => (
               <div key={people.id} className="people-card">
                 <Link to={`/${people.slug}`}>
                   <img src={people.avatar}/>
@@ -97,10 +97,10 @@ class People extends Component {
 }
 
 People.propTypes = {
-  people: PropTypes.array,
+  peopleAll: PropTypes.array,
   followUser: PropTypes.func,
   unfollowUser: PropTypes.func,
-  loadUserPeople: PropTypes.func,
+  loadPeopleAll: PropTypes.func,
   path: PropTypes.string,
   requestedUser: PropTypes.object,
 };
