@@ -14,11 +14,22 @@ import SubHeader from '../components/StoryLine/SubHeader';
 
 export default class TokensContainer extends Component {
   componentDidMount() {
+    console.log('TokensContainer');
     const {path, requestedUser} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
 
-    if (findSlug !== requestedUser.slug) {
-      this.props.getUser(findSlug);
+    // if (findSlug !== requestedUser.slug) {
+    //   this.props.getUser(findSlug);
+    // }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {path, requestedUser} = this.props;
+    if (prevProps.path !== path) {
+      const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+      if (findSlug && (findSlug !== requestedUser.slug)) {
+        this.props.getUser(findSlug);
+      }
     }
   }
 

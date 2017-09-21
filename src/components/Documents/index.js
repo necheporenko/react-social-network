@@ -3,13 +3,12 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import {getUser} from '../../redux/modules/user';
-import {getBox} from '../../redux/modules/document';
+import {getBox, createDraftHumanCard, updateDraftHumanCard} from '../../redux/modules/document';
 import DocumentsMenu from './DocumentsMenu';
 import SignHumanCard from '../Popup/SignHumanCard';
 import './index.scss';
 
 let savePositionTop;
-const doc = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
@@ -18,7 +17,9 @@ const doc = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   box: state.document.box,
 }), {
   getUser,
-  getBox
+  getBox,
+  createDraftHumanCard,
+  updateDraftHumanCard,
 })
 
 export default class Box extends Component {
@@ -26,21 +27,27 @@ export default class Box extends Component {
     super(props);
     this.state = {
       scrollTop: null,
+      fullName: '',
+      publicAddress: '',
     };
     this.handleScroll = this.handleScroll.bind(this);
     this.saveScroll = this.saveScroll.bind(this);
     this.httpGet = this.httpGet.bind(this);
+    this.changeFullName = this.changeFullName.bind(this);
+    this.changePublicAddress = this.changePublicAddress.bind(this);
+    this.saveDraft = this.saveDraft.bind(this);
   }
 
   componentDidMount() {
+    console.log('Box');
     window.addEventListener('scroll', this.handleScroll);
     this.saveScroll();
     const {path} = this.props;
-    const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
     const boxSlug = path.indexOf('/documents/') === -1 ? 'board' : path.substring(path.indexOf('/documents/') + 11);
+    this.props.getBox(boxSlug);
+    // const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
     // this.props.getUser(findSlug)
     //   .then(this.props.getBox(boxSlug));
-    this.props.getBox(boxSlug);
   }
 
   componentWillUnmount() {
@@ -56,6 +63,23 @@ export default class Box extends Component {
   saveScroll() {
     // console.log(`saveScroll:${savePositionTop}`);
     this.setState({scrollTop: savePositionTop});
+  }
+
+  changeFullName(event) {
+    this.setState({fullName: event.target.value});
+  }
+
+  changePublicAddress(event) {
+    this.setState({publicAddress: event.target.value});
+  }
+
+  saveDraft() {
+    const {createDraftHumanCard, updateDraftHumanCard, box, authorizedUser} = this.props;
+    box.draft_human_card.id
+      ?
+      updateDraftHumanCard(this.inputFullName.value, authorizedUser.id, this.inputPublicAddress.value, box.draft_human_card.id)
+      :
+      createDraftHumanCard(this.inputFullName.value, authorizedUser.id, this.inputPublicAddress.value);
   }
 
   httpGet() {
@@ -128,6 +152,7 @@ export default class Box extends Component {
     const {scrollTop} = this.state;
     const {box} = this.props;
     const {slug, first_name, last_name} = this.props.requestedUser;
+    const fullName = `${first_name} ${last_name}`;
 
     const chooseNav = () => {
       let Nav;
@@ -144,23 +169,26 @@ export default class Box extends Component {
     };
 
     const navigation = chooseNav();
+
     const input = `
-<?--- START HUMAN CARD ---?>  
-# Human Card
-------------------------------------------------------------
-**Public Address** - e3954b59340b92a01a2258251c56098cc6c485cc
+                    <?--- START HUMAN CARD ---?>  
+                    # Human Card
+                    ------------------------------------------------------------
+                    **Public Address** - e3954b59340b92a01a2258251c56098cc6c485cc
+                    
+                    This public address has been established for:
+                    
+                    ## Darth Vader
+                    Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd94kf94kf94kk9f49
+                    <?--- END HUMAN CARD ---?>
+                    <?--- START SELF SIGNATURE ---?>
+                    <?--- END SELF SIGNATURE ---?>
+                    <?--- START LINKED DIGITAL PROPERTY 1 ---?>
+                    <?--- END LINKED DIGITAL PROPERTY 1 ---?>
+                    <?--- START VALIDATORS SIGNATURE 1  ---?>
+                    <?--- END VALIDATORS SIGNATURE 1 ---?>
+                 `;
 
-This public address has been established for:
-
-## Jimbo Fry
-Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd94kf94kf94kk9f49
-<?--- END HUMAN CARD ---?>
-<?--- START SELF SIGNATURE ---?>
-<?--- END SELF SIGNATURE ---?>
-<?--- START LINKED DIGITAL PROPERTY 1 ---?>
-<?--- END LINKED DIGITAL PROPERTY 1 ---?>
-<?--- START VALIDATORS SIGNATURE 1  ---?>
-<?--- END VALIDATORS SIGNATURE 1 ---?>`;
     return (
       <div className={navigation.posTop}>
         <DocumentsMenu
@@ -175,19 +203,27 @@ Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd9
                 <strong>Public Address:</strong>
                 <input
                   type="text" placeholder="Paste your public address here"
+                  onChange={this.changeFullName}
+                  value={this.state.publicAddress || (box.draft_human_card && box.draft_human_card.public_address) || ''}
+                  ref={el => this.inputPublicAddress = el}
                   style={{width: '400px', marginLeft: '10px'}}
                 />
               </p>
               <p>This public address has been established for:</p>
               <p>
-                <input type="text" placeholder="Paste your name here" defaultValue={`${first_name} ${last_name}`}/>
+                <input
+                  type="text" placeholder="Paste your name here"
+                  onChange={this.changeFullName}
+                  value={this.state.fullName || (box.draft_human_card && box.draft_human_card.full_name) || fullName}
+                  ref={el => this.inputFullName = el}
+                />
               </p>
               <p>Digital Signature: <span style={{color: '#8F8F8F'}}>  your signature will be here</span></p>
 
               {/*<ReactMarkdown source={input}/>*/}
             </div>
             <div className="human-card-btn">
-              <button className="btn-brand">Save</button>
+              <button className="btn-brand" onClick={this.saveDraft}>Save</button>
               <SignHumanCard/>
             </div>
           </div>
@@ -240,4 +276,6 @@ Box.propTypes = {
   path: PropTypes.string,
   getBox: PropTypes.func,
   box: PropTypes.object,
+  createDraftHumanCard: PropTypes.func,
+  updateDraftHumanCard: PropTypes.func,
 };

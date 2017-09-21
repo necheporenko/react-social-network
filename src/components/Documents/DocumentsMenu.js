@@ -12,16 +12,17 @@ import './index.scss';
   boxes: state.document.boxes,
   path: state.routing.locationBeforeTransitions.pathname,
 }), {
-  // getUser,
+  getUser,
   loadBoxes
 })
 
 export default class DocumentsMenu extends Component {
   componentDidMount() {
+    console.log('DocumentsMenu');
     const {path} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-    this.props.loadBoxes(findSlug);
-    console.log(findSlug, this.props.boxes);
+    this.props.getUser(findSlug)
+      .then(this.props.loadBoxes(findSlug));
   }
 
   render() {
@@ -44,7 +45,7 @@ export default class DocumentsMenu extends Component {
             }
 
             {boxes.length > 0 && boxes[0].children.filter(box => box.key === 'board').map(box => (
-              <Link onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
+              <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
                 <li className="documents-mnu-board">{box.name}</li>
               </Link>
             ))}
@@ -75,7 +76,7 @@ export default class DocumentsMenu extends Component {
             ))}
 
             {boxes.length > 0 && boxes[0].children.filter(box => box.key === 'bin').map(box => (
-              <Link onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
+              <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
                 <li className="documents-mnu-box-bin">{box.name}</li>
               </Link>
             ))}
@@ -98,7 +99,7 @@ DocumentsMenu.propTypes = {
   requestedUser: PropTypes.object,
   sidebar: PropTypes.string,
   path: PropTypes.string,
-  // getUser: PropTypes.func,
+  getUser: PropTypes.func,
   loadBoxes: PropTypes.func,
   boxes: PropTypes.array,
 };

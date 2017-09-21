@@ -10,6 +10,12 @@ const GET_BOX_FAIL = 'GET_BOX_FAIL';
 const CREATE_BOX = 'CREATE_BOX';
 const CREATE_BOX_SUCCESS = 'CREATE_BOX_SUCCESS';
 const CREATE_BOX_FAIL = 'CREATE_BOX_FAIL';
+const CREATE_DRAFT_HUMAN_CARD = 'CREATE_DRAFT_HUMAN_CARD';
+const CREATE_DRAFT_HUMAN_CARD_SUCCESS = 'CREATE_DRAFT_HUMAN_CARD_SUCCESS';
+const CREATE_DRAFT_HUMAN_CARD_FAIL = 'CREATE_DRAFT_HUMAN_CARD_FAIL';
+const UPDATE_DRAFT_HUMAN_CARD = 'UPDATE_DRAFT_HUMAN_CARD';
+const UPDATE_DRAFT_HUMAN_CARD_SUCCESS = 'UPDATE_DRAFT_HUMAN_CARD_SUCCESS';
+const UPDATE_DRAFT_HUMAN_CARD_FAIL = 'UPDATE_DRAFT_HUMAN_CARD_FAIL';
 
 const initialState = {
   boxes: [],
@@ -88,6 +94,45 @@ export default function documentReducer(state = initialState, action) {
         error: action.error,
       };
 
+
+    case CREATE_DRAFT_HUMAN_CARD:
+      return {
+        ...state,
+        creating: true
+      };
+    case CREATE_DRAFT_HUMAN_CARD_SUCCESS:
+      return {
+        ...state,
+        creating: false,
+        created: true,
+      };
+    case CREATE_DRAFT_HUMAN_CARD_FAIL:
+      return {
+        ...state,
+        creating: false,
+        created: false,
+        error: action.error,
+      };
+
+    case UPDATE_DRAFT_HUMAN_CARD:
+      return {
+        ...state,
+        creating: true
+      };
+    case UPDATE_DRAFT_HUMAN_CARD_SUCCESS:
+      return {
+        ...state,
+        creating: false,
+        created: true,
+      };
+    case UPDATE_DRAFT_HUMAN_CARD_FAIL:
+      return {
+        ...state,
+        creating: false,
+        created: false,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -119,5 +164,19 @@ export function getBox(box_slug) {
   return {
     types: [GET_BOX, GET_BOX_SUCCESS, GET_BOX_FAIL],
     promise: (client) => client.get(`/boxes/${box_slug}`),
+  };
+}
+
+export function createDraftHumanCard(full_name, user_id, public_address) {
+  return {
+    types: [CREATE_DRAFT_HUMAN_CARD, CREATE_DRAFT_HUMAN_CARD_SUCCESS, CREATE_DRAFT_HUMAN_CARD_FAIL],
+    promise: (client) => client.post('/draft-human-card', {data: {full_name, user_id, public_address}}),
+  };
+}
+
+export function updateDraftHumanCard(full_name, user_id, public_address, draft_id) {
+  return {
+    types: [CREATE_DRAFT_HUMAN_CARD, CREATE_DRAFT_HUMAN_CARD_SUCCESS, CREATE_DRAFT_HUMAN_CARD_FAIL],
+    promise: (client) => client.patch(`/draft-human-card/${draft_id}`, {data: {full_name, user_id, public_address}}),
   };
 }
