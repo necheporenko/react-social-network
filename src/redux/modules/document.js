@@ -19,6 +19,9 @@ const UPDATE_DRAFT_HUMAN_CARD_FAIL = 'UPDATE_DRAFT_HUMAN_CARD_FAIL';
 const SEND_MESSAGE_FOR_SIGN = 'SEND_MESSAGE_FOR_SIGN';
 const SEND_MESSAGE_FOR_SIGN_SUCCESS = 'SEND_MESSAGE_FOR_SIGN_SUCCESS';
 const SEND_MESSAGE_FOR_SIGN_FAIL = 'SEND_MESSAGE_FOR_SIGN_FAIL';
+const VERIFY_HUMAN_CARD = 'VERIFY_HUMAN_CARD';
+const VERIFY_HUMAN_CARD_SUCCESS = 'VERIFY_HUMAN_CARD_SUCCESS';
+const VERIFY_HUMAN_CARD_FAIL = 'VERIFY_HUMAN_CARD_FAIL';
 
 const initialState = {
   boxes: [],
@@ -150,6 +153,20 @@ export default function documentReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case VERIFY_HUMAN_CARD:
+      return {
+        ...state,
+      };
+    case VERIFY_HUMAN_CARD_SUCCESS:
+      return {
+        ...state,
+      };
+    case VERIFY_HUMAN_CARD_FAIL:
+      return {
+        ...state,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -202,5 +219,12 @@ export function sendMessageForSign(draft_id, message) {
   return {
     types: [CREATE_DRAFT_HUMAN_CARD, CREATE_DRAFT_HUMAN_CARD_SUCCESS, CREATE_DRAFT_HUMAN_CARD_FAIL],
     promise: (client) => client.patch(`/draft-human-card/${draft_id}/message-for-sign`, {data: {message}}),
+  };
+}
+
+export function verifyHumanCard(draft_id, public_address, signature) {
+  return {
+    types: [VERIFY_HUMAN_CARD, VERIFY_HUMAN_CARD_SUCCESS, VERIFY_HUMAN_CARD_FAIL],
+    promise: (client) => client.patch(`/draft-human-card/${draft_id}/verify`, {data: {public_address, signature}}),
   };
 }

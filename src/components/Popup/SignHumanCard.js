@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {Modal} from 'react-bootstrap';
 import Web3 from 'web3';
-import {sendMessageForSign} from '../../redux/modules/document';
+import {sendMessageForSign, verifyHumanCard} from '../../redux/modules/document';
 import signTemplate from '../../constants/signTemplate';
 import './index.scss';
 
@@ -11,7 +11,8 @@ const web3 = new Web3(Web3.givenProvider);
 @connect((state) => ({
   box: state.document.box,
 }), {
-  sendMessageForSign
+  sendMessageForSign,
+  verifyHumanCard,
 })
 
 export default class SignHumanCard extends Component {
@@ -38,7 +39,6 @@ export default class SignHumanCard extends Component {
   sign(keystore, password) {
     const {fullName, publicAddress, box, sendMessageForSign} = this.props;
     const msg = JSON.stringify(signTemplate(fullName, publicAddress));
-    console.log(msg);
     sendMessageForSign(box.draft_human_card.id, msg)
       .then((response) => {
         console.log(response.data.message);
@@ -46,10 +46,11 @@ export default class SignHumanCard extends Component {
       .catch((error) => {
         console.log(error);
       });
-
-    // const DECRYPT = web3.eth.accounts.decrypt(JSON.parse(keystore.toLowerCase()), password);
-    // console.log(DECRYPT);
-    // console.log(web3.eth.accounts.sign(msg, DECRYPT.privateKey));
+    // console.log(keystore, password);
+    const decrypt = web3.eth.accounts.decrypt(JSON.parse(keystore.toLowerCase()), password);
+    const resultOfSigning = web3.eth.accounts.sign(msg, decrypt.privateKey);
+    console.log(decrypt);
+    console.log(resultOfSigning);
   }
 
   readKeystore(e) {
@@ -96,8 +97,8 @@ export default class SignHumanCard extends Component {
                   <br/>
                 </div>
                 }
-                {/*<button onClick={() => this.sign(this.state.file, this.inputKeystorePassword.value)}>Sign</button>*/}
-                <button onClick={() => this.sign()}>Sign</button>
+                <button onClick={() => this.sign(this.state.file, this.inputKeystorePassword.value)}>Sign</button>
+                {/*<button onClick={() => this.sign()}>Sign</button>*/}
               </div>
             </div>
           </Modal.Body>
@@ -115,4 +116,9 @@ export default class SignHumanCard extends Component {
   }
 }
 
-SignHumanCard.propTypes = {};
+SignHumanCard.propTypes = {
+  sendMessageForSign: PropTypes.func,
+  box: PropTypes.object,
+  fullName: PropTypes.string,
+  publicAddress: PropTypes.string,
+};
