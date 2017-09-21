@@ -170,24 +170,24 @@ export default class Box extends Component {
 
     const navigation = chooseNav();
 
-    const input = `
-                    <?--- START HUMAN CARD ---?>  
-                    # Human Card
-                    ------------------------------------------------------------
-                    **Public Address** - e3954b59340b92a01a2258251c56098cc6c485cc
-                    
-                    This public address has been established for:
-                    
-                    ## Darth Vader
-                    Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd94kf94kf94kk9f49
-                    <?--- END HUMAN CARD ---?>
-                    <?--- START SELF SIGNATURE ---?>
-                    <?--- END SELF SIGNATURE ---?>
-                    <?--- START LINKED DIGITAL PROPERTY 1 ---?>
-                    <?--- END LINKED DIGITAL PROPERTY 1 ---?>
-                    <?--- START VALIDATORS SIGNATURE 1  ---?>
-                    <?--- END VALIDATORS SIGNATURE 1 ---?>
-                 `;
+    const input =
+      `<?--- START HUMAN CARD ---?>  
+      # Human Card
+      ------------------------------------------------------------
+      **Public Address** - e3954b59340b92a01a2258251c56098cc6c485cc
+      
+      This public address has been established for:
+      
+      ## Darth Vader
+      Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd94kf94kf94kk9f49
+      <?--- END HUMAN CARD ---?>
+      <?--- START SELF SIGNATURE ---?>
+      <?--- END SELF SIGNATURE ---?>
+      <?--- START LINKED DIGITAL PROPERTY 1 ---?>
+      <?--- END LINKED DIGITAL PROPERTY 1 ---?>
+      <?--- START VALIDATORS SIGNATURE 1  ---?>
+      <?--- END VALIDATORS SIGNATURE 1 ---?>
+      `;
 
     return (
       <div className={navigation.posTop}>
@@ -197,30 +197,35 @@ export default class Box extends Component {
         <div>
           <div style={{display: 'flex'}}>
             <div className="human-card human-card-preview">
-              <h1>Human Card</h1>
-              <hr/>
-              <p>
-                <strong>Public Address:</strong>
-                <input
-                  type="text" placeholder="Paste your public address here"
-                  onChange={this.changeFullName}
-                  value={this.state.publicAddress || (box.draft_human_card && box.draft_human_card.public_address) || ''}
-                  ref={el => this.inputPublicAddress = el}
-                  style={{width: '400px', marginLeft: '10px'}}
-                />
-              </p>
-              <p>This public address has been established for:</p>
-              <p>
-                <input
-                  type="text" placeholder="Paste your name here"
-                  onChange={this.changeFullName}
-                  value={this.state.fullName || (box.draft_human_card && box.draft_human_card.full_name) || fullName}
-                  ref={el => this.inputFullName = el}
-                />
-              </p>
-              <p>Digital Signature: <span style={{color: '#8F8F8F'}}>  your signature will be here</span></p>
-
-              {/*<ReactMarkdown source={input}/>*/}
+              {box.human_card
+                ?
+                <ReactMarkdown source={input}/>
+                :
+                <div>
+                  <h1>Human Card</h1>
+                  <hr/>
+                  <p>
+                    <strong>Public Address:</strong>
+                    <input
+                      type="text" placeholder="Paste your public address here"
+                      onChange={this.changeFullName}
+                      value={this.state.publicAddress || (box.draft_human_card && box.draft_human_card.public_address) || ''}
+                      ref={el => this.inputPublicAddress = el}
+                      style={{width: '400px', marginLeft: '10px'}}
+                    />
+                  </p>
+                  <p>This public address has been established for:</p>
+                  <p>
+                    <input
+                      type="text" placeholder="Paste your name here"
+                      onChange={this.changeFullName}
+                      value={this.state.fullName || (box.draft_human_card && box.draft_human_card.full_name) || fullName}
+                      ref={el => this.inputFullName = el}
+                    />
+                  </p>
+                  <p>Digital Signature: <span style={{color: '#8F8F8F'}}>  your signature will be here</span></p>
+                </div>
+              }
             </div>
             <div className="human-card-btn">
               <button className="btn-brand" onClick={this.saveDraft}>Save</button>
