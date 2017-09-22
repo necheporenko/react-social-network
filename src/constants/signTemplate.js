@@ -1,5 +1,3 @@
-/* DON'T TOUCH THIS STRING!!! */
-
 export default function signTemplate(fullName, publicAddress) {
   return (
     `<?--- START HUMAN CARD ---?>
@@ -17,5 +15,3 @@ Digital Signature:
 <?--- END HUMAN CARD ---?>`
   );
 }
-
-/* DON'T TOUCH THIS STRING!!! */

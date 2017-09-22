@@ -33,8 +33,6 @@ export default class DocumentsMenu extends Component {
       <div className="sidebar documents-nav">
         <div className={this.props.sidebar}>
           <ul>
-            {/*{console.log('boxes', boxBin)}*/}
-
             {slug === this.props.authorizedUser.slug &&
             <Link
               to={`/${this.props.authorizedUser.slug}/documents/document`}
@@ -53,7 +51,7 @@ export default class DocumentsMenu extends Component {
             <hr/>
 
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">
-              <li className="documents-mnu-inbox">Inbox</li>
+              <li className="documents-mnu-box-private">Signed Documents</li>
             </Link>
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/wallet`} activeClassName="active">
               <li className="documents-mnu-wallet">Wallet</li>
@@ -69,8 +67,7 @@ export default class DocumentsMenu extends Component {
             <hr/>
 
             {boxes.length > 0 && boxes[0].children.filter(box => ((box.key !== 'bin') && (box.key !== 'board'))).map(box => (
-              <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`}
-                    activeClassName="active">
+              <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`} activeClassName="active">
                 <li className="documents-mnu-box-private">{box.name}</li>
               </Link>
             ))}

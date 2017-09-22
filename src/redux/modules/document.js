@@ -216,6 +216,7 @@ export function updateDraftHumanCard(full_name, user_id, public_address, draft_i
 }
 
 export function sendMessageForSign(draft_id, message) {
+  console.log(message);
   return {
     types: [CREATE_DRAFT_HUMAN_CARD, CREATE_DRAFT_HUMAN_CARD_SUCCESS, CREATE_DRAFT_HUMAN_CARD_FAIL],
     promise: (client) => client.patch(`/draft-human-card/${draft_id}/message-for-sign`, {data: {message}}),

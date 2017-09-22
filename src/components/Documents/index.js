@@ -202,10 +202,10 @@ Digital Signature:
                     <strong>Public Address:</strong>
                     <input
                       type="text" placeholder="Paste your public address here"
-                      onChange={this.changeFullName}
+                      onChange={this.changePublicAddress}
                       value={this.state.publicAddress || (box.draft_human_card && box.draft_human_card.public_address) || ''}
                       ref={el => this.inputPublicAddress = el}
-                      style={{width: '400px', marginLeft: '10px'}}
+                      style={{width: '370px', marginLeft: '10px', fontSize: '13px'}}
                     />
                   </p>
                   <p>This public address has been established for:</p>
@@ -215,6 +215,7 @@ Digital Signature:
                       onChange={this.changeFullName}
                       value={this.state.fullName || (box.draft_human_card && box.draft_human_card.full_name) || fullName}
                       ref={el => this.inputFullName = el}
+                      style={{fontSize: '18px'}}
                     />
                   </p>
                   <p>Digital Signature: <span style={{color: '#8F8F8F'}}>  your signature will be here</span></p>

@@ -434,7 +434,7 @@
 
 /* === Human Card Start === */
 .human-card {
-  width: 510px;
+  width: 480px;
   padding: 0 15px;
   margin: 70px auto;
   background: rgb(255, 255, 255);
@@ -443,18 +443,18 @@
 
   h1 {
     font-weight: bold;
-    font-size: 26px;
-    margin: 18px 0;
+    font-size: 18px;
+    margin: 15px 0;
   }
 
   h2 {
     font-weight: bold;
-    font-size: 19px;
-    margin: 17px 0;
+    font-size: 16px;
+    margin: 12px 0;
   }
 
   p {
-    margin: 14px 0;
+    margin: 10px 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

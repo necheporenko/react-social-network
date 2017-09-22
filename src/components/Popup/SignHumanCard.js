@@ -37,20 +37,19 @@ export default class SignHumanCard extends Component {
   }
 
   sign(keystore, password) {
-    const {fullName, publicAddress, box, sendMessageForSign} = this.props;
+    const {fullName, publicAddress, box, sendMessageForSign, verifyHumanCard} = this.props;
+
     const msg = JSON.stringify(signTemplate(fullName, publicAddress));
+    const decrypt = web3.eth.accounts.decrypt(JSON.parse(keystore.toLowerCase()), password);
+
     sendMessageForSign(box.draft_human_card.id, msg)
       .then((response) => {
-        console.log(response.data.message);
+        const resultOfSigning = web3.eth.accounts.sign(response.data.message, decrypt.privateKey);
+        verifyHumanCard(box.draft_human_card.id, publicAddress, resultOfSigning.signature);
       })
       .catch((error) => {
         console.log(error);
       });
-    // console.log(keystore, password);
-    const decrypt = web3.eth.accounts.decrypt(JSON.parse(keystore.toLowerCase()), password);
-    const resultOfSigning = web3.eth.accounts.sign(msg, decrypt.privateKey);
-    console.log(decrypt);
-    console.log(resultOfSigning);
   }
 
   readKeystore(e) {
@@ -105,9 +104,7 @@ export default class SignHumanCard extends Component {
           <Modal.Footer>
             <div style={{float: 'right'}}>
               <button className="btn-brand btn-cancel" onClick={this.Close}>Cancel</button>
-              <button className="btn-brand" style={{marginLeft: '10px'}} type="submit" onClick={this.handleSave}>Unlock
-                and Sign
-              </button>
+              <button className="btn-brand" style={{marginLeft: '10px'}} onClick={this.handleSave}>Unlock and Sign</button>
             </div>
           </Modal.Footer>
         </Modal>
@@ -118,6 +115,7 @@ export default class SignHumanCard extends Component {
 
 SignHumanCard.propTypes = {
   sendMessageForSign: PropTypes.func,
+  verifyHumanCard: PropTypes.func,
   box: PropTypes.object,
   fullName: PropTypes.string,
   publicAddress: PropTypes.string,
