@@ -22,7 +22,7 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
 
       <div className="title-infoblocks-book">
         <h5>{name}</h5>
-        <h6 style={{margin: '5px 0'}}>{`${requestedUser.first_name} ${requestedUser.last_name}`}</h6>
+        <h6 style={{margin: '5px 0', fontWeight: 400}}>{`${requestedUser.first_name} ${requestedUser.last_name}`}</h6>
       </div>
 
       <div className="book-edit">
@@ -47,7 +47,7 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
         </ul>
         {/*<hr />*/}
       </div>
-      <div className="btn-following btn-following-book" style={{margin: '5px 0'}}>
+      <div className="btn-following btn-following-book" style={{margin: '5px 0', left: '55px'}}>
         <div>Following Book</div>
         <span/>
       </div>
@@ -56,25 +56,25 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
       {/*<p>Description...</p>*/}
       {/*</div>*/}
 
-      <div className="book-subbooks">
-        {bookTreeArr && bookTreeArr.length > 0 &&
-        <BooksTreeContainer
-          bookTreeArr={bookTreeArr}
-        />
-        }
+      {/*<div className="book-subbooks">*/}
+        {/*{bookTreeArr && bookTreeArr.length > 0 &&*/}
+        {/*<BooksTreeContainer*/}
+          {/*bookTreeArr={bookTreeArr}*/}
+        {/*/>*/}
+        {/*}*/}
 
-        {bookTreeArr && bookTreeArr.length === 0 &&
-        <ul className="react-tree">
-          <li className={`icon_${icon}`}>
-            <div className="react-tree-item-label">
-              <span className=" draggable " draggable="true">
-                <Link to={`/${requestedUser.slug}/books/${book_slug}`}>{name}</Link>
-              </span>
-            </div>
-          </li>
-        </ul>
-        }
-      </div>
+        {/*{bookTreeArr && bookTreeArr.length === 0 &&*/}
+        {/*<ul className="react-tree">*/}
+          {/*<li className={`icon_${icon}`}>*/}
+            {/*<div className="react-tree-item-label">*/}
+              {/*<span className=" draggable " draggable="true">*/}
+                {/*<Link to={`/${requestedUser.slug}/books/${book_slug}`}>{name}</Link>*/}
+              {/*</span>*/}
+            {/*</div>*/}
+          {/*</li>*/}
+        {/*</ul>*/}
+        {/*}*/}
+      {/*</div>*/}
 
     </div>
   );
@@ -108,10 +108,10 @@ class Books extends Component {
         <div className="wrapper">
           <StackGrid
             //monitorImagesLoaded
-            columnWidth={290}
+            columnWidth={210}
             duration={600}
-            gutterWidth={10}
-            gutterHeight={10}
+            gutterWidth={20}
+            gutterHeight={30}
             //easing={easings.cubicOut}
             //appearDelay={60}
             // appear={transition.appear}
