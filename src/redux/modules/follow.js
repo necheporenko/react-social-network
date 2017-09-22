@@ -38,6 +38,7 @@ const initialState = {
     loadedPeopleBlock: false,
   },
   over: {
+    overAllPeople: false,
     overFollowing: false,
     overFollowers: false,
     overSuggested: false,
@@ -63,7 +64,7 @@ export default function followReducer(state = initialState, action) {
             if (user.id === action.user_id) {
               return {
                 ...user,
-                isFollowing: true
+                is_follow: true
               };
             }
             return {
@@ -71,13 +72,14 @@ export default function followReducer(state = initialState, action) {
             };
           });
           break;
-        case 'people':
-          followFollowing = Object.assign({}, state.following, {
-            users: state.following.users.map((user) => {
+
+        default:
+          followFollowing = Object.assign({}, state[`${action.choiceFollow}`], {
+            users: state[`${action.choiceFollow}`].users.map((user) => {
               if (user.id === action.user_id) {
                 return {
                   ...user,
-                  isFollowing: true
+                  is_follow: true
                 };
               }
               return {
@@ -85,16 +87,12 @@ export default function followReducer(state = initialState, action) {
               };
             })
           });
-          break;
-
-        default:
-          console.log('choiceFollow not found');
       }
       return {
         ...state,
         follow: true,
-        following: followFollowing || state.following,
-        whoToFollowList: followInWhoToFollowList || state.whoToFollowList
+        whoToFollowList: followInWhoToFollowList || state.whoToFollowList,
+        [`${action.choiceFollow}`]: followFollowing || state[`${action.choiceFollow}`]
       };
     case FOLLOW_USER_FAIL:
       console.log('FOLLOW_USER_FAIL', action.error);
@@ -112,7 +110,6 @@ export default function followReducer(state = initialState, action) {
     case UNFOLLOW_USER_SUCCESS:
       let unfollowFollowing;
       let unfollowInWhoToFollowList;
-      console.log('action.choiceFollow UNFOLLOW_USER_SUCCESS', action.choiceFollow);
 
       switch (action.choiceFollow) {
         case 'whoToFollow':
@@ -120,7 +117,7 @@ export default function followReducer(state = initialState, action) {
             if (user.id === action.user_id) {
               return {
                 ...user,
-                isFollowing: false
+                is_follow: false
               };
             }
             return {
@@ -128,13 +125,14 @@ export default function followReducer(state = initialState, action) {
             };
           });
           break;
-        case 'people':
-          unfollowFollowing = Object.assign({}, state.following, {
-            users: state.following.users.map((user) => {
+
+        default:
+          unfollowFollowing = Object.assign({}, state[`${action.choiceFollow}`], {
+            users: state[`${action.choiceFollow}`].users.map((user) => {
               if (user.id === action.user_id) {
                 return {
                   ...user,
-                  isFollowing: false
+                  is_follow: false
                 };
               }
               return {
@@ -142,16 +140,13 @@ export default function followReducer(state = initialState, action) {
               };
             })
           });
-          break;
-        default:
-          console.log('choiceUnfollow not found');
       }
 
       return {
         ...state,
         unfollow: true,
-        following: unfollowFollowing || state.foconstllowing,
-        whoToFollowList: unfollowInWhoToFollowList || state.whoToFollowList
+        whoToFollowList: unfollowInWhoToFollowList || state.whoToFollowList,
+        [`${action.choiceFollow}`]: unfollowFollowing || state[`${action.choiceFollow}`]
       };
     case UNFOLLOW_USER_FAIL:
       console.log('UNFOLLOW_USER_FAIL', action.error);
@@ -231,7 +226,9 @@ export default function followReducer(state = initialState, action) {
         ...state,
         loading: false,
         loaded,
-        suggested: action.result.data,
+        suggested: {
+          users: action.result.data
+        }
       };
     case LOAD_PEOPLE_SUGGESTED_FAIL:
       loaded = Object.assign({}, state.loaded, {
@@ -256,7 +253,9 @@ export default function followReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        peopleAll: action.result.data,
+        peopleAll: {
+          users: action.result.data
+        },
       };
     case LOAD_PEOPLE_ALL_FAIL:
       return {

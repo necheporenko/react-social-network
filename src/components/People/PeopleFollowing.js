@@ -41,13 +41,11 @@ class PeopleFollowing extends Component {
   }
 
   follow(id) {
-    this.props.followUser(id, 'people');
-    // .then(() => this.props.loadPeopleFollowing());
+    this.props.followUser(id, 'following');
   }
 
   unfollow(id) {
-    this.props.unfollowUser(id, 'people');
-    // .then(() => this.props.loadPeopleFollowing());
+    this.props.unfollowUser(id, 'following');
   }
 
   render() {

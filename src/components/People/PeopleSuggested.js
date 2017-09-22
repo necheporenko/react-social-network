@@ -37,13 +37,13 @@ class PeopleSuggested extends Component {
   }
 
   follow(id) {
-    this.props.followUser(id, 'people')
-      .then(() => this.props.loadPeopleSuggested());
+    this.props.followUser(id, 'suggested');
+      // .then(() => this.props.loadPeopleSuggested());
   }
 
   unfollow(id) {
-    this.props.unfollowUser(id, 'people')
-      .then(() => this.props.loadPeopleSuggested());
+    this.props.unfollowUser(id, 'suggested');
+      // .then(() => this.props.loadPeopleSuggested());
   }
 
   render() {
@@ -57,7 +57,7 @@ class PeopleSuggested extends Component {
         <div className="common-lists people-lists">
           <div className="wrapper">
 
-            {suggested && suggested.map((people) => (
+            {suggested.users && suggested.users.map((people) => (
               <div key={people.id} className="people-card">
                 <Link to={`/${people.slug}`}>
                   <img src={people.avatar}/>

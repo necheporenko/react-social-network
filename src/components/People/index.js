@@ -42,13 +42,11 @@ class People extends Component {
   }
 
   follow(id) {
-    this.props.followUser(id, 'people');
-    // .then(() => this.props.loadPeopleFollowing());
+    this.props.followUser(id, 'peopleAll');
   }
 
   unfollow(id) {
-    this.props.unfollowUser(id, 'people');
-    // .then(() => this.props.loadPeopleFollowing());
+    this.props.unfollowUser(id, 'peopleAll');
   }
 
   render() {
@@ -62,7 +60,7 @@ class People extends Component {
         <div className="common-lists people-lists">
           <div className="wrapper">
 
-            {peopleAll && peopleAll.map(people => (
+            {peopleAll.users && peopleAll.users.map(people => (
               <div key={people.id} className="people-card">
                 <Link to={`/${people.slug}`}>
                   <img src={people.avatar}/>
