@@ -39,7 +39,7 @@ export default class SignHumanCard extends Component {
   sign(keystore, password) {
     const {fullName, publicAddress, box, sendMessageForSign, verifyHumanCard} = this.props;
 
-    const msg = JSON.stringify(signTemplate(fullName, publicAddress));
+    const msg = signTemplate(fullName, publicAddress);
     const decrypt = web3.eth.accounts.decrypt(JSON.parse(keystore.toLowerCase()), password);
 
     sendMessageForSign(box.draft_human_card.id, msg)
@@ -104,7 +104,7 @@ export default class SignHumanCard extends Component {
           <Modal.Footer>
             <div style={{float: 'right'}}>
               <button className="btn-brand btn-cancel" onClick={this.Close}>Cancel</button>
-              <button className="btn-brand" style={{marginLeft: '10px'}} onClick={this.handleSave}>Unlock and Sign</button>
+              <button className="btn-brand" style={{marginLeft: '10px'}}>Unlock and Sign</button>
             </div>
           </Modal.Footer>
         </Modal>
