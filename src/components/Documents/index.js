@@ -222,32 +222,31 @@ export default class Box extends Component {
                 :
                 <div>
                   {/*<div className="help-human-card"><i/></div>*/}
-                  <h1>Human Card</h1>
-
-                  <hr/>
-                  <p>
-                    <strong>Public Address:</strong>
+                  <h1>HUMAN CARD</h1>
+                  {/*<hr/>*/}
+                  <p style={{marginTop: '20px'}}>
+                    {/*<strong>Public Address:</strong>*/}
                     <input
                       type="text" placeholder="Paste your public address here"
                       onChange={this.changePublicAddress}
                       value={this.state.publicAddress || (box.draft_human_card && box.draft_human_card.public_address) || ''}
                       ref={el => this.inputPublicAddress = el}
-                      style={{width: '370px', marginLeft: '10px', fontSize: '13px'}}
+                      style={{fontSize: '13px'}}
                     />
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
-                  <p>This public address has been established for:</p>
-                  <p>
+                  <p style={{fontSize: '13px', marginTop: '25px', marginBottom: '15px'}}>This public address has been established for:</p>
+                  <p style={{marginTop: '20px'}}>
                     <input
                       type="text" placeholder="Paste your name here"
                       onChange={this.changeFullName}
                       value={this.state.fullName || (box.draft_human_card && box.draft_human_card.full_name) || fullName}
                       ref={el => this.inputFullName = el}
-                      style={{fontSize: '18px'}}
+                      style={{fontSize: '26px', fontWeight: 500}}
                     />
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
-                  <p>Digital Signature: <span style={{color: '#8F8F8F'}}>  your signature will be here</span>
+                  <p style={{color: '#d2d2d2', fontSize: '13px', marginTop: '20px'}}>Digital Signature: <span>  your signature will be here</span>
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
                 </div>
