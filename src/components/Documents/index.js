@@ -36,6 +36,7 @@ export default class Box extends Component {
     this.changeFullName = this.changeFullName.bind(this);
     this.changePublicAddress = this.changePublicAddress.bind(this);
     this.saveDraft = this.saveDraft.bind(this);
+    this.requestHumanCard = this.requestHumanCard.bind(this);
   }
 
   componentDidMount() {
@@ -148,6 +149,39 @@ export default class Box extends Component {
     // xmlhttp.send();
   }
 
+  requestHumanCard(url) {
+    const myInit = {
+      method: 'GET',
+      headers: new Headers(),
+      mode: 'cors',
+      cache: 'default'
+    };
+
+    const result = fetch(url, myInit);
+    result.then(response => {
+      return response.text();
+    }).then((text) => {
+      if (text !== this.state.markdownText) {
+        return this.setState({markdownText: text});
+      }
+    }).catch((ex) => {
+      console.log('failed', ex);
+    });
+
+//     const XHR = ('onload' in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+//     const xhr = new XHR();
+// // (2) запрос на другой домен :)
+//     xhr.open('GET', url, true);
+//     xhr.onload = function () {
+//       return <div>Hello</div>;
+//       // return this.responseText;
+//     };
+//     xhr.onerror = function () {
+//       alert(`Ошибка ${this.status}`);
+//     };
+//     xhr.send();
+  }
+
   render() {
     const {scrollTop} = this.state;
     const {box} = this.props;
@@ -170,19 +204,6 @@ export default class Box extends Component {
 
     const navigation = chooseNav();
 
-    const input = `<?--- START HUMAN CARD ---?>
-
-# Human Card
-------------------------------------------------------------
-**Public Address** - 0xe3954b59340b92a01a2258251c56098cc6c485cc
-
-This public address has been established for: 
-
-## Jimbo Fry
-Digital Signature: 
-
-<?--- END HUMAN CARD ---?>`;
-
     return (
       <div className={navigation.posTop}>
         <DocumentsMenu
@@ -190,13 +211,19 @@ Digital Signature:
         />
         <div>
           <div style={{display: 'flex'}}>
+
             <div className="human-card human-card-preview">
               {box.human_card
                 ?
-                <ReactMarkdown source={input}/>
+                <Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`}>
+                  {this.requestHumanCard(box.human_card.url)}
+                  <ReactMarkdown source={this.state.markdownText}/>
+                </Link>
                 :
                 <div>
+                  {/*<div className="help-human-card"><i/></div>*/}
                   <h1>Human Card</h1>
+
                   <hr/>
                   <p>
                     <strong>Public Address:</strong>
@@ -207,6 +234,7 @@ Digital Signature:
                       ref={el => this.inputPublicAddress = el}
                       style={{width: '370px', marginLeft: '10px', fontSize: '13px'}}
                     />
+                    {/*<div className="help-human-card"><i/></div>*/}
                   </p>
                   <p>This public address has been established for:</p>
                   <p>
@@ -217,8 +245,11 @@ Digital Signature:
                       ref={el => this.inputFullName = el}
                       style={{fontSize: '18px'}}
                     />
+                    {/*<div className="help-human-card"><i/></div>*/}
                   </p>
-                  <p>Digital Signature: <span style={{color: '#8F8F8F'}}>  your signature will be here</span></p>
+                  <p>Digital Signature: <span style={{color: '#8F8F8F'}}>  your signature will be here</span>
+                    {/*<div className="help-human-card"><i/></div>*/}
+                  </p>
                 </div>
               }
             </div>
