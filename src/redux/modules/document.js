@@ -22,12 +22,16 @@ const SEND_MESSAGE_FOR_SIGN_FAIL = 'SEND_MESSAGE_FOR_SIGN_FAIL';
 const VERIFY_HUMAN_CARD = 'VERIFY_HUMAN_CARD';
 const VERIFY_HUMAN_CARD_SUCCESS = 'VERIFY_HUMAN_CARD_SUCCESS';
 const VERIFY_HUMAN_CARD_FAIL = 'VERIFY_HUMAN_CARD_FAIL';
+const GET_HUMAN_CARD = 'GET_HUMAN_CARD';
+const GET_HUMAN_CARD_SUCCESS = 'GET_HUMAN_CARD_SUCCESS';
+const GET_HUMAN_CARD_FAIL = 'GET_HUMAN_CARD_FAIL';
 
 const initialState = {
   boxes: [],
   box: {},
   documents: [],
-  document: {}
+  document: {},
+  humanCard: {},
 };
 
 export default function documentReducer(state = initialState, action) {
@@ -167,6 +171,52 @@ export default function documentReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case GET_HUMAN_CARD:
+      return {
+        ...state,
+      };
+    case GET_HUMAN_CARD_SUCCESS:
+      const hc = action.result.data;
+      const myInit = {
+        method: 'GET',
+        headers: new Headers(),
+        mode: 'cors',
+        cache: 'default'
+      };
+
+      // fetch(hc.url, myInit)
+      //   .then(response => response.text())
+      //   .then(text => hc.markdown = text);
+      let y = {
+        z: 1
+      };
+
+      // fetch(hc.url, myInit)
+      //   .then(response => response.text())
+      //   .then(text => Object.assign(y, {
+      //       markdown: text
+      //     })
+      //   );
+      let q;
+      const request = async () => {
+        const response = await fetch(hc.url, myInit);
+        q = await response.text();
+      };
+      // request();
+      request();
+      console.log(q);
+
+      return {
+        ...state,
+        humanCard: y,
+        test: y.markdown,
+      };
+    case GET_HUMAN_CARD_FAIL:
+      return {
+        ...state,
+        error: action.error,
+      };
+
     default:
       return state;
   }
@@ -227,5 +277,12 @@ export function verifyHumanCard(draft_id, public_address, signature) {
   return {
     types: [VERIFY_HUMAN_CARD, VERIFY_HUMAN_CARD_SUCCESS, VERIFY_HUMAN_CARD_FAIL],
     promise: (client) => client.patch(`/draft-human-card/${draft_id}/verify`, {data: {public_address, signature}}),
+  };
+}
+
+export function getHumanCard(public_address) {
+  return {
+    types: [GET_HUMAN_CARD, GET_HUMAN_CARD_SUCCESS, GET_HUMAN_CARD_FAIL],
+    promise: (client) => client.get(`/human-card/${public_address}`)
   };
 }

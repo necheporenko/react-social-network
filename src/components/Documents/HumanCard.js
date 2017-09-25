@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import {getUser} from '../../redux/modules/user';
-import {getBox} from '../../redux/modules/document';
+import {getHumanCard} from '../../redux/modules/document';
 import './index.scss';
 
 @connect((state) => ({
@@ -11,9 +11,10 @@ import './index.scss';
   requestedUser: state.user.requestedUser,
   path: state.routing.locationBeforeTransitions.pathname,
   box: state.document.box,
+  humanCard: state.document.humanCard,
 }), {
   getUser,
-  getBox
+  getHumanCard
 })
 
 export default class HumanCard extends Component {
@@ -22,6 +23,12 @@ export default class HumanCard extends Component {
     this.state = {
 
     };
+  }
+
+  componentDidMount() {
+    const {path} = this.props;
+    const humanCardSlug = path.substring(path.indexOf('/human-card/') + 12);
+    this.props.getHumanCard(humanCardSlug);
   }
 
   render() {
@@ -52,5 +59,6 @@ Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd9
 }
 
 HumanCard.propTypes = {
-
+  path: PropTypes.string,
+  getHumanCard: PropTypes.func,
 };
