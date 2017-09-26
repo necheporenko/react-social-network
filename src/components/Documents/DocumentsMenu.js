@@ -38,7 +38,7 @@ export default class DocumentsMenu extends Component {
               to={`/${this.props.authorizedUser.slug}/documents/document`}
               style={{marginLeft: '20px', marginBottom: '20px', display: 'block'}}
             >
-              <button className="btn-brand">New document</button>
+              <button className="btn-brand">New Document</button>
             </Link>
             }
 

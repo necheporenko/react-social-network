@@ -210,8 +210,8 @@ export default class Box extends Component {
           sidebar={navigation.sidebar}
         />
         <div>
+          {box.id &&
           <div style={{display: 'flex'}}>
-
             <div className="human-card human-card-preview">
               {box.human_card
                 ?
@@ -222,7 +222,7 @@ export default class Box extends Component {
                 :
                 <div>
                   {/*<div className="help-human-card"><i/></div>*/}
-                  <h1 style={{marginBottom: 0, fontWeight: 400}}>HUMAN CARD</h1>
+                  <h1 style={{marginBottom: 0}}>HUMAN CARD</h1>
                   {/*<hr/>*/}
                   <p style={{marginTop: '5px', marginBottom: 0}}>
                     {/*<strong>Public Address:</strong>*/}
@@ -235,7 +235,9 @@ export default class Box extends Component {
                     />
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
-                  <p style={{fontSize: '12px', marginTop: '5px', marginBottom: '10px'}}>This public address has been established for:</p>
+                  <p style={{fontSize: '12px', marginTop: '5px', marginBottom: '10px'}}>
+                    This public address has been established for:
+                  </p>
                   <p style={{marginTop: '10px'}}>
                     <input
                       type="text" placeholder="Paste your name here"
@@ -246,12 +248,15 @@ export default class Box extends Component {
                     />
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
-                  <p style={{color: '#d2d2d2', fontSize: '13px'}}>Digital Signature: <span>  your signature will be here</span>
+                  <p style={{color: '#d2d2d2', fontSize: '13px'}}>Digital Signature:
+                    <span>  your signature will be here</span>
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
                 </div>
               }
             </div>
+
+            {!box.human_card &&
             <div className="human-card-btn">
               <button className="btn-brand" onClick={this.saveDraft}>Save</button>
               <SignHumanCard
@@ -259,7 +264,9 @@ export default class Box extends Component {
                 publicAddress={this.state.publicAddress || (box.draft_human_card && box.draft_human_card.public_address) || ''}
               />
             </div>
+            }
           </div>
+          }
 
           <div className="common-lists tokens-lists">
             {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
