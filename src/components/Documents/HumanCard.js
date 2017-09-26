@@ -32,26 +32,27 @@ export default class HumanCard extends Component {
   }
 
   render() {
-    const input = `
-<?--- START HUMAN CARD ---?>  
-# Human Card
-------------------------------------------------------------
-**Public Address** - e3954b59340b92a01a2258251c56098cc6c485cc
+    const {humanCard} = this.props;
+    const test = `<?--- START HUMAN CARD ---?>
 
-This public address has been established for:
-## Jimbo Fry
-Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd94kf94kf94kk9f49
-<?--- END HUMAN CARD ---?>
-<?--- START SELF SIGNATURE ---?>
-<?--- END SELF SIGNATURE ---?>
-<?--- START LINKED DIGITAL PROPERTY 1 ---?>
-<?--- END LINKED DIGITAL PROPERTY 1 ---?>
-<?--- START VALIDATORS SIGNATURE 1  ---?>
-<?--- END VALIDATORS SIGNATURE 1 ---?>`;
+# HUMAN CARD
+
+0xB7871a6C2E51b9E3Fb6C867B7E902EA7De6F9e12
+
+------------------------------------------------------------
+This public address has been established for: 
+
+## Darth Vader
+------------------------------------------------------------
+
+Digital Signature: 
+
+<?--- END HUMAN CARD ---?>`;
     return (
       <div>
-        <div className="human-card">
-          <ReactMarkdown source={input}/>
+        <div className="human-card markdown-human-card">
+          <ReactMarkdown source={humanCard.markdown}/>
+          {/*<ReactMarkdown source={test}/>*/}
         </div>
       </div>
     );
@@ -61,4 +62,5 @@ Digital Signature: adfslivhao5932vhfo54rt89gvnw8574tyqw9384dry2wp9jf4t66gjd94kd9
 HumanCard.propTypes = {
   path: PropTypes.string,
   getHumanCard: PropTypes.func,
+  humanCard: PropTypes.object,
 };

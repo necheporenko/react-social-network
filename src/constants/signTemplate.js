@@ -2,13 +2,15 @@ export default function signTemplate(fullName, publicAddress) {
   return (
     `<?--- START HUMAN CARD ---?>
 
-# Human Card
-------------------------------------------------------------
-**Public Address** - ${publicAddress}
+# HUMAN CARD
 
+${publicAddress}
+
+------------------------------------------------------------
 This public address has been established for: 
 
 ## ${fullName}
+------------------------------------------------------------
 
 Digital Signature: 
 

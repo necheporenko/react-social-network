@@ -177,39 +177,16 @@ export default function documentReducer(state = initialState, action) {
       };
     case GET_HUMAN_CARD_SUCCESS:
       const hc = action.result.data;
-      const myInit = {
-        method: 'GET',
-        headers: new Headers(),
-        mode: 'cors',
-        cache: 'default'
-      };
-
-      // fetch(hc.url, myInit)
-      //   .then(response => response.text())
-      //   .then(text => hc.markdown = text);
-      let y = {
-        z: 1
-      };
-
-      // fetch(hc.url, myInit)
-      //   .then(response => response.text())
-      //   .then(text => Object.assign(y, {
-      //       markdown: text
-      //     })
-      //   );
-      let q;
-      const request = async () => {
-        const response = await fetch(hc.url, myInit);
-        q = await response.text();
-      };
-      // request();
-      request();
-      console.log(q);
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', hc.url, false);
+      xhr.send();
+      const humanCard = Object.assign(hc, {
+        markdown: xhr.responseText
+      });
 
       return {
         ...state,
-        humanCard: y,
-        test: y.markdown,
+        humanCard,
       };
     case GET_HUMAN_CARD_FAIL:
       return {
