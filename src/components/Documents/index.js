@@ -76,7 +76,7 @@ export default class Box extends Component {
 
   saveDraft() {
     const {createDraftHumanCard, updateDraftHumanCard, box, authorizedUser} = this.props;
-    box.draft_human_card.id
+    box.draft_human_card
       ?
       updateDraftHumanCard(this.inputFullName.value, authorizedUser.id, this.inputPublicAddress.value, box.draft_human_card.id)
       :
@@ -222,9 +222,9 @@ export default class Box extends Component {
                 :
                 <div>
                   {/*<div className="help-human-card"><i/></div>*/}
-                  <h1>HUMAN CARD</h1>
+                  <h1 style={{marginBottom: 0, fontWeight: 400}}>HUMAN CARD</h1>
                   {/*<hr/>*/}
-                  <p style={{marginTop: '20px'}}>
+                  <p style={{marginTop: '5px', marginBottom: 0}}>
                     {/*<strong>Public Address:</strong>*/}
                     <input
                       type="text" placeholder="Paste your public address here"
@@ -235,18 +235,18 @@ export default class Box extends Component {
                     />
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
-                  <p style={{fontSize: '13px', marginTop: '25px', marginBottom: '15px'}}>This public address has been established for:</p>
-                  <p style={{marginTop: '20px'}}>
+                  <p style={{fontSize: '12px', marginTop: '5px', marginBottom: '10px'}}>This public address has been established for:</p>
+                  <p style={{marginTop: '10px'}}>
                     <input
                       type="text" placeholder="Paste your name here"
                       onChange={this.changeFullName}
                       value={this.state.fullName || (box.draft_human_card && box.draft_human_card.full_name) || fullName}
                       ref={el => this.inputFullName = el}
-                      style={{fontSize: '26px', fontWeight: 500}}
+                      style={{fontSize: '22px'}}
                     />
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
-                  <p style={{color: '#d2d2d2', fontSize: '13px', marginTop: '20px'}}>Digital Signature: <span>  your signature will be here</span>
+                  <p style={{color: '#d2d2d2', fontSize: '13px'}}>Digital Signature: <span>  your signature will be here</span>
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
                 </div>

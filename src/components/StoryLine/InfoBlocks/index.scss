@@ -249,7 +249,8 @@
 .documents-mnu-board,
 .documents-mnu-wallet,
 .documents-mnu-box-private,
-.documents-mnu-box-bin {
+.documents-mnu-box-bin,
+.documents-mnu-boxes {
   padding-left: 12px;
 
   &:before {
@@ -283,20 +284,32 @@
 
 .documents-mnu-wallet {
   &:before {
-    background-position: 0 -210px;
+    background: url('../../../img/Icons/wallet.svg');
     height: 14px;
-    width: 21px;
+    width: 16px;
     top: 3px;
+    margin-right: 9px;
   }
 }
 
 .documents-mnu-box-private {
   &:before {
-    background: url('../../../img/Icons/private-box.svg');
+    //background: url('../../../img/Icons/private-box.svg');
+    background: url('../../../img/Icons/signed-documents.svg');
     height: 14px;
     width: 14px;
     top: 3px;
     margin-right: 11px;
+  }
+}
+
+.documents-mnu-boxes {
+  &:before {
+    background: url('../../../img/Icons/boxes.svg');
+    height: 14px;
+    width: 15px;
+    top: 3px;
+    margin-right: 10px;
   }
 }
 
@@ -306,7 +319,7 @@
     height: 14px;
     width: 15px;
     top: 2px;
-    margin-right: 5px;
+    margin-right: 9px;
     margin-left: 1px;
   }
 }

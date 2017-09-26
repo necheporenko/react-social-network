@@ -48,7 +48,15 @@ export default class DocumentsMenu extends Component {
               </Link>
             ))}
 
-            <hr/>
+            {/*<hr/>*/}
+            <div className="wrap-boxes">
+              <Link onlyActiveOnIndex={true} to={`/${slug}/documents/boxes`} activeClassName="active">
+                <li className="documents-mnu-boxes">Boxes</li>
+              </Link>
+              <div className="create-new-item">
+                <a href="#">+ Create new box</a>
+              </div>
+            </div>
 
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">
               <li className="documents-mnu-box-private">Signed Documents</li>
@@ -64,10 +72,11 @@ export default class DocumentsMenu extends Component {
             {/*</Link>*/}
             {/*</div>*/}
 
-            <hr/>
+            {/*<hr/>*/}
 
             {boxes.length > 0 && boxes[0].children.filter(box => ((box.key !== 'bin') && (box.key !== 'board'))).map(box => (
-              <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`} activeClassName="active">
+              <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`}
+                    activeClassName="active">
                 <li className="documents-mnu-box-private">{box.name}</li>
               </Link>
             ))}
@@ -78,9 +87,7 @@ export default class DocumentsMenu extends Component {
               </Link>
             ))}
           </ul>
-          <div className="create-new-item">
-            <a href="#">+ Create new box</a>
-          </div>
+
 
           {/*<BoxesTree*/}
           {/*boxes={this.props.boxes}*/}

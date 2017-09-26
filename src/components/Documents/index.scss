@@ -52,6 +52,23 @@
 //   width: 900px;
 // }
 
+.wrap-boxes {
+  position: relative;
+
+  a {
+    &:hover ~ .create-new-item {
+      display: block;
+    }
+  }
+
+  .create-new-item {
+    display: none;
+    position: absolute;
+    top: 3px;
+    right: 15px;
+  }
+}
+
 .document {
   > a {
     overflow: hidden;
@@ -434,7 +451,7 @@
 
 /* === Human Card Start === */
 .human-card {
-  width: 480px;
+  width: 315px;
   padding: 0 15px;
   margin: 70px auto;
   background: rgb(255, 255, 255);
@@ -470,6 +487,8 @@
     //box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-sizing: border-box;
     padding: 6px 0;
+    padding-bottom: 0;
+
 
     &::placeholder {
       color: #c3c3c3;
