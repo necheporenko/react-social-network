@@ -17,6 +17,7 @@ import PeopleFollowers from 'components/People/PeopleFollowers';
 import PeopleSuggested from 'components/People/PeopleSuggested';
 import DocumentsContainer from 'containers/DocumentsContainer';
 import Box from 'components/Documents';
+import Boxes from 'components/Documents/Boxes';
 import TokensPrivate from 'components/Documents/TokensPrivate';
 import Wallet from 'components/Documents/Wallet';
 import Inbox from 'components/Documents/Inbox';
@@ -144,6 +145,7 @@ export default (store) => {
         <Route path="inbox" component={Inbox} onEnter={requireLogin}/>
         <Route path="wallet" component={Wallet}/>
         <Route path="private" component={TokensPrivate}/>
+        <Route path="boxes" component={Boxes}/>
         <Route path="/:userName/documents(/:box)" component={Box}/>
       </Route>
 
