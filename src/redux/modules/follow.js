@@ -1,18 +1,19 @@
+import axios from 'axios';
 const FOLLOW_USER = 'FOLLOW_USER';
 const FOLLOW_USER_SUCCESS = 'FOLLOW_USER_SUCCESS';
 const FOLLOW_USER_FAIL = 'FOLLOW_USER_FAIL';
 const UNFOLLOW_USER = 'UNFOLLOW_USER';
 const UNFOLLOW_USER_SUCCESS = 'UNFOLLOW_USER_SUCCESS';
 const UNFOLLOW_USER_FAIL = 'UNFOLLOW_USER_FAIL';
-export const LOAD_PEOPLE_FOLLOWING = 'LOAD_PEOPLE_FOLLOWING';
-export const LOAD_PEOPLE_FOLLOWING_SUCCESS = 'LOAD_PEOPLE_FOLLOWING_SUCCESS';
-export const LOAD_PEOPLE_FOLLOWING_FAIL = 'LOAD_PEOPLE_FOLLOWING_FAIL';
-export const LOAD_PEOPLE_FOLLOWERS = 'LOAD_PEOPLE_FOLLOWERS';
-export const LOAD_PEOPLE_FOLLOWERS_SUCCESS = 'LOAD_PEOPLE_FOLLOWERS_SUCCESS';
-export const LOAD_PEOPLE_FOLLOWERS_FAIL = 'LOAD_PEOPLE_FOLLOWERS_FAIL';
-export const LOAD_PEOPLE_SUGGESTED = 'LOAD_PEOPLE_SUGGESTED';
-export const LOAD_PEOPLE_SUGGESTED_SUCCESS = 'LOAD_PEOPLE_SUGGESTED_SUCCESS';
-export const LOAD_PEOPLE_SUGGESTED_FAIL = 'LOAD_PEOPLE_SUGGESTED_FAIL';
+const LOAD_PEOPLE_FOLLOWING = 'LOAD_PEOPLE_FOLLOWING';
+const LOAD_PEOPLE_FOLLOWING_SUCCESS = 'LOAD_PEOPLE_FOLLOWING_SUCCESS';
+const LOAD_PEOPLE_FOLLOWING_FAIL = 'LOAD_PEOPLE_FOLLOWING_FAIL';
+const LOAD_PEOPLE_FOLLOWERS = 'LOAD_PEOPLE_FOLLOWERS';
+const LOAD_PEOPLE_FOLLOWERS_SUCCESS = 'LOAD_PEOPLE_FOLLOWERS_SUCCESS';
+const LOAD_PEOPLE_FOLLOWERS_FAIL = 'LOAD_PEOPLE_FOLLOWERS_FAIL';
+const LOAD_PEOPLE_SUGGESTED = 'LOAD_PEOPLE_SUGGESTED';
+const LOAD_PEOPLE_SUGGESTED_SUCCESS = 'LOAD_PEOPLE_SUGGESTED_SUCCESS';
+const LOAD_PEOPLE_SUGGESTED_FAIL = 'LOAD_PEOPLE_SUGGESTED_FAIL';
 const LOAD_PEOPLE_ALL = 'LOAD_PEOPLE_ALL';
 const LOAD_PEOPLE_ALL_SUCCESS = 'LOAD_PEOPLE_ALL_SUCCESS';
 const LOAD_PEOPLE_ALL_FAIL = 'LOAD_PEOPLE_ALL_FAIL';
@@ -23,6 +24,7 @@ const LOAD_USER_PEOPLE = 'LOAD_USER_PEOPLE';
 const LOAD_USER_PEOPLE_SUCCESS = 'LOAD_USER_PEOPLE_SUCCESS';
 const LOAD_USER_PEOPLE_FAIL = 'LOAD_USER_PEOPLE_FAIL';
 const CLEAR_PEOPLE_BLOCK = 'CLEAR_PEOPLE_BLOCK';
+const FILTER_WHO_TO_FOLLOW_PEOPLE = 'FILTER_WHO_TO_FOLLOW_PEOPLE';
 
 
 const initialState = {
@@ -320,6 +322,35 @@ export default function followReducer(state = initialState, action) {
         loaded
       };
 
+    case FILTER_WHO_TO_FOLLOW_PEOPLE: {
+      let newFollowUser = null;
+      const whoToFollowUserIds = state.whoToFollowList.map(user => user.id);
+
+      for (let i = 0; i < action.payload.whoToFollowList.length; i++) {
+        const item = action.payload.whoToFollowList[i];
+        if (!whoToFollowUserIds.includes(item.id)) {
+          newFollowUser = item;
+          break;
+        }
+      }
+
+      if (state.whoToFollowList.length === 3 && newFollowUser) {
+        return Object.assign({}, state, {
+          whoToFollowList: state.whoToFollowList.map(user => {
+            if (user.id === action.payload.id) {
+              return newFollowUser;
+            }
+
+            return user;
+          })
+        });
+      }
+
+      return Object.assign({}, state, {
+        whoToFollowList: state.whoToFollowList.filter(user => user.id !== action.payload.id)
+      });
+    }
+
     default:
       return state;
   }
@@ -406,5 +437,23 @@ export function loadUserPeople(slug) {
   return {
     types: [LOAD_USER_PEOPLE, LOAD_USER_PEOPLE_SUCCESS, LOAD_USER_PEOPLE_FAIL],
     promise: (client) => client.get('/people/block', { params: { user_slug }})
+  };
+}
+
+// TODO handle errors
+export function filterWhoToFollowUsers(id) {
+  return dispatch => {
+    return axios('http://api-test.validbook.org/v1/follows/who-to-follow?access_token=Z4EQzHw1sIHAWToNaZNRASeArH2gCGER')
+      .then(response => {
+        if (response.data && response.data.data) {
+          dispatch({
+            type: FILTER_WHO_TO_FOLLOW_PEOPLE,
+            payload: {
+              whoToFollowList: response.data.data,
+              id
+            }
+          });
+        }
+      });
   };
 }
