@@ -25,6 +25,18 @@
 .follow-people {
   display: flex;
   margin-top: 19px;
+
+  .remove-user-container {
+    margin-left: 30px;
+    
+    .remove-icon {
+      display: block;
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+      background: url(../../img/Icons/close.svg);
+    }
+  }
 }
 
 .follow-people-link-img {
@@ -60,10 +72,6 @@
     font-size: 14px;
     line-height: 14px;
     display: block;
-
-    &:hover {
-      text-decoration: underline;
-    }
   }
 }
 

@@ -3,6 +3,7 @@ import { routerMiddleware } from 'react-router-redux';
 import { createPersistor } from 'redux-persist';
 import { loadingBarMiddleware } from 'react-redux-loading-bar';
 import createMiddleware from './middleware/clientMiddleware';
+import thunk from 'redux-thunk';
 import socketMiddleware from './middleware/socketMiddleware';
 import createReducers from './reducer';
 
@@ -22,7 +23,7 @@ function getMissingReducers(reducers, data) {
 }
 
 export default function createStore(history, client, data, persistConfig = null) {
-  const middleware = [createMiddleware(client), socketMiddleware(), routerMiddleware(history)];
+  const middleware = [createMiddleware(client), thunk, socketMiddleware(), routerMiddleware(history)];
 
   let enhancers = [applyMiddleware(...middleware)];
   if (__CLIENT__ && __DEVTOOLS__) {
