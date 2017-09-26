@@ -20,6 +20,7 @@ import {
 } from '../../redux/modules/profile';
 import {clearStories} from '../../redux/modules/story';
 import {clearBookStories} from '../../redux/modules/book';
+import Loader from '../Common/Loader';
 
 @connect((state) => ({
   conversation: state.profile.conversation,
@@ -67,6 +68,7 @@ class UserButtons extends Component {
     this.whoWroteMessage = this.whoWroteMessage.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.openConversation = this.openConversation.bind(this);
+    this.chartsRender = this.chartsRender.bind(this);
   }
 
   clickMail() {
@@ -192,9 +194,87 @@ class UserButtons extends Component {
     }
   }
 
+  chartsRender() {
+    const {conversations, hasMoreConversations} = this.props;
+    console.log('conv', conversations);
+    if (!conversations.length) {
+      return <Loader marginTop={10}/>;
+    }
+
+    return (
+      <InfiniteScroll
+        loadMore={this.loadConversations}
+        hasMore={hasMoreConversations}
+        threshold={50}
+        // loader={loader}
+        useWindow={false}
+      >
+        {conversations.map(conversation => (
+          <Link
+            to={`/messages/${conversation.conversation_id}`}
+            key={conversation.conversation_id}
+            style={{background: conversation.is_seen ? '#fff' : '#E4F0F6'}}
+            onClick={() => this.openConversation(conversation.conversation_id)}
+          >
+            <li>
+              {this.groupAvatars(conversation.receivers)}
+              <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
+              {conversation.messages.length > 0 &&
+              <span>{this.whoWroteMessage(conversation.messages[0], conversation.receivers)}</span>
+              }
+              <span className="date">
+                {conversation.messages && conversation.messages[0].date.substring(11, 17)}
+              </span>
+              <div className="tooltip-date">
+                {conversation.messages && conversation.messages[0].date.substring(0, 11)}
+              </div>
+            </li>
+          </Link>
+        ))}
+      </InfiniteScroll>
+    );
+  }
+
+  notificationsRender() {
+    const {notifications, hasMoreNotifications} = this.props;
+
+    if (!notifications.length) {
+      return <Loader marginTop={10}/>;
+    }
+
+    return (
+      <InfiniteScroll
+        loadMore={this.loadNotifications}
+        hasMore={hasMoreNotifications}
+        threshold={50}
+        // loader={loader}
+        useWindow={false}
+      >
+        {notifications.map((notification) => (
+          <Link
+            to={notification.link}
+            key={notification.id}
+            onClick={() => this.props.readNotification(notification.id)}
+          >
+            <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#E4F0F6'}}>
+              <div>
+                <img src={notification.user.avatar} alt=""/>
+                <h6
+                  dangerouslySetInnerHTML={{__html: notification.text}}
+                  style={{display: 'flex', width: '265px', fontWeight: 400}}
+                />
+              </div>
+              <p>{notification.created}</p>
+            </li>
+          </Link>
+        ))}
+      </InfiniteScroll>
+    );
+  }
+
   render() {
     const {slug, first_name, avatar32} = this.props.authorizedUser;
-    const {logoutUser, notifications, conversations, bubbleMessage, bubbleNotification} = this.props;
+    const {logoutUser, bubbleMessage, bubbleNotification} = this.props;
     const chats = require('../../img/Icons/chat-sm.svg');
     const chatsHover = require('../../img/Icons/chat-sm-hover.svg');
 
@@ -235,36 +315,7 @@ class UserButtons extends Component {
                 </div>
                 <hr/>
                 <ul>
-                  <InfiniteScroll
-                    loadMore={this.loadConversations}
-                    hasMore={this.props.hasMoreConversations}
-                    threshold={50}
-                    // loader={loader}
-                    useWindow={false}
-                  >
-                    {conversations && conversations.map(conversation => (
-                      <Link
-                        to={`/messages/${conversation.conversation_id}`}
-                        key={conversation.conversation_id}
-                        style={{background: conversation.is_seen ? '#fff' : '#E4F0F6'}}
-                        onClick={() => this.openConversation(conversation.conversation_id)}
-                      >
-                        <li>
-                          {this.groupAvatars(conversation.receivers)}
-                          <h6>{conversation.receiversName && conversation.receiversName.toString()}</h6>
-                          {conversation.messages.length > 0 &&
-                          <span>{this.whoWroteMessage(conversation.messages[0], conversation.receivers)}</span>
-                          }
-                          <span className="date">
-                            {conversation.messages && conversation.messages[0].date.substring(11, 17)}
-                          </span>
-                          <div className="tooltip-date">
-                            {conversation.messages && conversation.messages[0].date.substring(0, 11)}
-                          </div>
-                        </li>
-                      </Link>
-                    ))}
-                  </InfiniteScroll>
+                  {this.chartsRender()}
                 </ul>
                 <div style={{padding: '3px 0 5px', justifyContent: 'center'}}>
                   <Link to="/messages">See all</Link>
@@ -300,32 +351,7 @@ class UserButtons extends Component {
                 </div>
                 <hr/>
                 <ul>
-                  <InfiniteScroll
-                    loadMore={this.loadNotifications}
-                    hasMore={this.props.hasMoreNotifications}
-                    threshold={50}
-                    // loader={loader}
-                    useWindow={false}
-                  >
-                    {notifications && notifications.map((notification) => (
-                      <Link
-                        to={notification.link}
-                        key={notification.id}
-                        onClick={() => this.props.readNotification(notification.id)}
-                      >
-                        <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#E4F0F6'}}>
-                          <div>
-                            <img src={notification.user.avatar} alt=""/>
-                            <h6
-                              dangerouslySetInnerHTML={{__html: notification.text}}
-                              style={{display: 'flex', width: '265px', fontWeight: 400}}
-                            />
-                          </div>
-                          <p>{notification.created}</p>
-                        </li>
-                      </Link>
-                    ))}
-                  </InfiniteScroll>
+                  {this.notificationsRender()}
                   {/*<a href="#">*/}
                   {/*<li>*/}
                   {/*<div>*/}
