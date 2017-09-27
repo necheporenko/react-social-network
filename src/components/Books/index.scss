@@ -20,17 +20,51 @@
   width: 210px;
   background: #fff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
-  border-radius: 6px;
   padding: 0 15px 10px 15px;
   //margin: 0 0 10px 10px;
   align-self: baseline;
   box-sizing: border-box;
 
+  .title-infoblocks-book {
+    display: flex;
+    justify-content: space-between;
+
+    .book-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 16px;
+      line-height: 30px;
+      color: #000;
+    }
+
+    .book-author {
+      color: #8E8E8E;
+      margin-top: 0;
+      margin-bottom: 5px;
+      font-weight: 400;
+    }
+
+    .book-edit {
+      margin-top: 8px;
+      visibility: hidden;
+      background: $sprite;
+      background-position: -159px -225px;
+      height: 13px;
+      width: 13px;
+      cursor: pointer;
+    }
+  }
+
+  .book-info {
+    color: #8E8E8E;
+  }
+
   &:hover {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
 
     .book-edit {
-      display: block;
+      visibility: visible;
     }
   }
 
@@ -66,9 +100,16 @@
     img {
       border-radius: 50%;
       margin-top: -18px;
+      border: 2px solid #fff;
     }
   }
+
+  .btn-following {
+    color: #8E8E8E;
+  }
 }
+
+
 
 .book-title {
   word-wrap: break-word;
@@ -113,39 +154,4 @@
     left: 0;
     width: 200px;
   }
-}
-
-.active-popup {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.title-infoblocks-book {
-  padding-top: 5px;
-  max-width: 135px;
-
-  h5 {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 18px;
-    line-height: 30px;
-    font-weight: 500;
-  }
-}
-
-
-.book-edit {
-  display: none;
-  background: $sprite;
-  background-position: -159px -225px;
-  height: 13px;
-  width: 13px;
-  cursor: pointer;
-  position: absolute;
-  top: 14px;
-  left: 145px;
 }

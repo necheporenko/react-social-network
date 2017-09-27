@@ -198,7 +198,7 @@ class UserButtons extends Component {
     const {conversations, hasMoreConversations} = this.props;
     console.log('conv', conversations);
     if (!conversations.length) {
-      return <Loader marginTop={10}/>;
+      return <Loader marginTop="10px"/>;
     }
 
     return (
@@ -239,7 +239,7 @@ class UserButtons extends Component {
     const {notifications, hasMoreNotifications} = this.props;
 
     if (!notifications.length) {
-      return <Loader marginTop={10}/>;
+      return <Loader marginTop="10px"/>;
     }
 
     return (

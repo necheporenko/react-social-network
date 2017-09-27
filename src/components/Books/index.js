@@ -9,6 +9,7 @@ import './index.scss';
 const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
   return (
     <div className="book">
+
       <div
         className="coverBook"
         style={{
@@ -16,22 +17,22 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
           backgroundImage: requestedUser.cover && requestedUser.cover.picture ? `url(${requestedUser.cover.picture})` : null
         }}
       />
+
       <div className="authorUser">
         <img src={requestedUser.avatar32} alt=""/>
       </div>
 
       <div className="title-infoblocks-book">
-        <h5>{name}</h5>
-        <h6 style={{margin: '5px 0', fontWeight: 400}}>{`${requestedUser.first_name} ${requestedUser.last_name}`}</h6>
-      </div>
-
-      <div className="book-edit">
-        <i>
+        <div>
+          <div className="book-name">{name}</div>
+          <div className="book-author">{`${requestedUser.first_name} ${requestedUser.last_name}`}</div>
+        </div>
+        <div className="book-edit">
           <EditBook
             book_name={name}
             book_slug={book_slug}
           />
-        </i>
+        </div>
       </div>
 
       {/*<div className="book-quantity">*/}
@@ -47,7 +48,7 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
         </ul>
         {/*<hr />*/}
       </div>
-      <div className="btn-following btn-following-book" style={{margin: '5px 0', left: '55px'}}>
+      <div className="btn-following btn-following-book" style={{margin: '5px 0'}}>
         <div>Following Book</div>
         <span/>
       </div>
