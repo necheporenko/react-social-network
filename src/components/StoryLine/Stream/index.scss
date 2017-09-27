@@ -502,7 +502,7 @@
 }
 
 .post-delimiter {
-  padding: 0 8px;
+  padding: 0 3px;
 }
 
 .post-details {
@@ -544,7 +544,6 @@
 .post-details-loud-icon {
   position: relative;
   top: -1px;
-  left: 8px;
   cursor: pointer;
 
   &:hover {
@@ -603,9 +602,10 @@
 
   a {
     cursor: pointer;
+    color: #777;
 
     &:hover {
-      color: #333;
+      color: #777;
       text-decoration: underline;
     }
 

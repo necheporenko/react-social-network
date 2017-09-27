@@ -77,6 +77,10 @@ class PostHeader extends Component {
     this.props.setVisibilityStory(visibility_type, story_id);
   }
 
+  delimiterRender() {
+    return <div className="post-delimiter">·</div>;
+  }
+
   render() {
     const {fullName, slug, avatar} = this.props.user;
     const {authorizedUser, date, visibility, loudness, id, books} = this.props;
@@ -110,15 +114,14 @@ class PostHeader extends Component {
               </div>
             </div>
 
-            {authorizedUser.slug === slug &&
-            <div className="post-delimiter" style={{display: 'flex'}}><span> · </span>
-              <div className="post-details-loud-icon">
-                <span className={this.chooseLoudnessIcon(loudness)}/>
-                <div className="block-additional block-additional-loud">{this.chooseLoudnessTooltip(loudness)}</div>
-              </div>
+            {/* {authorizedUser.slug === slug && */}
+            {this.delimiterRender()}
+            <div className="post-details-loud-icon">
+              <span className={this.chooseLoudnessIcon(loudness)}/>
+              <div className="block-additional block-additional-loud">{this.chooseLoudnessTooltip(loudness)}</div>
             </div>
-            }
-            <div className="post-delimiter"><span> · </span></div>
+
+            {this.delimiterRender()}
             <div className="post-details-visibility">
               <div className="post-details-visibility-icon">
                 <span className={this.chooseVisibilityIcon(visibility.value)}/>
@@ -190,7 +193,7 @@ class PostHeader extends Component {
               </div>
             </div>
 
-            <div className="post-delimiter"><span> · </span></div>
+            {this.delimiterRender()}
             <div className="post-details-location">
               <OverlayTrigger placement="top" overlay={tooltipBooks} id="tooltipBooks">
                 <div>{this.loadBookInfo(books)}</div>
