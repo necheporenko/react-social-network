@@ -175,10 +175,7 @@ export default class SubHeader extends Component {
               {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
               <div>
                 <input type="file" onChange={(e) => this.handleAvatarChange(e)} ref={(el) => this.inputAvatar = el}/>
-                <a href="#">
-                  <i/>
-                  Update Profile Picture
-                </a>
+                <a href="#"><i/>Update Profile Photo</a>
               </div>
               }
             </div>
