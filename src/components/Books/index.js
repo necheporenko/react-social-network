@@ -130,8 +130,7 @@ class Books extends Component {
                 bookTreeArr={book.children}
                 requestedUser={requestedUser}
               />
-            ))
-            }
+            ))}
           </StackGrid>
         </div>
       </div>

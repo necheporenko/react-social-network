@@ -4,8 +4,6 @@ import {Link} from 'react-router';
 import NavigationUserInfo from './NavigationUserInfo';
 import './index.scss';
 
-let savePositionTop;
-
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
@@ -15,57 +13,68 @@ export default class Navigation extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      scrollTop: null
+      navigationPosition: 'navigation',
+      showSmallUser: 'navigation-infouser-none'
     };
     this.handleScroll = this.handleScroll.bind(this);
-    this.saveScroll = this.saveScroll.bind(this);
   }
 
   componentDidMount() {
+    console.log('componentDidMount');
     window.addEventListener('scroll', this.handleScroll);
-    this.saveScroll();
   }
 
   componentWillUnmount() {
+    console.log('componentWillUnmount');
     window.removeEventListener('scroll', this.handleScroll);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('scu');
+    if (this.state.navigationPosition !== nextState.navigationPosition && this.state.showSmallUser !== nextState.showSmallUser) {
+      return true;
+    }
 
-  handleScroll(e) {
-    const scrollTop = document.documentElement.scrollTop || (e.target || e.srcElement).body.scrollTop;
-    savePositionTop = scrollTop;
-    this.setState({scrollTop});
+    return false;
   }
 
-  saveScroll() {
-    // console.log(`saveScroll:${savePositionTop}`);
-    this.setState({scrollTop: savePositionTop});
+  handleScroll() {
+    const scrollTop = document.documentElement.scrollTop;
+    let navigationPosition;
+    let displayUser;
+
+    if (scrollTop <= 236) {
+      navigationPosition = 'navigation';
+      displayUser = 'navigation-infouser-none';
+    } else {
+      navigationPosition = 'navigation navigation-fixed';
+      displayUser = 'navigation-infouser';
+    }
+
+    this.setState({
+      navigationPosition,
+      showSmallUser: displayUser
+    });
+  }
+
+  onNavigationLinkClick(e) {
+    if (e.target.tagName === 'a') {
+      document.documentElement.scrollTop = 237;
+    }
   }
 
   render() {
     const {first_name, last_name, slug, avatar32, isFollowing, id, cover} = this.props.requestedUser;
-    const {scrollTop} = this.state;
-
-    const chooseNav = () => {
-      let Nav;
-      let displayUser;
-
-      if (scrollTop <= 275 || !scrollTop) {
-        Nav = 'navigation';
-        displayUser = 'navigation-infouser-none';
-      } else {
-        Nav = 'navigation navigation-fixed';
-        displayUser = 'navigation-infouser';
-      }
-      const result = {posTop: Nav, show: displayUser};
-      return result;
-    };
-
-    const navigation = chooseNav();
+    const {navigationPosition, showSmallUser} = this.state;
+    console.log('nav render');
 
     return (
-      <div className={navigation.posTop} style={{boxShadow: id ? '0 2px 4px 0 rgba(0, 0, 0, 0.1)' : 'none'}}>
-        <div className="navigation-wrap" style={{borderColor: cover && cover.color ? `#${cover.color}` : '#1976d2'}}>
+      <div className={navigationPosition} style={{boxShadow: id ? '0 2px 4px 0 rgba(0, 0, 0, 0.1)' : 'none'}}>
+        <div
+          onClick={this.onNavigationLinkClick}
+          className="navigation-wrap"
+          style={{borderColor: cover && cover.color ? `#${cover.color}` : '#1976d2'}}
+        >
           <Link
             to={`/${slug}`}
             onlyActiveOnIndex={true}
@@ -118,35 +127,23 @@ export default class Navigation extends Component {
           }
           <div
             className="btn-following"
-            onClick={
-              !isFollowing ?
-                () => {
-                  this.follow(id);
-                }
+            onClick={isFollowing ?
+                () => this.unfollow(id)
                 :
-                () => {
-                  this.unfollow(id);
-                }
+                () => this.follow(id)
             }>
             <div>
-              {!isFollowing ? 'Follow' : 'Following'}
+              {isFollowing ? 'Following' : 'Follow'}
             </div>
             <span/>
           </div>
         </div>
         }
-        {/* {showName &&
-          <NavigationInfoUser
-            userName={`${first_name} ${last_name}`}
-            link={link}
-            displayUser={navigation.show}
-          />
-        } */}
         <NavigationUserInfo
           userName={`${first_name} ${last_name}`}
           avatar32={avatar32}
           link={`/${slug}`}
-          displayUser={navigation.show}
+          displayUser={showSmallUser}
         />
       </div>
 
