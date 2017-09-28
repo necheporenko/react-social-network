@@ -216,7 +216,7 @@ export default class Box extends Component {
                   {/*<Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">*/}
                   {this.requestHumanCard(box.human_card.url)}
                   <ReactMarkdown source={this.state.markdownText}>
-                    {this.CopyToClipboard()}
+                    {/*{this.CopyToClipboard()}*/}
                   </ReactMarkdown>
                   {/*</Link>*/}
                 </div>

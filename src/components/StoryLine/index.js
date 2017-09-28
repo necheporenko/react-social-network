@@ -7,6 +7,7 @@ import { loadPeopleFollowers, loadPeopleFollowing, loadUserPeople } from '../../
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import Stream from './Stream/index';
 import InfoBloks from './InfoBlocks/index';
+import PeoplePhotos from './InfoBlocks/PeoplePhotos';
 import './index.scss';
 
 let documentHeight;
@@ -101,8 +102,8 @@ class StoryLine extends Component {
             style={{
               // left: 'calc(50% + 275px)',
               // left: '160px',
-              width: '320px',
-              flex: '0 0 320px',
+              width: '220px',
+              flex: '0 0 220px',
               top: chooseScroll.infoBloks,
               position: 'fixed',
             }}
@@ -116,6 +117,7 @@ class StoryLine extends Component {
               following={this.props.following}
               followers={this.props.followers}
               people={this.props.people}
+              bookTreeArr={this.props.bookTreeArr}
             />
           </div>
           <Stream
@@ -126,11 +128,17 @@ class StoryLine extends Component {
             loadStories={this.props.loadStories}
             loadNextStories={this.props.loadNextStories}
           />
-          <BooksTreeContainer
-            booksTreeTop={chooseScroll.booksTree}
+          <PeoplePhotos
             requestedUser={this.props.requestedUser}
-            bookTreeArr={this.props.bookTreeArr}
+            following={this.props.following}
+            followers={this.props.followers}
+            people={this.props.people}
           />
+          {/*<BooksTreeContainer*/}
+            {/*booksTreeTop={chooseScroll.booksTree}*/}
+            {/*requestedUser={this.props.requestedUser}*/}
+            {/*bookTreeArr={this.props.bookTreeArr}*/}
+          {/*/>*/}
         </div>
       </div>
     );

@@ -519,6 +519,7 @@
   p:nth-child(3) {
     font-size: 13px;
     margin-bottom: 0;
+    user-select: all;
   }
 
   hr:nth-child(4) {
@@ -538,6 +539,7 @@
     margin-bottom: 0;
     font-size: 22px;
     font-weight: normal;
+    user-select: all;
   }
 }
 
