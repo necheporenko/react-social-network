@@ -1,6 +1,14 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
+function work(occupation, company) {
+  if (occupation && company) {
+    return `${occupation} at ${company}`;
+  } else {
+    return occupation || company;
+  }
+}
+
 const Cutaway = ({requestedUserProfile}) => {
   const {
     first_name,
@@ -20,6 +28,7 @@ const Cutaway = ({requestedUserProfile}) => {
     linkedin,
     skype,
   } = requestedUserProfile;
+
   return (
     requestedUserProfile.first_name ?
       <div className="infoblocks-cutaway">
@@ -36,17 +45,17 @@ const Cutaway = ({requestedUserProfile}) => {
             <div className="bio">{bio}</div>
             }
 
-            {occupation &&
-            <div className="occupation">
-              <b>Occupation:</b>
-              <p>{occupation}</p>
-            </div>
-            }
+            {/*{occupation &&*/}
+            {/*<div className="occupation">*/}
+            {/*<b>Occupation:</b>*/}
+            {/*<p>{occupation}</p>*/}
+            {/*</div>*/}
+            {/*}*/}
 
-            {company &&
+            {(company || occupation) &&
             <div className="company">
-              <b>Company:</b>
-              <p>{company}</p>
+              <i/>
+              <p>{work(occupation, company)}</p>
             </div>
             }
 
@@ -57,28 +66,28 @@ const Cutaway = ({requestedUserProfile}) => {
 
             {location &&
             <div className="location">
-              <b>Location:</b>
+              <i/>
               <p>{location}</p>
             </div>
             }
 
             {birthYear &&
             <div className="birthday">
-              <b>Birthday:</b>
+              <i/>
               <p>January 18, {`${birthYear}`}</p>
             </div>
             }
 
             {phone &&
             <div className="phone">
-              <b>Phone:</b>
+              <i/>
               <p>{phone}</p>
             </div>
             }
 
             {website &&
             <div className="websites">
-              <b>Websites:</b>
+              <i/>
               <p><Link to={website}>{website}</Link></p>
             </div>
             }
