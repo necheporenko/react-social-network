@@ -249,8 +249,9 @@ export default class Box extends Component {
                     />
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
-                  <p style={{color: '#d2d2d2', fontSize: '13px'}}>Digital Signature:
-                    <span>  your signature will be here</span>
+                  <p style={{color: '#d2d2d2', fontSize: '13px'}}>
+                    Digital Signature and its creation date will be here
+                    {/*<span>  your signature will be here</span>*/}
                     {/*<div className="help-human-card"><i/></div>*/}
                   </p>
                 </div>

@@ -3,8 +3,8 @@
 
 .documents-nav {
   .create-new-item {
-    padding-left: 30px;
-    padding-top: 10px;
+    //padding-left: 30px;
+    //padding-top: 10px;
   }
 
   .title {
@@ -54,18 +54,32 @@
 
 .wrap-boxes {
   position: relative;
+  display: flex;
 
-  a {
-    &:hover ~ .create-new-item {
+  &:hover {
+    border-color: #8F8F8F;
+    background-color: #E1E1E1;
+
+    .create-new-item {
       display: block;
     }
   }
 
+  a {
+    width: 120px;
+    height: 39px;
+    display: inline-block;
+  }
+
   .create-new-item {
     display: none;
-    position: absolute;
-    top: 3px;
-    right: 15px;
+    position: relative;
+
+    a {
+      padding-left: 15px;
+      position: absolute;
+      top: 12px;
+    }
   }
 }
 
