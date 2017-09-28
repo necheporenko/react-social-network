@@ -196,7 +196,6 @@ class UserButtons extends Component {
 
   chartsRender() {
     const {conversations, hasMoreConversations} = this.props;
-    console.log('conv', conversations);
     if (!conversations.length) {
       return <Loader marginTop="10px"/>;
     }

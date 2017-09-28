@@ -183,29 +183,30 @@
 .photos-icon-sm,
 .followers-icon-sm,
 .stories-icon-sm {
-  height: 10px;
+  vertical-align: middle;
+  height: 12px;
   display: inline-block;
   margin: 0 8px 0 3px;
 }
 
 
 .subbooks-icon-sm {
-  background: url('../../img/Icons/subbooks-sm.svg');
-  width: 13px;
+  background: url('../../img/Icons/subbooks-sm.svg') no-repeat;
+  width: 12px;
 }
 
 .photos-icon-sm {
-  background: url('../../img/Icons/photos-sm.svg');
+  background: url('../../img/Icons/photos-sm.svg') no-repeat;
   width: 13px;
 }
 
 .followers-icon-sm {
-  background: url('../../img/Icons/people-sm.svg');
+  background: url('../../img/Icons/people-sm.svg') no-repeat;
   width: 14px;
 }
 
 .stories-icon-sm {
-  background: url('../../img/Icons/stories-sm.svg');
+  background: url('../../img/Icons/stories-sm.svg') no-repeat;
   width: 8px;
 }
 

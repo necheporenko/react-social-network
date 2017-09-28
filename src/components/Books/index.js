@@ -6,9 +6,14 @@ import EditBook from '../../components/BooksTree/EditBook';
 import AddBook from '../Popup/AddBook';
 import './index.scss';
 
-const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
+const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser, history}) => {
+  const onBookClick = () => {
+    const location = history.location.pathname;
+    history.push(`${location}/${book_slug}`);
+  };
+
   return (
-    <div className="book">
+    <div onClick={() => onBookClick()} className="book">
 
       <div
         className="coverBook"
@@ -39,8 +44,8 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
       {/*<span>2 subbooks</span>*/}
       {/*</div>*/}
 
-      <div className="book-info" style={{margin: '5px 0'}}>
-        <ul className="book-info-list" style={{marginLeft: '-3px'}}>
+      <div className="book-info">
+        <ul>
           <li><i className="infobook-icon-visibility"/><span>0</span><i className="stories-icon-sm"/>·</li>
           <li><span>0</span><i className="subbooks-icon-sm"/>·</li>
           <li><span>0</span><i className="followers-icon-sm"/>·</li>
@@ -48,7 +53,7 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
         </ul>
         {/*<hr />*/}
       </div>
-      <div className="btn-following btn-following-book" style={{margin: '5px 0'}}>
+      <div className="btn-following btn-following-book">
         <div>Following Book</div>
         <span/>
       </div>
@@ -83,7 +88,7 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser}) => {
 
 class Books extends Component {
   render() {
-    const {bookTreeArr, requestedUser, loaded} = this.props;
+    const {bookTreeArr, requestedUser, loaded, history} = this.props;
 
     return (
       loaded.loadedBookTree &&
@@ -129,6 +134,7 @@ class Books extends Component {
                 icon={book.icon}
                 bookTreeArr={book.children}
                 requestedUser={requestedUser}
+                history={history}
               />
             ))}
           </StackGrid>
