@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import {Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton} from 'react-bootstrap';
 import {setVisibilityStory, deleteStory, pinStory} from '../../../redux/modules/story';
 import DeleteStory from '../../Popup/DeleteStory';
 import PinStory from '../../Popup/PinStory';
