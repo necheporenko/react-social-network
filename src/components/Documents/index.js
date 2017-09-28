@@ -32,11 +32,12 @@ export default class Box extends Component {
     };
     this.handleScroll = this.handleScroll.bind(this);
     this.saveScroll = this.saveScroll.bind(this);
-    this.httpGet = this.httpGet.bind(this);
     this.changeFullName = this.changeFullName.bind(this);
     this.changePublicAddress = this.changePublicAddress.bind(this);
     this.saveDraft = this.saveDraft.bind(this);
     this.requestHumanCard = this.requestHumanCard.bind(this);
+    this.copyAddress = this.copyAddress.bind(this);
+    this.CopyToClipboard = this.CopyToClipboard.bind(this);
   }
 
   componentDidMount() {
@@ -46,14 +47,61 @@ export default class Box extends Component {
     const {path} = this.props;
     const boxSlug = path.indexOf('/documents/') === -1 ? 'board' : path.substring(path.indexOf('/documents/') + 11);
     this.props.getBox(boxSlug);
-    // const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-    // this.props.getUser(findSlug)
-    //   .then(this.props.getBox(boxSlug));
   }
 
   componentWillUnmount() {
+    const div = document.querySelector('.markdown-human-card div');
+    const getAddress = div.getElementsByTagName('p');
+    const getName = div.getElementsByTagName('h2');
+
     window.removeEventListener('scroll', this.handleScroll);
+    getAddress[0].removeEventListener('click', this.copyAddress);
+    getName[0].removeEventListener('click', this.copyName);
   }
+
+  copyAddress = () => {
+    const div = document.querySelector('.markdown-human-card div');
+    const getAddress = div.getElementsByTagName('p');
+
+    let range;
+    let select;
+    if (document.createRange) {
+      range = document.createRange();
+      range.selectNodeContents(getAddress[0]);
+      select = window.getSelection();
+      select.removeAllRanges();
+      select.addRange(range);
+      document.execCommand('copy');
+      select.removeAllRanges();
+    } else {
+      range = document.body.createTextRange();
+      range.moveToElementText(getAddress[0]);
+      range.select();
+      document.execCommand('copy');
+    }
+  };
+
+  copyName = () => {
+    const div = document.querySelector('.markdown-human-card div');
+    const getName = div.getElementsByTagName('h2');
+
+    let range;
+    let select;
+    if (document.createRange) {
+      range = document.createRange();
+      range.selectNodeContents(getName[0]);
+      select = window.getSelection();
+      select.removeAllRanges();
+      select.addRange(range);
+      document.execCommand('copy');
+      select.removeAllRanges();
+    } else {
+      range = document.body.createTextRange();
+      range.moveToElementText(getName[0]);
+      range.select();
+      document.execCommand('copy');
+    }
+  };
 
   handleScroll(e) {
     const scrollTop = e.srcElement.body.scrollTop;
@@ -81,72 +129,6 @@ export default class Box extends Component {
       updateDraftHumanCard(this.inputFullName.value, authorizedUser.id, this.inputPublicAddress.value, box.draft_human_card.id)
       :
       createDraftHumanCard(this.inputFullName.value, authorizedUser.id, this.inputPublicAddress.value);
-  }
-
-  httpGet() {
-    // const theUrl = 'https://s3-us-west-2.amazonaws.com/dev.validbook/documents/2017/09/13/53/4CEA4106.html';
-    const theUrl = 'https://s3-us-west-2.amazonaws.com/dev.validbook/human_card/2017/09/14/1/hc_Jimbo_Fry.md';
-    // const theUrl = 'http://localhost:3000/darth.vader/documents/board';
-    // const theUrl = 'http://api.validbook.org';
-    // const theUrl = 'https://api.github.com';
-
-    // const myHeaders = new Headers();
-    //
-    const myInit = {
-      method: 'GET',
-      headers: new Headers(),
-      mode: 'cors',
-      cache: 'default'
-    };
-
-    // fetch(theUrl, myInit)
-    //   .then((response) => {
-    //     console.log(response);
-    //     return response.text();
-    //   }).then((body) => {
-    //     console.log(body, 'hey');
-    //   }).catch(error => {
-    //     console.log('error', error);
-    //   });
-
-    const result = fetch(theUrl, myInit);
-    console.log(result);
-    result.then((response) => {
-      console.log('response', response);
-      console.log('header', response.headers.get('Content-Type'));
-      return response.text();
-    }).then((text) => {
-      console.log('got text', text);
-    }).catch((ex) => {
-      console.log('failed', ex);
-    });
-
-    const XHR = ('onload' in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
-    const xhr = new XHR();
-// (2) запрос на другой домен :)
-    xhr.open('GET', theUrl, true);
-    xhr.onload = function () {
-      alert(this.responseText);
-    };
-    xhr.onerror = function () {
-      alert(`Ошибка ${this.status}`);
-    };
-    xhr.send();
-
-    // let xmlhttp;
-    //
-    // if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
-    //   xmlhttp = new XMLHttpRequest();
-    // } else { // code for IE6, IE5
-    //   xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-    // }
-    // xmlhttp.onreadystatechange = function () {
-    //   if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-    //     console.log('hey', xmlhttp.responseText);
-    //   }
-    // };
-    // xmlhttp.open('GET', theUrl, false);
-    // xmlhttp.send();
   }
 
   requestHumanCard(url) {
@@ -182,6 +164,21 @@ export default class Box extends Component {
 //     xhr.send();
   }
 
+  CopyToClipboard() {
+    const div = document.querySelector('.markdown-human-card div');
+
+    if (div) {
+      function w(address, name) {
+        const getAddress = div.getElementsByTagName('p');
+        const getName = div.getElementsByTagName('h2');
+        getAddress[0].addEventListener('click', address);
+        getName[0].addEventListener('click', name);
+      }
+      setTimeout(() => w(this.copyAddress, this.copyName), 1000);
+    }
+  }
+
+
   render() {
     const {scrollTop} = this.state;
     const {box} = this.props;
@@ -209,16 +206,20 @@ export default class Box extends Component {
         <DocumentsMenu
           sidebar={navigation.sidebar}
         />
-        <div>
+        <div className="testtt">
           {box.id &&
-          <div style={{display: 'flex'}}>
+          <div style={{display: 'flex'}} className="wrapper-human-card">
             <div className="human-card human-card-preview">
               {box.human_card
                 ?
-                <Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">
+                <div className="markdown-human-card">
+                  {/*<Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">*/}
                   {this.requestHumanCard(box.human_card.url)}
-                  <ReactMarkdown source={this.state.markdownText}/>
-                </Link>
+                  <ReactMarkdown source={this.state.markdownText}>
+                    {this.CopyToClipboard()}
+                  </ReactMarkdown>
+                  {/*</Link>*/}
+                </div>
                 :
                 <div>
                   {/*<div className="help-human-card"><i/></div>*/}
@@ -240,7 +241,7 @@ export default class Box extends Component {
                   </p>
                   <p style={{marginTop: '10px'}}>
                     <input
-                      type="text" placeholder="Paste your name here"
+                      type="text" placeholder="Paste your getAddress here"
                       onChange={this.changeFullName}
                       value={this.state.fullName || (box.draft_human_card && box.draft_human_card.full_name) || fullName}
                       ref={el => this.inputFullName = el}

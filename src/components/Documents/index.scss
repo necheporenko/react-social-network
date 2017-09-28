@@ -463,12 +463,13 @@
     font-weight: 500;
     font-size: 14px;
     margin: 15px 0;
+    margin-bottom: 20px;
   }
 
   h2 {
     font-weight: bold;
     font-size: 16px;
-    margin: 12px 0;
+    margin: 20px 0 12px;
   }
 
   p {
@@ -519,8 +520,18 @@
     font-size: 13px;
     margin-bottom: 0;
   }
+
+  hr:nth-child(4) {
+    margin-bottom: 0;
+  }
+
   p:nth-child(5) {
     font-size: 12px;
+    margin-top: 0;
+  }
+
+  h1 {
+    margin-bottom: 20px;
   }
 
   h2 {
