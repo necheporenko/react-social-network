@@ -12,7 +12,7 @@ This public address has been established for:
 ## ${fullName}
 ------------------------------------------------------------
 
-Digital Signature: 
+Self-signed on: Digital Signature: 
 
 <?--- END HUMAN CARD ---?>`
   );
