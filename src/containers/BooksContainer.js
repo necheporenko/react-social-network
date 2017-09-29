@@ -1,11 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import Helmet from 'react-helmet';
 import {getUser} from '../redux/modules/user';
 import {load as loadBookTree, clearBookTree} from '../redux/modules/book';
-import Navigation from '../components/Navigation';
 import Books from '../components/Books';
-import SubHeader from '../components/StoryLine/SubHeader';
 
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
@@ -32,25 +29,15 @@ export default class BooksContainer extends Component {
   }
 
   render() {
-    const {requestedUser} = this.props;
+    const {requestedUser, router, bookTreeArr, loaded} = this.props;
 
     return (
-      <div>
-        <Helmet
-          title={`${requestedUser.first_name} ${requestedUser.last_name} - Books`}
-        />
-        <SubHeader
-          requestedUser={this.props.requestedUser}
-        />
-        <Navigation
-          requestedUser={this.props.requestedUser}
-        />
-        <Books
-          bookTreeArr={this.props.bookTreeArr}
-          requestedUser={this.props.requestedUser}
-          loaded={this.props.loaded}
-        />
-      </div>
+      <Books
+        bookTreeArr={bookTreeArr}
+        requestedUser={requestedUser}
+        loaded={loaded}
+        history={router}
+      />
     );
   }
 }

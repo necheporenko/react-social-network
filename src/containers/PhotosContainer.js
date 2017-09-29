@@ -1,9 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import Helmet from 'react-helmet';
 import {getUser} from '../redux/modules/user';
-import Navigation from '../components/Navigation';
-import SubHeader from '../components/StoryLine/SubHeader';
 
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
@@ -23,22 +20,7 @@ export default class PhotosContainer extends Component {
   }
 
   render() {
-    const {requestedUser} = this.props;
-
-    return (
-      <div>
-        <Helmet
-          title={`${requestedUser.first_name} ${requestedUser.last_name} - Photos`}
-        />
-        <SubHeader
-          requestedUser={this.props.requestedUser}
-        />
-        <Navigation
-          requestedUser={this.props.requestedUser}
-        />
-        {this.props.children}
-      </div>
-    );
+    return this.props.children;
   }
 }
 

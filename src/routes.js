@@ -4,6 +4,7 @@ import {isLoaded as isAuthLoaded, load as loadAuth} from 'redux/modules/user';
 import App from 'containers/App/App';
 import IndexContainer from 'containers/IndexContainer';
 import UserContainer from 'containers/UserContainer';
+import StoryLineContainer from 'containers/StoryLineContainer';
 import BooksContainer from 'containers/BooksContainer';
 import PhotosContainer from 'containers/PhotosContainer';
 import PhotosCovers from 'components/Photos/PhotosCovers';
@@ -125,35 +126,37 @@ export default (store) => {
 
       <Route path="/story/:id" component={Story}/>
 
-      <Route path="/:userName" component={UserContainer}/>
-
-      <Route path="/:userName/books" component={BooksContainer}/>
       <Route path="/:userName/books/:bookName" component={BookPage}/>
-
-      <Route path="/:userName/people" component={PeopleContainer}>
-        <IndexRoute component={People}/>
-        <Route path="following" component={PeopleFollowing}/>
-        <Route path="followers" component={PeopleFollowers}/>
-        <Route path="suggested" component={PeopleSuggested} onEnter={requireLogin}/>
-      </Route>
-
       <Route path="/:userName/documents/document" component={NewDocument}/>
-      <Route path="/:userName/documents/human-card/:humanCard" component={HumanCard}/>
       <Route path="/:userName/documents/:box/:document" component={NewDocument}/>
-      <Route path="/:userName/documents" component={DocumentsContainer}>
-        <IndexRoute component={Box}/>
-        <Route path="inbox" component={Inbox} onEnter={requireLogin}/>
-        <Route path="wallet" component={Wallet}/>
-        <Route path="private" component={TokensPrivate}/>
-        <Route path="boxes" component={Boxes}/>
-        <Route path="/:userName/documents(/:box)" component={Box}/>
-      </Route>
 
-      <Route path="/:userName/photos" component={PhotosContainer}>
-        <IndexRoute component={Photos}/>
-        <Route path="external" component={PhotosExternal}/>
-        <Route path="covers" component={PhotosCovers}/>
-        <Route path="profile" component={PhotosProfile}/>
+      <Route path="/:userName" component={UserContainer}>
+        <IndexRoute component={StoryLineContainer}/>
+        <Route path="books" component={BooksContainer}/>
+
+        <Route path="people" component={PeopleContainer}>
+          <IndexRoute component={People}/>
+          <Route path="following" component={PeopleFollowing}/>
+          <Route path="followers" component={PeopleFollowers}/>
+          <Route path="suggested" component={PeopleSuggested} onEnter={requireLogin}/>
+        </Route>
+
+        {/* <Route path="/:userName/documents/human-card/:humanCard" component={HumanCard}/> */}
+        <Route path="documents" component={DocumentsContainer}>
+          <IndexRoute component={Box}/>
+          <Route path="inbox" component={Inbox} onEnter={requireLogin}/>
+          <Route path="wallet" component={Wallet}/>
+          <Route path="private" component={TokensPrivate}/>
+          <Route path="boxes" component={Boxes}/>
+          {/* <Route path="/:userName/documents(/:box)" component={Box}/> */}
+        </Route>
+
+        <Route path="photos" component={PhotosContainer}>
+          <IndexRoute component={Photos}/>
+          <Route path="external" component={PhotosExternal}/>
+          <Route path="covers" component={PhotosCovers}/>
+          <Route path="profile" component={PhotosProfile}/>
+        </Route>
       </Route>
 
       {/* Catch all route */}

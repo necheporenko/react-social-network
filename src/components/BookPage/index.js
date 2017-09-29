@@ -205,6 +205,7 @@ export default class BookPage extends Component {
   }
 
   render() {
+    console.log(this.state);
     const {scrollTop} = this.state;
     const scroll = () => {
       let Nav = 'navigation navigation-fixed';

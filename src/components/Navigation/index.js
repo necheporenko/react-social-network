@@ -1,13 +1,8 @@
 import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
+// import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import NavigationUserInfo from './NavigationUserInfo';
 import './index.scss';
-
-@connect((state) => ({
-  authorizedUser: state.user.authorizedUser,
-  requestedUser: state.user.requestedUser,
-}), {})
 
 export default class Navigation extends Component {
   constructor(props) {
@@ -20,23 +15,20 @@ export default class Navigation extends Component {
   }
 
   componentDidMount() {
-    console.log('componentDidMount');
     window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
-    console.log('componentWillUnmount');
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('scu');
-    if (this.state.navigationPosition !== nextState.navigationPosition && this.state.showSmallUser !== nextState.showSmallUser) {
-      return true;
-    }
-
-    return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (this.state.navigationPosition !== nextState.navigationPosition && this.state.showSmallUser !== nextState.showSmallUser) {
+  //     return true;
+  //   }
+  //
+  //   return false;
+  // }
 
   handleScroll() {
     const scrollTop = document.documentElement.scrollTop;
@@ -57,21 +49,14 @@ export default class Navigation extends Component {
     });
   }
 
-  onNavigationLinkClick(e) {
-    if (e.target.tagName === 'a') {
-      document.documentElement.scrollTop = 237;
-    }
-  }
-
   render() {
     const {first_name, last_name, slug, avatar32, isFollowing, id, cover} = this.props.requestedUser;
+    const {authorizedUser} = this.props;
     const {navigationPosition, showSmallUser} = this.state;
-    console.log('nav render');
 
     return (
       <div className={navigationPosition} style={{boxShadow: id ? '0 2px 4px 0 rgba(0, 0, 0, 0.1)' : 'none'}}>
         <div
-          onClick={this.onNavigationLinkClick}
           className="navigation-wrap"
           style={{borderColor: cover && cover.color ? `#${cover.color}` : '#1976d2'}}
         >
@@ -114,7 +99,7 @@ export default class Navigation extends Component {
 
         {this.props.requestedUser.id &&
         <div>
-          {this.props.authorizedUser.id !== this.props.requestedUser.id &&
+          {authorizedUser.id !== this.props.requestedUser.id &&
           <div
             className="btn-following btn-message"
             onClick={() => this.openConversation(id, this.props.requestedUser)}
