@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import StackGrid from 'react-stack-grid';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import EditBook from '../../components/BooksTree/EditBook';
 import AddBook from '../Popup/AddBook';
@@ -63,23 +62,23 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser, history}) 
       {/*</div>*/}
 
       {/*<div className="book-subbooks">*/}
-        {/*{bookTreeArr && bookTreeArr.length > 0 &&*/}
-        {/*<BooksTreeContainer*/}
-          {/*bookTreeArr={bookTreeArr}*/}
-        {/*/>*/}
-        {/*}*/}
+      {/*{bookTreeArr && bookTreeArr.length > 0 &&*/}
+      {/*<BooksTreeContainer*/}
+      {/*bookTreeArr={bookTreeArr}*/}
+      {/*/>*/}
+      {/*}*/}
 
-        {/*{bookTreeArr && bookTreeArr.length === 0 &&*/}
-        {/*<ul className="react-tree">*/}
-          {/*<li className={`icon_${icon}`}>*/}
-            {/*<div className="react-tree-item-label">*/}
-              {/*<span className=" draggable " draggable="true">*/}
-                {/*<Link to={`/${requestedUser.slug}/books/${book_slug}`}>{name}</Link>*/}
-              {/*</span>*/}
-            {/*</div>*/}
-          {/*</li>*/}
-        {/*</ul>*/}
-        {/*}*/}
+      {/*{bookTreeArr && bookTreeArr.length === 0 &&*/}
+      {/*<ul className="react-tree">*/}
+      {/*<li className={`icon_${icon}`}>*/}
+      {/*<div className="react-tree-item-label">*/}
+      {/*<span className=" draggable " draggable="true">*/}
+      {/*<Link to={`/${requestedUser.slug}/books/${book_slug}`}>{name}</Link>*/}
+      {/*</span>*/}
+      {/*</div>*/}
+      {/*</li>*/}
+      {/*</ul>*/}
+      {/*}*/}
       {/*</div>*/}
 
     </div>
@@ -110,23 +109,9 @@ class Books extends Component {
           {/*</div>*/}
 
         </div>
-
-        <div className="wrapper">
-          <StackGrid
-            //monitorImagesLoaded
-            columnWidth={210}
-            duration={600}
-            gutterWidth={20}
-            gutterHeight={30}
-            //easing={easings.cubicOut}
-            //appearDelay={60}
-            // appear={transition.appear}
-            // appeared={transition.appeared}
-            // enter={transition.enter}
-            // entered={transition.entered}
-            //leaved={transition.leaved}
-          >
-            {bookTreeArr[0].children.map((book) => (
+        <div className="common-lists">
+          <div className="wrapper">
+            {bookTreeArr[0].children.map(book => (
               <BookCard
                 key={book.key}
                 name={book.name}
@@ -137,7 +122,7 @@ class Books extends Component {
                 history={history}
               />
             ))}
-          </StackGrid>
+          </div>
         </div>
       </div>
     );

@@ -17,14 +17,18 @@
 
 
 .photos-img {
-  height: 200px;
-  margin: 0 10px 20px 10px;
+  height: 207px;
+  margin: 0 20px 20px 0;
   img {
-    width: 200px;
-    height: 200px;
+    width: 207px;
+    height: 207px;
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
     border-radius: 2px;
     //margin: 3px;
+  }
+
+  &:nth-child(4n) {
+    margin-right: 0;
   }
 }
 

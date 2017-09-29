@@ -44,7 +44,8 @@ export default class DocumentsMenu extends Component {
             }
 
             {boxes.length > 0 && boxes[0].children.filter(box => box.key === 'board').map(box => (
-              <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
+              <Link key={box.id} onlyActiveOnIndex={false} to={`/${slug}/documents/${box.key}`} activeClassName="active"
+                    className={path.slice(-9) === 'documents' && 'active'}>
                 <li className="documents-mnu-board">{box.name}</li>
               </Link>
             ))}

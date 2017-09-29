@@ -3,9 +3,11 @@
 .books {
   .wrapper {
     // padding: 20px;
-    // display: flex;
-    // flex-wrap: wrap;
-    width: 90%;
+    //width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 10;
+    position: relative;
 
     span {
       transition: all 0s ease 0s !important;
@@ -18,13 +20,17 @@
 
 .book {
   cursor: pointer;
-  width: 210px;
+  width: 207px;
   background: #fff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
   padding: 0 15px 10px 15px;
-  //margin: 0 0 10px 10px;
+  margin: 0 20px 20px 0;
   align-self: baseline;
   box-sizing: border-box;
+
+  &:nth-child(4n) {
+    margin-right: 0;
+  }
 
   .title-infoblocks-book {
     display: flex;
@@ -155,8 +161,8 @@
 
 
 .sidebar-books {
-  width: 252px;
-  min-width: 250px;
+  //width: 252px;
+  //min-width: 250px;
 
   .wrap-bookstree {
     left: 0;
