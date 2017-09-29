@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { getUser, getUserSlug } from '../../redux/modules/user';
-import { create as createStory, load as loadStories, loadNext as loadNextStories } from '../../redux/modules/story';
-import { create as createBook, load as loadBookTree } from '../../redux/modules/book';
-import { loadPeopleFollowers, loadPeopleFollowing, loadUserPeople } from '../../redux/modules/follow';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import {getUser, getUserSlug} from '../../redux/modules/user';
+import {create as createStory, load as loadStories, loadNext as loadNextStories} from '../../redux/modules/story';
+import {create as createBook, load as loadBookTree} from '../../redux/modules/book';
+import {loadPeopleFollowers, loadPeopleFollowing, loadUserPeople} from '../../redux/modules/follow';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
 import Stream from './Stream/index';
 import InfoBloks from './InfoBlocks/index';
@@ -64,11 +64,11 @@ class StoryLine extends Component {
   handleScroll(e) {
     const scrollTop = document.documentElement.scrollTop || (e.target || e.srcElement).body.scrollTop;
     // console.log(scrollTop);
-    this.setState({ scrollTop: scrollTop });
+    this.setState({scrollTop: scrollTop});
   }
 
   render() {
-    const { scrollTop } = this.state;
+    const {scrollTop} = this.state;
     const scroll = () => {
       let booksTreeTop;
       let infoBlocksTop;
@@ -102,8 +102,8 @@ class StoryLine extends Component {
             style={{
               // left: 'calc(50% + 275px)',
               // left: '160px',
-              width: '220px',
-              flex: '0 0 220px',
+              width: '320px',
+              flex: '0 0 320px',
               top: chooseScroll.infoBloks,
               position: 'fixed',
             }}
@@ -128,17 +128,19 @@ class StoryLine extends Component {
             loadStories={this.props.loadStories}
             loadNextStories={this.props.loadNextStories}
           />
-          <PeoplePhotos
-            requestedUser={this.props.requestedUser}
-            following={this.props.following}
-            followers={this.props.followers}
-            people={this.props.people}
-          />
-          {/*<BooksTreeContainer*/}
-            {/*booksTreeTop={chooseScroll.booksTree}*/}
-            {/*requestedUser={this.props.requestedUser}*/}
-            {/*bookTreeArr={this.props.bookTreeArr}*/}
+          {/*<PeoplePhotos*/}
+          {/*requestedUser={this.props.requestedUser}*/}
+          {/*following={this.props.following}*/}
+          {/*followers={this.props.followers}*/}
+          {/*people={this.props.people}*/}
           {/*/>*/}
+          <div style={{width: '220px'}}>
+            <BooksTreeContainer
+              booksTreeTop={chooseScroll.booksTree}
+              requestedUser={this.props.requestedUser}
+              bookTreeArr={this.props.bookTreeArr}
+            />
+          </div>
         </div>
       </div>
     );

@@ -111,23 +111,28 @@
   left: calc(50% - 590px);
 }
 
-.subHeader-userName {
-  align-self: center;
-  margin-top: 108px;
-  margin-left: 6px;
-}
-
 .subHeader-userName, .subHeader-bookName {
   a {
     font-size: 22px;
     font-weight: bold;;
     color: #fff;
     text-decoration: none;
-    text-shadow: 0 0 3px rgba(0,0,0,.8);
+    text-shadow: 0 0 9px rgba(0, 0, 0, 1);
 
     &:hover {
       color: #fff;
     }
+  }
+}
+
+.subHeader-userName {
+  align-self: center;
+  margin-top: 134px;
+  margin-left: 6px;
+
+  a {
+    font-weight: 500;
+    font-size: 26px;
   }
 }
 

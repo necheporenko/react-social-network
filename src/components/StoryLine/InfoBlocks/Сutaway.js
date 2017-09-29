@@ -4,8 +4,10 @@ import {Link} from 'react-router';
 function work(occupation, company) {
   if (occupation && company) {
     return `${occupation} at ${company}`;
+  } else if (!occupation && company) {
+    return `Works at ${company}`;
   } else {
-    return occupation || company;
+    return occupation;
   }
 }
 
@@ -67,7 +69,7 @@ const Cutaway = ({requestedUserProfile}) => {
             {location &&
             <div className="location">
               <i/>
-              <p>{location}</p>
+              <p>{`Lives in ${location}`}</p>
             </div>
             }
 

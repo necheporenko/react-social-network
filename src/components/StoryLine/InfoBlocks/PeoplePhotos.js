@@ -13,17 +13,7 @@ class PeoplePhotos extends Component {
   render() {
     return (
       <div className="infobloks">
-        {/*<Tokens/>*/}
-        <Peoples
-          following={this.props.following}
-          followers={this.props.followers}
-          people={this.props.people}
-          requestedUser={this.props.requestedUser}
-        />
-        <Photos
-          loaded={this.props.loaded}
-          requestedUser={this.props.requestedUser}
-        />
+
       </div>
     );
   }
