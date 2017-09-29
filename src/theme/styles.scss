@@ -3,9 +3,10 @@
 
 /* Styles */
 body {
- margin: 0;
- font-family: "Roboto", Arial, sans-serif;
- background: $default-bg;
+  min-height: 1262px;
+  margin: 0;
+  font-family: "Roboto", Arial, sans-serif;
+  background: $default-bg;
   -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-y: scroll;
