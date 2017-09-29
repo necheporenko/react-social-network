@@ -5,20 +5,21 @@ import EditBook from '../../components/BooksTree/EditBook';
 import AddBook from '../Popup/AddBook';
 import './index.scss';
 
-const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser, history}) => {
-  const onBookClick = () => {
-    const location = history.location.pathname;
-    history.push(`${location}/${book_slug}`);
+const BookCard = ({book, history, requestedUser}) => {
+  const {name, key, cover, children} = book;
+
+  const onBookClick = (e) => {
+    e.preventDefault();
   };
 
   return (
-    <div onClick={() => onBookClick()} className="book">
+    <Link to={`${location}/${key}`} className="book">
 
       <div
         className="coverBook"
         style={{
-          backgroundColor: requestedUser.cover && requestedUser.cover.color ? `#${requestedUser.cover.color}` : '#fff',
-          backgroundImage: requestedUser.cover && requestedUser.cover.picture ? `url(${requestedUser.cover.picture})` : null
+          backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
+          backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null
         }}
       />
 
@@ -31,10 +32,10 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser, history}) 
           <div className="book-name">{name}</div>
           <div className="book-author">{`${requestedUser.first_name} ${requestedUser.last_name}`}</div>
         </div>
-        <div className="book-edit">
+        <div onClick={onBookClick} className="book-edit">
           <EditBook
             book_name={name}
-            book_slug={book_slug}
+            book_slug={key}
           />
         </div>
       </div>
@@ -46,7 +47,7 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser, history}) 
       <div className="book-info">
         <ul>
           <li><i className="infobook-icon-visibility"/><span>0</span><i className="stories-icon-sm"/>·</li>
-          <li><span>0</span><i className="subbooks-icon-sm"/>·</li>
+          <li><span>{children ? children.length : 0}</span><i className="subbooks-icon-sm"/>·</li>
           <li><span>0</span><i className="followers-icon-sm"/>·</li>
           <li><span>0</span><i className="photos-icon-sm"/></li>
         </ul>
@@ -81,7 +82,7 @@ const BookCard = ({name, bookTreeArr, book_slug, icon, requestedUser, history}) 
       {/*}*/}
       {/*</div>*/}
 
-    </div>
+    </Link>
   );
 };
 
@@ -114,12 +115,9 @@ class Books extends Component {
             {bookTreeArr[0].children.map(book => (
               <BookCard
                 key={book.key}
-                name={book.name}
-                book_slug={book.key}
-                icon={book.icon}
-                bookTreeArr={book.children}
-                requestedUser={requestedUser}
+                book={book}
                 history={history}
+                requestedUser={requestedUser}
               />
             ))}
           </div>

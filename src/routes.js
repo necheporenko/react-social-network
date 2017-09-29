@@ -127,6 +127,7 @@ export default (store) => {
       <Route path="/story/:id" component={Story}/>
 
       <Route path="/:userName/books/:bookName" component={BookPage}/>
+      <Route path="/:userName/documents/human-card/:humanCard" component={HumanCard}/>
       <Route path="/:userName/documents/document" component={NewDocument}/>
       <Route path="/:userName/documents/:box/:document" component={NewDocument}/>
 
@@ -141,7 +142,6 @@ export default (store) => {
           <Route path="suggested" component={PeopleSuggested} onEnter={requireLogin}/>
         </Route>
 
-        {/* <Route path="/:userName/documents/human-card/:humanCard" component={HumanCard}/> */}
         <Route path="documents" component={DocumentsContainer}>
           <IndexRoute component={Box}/>
           <Route path="inbox" component={Inbox} onEnter={requireLogin}/>
