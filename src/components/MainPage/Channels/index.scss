@@ -26,7 +26,7 @@
   }
 
   .sidebar {
-    width: 255px;
+    width: 190px;
 
     &:hover {
       .create-new-item {
@@ -36,6 +36,7 @@
 
     ul > a.active > li {
       padding-left: 15px;
+      border-left: none;
     }
 
     li {

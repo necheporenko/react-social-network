@@ -56,12 +56,21 @@
   position: relative;
   display: flex;
 
+  .create-new-item {
+    &:hover {
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+
   &:hover {
     border-color: #8F8F8F;
     background-color: #E1E1E1;
 
     .create-new-item {
       display: block;
+      width: 50%;
     }
   }
 
@@ -429,8 +438,6 @@
 
   }
 
-
-
   .wrapper-document {
     margin: 0 auto 20px;
   }
@@ -461,7 +468,6 @@
     }
   }
 }
-
 
 /* === Human Card Start === */
 .human-card {

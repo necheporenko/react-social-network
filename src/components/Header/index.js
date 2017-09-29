@@ -1,5 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import LoadingBar from 'react-redux-loading-bar';
 import Logo from './Logo';
 import SearchField from './SearchField';
@@ -11,6 +11,7 @@ import './index.scss';
   notifications: state.profile.notifications,
   loadingBar: state.loadingBar,
   authorizedUser: state.user.authorizedUser,
+  path: state.routing.locationBeforeTransitions.pathname,
 }), {})
 
 class Header extends Component {
@@ -36,6 +37,7 @@ class Header extends Component {
     // this.menuButtonClick1 = this.menuButtonClick1.bind(this);
     // this.menuButtonClick2 = this.menuButtonClick2.bind(this);
   }
+
   //
   // componentWillMount() {
   //   this.isMobile();
@@ -71,6 +73,7 @@ class Header extends Component {
   // }
 
   render() {
+    const {path} = this.props;
     // const testSideBar =
     //     <div style={{padding: '16px', height: '100%', backgroundColor: 'white', width: '270px'}}>
     //       <ul>
@@ -93,26 +96,34 @@ class Header extends Component {
         {/* {this.state.isMob &&
           <div style={{width: '35px'}}></div>
         } */}
-        <div className="wrap-loadingBar" style={{opacity: this.props.loadingBar}}>
-          <LoadingBar style={{ backgroundColor: '#2887D2', height: '2px', top: 0, left: 0, transition: 'transform 300ms ease 0s' }} />
-        </div>
+        <div className="wrap-header" style={{width: path === '/' ? '1070px' : '1130px'}}>
+          <div className="wrap-loadingBar" style={{opacity: this.props.loadingBar}}>
+            <LoadingBar style={{
+              backgroundColor: '#2887D2',
+              height: '2px',
+              top: 0,
+              left: 0,
+              transition: 'transform 300ms ease 0s'
+            }}/>
+          </div>
+          <div className="wrap-logo-and-search">
+            <Logo/>
+            {/*{ this.props.header_channel_name &&*/}
+            {/*<div className="channel-name">*/}
+            {/*{this.props.header_channel_name}*/}
+            {/*</div>*/}
+            {/*}*/}
+            <SearchField/>
+          </div>
+          <UserButtons
+            // onSignIn={this.props.onSignIn}
+            // onSignOut={this.props.onSignOut}
+            logoutUser={this.props.logoutUser}
+            authorizedUser={this.props.authorizedUser}
+            notifications={this.props.notifications}
+          />
 
-        <Logo />
-        {/*{ this.props.header_channel_name &&*/}
-        {/*<div className="channel-name">*/}
-        {/*{this.props.header_channel_name}*/}
-        {/*</div>*/}
-        {/*}*/}
-        <SearchField />
-        <UserButtons
-          // onSignIn={this.props.onSignIn}
-          // onSignOut={this.props.onSignOut}
-          logoutUser={this.props.logoutUser}
-          authorizedUser={this.props.authorizedUser}
-          notifications={this.props.notifications}
-        />
-
-        {/* {this.state.isMob &&
+          {/* {this.state.isMob &&
           <div className="mobile-sidebar">
             <Sidebar
                sidebar={LeftPanelSideBar}
@@ -142,7 +153,7 @@ class Header extends Component {
         } */}
 
 
-        {/* {this.state.isMob &&
+          {/* {this.state.isMob &&
           <div className="mobile-sidebar">
             <Sidebar
                sidebar={testSideBar}
@@ -172,7 +183,8 @@ class Header extends Component {
         } */}
 
 
-        {this.props.children}
+          {this.props.children}
+        </div>
       </div>
     );
   }
