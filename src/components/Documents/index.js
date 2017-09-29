@@ -50,13 +50,13 @@ export default class Box extends Component {
   }
 
   componentWillUnmount() {
-    const div = document.querySelector('.markdown-human-card div');
-    const getAddress = div.getElementsByTagName('p');
-    const getName = div.getElementsByTagName('h2');
+    // const div = document.querySelector('.markdown-human-card div');
+    // const getAddress = div.getElementsByTagName('p');
+    // const getName = div.getElementsByTagName('h2');
 
     window.removeEventListener('scroll', this.handleScroll);
-    getAddress[0].removeEventListener('click', this.copyAddress);
-    getName[0].removeEventListener('click', this.copyName);
+    // getAddress[0].removeEventListener('click', this.copyAddress);
+    // getName[0].removeEventListener('click', this.copyName);
   }
 
   copyAddress = () => {

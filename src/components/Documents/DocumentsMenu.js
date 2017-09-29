@@ -26,8 +26,9 @@ export default class DocumentsMenu extends Component {
   }
 
   render() {
-    const {boxes} = this.props;
+    const {boxes, path} = this.props;
     const {slug} = this.props.requestedUser;
+    const findBoxes = path.indexOf('/documents/boxes');
 
     return (
       <div className="sidebar documents-nav">
@@ -49,7 +50,7 @@ export default class DocumentsMenu extends Component {
             ))}
 
             {/*<hr/>*/}
-            <div className="wrap-boxes">
+            <div className="wrap-boxes" style={{backgroundColor: findBoxes > 0 && '#e1e1e1'}}>
               <Link onlyActiveOnIndex={true} to={`/${slug}/documents/boxes`} activeClassName="active">
                 <li className="documents-mnu-boxes">Boxes</li>
               </Link>
