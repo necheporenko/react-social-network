@@ -12,7 +12,7 @@ import Navigation from '../components/Navigation';
 export default class UserContainer extends Component {
   constructor() {
     super();
-    
+
     this.state = {
       showSmallNavigation: false
     };
@@ -29,7 +29,7 @@ export default class UserContainer extends Component {
   }
 
   handleScroll() {
-    const scrollTop = document.documentElement.scrollTop;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const {showSmallNavigation} = this.state;
 
     if (scrollTop <= 236 && showSmallNavigation) {

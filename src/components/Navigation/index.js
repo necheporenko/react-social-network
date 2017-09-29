@@ -5,12 +5,12 @@ import './index.scss';
 
 export default class Navigation extends Component {
   onLinkClick() {
-    const scrollTop = document.documentElement.scrollTop;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
     if (scrollTop > 236) {
-      document.documentElement.scrollTop = 237;
+      window.scrollTo(0, 237);
     } else {
-      document.documentElement.scrollTop = scrollTop;
+      window.scrollTo(scrollTop);
     }
   }
 
