@@ -1,62 +1,29 @@
 import React, {Component, PropTypes} from 'react';
-// import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import NavigationUserInfo from './NavigationUserInfo';
 import './index.scss';
 
 export default class Navigation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      navigationPosition: 'navigation',
-      showSmallUser: 'navigation-infouser-none'
-    };
-    this.handleScroll = this.handleScroll.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (this.state.navigationPosition !== nextState.navigationPosition && this.state.showSmallUser !== nextState.showSmallUser) {
-  //     return true;
-  //   }
-  //
-  //   return false;
-  // }
-
-  handleScroll() {
+  onLinkClick() {
     const scrollTop = document.documentElement.scrollTop;
-    let navigationPosition;
-    let displayUser;
 
-    if (scrollTop <= 236) {
-      navigationPosition = 'navigation';
-      displayUser = 'navigation-infouser-none';
+    if (scrollTop > 236) {
+      document.documentElement.scrollTop = 237;
     } else {
-      navigationPosition = 'navigation navigation-fixed';
-      displayUser = 'navigation-infouser';
+      document.documentElement.scrollTop = scrollTop;
     }
-
-    this.setState({
-      navigationPosition,
-      showSmallUser: displayUser
-    });
   }
 
   render() {
     const {first_name, last_name, slug, avatar32, isFollowing, id, cover} = this.props.requestedUser;
-    const {authorizedUser} = this.props;
-    const {navigationPosition, showSmallUser} = this.state;
+    const {authorizedUser, showSmallNavigation} = this.props;
 
     return (
-      <div className={navigationPosition} style={{boxShadow: id ? '0 2px 4px 0 rgba(0, 0, 0, 0.1)' : 'none'}}>
+      <div
+        className={'navigation' + (showSmallNavigation ? ' navigation-fixed' : '')}
+        style={{boxShadow: id ? '0 2px 4px 0 rgba(0, 0, 0, 0.1)' : 'none'}}>
         <div
+          onClick={() => this.onLinkClick()}
           className="navigation-wrap"
           style={{borderColor: cover && cover.color ? `#${cover.color}` : '#1976d2'}}
         >
@@ -128,7 +95,7 @@ export default class Navigation extends Component {
           userName={`${first_name} ${last_name}`}
           avatar32={avatar32}
           link={`/${slug}`}
-          displayUser={showSmallUser}
+          displayUser={showSmallNavigation ? 'navigation-infouser' : 'navigation-infouser-none'}
         />
       </div>
 
@@ -138,4 +105,6 @@ export default class Navigation extends Component {
 
 Navigation.propTypes = {
   requestedUser: PropTypes.object,
+  authorizedUser: PropTypes.object,
+  showSmallNavigation: PropTypes.bool,
 };

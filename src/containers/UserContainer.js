@@ -10,8 +10,38 @@ import Navigation from '../components/Navigation';
 }))
 
 export default class UserContainer extends Component {
+  constructor() {
+    super();
+    
+    this.state = {
+      showSmallNavigation: false
+    };
+
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll() {
+    const scrollTop = document.documentElement.scrollTop;
+    const {showSmallNavigation} = this.state;
+
+    if (scrollTop <= 236 && showSmallNavigation) {
+      this.setState({showSmallNavigation: false});
+    } else if (scrollTop > 236 && !showSmallNavigation) {
+      this.setState({showSmallNavigation: true});
+    }
+  }
+
   render() {
     const {requestedUser, authorizedUser} = this.props;
+    const { showSmallNavigation } = this.state;
 
     return (
       <div>
@@ -24,8 +54,9 @@ export default class UserContainer extends Component {
         <Navigation
           requestedUser={requestedUser}
           authorizedUser={authorizedUser}
+          showSmallNavigation={showSmallNavigation}
         />
-        <div style={{ marginTop: 20 }}>
+        <div style={{ marginTop: (showSmallNavigation ? 68 : 20) }}>
           {this.props.children}
         </div>
       </div>
