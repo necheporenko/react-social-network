@@ -73,7 +73,7 @@ const Cutaway = ({requestedUserProfile}) => {
             </div>
             }
 
-            {birthYear &&
+            {birthYear !== 0 && birthYear &&
             <div className="birthday">
               <i/>
               <p>January 18, {`${birthYear}`}</p>
