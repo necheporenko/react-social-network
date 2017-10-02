@@ -9,7 +9,6 @@ import './index.scss';
 
 class StoryLine extends Component {
   render() {
-    console.log('render');
     const {
       requestedUser, 
       requestedUserProfile, 

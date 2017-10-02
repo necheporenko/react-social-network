@@ -69,8 +69,6 @@ export default class StoryLineContainer extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-
-
   handleScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const {fixedBlocks} = this.state;
@@ -110,25 +108,39 @@ export default class StoryLineContainer extends Component {
   }
 
   render() {
-    const {requestedUser} = this.props;
+    const {fixedBlocks} = this.state;
+    const {
+      requestedUser, 
+      authorizedUser, 
+      requestedUserProfile, 
+      storiesArr, 
+      createStory, 
+      loadStories, 
+      bookTreeArr, 
+      loadNextStories, 
+      following,
+      followers,
+      people
+    } = this.props;
     return (
       <div>
         <Helmet
           title={`${requestedUser.first_name} ${requestedUser.last_name} - Storyline`}
         />
         <StoryLine
-          authorizedUser={this.props.authorizedUser}
-          requestedUser={this.props.requestedUser}
-          requestedUserProfile={this.props.requestedUserProfile}
-          storiesArr={this.props.storiesArr}
-          createStory={this.props.createStory}
-          loadStories={this.props.loadStories}
-          bookTreeArr={this.props.bookTreeArr}
-          loadNextStories={this.props.loadNextStories}
+          authorizedUser={authorizedUser}
+          requestedUser={requestedUser}
+          requestedUserProfile={requestedUserProfile}
+          storiesArr={storiesArr}
+          createStory={createStory}
+          loadStories={loadStories}
+          bookTreeArr={bookTreeArr}
+          loadNextStories={loadNextStories}
           // userProfile={this.props.userProfile}
-          following={this.props.following}
-          followers={this.props.followers}
-          people={this.props.people}
+          following={following}
+          followers={followers}
+          people={people}
+          fixedBlocks={fixedBlocks}
         />
       </div>
     );
