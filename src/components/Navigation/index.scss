@@ -54,11 +54,14 @@
       position: relative;
     }
   }
+
+  .navigation-wrap {
+    left: calc(50% - 326px);
+  }
 }
 
 .navigation-wrap {
   position: absolute;
-  left: calc(50% - 226px);
   top: 16px;
 
   a {
@@ -109,6 +112,10 @@
   position: fixed;
   top: 52px;
   z-index: 11;
+
+  .navigation-wrap {
+    left: calc(50% - 226px);
+  }
 
   .btn-following {
     //display: block;

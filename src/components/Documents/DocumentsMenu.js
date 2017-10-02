@@ -17,6 +17,13 @@ import './index.scss';
 })
 
 export default class DocumentsMenu extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+    };
+  }
+
   componentDidMount() {
     console.log('DocumentsMenu');
     const {path} = this.props;
@@ -25,7 +32,13 @@ export default class DocumentsMenu extends Component {
       .then(this.props.loadBoxes(findSlug));
   }
 
+  openBoxes() {
+    this.setState({isOpen: !this.state.isOpen});
+    console.log('hi', this.state.isOpen);
+  }
+
   render() {
+    const {isOpen} = this.state;
     const {boxes, path} = this.props;
     const {slug} = this.props.requestedUser;
     const findBoxes = path.indexOf('/documents/boxes');
@@ -52,12 +65,22 @@ export default class DocumentsMenu extends Component {
 
             {/*<hr/>*/}
             <div className="wrap-boxes" style={{backgroundColor: findBoxes > 0 && '#e1e1e1'}}>
+              <div className={isOpen ? ' arrow-boxes' : 'arrow-boxes-close'} onClick={() => this.openBoxes()}><i/></div>
               <Link onlyActiveOnIndex={true} to={`/${slug}/documents/boxes`} activeClassName="active">
                 <li className="documents-mnu-boxes">Boxes</li>
               </Link>
               <div className="create-new-item">
                 <a href="#">+ Create new box</a>
               </div>
+            </div>
+
+            <div className="boxes-mnu" style={{display: isOpen ? 'block' : 'none'}}>
+              {boxes.length > 0 && boxes[0].children.filter(box => ((box.key !== 'bin') && (box.key !== 'board'))).map(box => (
+                <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`}
+                      activeClassName="active">
+                  <li className="documents-mnu-box-private">{box.name}</li>
+                </Link>
+              ))}
             </div>
 
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">
@@ -75,13 +98,6 @@ export default class DocumentsMenu extends Component {
             {/*</div>*/}
 
             {/*<hr/>*/}
-
-            {boxes.length > 0 && boxes[0].children.filter(box => ((box.key !== 'bin') && (box.key !== 'board'))).map(box => (
-              <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`}
-                    activeClassName="active">
-                <li className="documents-mnu-box-private">{box.name}</li>
-              </Link>
-            ))}
 
             {boxes.length > 0 && boxes[0].children.filter(box => box.key === 'bin').map(box => (
               <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">

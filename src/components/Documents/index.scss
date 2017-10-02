@@ -92,6 +92,49 @@
   }
 }
 
+.arrow-boxes {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  width: 15px;
+  height: 15px;
+  padding-left: 5px;
+
+  i {
+    content: '';
+    display: inline-block;
+    border-top: 5px solid #777777;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+}
+
+.arrow-boxes-close {
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  width: 15px;
+  height: 15px;
+  padding-left: 5px;
+
+  i {
+    content: '';
+    display: inline-block;
+    border-top: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-left: 5px solid #777777;
+    border-bottom: 5px solid transparent;
+  }
+}
+.sidebar {
+  .boxes-mnu {
+    li {
+      padding: 7px 7px 7px 40px;
+    }
+  }
+}
+
 .document {
   > a {
     overflow: hidden;
