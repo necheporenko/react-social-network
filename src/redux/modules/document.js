@@ -25,6 +25,7 @@ const VERIFY_HUMAN_CARD_FAIL = 'VERIFY_HUMAN_CARD_FAIL';
 const GET_HUMAN_CARD = 'GET_HUMAN_CARD';
 const GET_HUMAN_CARD_SUCCESS = 'GET_HUMAN_CARD_SUCCESS';
 const GET_HUMAN_CARD_FAIL = 'GET_HUMAN_CARD_FAIL';
+const CLEAR_HUMAN_CARD = 'CLEAR_HUMAN_CARD';
 
 const initialState = {
   boxes: [],
@@ -194,6 +195,12 @@ export default function documentReducer(state = initialState, action) {
         error: action.error,
       };
 
+    case CLEAR_HUMAN_CARD:
+      return {
+        ...state,
+        humanCard: {}
+      };
+
     default:
       return state;
   }
@@ -261,5 +268,11 @@ export function getHumanCard(public_address) {
   return {
     types: [GET_HUMAN_CARD, GET_HUMAN_CARD_SUCCESS, GET_HUMAN_CARD_FAIL],
     promise: (client) => client.get(`/human-card/${public_address}`)
+  };
+}
+
+export function clearHumanCard() {
+  return {
+    type: CLEAR_HUMAN_CARD
   };
 }

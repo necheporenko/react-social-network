@@ -449,6 +449,13 @@ export default class BookPage extends Component {
         </div>
 
         <div className={chooseScroll.posTop}>
+          <NavigationBookPage
+            userName={`${first_name} ${last_name}`}
+            avatar32={avatar32}
+            link={`/${slug}`}
+            displayUser={chooseScroll.show}
+          />
+
           <div className="navigation-wrap book-nav">
             <ul>
               <li>
@@ -477,13 +484,6 @@ export default class BookPage extends Component {
             </div>
             <span/>
           </div>
-
-          <NavigationBookPage
-            userName={`${first_name} ${last_name}`}
-            avatar32={avatar32}
-            link={`/${slug}`}
-            displayUser={chooseScroll.show}
-          />
         </div>
         {/*</div>*/}
 

@@ -61,8 +61,14 @@
   }
 }
 
+.wrapper-navigation{
+  width: 1130px;
+  margin: 0 auto;
+  display: flex;
+}
+
 .navigation-wrap {
-  position: absolute;
+  position: relative;
   top: 16px;
 
   a {
@@ -115,7 +121,7 @@
   z-index: 11;
 
   .navigation-wrap {
-    left: calc(50% - 326px);
+    left: 0;
   }
 
   .btn-following {
@@ -152,10 +158,13 @@
 
 /* === NavigationInfoUser Start === */
 .navigation-infouser {
-  position: absolute;
+  position: relative;
   z-index: 10;
   left: calc(50% - 570px);
   top: 1px;
+  min-width: 226px;
+  max-width: 340px;
+
 
   a {
     display: flex;
@@ -174,6 +183,9 @@
     color: #444;
     align-self: center;
     margin-left: 7px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 
@@ -191,6 +203,7 @@
 
 .navigation-infouser-book-fixed {
   top: 4px;
+  position: absolute;
 
   img {
     margin: 6px 0 0 14px;

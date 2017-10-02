@@ -9,7 +9,7 @@ export default class Navigation extends Component {
 
     if (scrollTop > 236) {
       window.scrollTo(0, 237);
-    } 
+    }
   }
 
   render() {
@@ -19,85 +19,88 @@ export default class Navigation extends Component {
     return (
       <div
         className={'navigation' + (showSmallNavigation ? ' navigation-fixed' : '')}
-        style={{boxShadow: id ? '0 2px 4px 0 rgba(0, 0, 0, 0.1)' : 'none'}}>
-        <div
-          onClick={() => this.onLinkClick()}
-          className="navigation-wrap"
-          style={{borderColor: cover && cover.color ? `#${cover.color}` : '#1976d2'}}
-        >
-          <Link
-            to={`/${slug}`}
-            onlyActiveOnIndex={true}
-            activeClassName="active"
-            style={{padding: '0 10px'}}
-          >
-            Storyline
-          </Link>
-          <Link
-            to={`/${slug}/books`}
-            onlyActiveOnIndex={true}
-            activeClassName="active"
-          >
-            Books
-          </Link>
-          <Link
-            to={`/${slug}/people`}
-            onlyActiveOnIndex={true}
-            activeClassName="active"
-          >
-            People
-          </Link>
-          <Link
-            to={`/${slug}/photos`}
-            onlyActiveOnIndex={true}
-            activeClassName="active"
-          >
-            Photos
-          </Link>
-          <Link
-            to={`/${slug}/documents`}
-            onlyActiveOnIndex={true}
-            activeClassName="active"
-          >
-            Documents
-          </Link>
-        </div>
+        style={{boxShadow: id ? '0 2px 4px 0 rgba(0, 0, 0, 0.1)' : 'none'}}
+      >
+        <div className="wrapper-navigation">
+          <NavigationUserInfo
+            userName={`${first_name} ${last_name}`}
+            avatar32={avatar32}
+            link={`/${slug}`}
+            displayUser={showSmallNavigation ? 'navigation-infouser' : 'navigation-infouser-none'}
+          />
 
-        {this.props.requestedUser.id &&
-        <div>
-          {authorizedUser.id !== this.props.requestedUser.id &&
           <div
-            className="btn-following btn-message"
-            onClick={() => this.openConversation(id, this.props.requestedUser)}
+            onClick={() => this.onLinkClick()}
+            className="navigation-wrap"
+            style={{borderColor: cover && cover.color ? `#${cover.color}` : '#1976d2'}}
           >
-            <Link // to="/messages/new"
+            <Link
+              to={`/${slug}`}
+              onlyActiveOnIndex={true}
+              activeClassName="active"
+              style={{padding: '0 10px'}}
             >
-              <div>Chat<i/></div>
+              Storyline
+            </Link>
+            <Link
+              to={`/${slug}/books`}
+              onlyActiveOnIndex={true}
+              activeClassName="active"
+            >
+              Books
+            </Link>
+            <Link
+              to={`/${slug}/people`}
+              onlyActiveOnIndex={true}
+              activeClassName="active"
+            >
+              People
+            </Link>
+            <Link
+              to={`/${slug}/photos`}
+              onlyActiveOnIndex={true}
+              activeClassName="active"
+            >
+              Photos
+            </Link>
+            <Link
+              to={`/${slug}/documents`}
+              onlyActiveOnIndex={true}
+              activeClassName="active"
+            >
+              Documents
             </Link>
           </div>
-          }
-          <div
-            className="btn-following"
-            onClick={isFollowing ?
+
+          {this.props.requestedUser.id &&
+          <div>
+            {authorizedUser.id !== this.props.requestedUser.id &&
+            <div
+              className="btn-following btn-message"
+              onClick={() => this.openConversation(id, this.props.requestedUser)}
+            >
+              <Link // to="/messages/new"
+              >
+                <div>Chat<i/></div>
+              </Link>
+            </div>
+            }
+            <div
+              className="btn-following"
+              onClick={isFollowing ?
                 () => this.unfollow(id)
                 :
                 () => this.follow(id)
-            }>
-            <div>
-              {isFollowing ? 'Following' : 'Follow'}
+              }>
+              <div>
+                {isFollowing ? 'Following' : 'Follow'}
+              </div>
+              <span/>
             </div>
-            <span/>
           </div>
+          }
         </div>
-        }
-        <NavigationUserInfo
-          userName={`${first_name} ${last_name}`}
-          avatar32={avatar32}
-          link={`/${slug}`}
-          displayUser={showSmallNavigation ? 'navigation-infouser' : 'navigation-infouser-none'}
-        />
       </div>
-
     );
   }
 }
