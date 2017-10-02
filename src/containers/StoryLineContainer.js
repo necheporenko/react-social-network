@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
+import Helmet from 'react-helmet';
 import {getUser, getUserSlug, getUserProfile} from '../redux/modules/user';
 import {
   create as createStory,
@@ -88,21 +89,27 @@ export default class StoryLineContainer extends Component {
   }
 
   render() {
+    const {requestedUser} = this.props;
     return (
-      <StoryLine
-        authorizedUser={this.props.authorizedUser}
-        requestedUser={this.props.requestedUser}
-        requestedUserProfile={this.props.requestedUserProfile}
-        storiesArr={this.props.storiesArr}
-        createStory={this.props.createStory}
-        loadStories={this.props.loadStories}
-        bookTreeArr={this.props.bookTreeArr}
-        loadNextStories={this.props.loadNextStories}
-        // userProfile={this.props.userProfile}
-        following={this.props.following}
-        followers={this.props.followers}
-        people={this.props.people}
-      />
+      <div>
+        <Helmet
+          title={`${requestedUser.first_name} ${requestedUser.last_name} - Storyline`}
+        />
+        <StoryLine
+          authorizedUser={this.props.authorizedUser}
+          requestedUser={this.props.requestedUser}
+          requestedUserProfile={this.props.requestedUserProfile}
+          storiesArr={this.props.storiesArr}
+          createStory={this.props.createStory}
+          loadStories={this.props.loadStories}
+          bookTreeArr={this.props.bookTreeArr}
+          loadNextStories={this.props.loadNextStories}
+          // userProfile={this.props.userProfile}
+          following={this.props.following}
+          followers={this.props.followers}
+          people={this.props.people}
+        />
+      </div>
     );
   }
 

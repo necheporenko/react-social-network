@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
+import Helmet from 'react-helmet';
 import {getUser} from '../redux/modules/user';
 import {load as loadBookTree, clearBookTree} from '../redux/modules/book';
 import Books from '../components/Books';
@@ -32,12 +33,17 @@ export default class BooksContainer extends Component {
     const {requestedUser, router, bookTreeArr, loaded} = this.props;
 
     return (
-      <Books
-        bookTreeArr={bookTreeArr}
-        requestedUser={requestedUser}
-        loaded={loaded}
-        history={router}
-      />
+      <div>
+        <Helmet
+          title={`${requestedUser.first_name} ${requestedUser.last_name} - Books`}
+        />
+        <Books
+          bookTreeArr={bookTreeArr}
+          requestedUser={requestedUser}
+          loaded={loaded}
+          history={router}
+        />
+      </div>
     );
   }
 }

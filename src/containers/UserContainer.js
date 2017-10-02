@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import Helmet from 'react-helmet';
 import SubHeader from '../components/StoryLine/SubHeader';
 import Navigation from '../components/Navigation';
 
@@ -45,9 +44,6 @@ export default class UserContainer extends Component {
 
     return (
       <div>
-        <Helmet
-          title={`${requestedUser.first_name} ${requestedUser.last_name} - Storyline`}
-        />
         <SubHeader
           requestedUser={requestedUser}
         />

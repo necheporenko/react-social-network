@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-// import Helmet from 'react-helmet';
+import Helmet from 'react-helmet';
 import {getUser} from '../redux/modules/user';
 // import Navigation from '../components/Navigation';
 // import SubHeader from '../components/StoryLine/SubHeader';
@@ -34,7 +34,15 @@ export default class TokensContainer extends Component {
   }
 
   render() {
-    return this.props.children;
+    const {requestedUser} = this.props;
+    return (
+      <div>
+        <Helmet
+          title={`${requestedUser.first_name} ${requestedUser.last_name} - Documents`}
+        />
+        {this.props.children}
+      </div>
+    );
   }
 }
 

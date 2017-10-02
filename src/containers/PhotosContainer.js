@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
+import Helmet from 'react-helmet';
 import {getUser} from '../redux/modules/user';
 
 @connect((state) => ({
@@ -20,7 +21,15 @@ export default class PhotosContainer extends Component {
   }
 
   render() {
-    return this.props.children;
+    const {requestedUser} = this.props;
+    return (
+      <div>
+        <Helmet
+          title={`${requestedUser.first_name} ${requestedUser.last_name} - Photos`}
+        />
+        {this.props.children}
+      </div>
+    );
   }
 }
 

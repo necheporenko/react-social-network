@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-// import Helmet from 'react-helmet';
+import Helmet from 'react-helmet';
 import {
   getUser,
   // getUserSlug
@@ -27,7 +27,15 @@ export default class PeopleContainer extends Component {
   }
 
   render() {
-    return this.props.children;
+    const {requestedUser} = this.props;
+    return (
+      <div>
+        <Helmet
+          title={`${requestedUser.first_name} ${requestedUser.last_name} - People`}
+        />
+        {this.props.children}
+      </div>
+    );
   }
 }
 
