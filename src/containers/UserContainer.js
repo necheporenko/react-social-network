@@ -54,7 +54,7 @@ export default class UserContainer extends Component {
           authorizedUser={authorizedUser}
           showSmallNavigation={showSmallNavigation}
         />
-        <div style={{ marginTop: (showSmallNavigation ? 68 : 20) }}>
+        <div style={{ marginTop: (showSmallNavigation ? 68 : 20), minHeight: 849 }}>
           {this.props.children}
         </div>
       </div>

@@ -25,6 +25,9 @@ const LOAD_USER_PEOPLE_SUCCESS = 'LOAD_USER_PEOPLE_SUCCESS';
 const LOAD_USER_PEOPLE_FAIL = 'LOAD_USER_PEOPLE_FAIL';
 const CLEAR_PEOPLE_BLOCK = 'CLEAR_PEOPLE_BLOCK';
 const FILTER_WHO_TO_FOLLOW_PEOPLE = 'FILTER_WHO_TO_FOLLOW_PEOPLE';
+const LOAD_NEXT_PEOPLE_ALL = 'LOAD_NEXT_PEOPLE_ALL';
+const LOAD_NEXT_PEOPLE_ALL_SUCCESS = 'LOAD_NEXT_PEOPLE_ALL_SUCCESS';
+const LOAD_NEXT_PEOPLE_ALL_FAIL = 'LOAD_NEXT_PEOPLE_ALL_FAIL';
 
 
 const initialState = {
@@ -39,11 +42,17 @@ const initialState = {
     loadedSuggested: false,
     loadedPeopleBlock: false,
   },
+  pagination: {
+    allPeople: 1,
+    following: 1,
+    followers: 1,
+    suggested: 1,
+  },
   over: {
-    overAllPeople: false,
-    overFollowing: false,
-    overFollowers: false,
-    overSuggested: false,
+    allPeople: false,
+    following: false,
+    followers: false,
+    suggested: false,
   },
   whoToFollowList: [],
 };
@@ -255,9 +264,9 @@ export default function followReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        peopleAll: {
-          users: action.result.data
-        },
+        loaded: Object.assign({}, state.loaded, {loadedPeopleBlock: true}),
+        peopleAll: action.result.data,
+        pagination: Object.assign({}, state.pagination, { allPeople: 2 })
       };
     case LOAD_PEOPLE_ALL_FAIL:
       return {
@@ -350,6 +359,23 @@ export default function followReducer(state = initialState, action) {
         whoToFollowList: state.whoToFollowList.filter(user => user.id !== action.payload.id)
       });
     }
+
+    case LOAD_NEXT_PEOPLE_ALL:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case LOAD_NEXT_PEOPLE_ALL_SUCCESS:
+      console.log('action', action.result);
+      return {
+        ...state,
+        loding: false,
+        over: Object.assign({}, state.over, {allPeople: action.result.data.length === 0 && true}),
+        pagination: Object.assign({}, state.pagination, {allPeople: state.pagination.allPeople + 1}),
+        peopleAll: [...state.peopleAll, ...action.result.data],
+        loaded: Object.assign({}, state.loaded, {loadedPeopleBlock: true})
+      };
 
     default:
       return state;
@@ -457,3 +483,11 @@ export function filterWhoToFollowUsers(id) {
       });
   };
 }
+
+export const getNextPeople = (user_slug, pagination) => {
+  return {
+    types: [LOAD_NEXT_PEOPLE_ALL, LOAD_NEXT_PEOPLE_ALL_SUCCESS, LOAD_NEXT_PEOPLE_ALL_FAIL],
+    promise: (client) => client.get('/people/all', {params: {page: pagination, user_slug}}),
+    pagination
+  };
+};

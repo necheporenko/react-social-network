@@ -75,7 +75,7 @@ export default function storyReducer(state = initialState, action) {
         loading: false,
         loaded,
         storiesArr: dataStories,
-        paginationStory: 1,
+        paginationStory: 2,
       };
     case LOAD_SHOW_USER_STORIES_FAIL:
       loaded = Object.assign({}, state.loaded, {

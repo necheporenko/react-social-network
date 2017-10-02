@@ -67,9 +67,9 @@ export default class ChannelStream extends Component {
           threshold={50}
           loader={loader}
         >
-          { channelStories && channelStories.map((story) => (
+          { channelStories && channelStories.map((story, index) => (
             <Post
-              key={story.id}
+              key={index}
               id={story.id}
               post={story.text}
               user={story.user}

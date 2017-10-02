@@ -62,13 +62,13 @@ class Stream extends Component {
         {loaded.stories ?
           <InfiniteScroll
             loadMore={this.load}
-            hasMore={false}
+            hasMore={true}
             threshold={50}
             loader={loader}
           >
-            {storiesArr && storiesArr.map((story) => (
+            {storiesArr && storiesArr.map((story, index) => (
               <Post
-                key={story.id}
+                key={index}
                 id={story.id}
                 post={story.text}
                 user={story.user}

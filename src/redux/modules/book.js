@@ -61,7 +61,7 @@ export default function bookReducer(state = initialState, action) {
         loading: false,
         loaded,
         bookTreeArr: action.result.data,
-        pagination: 1,
+        pagination: 2,
         over: false,
       };
     case LOAD_BOOKTREE_FAIL:
