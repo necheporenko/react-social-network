@@ -29,6 +29,7 @@ export default class Navigation extends Component {
             to={`/${slug}`}
             onlyActiveOnIndex={true}
             activeClassName="active"
+            style={{padding: '0 10px'}}
           >
             Storyline
           </Link>
