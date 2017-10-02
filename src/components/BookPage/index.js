@@ -142,9 +142,9 @@ export default class BookPage extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   }
 
-  handleScroll(e) {
-    const scrollTop = e.srcElement.body.scrollTop;
-    //console.log(scrollTop);
+  handleScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    // console.log(scrollTop);
     this.setState({scrollTop: scrollTop});
   }
 
@@ -205,7 +205,7 @@ export default class BookPage extends Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     const {scrollTop} = this.state;
     const scroll = () => {
       let Nav = 'navigation navigation-fixed';
