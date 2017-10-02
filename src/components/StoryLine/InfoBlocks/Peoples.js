@@ -61,11 +61,11 @@ Peoples.propTypes = {
   loaded: PropTypes.object,
   people: PropTypes.array,
   followers: PropTypes.shape({
-    count: PropTypes.number,
+    count: PropTypes.string,
     users: PropTypes.array
   }),
   following: PropTypes.shape({
-    count: PropTypes.number,
+    count: PropTypes.string,
     users: PropTypes.array
   }),
   requestedUser: PropTypes.object,

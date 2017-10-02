@@ -20,10 +20,12 @@ export default class UserContainer extends Component {
   }
 
   componentDidMount() {
+    window.scrollTo(0, 0);
     window.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
+    window.scrollTo(0, 0);
     window.removeEventListener('scroll', this.handleScroll);
   }
 

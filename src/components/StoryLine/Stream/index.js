@@ -46,11 +46,11 @@ class Stream extends Component {
   }
 
   render() {
-    const {storiesArr, authorizedUser, requestedUser, isAuthenticated, loaded} = this.props;
+    const {storiesArr, authorizedUser, requestedUser, isAuthenticated, loaded, style} = this.props;
     const loader = <Loader marginTop="52px"/>;
 
     return (
-      <div className="stream">
+      <div className="stream" style={style}>
         {isAuthenticated && authorizedUser.id === requestedUser.id &&
         <Sbox
           authorizedUser={this.props.authorizedUser}

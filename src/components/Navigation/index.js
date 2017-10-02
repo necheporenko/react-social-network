@@ -9,9 +9,7 @@ export default class Navigation extends Component {
 
     if (scrollTop > 236) {
       window.scrollTo(0, 237);
-    } else {
-      window.scrollTo(scrollTop);
-    }
+    } 
   }
 
   render() {

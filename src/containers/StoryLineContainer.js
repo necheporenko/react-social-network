@@ -42,22 +42,43 @@ import StoryLine from '../components/StoryLine';
 export default class StoryLineContainer extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      fixedBlocks: false
+    };
+
     this.requests = this.requests.bind(this);
     this.clearState = this.clearState.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
-    (function () {
-      document.body.scrollTop = 0;
-    }());
     const {path, requestedUser, requestedUserProfile} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+    window.addEventListener('scroll', this.handleScroll);
     if (findSlug !== requestedUser.slug) {
       this.clearState();
       this.requests(findSlug);
     }
     if (!requestedUserProfile.id) {
       this.requests(findSlug);
+    }
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+
+
+  handleScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const {fixedBlocks} = this.state;
+
+    if (scrollTop <= 236 && fixedBlocks) {
+      this.setState({fixedBlocks: false});
+    } else if (scrollTop > 236 && !fixedBlocks) {
+      this.setState({fixedBlocks: true});
     }
   }
 
