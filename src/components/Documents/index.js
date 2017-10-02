@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import {getUser} from '../../redux/modules/user';
 import {getBox, createDraftHumanCard, updateDraftHumanCard} from '../../redux/modules/document';
@@ -38,6 +38,7 @@ export default class Box extends Component {
     this.requestHumanCard = this.requestHumanCard.bind(this);
     this.copyAddress = this.copyAddress.bind(this);
     this.CopyToClipboard = this.CopyToClipboard.bind(this);
+    this.linkHC = this.linkHC.bind(this);
   }
 
   componentDidMount() {
@@ -150,6 +151,20 @@ export default class Box extends Component {
       console.log('failed', ex);
     });
 
+    const div = document.querySelector('.markdown-human-card div');
+    if (div) {
+      function w(linkHC) {
+        const h1 = div.querySelector('h1');
+        const p5 = div.querySelector('p:nth-child(5)');
+        const p8 = div.querySelector('p:nth-child(8)');
+
+        h1.addEventListener('click', linkHC);
+        p5.addEventListener('click', linkHC);
+        p8.addEventListener('click', linkHC);
+      }
+      setTimeout(() => w(this.linkHC), 1000);
+    }
+
 //     const XHR = ('onload' in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
 //     const xhr = new XHR();
 // // (2) запрос на другой домен :)
@@ -178,6 +193,11 @@ export default class Box extends Component {
     }
   }
 
+  linkHC() {
+    const {box} = this.props;
+    const {slug} = this.props.requestedUser;
+    browserHistory.push(`/${slug}/documents/human-card/${box.human_card.public_address}`);
+  }
 
   render() {
     const {scrollTop} = this.state;
@@ -212,49 +232,49 @@ export default class Box extends Component {
             <div className="human-card human-card-preview">
               {box.human_card
                 ?
-                <div className="markdown-human-card">
-                  {/*<Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">*/}
-                  {this.requestHumanCard(box.human_card.url)}
-                  <ReactMarkdown source={this.state.markdownText}>
-                    {/*{this.CopyToClipboard()}*/}
-                  </ReactMarkdown>
-                  {/*</Link>*/}
-                </div>
+                  <div className="markdown-human-card">
+                    {/*<Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">*/}
+                    {this.requestHumanCard(box.human_card.url)}
+                    <ReactMarkdown source={this.state.markdownText}>
+                      {/*{this.CopyToClipboard()}*/}
+                    </ReactMarkdown>
+                    {/*</Link>*/}
+                  </div>
                 :
-                <div>
-                  {/*<div className="help-human-card"><i/></div>*/}
-                  <h1 style={{marginBottom: 0}}>HUMAN CARD</h1>
-                  {/*<hr/>*/}
-                  <p style={{marginTop: '5px', marginBottom: 0}}>
-                    {/*<strong>Public Address:</strong>*/}
-                    <input
-                      type="text" placeholder="Paste your public address here"
-                      onChange={this.changePublicAddress}
-                      value={this.state.publicAddress || (box.draft_human_card && box.draft_human_card.public_address) || ''}
-                      ref={el => this.inputPublicAddress = el}
-                      style={{fontSize: '13px'}}
-                    />
+                  <div>
                     {/*<div className="help-human-card"><i/></div>*/}
-                  </p>
-                  <p style={{fontSize: '12px', marginTop: '5px', marginBottom: '10px'}}>
+                    <h1 style={{marginBottom: 0}}>HUMAN CARD</h1>
+                    {/*<hr/>*/}
+                    <p style={{marginTop: '5px', marginBottom: 0}}>
+                      {/*<strong>Public Address:</strong>*/}
+                      <input
+                        type="text" placeholder="Paste your public address here"
+                        onChange={this.changePublicAddress}
+                        value={this.state.publicAddress || (box.draft_human_card && box.draft_human_card.public_address) || ''}
+                        ref={el => this.inputPublicAddress = el}
+                        style={{fontSize: '13px'}}
+                    />
+                      {/*<div className="help-human-card"><i/></div>*/}
+                    </p>
+                    <p style={{fontSize: '12px', marginTop: '5px', marginBottom: '10px'}}>
                     This public address has been established for:
                   </p>
-                  <p style={{marginTop: '10px'}}>
-                    <input
-                      type="text" placeholder="Paste your getAddress here"
-                      onChange={this.changeFullName}
-                      value={this.state.fullName || (box.draft_human_card && box.draft_human_card.full_name) || fullName}
-                      ref={el => this.inputFullName = el}
-                      style={{fontSize: '22px'}}
+                    <p style={{marginTop: '10px'}}>
+                      <input
+                        type="text" placeholder="Paste your getAddress here"
+                        onChange={this.changeFullName}
+                        value={this.state.fullName || (box.draft_human_card && box.draft_human_card.full_name) || fullName}
+                        ref={el => this.inputFullName = el}
+                        style={{fontSize: '22px'}}
                     />
-                    {/*<div className="help-human-card"><i/></div>*/}
-                  </p>
-                  <p style={{color: '#d2d2d2', fontSize: '13px'}}>
+                      {/*<div className="help-human-card"><i/></div>*/}
+                    </p>
+                    <p style={{color: '#d2d2d2', fontSize: '13px'}}>
                     Digital signature and signing date will be here.
                     {/*<span>  your signature will be here</span>*/}
-                    {/*<div className="help-human-card"><i/></div>*/}
-                  </p>
-                </div>
+                      {/*<div className="help-human-card"><i/></div>*/}
+                    </p>
+                  </div>
               }
             </div>
 

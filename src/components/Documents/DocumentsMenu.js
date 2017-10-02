@@ -34,7 +34,6 @@ export default class DocumentsMenu extends Component {
 
   openBoxes() {
     this.setState({isOpen: !this.state.isOpen});
-    console.log('hi', this.state.isOpen);
   }
 
   render() {

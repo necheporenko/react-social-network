@@ -592,10 +592,16 @@
   p:nth-child(5) {
     font-size: 12px;
     margin-top: 0;
+    cursor: pointer;
+  }
+
+  p:nth-child(8) {
+    cursor: pointer;
   }
 
   h1 {
     margin-bottom: 20px;
+    cursor: pointer;
   }
 
   h2 {
