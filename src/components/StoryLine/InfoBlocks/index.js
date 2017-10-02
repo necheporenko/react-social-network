@@ -15,7 +15,9 @@ class InfoBloks extends Component {
     return (
       <div className="infobloks">
         <Cutaway
+          requestedUser={this.props.requestedUser}
           requestedUserProfile={this.props.requestedUserProfile}
+          humanCard={this.props.humanCard}
         />
         {/*<Tokens/>*/}
         <Photos

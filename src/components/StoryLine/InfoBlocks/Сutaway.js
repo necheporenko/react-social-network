@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
+import ReactMarkdown from 'react-markdown';
 
 function work(occupation, company) {
   if (occupation && company) {
@@ -11,7 +12,7 @@ function work(occupation, company) {
   }
 }
 
-const Cutaway = ({requestedUserProfile}) => {
+const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
   const {
     first_name,
     last_name,
@@ -30,6 +31,8 @@ const Cutaway = ({requestedUserProfile}) => {
     linkedin,
     skype,
   } = requestedUserProfile;
+  const {markdown} = humanCard;
+  const {slug} = requestedUser;
 
   return (
     requestedUserProfile.first_name ?
@@ -102,6 +105,17 @@ const Cutaway = ({requestedUserProfile}) => {
             </div>
           </div>
 
+          {humanCard.id &&
+          <div className="infoblock-human-card ">
+            <hr style={{margin: '0 15px 20px 15px'}} />
+            <div className="human-card markdown-human-card">
+              <Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>
+                <ReactMarkdown source={humanCard.markdown}/>
+              </Link>
+            </div>
+          </div>
+          }
+
         </div>
       </div>
       :
@@ -110,7 +124,9 @@ const Cutaway = ({requestedUserProfile}) => {
 };
 
 Cutaway.propTypes = {
-  requestedUserProfile: PropTypes.object
+  requestedUserProfile: PropTypes.object,
+  requestedUser: PropTypes.object,
+  humanCard: PropTypes.object,
 };
 
 export default Cutaway;

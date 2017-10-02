@@ -10,25 +10,26 @@ import './index.scss';
 class StoryLine extends Component {
   render() {
     const {
-      requestedUser, 
-      requestedUserProfile, 
-      following, 
-      followers, 
-      people, 
-      bookTreeArr, 
-      authorizedUser, 
-      storiesArr, 
-      createStory, 
+      requestedUser,
+      requestedUserProfile,
+      following,
+      followers,
+      people,
+      bookTreeArr,
+      authorizedUser,
+      storiesArr,
+      createStory,
       loadStories,
       loadNextStories,
-      fixedBlocks
+      fixedBlocks,
+      humanCard
     } = this.props;
 
     return (
       <div className="storyLine">
         <div className="wrap-storyLine">
           <div
-            style={{ 
+            style={{
               top: fixedBlocks ? 116 : null,
               position: fixedBlocks ? 'fixed' : null,
               width: 320
@@ -45,7 +46,7 @@ class StoryLine extends Component {
               following={following}
               followers={followers}
               people={people}
-              bookTreeArr={bookTreeArr}
+              humanCard={humanCard}
             />
           </div>
           <Stream

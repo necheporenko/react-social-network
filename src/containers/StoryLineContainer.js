@@ -10,6 +10,7 @@ import {
 } from '../redux/modules/story';
 import {load as loadBookTree, clearBookTree} from '../redux/modules/book';
 import {loadPeopleFollowers, loadPeopleFollowing, loadUserPeople, clearPeopleBlock} from '../redux/modules/follow';
+import {getHumanCard} from '../redux/modules/document';
 import StoryLine from '../components/StoryLine';
 
 @connect((state) => ({
@@ -23,6 +24,7 @@ import StoryLine from '../components/StoryLine';
   followers: state.follow.followers,
   people: state.follow.people,
   path: state.routing.locationBeforeTransitions.pathname,
+  humanCard: state.document.humanCard,
 }), {
   getUser,
   getUserSlug,
@@ -36,7 +38,8 @@ import StoryLine from '../components/StoryLine';
   loadPeopleFollowers,
   loadPeopleFollowing,
   loadUserPeople,
-  clearPeopleBlock
+  clearPeopleBlock,
+  getHumanCard,
 })
 
 export default class StoryLineContainer extends Component {
@@ -64,7 +67,7 @@ export default class StoryLineContainer extends Component {
       this.requests(findSlug);
     }
   }
-  
+
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   }
@@ -98,7 +101,8 @@ export default class StoryLineContainer extends Component {
       .then(this.props.getUserProfile(findSlug))
       .then(this.props.loadUserPeople(findSlug))
       .then(this.props.loadPeopleFollowing(findSlug))
-      .then(this.props.loadPeopleFollowers(findSlug));
+      .then(this.props.loadPeopleFollowers(findSlug))
+      .then(() => (this.props.requestedUser.public_address && this.props.getHumanCard(this.props.requestedUser.public_address)));
   }
 
   clearState() {
@@ -110,17 +114,18 @@ export default class StoryLineContainer extends Component {
   render() {
     const {fixedBlocks} = this.state;
     const {
-      requestedUser, 
-      authorizedUser, 
-      requestedUserProfile, 
-      storiesArr, 
-      createStory, 
-      loadStories, 
-      bookTreeArr, 
-      loadNextStories, 
+      requestedUser,
+      authorizedUser,
+      requestedUserProfile,
+      storiesArr,
+      createStory,
+      loadStories,
+      bookTreeArr,
+      loadNextStories,
       following,
       followers,
-      people
+      people,
+      humanCard
     } = this.props;
     return (
       <div>
@@ -141,6 +146,7 @@ export default class StoryLineContainer extends Component {
           followers={followers}
           people={people}
           fixedBlocks={fixedBlocks}
+          humanCard={humanCard}
         />
       </div>
     );
@@ -171,4 +177,5 @@ StoryLineContainer.propTypes = {
   loadUserPeople: PropTypes.func,
   loadPeopleFollowing: PropTypes.func,
   loadPeopleFollowers: PropTypes.func,
+  getHumanCard: PropTypes.func,
 };
