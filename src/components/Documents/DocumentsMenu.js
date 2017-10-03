@@ -55,12 +55,17 @@ export default class DocumentsMenu extends Component {
             </Link>
             }
 
-            {boxes.length > 0 && boxes[0].children.filter(box => box.key === 'board').map(box => (
-              <Link key={box.id} onlyActiveOnIndex={false} to={`/${slug}/documents/${box.key}`} activeClassName="active"
-                    className={path.slice(-9) === 'documents' && 'active'}>
-                <li className="documents-mnu-board">{box.name}</li>
-              </Link>
-            ))}
+            {/*{boxes.length > 0 && boxes[0].children.filter(box => box.key === 'board').map(box => (*/}
+            {/*<Link key={box.id} onlyActiveOnIndex={false} to={`/${slug}/documents/${box.key}`} activeClassName="active"*/}
+            {/*className={path.slice(-9) === 'documents' && 'active'}>*/}
+            {/*<li className="documents-mnu-board">{box.name}</li>*/}
+            {/*</Link>*/}
+            {/*))}*/}
+            {boxes.length > 0 &&
+            <Link to={`/${slug}/documents/${boxes[0].board.key}`} activeClassName="active" className={path.slice(-9) === 'documents' && 'active'}>
+              <li className="documents-mnu-board">{boxes[0].board.name}</li>
+            </Link>
+            }
 
             {/*<hr/>*/}
             <div className="wrap-boxes" style={{backgroundColor: findBoxes > 0 && '#e1e1e1'}}>
@@ -82,9 +87,9 @@ export default class DocumentsMenu extends Component {
               ))}
             </div>
 
-            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">
-              <li className="documents-mnu-box-private">Signed Documents</li>
-            </Link>
+            {/*<Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">*/}
+            {/*<li className="documents-mnu-box-private">Signed Documents</li>*/}
+            {/*</Link>*/}
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/wallet`} activeClassName="active">
               <li className="documents-mnu-wallet">Wallet</li>
             </Link>
@@ -98,11 +103,17 @@ export default class DocumentsMenu extends Component {
 
             {/*<hr/>*/}
 
-            {boxes.length > 0 && boxes[0].children.filter(box => box.key === 'bin').map(box => (
-              <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
-                <li className="documents-mnu-box-bin">{box.name}</li>
-              </Link>
-            ))}
+            {/*{boxes.length > 0 && boxes[0].children.filter(box => box.key === 'bin').map(box => (*/}
+            {/*<Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">*/}
+            {/*<li className="documents-mnu-box-bin">{box.name}</li>*/}
+            {/*</Link>*/}
+            {/*))}*/}
+
+            {boxes.length > 0 &&
+            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/${boxes[0].bin.key}`} activeClassName="active">
+              <li className="documents-mnu-box-bin">{boxes[0].bin.name}</li>
+            </Link>
+            }
           </ul>
 
 

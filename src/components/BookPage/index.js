@@ -230,7 +230,7 @@ export default class BookPage extends Component {
       return result;
     };
     const chooseScroll = scroll();
-    const {name, description, settings, cover, counters} = this.props.bookPage;
+    const {name, description, settings, cover, counts} = this.props.bookPage;
     const book_slug = this.props.bookPage.slug;
     const {slug, first_name, last_name, avatar32} = this.props.requestedUser;
 
@@ -297,10 +297,10 @@ export default class BookPage extends Component {
             <div className="book-counter">
               <ul>
                 <li><i className="infobook-icon-visibility"/> · <span
-                  style={{padding: '0 4px'}}>{counters.stories}</span><i className="stories-icon-sm"/>·
+                  style={{padding: '0 4px'}}>{counts.stories}</span><i className="stories-icon-sm"/>·
                 </li>
-                <li><span>{counters.sub_books}</span><i className="subbooks-icon-sm"/>·</li>
-                <li><span>{counters.follows_book}</span><i className="followers-icon-sm"/>·</li>
+                <li><span>{counts.sub_books}</span><i className="subbooks-icon-sm"/>·</li>
+                <li><span>{counts.follows_book}</span><i className="followers-icon-sm"/>·</li>
                 <li><span>0</span><i className="photos-icon-sm"/></li>
 
 
@@ -322,7 +322,7 @@ export default class BookPage extends Component {
                 {/*</div>*/}
 
 
-                {/*<li><span>{counters.sub_books}</span> subbooks</li>*/}
+                {/*<li><span>{counts.sub_books}</span> subbooks</li>*/}
                 {/*<div>*/}
                 {/*<p>Book 1</p>*/}
                 {/*</div>*/}
