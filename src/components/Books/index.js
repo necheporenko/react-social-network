@@ -8,7 +8,7 @@ import Loader from '../Common/Loader';
 import './index.scss';
 
 const BookCard = ({book, history, requestedUser}) => {
-  const {name, key, cover, children} = book;
+  const {name, key, cover, children, counts} = book;
 
   const onBookClick = (e) => {
     e.preventDefault();
@@ -48,10 +48,10 @@ const BookCard = ({book, history, requestedUser}) => {
 
       <div className="book-info">
         <ul>
-          <li><i className="infobook-icon-visibility"/><span>0</span><i className="stories-icon-sm"/>·</li>
-          <li><span>{children ? children.length : 0}</span><i className="subbooks-icon-sm"/>·</li>
-          <li><span>0</span><i className="followers-icon-sm"/>·</li>
-          <li><span>0</span><i className="photos-icon-sm"/></li>
+          <li><i className="infobook-icon-visibility"/><span>{counts ? counts.stories : 0}</span><i className="stories-icon-sm"/>·</li>
+          <li><span>{counts ? counts.sub_books : 0}</span><i className="subbooks-icon-sm"/>·</li>
+          <li><span>{counts ? counts.followers : 0}</span><i className="followers-icon-sm"/>·</li>
+          <li><span>{counts ? counts.images : 0}</span><i className="photos-icon-sm"/></li>
         </ul>
         {/*<hr />*/}
       </div>
