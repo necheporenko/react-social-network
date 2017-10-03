@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import ReactMarkdown from 'react-markdown';
 
 function work(occupation, company) {
@@ -9,6 +9,23 @@ function work(occupation, company) {
     return `Works at ${company}`;
   } else {
     return occupation;
+  }
+}
+
+
+function fnHumanCard(address, slug) {
+  function linkHC() {
+    browserHistory.push(`/${slug}/documents/human-card/${address}`);
+  }
+
+  const div = document.querySelector('.markdown-human-card div');
+  if (div) {
+    const h1 = div.querySelector('h1');
+    const p5 = div.querySelector('p:nth-child(5)');
+    const p8 = div.querySelector('p:nth-child(8)');
+    h1.addEventListener('click', linkHC);
+    p5.addEventListener('click', linkHC);
+    p8.addEventListener('click', linkHC);
   }
 }
 
@@ -107,11 +124,12 @@ const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
 
           {humanCard.id &&
           <div className="infoblock-human-card ">
-            <hr style={{margin: '0 15px 20px 15px'}} />
+            {/*<hr style={{margin: '0 15px 20px 15px'}} />*/}
+            {fnHumanCard(humanCard.public_address, slug)}
             <div className="human-card markdown-human-card">
-              <Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>
+              {/*<Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>*/}
                 <ReactMarkdown source={humanCard.markdown}/>
-              </Link>
+              {/*</Link>*/}
             </div>
           </div>
           }

@@ -57,7 +57,8 @@
   }
 
   .navigation-wrap {
-    left: calc(50% - 326px);
+    //left: calc(50% - 326px);
+    left: calc(50% - 183px);
   }
 }
 
@@ -68,7 +69,7 @@
 }
 
 .navigation-wrap {
-  position: relative;
+  position: absolute;
   top: 16px;
 
   a {
@@ -120,9 +121,9 @@
   top: 52px;
   z-index: 11;
 
-  .navigation-wrap {
-    left: 0;
-  }
+  //.navigation-wrap {
+  //  left: 0;
+  //}
 
   .btn-following {
     //display: block;

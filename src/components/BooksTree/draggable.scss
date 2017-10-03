@@ -154,10 +154,11 @@ $valid_color: #1976d2;
       > a {
         text-decoration: none;
         display: block;
-        width: 100%;
+        width: 165px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        padding-left: 20px;
       }
     }
     ul {
@@ -429,7 +430,7 @@ $valid_color: #1976d2;
       background: $sprite;
       content: '';
       display: inline-block;
-      position: relative;
+      position: absolute;
     }
   }
 }
@@ -440,8 +441,9 @@ $valid_color: #1976d2;
       background-position: -86px -515px;
       height: 15px;
       width: 16px;
-      top: 4px;
+      top: 6px;
       margin-right: 5px;
+      left: 0;
     }
   }
 }
