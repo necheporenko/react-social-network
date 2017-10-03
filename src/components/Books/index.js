@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
+import InfiniteScroll from 'react-infinite-scroller';
 import EditBook from '../../components/BooksTree/EditBook';
 import AddBook from '../Popup/AddBook';
+import Loader from '../Common/Loader';
 import './index.scss';
 
 const BookCard = ({book, history, requestedUser}) => {
@@ -89,6 +91,7 @@ const BookCard = ({book, history, requestedUser}) => {
 class Books extends Component {
   render() {
     const {bookTreeArr, requestedUser, loaded, history} = this.props;
+    const loader = <Loader marginTop="10px"/>;
 
     return (
       loaded.loadedBookTree &&
@@ -111,16 +114,25 @@ class Books extends Component {
 
         </div>
         <div className="common-lists">
-          <div className="wrapper">
-            {bookTreeArr[0].children.map(book => (
-              <BookCard
-                key={book.key}
-                book={book}
-                history={history}
-                requestedUser={requestedUser}
-              />
-            ))}
-          </div>
+          {true 
+            ? <InfiniteScroll
+              hasMore={true}
+              threshold={50}
+              loader={loader}
+            >
+              <div className="wrapper">
+                {bookTreeArr[0].children.map(book => (
+                  <BookCard
+                    key={book.key}
+                    book={book}
+                    history={history}
+                    requestedUser={requestedUser}
+                  />
+                ))}
+              </div>
+            </InfiniteScroll>
+            : <Loader marginTop="52px"/>
+          }
         </div>
       </div>
     );

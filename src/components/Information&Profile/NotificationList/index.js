@@ -2,7 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
-import { getUserNotifications } from '../../../redux/modules/profile';
+import InfiniteScroll from 'react-infinite-scroller';
+import { getUserNotifications, loadNextNotifications } from '../../../redux/modules/profile';
+import Loader from '../../Common/Loader';
 import './index.scss';
 
 @asyncConnect([{
@@ -15,11 +17,30 @@ import './index.scss';
 
 @connect((state) => ({
   notifications: state.profile.notifications,
-}), {})
+  pagination: state.profile.paginationNotifications,
+  hasMoreNotifications: state.profile.hasMoreNotifications
+}), {
+  loadNextNotifications
+})
 
 class NotificationList extends Component {
+  constructor() {
+    super();
+    this.load = this.load.bind(this);
+  }
+
+  load() {
+    const {hasMoreNotifications, loadNextNotifications, pagination} = this.props;
+
+    if (hasMoreNotifications) {
+      loadNextNotifications(pagination);
+    }
+  }
+
   render() {
-    const { notifications } = this.props;
+    const { notifications, loaded, hasMoreNotifications } = this.props;
+    const loader = <Loader marginTop="10px"/>;
+    console.log(notifications);
 
     return (
       <div className="notification">
@@ -28,8 +49,14 @@ class NotificationList extends Component {
         <div className="notification-box notification-box-list">
           <div className="additional-title">Notifications</div>
           <hr/>
-          <ul>
-            { notifications && notifications.map((notification) => (
+          <InfiniteScroll
+            element={'ul'}
+            loadMore={this.load}
+            hasMore={true}
+            threshold={50}
+            loader={hasMoreNotifications ? loader : null}
+          >
+            {notifications && notifications.map((notification) => (
               <li key={notification.id}>
                 <div>
                   <img src={notification.user.avatar} alt=""/>
@@ -38,29 +65,7 @@ class NotificationList extends Component {
                 <p>{notification.created}</p>
               </li>
             ))}
-            <li>
-              <div>
-                <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                <h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>
-              </div>
-              <p>21 Mar 2017</p>
-            </li>
-            <li>
-              <div>
-                <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                <h6><a href="#"><b>Name Surname</b></a>commented on your story</h6>
-              </div>
-              <p>21 Mar 2017</p>
-            </li>
-            <li>
-              <div>
-                <img src="http://devianmbanks.validbook.org/cdn/120x120.png?t=1489675034" alt=""/>
-                <h6><a href="#">Name Surname</a><span>commented on your</span><a href="#">story</a>.</h6>
-              </div>
-              <p>21 Mar 2017</p>
-            </li>
-          </ul>
-
+          </InfiniteScroll>
         </div>
       </div>
     );

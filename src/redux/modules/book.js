@@ -39,7 +39,7 @@ const initialState = {
     loadedBookTree: false,
     loadedBookStories: false,
   },
-  pagination: 1,
+  pagination: 2,
   uploading: false,
   bookPage: {},
 };
@@ -61,7 +61,6 @@ export default function bookReducer(state = initialState, action) {
         loading: false,
         loaded,
         bookTreeArr: action.result.data,
-        pagination: 2,
         over: false,
       };
     case LOAD_BOOKTREE_FAIL:
@@ -362,7 +361,7 @@ export function next(slug, page) {
   const book_slug = slug || '';
   return {
     types: [SHOW_NEXT_BOOK, SHOW_NEXT_BOOK_SUCCESS, SHOW_NEXT_BOOK_FAIL],
-    promise: (client) => client.get(`/books/${book_slug}`, { params: { page }}),
+    promise: (client) => client.get(`/books/${book_slug}`, { params: { stories_page: page }}),
     page,
     book_slug
   };
@@ -425,3 +424,10 @@ export function viewMoreComments(entity_id, paginationComment) {
     entity_id
   };
 }
+
+export const getNextBooks = (user_slug, pagination) => {
+  return {
+    types: [VIEW_MORE_COMMENTS, VIEW_MORE_COMMENTS_SUCCESS, VIEW_MORE_COMMENTS_FAIL],
+    promise: (client) => client.get('/books', {params: {page: pagination, user_slug}})
+  };
+};

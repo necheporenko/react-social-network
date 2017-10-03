@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+import InfiniteScroll from 'react-infinite-scroller';
+import Loader from '../Common/Loader';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
-import { searchUser } from '../../redux/modules/search';
+import { searchUser, getNextUsers } from '../../redux/modules/search';
 import './index.scss';
 
 @asyncConnect([{
@@ -16,38 +18,67 @@ import './index.scss';
 @connect((state) => ({
   query: state.search.query,
   foundUsers: state.search.foundUsers,
+  pagination: state.search.pagination,
+  over: state.search.over
 }), {
-  searchUser
+  searchUser,
+  getNextUsers
 })
 
 class SearchPeople extends Component {
+  constructor() {
+    super();
+
+    this.load = this.load.bind(this);
+  }
+
+  load() {
+    const {pagination, getNextUsers, over, query} = this.props;
+
+    if (!over) {
+      getNextUsers(query, pagination);
+    }
+  }
   render() {
-    const { foundUsers } = this.props;
+    const { foundUsers, over, loaded } = this.props;
+    console.log(foundUsers)
+    const loader = <Loader marginTop="10px"/>;
+
     return (
       <div className="people page-bg">
         <div className="people-lists">
-          <div className="wrapper" style={{marginTop: '25px'}}>
+          {true 
+            ? <InfiniteScroll
+              loadMore={this.load}
+              hasMore={true}
+              threshold={200}
+              loader={over ? null : loader}
+            >
+              <div className="wrapper" style={{marginTop: '25px'}}>
 
-            {foundUsers && foundUsers.map((people) => (
-              <div key={people.id} className="people-card">
-                <Link to={`/${people.slug}`}>
-                  <img src={people.avatar} />
-                  <div>{`${people.first_name} ${people.last_name}`}</div>
-                </Link>
+                {foundUsers && foundUsers.map((people) => (
+                  <div key={people.id} className="people-card">
+                    <Link to={`/${people.slug}`}>
+                      <img src={people.avatar} />
+                      <div>{`${people.first_name} ${people.last_name}`}</div>
+                    </Link>
 
-                <div
-                  className="btn-following"
-                >
-                  <div>
-                    Following
+                    <div
+                      className="btn-following"
+                    >
+                      <div>
+                        Following
+                      </div>
+                      <span/>
+                    </div>
+
                   </div>
-                  <span/>
-                </div>
+                ))}
 
               </div>
-            ))}
-
-          </div>
+            </InfiniteScroll>
+            : <Loader marginTop="52px"/>
+          }
         </div>
       </div>
     );

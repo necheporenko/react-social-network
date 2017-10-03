@@ -62,6 +62,7 @@ import MainPage from '../components/MainPage';
 
 export default class IndexContainer extends Component {
   componentDidMount() {
+    console.log('cdm')
     if (this.props.isAuthenticated) {
       this.props.showChannel(this.isMashUp())
         .then(this.props.loadChannels())
@@ -76,6 +77,8 @@ export default class IndexContainer extends Component {
   }
 
   render() {
+    console.log(this.props);
+    console.log('index container render');
     return (
       <div>
         {this.props.isAuthenticated ?

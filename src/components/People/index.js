@@ -22,7 +22,7 @@ import './index.scss';
   peopleAll: state.follow.peopleAll,
   slug: state.user.requestedUser.slug,
   over: state.follow.over.allPeople,
-  loaded: state.follow.loaded.loadedPeopleBlock
+  loaded: state.follow.loaded.loadedAllPeople
 }), {
   isLoadedFollowing,
   followUser,
@@ -48,7 +48,6 @@ class People extends Component {
   
   load() {
     if (!this.props.over) {
-      console.log('over people', this.props.over);
       this.props.getNextPeople(this.props.slug, this.props.pagination);
     }
   }
@@ -62,9 +61,9 @@ class People extends Component {
   }
 
   render() {
-    const {peopleAll, loaded} = this.props;
+    const {peopleAll, loaded, over} = this.props;
     const loader = <Loader marginTop="52px"/>;
-    console.log('people', this.props);
+    console.log('people', peopleAll);
 
     return (
       <div className="people contents">
@@ -77,11 +76,11 @@ class People extends Component {
               loadMore={this.load}
               hasMore={true}
               threshold={50}
-              loader={loader}
+              loader={over ? null : loader}
             >
               <div className="wrapper">
                 {peopleAll && peopleAll.map((people, index) => (
-                  <div key={index} className="people-card">
+                  <div key={people.id} className="people-card">
                     <Link to={`/${people.slug}`}>
                       <img src={people.avatar}/>
                       <div>{`${people.first_name} ${people.last_name}`}</div>

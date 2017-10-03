@@ -1,15 +1,15 @@
-export const LOAD_CHANNELS_LIST = 'LOAD_CHANNELS_LIST';
-export const LOAD_CHANNELS_LIST_SUCCESS = 'LOAD_CHANNELS_LIST_SUCCESS';
-export const LOAD_CHANNELS_LIST_FAIL = 'LOAD_CHANNELS_LIST_FAIL';
-export const LOAD_CHANNEL = 'LOAD_CHANNEL';
-export const LOAD_CHANNEL_SUCCESS = 'LOAD_CHANNEL_SUCCESS';
-export const LOAD_CHANNEL_FAIL = 'LOAD_CHANNEL_FAIL';
-export const LOAD_NEXT_CHANNEL_STORIES = 'LOAD_NEXT_CHANNEL_STORIES';
-export const LOAD_NEXT_CHANNEL_STORIES_SUCCESS = 'LOAD_NEXT_CHANNEL_STORIES_SUCCESS';
-export const LOAD_NEXT_CHANNEL_STORIES_FAIL = 'LOAD_NEXT_CHANNEL_STORIES_FAIL';
-export const CREATE_CHANNEL = 'CREATE_CHANNEL';
-export const CREATE_CHANNEL_SUCCESS = 'CREATE_CHANNEL_SUCCESS';
-export const CREATE_CHANNEL_FAIL = 'CREATE_CHANNEL_FAIL';
+const LOAD_CHANNELS_LIST = 'LOAD_CHANNELS_LIST';
+const LOAD_CHANNELS_LIST_SUCCESS = 'LOAD_CHANNELS_LIST_SUCCESS';
+const LOAD_CHANNELS_LIST_FAIL = 'LOAD_CHANNELS_LIST_FAIL';
+const LOAD_CHANNEL = 'LOAD_CHANNEL';
+const LOAD_CHANNEL_SUCCESS = 'LOAD_CHANNEL_SUCCESS';
+const LOAD_CHANNEL_FAIL = 'LOAD_CHANNEL_FAIL';
+const LOAD_NEXT_CHANNEL_STORIES = 'LOAD_NEXT_CHANNEL_STORIES';
+const LOAD_NEXT_CHANNEL_STORIES_SUCCESS = 'LOAD_NEXT_CHANNEL_STORIES_SUCCESS';
+const LOAD_NEXT_CHANNEL_STORIES_FAIL = 'LOAD_NEXT_CHANNEL_STORIES_FAIL';
+const CREATE_CHANNEL = 'CREATE_CHANNEL';
+const CREATE_CHANNEL_SUCCESS = 'CREATE_CHANNEL_SUCCESS';
+const CREATE_CHANNEL_FAIL = 'CREATE_CHANNEL_FAIL';
 const HEADER_CHANNEL_NAME = 'HEADER_CHANNEL_NAME';
 const LIKE_STORY = 'LIKE_STORY';
 const LIKE_STORY_SUCCESS = 'LIKE_STORY_SUCCESS';
@@ -26,7 +26,7 @@ const initialState = {
     loadedChannelList: false,
     loadedChannelStories: false,
   },
-  pagination: 1,
+  pagination: 2,
 };
 
 export default function channelReducer(state = initialState, action) {
@@ -48,7 +48,6 @@ export default function channelReducer(state = initialState, action) {
           loadedChannelList: action.result.status === 'success' && true
         },
         over: false,
-        pagination: 1,
         channelsArr: action.result.data,
       };
     case LOAD_CHANNELS_LIST_FAIL:
@@ -80,9 +79,7 @@ export default function channelReducer(state = initialState, action) {
         loading: {
           loadingChannelStories: false
         },
-        loaded: {
-          loadedChannelStories: action.result.status === 'success' && true
-        },
+        loaded: Object.assign({}, state.loaded, {loadedChannelStories: action.result.status === 'success'}),
         channel_slug: action.channel_slug,
         channelStories: dataStories,
       };
@@ -108,10 +105,10 @@ export default function channelReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        loaded: action.result.status === 'success' && true,       // or just true
-        over: action.result.data.stories.length === 0 && true,
+        loaded: Object.assign({}, state.loaded, {loadedChannelStories: action.result.status === 'success'}),
+        over: action.result.data.stories.length === 0,
         channelStories: [...state.channelStories, ...action.result.data.stories],
-        pagination: action.page + 1
+        pagination: state.pagination + 1
       };
     case LOAD_NEXT_CHANNEL_STORIES_FAIL:
       return {

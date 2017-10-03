@@ -28,6 +28,15 @@ const FILTER_WHO_TO_FOLLOW_PEOPLE = 'FILTER_WHO_TO_FOLLOW_PEOPLE';
 const LOAD_NEXT_PEOPLE_ALL = 'LOAD_NEXT_PEOPLE_ALL';
 const LOAD_NEXT_PEOPLE_ALL_SUCCESS = 'LOAD_NEXT_PEOPLE_ALL_SUCCESS';
 const LOAD_NEXT_PEOPLE_ALL_FAIL = 'LOAD_NEXT_PEOPLE_ALL_FAIL';
+const LOAD_NEXT_FOLLOWING = 'LOAD_NEXT_FOLLOWING';
+const LOAD_NEXT_FOLLOWING_SUCCESS = 'LOAD_NEXT_FOLLOWING_SUCCESS';
+const LOAD_NEXT_FOLLOWING_FAIL = 'LOAD_NEXT_FOLLOWING_FAIL';
+const LOAD_NEXT_FOLLOWERS = 'LOAD_NEXT_FOLLOWERS';
+const LOAD_NEXT_FOLLOWERS_SUCCESS = 'LOAD_NEXT_FOLLOWERS_SUCCESS';
+const LOAD_NEXT_FOLLOWERS_FAIL = 'LOAD_NEXT_FOLLOWERS_FAIL';
+const LOAD_NEXT_SUGGESTED = 'LOAD_NEXT_SUGGESTED';
+const LOAD_NEXT_SUGGESTED_SUCCESS = 'LOAD_NEXT_SUGGESTED_SUCCESS';
+const LOAD_NEXT_SUGGESTED_FAIL = 'LOAD_NEXT_SUGGESTED_FAIL';
 
 
 const initialState = {
@@ -37,16 +46,17 @@ const initialState = {
   people: [],
   peopleAll: [],
   loaded: {
+    loadedAllPeople: false,
     loadedFollowing: false,
     loadedFollowers: false,
     loadedSuggested: false,
     loadedPeopleBlock: false,
   },
   pagination: {
-    allPeople: 1,
-    following: 1,
-    followers: 1,
-    suggested: 1,
+    allPeople: 2,
+    following: 2,
+    followers: 2,
+    suggested: 2,
   },
   over: {
     allPeople: false,
@@ -174,13 +184,14 @@ export default function followReducer(state = initialState, action) {
       };
     case LOAD_PEOPLE_FOLLOWING_SUCCESS:
       let loaded = Object.assign({}, state.loaded, {
-        loadedFollowing: true,
+        loadedFollowing: true
       });
 
       return {
         ...state,
         loading: false,
         loaded,
+        over: Object.assign({}, state.over, {following: action.result.data.users.length === 0}),
         following: action.result.data,
       };
     case LOAD_PEOPLE_FOLLOWING_FAIL:
@@ -209,6 +220,7 @@ export default function followReducer(state = initialState, action) {
         ...state,
         loading: false,
         loaded,
+        over: Object.assign({}, state.over, {followers: action.result.data.users.length === 0}),
         followers: action.result.data,
       };
     case LOAD_PEOPLE_FOLLOWERS_FAIL:
@@ -237,6 +249,7 @@ export default function followReducer(state = initialState, action) {
         ...state,
         loading: false,
         loaded,
+        over: Object.assign({}, state.over, {suggested: action.result.data.length === 0}),
         suggested: {
           users: action.result.data
         }
@@ -249,9 +262,7 @@ export default function followReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        loaded: {
-          loadedSuggested: false
-        },
+        loaded,
         error: action.error,
       };
 
@@ -264,9 +275,9 @@ export default function followReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        loaded: Object.assign({}, state.loaded, {loadedPeopleBlock: true}),
-        peopleAll: action.result.data,
-        pagination: Object.assign({}, state.pagination, { allPeople: 2 })
+        loaded: Object.assign({}, state.loaded, {loadedAllPeople: true}),
+        over: Object.assign({}, state.over, {allPeople: action.result.data.length === 0}),
+        peopleAll: action.result.data
       };
     case LOAD_PEOPLE_ALL_FAIL:
       return {
@@ -367,15 +378,83 @@ export default function followReducer(state = initialState, action) {
       };
 
     case LOAD_NEXT_PEOPLE_ALL_SUCCESS:
-      console.log('action', action.result);
       return {
         ...state,
         loding: false,
-        over: Object.assign({}, state.over, {allPeople: action.result.data.length === 0 && true}),
+        over: Object.assign({}, state.over, {allPeople: action.result.data.length === 0}),
         pagination: Object.assign({}, state.pagination, {allPeople: state.pagination.allPeople + 1}),
-        peopleAll: [...state.peopleAll, ...action.result.data],
-        loaded: Object.assign({}, state.loaded, {loadedPeopleBlock: true})
+        peopleAll: state.peopleAll.concat(action.result.data),
+        loaded: Object.assign({}, state.loaded, {loadedAllPeople: true})
       };
+    
+    // case LOAD_NEXT_PEOPLE_ALL_FAIL:
+    //   return {
+    //     ...state,
+
+    //   }
+
+    case LOAD_NEXT_FOLLOWING:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case LOAD_NEXT_FOLLOWING_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        over: Object.assign({}, state.over, {following: action.result.data.users.length === 0}),
+        pagination: Object.assign({}, state.pagination, {following: state.pagination.following + 1}),
+        following: Object.assign({}, state.following, {users: [...state.following.users, ...action.result.data.users]}),
+        loaded: Object.assign({}, state.loaded, {loadedFollowing: true})
+      };
+
+    // case LOAD_NEXT_FOLLOWING_FAIL:
+    //   return {
+    //     ...state
+    //   }
+
+    case LOAD_NEXT_FOLLOWERS:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case LOAD_NEXT_FOLLOWERS_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        over: Object.assign({}, state.over, {followers: action.result.data.users.length === 0}),
+        pagination: Object.assign({}, state.pagination, {followers: state.pagination.followers + 1}),
+        followers: Object.assign({}, state.followers, {users: [...state.followers.users, ...action.result.data.users]}),
+        loaded: Object.assign({}, state.loaded, {loadedFollowers: true})
+      };
+
+    // case LOAD_NEXT_FOLLOWERS_FAIL:
+    //   return {
+    //     ...state
+    //   };
+
+    case LOAD_NEXT_SUGGESTED:
+      return {
+        ...state,
+        loading: true
+      };
+      
+    case LOAD_NEXT_SUGGESTED_SUCCESS:
+      return {
+        ...state,
+        loding: false,
+        over: Object.assign({}, state.over, {suggested: action.result.data.length === 0}),
+        pagination: Object.assign({}, state.pagination, {suggested: state.pagination.suggested + 1}),
+        suggested: Object.assign({}, state.suggested, {users: [...state.suggested.users, ...action.result.data]}),
+        loaded: Object.assign({}, state.loaded, {loadedSuggested: true})
+      };
+
+    // case LOAD_NEXT_SUGGESTED_FAIL:
+    //   return {
+    //     ...state
+    //   };
 
     default:
       return state;
@@ -487,7 +566,27 @@ export function filterWhoToFollowUsers(id) {
 export const getNextPeople = (user_slug, pagination) => {
   return {
     types: [LOAD_NEXT_PEOPLE_ALL, LOAD_NEXT_PEOPLE_ALL_SUCCESS, LOAD_NEXT_PEOPLE_ALL_FAIL],
-    promise: (client) => client.get('/people/all', {params: {page: pagination, user_slug}}),
-    pagination
+    promise: (client) => client.get('/people/all', {params: {page: pagination, user_slug}})
+  };
+};
+
+export const getNextFollowing = (user_slug, pagination) => {
+  return {
+    types: [LOAD_NEXT_FOLLOWING, LOAD_NEXT_FOLLOWING_SUCCESS, LOAD_NEXT_FOLLOWING_FAIL],
+    promise: (client) => client.get('/people/following', {params: {page: pagination, user_slug}})
+  };
+};
+
+export const getNextFollowers = (user_slug, pagination) => {
+  return {
+    types: [LOAD_NEXT_FOLLOWERS, LOAD_NEXT_FOLLOWERS_SUCCESS, LOAD_NEXT_FOLLOWERS_FAIL],
+    promise: (client) => client.get('/people/followers', {params: {page: pagination, user_slug}})
+  };
+};
+
+export const getNextSuggested = (user_slug, pagination) => {
+  return {
+    types: [LOAD_NEXT_SUGGESTED, LOAD_NEXT_SUGGESTED_SUCCESS, LOAD_NEXT_SUGGESTED_FAIL],
+    promise: (client) => client.get('/people/suggested', {params: {page: pagination, user_slug}})
   };
 };

@@ -8,6 +8,7 @@ import './index.scss';
 
 @connect((state) => ({
   over: state.channel.over,
+  loaded: state.channel.loaded.loadedChannelStories,
   channel_slug: state.channel.channel_slug,
   pagination: state.channel.pagination
 }), {
@@ -43,7 +44,8 @@ export default class ChannelStream extends Component {
   }
 
   render() {
-    const { channelStories } = this.props;
+    const { channelStories, loaded, over } = this.props;
+    console.log(this.props);
     const loader = (
       <div className="wrapper-loader">
         <div className="loader">
@@ -61,34 +63,37 @@ export default class ChannelStream extends Component {
           createStory={this.props.createStory}
           reloadStream={this.reloadStreamChannel}
         />
-        <InfiniteScroll
-          loadMore={this.load}
-          hasMore={true}
-          threshold={50}
-          loader={loader}
-        >
-          { channelStories && channelStories.map((story, index) => (
-            <Post
-              key={index}
-              id={story.id}
-              post={story.text}
-              user={story.user}
-              date={story.date}
-              images={story.images}
-              likes={story.likes}
-              books={story.books}
-              loudness={story.loudness}
-              visibility={story.visibility}
-              comments={story.comments}
-              paginationComment={story.paginationComment}
-              counts={story.counts}
-              likeFunc={this.like}
-              showMoreCommentsFunc={this.showMoreComments}
-              authorizedUser={this.props.authorizedUser}
-              requestedUser={this.props.requestedUser}
-            />
-        ))}
-        </InfiniteScroll>
+        {loaded 
+          ? <InfiniteScroll
+            loadMore={this.load}
+            hasMore={true}
+            threshold={50}
+            loader={over ? null : loader}
+          >
+            { channelStories && channelStories.map((story, index) => (
+              <Post
+                key={index}
+                id={story.id}
+                post={story.text}
+                user={story.user}
+                date={story.date}
+                images={story.images}
+                likes={story.likes}
+                books={story.books}
+                loudness={story.loudness}
+                visibility={story.visibility}
+                comments={story.comments}
+                paginationComment={story.paginationComment}
+                counts={story.counts}
+                likeFunc={this.like}
+                showMoreCommentsFunc={this.showMoreComments}
+                authorizedUser={this.props.authorizedUser}
+                requestedUser={this.props.requestedUser}
+              />
+            ))}
+          </InfiniteScroll>
+        : loader
+        }
       </div>
     );
   }

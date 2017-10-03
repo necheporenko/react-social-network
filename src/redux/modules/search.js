@@ -9,12 +9,17 @@ const SEARCH_STORY = 'SEARCH_STORY';
 const SEARCH_STORY_SUCCESS = 'SEARCH_STORY_SUCCESS';
 const SEARCH_STORY_FAIL = 'SEARCH_STORY_FAIL';
 const CLEAR_USER_RESULT = 'CLEAR_USER_RESULT';
+const SEARCH_NEXT_PEOPLE = 'SEARCH_NEXT_PEOPLE';
+const SEARCH_NEXT_PEOPLE_SUCCESS = 'SEARCH_NEXT_PEOPLE_SUCCESS';
+const SEARCH_NEXT_PEOPLE_FAIL = 'SEARCH_NEXT_PEOPLE_FAIL'
 
 const initialState = {
   query: '',
   foundUsers: [],
   foundBooks: [],
   foundStories: [],
+  pagination: 2,
+  over: false
 };
 
 export default function bookReducer(state = initialState, action) {
@@ -29,6 +34,8 @@ export default function bookReducer(state = initialState, action) {
       return {
         ...state,
         searching: true,
+        pagination: 2,
+        over: false
       };
     case SEARCH_USER_SUCCESS:
       return {
@@ -86,6 +93,25 @@ export default function bookReducer(state = initialState, action) {
         foundUsers: [],
       };
 
+
+    case SEARCH_NEXT_PEOPLE:
+      return {
+        ...state
+      };
+
+    case SEARCH_NEXT_PEOPLE_SUCCESS:
+      return {
+        ...state,
+        over: action.result.data.users.length === 0,
+        foundUsers: [...state.foundUsers, ...action.result.data.users],
+        pagination: state.pagination + 1
+      };
+
+    // case SEARCH_NEXT_PEOPLE_FAIL:
+    //   return {
+    //     ...state,
+    //   };
+
     default:
       return state;
   }
@@ -135,4 +161,11 @@ export function clearUserResult() {
     type: CLEAR_USER_RESULT
   };
 }
+
+export const getNextUsers = (str, pagination) => {
+  return {
+    types: [SEARCH_NEXT_PEOPLE, SEARCH_NEXT_PEOPLE_SUCCESS, SEARCH_NEXT_PEOPLE_FAIL],
+    promise: (client) => client.get('/search/users', { params: { q: str, page: pagination }})
+  };
+};
 
