@@ -167,18 +167,21 @@ export default class SubHeader extends Component {
         <div className="wrapper">
 
           <div className="subHeader-userAvatar">
-            <Link to={`/${slug}`} style={{boxShadow: id ? '0px 1px 3px 0px rgba(0, 0, 0, 0.15)' : 'none'}}>
-              {avatar230 && <img src={avatar230}/>}
-            </Link>
+            <Link
+              to={`/${slug}`}
+              style={{
+                boxShadow: id ? '0px 1px 3px 0px rgba(0, 0, 0, 0.15)' : 'none',
+                background: avatar230 ? `url(${avatar230})` : '#fff'
+              }}>
+              {/*{avatar230 && <img src={avatar230}/>}*/}
 
-            <div className="subHeader-add">
               {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
-              <div>
+              <div className="subHeader-add">
                 <input type="file" onChange={(e) => this.handleAvatarChange(e)} ref={(el) => this.inputAvatar = el}/>
                 <a href="#"><i/>Update Profile Photo</a>
               </div>
               }
-            </div>
+            </Link>
           </div>
 
           <div className="subHeader-cover">

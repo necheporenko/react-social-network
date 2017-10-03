@@ -36,13 +36,86 @@
 
 .subHeader-userAvatar {
   z-index: 10;
-  width: 230px;
-  height: 230px;
-  overflow: hidden;
+  //width: 230px;
+  //height: 230px;
   border: 4px solid #fff;
   border-radius: 50%;
-  position: relative;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, .3);
+  //overflow: hidden;
+  //position: relative;
+
+  .inside {
+    position: absolute;
+    top: 200px;
+    width: 230px;
+    height: 53px;
+    opacity: 0;
+    left: 40px;
+    background: yellow;
+  }
+
+  > a {
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+
+    &:hover {
+      .subHeader-add {
+        opacity: 0.8;
+        transform: scale(1);
+      }
+      .inside {
+        opacity: 1;
+      }
+    }
+
+    .subHeader-add {
+      position: absolute;
+      bottom: 0;
+      width: 230px;
+      height: 53px;
+      background: rgba(0, 0, 0, 0.9);
+      margin: 0 4px;
+      opacity: 0;
+      //transition: all 200ms ease-in-out;
+      transform: scale(0);
+
+      input {
+        position: absolute;
+        top: 0;
+        width: 230px;
+        height: 53px;
+        opacity: 0;
+        cursor: pointer;
+      }
+
+      a {
+        font-size: 12px;
+        border: 0;
+        box-shadow: none;
+        color: #fff;
+        //font-weight: 500;
+        padding: 15px;
+        padding-left: 26px;
+        padding-top: 10px;
+
+        &:hover {
+          color: #fff;
+        }
+
+        i {
+          margin-left: 20px;
+          margin-right: 5px;
+        }
+      }
+
+      //&:hover {
+      //  opacity: 1;
+      //}
+    }
+  }
 
   a,
   img {
@@ -53,55 +126,6 @@
     cursor: pointer;
   }
 
-  &:hover {
-    .subHeader-add {
-      opacity: 0.8;
-    }
-  }
-
-  .subHeader-add {
-    position: absolute;
-    bottom: 0;
-    width: 230px;
-    height: 53px;
-    background: rgba(0, 0, 0, 0.9);
-    margin: 0 4px;
-    opacity: 0;
-    transition: all 200ms ease-in-out;
-
-    input {
-      position: absolute;
-      top: 0;
-      width: 230px;
-      height: 53px;
-      opacity: 0;
-      cursor: pointer;
-    }
-
-    a {
-      font-size: 12px;
-      border: 0;
-      box-shadow: none;
-      color: #fff;
-      //font-weight: 500;
-      padding: 15px;
-      padding-left: 26px;
-      padding-top: 10px;
-
-      &:hover {
-        color: #fff;
-      }
-
-      i {
-        margin-left: 20px;
-        margin-right: 5px;
-      }
-    }
-
-    &:hover {
-      opacity: 1;
-    }
-  }
 }
 
 .subHeader-bookName {

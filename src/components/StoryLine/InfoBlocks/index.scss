@@ -259,8 +259,20 @@
     }
 
     .markdown-human-card {
+      h1 {
+        margin-bottom: 15px;
+      }
+
       p:nth-child(3) {
         font-size: 10px;
+      }
+
+      hr:nth-child(7) {
+        margin-bottom: 0;
+      }
+
+      p:nth-child(8) {
+        margin-top: 5px;
       }
     }
   }

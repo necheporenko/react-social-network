@@ -94,12 +94,11 @@ b {
   span {
     content: '';
     display: inline-block;
-    background: $sprite;
-    background-position: -153px -529px;
-    height: 14px;
-    width: 10px;
+    background: $sprite no-repeat -62px -221px;
+    height: 19px;
+    width: 6px;
     position: absolute;
-    top: 6px;
+    top: 3px;
     right: 8px;
 
     &::before {
@@ -108,8 +107,8 @@ b {
       border-left: 1px solid #D9D9D9;
       height: 25px;
       position: absolute;
-      top: -6px;
-      left: -7px;
+      top: -3px;
+      left: -8px;
     }
   }
 }
