@@ -87,10 +87,9 @@ export default class Navigation extends Component {
             }
             <div
               className="btn-following"
-              onClick={isFollowing ?
-                () => this.unfollow(id)
-                :
-                () => this.follow(id)
+              onClick={isFollowing
+                ? () => this.unfollow(id)
+                : () => this.follow(id)
               }>
               <div>
                 {isFollowing ? 'Following' : 'Follow'}

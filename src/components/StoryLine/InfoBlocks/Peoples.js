@@ -10,12 +10,21 @@ import {showActivePeopleTab} from '../../../redux/modules/form';
 })
 
 export default class Peoples extends Component {
+  _onPeopleInfoBlockClick(e) {
+    if (e.target.tagName === 'A' || e.target.tagName === 'IMG') {
+      window.scrollTo(0, 0);
+    }
+  }
+
   render() {
     const {people, following, followers, loaded, requestedUser} = this.props;
 
     return (
       loaded.loadedPeopleBlock &&
-      <div className="infoblocks-peoples">
+      <div 
+        className="infoblocks-peoples" 
+        onClick={(e) => this._onPeopleInfoBlockClick(e)}
+      >
         <div>
           <div className="title-infoblocks">
             <span className="peoples-icon"/>
