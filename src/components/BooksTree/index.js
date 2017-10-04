@@ -6,7 +6,8 @@ import {
   load as loadBookTree,
   show as showBookStories,
   move as moveBook,
-  clearBookStories
+  clearBookStories,
+  showSubBooksCurrentBook
 } from '../../redux/modules/book';
 import {clearStories} from '../../redux/modules/story';
 import {gData} from './util';
@@ -21,7 +22,8 @@ import './draggable.scss';
   showBookStories,
   moveBook,
   clearBookStories,
-  clearStories
+  clearStories,
+  showSubBooksCurrentBook
 })
 
 class BooksTree extends Component {
@@ -33,6 +35,7 @@ class BooksTree extends Component {
       'onDrop',
       'onExpand',
       'clearStream',
+      'showSubBooks'
     ].forEach((name) => (this[name] = this[name].bind(this)));
 
     this.state = {
@@ -152,6 +155,11 @@ class BooksTree extends Component {
     this.props.clearStories();
   }
 
+  showSubBooks(subboks) {
+    console.log(subboks);
+    this.props.showSubBooksCurrentBook(subboks);
+  }
+
   render() {
     const {path} = this.props;
     const slug = this.props.requestedUserSlug || this.props.authorizedUserSlug;
@@ -166,11 +174,19 @@ class BooksTree extends Component {
               className={[[`${this.onPick(item)}`], [`${path}` === `${`/${slug}/books/${item.key}`}` ? 'active' : null]]}
               disabled={item.no_drag}
             >
+              {/*<Link*/}
+                {/*to={`/${slug}/books/${item.key}`}*/}
+                {/*draggable={false}*/}
+                {/*onClick={this.clearStream}*/}
+                {/*// onClick={() => this.showBookStories(item.key)}*/}
+              {/*>*/}
+                {/*{item.name}*/}
+              {/*</Link>*/}
               <Link
-                to={`/${slug}/books/${item.key}`}
+                // to={`/${slug}/books/${item.key}`}
                 draggable={false}
-                onClick={this.clearStream}
-                // onClick={() => this.showBookStories(item.key)}
+                // onClick={this.clearStream}
+                onClick={() => this.showSubBooks(item.children)}
               >
                 {item.name}
               </Link>
@@ -183,7 +199,8 @@ class BooksTree extends Component {
         <div className="draggable-container">
           <Tree
             expandedKeys={this.state.expandedKeys}
-            onExpand={this.onExpand} autoExpandParent={this.state.autoExpandParent}
+            onExpand={this.onExpand}
+            autoExpandParent={this.state.autoExpandParent}
             draggable
             onDragStart={this.onDragStart}
             onDragEnter={this.onDragEnter}

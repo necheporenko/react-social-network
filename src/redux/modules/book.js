@@ -30,6 +30,7 @@ const VIEW_MORE_COMMENTS = 'VIEW_MORE_COMMENTS';
 const VIEW_MORE_COMMENTS_SUCCESS = 'VIEW_MORE_COMMENTS_SUCCESS';
 const VIEW_MORE_COMMENTS_FAIL = 'VIEW_MORE_COMMENTS_FAIL';
 // const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
+const SHOW_SUBBOKS_CURRENT_BOOK = 'SHOW_SUBBOKS_CURRENT_BOOK';
 
 const initialState = {
   bookTreeArr: [],
@@ -42,6 +43,7 @@ const initialState = {
   pagination: 2,
   uploading: false,
   bookPage: {},
+  subBooksArr: [],
 };
 
 export default function bookReducer(state = initialState, action) {
@@ -61,6 +63,7 @@ export default function bookReducer(state = initialState, action) {
         loading: false,
         loaded,
         bookTreeArr: action.result.data,
+        subBooksArr: action.result.data[0].children,
         over: false,
       };
     case LOAD_BOOKTREE_FAIL:
@@ -319,6 +322,13 @@ export default function bookReducer(state = initialState, action) {
       };
     }
 
+    case SHOW_SUBBOKS_CURRENT_BOOK: {
+      return {
+        ...state,
+        subBooksArr: action.subbooks
+      };
+    }
+
     default:
       return state;
   }
@@ -344,7 +354,7 @@ export function clearBookTree() {
 export function load(user_slug) {
   return {
     types: [LOAD_BOOKTREE, LOAD_BOOKTREE_SUCCESS, LOAD_BOOKTREE_FAIL],
-    promise: (client) => client.get('/books', { params: { user_slug }}),
+    promise: (client) => client.get('/books/tree', { params: { user_slug }}),
   };
 }
 
@@ -431,3 +441,10 @@ export const getNextBooks = (user_slug, pagination) => {
     promise: (client) => client.get('/books', {params: {page: pagination, user_slug}})
   };
 };
+
+export function showSubBooksCurrentBook(subbooks) {
+  return {
+    type: SHOW_SUBBOKS_CURRENT_BOOK,
+    subbooks
+  };
+}

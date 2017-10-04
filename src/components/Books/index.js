@@ -28,7 +28,7 @@ const BookCard = ({book, history, requestedUser}) => {
       <div className="authorUser">
         <img src={requestedUser.avatar32} alt=""/>
       </div>
-      
+
       <div onClick={onBookClick} className="book-edit">
         <EditBook
           book_name={name}
@@ -89,44 +89,45 @@ const BookCard = ({book, history, requestedUser}) => {
 
 class Books extends Component {
   render() {
-    const {bookTreeArr, requestedUser, loaded, history, fixedBlocks} = this.props;
+    const {bookTreeArr, requestedUser, loaded, history, fixedBlocks, subBooksArr} = this.props;
     const loader = <Loader marginTop="10px"/>;
 
     return (
       loaded.loadedBookTree &&
       <div className="books contents">
-        <div 
+        <div
           className="sidebar-books"
           style={{
             position: fixedBlocks ? 'fixed' : null,
             top: fixedBlocks ? 118 : null
-        }}>
+          }}>
           <div className="sidebar">
             <ul>
               <Link onlyActiveOnIndex={true} to={`/${requestedUser.slug}/books`} activeClassName="active">
-                <li>All books</li>
+                <li>Primary Books</li>
               </Link>
             </ul>
           </div>
           <BooksTreeContainer
             bookTreeArr={bookTreeArr}
-            title="ALL BOOKS"
+            title="Primary Books"
           />
           {/*<div className="title-new-book" style={{marginLeft: '26px'}}>+ Create new book*/}
           {/*<AddBook/>*/}
           {/*</div>*/}
 
         </div>
-        <div 
-          className="common-lists" 
-          style={{marginLeft: fixedBlocks ? 240 : null}}>
+        <div
+          className="common-lists"
+          style={{marginLeft: fixedBlocks ? 240 : null}}
+        >
           <InfiniteScroll
             hasMore={true}
             threshold={50}
             loader={loader}
           >
             <div className="wrapper">
-              {bookTreeArr[0].children.map(book => (
+              {subBooksArr.length > 0 && subBooksArr.map(book => (
                 <BookCard
                   key={book.key}
                   book={book}
@@ -136,6 +137,7 @@ class Books extends Component {
               ))}
             </div>
           </InfiniteScroll>
+
         </div>
       </div>
     );

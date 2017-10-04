@@ -10,6 +10,7 @@ import Books from '../components/Books';
   bookTreeArr: state.book.bookTreeArr,
   path: state.routing.locationBeforeTransitions.pathname,
   loaded: state.book.loaded,
+  subBooksArr: state.book.subBooksArr,
 }), {
   getUser,
   loadBookTree,
@@ -30,7 +31,7 @@ export default class BooksContainer extends Component {
   }
 
   render() {
-    const {requestedUser, router, bookTreeArr, loaded, fixedBlocks} = this.props;
+    const {requestedUser, router, bookTreeArr, loaded, fixedBlocks, subBooksArr} = this.props;
 
     return (
       <div>
@@ -42,6 +43,7 @@ export default class BooksContainer extends Component {
           requestedUser={requestedUser}
           loaded={loaded}
           history={router}
+          subBooksArr={subBooksArr}
           fixedBlocks={fixedBlocks}
         />
       </div>
