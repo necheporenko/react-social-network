@@ -91,7 +91,8 @@ export default class BookPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      scrollTop: 0,
+      showSmallNavigation: false,
+      // scrollTop: 0,
       // settings: this.props.bookSettings,
       file: '',
       dropdownUserCover: false,
@@ -144,8 +145,13 @@ export default class BookPage extends Component {
 
   handleScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    // console.log(scrollTop);
-    this.setState({scrollTop: scrollTop});
+    const {showSmallNavigation} = this.state;
+    
+    if (scrollTop <= 236 && showSmallNavigation) {
+      this.setState({showSmallNavigation: false});
+    } else if (scrollTop > 236 && !showSmallNavigation) {
+      this.setState({showSmallNavigation: true});
+    }
   }
 
   handleSaveSettings(options, index) {
@@ -184,7 +190,7 @@ export default class BookPage extends Component {
   }
 
   zeroTop() {
-    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
   }
 
   onBlur(e) {
@@ -205,8 +211,8 @@ export default class BookPage extends Component {
   }
 
   render() {
-    // console.log(this.state);
-    const {scrollTop} = this.state;
+    console.log(this.state);
+    const {showSmallNavigation} = this.state;
     const scroll = () => {
       let Nav = 'navigation navigation-fixed';
       let booksTreeTop = 'wrapper wrapper-fixed';
@@ -214,7 +220,7 @@ export default class BookPage extends Component {
       const infoblock = 'infobloks-book';
       let wrapperInfoBlock;
 
-      if (scrollTop <= 250) {
+      if (!showSmallNavigation) {
         Nav = 'navigation navigation-bookpage';
         booksTreeTop = 'wrapper';
         displayUser = 'navigation-infouser navigation-infouser-book';
@@ -456,14 +462,10 @@ export default class BookPage extends Component {
             displayUser={chooseScroll.show}
           />
 
-          <div className="navigation-wrap book-nav">
-            <ul>
-              <li>
-                <Link onClick={() => this.zeroTop()}>
-                  {name}
-                </Link>
-              </li>
-            </ul>
+          <div className="navigation-wrap book-nav"> 
+            <Link onClick={() => this.zeroTop()}> 
+              {name} 
+            </Link> 
           </div>
 
           <div

@@ -85,6 +85,7 @@
     //z-index: 12;
 
     &:hover, &.active {
+      cursor: pointer;
       text-decoration: none;
       border-bottom: 3px solid;
       border-color: inherit;
@@ -135,7 +136,6 @@
   .book-nav {
     margin: 0 auto;
     position: static;
-    margin-top: 15px;
 
     a {
       font-size: 24px;
