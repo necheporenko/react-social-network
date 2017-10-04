@@ -5,12 +5,18 @@ import './index.scss';
 
 class PhotosProfile extends Component {
   render() {
+    const {fixedBlocks} = this.props;
     return (
       <div className="photos contents">
 
-        <PhotosMenu />
+        <PhotosMenu 
+          fixedBlocks={fixedBlocks}
+        />
 
-        <div className="common-lists photos-lists">
+        <div 
+          className="common-lists photos-lists"
+          style={{marginLeft: fixedBlocks ? 240 : null}}
+        >
           <div className="wrapper">
 
             {PHOTOS.map((photo, index) => (

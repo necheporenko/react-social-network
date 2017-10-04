@@ -34,13 +34,13 @@ export default class TokensContainer extends Component {
   }
 
   render() {
-    const {requestedUser} = this.props;
+    const {requestedUser, fixedBlocks} = this.props;
     return (
       <div>
         <Helmet
           title={`${requestedUser.first_name} ${requestedUser.last_name} - Documents`}
         />
-        {this.props.children}
+        {React.cloneElement(this.props.children, {fixedBlocks})}
       </div>
     );
   }

@@ -201,7 +201,7 @@ export default class Box extends Component {
 
   render() {
     const {scrollTop} = this.state;
-    const {box} = this.props;
+    const {box, fixedBlocks} = this.props;
     const {slug, first_name, last_name} = this.props.requestedUser;
     const fullName = `${first_name} ${last_name}`;
 
@@ -224,9 +224,13 @@ export default class Box extends Component {
     return (
       <div className={navigation.posTop}>
         <DocumentsMenu
+          fixedBlocks={fixedBlocks}
           sidebar={navigation.sidebar}
         />
-        <div className="testtt">
+        <div
+          className="testtt"
+          style={{marginLeft: fixedBlocks ? 240 : null}}
+        >
           {box.id &&
           <div style={{display: 'flex'}} className="wrapper-human-card">
             <div className="human-card human-card-preview">

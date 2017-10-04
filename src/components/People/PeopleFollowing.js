@@ -66,13 +66,18 @@ class PeopleFollowing extends Component {
   }
 
   render() {
-    const {following, loaded, over} = this.props;
+    const {following, loaded, over, fixedBlocks} = this.props;
     const loader = <Loader marginTop="10px"/>;
 
     return (
       <div className="people contents">
-        <PeopleMenu/>
-        <div className="common-lists people-lists">
+        <PeopleMenu 
+          fixedBlocks={fixedBlocks}
+        />
+        <div
+          className="common-lists people-lists"
+          style={{marginLeft: fixedBlocks ? 240 : null}}
+        >
           {loaded 
             ? <InfiniteScroll
               loadMore={this.load}

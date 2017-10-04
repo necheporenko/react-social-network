@@ -10,10 +10,16 @@ import './index.scss';
 
 export default class PeopleMenu extends Component {
   render() {
+    const {fixedBlocks} = this.props;
     const {slug} = this.props.requestedUser;
 
     return (
-      <div className="sidebar people-nav">
+      <div 
+        className="sidebar people-nav"
+        style={{
+          position: fixedBlocks ? 'fixed' : null,
+          top: fixedBlocks ? 118 : null
+      }}>
         <ul>
           <Link onlyActiveOnIndex={true} to={`/${slug}/people`} activeClassName="active">
             <li>All people</li>

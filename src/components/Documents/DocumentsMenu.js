@@ -38,12 +38,17 @@ export default class DocumentsMenu extends Component {
 
   render() {
     const {isOpen} = this.state;
-    const {boxes, path} = this.props;
+    const {boxes, path, fixedBlocks} = this.props;
     const {slug} = this.props.requestedUser;
     const findBoxes = path.indexOf('/documents/boxes');
 
     return (
-      <div className="sidebar documents-nav">
+      <div
+        className="sidebar documents-nav"
+        style={{
+          position: fixedBlocks ? 'fixed' : null,
+          top: fixedBlocks ? 118 : null
+      }}>
         <div className={this.props.sidebar}>
           <ul>
             {slug === this.props.authorizedUser.slug &&

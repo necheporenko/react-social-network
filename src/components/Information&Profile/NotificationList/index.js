@@ -29,7 +29,9 @@ class NotificationList extends Component {
     this.load = this.load.bind(this);
   }
 
-  load() {
+  load(e) {
+    console.log('scrollTop', document.documentElement.scrollTop);
+
     const {hasMoreNotifications, loadNextNotifications, pagination} = this.props;
 
     if (hasMoreNotifications) {
@@ -40,10 +42,9 @@ class NotificationList extends Component {
   render() {
     const { notifications, loaded, hasMoreNotifications } = this.props;
     const loader = <Loader marginTop="10px"/>;
-    console.log(notifications);
-
+    
     return (
-      <div className="notification">
+      <div className="notifications">
         <Helmet title="Notifications"/>
 
         <div className="notification-box notification-box-list">

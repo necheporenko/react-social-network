@@ -54,8 +54,11 @@ export default class UserContainer extends Component {
           authorizedUser={authorizedUser}
           showSmallNavigation={showSmallNavigation}
         />
-        <div style={{ marginTop: (showSmallNavigation ? 68 : 20), minHeight: 849 }}>
-          {this.props.children}
+        <div style={{ 
+          marginTop: showSmallNavigation ? 68 : 20,
+          minHeight: 880
+        }}>
+          {React.cloneElement(this.props.children, {fixedBlocks: this.state.showSmallNavigation})}
         </div>
       </div>
     );

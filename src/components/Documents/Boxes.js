@@ -4,11 +4,18 @@ import './index.scss';
 
 export default class Boxes extends Component {
   render() {
+    const {fixedBlocks} = this.props;
+
     return (
       <div className="tokens contents">
-        <DocumentsMenu/>
+        <DocumentsMenu
+          fixedBlocks={fixedBlocks}
+        />
 
-        <div className="common-lists tokens-lists">
+        <div
+          className="common-lists tokens-lists"
+          style={{marginLeft: fixedBlocks ? 240 : null}}
+        >
           <div>No boxes to see</div>
         </div>
       </div>

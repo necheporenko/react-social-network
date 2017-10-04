@@ -9,10 +9,16 @@ import './index.scss';
 
 export default class PhotosMenu extends Component {
   render() {
+    const { fixedBlocks } = this.props;
     const { slug } = this.props.authorizedUser;
 
     return (
-      <div className="sidebar">
+      <div 
+        className="sidebar"
+        style={{
+          position: fixedBlocks ? 'fixed' : null,
+          top: fixedBlocks ? 118 : null
+      }}>
         <ul>
           {/* <Link onlyActiveOnIndex={true} to={link + '/photos'} activeClassName="active"> */}
           <Link onlyActiveOnIndex={true} to={`/${slug}/photos`} activeClassName="active">

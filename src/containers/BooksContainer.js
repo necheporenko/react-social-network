@@ -30,7 +30,7 @@ export default class BooksContainer extends Component {
   }
 
   render() {
-    const {requestedUser, router, bookTreeArr, loaded} = this.props;
+    const {requestedUser, router, bookTreeArr, loaded, fixedBlocks} = this.props;
 
     return (
       <div>
@@ -42,6 +42,7 @@ export default class BooksContainer extends Component {
           requestedUser={requestedUser}
           loaded={loaded}
           history={router}
+          fixedBlocks={fixedBlocks}
         />
       </div>
     );

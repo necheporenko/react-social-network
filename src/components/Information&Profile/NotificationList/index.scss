@@ -22,8 +22,9 @@
 //}
 /* -=== ScrollBar ===- */
 
-.notification {
+.notifications {
   width: 600px;
+  height: 100%;
   margin: 70px auto 0;
 
   .additional-title {
@@ -34,8 +35,7 @@
 
   .notification-box {
     padding-bottom: 5px;
-    height: 90%;
-    position: fixed;
+    height: 100%;
     width: 600px;
     background: #fff;
     border-radius: 2px;
@@ -45,6 +45,8 @@
   .notification-box-list {
     ul {
       max-height: 95%;
+      overflow: hidden;
+      // max-height: 77%;
     }
   }
 }

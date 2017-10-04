@@ -930,7 +930,6 @@ export function getUserNotifications() {
 }
 
 export function loadNextNotifications(page) {
-  console.log(page);
   return {
     types: [LOAD_NEXT_NOTIFICATIONS, LOAD_NEXT_NOTIFICATIONS_SUCCESS, LOAD_NEXT_NOTIFICATIONS_FAIL],
     promise: (client) => client.get('/notifications', { params: { page }})

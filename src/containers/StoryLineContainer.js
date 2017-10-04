@@ -46,20 +46,15 @@ import StoryLine from '../components/StoryLine';
 export default class StoryLineContainer extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      fixedBlocks: false
-    };
-
+    console.log('coonstructor story line');
     this.requests = this.requests.bind(this);
     this.clearState = this.clearState.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
     const {path, requestedUser, requestedUserProfile} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-    window.addEventListener('scroll', this.handleScroll);
+    // window.addEventListener('scroll', this.handleScroll);
     if (findSlug !== requestedUser.slug) {
       this.clearState();
       this.requests(findSlug);
@@ -68,22 +63,7 @@ export default class StoryLineContainer extends Component {
       this.requests(findSlug);
     }
   }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll() {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const {fixedBlocks} = this.state;
-
-    if (scrollTop <= 236 && fixedBlocks) {
-      this.setState({fixedBlocks: false});
-    } else if (scrollTop > 236 && !fixedBlocks) {
-      this.setState({fixedBlocks: true});
-    }
-  }
-
+  
   componentDidUpdate(prevProps) {
     const {path, requestedUser} = this.props;
     if (prevProps.path !== path) {
@@ -114,7 +94,8 @@ export default class StoryLineContainer extends Component {
   }
 
   render() {
-    const {fixedBlocks} = this.state;
+    const {fixedBlocks} = this.props;
+
     const {
       requestedUser,
       authorizedUser,

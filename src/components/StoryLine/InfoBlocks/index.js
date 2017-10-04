@@ -11,7 +11,9 @@ import './index.scss';
 }), {})
 
 class InfoBloks extends Component {
+
   render() {
+
     return (
       <div className="infobloks">
         <Cutaway

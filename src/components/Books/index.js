@@ -89,13 +89,18 @@ const BookCard = ({book, history, requestedUser}) => {
 
 class Books extends Component {
   render() {
-    const {bookTreeArr, requestedUser, loaded, history} = this.props;
+    const {bookTreeArr, requestedUser, loaded, history, fixedBlocks} = this.props;
     const loader = <Loader marginTop="10px"/>;
 
     return (
       loaded.loadedBookTree &&
       <div className="books contents">
-        <div className="sidebar-books">
+        <div 
+          className="sidebar-books"
+          style={{
+            position: fixedBlocks ? 'fixed' : null,
+            top: fixedBlocks ? 118 : null
+        }}>
           <div className="sidebar">
             <ul>
               <Link onlyActiveOnIndex={true} to={`/${requestedUser.slug}/books`} activeClassName="active">
@@ -112,26 +117,25 @@ class Books extends Component {
           {/*</div>*/}
 
         </div>
-        <div className="common-lists">
-          {true 
-            ? <InfiniteScroll
-              hasMore={true}
-              threshold={50}
-              loader={loader}
-            >
-              <div className="wrapper">
-                {bookTreeArr[0].children.map(book => (
-                  <BookCard
-                    key={book.key}
-                    book={book}
-                    history={history}
-                    requestedUser={requestedUser}
-                  />
-                ))}
-              </div>
-            </InfiniteScroll>
-            : <Loader marginTop="52px"/>
-          }
+        <div 
+          className="common-lists" 
+          style={{marginLeft: fixedBlocks ? 240 : null}}>
+          <InfiniteScroll
+            hasMore={true}
+            threshold={50}
+            loader={loader}
+          >
+            <div className="wrapper">
+              {bookTreeArr[0].children.map(book => (
+                <BookCard
+                  key={book.key}
+                  book={book}
+                  history={history}
+                  requestedUser={requestedUser}
+                />
+              ))}
+            </div>
+          </InfiniteScroll>
         </div>
       </div>
     );
