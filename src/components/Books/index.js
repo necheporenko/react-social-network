@@ -28,18 +28,17 @@ const BookCard = ({book, history, requestedUser}) => {
       <div className="authorUser">
         <img src={requestedUser.avatar32} alt=""/>
       </div>
+      
+      <div onClick={onBookClick} className="book-edit">
+        <EditBook
+          book_name={name}
+          book_slug={key}
+        />
+      </div>
 
       <div className="title-infoblocks-book">
-        <div>
-          <div className="book-name">{name}</div>
-          <div className="book-author">{`${requestedUser.first_name} ${requestedUser.last_name}`}</div>
-        </div>
-        <div onClick={onBookClick} className="book-edit">
-          <EditBook
-            book_name={name}
-            book_slug={key}
-          />
-        </div>
+        <div className="book-name">{name}</div>
+        <div className="book-author">{`${requestedUser.first_name} ${requestedUser.last_name}`}</div>
       </div>
 
       {/*<div className="book-quantity">*/}
@@ -48,10 +47,10 @@ const BookCard = ({book, history, requestedUser}) => {
 
       <div className="book-info">
         <ul>
-          <li><i className="infobook-icon-visibility"/><span>{counts ? counts.stories : 0}</span><i className="stories-icon-sm"/>·</li>
-          <li><span>{counts ? counts.sub_books : 0}</span><i className="subbooks-icon-sm"/>·</li>
-          <li><span>{counts ? counts.followers : 0}</span><i className="followers-icon-sm"/>·</li>
-          <li><span>{counts ? counts.images : 0}</span><i className="photos-icon-sm"/></li>
+          <li><span>{counts ? counts.followers : 0}</span><i className="followers-icon-sm"/></li>
+          <li>·<span>{counts ? counts.stories : 0}</span><i className="stories-icon-sm"/></li>
+          <li>·<span>{counts ? counts.images : 0}</span><i className="photos-icon-sm"/></li>
+          <li>·<span>{counts ? counts.sub_books : 0}</span><i className="subbooks-icon-sm"/></li>
         </ul>
         {/*<hr />*/}
       </div>
