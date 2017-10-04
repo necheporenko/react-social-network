@@ -167,8 +167,8 @@ export default class SubHeader extends Component {
         <div className="wrapper">
 
           <div className="subHeader-userAvatar">
-            <Link
-              to={`/${slug}`}
+            <div
+              // to={`/${slug}`}
               style={{
                 boxShadow: id ? '0px 1px 3px 0px rgba(0, 0, 0, 0.15)' : 'none',
                 background: avatar230 ? `url(${avatar230})` : '#fff'
@@ -181,7 +181,7 @@ export default class SubHeader extends Component {
                 <a href="#"><i/>Update Profile Photo</a>
               </div>
               }
-            </Link>
+            </div>
           </div>
 
           <div className="subHeader-cover">

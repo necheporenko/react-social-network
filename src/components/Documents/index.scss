@@ -131,6 +131,9 @@
   .boxes-mnu {
     li {
       padding: 7px 7px 7px 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }
@@ -586,7 +589,7 @@
   }
 
   hr:nth-child(4) {
-    margin-bottom: 0;
+    margin-bottom: 2px;
   }
 
   p:nth-child(5) {

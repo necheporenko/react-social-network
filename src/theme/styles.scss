@@ -94,12 +94,13 @@ b {
   span {
     content: '';
     display: inline-block;
-    background: $sprite no-repeat -62px -221px;
+    //background: $sprite no-repeat -62px -221px;
+    background: url('../img/Icons/3dots.svg');
     height: 19px;
     width: 6px;
     position: absolute;
     top: 3px;
-    right: 8px;
+    right: 7px;
 
     &::before {
       content: '';

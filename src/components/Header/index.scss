@@ -550,7 +550,8 @@
     //margin-right: 5px;
 
     &::before {
-      background: $sprite -62px -221px;
+      //background: $sprite -62px -221px;
+      background: url('../../img/Icons/3dots.svg');
       width: 6px;
       height: 19px;
       display: block;

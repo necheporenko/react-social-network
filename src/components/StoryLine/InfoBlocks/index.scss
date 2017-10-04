@@ -312,6 +312,7 @@
 .documents-mnu-board,
 .documents-mnu-wallet,
 .documents-mnu-box-private,
+.documents-mnu-box,
 .documents-mnu-box-bin,
 .documents-mnu-boxes {
   padding-left: 12px;
@@ -359,6 +360,17 @@
   &:before {
     //background: url('../../../img/Icons/private-box.svg');
     background: url('../../../img/Icons/signed-documents.svg');
+    height: 14px;
+    width: 14px;
+    top: 3px;
+    margin-right: 11px;
+  }
+}
+
+.documents-mnu-box {
+  &:before {
+    //background: url('../../../img/Icons/private-box.svg');
+    background: url('../../../img/Icons/box.svg');
     height: 14px;
     width: 14px;
     top: 3px;

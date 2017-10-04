@@ -85,9 +85,8 @@ export default class DocumentsMenu extends Component {
 
             <div className="boxes-mnu" style={{display: isOpen ? 'block' : 'none'}}>
               {boxes.length > 0 && boxes[0].children.filter(box => ((box.key !== 'bin') && (box.key !== 'board'))).map(box => (
-                <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`}
-                      activeClassName="active">
-                  <li className="documents-mnu-box-private">{box.name}</li>
+                <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`} activeClassName="active">
+                  <li className="documents-mnu-box">{box.name}</li>
                 </Link>
               ))}
             </div>

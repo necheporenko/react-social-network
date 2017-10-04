@@ -44,17 +44,7 @@
   //overflow: hidden;
   //position: relative;
 
-  .inside {
-    position: absolute;
-    top: 200px;
-    width: 230px;
-    height: 53px;
-    opacity: 0;
-    left: 40px;
-    background: yellow;
-  }
-
-  > a {
+  > div {
     width: 230px;
     height: 230px;
     border-radius: 50%;
