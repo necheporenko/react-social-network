@@ -90,8 +90,8 @@ const BookCard = ({book, history, requestedUser}) => {
 class Books extends Component {
   render() {
     const {bookTreeArr, requestedUser, loaded, history, fixedBlocks, subBooksArr} = this.props;
-    const loader = <Loader marginTop="10px"/>;
-
+    const loader = <Loader/>;
+    
     return (
       loaded.loadedBookTree &&
       <div className="books contents">

@@ -93,19 +93,24 @@ export default function followReducer(state = initialState, action) {
             };
           });
           break;
+          
+        case 'peopleAll':
+          followFollowing = state[action.choiceFollow].map(user => {
+            if (user.id === action.user_id) {
+              return Object.assign({}, user, {is_follow: true});
+            }
+
+            return user;
+          });
+          break;
 
         default:
-          followFollowing = Object.assign({}, state[`${action.choiceFollow}`], {
-            users: state[`${action.choiceFollow}`].users.map((user) => {
+          followFollowing = Object.assign({}, state[action.choiceFollow], {
+            users: state[action.choiceFollow].users.map((user) => {
               if (user.id === action.user_id) {
-                return {
-                  ...user,
-                  is_follow: true
-                };
+                return Object.assign({}, user, {is_follow: true});
               }
-              return {
-                ...user
-              };
+              return user;
             })
           });
       }
@@ -113,7 +118,7 @@ export default function followReducer(state = initialState, action) {
         ...state,
         follow: true,
         whoToFollowList: followInWhoToFollowList || state.whoToFollowList,
-        [`${action.choiceFollow}`]: followFollowing || state[`${action.choiceFollow}`]
+        [action.choiceFollow]: followFollowing || state[action.choiceFollow]
       };
     case FOLLOW_USER_FAIL:
       console.log('FOLLOW_USER_FAIL', action.error);
@@ -146,19 +151,26 @@ export default function followReducer(state = initialState, action) {
             };
           });
           break;
+        
+        case 'peopleAll':
+          unfollowFollowing = state[action.choiceFollow].map(user => {
+            if (user.id === action.user_id) {
+              return Object.assign({}, user, {is_follow: false});
+            }
+
+            return user;
+          });
+          break;
+          
 
         default:
-          unfollowFollowing = Object.assign({}, state[`${action.choiceFollow}`], {
-            users: state[`${action.choiceFollow}`].users.map((user) => {
+          unfollowFollowing = Object.assign({}, state[action.choiceFollow], {
+            users: state[action.choiceFollow].users.map((user) => {
               if (user.id === action.user_id) {
-                return {
-                  ...user,
-                  is_follow: false
-                };
+                return Object.assign({}, user, {is_follow: false});
               }
-              return {
-                ...user
-              };
+
+              return user;
             })
           });
       }
@@ -167,7 +179,7 @@ export default function followReducer(state = initialState, action) {
         ...state,
         unfollow: true,
         whoToFollowList: unfollowInWhoToFollowList || state.whoToFollowList,
-        [`${action.choiceFollow}`]: unfollowFollowing || state[`${action.choiceFollow}`]
+        [action.choiceFollow]: unfollowFollowing || state[action.choiceFollow]
       };
     case UNFOLLOW_USER_FAIL:
       console.log('UNFOLLOW_USER_FAIL', action.error);

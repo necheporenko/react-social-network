@@ -5,13 +5,14 @@ import './index.scss';
 
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
-  authorizedUser: state.user.authorizedUser
+  authorizedUserId: state.user.authorizedUser.id
 }), {})
 
 export default class PeopleMenu extends Component {
   render() {
-    const {fixedBlocks} = this.props;
+    const {fixedBlocks, authorizedUserId} = this.props;
     const {slug} = this.props.requestedUser;
+    const requestedUserId = this.props.requestedUser.id;
 
     return (
       <div 
@@ -30,10 +31,10 @@ export default class PeopleMenu extends Component {
           <Link onlyActiveOnIndex={true} to={`/${slug}/people/followers`} activeClassName="active">
             <li>Followers</li>
           </Link>
-          {this.props.authorizedUser.id === this.props.requestedUser.id &&
-          <Link onlyActiveOnIndex={true} to={`/${slug}/people/suggested`} activeClassName="active">
-            <li>Find People</li>
-          </Link>
+          {authorizedUserId === requestedUserId &&
+            <Link onlyActiveOnIndex={true} to={`/${slug}/people/suggested`} activeClassName="active">
+              <li>Find People</li>
+            </Link>
           }
         </ul>
       </div>
@@ -43,5 +44,5 @@ export default class PeopleMenu extends Component {
 
 PeopleMenu.propTypes = {
   requestedUser: PropTypes.object,
-  authorizedUser: PropTypes.object,
+  authorizedUserId: PropTypes.object
 };

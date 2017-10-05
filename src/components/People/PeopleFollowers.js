@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
-import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {getUserSlug} from '../../redux/modules/user';
 import {
@@ -12,6 +11,7 @@ import {
 } from '../../redux/modules/follow';
 import PeopleMenu from './PeopleMenu';
 import Loader from '../Common/Loader';
+import UserItem from './UserItem';
 import './index.scss';
 
 @connect((state) => ({
@@ -74,36 +74,24 @@ class PeopleFollowers extends Component {
           className="common-lists people-lists"
           style={{marginLeft: fixedBlocks ? 240 : null}}
         >
-          {loaded 
-            ? <InfiniteScroll
+          {loaded &&
+            <InfiniteScroll
               loadMore={this.load}
               hasMore={true}
               threshold={50}
               loader={over ? null : loader}
             >
               <div className="wrapper">
-                {followers.users && followers.users.map((people) => (
-                  <div key={people.id} className="people-card">
-                    <Link to={`/${people.slug}`}>
-                      <img src={people.avatar}/>
-                      <div>{`${people.first_name} ${people.last_name}`}</div>
-                    </Link>
-                    <div
-                      className="btn-following"
-                      onClick={people.is_follow 
-                        ? () => this.unfollow(people.id)
-                        : () => this.follow(people.id)
-                      }>
-                      <div>
-                        {people.is_follow ? 'Following' : 'Follow'}
-                      </div>
-                      <span/>
-                    </div>
-                  </div>
+                {followers.users && followers.users.map(user => (
+                  <UserItem
+                    key={user.id}
+                    user={user}
+                    unfollowUserHandler={this.unfollow}
+                    followUserHandler={this.follow}
+                  />
                 ))}
               </div>
             </InfiniteScroll>
-            : <Loader marginTop="52px"/>
           }
         </div>
       </div>
