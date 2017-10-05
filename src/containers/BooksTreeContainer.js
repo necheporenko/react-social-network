@@ -24,7 +24,7 @@ export default class BooksTreeContainer extends Component {
 
   render() {
     const {slug} = this.props.requestedUser;
-    const {loaded, title} = this.props;
+    const {loaded, title, isLink} = this.props;
 
     return (
       <div className="bookstree" onClick={ (e) => this._onBookClick(e) }>
@@ -38,6 +38,7 @@ export default class BooksTreeContainer extends Component {
           </div>
           <BooksTree
             bookTreeArr={this.props.bookTreeArr}
+            isLink={isLink}
           />
           {/*<AddBook*/}
           {/*// loadBookTree={this.props.loadBookTree}*/}

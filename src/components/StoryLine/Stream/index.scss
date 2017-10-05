@@ -88,11 +88,15 @@
   .btn-brand {
     min-width: 22px;
     height: 13px;
-    background: #5c96d0;
+    background: #1870c8;
     line-height: 13px;
     border: 0;
     padding: 5px 25px;
     opacity: 1;
+
+    &:hover {
+      background: #1564b4;
+    }
   }
 
   .camera {
@@ -723,10 +727,11 @@
     cursor: pointer;
 
     &::before {
-      background: $sprite;
-      background-position: -22px -111px;
-      width: 18px;
-      height: 17px;
+      //background: $sprite;
+      //background-position: -22px -111px;
+      background: url('../../../img/Icons/3dots-min.svg');
+      width: 5px;
+      height: 16px;
       display: block;
       content: '';
     }

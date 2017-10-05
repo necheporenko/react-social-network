@@ -111,6 +111,7 @@ class Books extends Component {
           <BooksTreeContainer
             bookTreeArr={bookTreeArr}
             title="Primary Books"
+            isLink={false}
           />
           {/*<div className="title-new-book" style={{marginLeft: '26px'}}>+ Create new book*/}
           {/*<AddBook/>*/}

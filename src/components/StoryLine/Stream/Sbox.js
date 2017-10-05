@@ -32,6 +32,7 @@ class Sbox extends PureComponent {
       toolbarHidden: true,
       sboxVisibleElements: 'none',
       sboxFocusBtn: '#5c96d0',
+      sboxShadow: '0 1px 3px rgba(0, 0, 0, 0.15)',
       jump: '20px',
       loud: {
         quiet_log: false,
@@ -74,7 +75,7 @@ class Sbox extends PureComponent {
   };
 
   focusSboxElement() {
-    this.setState({sboxVisibleElements: 'flex', sboxFocusBtn: '#1870C8'});
+    this.setState({sboxVisibleElements: 'flex', sboxFocusBtn: '#1870C8', sboxShadow: '0px 7px 15px 2px rgba(0, 0, 0, 0.15)'});
   }
 
 
@@ -304,12 +305,12 @@ class Sbox extends PureComponent {
   // }
 
   render() {
-    const {editorContent} = this.state;
+    const {editorContent, sboxShadow} = this.state;
     const {first_name, last_name, avatar32} = this.props.authorizedUser;
     const link = `/${first_name.toLowerCase()}.${last_name.toLowerCase()}`;
 
     return (
-      <div className="sbox">
+      <div className="sbox" style={{boxShadow: sboxShadow}}>
         <Editor
           toolbarHidden={this.state.toolbarHidden}
           onFocus={this.focusSboxElement}
@@ -386,7 +387,10 @@ class Sbox extends PureComponent {
               className="btn-brand"
               type="submit"
               onClick={this.onSubmitStory}
-              style={{fontSize: '13px', backgroundColor: this.state.sboxFocusBtn}}
+              style={{
+                fontSize: '13px',
+                // backgroundColor: this.state.sboxFocusBtn
+              }}
             >Log
             </div>
             <ButtonToolbar>

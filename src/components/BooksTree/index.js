@@ -155,43 +155,35 @@ class BooksTree extends Component {
     this.props.clearStories();
   }
 
-  showSubBooks(subboks) {
+  showSubBooks(e, subboks) {
+    e.preventDefault();
     console.log(subboks);
     this.props.showSubBooksCurrentBook(subboks);
   }
 
   render() {
-    const {path} = this.props;
+    const {path, isLink} = this.props;
     const slug = this.props.requestedUserSlug || this.props.authorizedUserSlug;
     const loop = data => (
       data.map((item) => {
-          return (
-            <TreeNode
-              key={item.key}
-              items={(item.children && item.children.length) ? loop(item.children) : null}
+        return (
+          <TreeNode
+            key={item.key}
+            items={(item.children && item.children.length) ? loop(item.children) : null}
               //no_drag = {item.no_drag ? draggable={false} : null}
               //className={item.show ? 'not_show' : null}
-              className={[[`${this.onPick(item)}`], [`${path}` === `${`/${slug}/books/${item.key}`}` ? 'active' : null]]}
-              disabled={item.no_drag}
+            className={[[`${this.onPick(item)}`], [`${path}` === `${`/${slug}/books/${item.key}`}` ? 'active' : null]]}
+            disabled={item.no_drag}
             >
-              {/*<Link*/}
-                {/*to={`/${slug}/books/${item.key}`}*/}
-                {/*draggable={false}*/}
-                {/*onClick={this.clearStream}*/}
-                {/*// onClick={() => this.showBookStories(item.key)}*/}
-              {/*>*/}
-                {/*{item.name}*/}
-              {/*</Link>*/}
-              <Link
-                // to={`/${slug}/books/${item.key}`}
-                draggable={false}
-                // onClick={this.clearStream}
-                onClick={() => this.showSubBooks(item.children)}
+            <Link
+              to={`/${slug}/books/${item.key}`}
+              draggable={false}
+              onClick={e => isLink ? this.clearStream : this.showSubBooks(e, item.children)}
               >
-                {item.name}
-              </Link>
-            </TreeNode>);
-        }
+              {item.name}
+            </Link>
+          </TreeNode>);
+      }
       )
     );
     return (
@@ -218,11 +210,15 @@ class BooksTree extends Component {
   }
 }
 
-export default BooksTree;
-
 BooksTree.propTypes = {
   bookTreeArr: PropTypes.array,
   moveBook: PropTypes.func,
   clearBookStories: PropTypes.func,
   clearStories: PropTypes.func,
 };
+
+BooksTree.defaultProps = {
+  isLink: true
+};
+
+export default BooksTree;
