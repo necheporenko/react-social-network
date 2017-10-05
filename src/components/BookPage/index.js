@@ -146,7 +146,7 @@ export default class BookPage extends Component {
   handleScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const {showSmallNavigation} = this.state;
-    
+
     if (scrollTop <= 236 && showSmallNavigation) {
       this.setState({showSmallNavigation: false});
     } else if (scrollTop > 236 && !showSmallNavigation) {
@@ -171,10 +171,12 @@ export default class BookPage extends Component {
     const file = e.target.files[0];
 
     reader.onloadend = () => {
-      this.setState({
-        file: file,
-      });
-      this.props.showPopUp(true, reader.result, 'ChangeBookCoverImage');
+      this.setState({file});
+      const image = {
+        name: file.name,
+        url: reader.result
+      };
+      this.props.showPopUp(true, image, 'ChangeBookCoverImage');
       this.cleanInputCover();
     };
     reader.readAsDataURL(file);
@@ -410,7 +412,7 @@ export default class BookPage extends Component {
             className="subheader-bookpage"
             style={{
               backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
-              backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null
+              backgroundImage: cover && cover.picture_original ? `url(${cover.picture_original})` : null
             }}
           >
             <div className="subHeader-cover">
@@ -462,10 +464,10 @@ export default class BookPage extends Component {
             displayUser={chooseScroll.show}
           />
 
-          <div className="navigation-wrap book-nav"> 
-            <Link onClick={() => this.zeroTop()}> 
-              {name} 
-            </Link> 
+          <div className="navigation-wrap book-nav">
+            <Link onClick={() => this.zeroTop()}>
+              {name}
+            </Link>
           </div>
 
           <div

@@ -22,7 +22,7 @@ export function showPopUp(visible, currentImage, activePopUp) {
     type: SHOW_POPUP,
     visible,
     currentImage,
-    activePopUp
+    activePopUp,
   };
 }
 
@@ -68,7 +68,8 @@ export default function formsReducer(state = initialState, action) {
         ...state,
         visible: action.visible,
         currentImage: action.currentImage,
-        activePopUp: action.activePopUp
+        activePopUp: action.activePopUp,
+        file: action.file,
       };
     }
 

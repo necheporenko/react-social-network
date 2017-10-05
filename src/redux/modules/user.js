@@ -1,3 +1,4 @@
+import dataURItoBlob from '../../constants/dataURItoBlob';
 const LOGIN = 'LOGIN';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const LOGIN_FAIL = 'LOGIN_FAIL';
@@ -439,10 +440,13 @@ export function unfollowRequestedUser(user_id) {
   };
 }
 
-export function uploadUserCover(picture, color) {
+export function uploadUserCover(picture, color, name) {
+  const formData = new FormData();
+  if (picture) { formData.append('file', dataURItoBlob(picture), name); }
+  formData.append('color', color);
   return {
     types: [UPLOAD_USER_COVER, UPLOAD_USER_COVER_SUCCESS, UPLOAD_USER_COVER_FAIL],
-    promise: (client) => client.post('/upload/user-cover', {data: {picture, color}})
+    promise: (client) => client.post('/upload/user-cover', {data: formData})
   };
 }
 
@@ -453,10 +457,12 @@ export function uploadUserCoverBase64(userCoverBase64) {
   };
 }
 
-export function uploadAvatar(img) {
+export function uploadAvatar(picture, name) {
+  const formData = new FormData();
+  formData.append('file', dataURItoBlob(picture), name);
   return {
     types: [UPLOAD_AVATAR, UPLOAD_AVATAR_SUCCESS, UPLOAD_AVATAR_FAIL],
-    promise: (client) => client.post('/upload/avatar', {data: {img}})
+    promise: (client) => client.post('/upload/avatar', {data: formData})
   };
 }
 

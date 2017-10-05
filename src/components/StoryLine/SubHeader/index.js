@@ -38,6 +38,7 @@ const coverColors = [
   currentImage: state.forms.currentImage,
   activePopUp: state.forms.activePopUp,
   conversation: state.profile.conversation,
+  file: state.forms.file,
 }), {
   followRequestedUser,
   unfollowRequestedUser,
@@ -73,7 +74,7 @@ export default class SubHeader extends Component {
 
   setCoverColor(color) {
     this.setState({currentUserCoverColor: color});
-    this.props.uploadUserCover(null, color.substring(1));
+    this.props.uploadUserCover(null, color.substring(1), null);
   }
 
   onBlur(e) {
@@ -99,10 +100,12 @@ export default class SubHeader extends Component {
     const file = e.target.files[0];
 
     reader.onloadend = () => {
-      this.setState({
-        file: file,
-      });
-      this.props.showPopUp(true, reader.result, 'ChangeAvatar');
+      this.setState({file});
+      const image = {
+        name: file.name,
+        url: reader.result
+      };
+      this.props.showPopUp(true, image, 'ChangeAvatar');
       this.cleanInputAvatar();
     };
     reader.readAsDataURL(file);
@@ -114,10 +117,12 @@ export default class SubHeader extends Component {
     const file = e.target.files[0];
 
     reader.onloadend = () => {
-      this.setState({
-        file: file,
-      });
-      this.props.showPopUp(true, reader.result, 'ChangeCoverImage');
+      this.setState({file});
+      const image = {
+        name: file.name,
+        url: reader.result
+      };
+      this.props.showPopUp(true, image, 'ChangeCoverImage');
       this.cleanInputCover();
     };
     reader.readAsDataURL(file);
@@ -161,7 +166,7 @@ export default class SubHeader extends Component {
           className="imageCover"
           style={{
             backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
-            backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null
+            backgroundImage: cover && cover.picture_original ? `url(${cover.picture_original})` : null
           }}
         />
         <div className="wrapper">

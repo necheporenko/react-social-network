@@ -37,11 +37,9 @@ export default class ChangeCoverImage extends Component {
 
   handleSave() {
     const newImage = this.editor.getImage().toDataURL();
-    this.setState({
-      picture: newImage,
-    });
+    this.setState({picture: newImage});
     this.props.uploadUserCoverBase64(newImage);
-    this.props.uploadUserCover(newImage, null)
+    this.props.uploadUserCover(newImage, '', this.props.currentImage.name)
     .then(() => this.props.getUser(this.props.requestedUser.slug))
     .then(() => this.Close());
   }
@@ -70,7 +68,7 @@ export default class ChangeCoverImage extends Component {
               <h4>Crop it</h4>
               <AvatarEditor
                 ref={this.setEditorRef}
-                image={currentImage}
+                image={currentImage.url}
                 width={540}
                 height={68}
                 border={20}

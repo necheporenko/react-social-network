@@ -1,3 +1,4 @@
+import dataURItoBlob from '../../constants/dataURItoBlob';
 const LOAD_BOOKTREE = 'LOAD_BOOKTREE';
 const LOAD_BOOKTREE_SUCCESS = 'LOAD_BOOKTREE_SUCCESS';
 const LOAD_BOOKTREE_FAIL = 'LOAD_BOOKTREE_FAIL';
@@ -413,10 +414,14 @@ export function like(story_id) {
   };
 }
 
-export function upload(picture, color, book_id) {
+export function upload(picture, color, book_id, name) {
+  const formData = new FormData();
+  if (picture) { formData.append('file', dataURItoBlob(picture), name); }
+  formData.append('color', color);
+  formData.append('book_id', book_id);
   return {
     types: [UPLOAD_BOOK_COVER, UPLOAD_BOOK_COVER_SUCCESS, UPLOAD_BOOK_COVER_FAIL],
-    promise: (client) => client.post('/upload/book-cover', {data: {picture, color, book_id}})
+    promise: (client) => client.post('/upload/book-cover', {data: formData})
   };
 }
 

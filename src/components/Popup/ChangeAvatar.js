@@ -40,11 +40,9 @@ export default class ChangeAvatar extends Component {
 
   handleSave() {
     const newImage = this.editor.getImageScaledToCanvas().toDataURL();
-    this.setState({
-      picture: newImage,
-    });
+    this.setState({picture: newImage});
     this.props.uploadAvatarBase64(newImage);
-    this.props.uploadAvatar(newImage)
+    this.props.uploadAvatar(newImage, this.props.currentImage.name)
     .then(() => this.props.getUser(this.props.requestedUser.slug))
     .then(() => this.props.loadAuth())
     .then(() => this.props.loadStories(this.props.requestedUser.slug))
@@ -76,7 +74,7 @@ export default class ChangeAvatar extends Component {
               <div style={{width: '280px', margin: '0 auto'}}>
                 <AvatarEditor
                   ref={this.setEditorRef}
-                  image={currentImage}
+                  image={currentImage.url}
                   width={230}
                   height={230}
                   border={25}

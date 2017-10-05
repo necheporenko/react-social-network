@@ -51,7 +51,7 @@ export default class ChangeBookCoverImage extends Component {
       picture: newImage,
     });
     this.props.uploadBookCoverBase64(newImage);
-    this.props.uploadBookCover(newImage, null, this.props.bookPage.id)
+    this.props.uploadBookCover(newImage, '', this.props.bookPage.id, this.props.currentImage.name)
     // .then(() => this.props.getUser(this.props.bookCover.id))
       .then(() => this.Close());
   }
@@ -71,7 +71,7 @@ export default class ChangeBookCoverImage extends Component {
               <h4>Crop it</h4>
               <AvatarEditor
                 ref={this.setEditorRef}
-                image={currentImage}
+                image={currentImage.url}
                 width={540}
                 height={200}
                 border={20}
