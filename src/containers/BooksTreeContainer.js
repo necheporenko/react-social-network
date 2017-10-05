@@ -15,12 +15,19 @@ import '../components/BooksTree/index.scss';
 })
 
 export default class BooksTreeContainer extends Component {
+
+  _onBookClick(e) {
+    if (e.target.tagName === "A") {
+      window.scrollTo(0, 0);
+    }
+  }
+
   render() {
     const {slug} = this.props.requestedUser;
     const {loaded, title} = this.props;
 
     return (
-      <div className="bookstree">
+      <div className="bookstree" onClick={ (e) => this._onBookClick(e) }>
         {loaded.loadedBookTree &&
         <div className={this.props.booksTreeTop}>
           <div className="bookstree-title"><span className="booktree-icon"/><Link to={`/${slug}/books`}>{title}</Link>

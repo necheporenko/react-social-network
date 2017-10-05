@@ -8,7 +8,39 @@ import './index.scss';
 // let documentHeight;
 
 class StoryLine extends Component {
+  
+  constructor() {
+    super();
+
+    this.state = {};
+    this.getCoords = this.getCoords.bind(this);
+  }
+
+  getCoords() {
+    const elem = this.refs.infoblocks;
+    const box = elem.getBoundingClientRect();
+    console.log(box);
+
+    if (box.y === -51) {
+      this.setState({fixedTop: true})
+    } 
+
+    // return {
+    //   top: box.top + pageYOffset,
+    //   left: box.left + pageXOffset
+    // };
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.getCoords, false);
+  }
+  
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.getCoords);
+  }
   render() {
+    const {fixedTop} = this.state;
+    console.log(fixedTop);
     const {
       requestedUser,
       requestedUserProfile,
@@ -28,17 +60,18 @@ class StoryLine extends Component {
     return (
       <div className="storyLine">
         <div className="wrap-storyLine">
-          <div
+          <div ref="infoblocks"
             style={{
-              top: fixedBlocks ? 116 : null,
-              position: fixedBlocks ? 'fixed' : null,
-              width: 320
+              // top: fixedBlocks ? 116 : null,
+              position: fixedBlocks && fixedTop ? 'fixed' : null,
+              width: 320,
+              bottom: fixedTop ? 0 : null
+              //bottom: fixedBlocks ? 0 : null
               // left: 'calc(50% + 275px)',
               // left: '160px',
               // top: fixedBlocks ? 115 : 354 - scrollTop,
               // position: 'fixed',
             }}
-            ref={(c) => this.infoBlock = c}
           >
             <InfoBloks
               requestedUser={requestedUser}
@@ -50,7 +83,7 @@ class StoryLine extends Component {
             />
           </div>
           <Stream
-            style={{ marginLeft: fixedBlocks ? 320 : null }}
+            style={{ marginLeft: fixedBlocks && fixedTop ? 320 : null }}
             authorizedUser={authorizedUser}
             requestedUser={requestedUser}
             storiesArr={storiesArr}

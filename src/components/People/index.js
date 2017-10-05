@@ -86,7 +86,7 @@ class People extends Component {
               <div className="wrapper">
                 {peopleAll && peopleAll.map((people, index) => (
                   <div key={people.id} className="people-card">
-                    <Link to={`/${people.slug}`}>
+                    <Link onClick={() => window.scrollTo(0, 0)} to={`/${people.slug}`}>
                       <img src={people.avatar}/>
                       <div>{`${people.first_name} ${people.last_name}`}</div>
                     </Link>
