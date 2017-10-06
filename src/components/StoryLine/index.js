@@ -5,8 +5,6 @@ import InfoBloks from './InfoBlocks/index';
 // import PeoplePhotos from './InfoBlocks/PeoplePhotos';
 import './index.scss';
 
-// let documentHeight;
-
 class StoryLine extends Component {
   
   constructor() {
@@ -14,49 +12,48 @@ class StoryLine extends Component {
 
     this.state = {
       fixedTop: false,
-      fixedBottom: false,
-      scrollUp: null
+      fixedBottom: false
     };
     this.getCoords = this.getCoords.bind(this);
     this.scrollTop = 0;
+    this.topInfoBlock = 0;
   }
 
   getCoords() {
+    const {fixedBlocks} = this.props;
     const {fixedBottom, fixedTop} = this.state;
     const elem = this.refs.infoblocks;
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const box = elem.getBoundingClientRect();
+    const topInfoBlock = box.top + scrollTop;
 
-    if (scrollTop > 410) {
-      if (this.scrollTop > scrollTop && !fixedTop && box.y >= 116) {
+
+    if (fixedBlocks) {
+      if (elem.style.position === 'absolute' && topInfoBlock - scrollTop >= 115) {
         this.setState({
           fixedTop: true
         });
-      } else if (!fixedBottom && this.scrollTop < scrollTop && box.y <= -59) {
+      } else if (elem.style.position === 'absolute' && scrollTop - topInfoBlock >= 58) {
         this.setState({
           fixedBottom: true
         });
-      } else if (this.scrollTop > scrollTop && fixedBottom) {
+      } else if (elem.style.position === 'fixed' && this.scrollTop > scrollTop && fixedBottom) {
         this.setState({
-          fixedBottom: false,
-          scrollUp: true,
-          fixedTop: false
+          fixedBottom: false
         });
-      } else if (this.scrollTop < scrollTop && fixedTop) {
+      } else if (elem.style.position === 'fixed' && this.scrollTop < scrollTop && fixedTop) {
         this.setState({
-          fixedBottom: false,
-          scrollUp: false,
           fixedTop: false
         });
       }
-    } else if (scrollTop <= 237 && this.state.fixedTop && box.y === 116) {
+    } else if (!fixedBlocks && fixedTop) {
       this.setState({
-        fixedTop: false,
-        scrollUp: null
+        fixedTop: false
       });
     }
     
     this.scrollTop = scrollTop;
+    this.topInfoBlock = topInfoBlock;
   }
 
   componentDidMount() {
@@ -67,7 +64,7 @@ class StoryLine extends Component {
     window.removeEventListener('scroll', this.getCoords);
   }
   render() {
-    const {fixedTop, fixedBottom, scrollUp} = this.state;
+    const {fixedTop, fixedBottom} = this.state;
     const {
       requestedUser,
       requestedUserProfile,
@@ -84,24 +81,17 @@ class StoryLine extends Component {
       humanCard
     } = this.props;
 
-    const top = () => {
-      if (!fixedBottom && fixedTop) {
+
+    const top = () => { 
+      if (!fixedBottom && fixedTop) { 
         return 116;
-      } else if (!fixedBottom && scrollUp) {
-        return this.scrollTop - 59;
-      } else if (!fixedBottom && scrollUp === false) {
-        return this.scrollTop + 116;
+      } else if (fixedBottom && !fixedTop) { 
+        return -59; 
+      } else if (!fixedTop && !fixedBottom && this.topInfoBlock && fixedBlocks) {
+        return this.topInfoBlock;
       }
-
-      return null;
-    };
-
-    const bottom = () => {
-      if (!fixedTop && fixedBottom) {
-        return 0;
-      }
-
-      return null;
+ 
+      return null; 
     };
 
     return (
@@ -109,17 +99,11 @@ class StoryLine extends Component {
         <div className="wrap-storyLine">
           <div ref="infoblocks"
             style={{
-              //top: fixedBottom ? -59 : (fixedTop ? 116 : this.scrollTop - 59),
               top: top(),
               position: !fixedTop && !fixedBottom ? 'absolute' : 'fixed',
               width: 320,
-              // bottom: fixedTop ? null : (fixedBottom ? 0 : null)
-              bottom: bottom()
-              //bottom: fixedBlocks ? 0 : null
-              // left: 'calc(50% + 275px)',
-              // left: '160px',
-              // top: fixedBlocks ? 115 : 354 - scrollTop,
-              // position: 'fixed',
+              //top: 116,
+              //position: 'fixed'
             }}
           >
             <InfoBloks
