@@ -44,13 +44,9 @@
   }
 }
 
-// .tokens-lists {
-//   margin: 0 auto;
-//   display: flex;
-//   flex-wrap: wrap;
-//   //max-width: 780px;
-//   width: 900px;
-// }
+.tokens-lists {
+  margin-top: 20px;
+}
 
 .wrap-boxes {
   position: relative;
@@ -642,6 +638,16 @@
 }
 
 /* === Human Card End === */
+
+.add-new-document {
+  background-image: url(../img/Icons/box-plus.svg);
+  position: relative;
+  display: block;
+  width: 15px;
+  margin-left: auto;
+  margin-right: 0;
+  height: 14px;
+}
 
 @media only screen and (max-width: 1200px) {
   .document > a {
