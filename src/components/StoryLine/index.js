@@ -29,11 +29,11 @@ class StoryLine extends Component {
 
 
     if (fixedBlocks) {
-      if (elem.style.position === 'absolute' && topInfoBlock - scrollTop >= 115) {
+      if (elem.style.position === 'absolute' && topInfoBlock - scrollTop >= 114) {
         this.setState({
           fixedTop: true
         });
-      } else if (elem.style.position === 'absolute' && scrollTop - topInfoBlock >= 58) {
+      } else if (elem.style.position === 'absolute' && scrollTop - topInfoBlock >= 57) {
         this.setState({
           fixedBottom: true
         });
