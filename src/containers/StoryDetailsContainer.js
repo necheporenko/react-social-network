@@ -32,14 +32,16 @@ export default class StoryDetailsContainer extends Component {
           meta={[
           { name: 'twitter:card', content: 'summary' },
           { name: 'twitter:site', content: '@nytimesbits' },
+          { name: 'twitter:title', content: 'Small test twitter' },
+          { name: 'twitter:description', content: 'Small description test twitter' },
+          { name: 'twitter:image', content: 'https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg' },
           { name: 'twitter:creator', content: '@nickbilton' },
           { property: 'og:url', content: 'http://bits.blogs.nytimes.com/2011/12/08/a-twitter-for-my-sister/'},
           { property: 'og:title', content: 'React Validbook' },
           { property: 'og:description', content: 'In the early days, Twitter grew so quickly that it was almost impossible' },
-          { property: 'og:image', content: 'https://s3-us-west-2.amazonaws.com/dev.validbook/story-images/2017/10/06/53/OG6yDqhq8fygl51XoUK2jTFzamF_-N3-.jpg' },
+          { property: 'og:image', content: 'https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg' },
           ]}
-        >
-        </Helmet>
+        />
         {singleStory && singleStory.map((story) => (
           <Post
             key={story.id}
