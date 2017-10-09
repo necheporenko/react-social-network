@@ -10,7 +10,8 @@ import LogStory from '../../Popup/Log';
 const {FacebookShareButton, TwitterShareButton} = ShareButtons;
 
 @connect((state) => ({
-  creatingNewComment: state.story.creatingNewComment
+  creatingNewComment: state.story.creatingNewComment,
+  path: state.routing.locationBeforeTransitions.pathname,
 }), {
   likePost,
   createComment,
@@ -197,7 +198,7 @@ class PostFooter extends Component {
   }
 
   render() {
-    const {likes, id, comments, post, authorizedUser, paginationComment, counts} = this.props;
+    const {likes, id, comments, post, authorizedUser, paginationComment, counts, path} = this.props;
 
     const tooltipLike = (
       <Tooltip id="tooltipLike" arrowOffsetLeft={10}>
@@ -232,26 +233,27 @@ class PostFooter extends Component {
             <div className="wrapper" style={{position: 'relative'}}>
               <i className="post-action-icon"/>
               <span>Share</span>
-              {/*<div className="list-of-social-share">*/}
-              {/*<FacebookShareButton*/}
-              {/*url={`http://devasimov.validbook.org/story/${id}`}*/}
-              {/*title={post.replace(/<[^>]*>?/g, '')}*/}
-              {/*picture="http://i.imgur.com/gu5Ia4D.jpg"*/}
-              {/*// picture={`${String(window.location)}/${exampleImage}`}*/}
-              {/*className="Demo__some-network__share-button"*/}
-              {/*>*/}
-              {/*<div className="share-facebook"><i className="fa fa-facebook" aria-hidden="true"/></div>*/}
-              {/*</FacebookShareButton>*/}
+              <div className="list-of-social-share">
+                <FacebookShareButton
+                  url={`http://futurama11001111.validbook.org/story/${id}`}
+                  quote={post.replace(/<[^>]*>?/g, '')}
+                  // picture="https://s3-us-west-2.amazonaws.com/dev.validbook/story-images/2017/10/06/53/OG6yDqhq8fygl51XoUK2jTFzamF_-N3-.jpg"
+                  // picture={`${String(window.location)}/${exampleImage}`}
+                  className="Demo__some-network__share-button"
+                >
+                  <div className="share-facebook"><i className="fa fa-facebook" aria-hidden="true"/></div>
+                </FacebookShareButton>
 
-              {/*<TwitterShareButton*/}
-              {/*url={`http://devasimov.validbook.org/story/${id}`}*/}
-              {/*title={post.replace(/<[^>]*>?/g, '')}*/}
-              {/*picture="http://i.imgur.com/gu5Ia4D.jpg"*/}
-              {/*className="Demo__some-network__share-button"*/}
-              {/*>*/}
-              {/*<div className="share-twitter"><i className="fa fa-twitter" aria-hidden="true"/></div>*/}
-              {/*</TwitterShareButton>*/}
-              {/*</div>*/}
+                <TwitterShareButton
+                  url={`http://futurama11001111.validbook.org/story/${id}`}
+                  // title={post.replace(/<[^>]*>?/g, '')}
+                  title={`Adding the Tweet button to your website | Справочный центр Твиттера http://futurama11001111.validbook.org/story/${id} с помощью @necheporenko_v`}
+                  // picture="https://s3-us-west-2.amazonaws.com/dev.validbook/story-images/2017/10/06/53/OG6yDqhq8fygl51XoUK2jTFzamF_-N3-.jpg"
+                  className="Demo__some-network__share-button"
+                >
+                  <div className="share-twitter"><i className="fa fa-twitter" aria-hidden="true"/></div>
+                </TwitterShareButton>
+              </div>
             </div>
           </div>
         </div>
@@ -266,7 +268,8 @@ class PostFooter extends Component {
             </OverlayTrigger>
           </div>
 
-          <div className="post-comment-field" style={{display: (comments === 0) ? 'none' : 'block'}}>
+          <div className="post-comment-field"
+               style={{display: (path === '/' && comments.length === 0) ? 'none' : 'block'}}>
             <div className="comments">
               {counts.comments > 4 &&
               <div
