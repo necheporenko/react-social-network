@@ -13,7 +13,7 @@ const UserItem = ({user, unfollowUserHandler, followUserHandler}) => (
         ? () => unfollowUserHandler(user.id)
         : () => followUserHandler(user.id)
       }>
-      <div>
+      <div style={{color: user.is_follow ? '#999' : '#333'}}>
         {user.is_follow ? 'Following' : 'Follow'}
       </div>
       <span/>

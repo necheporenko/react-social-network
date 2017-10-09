@@ -113,7 +113,7 @@ export default class Navigation extends Component {
               //   // backgroundColor: is_follow ? '#1976d2' : '#fff',
               // }}
             >
-              <div>
+              <div style={{color: is_follow ? '#999' : '#333'}}>
                 {is_follow ? 'Following' : 'Follow'}
               </div>
               <span/>

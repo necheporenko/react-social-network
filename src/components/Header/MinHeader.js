@@ -7,7 +7,7 @@ import './index.scss';
 class MinHeader extends Component {
   render() {
     return (
-      <div className="header">
+      <div className="header none-auth-header">
         <Logo />
         <SearchField />
 

@@ -6,7 +6,7 @@
   padding: 6px 20px 5px;
   border-bottom: 1px solid rgba(0,0,0,0.15);
   width: 100%;
-  //display: flex;
+  display: flex;
   position: fixed;
   height: 52px;
   box-sizing: border-box;
@@ -35,6 +35,12 @@
   }
 }
 /* -- Logo End  -- */
+
+.none-auth-header {
+  .search-field input {
+    width: 60%;
+  }
+}
 
 .wrap-loadingBar {
   height: 2px;

@@ -687,8 +687,8 @@
 
 .wrap-post-story-dropdown {
   position: absolute;
-  right: 0;
-  top: 5px;
+  right: -5px;
+  top: 0;
 
   .dropdown-menu-right {
     right: -2px;
@@ -729,11 +729,12 @@
     &::before {
       //background: $sprite;
       //background-position: -22px -111px;
-      background: url('../../../img/Icons/3dots-min.svg');
-      width: 5px;
-      height: 16px;
+      background: url('../../../img/Icons/3dots-min.svg') no-repeat center;
+      width: 25px;
+      height: 25px;
       display: block;
       content: '';
+      transform: rotate(90deg);
     }
   }
 
@@ -1102,7 +1103,7 @@
 
     textarea {
       border: 1px solid #ddd;
-      border-radius: 5px;
+      border-radius: 2px;
       font-size: 12px;
       margin: 0;
       margin-bottom: 10px;
