@@ -32,6 +32,9 @@ const VIEW_MORE_COMMENTS_SUCCESS = 'VIEW_MORE_COMMENTS_SUCCESS';
 const VIEW_MORE_COMMENTS_FAIL = 'VIEW_MORE_COMMENTS_FAIL';
 // const SAVE_CURRENT_BOOK_SLUG = 'SAVE_CURRENT_BOOK_SLUG';
 const SHOW_SUBBOKS_CURRENT_BOOK = 'SHOW_SUBBOKS_CURRENT_BOOK';
+const GET_BOOKS = 'GET_BOOKS';
+const GET_BOOKS_SUCCESS = 'GET_BOOKS_SUCCESS';
+const GET_BOOKS_FAIL = 'GET_BOOKS_FAIL';
 
 const initialState = {
   bookTreeArr: [],
@@ -64,7 +67,6 @@ export default function bookReducer(state = initialState, action) {
         loading: false,
         loaded,
         bookTreeArr: action.result.data,
-        subBooksArr: action.result.data[0].children,
         over: false,
       };
     case LOAD_BOOKTREE_FAIL:
@@ -330,6 +332,23 @@ export default function bookReducer(state = initialState, action) {
       };
     }
 
+    case GET_BOOKS: {
+      return {
+        ...state,
+      };
+    }
+    case GET_BOOKS_SUCCESS: {
+      return {
+        ...state,
+        subBooksArr: action.result.data[0].children
+      };
+    }
+    case GET_BOOKS_FAIL: {
+      return {
+        ...state,
+      };
+    }
+
     default:
       return state;
   }
@@ -451,5 +470,13 @@ export function showSubBooksCurrentBook(subbooks) {
   return {
     type: SHOW_SUBBOKS_CURRENT_BOOK,
     subbooks
+  };
+}
+
+export function getBooks(user_slug, book) {
+  const book_slug = book || '';
+  return {
+    types: [GET_BOOKS, GET_BOOKS_SUCCESS, GET_BOOKS_FAIL],
+    promise: (client) => client.get('/books', {params: {user_slug, book_slug}})
   };
 }

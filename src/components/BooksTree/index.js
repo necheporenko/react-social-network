@@ -7,7 +7,8 @@ import {
   show as showBookStories,
   move as moveBook,
   clearBookStories,
-  showSubBooksCurrentBook
+  showSubBooksCurrentBook,
+  getBooks
 } from '../../redux/modules/book';
 import {clearStories} from '../../redux/modules/story';
 import {gData} from './util';
@@ -23,7 +24,8 @@ import './draggable.scss';
   moveBook,
   clearBookStories,
   clearStories,
-  showSubBooksCurrentBook
+  showSubBooksCurrentBook,
+  getBooks
 })
 
 class BooksTree extends Component {
@@ -155,10 +157,9 @@ class BooksTree extends Component {
     this.props.clearStories();
   }
 
-  showSubBooks(e, subboks) {
+  showSubBooks(e, slug, book_slug) {
     e.preventDefault();
-    console.log(subboks);
-    this.props.showSubBooksCurrentBook(subboks);
+    this.props.getBooks(slug, book_slug);
   }
 
   render() {
@@ -178,7 +179,7 @@ class BooksTree extends Component {
             <Link
               to={`/${slug}/books/${item.key}`}
               draggable={false}
-              onClick={e => isLink ? this.clearStream : this.showSubBooks(e, item.children)}
+              onClick={e => isLink ? this.clearStream : this.showSubBooks(e, slug, item.key)}
               >
               {item.name}
             </Link>

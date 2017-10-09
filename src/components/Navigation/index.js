@@ -1,7 +1,14 @@
 import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import NavigationUserInfo from './NavigationUserInfo';
+import {followRequestedUser, unfollowRequestedUser} from '../../redux/modules/user';
 import './index.scss';
+
+@connect(state => ({}), {
+  followRequestedUser,
+  unfollowRequestedUser,
+})
 
 export default class Navigation extends Component {
   onLinkClick() {
@@ -12,9 +19,18 @@ export default class Navigation extends Component {
     }
   }
 
+  follow = (id) => {
+    this.props.followRequestedUser(id);
+  };
+
+  unfollow = (id) => {
+    this.props.unfollowRequestedUser(id);
+  };
+
   render() {
-    const {first_name, last_name, slug, avatar32, isFollowing, id, cover} = this.props.requestedUser;
+    const {first_name, last_name, slug, avatar32, is_follow, id, cover} = this.props.requestedUser;
     const {authorizedUser, showSmallNavigation} = this.props;
+    // const style ={}
 
     return (
       <div
@@ -87,12 +103,18 @@ export default class Navigation extends Component {
             }
             <div
               className="btn-following"
-              onClick={isFollowing
+              onClick={is_follow
                 ? () => this.unfollow(id)
                 : () => this.follow(id)
-              }>
+              }
+              // style={{
+              //   borderColor: cover.color ? cover.color : '#1976d2',
+              //   color: cover.color ? cover.color : '#1976d2',
+              //   // backgroundColor: is_follow ? '#1976d2' : '#fff',
+              // }}
+            >
               <div>
-                {isFollowing ? 'Following' : 'Follow'}
+                {is_follow ? 'Following' : 'Follow'}
               </div>
               <span/>
             </div>

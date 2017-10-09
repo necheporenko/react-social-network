@@ -39,7 +39,8 @@ export default class ChangeAvatar extends Component {
   }
 
   handleSave() {
-    const newImage = this.editor.getImageScaledToCanvas().toDataURL();
+    const newImage = this.editor.getImage().toDataURL();
+
     this.setState({picture: newImage});
     this.props.uploadAvatarBase64(newImage);
     this.props.uploadAvatar(newImage, this.props.currentImage.name)

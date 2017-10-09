@@ -21,7 +21,7 @@ const BookCard = ({book, history, requestedUser}) => {
         className="coverBook"
         style={{
           backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
-          backgroundImage: cover && cover.picture ? `url(${cover.picture})` : null
+          backgroundImage: cover && cover.picture_small ? `url(${cover.picture_small})` : null
         }}
       />
 
@@ -89,9 +89,9 @@ const BookCard = ({book, history, requestedUser}) => {
 
 class Books extends Component {
   render() {
-    const {bookTreeArr, requestedUser, loaded, history, fixedBlocks, subBooksArr} = this.props;
+    const {bookTreeArr, requestedUser, loaded, history, fixedBlocks, subBooksArr, getBooks} = this.props;
     const loader = <Loader/>;
-    
+
     return (
       loaded.loadedBookTree &&
       <div className="books contents">
@@ -103,7 +103,12 @@ class Books extends Component {
           }}>
           <div className="sidebar">
             <ul>
-              <Link onlyActiveOnIndex={true} to={`/${requestedUser.slug}/books`} activeClassName="active">
+              <Link
+                onlyActiveOnIndex={true}
+                to={`/${requestedUser.slug}/books`}
+                activeClassName="active"
+                onClick={() => getBooks(requestedUser.slug)}
+              >
                 <li>Primary Books</li>
               </Link>
             </ul>
