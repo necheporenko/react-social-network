@@ -27,19 +27,18 @@ export default class StoryDetailsContainer extends Component {
     const {singleStory, authorizedUser, requestedUser} = this.props;
     return (
       <div style={{width: '500px', margin: '0 auto', paddingTop: '20px'}}>
-        <Helmet>
-          <title>My Title</title>
-          <meta name="twitter:card" content="summary"/>
-          <meta name="twitter:site" content="@nytimesbits"/>
-          <meta name="twitter:creator" content="@nickbilton"/>
-          <meta property="og:url" content="http://bits.blogs.nytimes.com/2011/12/08/a-twitter-for-my-sister/"/>
-          <meta property="og:title" content="A Twitter for My Sister"/>
-          <meta
-            property="og:description"
-            content="In the early days, Twitter grew so quickly that it was almost impossible to add new features because engineers spent their time trying to keep the rocket ship from stalling."/>
-          <meta
-            property="og:image"
-            content="http://graphics8.nytimes.com/images/2011/12/08/technology/bits-newtwitter/bits-newtwitter-tmagArticle.jpg"/>
+        <Helmet
+          title={'Myy Title'}
+          meta={[
+          { name: 'twitter:card', content: 'summary' },
+          { name: 'twitter:site', content: '@nytimesbits' },
+          { name: 'twitter:creator', content: '@nickbilton' },
+          { property: 'og:url', content: 'http://bits.blogs.nytimes.com/2011/12/08/a-twitter-for-my-sister/'},
+          { property: 'og:title', content: 'React Validbook' },
+          { property: 'og:description', content: 'In the early days, Twitter grew so quickly that it was almost impossible' },
+          { property: 'og:image', content: 'https://s3-us-west-2.amazonaws.com/dev.validbook/story-images/2017/10/06/53/OG6yDqhq8fygl51XoUK2jTFzamF_-N3-.jpg' },
+          ]}
+        >
         </Helmet>
         {singleStory && singleStory.map((story) => (
           <Post
