@@ -515,7 +515,6 @@
 .human-card {
   width: 330px;
   padding: 0 15px;
-  margin: 70px auto;
   background: rgb(255, 255, 255);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
   border: 1px solid #dadada;
@@ -639,14 +638,27 @@
 
 /* === Human Card End === */
 
-.add-new-document {
-  background-image: url(../img/Icons/box-plus.svg);
-  position: relative;
-  display: block;
-  width: 15px;
-  margin-left: auto;
-  margin-right: 0;
-  height: 14px;
+.add-new-item {
+  display: flex;
+  justify-content: flex-end;
+
+  span {
+    display: block;
+  }
+
+  .add-new-document {
+    background-image: url(../img/Icons/add-document.svg);
+    width: 11px;
+    height: 14px;
+  }
+
+  .add-new-box {
+    background-image: url(../img/Icons/add-box.svg);
+    width: 14px;
+    height: 14px;
+    margin-left: 5px;
+  }
+
 }
 
 @media only screen and (max-width: 1200px) {

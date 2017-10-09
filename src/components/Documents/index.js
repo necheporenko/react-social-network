@@ -6,6 +6,7 @@ import {getUser} from '../../redux/modules/user';
 import {getBox, createDraftHumanCard, updateDraftHumanCard} from '../../redux/modules/document';
 import DocumentsMenu from './DocumentsMenu';
 import SignHumanCard from '../Popup/SignHumanCard';
+import DocumentItem from './DocumentItem';
 import './index.scss';
 
 let savePositionTop;
@@ -199,11 +200,18 @@ export default class Box extends Component {
     browserHistory.push(`/${slug}/documents/human-card/${box.human_card.public_address}`);
   }
 
+  // _newDocumentClick() {
+
+  //   {slug === this.props.authorizedUser.slug &&
+  //     }
+  // }
+
   render() {
     const {scrollTop} = this.state;
-    const {box, fixedBlocks} = this.props;
+    const {box, fixedBlocks, authorizedUser} = this.props;
     const {slug, first_name, last_name} = this.props.requestedUser;
     const fullName = `${first_name} ${last_name}`;
+    console.log(this.props.box);
 
     const chooseNav = () => {
       let Nav;
@@ -233,21 +241,26 @@ export default class Box extends Component {
             marginLeft: fixedBlocks ? 240 : null
         }}>
 
-          <div><span className="add-new-document"></span></div>
+          <div className="add-new-item">
+            {slug === this.props.authorizedUser.slug &&
+              <Link
+                className="add-new-document"
+                to={`/${this.props.authorizedUser.slug}/documents/document`}/>
+            }
+            {slug === this.props.authorizedUser.slug &&
+              <Link
+                className="add-new-box"
+                to={'#'}/>
+            }
+          </div>
           <div className="common-lists tokens-lists">
             {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
             {box.id && box.documents && box.documents.map(document => (
-              <div key={document.id} className="document">
-                <Link to={`/${slug}/documents/${box.key}/${document.id}`}>
-                  <div>
-                    <i className="doc-icon"/>
-                    {/*<div className="doc-sign">*/}
-                    {/*<i/>*/}
-                    {/*</div>*/}
-                    <p>{document.title}</p>
-                  </div>
-                </Link>
-              </div>
+              <DocumentItem 
+                key={document.id}
+                document={document}
+                boxKey={box.key}
+              />
             ))}
 
             {/*{doc.map((document, index) => (*/}

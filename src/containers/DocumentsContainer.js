@@ -18,9 +18,9 @@ export default class TokensContainer extends Component {
     const {path, requestedUser} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
 
-    // if (findSlug !== requestedUser.slug) {
-    //   this.props.getUser(findSlug);
-    // }
+    if (findSlug !== requestedUser.slug) {
+      this.props.getUser(findSlug);
+    }
   }
 
   componentDidUpdate(prevProps) {

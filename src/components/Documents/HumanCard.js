@@ -49,11 +49,9 @@ Digital Signature:
 
 <?--- END HUMAN CARD ---?>`;
     return (
-      <div>
-        <div className="human-card markdown-human-card">
-          <ReactMarkdown source={humanCard.markdown}/>
-          {/*<ReactMarkdown source={test}/>*/}
-        </div>
+      <div className="human-card markdown-human-card">
+        <ReactMarkdown source={humanCard.markdown}/>
+        {/*<ReactMarkdown source={test}/>*/}
       </div>
     );
   }

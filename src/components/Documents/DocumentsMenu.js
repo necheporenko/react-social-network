@@ -39,8 +39,9 @@ export default class DocumentsMenu extends Component {
   render() {
     const {isOpen} = this.state;
     const {boxes, path, fixedBlocks} = this.props;
-    const {slug} = this.props.requestedUser;
+    const {slug, public_address} = this.props.requestedUser;
     const findBoxes = path.indexOf('/documents/boxes');
+    console.log(this.props);
 
     return (
       <div
@@ -51,14 +52,6 @@ export default class DocumentsMenu extends Component {
       }}>
         <div className={this.props.sidebar}>
           <ul>
-            {slug === this.props.authorizedUser.slug &&
-            <Link
-              to={`/${this.props.authorizedUser.slug}/documents/document`}
-              style={{marginLeft: '20px', marginBottom: '20px', display: 'block'}}
-            >
-              <button className="btn-brand">New Document</button>
-            </Link>
-            }
 
             {/*{boxes.length > 0 && boxes[0].children.filter(box => box.key === 'board').map(box => (*/}
             {/*<Link key={box.id} onlyActiveOnIndex={false} to={`/${slug}/documents/${box.key}`} activeClassName="active"*/}
@@ -78,9 +71,9 @@ export default class DocumentsMenu extends Component {
               <Link onlyActiveOnIndex={true} to={`/${slug}/documents/boxes`} activeClassName="active">
                 <li className="documents-mnu-boxes">Boxes</li>
               </Link>
-              <div className="create-new-item">
+              {/* <div className="create-new-item">
                 <a href="#">+ Create new box</a>
-              </div>
+              </div> */}
             </div>
 
             <div className="boxes-mnu" style={{display: isOpen ? 'block' : 'none'}}>
@@ -94,9 +87,6 @@ export default class DocumentsMenu extends Component {
             {/*<Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">*/}
             {/*<li className="documents-mnu-box-private">Signed Documents</li>*/}
             {/*</Link>*/}
-            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/wallet`} activeClassName="active">
-              <li className="documents-mnu-wallet">Wallet</li>
-            </Link>
 
             {/*<div className="doc-buttons">*/}
             {/*<button>New Box</button>*/}
@@ -118,6 +108,17 @@ export default class DocumentsMenu extends Component {
               <li className="documents-mnu-box-bin">{boxes[0].bin.name}</li>
             </Link>
             }
+            <hr/>
+
+            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/human-card/${public_address}`} activeClassName="active">
+              <li className="documents-mnu-wallet">Human Card Page</li>
+            </Link>
+            <hr/>
+
+            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/wallet`} activeClassName="active">
+              <li className="documents-mnu-wallet">Wallet</li>
+            </Link>
+            <hr/>
           </ul>
 
 
