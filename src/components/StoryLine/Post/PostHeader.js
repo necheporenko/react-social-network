@@ -53,9 +53,9 @@ class PostHeader extends Component {
     if (!loudness.inChannels && !loudness.inBooks) {
       return 'Story did not appear in the channels';
     } else if (loudness.inChannels && loudness.inBooks) {
-      return 'Story appeared in the channels of your followers';
+      return 'Story was logged loudly. It may have appeared in the channels of your followers. This is visible only to you.';
     } else if (!loudness.inChannels && loudness.inBooks) {
-      return 'Story appeared in the channels of book followers';
+      return 'Story was logged loudly in book. It may have appeared in the channels of book followers. This is visible only to you.';
     }
   }
 

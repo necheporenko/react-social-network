@@ -246,8 +246,8 @@ class PostFooter extends Component {
 
                 <TwitterShareButton
                   url={`http://futurama11001111.validbook.org/story/${id}`}
-                  // title={post.replace(/<[^>]*>?/g, '')}
-                  title={`Adding the Tweet button to your website | Справочный центр Твиттера http://futurama11001111.validbook.org/story/${id} с помощью @necheporenko_v`}
+                  title={post.replace(/<[^>]*>?/g, '')}
+                  // title={`Adding the Tweet button to your website | Справочный центр Твиттера http://futurama11001111.validbook.org/story/${id} с помощью @necheporenko_v`}
                   // picture="https://s3-us-west-2.amazonaws.com/dev.validbook/story-images/2017/10/06/53/OG6yDqhq8fygl51XoUK2jTFzamF_-N3-.jpg"
                   className="Demo__some-network__share-button"
                 >

@@ -141,9 +141,25 @@ export default function storyReducer(state = initialState, action) {
     }
 
     case LIKE_STORY: {
+      const likedStory = state.storiesArr.map((story) => {
+        if (story.id === action.story_id) {
+          const likes = Object.assign({}, story.likes, {
+            is_liked: !story.likes.is_liked
+          });
+          return {
+            ...story,
+            likes
+          };
+        }
+        return {
+          ...story
+        };
+      });
+
       return {
         ...state,
-        liking: true
+        liking: true,
+        storiesArr: likedStory
       };
     }
     case LIKE_STORY_SUCCESS: {
@@ -152,7 +168,6 @@ export default function storyReducer(state = initialState, action) {
         notification.type = 'notification-like';
         socket.send(JSON.stringify(notification));
       }
-
       const likedStory = state.storiesArr.map((story) => {
         if (story.id === action.story_id) {
           return {
@@ -161,9 +176,10 @@ export default function storyReducer(state = initialState, action) {
           };
         }
         return {
-          ...story
+          ...story,
         };
       });
+
       return {
         ...state,
         liking: false,

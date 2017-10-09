@@ -31,6 +31,12 @@ const proxy = httpProxy.createProxyServer({
   target: targetUrl,
   ws: true
 });
+const options = {
+  root: `${__dirname}/static/`,
+  headers: {
+    'Content-Type': 'text/plain;charset=UTF-8',
+  }
+};
 
 app.use(cookieParser());
 app.use(compression());
@@ -65,7 +71,7 @@ app.use('/api', (req, res) => {
     if (error) {
       if (resourcesResponse) {
         return res.status(error.status || 500).send(resourcesResponse.body || '');
-      } 
+      }
       return res.status(error.status || 500).send('');
     }
 
@@ -166,3 +172,7 @@ if (config.port) {
 } else {
   console.error('==>     ERROR: No PORT environment variable has been specified');
 }
+
+app.get('/robots.txt', (req, res) => {
+  res.status(200).sendFile('robots.txt', options);
+});
