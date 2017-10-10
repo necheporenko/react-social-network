@@ -1,7 +1,11 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
-import {like as likePostStoryline, viewMoreComments as viewMoreCommentsStoryline} from '../../../redux/modules/story';
+import {
+  like as likePostStoryline,
+  viewMoreComments as viewMoreCommentsStoryline,
+  createComment as createCommentStoryline,
+} from '../../../redux/modules/story';
 import Sbox from './Sbox';
 import Post from '../Post/index';
 import Loader from '../../Common/Loader';
@@ -15,7 +19,8 @@ import './index.scss';
   loaded: state.story.loaded,
 }), {
   likePostStoryline,
-  viewMoreCommentsStoryline
+  viewMoreCommentsStoryline,
+  createCommentStoryline,
 })
 
 class Stream extends Component {
@@ -25,6 +30,7 @@ class Stream extends Component {
     this.like = this.like.bind(this);
     this.showMoreComments = this.showMoreComments.bind(this);
     this.reloadStreamStoryline = this.reloadStreamStoryline.bind(this);
+    this.createComment = this.createComment.bind(this);
   }
 
   load() {
@@ -39,6 +45,10 @@ class Stream extends Component {
 
   like(id) {
     this.props.likePostStoryline(id);
+  }
+
+  createComment(entity_id, content, parent_id, user) {
+    this.props.createCommentStoryline(entity_id, content, parent_id, user);
   }
 
   showMoreComments(id, paginationComment) {
@@ -85,6 +95,7 @@ class Stream extends Component {
                 showMoreCommentsFunc={this.showMoreComments}
                 authorizedUser={this.props.authorizedUser}
                 requestedUser={this.props.requestedUser}
+                createComment={this.createComment}
               />
             ))}
           </InfiniteScroll>

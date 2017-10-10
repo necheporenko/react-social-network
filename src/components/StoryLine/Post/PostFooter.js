@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Textarea from 'react-textarea-autosize';
 import {ShareButtons} from 'react-share';
 import {Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton} from 'react-bootstrap';
-import {like as likePost, createComment, viewMoreComments} from '../../../redux/modules/story';
+import {like as likePost, viewMoreComments} from '../../../redux/modules/story';
 import LogStory from '../../Popup/Log';
 
 const {FacebookShareButton, TwitterShareButton} = ShareButtons;
@@ -14,8 +14,7 @@ const {FacebookShareButton, TwitterShareButton} = ShareButtons;
   path: state.routing.locationBeforeTransitions.pathname,
 }), {
   likePost,
-  createComment,
-  viewMoreComments
+  viewMoreComments,
 })
 
 class PostFooter extends Component {
@@ -102,7 +101,7 @@ class PostFooter extends Component {
     const {parent_id} = this.state;
     if (event.keyCode === 13 && !event.shiftKey) {
       event.preventDefault();
-      // console.log('comment', this.props.id, event.target.value, this.state.parent_id, this.props.authorizedUser.id);
+      // console.log('comment.js', this.props.id, event.target.value, this.state.parent_id, this.props.authorizedUser.id);
       createComment(id, event.target.value, parent_id, authorizedUser)
         .then(event.target.value = '');
     }
@@ -123,8 +122,8 @@ class PostFooter extends Component {
 
     function treeOfComments(comments) {
       comments && comments.map(comment => {
-        // console.log(comment)
-        // comment.rightParent = 0;
+        // console.log(comment.js)
+        // comment.js.rightParent = 0;
         if (comment.rightParent) {
           comment.right = comment.rightParent;
           right = comment.rightParent;
@@ -283,15 +282,15 @@ class PostFooter extends Component {
               </div>
               }
               {this.replyComments(comments)}
-              {/*{ comments && comments.map((comment) => this.replyComments(comment))}*/}
-              {/*<div className="comment" key={comment.id}>*/}
+              {/*{ comments && comments.map((comment.js) => this.replyComments(comment.js))}*/}
+              {/*<div className="comment.js" key={comment.js.id}>*/}
               {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
               {/*<div className="text-block">*/}
-              {/*<p><Link>{`${comment.user.first_name} ${comment.user.last_name}`}</Link>{comment.content}</p>*/}
-              {/*<span className="reply" onClick={() => this.reply(comment.id)}>Reply</span><span> · </span><span className="date">{comment.date}</span>*/}
+              {/*<p><Link>{`${comment.js.user.first_name} ${comment.js.user.last_name}`}</Link>{comment.js.content}</p>*/}
+              {/*<span className="reply" onClick={() => this.reply(comment.js.id)}>Reply</span><span> · </span><span className="date">{comment.js.date}</span>*/}
               {/*</div>*/}
               {/*<ButtonToolbar>*/}
-              {/*<DropdownButton className="profileMenu-btn" title={''} id={comment.id} noCaret pullRight >*/}
+              {/*<DropdownButton className="profileMenu-btn" title={''} id={comment.js.id} noCaret pullRight >*/}
               {/*<li>*/}
               {/*<p>Edit Comment</p>*/}
               {/*</li>*/}
@@ -303,10 +302,10 @@ class PostFooter extends Component {
               {/*</li>*/}
               {/*</DropdownButton>*/}
               {/*</ButtonToolbar>*/}
-              {/*{this.replyComments(comment)}*/}
+              {/*{this.replyComments(comment.js)}*/}
               {/*</div>*/}
 
-              {/*<div className="comment" style={{paddingLeft: '30px'}}>*/}
+              {/*<div className="comment.js" style={{paddingLeft: '30px'}}>*/}
               {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
               {/*<div className="text-block">*/}
               {/*<p><Link>User1 User2</Link>random text</p>*/}
@@ -326,7 +325,7 @@ class PostFooter extends Component {
               {/*</DropdownButton>*/}
               {/*</ButtonToolbar>*/}
               {/*</div>*/}
-              {/*<div className="comment" style={{paddingLeft: '60px'}}>*/}
+              {/*<div className="comment.js" style={{paddingLeft: '60px'}}>*/}
               {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
               {/*<div className="text-block">*/}
               {/*<p><Link>User1 User2</Link>random text</p>*/}
@@ -346,7 +345,7 @@ class PostFooter extends Component {
               {/*</DropdownButton>*/}
               {/*</ButtonToolbar>*/}
               {/*</div>*/}
-              {/*<div className="comment" style={{paddingLeft: '90px'}}>*/}
+              {/*<div className="comment.js" style={{paddingLeft: '90px'}}>*/}
               {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
               {/*<div className="text-block">*/}
               {/*<p><Link>User1 User2</Link>random text</p>*/}
@@ -356,7 +355,7 @@ class PostFooter extends Component {
               {/*/!*  REPLY COMMENT *!/*/}
 
 
-              {/*<div className="reply-comment">*/}
+              {/*<div className="reply-comment.js">*/}
               {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
               {/*<Textarea*/}
               {/*placeholder="Write a reply..."*/}
@@ -379,7 +378,7 @@ class PostFooter extends Component {
               {/*</DropdownButton>*/}
               {/*</ButtonToolbar>*/}
               {/*</div>*/}
-              {/*<div className="comment" style={{paddingLeft: '120px'}}>*/}
+              {/*<div className="comment.js" style={{paddingLeft: '120px'}}>*/}
               {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
               {/*<div className="text-block">*/}
               {/*<p><Link>User1 User2</Link>random textrandom textrandom</p>*/}
@@ -399,7 +398,7 @@ class PostFooter extends Component {
               {/*</DropdownButton>*/}
               {/*</ButtonToolbar>*/}
               {/*</div>*/}
-              {/*<div className="comment" style={{paddingLeft: '150px'}}>*/}
+              {/*<div className="comment.js" style={{paddingLeft: '150px'}}>*/}
               {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
               {/*<div className="text-block">*/}
               {/*<p><Link>User1 User2</Link>random textrandom textrandom </p>*/}
@@ -419,7 +418,7 @@ class PostFooter extends Component {
               {/*</DropdownButton>*/}
               {/*</ButtonToolbar>*/}
               {/*</div>*/}
-              {/*<div className="comment" style={{paddingLeft: '180px'}}>*/}
+              {/*<div className="comment.js" style={{paddingLeft: '180px'}}>*/}
               {/*<img src="http://devianmbanks.validbook.org/cdn/1/avatar/32x32.jpg?t=1498552347" alt=""/>*/}
               {/*<div className="text-block">*/}
               {/*<p><Link>User1 User2</Link>random textrandom</p>*/}

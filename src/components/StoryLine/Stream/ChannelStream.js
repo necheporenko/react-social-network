@@ -1,7 +1,11 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
-import {like as likePostChannel, viewMoreComments as viewMoreCommentsChannel} from '../../../redux/modules/channel';
+import {
+  like as likePostChannel,
+  viewMoreComments as viewMoreCommentsChannel,
+  createComment as createCommentChannel
+} from '../../../redux/modules/channel';
 import Sbox from './Sbox';
 import Post from '../Post/index';
 import './index.scss';
@@ -13,7 +17,8 @@ import './index.scss';
   pagination: state.channel.pagination
 }), {
   likePostChannel,
-  viewMoreCommentsChannel
+  viewMoreCommentsChannel,
+  createCommentChannel,
 })
 
 export default class ChannelStream extends Component {
@@ -23,6 +28,7 @@ export default class ChannelStream extends Component {
     this.like = this.like.bind(this);
     this.showMoreComments = this.showMoreComments.bind(this);
     this.reloadStreamChannel = this.reloadStreamChannel.bind(this);
+    this.createComment = this.createComment.bind(this);
   }
 
   load() {
@@ -39,12 +45,16 @@ export default class ChannelStream extends Component {
     this.props.likePostChannel(id);
   }
 
+  createComment(entity_id, content, parent_id, user) {
+    this.props.createCommentChannel(entity_id, content, parent_id, user);
+  }
+
   showMoreComments(id, paginationComment) {
     this.props.viewMoreCommentsChannel(id, paginationComment);
   }
 
   render() {
-    const { channelStories, loaded, over } = this.props;
+    const {channelStories, loaded, over} = this.props;
     console.log(this.props);
     const loader = (
       <div className="wrapper-loader">
@@ -63,14 +73,14 @@ export default class ChannelStream extends Component {
           createStory={this.props.createStory}
           reloadStream={this.reloadStreamChannel}
         />
-        {loaded 
+        {loaded
           ? <InfiniteScroll
             loadMore={this.load}
             hasMore={true}
             threshold={50}
             loader={over ? null : loader}
           >
-            { channelStories && channelStories.map((story, index) => (
+            {channelStories && channelStories.map((story, index) => (
               <Post
                 key={index}
                 id={story.id}
@@ -89,10 +99,11 @@ export default class ChannelStream extends Component {
                 showMoreCommentsFunc={this.showMoreComments}
                 authorizedUser={this.props.authorizedUser}
                 requestedUser={this.props.requestedUser}
+                createComment={this.createComment}
               />
             ))}
           </InfiniteScroll>
-        : loader
+          : loader
         }
       </div>
     );

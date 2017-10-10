@@ -125,7 +125,6 @@ export default class Post extends Component {
         {/* ===========
             Post Footer
             =========== */}
-
         <PostFooter
           authorizedUser={this.props.authorizedUser}
           likes={this.props.likes}
@@ -136,8 +135,8 @@ export default class Post extends Component {
           post={this.props.post}
           likeFunc={this.props.likeFunc}
           showMoreCommentsFunc={this.props.showMoreCommentsFunc}
+          createComment={this.props.createComment}
         />
-
       </div>
     );
   }

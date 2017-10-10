@@ -1,3 +1,5 @@
+import {likeStory, likeStorySuccess} from '../../constants/like';
+import {createNewComment, createNewCommentSuccess} from '../../constants/comment';
 const LOAD_SHOW_USER_STORIES = 'LOAD_SHOW_USER_STORIES';
 const LOAD_SHOW_USER_STORIES_SUCCESS = 'LOAD_SHOW_USER_STORIES_SUCCESS';
 const LOAD_SHOW_USER_STORIES_FAIL = 'LOAD_SHOW_USER_STORIES_FAIL';
@@ -141,24 +143,10 @@ export default function storyReducer(state = initialState, action) {
     }
 
     case LIKE_STORY: {
-      const likedStory = state.storiesArr.map((story) => {
-        if (story.id === action.story_id) {
-          const likes = Object.assign({}, story.likes, {
-            is_liked: !story.likes.is_liked
-          });
-          return {
-            ...story,
-            likes
-          };
-        }
-        return {
-          ...story
-        };
-      });
       return {
         ...state,
         liking: true,
-        storiesArr: likedStory
+        storiesArr: likeStory(state.storiesArr, action)
       };
     }
     case LIKE_STORY_SUCCESS: {
@@ -167,22 +155,10 @@ export default function storyReducer(state = initialState, action) {
         notification.type = 'notification-like';
         socket.send(JSON.stringify(notification));
       }
-      const likedStory = state.storiesArr.map((story) => {
-        if (story.id === action.story_id) {
-          return {
-            ...story,
-            likes: action.result.data.likes,
-          };
-        }
-        return {
-          ...story,
-        };
-      });
-
       return {
         ...state,
         liking: false,
-        storiesArr: likedStory
+        storiesArr: likeStorySuccess(state.storiesArr, action)
       };
     }
     case LIKE_STORY_FAIL: {
@@ -308,103 +284,17 @@ export default function storyReducer(state = initialState, action) {
     }
 
     case CREATE_NEW_COMMENT: {
-      let fn;
-      const receivedPreComment = Object.assign({}, {
-        entity: action.entity,
-        entity_id: action.entity_id,
-        content: action.content,
-        parent_id: action.parent_id,
-        created_by: action.created_by,
-        user: action.user,
-        id: 'temporary',
-      });
-
-      console.log("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHH", receivedPreComment);
-
-      const addNewComment = state.storiesArr.map(story => {
-        if (story.id === action.entity_id) {
-          const searchComment = story.comments;
-
-          if (receivedPreComment.parent_id === 0) {
-            return {
-              ...story,
-              comments: [...story.comments, receivedPreComment]
-            };
-          }
-
-          fn = function fnComments(searchComment) {
-            searchComment.map(comment => {
-              if (comment.id === receivedPreComment.parent_id) {
-                const newComment = Object.assign(comment);
-
-                if (newComment.children === null) {
-                  newComment.children = [];
-                  newComment.children.push(receivedPreComment);
-                } else {
-                  newComment.children.push(receivedPreComment);
-                }
-
-                return {
-                  ...story,
-                  comments: [...story.comments, newComment]
-                };
-              }
-
-              if (comment.children) {
-                fn(comment.children);
-              }
-            });
-          };
-          fn(searchComment);
-        }
-        return {
-          ...story,
-        };
-      });
-      console.log(addNewComment);
       return {
         ...state,
         creatingNewComment: false,
-        storiesArr: addNewComment,
+        storiesArr: createNewComment(state.storiesArr, action)
       };
     }
     case CREATE_NEW_COMMENT_SUCCESS: {
-      let fn;
-      const receivedComment = action.result.data;
-
-      const addNewComment = state.storiesArr.map(story => {
-        if (story.id === action.entity_id) {
-          const searchComment = story.comments;
-
-          fn = function fnComments(searchComment) {
-            searchComment.map(comment => {
-              if (comment.id === 'temporary') {
-                const newComment = Object.assign(comment, {
-                  id: receivedComment.id,
-                  date: receivedComment.date,
-                  children: receivedComment.children,
-                });
-                return {
-                  ...story,
-                  comments: [...story.comments, newComment]
-                };
-              }
-
-              if (comment.children) {
-                fn(comment.children);
-              }
-            });
-          };
-          fn(searchComment);
-        }
-        return {
-          ...story,
-        };
-      });
       return {
         ...state,
         creatingNewComment: true,
-        storiesArr: addNewComment,
+        storiesArr: createNewCommentSuccess(state.storiesArr, action)
       };
     }
     case CREATE_NEW_COMMENT_FAIL: {

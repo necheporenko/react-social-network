@@ -1,4 +1,5 @@
 import dataURItoBlob from '../../constants/dataURItoBlob';
+import {likeStory, likeStorySuccess} from '../../constants/like';
 const LOAD_BOOKTREE = 'LOAD_BOOKTREE';
 const LOAD_BOOKTREE_SUCCESS = 'LOAD_BOOKTREE_SUCCESS';
 const LOAD_BOOKTREE_FAIL = 'LOAD_BOOKTREE_FAIL';
@@ -210,42 +211,17 @@ export default function bookReducer(state = initialState, action) {
       };
 
     case LIKE_STORY: {
-      const likedStory = state.bookStories.map((story) => {
-        if (story.id === action.story_id) {
-          const likes = Object.assign({}, story.likes, {
-            is_liked: !story.likes.is_liked
-          });
-          return {
-            ...story,
-            likes
-          };
-        }
-        return {
-          ...story
-        };
-      });
       return {
         ...state,
         liking: true,
-        bookStories: likedStory
+        bookStories: likeStory(state.bookStories, action)
       };
     }
     case LIKE_STORY_SUCCESS: {
-      const likedStory = state.bookStories.map((story) => {
-        if (story.id === action.story_id) {
-          return {
-            ...story,
-            likes: action.result.data.likes
-          };
-        }
-        return {
-          ...story
-        };
-      });
       return {
         ...state,
         liking: false,
-        bookStories: likedStory
+        bookStories: likeStorySuccess(state.bookStories, action)
       };
     }
     case LIKE_STORY_FAIL: {
