@@ -132,10 +132,10 @@ const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
                 {/*</Link>*/}
               </div>
               <div className="buttons-container">
+                <div className="validate-button"><button className="btn-sign btn-brand">Validate</button></div>
                 <div className="review-proofs">
                   <Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>Review Proofs</Link>
                 </div>
-                <div className="validate-button"><button className="btn-sign btn-brand">Validate</button></div>
               </div>
             </div>
           }
