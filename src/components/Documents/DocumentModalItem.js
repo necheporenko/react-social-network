@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import {Form, Input} from 'formsy-react-components';
+import './document-modal-item.scss';
 
 export default class DocumentModalItem extends Component {
   render() {
@@ -10,29 +11,29 @@ export default class DocumentModalItem extends Component {
     return (
       <div className="static-modal">
         <Modal show={showModal} onHide={closeModalHandler || saveChangesHandler}>
-          <Modal.Header>
+          <Modal.Header closeButton>
             <Modal.Title>Rename</Modal.Title>
           </Modal.Header>
     
           <Modal.Body>
-            <Form>
+            <Form rowClassName={[{'form-group': false}, {row: false}, 'channel-form']}>
               <Input
                 name="name"
-                value={'Undefained'}
+                value={'Undefined'}
                 labelClassName={[{'col-sm-3': false}, 'channel-label']}
-                label="Book name"
+                label="Enter new name:"
                 elementWrapperClassName={[{'col-sm-9': false}, 'channel-element-wrapper']}
-                placeholder="Type name or select book template"
+                placeholder=""
                 type="text"
               />
+    
             </Form>
           </Modal.Body>
     
           <Modal.Footer>
-            <Button onClick={closeModalHandler}>Close</Button>
-            <Button onClick={saveChangesHandler} bsStyle="primary">Save changes</Button>
+            <button className="btn-brand btn-cancel" onClick={closeModalHandler}>Cancel</button>
+            <button className="btn-brand" style={{marginLeft: '10px'}} onClick={saveChangesHandler}>Save changes</button>
           </Modal.Footer>
-    
         </Modal>
       </div>
     );

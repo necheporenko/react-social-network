@@ -8,8 +8,10 @@ class DocumentShowMoreOperations extends Component {
 
     return (
       <div className="document-dropdown-menu">
-        <div onClick={showModalHandler}>Rename document</div>
-        <div>Delete</div>
+        <div className="document-dropdown-menu-container">
+          <div onClick={showModalHandler}>Rename document</div>
+          <div>Delete</div>
+        </div>
       </div>
     );
   }

@@ -1,13 +1,26 @@
 .document-dropdown-menu {
   width: 300px;
-  background: #fff;
-  border: 1px solid #787878;
+  border: none;
   top: 28px;
   left: -116px;
   position: absolute;
+  background-color: #fafafa;
+  border-radius: 2px;
+  box-shadow: rgba(255,255,255,.9) 0px 1px 0px inset, rgba(0,0,0,.03) 0px -1px 0px inset, rgba(0,0,0,.2) 0px 1px 3px;
+  font-weight: normal;
+  padding: 0;
+  
+  .document-dropdown-menu-container {
+    padding: 6px 0;
 
-  div {
-    margin: 5px 0 5px 15px;
-    height: 20px;
+    div {
+      padding: 5px 0 5px 15px;
+      height: 20px;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #757575;
+      }
+    }
   }
 }
