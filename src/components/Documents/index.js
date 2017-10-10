@@ -40,6 +40,7 @@ export default class Box extends Component {
     this.copyAddress = this.copyAddress.bind(this);
     this.CopyToClipboard = this.CopyToClipboard.bind(this);
     this.linkHC = this.linkHC.bind(this);
+    this._newDocumentClick = this._newDocumentClick.bind(this);
   }
 
   componentDidMount() {
@@ -200,6 +201,10 @@ export default class Box extends Component {
     browserHistory.push(`/${slug}/documents/human-card/${box.human_card.public_address}`);
   }
 
+  _newDocumentClick() {
+    browserHistory.push(`/${this.props.authorizedUser.slug}/documents/document`);
+  }
+
   // _newDocumentClick() {
 
   //   {slug === this.props.authorizedUser.slug &&
@@ -243,14 +248,18 @@ export default class Box extends Component {
 
           <div className="add-new-item">
             {slug === this.props.authorizedUser.slug &&
-              <Link
-                className="add-new-document"
-                to={`/${this.props.authorizedUser.slug}/documents/document`}/>
+              <div className="add-new-document" onClick={this._newDocumentClick}>
+                <span
+                  className="add-new-document-icon"
+                  />
+              </div>
             }
             {slug === this.props.authorizedUser.slug &&
-              <Link
-                className="add-new-box"
-                to={'#'}/>
+              <div className="add-new-box">
+                <span
+                  className="add-new-box-icon"
+                  to={'#'}/>
+              </div>
             }
           </div>
           <div className="common-lists tokens-lists">

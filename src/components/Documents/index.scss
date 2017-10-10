@@ -642,23 +642,37 @@
   display: flex;
   justify-content: flex-end;
 
-  span {
-    display: block;
-  }
-
-  .add-new-document {
-    background-image: url(../img/Icons/add-document.svg);
-    width: 11px;
-    height: 14px;
+  div {
+    width: 36px;
+    height: 36px;
+    border-radius: 3px;
+    cursor: pointer;
   }
 
   .add-new-box {
-    background-image: url(../img/Icons/add-box.svg);
-    width: 14px;
-    height: 14px;
-    margin-left: 5px;
+    margin-left: 20px;
   }
 
+  span {
+    display: block;
+    margin: 9px auto;
+  }
+
+  .add-new-document-icon {
+    background-image: url(../img/Icons/add-document.svg);
+    width: 14px;
+    height: 18px;
+  }
+
+  .add-new-box-icon {
+    background-image: url(../img/Icons/add-box.svg);
+    width: 18px;
+    height: 18px;
+  }
+
+  div:hover {
+    background-color: #CECECE;
+  }
 }
 
 @media only screen and (max-width: 1200px) {
