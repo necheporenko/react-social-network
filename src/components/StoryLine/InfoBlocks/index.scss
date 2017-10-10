@@ -253,7 +253,7 @@
 
   .infoblock-human-card {
     .human-card {
-      margin: 0 15px 20px 15px;
+      margin: 0 15px 5px 15px;
       width: 260px;
       box-shadow: none;
     }
@@ -273,6 +273,17 @@
 
       p:nth-child(8) {
         margin-top: 5px;
+      }
+    }
+
+    .buttons-container {
+      margin: 0 15px 5px 15px;
+      display: flex;
+      justify-content: space-between;
+
+      .review-proofs {
+        font-size: 13px;
+        cursor: pointer;
       }
     }
   }
