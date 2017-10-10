@@ -13,21 +13,21 @@ function work(occupation, company) {
 }
 
 
-// function fnHumanCard(address, slug) {
-//   function linkHC() {
-//     browserHistory.push(`/${slug}/documents/human-card/${address}`);
-//   }
+function fnHumanCard(address, slug) {
+  function linkHC() {
+    browserHistory.push(`/${slug}/documents/human-card/${address}`);
+  }
 
-//   const div = document.querySelector('.markdown-human-card div');
-//   if (div) {
-//     const h1 = div.querySelector('h1');
-//     const p5 = div.querySelector('p:nth-child(5)');
-//     const p8 = div.querySelector('p:nth-child(8)');
-//     h1.addEventListener('click', linkHC);
-//     p5.addEventListener('click', linkHC);
-//     p8.addEventListener('click', linkHC);
-//   }
-// }
+  const div = document.querySelector('.markdown-human-card div');
+  if (div) {
+    const h1 = div.querySelector('h1');
+    const p5 = div.querySelector('p:nth-child(5)');
+    const p8 = div.querySelector('p:nth-child(8)');
+    h1.addEventListener('click', linkHC);
+    p5.addEventListener('click', linkHC);
+    p8.addEventListener('click', linkHC);
+  }
+}
 
 const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
   const {
@@ -50,7 +50,6 @@ const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
   } = requestedUserProfile;
   const {markdown} = humanCard;
   const {slug} = requestedUser;
-  console.log(humanCard);
 
   return (
     requestedUserProfile.first_name ?
@@ -126,16 +125,17 @@ const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
           {humanCard.id &&
             <div className="infoblock-human-card ">
               {/*<hr style={{margin: '0 15px 20px 15px'}} />*/}
+              {fnHumanCard(humanCard.public_address, slug)}
               <div className="human-card markdown-human-card">
                 {/*<Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>*/}
-                  <ReactMarkdown source={humanCard.markdown}/>
+                <ReactMarkdown source={humanCard.markdown}/>
                 {/*</Link>*/}
               </div>
               <div className="buttons-container">
                 <div className="review-proofs">
                   <Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>Review Proofs</Link>
                 </div>
-                <div><button className="btn-sign btn-brand">Validate</button></div>
+                <div className="validate-button"><button className="btn-sign btn-brand">Validate</button></div>
               </div>
             </div>
           }

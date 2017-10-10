@@ -277,19 +277,38 @@
     }
 
     .buttons-container {
-      margin: 0 15px 5px 15px;
+      margin: 5px 15px;
       display: flex;
       justify-content: space-between;
+      font-size: 13px !important;
 
       .review-proofs {
-        font-size: 13px;
-        cursor: pointer;
+        a {
+          color: #777;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .validate-button {
+        margin: 7px 0;
+        
+        .btn-sign {
+          font-size: 13px;
+          font-weight: 500;
+        }
       }
     }
   }
 }
 
-
+.human-card:hover ~ .buttons-container {
+  a {
+    text-decoration: underline;
+  }
+}
 
 /* === Documents Start === */
 .infoblocks-documents {
