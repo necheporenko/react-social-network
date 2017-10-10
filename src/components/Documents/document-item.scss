@@ -30,6 +30,7 @@
 
     .document-item-metadata-row {
       display: flex;
+      margin-top: 5px;
 
       .document-item-icon {
         background: url(../img/Icons/document-item.svg) no-repeat;
@@ -38,27 +39,31 @@
       }
 
       .document-item-created {
-        margin-left: 5px;
+        margin-left: 10px;
+        color: #808080;
       }
     }
 
     .document-item-show-more-container {
       position: absolute;
-      right: 15px;
-      top: 32%;
-      width: 19px;
-      height: 19px;
+      right: 8px;
+      top: 34%;
 
       .show-more-operations-icon {
-        margin: 0 auto;
-        background-image: url(../img/Icons/3dots.svg);
-        width: 5px;
-        height: 19px;
+        padding: 0 5px 0 5px;
+        // background-image: url(../img/Icons/3dots-max.svg);
+        // width: 5px;
+        // height: 19px;
+        
+        &:hover {
+          path {
+            margin: 0 auto;
+            fill: #000;
+          }
+        } 
       }
 
-      &:hover {
-        color: #000;
-      } 
+      
     }
   }
 }
