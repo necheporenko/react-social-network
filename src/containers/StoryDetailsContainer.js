@@ -36,15 +36,15 @@ export default class StoryDetailsContainer extends Component {
           { name: 'twitter:description', content: 'Small description test twitter' },
           { name: 'twitter:image', content: 'https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg' },
           { name: 'twitter:creator', content: '@nickbilton' },
-          { property: 'og:url', content: 'http://bits.blogs.nytimes.com/2011/12/08/a-twitter-for-my-sister/'},
-          { property: 'og:title', content: 'React Validbook' },
-          { property: 'og:description', content: 'In the early days, Twitter grew so quickly that it was almost impossible' },
-          { property: 'og:image', content: 'https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg' },
+          // { property: 'og:url', content: 'http://bits.blogs.nytimes.com/2011/12/08/a-twitter-for-my-sister/'},
+          // { property: 'og:title', content: 'React Validbook' },
+          // { property: 'og:description', content: 'In the early days, Twitter grew so quickly that it was almost impossible' },
+          // { property: 'og:image', content: 'https://farm6.staticflickr.com/5510/14338202952_93595258ff_z.jpg' },
           ]}
         />
-        {singleStory && singleStory.map((story) => (
+        {singleStory && singleStory.map((story, index) => (
           <Post
-            key={story.id}
+            key={index}
             id={story.id}
             post={story.text}
             user={story.user}
@@ -55,8 +55,10 @@ export default class StoryDetailsContainer extends Component {
             loudness={story.loudness}
             visibility={story.visibility}
             comments={story.comments}
+            paginationComment={story.paginationComment}
             counts={story.counts}
-            likeFunc={this.like}
+            // likeFunc={this.like}
+            // showMoreCommentsFunc={this.showMoreComments}
             authorizedUser={authorizedUser}
             requestedUser={requestedUser}
           />

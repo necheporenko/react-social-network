@@ -155,7 +155,6 @@ export default function storyReducer(state = initialState, action) {
           ...story
         };
       });
-
       return {
         ...state,
         liking: true,
@@ -309,36 +308,40 @@ export default function storyReducer(state = initialState, action) {
     }
 
     case CREATE_NEW_COMMENT: {
-      return {
-        ...state,
-        creatingNewComment: false,
-      };
-    }
-    case CREATE_NEW_COMMENT_SUCCESS: {
       let fn;
-      const receivedComment = action.result.data;
+      const receivedPreComment = Object.assign({}, {
+        entity: action.entity,
+        entity_id: action.entity_id,
+        content: action.content,
+        parent_id: action.parent_id,
+        created_by: action.created_by,
+        user: action.user,
+        id: 'temporary',
+      });
+
+      console.log("YEEEEEEEEEEEEEEEEEEEEEEEEEEEEAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHH", receivedPreComment);
 
       const addNewComment = state.storiesArr.map(story => {
         if (story.id === action.entity_id) {
           const searchComment = story.comments;
 
-          if (receivedComment.parent_id === 0) {
+          if (receivedPreComment.parent_id === 0) {
             return {
               ...story,
-              comments: [...story.comments, receivedComment]
+              comments: [...story.comments, receivedPreComment]
             };
           }
 
           fn = function fnComments(searchComment) {
             searchComment.map(comment => {
-              if (comment.id === receivedComment.parent_id) {
+              if (comment.id === receivedPreComment.parent_id) {
                 const newComment = Object.assign(comment);
 
                 if (newComment.children === null) {
                   newComment.children = [];
-                  newComment.children.push(receivedComment);
+                  newComment.children.push(receivedPreComment);
                 } else {
-                  newComment.children.push(receivedComment);
+                  newComment.children.push(receivedPreComment);
                 }
 
                 return {
@@ -359,6 +362,45 @@ export default function storyReducer(state = initialState, action) {
         };
       });
       console.log(addNewComment);
+      return {
+        ...state,
+        creatingNewComment: false,
+        storiesArr: addNewComment,
+      };
+    }
+    case CREATE_NEW_COMMENT_SUCCESS: {
+      let fn;
+      const receivedComment = action.result.data;
+
+      const addNewComment = state.storiesArr.map(story => {
+        if (story.id === action.entity_id) {
+          const searchComment = story.comments;
+
+          fn = function fnComments(searchComment) {
+            searchComment.map(comment => {
+              if (comment.id === 'temporary') {
+                const newComment = Object.assign(comment, {
+                  id: receivedComment.id,
+                  date: receivedComment.date,
+                  children: receivedComment.children,
+                });
+                return {
+                  ...story,
+                  comments: [...story.comments, newComment]
+                };
+              }
+
+              if (comment.children) {
+                fn(comment.children);
+              }
+            });
+          };
+          fn(searchComment);
+        }
+        return {
+          ...story,
+        };
+      });
       return {
         ...state,
         creatingNewComment: true,
@@ -508,19 +550,10 @@ export function create(data, books, files) {
   const formData = new FormData();
   formData.append('description', data);
   formData.append('books', JSON.stringify(books));
-  // formData.append('file', files[0]);
-  // console.log(JSON.stringify(files));
-  // console.log(files);
-  // formData.append('file[]', files[0]);
-  // formData.append('file[]', files[1]);
-  // console.log(files[0], files[1]);
-
   Object.keys(files).forEach((key) => {
     const file = files[key];
     formData.append('file[]', file);
   });
-
-
   return {
     types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
     promise: (client) => client.post('/stories', {
@@ -592,19 +625,24 @@ export function pinStory(pins, id) {
   };
 }
 
-export function createComment(entity_id, content, parent_id, created_by) {
+export function createComment(entity_id, content, parent_id, user) {
   return {
     types: [CREATE_NEW_COMMENT, CREATE_NEW_COMMENT_SUCCESS, CREATE_NEW_COMMENT_FAIL],
-    entity_id,    //story id
     promise: (client) => client.post('/comments', {
       data: {
         entity: 'story',
         entity_id,  //story id
         content,    //text
         parent_id,  //default 0
-        created_by  //auth_id
+        created_by: user.id  //auth_id
       }
-    })
+    }),
+    entity: 'story',
+    entity_id,
+    content,
+    parent_id,
+    created_by: user.id,
+    user,
   };
 }
 

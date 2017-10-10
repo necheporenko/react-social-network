@@ -41,6 +41,8 @@ import MinHeader from '../../components/Header/MinHeader';
 @asyncConnect([{
   promise: ({store: {dispatch, getState}}) => {
     const promises = [];
+    const state = getState();
+    const path = state.routing.locationBeforeTransitions.pathname;
     // console.log('<!======  loadAuth ========!>', isAuthLoaded(getState()));
     if (!isAuthLoaded(getState())) {
       promises.push(dispatch(loadAuth()));
@@ -49,8 +51,7 @@ import MinHeader from '../../components/Header/MinHeader';
     // else if (!isCountSeenNotification(getState())) {
     //   promises.push(dispatch(getCountSeenNotification(authUserState(getState()))));
     // }
-
-    dispatch(showLoading());
+    (path.indexOf('/story/') < 0) && dispatch(showLoading());
     promises.push(dispatch(getChannelName(getState())));
 
     return Promise.all(promises);

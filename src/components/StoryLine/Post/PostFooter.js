@@ -98,10 +98,12 @@ class PostFooter extends Component {
   }
 
   handleKeyPress(event) {
+    const {createComment, authorizedUser, id} = this.props;
+    const {parent_id} = this.state;
     if (event.keyCode === 13 && !event.shiftKey) {
       event.preventDefault();
       // console.log('comment', this.props.id, event.target.value, this.state.parent_id, this.props.authorizedUser.id);
-      this.props.createComment(this.props.id, event.target.value, this.state.parent_id, this.props.authorizedUser.id)
+      createComment(id, event.target.value, parent_id, authorizedUser)
         .then(event.target.value = '');
     }
   }

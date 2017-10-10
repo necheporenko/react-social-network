@@ -144,9 +144,24 @@ export default function channelReducer(state = initialState, action) {
       };
 
     case LIKE_STORY: {
+      const likedStory = state.channelStories.map((story) => {
+        if (story.id === action.story_id) {
+          const likes = Object.assign({}, story.likes, {
+            is_liked: !story.likes.is_liked
+          });
+          return {
+            ...story,
+            likes
+          };
+        }
+        return {
+          ...story
+        };
+      });
       return {
         ...state,
-        liking: true
+        liking: true,
+        channelStories: likedStory
       };
     }
     case LIKE_STORY_SUCCESS: {
@@ -154,7 +169,7 @@ export default function channelReducer(state = initialState, action) {
         if (story.id === action.story_id) {
           return {
             ...story,
-            likes: action.result.data
+            likes: action.result.data.likes
           };
         }
         return {
