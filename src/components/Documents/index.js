@@ -264,7 +264,7 @@ export default class Box extends Component {
           </div>
           <div className="common-lists tokens-lists">
             {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
-            {box.id && box.documents && box.documents.map(document => (
+            {slug === this.props.authorizedUser.slug && box.documents && box.documents.map(document => (
               <DocumentItem 
                 key={document.id}
                 document={document}
