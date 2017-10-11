@@ -256,6 +256,7 @@
       margin: 0 15px 5px 15px;
       width: 260px;
       box-shadow: none;
+      cursor: pointer;
     }
 
     .markdown-human-card {
@@ -265,6 +266,7 @@
 
       p:nth-child(3) {
         font-size: 10px;
+        cursor: text;
       }
 
       hr:nth-child(7) {
@@ -273,6 +275,10 @@
 
       p:nth-child(8) {
         margin-top: 5px;
+      }
+
+      h2 {
+        cursor: text;
       }
     }
 
@@ -285,10 +291,6 @@
       .review-proofs {
         a {
           color: #777;
-
-          &:hover {
-            text-decoration: underline;
-          }
         }
       }
 
@@ -301,12 +303,6 @@
         }
       }
     }
-  }
-}
-
-.human-card:hover ~ .buttons-container {
-  a {
-    text-decoration: underline;
   }
 }
 

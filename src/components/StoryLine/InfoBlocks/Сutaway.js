@@ -12,20 +12,40 @@ function work(occupation, company) {
   }
 }
 
-
-function fnHumanCard(address, slug) {
-  function linkHC() {
-    browserHistory.push(`/${slug}/documents/human-card/${address}`);
-  }
-
+const onHoverHumanCard = (e) => {
   const div = document.querySelector('.markdown-human-card div');
   if (div) {
-    const h1 = div.querySelector('h1');
-    const p5 = div.querySelector('p:nth-child(5)');
-    const p8 = div.querySelector('p:nth-child(8)');
-    h1.addEventListener('click', linkHC);
-    p5.addEventListener('click', linkHC);
-    p8.addEventListener('click', linkHC);
+    const h2 = div.querySelector('h2');
+    const p3 = div.querySelector('p:nth-child(3)');
+    const el = document.querySelector('.infoblock-human-card .review-proofs a');
+    
+    if (e.target === h2 || e.target === p3) {
+      el.style.textDecoration = 'none';
+    } else {
+      el.style.textDecoration = 'underline';
+    }
+  }
+};
+
+const onHoverOutHumanCard = () => {
+  const el = document.querySelector('.infoblock-human-card .review-proofs a');
+  el.style.textDecoration = 'none';
+}
+
+const onHoverLinkHumanCard = () => {
+  const el = document.querySelector('.infoblock-human-card .review-proofs a');
+  el.style.textDecoration = 'underline';
+}
+
+function fnHumanCard(address, slug, e) {
+  const div = document.querySelector('.markdown-human-card div');
+  if (div) {
+    const h2 = div.querySelector('h2');
+    const p3 = div.querySelector('p:nth-child(3)');
+
+    if (e.target !== h2 && e.target !== p3) {
+      browserHistory.push(`/${slug}/documents/human-card/${address}`);
+    }
   }
 }
 
@@ -125,8 +145,11 @@ const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
           {humanCard.id &&
             <div className="infoblock-human-card ">
               {/*<hr style={{margin: '0 15px 20px 15px'}} />*/}
-              {fnHumanCard(humanCard.public_address, slug)}
-              <div className="human-card markdown-human-card">
+              <div
+                onMouseOut={onHoverOutHumanCard}
+                onMouseMove={onHoverHumanCard} 
+                className="human-card markdown-human-card" 
+                onClick={(e) => fnHumanCard(humanCard.public_address, slug, e)}>
                 {/*<Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>*/}
                 <ReactMarkdown source={humanCard.markdown}/>
                 {/*</Link>*/}
@@ -134,7 +157,10 @@ const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
               <div className="buttons-container">
                 <div className="validate-button"><button className="btn-sign btn-brand">Validate</button></div>
                 <div className="review-proofs">
-                  <Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>Review Proofs</Link>
+                  <Link
+                    onMouseMove={onHoverLinkHumanCard}
+                    onMouseOut={onHoverOutHumanCard} 
+                    to={`/${slug}/documents/human-card/${humanCard.public_address}`}>Review Proofs</Link>
                 </div>
               </div>
             </div>
