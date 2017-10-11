@@ -26,6 +26,7 @@ import './index.scss';
 class Stream extends Component {
   constructor(props) {
     super(props);
+
     this.load = this.load.bind(this);
     this.like = this.like.bind(this);
     this.showMoreComments = this.showMoreComments.bind(this);
@@ -56,8 +57,9 @@ class Stream extends Component {
   }
 
   render() {
-    const {storiesArr, authorizedUser, requestedUser, isAuthenticated, loaded, style} = this.props;
+    const {storiesArr, authorizedUser, requestedUser, isAuthenticated, loaded, style, over} = this.props;
     const loader = <Loader marginTop="52px"/>;
+    console.log('RENDER STREAM');
 
     return (
       <div className="stream" style={style}>
@@ -69,28 +71,17 @@ class Stream extends Component {
         />
         }
 
-        {loaded.stories ?
+        {loaded.stories &&
           <InfiniteScroll
             loadMore={this.load}
-            hasMore={true}
+            hasMore={!over}
             threshold={50}
-            loader={loader}
+            loader={over ? null : loader}
           >
             {storiesArr && storiesArr.map((story, index) => (
               <Post
-                key={index}
-                id={story.id}
-                post={story.text}
-                user={story.user}
-                date={story.date}
-                images={story.images}
-                likes={story.likes}
-                books={story.books}
-                loudness={story.loudness}
-                visibility={story.visibility}
-                comments={story.comments}
-                paginationComment={story.paginationComment}
-                counts={story.counts}
+                key={story.id}
+                story={story}
                 likeFunc={this.like}
                 showMoreCommentsFunc={this.showMoreComments}
                 authorizedUser={this.props.authorizedUser}
@@ -99,8 +90,6 @@ class Stream extends Component {
               />
             ))}
           </InfiniteScroll>
-          :
-          <Loader marginTop="52px"/>
         }
       </div>
     );

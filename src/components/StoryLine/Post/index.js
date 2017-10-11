@@ -21,13 +21,9 @@ import PostFooter from './PostFooter';
 // }
 
 export default class Post extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
-    const {post, images} = this.props;
+    const {authorizedUser} = this.props;
+    const {text, images, id, user, date, likes, books, loudness, visibility, comments, paginationComment, counts} = this.props.story;
 
     // const tooltip = (props) => (
     //
@@ -49,13 +45,13 @@ export default class Post extends Component {
          =========== */}
 
         <PostHeader
-          authorizedUser={this.props.authorizedUser}
-          user={this.props.user}
-          date={this.props.date}
-          visibility={this.props.visibility}
-          loudness={this.props.loudness}
-          id={this.props.id}
-          books={this.props.books}
+          authorizedUser={authorizedUser}
+          user={user}
+          date={date}
+          visibility={visibility}
+          loudness={loudness}
+          id={id}
+          books={books}
         />
 
         {/* ===========
@@ -66,7 +62,7 @@ export default class Post extends Component {
           <div className="wrap-post-content">
             <div
               className="post-content-type-text"
-              dangerouslySetInnerHTML={{__html: post}}
+              dangerouslySetInnerHTML={{__html: text}}
             />
 
             {/*<div className="post-content-type-text">
@@ -126,13 +122,13 @@ export default class Post extends Component {
             Post Footer
             =========== */}
         <PostFooter
-          authorizedUser={this.props.authorizedUser}
-          likes={this.props.likes}
-          id={this.props.id}
-          comments={this.props.comments}
-          paginationComment={this.props.paginationComment}
-          counts={this.props.counts}
-          post={this.props.post}
+          authorizedUser={authorizedUser}
+          likes={likes}
+          id={id}
+          comments={comments}
+          paginationComment={paginationComment}
+          counts={counts}
+          post={text}
           likeFunc={this.props.likeFunc}
           showMoreCommentsFunc={this.props.showMoreCommentsFunc}
           createComment={this.props.createComment}
@@ -144,19 +140,8 @@ export default class Post extends Component {
 
 Post.propTypes = {
   authorizedUser: PropTypes.object,           //user
-  user: PropTypes.object,
-  likes: PropTypes.object,
-  post: PropTypes.string,
-  date: PropTypes.object,
-  id: PropTypes.number,
-  images: PropTypes.array,
-  books: PropTypes.array,
-  comments: PropTypes.array,
-  loudness: PropTypes.object,
-  visibility: PropTypes.object,
-  createComment: PropTypes.func,
+  story: PropTypes.object,
+  // createComment: PropTypes.func,
   likeFunc: PropTypes.func,
-  paginationComment: PropTypes.number,
-  counts: PropTypes.object,
   showMoreCommentsFunc: PropTypes.func,
 };

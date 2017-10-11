@@ -53,7 +53,7 @@ const initialState = {
   storiesArr: [],
   singleStory: {},
   over: false,
-  paginationStory: 1,
+  paginationStory: 2,
   creatingNewComment: false,
 };
 
@@ -76,8 +76,8 @@ export default function storyReducer(state = initialState, action) {
         ...state,
         loading: false,
         loaded,
-        storiesArr: dataStories,
-        paginationStory: 2,
+        over: action.result.data.length === 0,
+        storiesArr: dataStories
       };
     case LOAD_SHOW_USER_STORIES_FAIL:
       loaded = Object.assign({}, state.loaded, {
@@ -98,11 +98,12 @@ export default function storyReducer(state = initialState, action) {
         loading: true
       };
     case LOAD_NEXT_SHOW_USER_STORIES_SUCCESS:
+      console.log(action);
       return {
         ...state,
         loading: false,
         // loaded: action.result.status === 'success' && true,       // or just true
-        over: action.result.data.length === 0 && true,
+        over: action.result.data.length === 0,
         storiesArr: [...state.storiesArr, ...action.result.data],
         paginationStory: action.paginationStory + 1,
       };

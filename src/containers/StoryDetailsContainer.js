@@ -44,20 +44,9 @@ export default class StoryDetailsContainer extends Component {
         />
         {singleStory && singleStory.map((story, index) => (
           <Post
-            key={index}
-            id={story.id}
-            post={story.text}
-            user={story.user}
-            date={story.date}
-            images={story.images}
-            likes={story.likes}
-            books={story.books}
-            loudness={story.loudness}
-            visibility={story.visibility}
-            comments={story.comments}
-            paginationComment={story.paginationComment}
-            counts={story.counts}
-            // likeFunc={this.like}
+            likeFunc={this.like}
+            story={story}
+            key={story.id}
             // showMoreCommentsFunc={this.showMoreComments}
             authorizedUser={authorizedUser}
             requestedUser={requestedUser}

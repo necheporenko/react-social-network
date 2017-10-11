@@ -32,15 +32,7 @@ class SearchStories extends Component {
           {foundStories && foundStories.map((story) => (
             <Post
               key={story.id}
-              id={story.id}
-              post={story.text}
-              user={story.user}
-              date={story.date}
-              images={story.images}
-              likes={story.likes}
-              books={story.books}
-              loudness={story.loudness}
-              visibility={story.visibility}
+              story={story}
               likeFunc={this.like}
               authorizedUser={this.props.authorizedUser}
               requestedUser={this.props.requestedUser}

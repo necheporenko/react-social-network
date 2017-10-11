@@ -77,18 +77,7 @@ export default class BookStream extends Component {
             {bookStories && bookStories.map((story) => (
               <Post
                 key={story.id}
-                id={story.id}
-                post={story.text}
-                user={story.user}
-                date={story.date}
-                images={story.images}
-                likes={story.likes}
-                books={story.books}
-                loudness={story.loudness}
-                visibility={story.visibility}
-                comments={story.comments}
-                paginationComment={story.paginationComment}
-                counts={story.counts}
+                story={story}
                 likeFunc={this.like}
                 showMoreCommentsFunc={this.showMoreComments}
                 authorizedUser={this.props.authorizedUser}
