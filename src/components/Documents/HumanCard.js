@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import ReactMarkdown from 'react-markdown';
 import {getUser} from '../../redux/modules/user';
 import {getHumanCard} from '../../redux/modules/document';
-import './index.scss';
+import './human-card.scss';
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
@@ -33,21 +33,7 @@ export default class HumanCard extends Component {
 
   render() {
     const {humanCard} = this.props;
-    const test = `<?--- START HUMAN CARD ---?>
-
-# HUMAN CARD
-
-0xB7871a6C2E51b9E3Fb6C867B7E902EA7De6F9e12
-
-------------------------------------------------------------
-This public address has been established for: 
-
-## Darth Vader
-------------------------------------------------------------
-
-Digital Signature: 
-
-<?--- END HUMAN CARD ---?>`;
+    
     return (
       <div className="human-card markdown-human-card">
         <ReactMarkdown source={humanCard.markdown}/>

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 import HumanCard from './HumanCard';
 import {connect} from 'react-redux';
 import SubHeader from '../StoryLine/SubHeader';
@@ -62,19 +63,23 @@ export default class HumanCardPage extends Component {
     };
 
     return (
-      <div className="human-card-navigation" style={{
+      <div className="human-card-navigation-wrapper" style={{
         position: showSmallNavigation ? 'fixed' : null,
         top: showSmallNavigation ? 52 : null,
         zIndex: showSmallNavigation ? 11 : null
       }}>
-        <div className="user-info" style={{visibility: showSmallNavigation ? 'visible' : 'hidden'}}>
-          <a href={`/${slug}`}>
-            <img src={avatar32} alt={`${first_name} ${last_name}`}/>
-            <span>{first_name} {last_name}</span>
-          </a>
-        </div>
-        <div className="human-card-page" onClick={scrollTo}>
-          <span>Human Card Page</span>
+        <div className="human-card-navigation-container">
+          <div className="user-info" style={{visibility: showSmallNavigation ? 'visible' : 'hidden'}}>
+            <a href={`/${slug}`}>
+              <img src={avatar32} alt={`${first_name} ${last_name}`}/>
+              <span>{first_name} {last_name}</span>
+            </a>
+          </div>
+          <div className="human-page-breadcrumb">
+            <Link to={`/${slug}/documents`}>Document</Link>
+            <span className="chevron-right"/>
+            <span className="scroll-to" onClick={scrollTo}>Human Card Page</span>
+          </div>
         </div>
       </div>
     );
@@ -86,16 +91,13 @@ export default class HumanCardPage extends Component {
         <h2>Linked digital property</h2>
         <div className="property-list">
           <div>
-            <input id="item1" type="checkbox" checked/>
-            <label htmlFor="item1">validbook.org/jimbo.fry</label>
+            validbook.org/jimbo.fry
           </div>
           <div>
-            <input id="item2" type="checkbox"/>
-            <label htmlFor="item1">facebook.com/jimbo.fry</label>
+            facebook.com/jimbo.fry
           </div>
           <div>
-            <input id="item3" type="checkbox"/>
-            <label htmlFor="item1">twitter.com/friedcookies</label>
+            twitter.com/friedcookies
           </div>
         </div>
       </div>
@@ -135,7 +137,7 @@ export default class HumanCardPage extends Component {
           requestedUser={requestedUser}
         />
         {this.navigationRender()}
-        <div id="human-card-page" style={{
+        <div className="human-card-page" style={{
           marginTop: showSmallNavigation ? 70 : 20
         }}>
           <div className="upper-block">
