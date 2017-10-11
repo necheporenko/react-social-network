@@ -1,3 +1,50 @@
-.channel-form .channel-label {
-  padding-top: 0 !important;
-} 
+
+.modal-dialog {
+  width: 390px;
+  box-sizing: content-box;
+
+  .modal-header {
+    padding: 24px 24px 15px;
+    border-bottom: none;
+
+    h4 {
+      font-weight: normal;
+      font-size: 18px;
+    }
+
+    span {
+      position: absolute;
+      right: 15px;
+      top: 11px;
+    }
+  }
+
+  .modal-body {
+    padding: 0 24px 15px;
+
+    label {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .channel-form .channel-label {
+      padding-top: 0 !important;
+      padding-bottom: 17px;
+      font-weight: 300;
+    }
+    
+    .channel-element-wrapper {
+      .form-control {
+        height: 25px;
+        width: 321px;
+        padding: 1px 8px;
+      }
+    }
+  }
+
+  .modal-footer {
+    border-top: none;
+    text-align: right;
+    padding: 9px 24px 20px;
+  }
+}

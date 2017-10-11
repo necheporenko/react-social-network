@@ -10,7 +10,10 @@ export default class DocumentModalItem extends Component {
 
     return (
       <div className="static-modal">
-        <Modal show={showModal} onHide={closeModalHandler || saveChangesHandler}>
+        <Modal 
+          show={showModal}
+          onHide={closeModalHandler || saveChangesHandler}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Rename</Modal.Title>
           </Modal.Header>
@@ -31,8 +34,13 @@ export default class DocumentModalItem extends Component {
           </Modal.Body>
     
           <Modal.Footer>
-            <button className="btn-brand btn-cancel" onClick={closeModalHandler}>Cancel</button>
-            <button className="btn-brand" style={{marginLeft: '10px'}} onClick={saveChangesHandler}>Save changes</button>
+            <button 
+              className="btn-brand btn-cancel" 
+              onClick={closeModalHandler}>Cancel</button>
+            <button 
+              className="btn-brand" 
+              style={{marginLeft: '16px'}} 
+              onClick={saveChangesHandler}>OK</button>
           </Modal.Footer>
         </Modal>
       </div>
