@@ -28,7 +28,7 @@ export default class StoryDetailsContainer extends Component {
     return (
       <div style={{width: '500px', margin: '0 auto', paddingTop: '20px'}}>
         <Helmet
-          title={'Myy Title'}
+          title={'Validbook - Story Page'}
           meta={[
           { name: 'twitter:card', content: 'summary' },
           { name: 'twitter:site', content: '@nytimesbits' },

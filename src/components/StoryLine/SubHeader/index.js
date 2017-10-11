@@ -98,11 +98,17 @@ export default class SubHeader extends Component {
     e.preventDefault();
     const reader = new FileReader();
     const file = e.target.files[0];
+    const nameOfPicture = () => {
+      if (~file.name.indexOf('.png')) {
+        return file.name;
+      }
+      return `${file.name.substring(0, file.name.lastIndexOf('.'))}.png`;
+    };
 
     reader.onloadend = () => {
       this.setState({file});
       const image = {
-        name: file.name,
+        name: nameOfPicture(),
         url: reader.result
       };
       this.props.showPopUp(true, image, 'ChangeAvatar');

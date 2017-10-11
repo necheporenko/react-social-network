@@ -97,7 +97,8 @@ class StoryLine extends Component {
     return (
       <div className="storyLine">
         <div className="wrap-storyLine">
-          <div ref="infoblocks"
+          <div
+            ref="infoblocks"
             style={{
               top: top(),
               position: !fixedTop && !fixedBottom ? 'absolute' : 'fixed',
