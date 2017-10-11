@@ -225,7 +225,7 @@ class PostFooter extends Component {
           </div>
           <div className="post-log">
             <i className="post-action-icon"/>
-            <span>Log</span>
+            <span>Relog</span>
             <LogStory
               storyID={id}
             />
