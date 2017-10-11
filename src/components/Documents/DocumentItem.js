@@ -89,7 +89,7 @@ export default class DocumentItem extends Component {
           </div>
           <div className="document-item-show-more-container" onClick={this.showOperations}>
             <div className="show-more-operations-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" height="19px" viewBox="0 0 4.75 19" width="4.75px"><path d="M2.375 4.75c1.306 0 2.375-1.07 2.375-2.375C4.75 1.07 3.68 0 2.375 0 1.07 0 0 1.07 0 2.375 0 3.68 1.07 4.75 2.375 4.75zm0 2.375C1.07 7.125 0 8.195 0 9.5c0 1.306 1.07 2.375 2.375 2.375 1.306 0 2.375-1.07 2.375-2.375 0-1.306-1.07-2.375-2.375-2.375zm0 7.125C1.07 14.25 0 15.32 0 16.625 0 17.93 1.07 19 2.375 19c1.306 0 2.375-1.07 2.375-2.375 0-1.306-1.07-2.375-2.375-2.375z" fill="#cdcdcd"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 4.5 18" width="4.5"><path d="M2.25 4.5c1.237 0 2.25-1.013 2.25-2.25C4.5 1.012 3.487 0 2.25 0 1.012 0 0 1.012 0 2.25 0 3.487 1.012 4.5 2.25 4.5zm0 2.25C1.012 6.75 0 7.763 0 9c0 1.238 1.012 2.25 2.25 2.25 1.237 0 2.25-1.012 2.25-2.25 0-1.237-1.013-2.25-2.25-2.25zm0 6.75C1.012 13.5 0 14.512 0 15.75S1.012 18 2.25 18c1.237 0 2.25-1.012 2.25-2.25S3.487 13.5 2.25 13.5z" fill="#cdcdcd"/></svg>
             </div>
             {this.showMoreOperationsRender()}
             {this.documentModalRender()}

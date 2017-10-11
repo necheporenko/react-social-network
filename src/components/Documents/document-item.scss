@@ -11,6 +11,10 @@
   margin-right: 20px;
   width: 208px;
 
+  &:hover {
+    border: 1px solid #679fff;
+  }
+
   .document-item-thumbnail {
     height: 269px;
     width: 208px;
@@ -33,20 +37,21 @@
       margin-top: 5px;
 
       .document-item-icon {
-        background: url(../img/Icons/document-item.svg) no-repeat;
-        width: 12px;
+        background: url(../img/Icons/file-document-box.svg) no-repeat;
+        width: 14px;
         height: 14px; 
       }
 
       .document-item-created {
-        margin-left: 10px;
+        font-size: 12px;
+        margin-left: 12px;
         color: #808080;
       }
     }
 
     .document-item-show-more-container {
       position: absolute;
-      right: 8px;
+      right: 10px;
       top: 34%;
 
       .show-more-operations-icon {
