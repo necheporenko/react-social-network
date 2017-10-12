@@ -131,7 +131,7 @@ export default class Post extends Component {
           post={text}
           likeFunc={this.props.likeFunc}
           showMoreCommentsFunc={this.props.showMoreCommentsFunc}
-          createComment={this.props.createComment}
+          createCommentFunc={this.props.createCommentFunc}
         />
       </div>
     );

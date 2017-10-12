@@ -147,7 +147,8 @@ export default function storyReducer(state = initialState, action) {
       return {
         ...state,
         liking: true,
-        storiesArr: likeStory(state.storiesArr, action)
+        storiesArr: action.place === 'storyline' && likeStory(state.storiesArr, action),
+        singleStory: action.place === 'storyPage' && likeStory(state.singleStory, action),
       };
     }
     case LIKE_STORY_SUCCESS: {
@@ -159,7 +160,8 @@ export default function storyReducer(state = initialState, action) {
       return {
         ...state,
         liking: false,
-        storiesArr: likeStorySuccess(state.storiesArr, action)
+        storiesArr: action.place === 'storyline' && likeStorySuccess(state.storiesArr, action),
+        singleStory: action.place === 'storyPage' && likeStorySuccess(state.singleStory, action),
       };
     }
     case LIKE_STORY_FAIL: {
@@ -285,17 +287,20 @@ export default function storyReducer(state = initialState, action) {
     }
 
     case CREATE_NEW_COMMENT: {
+      console.log(action);
       return {
         ...state,
         creatingNewComment: false,
-        storiesArr: createNewComment(state.storiesArr, action)
+        storiesArr: action.place === 'storyline' && createNewComment(state.storiesArr, action),
+        singleStory: action.place === 'storyPage' && createNewComment(state.singleStory, action),
       };
     }
     case CREATE_NEW_COMMENT_SUCCESS: {
       return {
         ...state,
         creatingNewComment: true,
-        storiesArr: createNewCommentSuccess(state.storiesArr, action)
+        storiesArr: action.place === 'storyline' && createNewCommentSuccess(state.storiesArr, action),
+        singleStory: action.place === 'storyPage' && createNewCommentSuccess(state.singleStory, action),
       };
     }
     case CREATE_NEW_COMMENT_FAIL: {
@@ -460,11 +465,12 @@ export function deleteStory(id) {
   };
 }
 
-export function like(story_id) {
+export function like(story_id, place) {
   return {
     types: [LIKE_STORY, LIKE_STORY_SUCCESS, LIKE_STORY_FAIL],
     promise: (client) => client.post('/like/story', {data: {story_id}}),
-    story_id
+    story_id,
+    place
   };
 }
 
@@ -516,7 +522,8 @@ export function pinStory(pins, id) {
   };
 }
 
-export function createComment(entity_id, content, parent_id, user) {
+export function createComment(entity_id, content, parent_id, user, place) {
+  console.log('Place', place);
   return {
     types: [CREATE_NEW_COMMENT, CREATE_NEW_COMMENT_SUCCESS, CREATE_NEW_COMMENT_FAIL],
     promise: (client) => client.post('/comments', {
@@ -534,6 +541,7 @@ export function createComment(entity_id, content, parent_id, user) {
     parent_id,
     created_by: user.id,
     user,
+    place,
   };
 }
 

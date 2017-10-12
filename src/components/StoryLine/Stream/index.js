@@ -45,11 +45,11 @@ class Stream extends Component {
   }
 
   like(id) {
-    this.props.likePostStoryline(id);
+    this.props.likePostStoryline(id, 'storyline');
   }
 
   createComment(entity_id, content, parent_id, user) {
-    this.props.createCommentStoryline(entity_id, content, parent_id, user);
+    this.props.createCommentStoryline(entity_id, content, parent_id, user, 'storyline');
   }
 
   showMoreComments(id, paginationComment) {
@@ -85,7 +85,7 @@ class Stream extends Component {
                 showMoreCommentsFunc={this.showMoreComments}
                 authorizedUser={this.props.authorizedUser}
                 requestedUser={this.props.requestedUser}
-                createComment={this.createComment}
+                createCommentFunc={this.createComment}
               />
             ))}
           </InfiniteScroll>

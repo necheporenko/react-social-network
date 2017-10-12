@@ -88,7 +88,7 @@ export default class ChannelStream extends Component {
                 showMoreCommentsFunc={this.showMoreComments}
                 authorizedUser={this.props.authorizedUser}
                 requestedUser={this.props.requestedUser}
-                createComment={this.createComment}
+                createCommentFunc={this.createComment}
               />
             ))}
           </InfiniteScroll>

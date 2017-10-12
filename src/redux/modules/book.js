@@ -1,5 +1,6 @@
 import dataURItoBlob from '../../constants/dataURItoBlob';
 import {likeStory, likeStorySuccess} from '../../constants/like';
+import {createNewComment, createNewCommentSuccess} from '../../constants/comment';
 const LOAD_BOOKTREE = 'LOAD_BOOKTREE';
 const LOAD_BOOKTREE_SUCCESS = 'LOAD_BOOKTREE_SUCCESS';
 const LOAD_BOOKTREE_FAIL = 'LOAD_BOOKTREE_FAIL';
@@ -36,6 +37,9 @@ const SHOW_SUBBOKS_CURRENT_BOOK = 'SHOW_SUBBOKS_CURRENT_BOOK';
 const GET_BOOKS = 'GET_BOOKS';
 const GET_BOOKS_SUCCESS = 'GET_BOOKS_SUCCESS';
 const GET_BOOKS_FAIL = 'GET_BOOKS_FAIL';
+const CREATE_NEW_COMMENT = 'CREATE_NEW_COMMENT';
+const CREATE_NEW_COMMENT_SUCCESS = 'CREATE_NEW_COMMENT_SUCCESS';
+const CREATE_NEW_COMMENT_FAIL = 'CREATE_NEW_COMMENT_FAIL';
 
 const initialState = {
   bookTreeArr: [],
@@ -340,6 +344,28 @@ export default function bookReducer(state = initialState, action) {
       };
     }
 
+    case CREATE_NEW_COMMENT: {
+      return {
+        ...state,
+        creatingNewComment: false,
+        bookStories: createNewComment(state.bookStories, action)
+      };
+    }
+    case CREATE_NEW_COMMENT_SUCCESS: {
+      return {
+        ...state,
+        creatingNewComment: true,
+        bookStories: createNewCommentSuccess(state.bookStories, action)
+      };
+    }
+    case CREATE_NEW_COMMENT_FAIL: {
+      return {
+        ...state,
+        creatingNewComment: false,
+      };
+    }
+
+
     default:
       return state;
   }
@@ -469,5 +495,26 @@ export function getBooks(user_slug, book) {
   return {
     types: [GET_BOOKS, GET_BOOKS_SUCCESS, GET_BOOKS_FAIL],
     promise: (client) => client.get('/books', {params: {user_slug, book_slug}})
+  };
+}
+
+export function createComment(entity_id, content, parent_id, user) {
+  return {
+    types: [CREATE_NEW_COMMENT, CREATE_NEW_COMMENT_SUCCESS, CREATE_NEW_COMMENT_FAIL],
+    promise: (client) => client.post('/comments', {
+      data: {
+        entity: 'story',
+        entity_id,  //story id
+        content,    //text
+        parent_id,  //default 0
+        created_by: user.id  //auth_id
+      }
+    }),
+    entity: 'story',
+    entity_id,
+    content,
+    parent_id,
+    created_by: user.id,
+    user,
   };
 }

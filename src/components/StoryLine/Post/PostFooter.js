@@ -23,7 +23,8 @@ class PostFooter extends Component {
     this.state = {
       showModal: false,
       parent_id: 0,
-      showReply: false
+      showReply: false,
+      showComment: false,
     };
     this.Close = this.Close.bind(this);
     this.Open = this.Open.bind(this);
@@ -31,6 +32,7 @@ class PostFooter extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.reply = this.reply.bind(this);
     this.replyComments = this.replyComments.bind(this);
+    this.openCommentBlock = this.openCommentBlock.bind(this);
     // this.showMoreComments = this.showMoreComments.bind(this);
   }
 
@@ -50,6 +52,12 @@ class PostFooter extends Component {
 
   Open() {
     this.setState({showModal: true});
+  }
+
+  openCommentBlock() {
+    console.log('hello', this.state.showComment);
+    this.setState({showComment: true});
+    console.log('bye', this.state.showComment);
   }
 
   loadLikeInfo(people_list) {
@@ -97,13 +105,13 @@ class PostFooter extends Component {
   }
 
   handleKeyPress(event) {
-    const {createComment, authorizedUser, id} = this.props;
+    const {createCommentFunc, authorizedUser, id} = this.props;
     const {parent_id} = this.state;
     if (event.keyCode === 13 && !event.shiftKey) {
       event.preventDefault();
       // console.log('comment.js', this.props.id, event.target.value, this.state.parent_id, this.props.authorizedUser.id);
-      createComment(id, event.target.value, parent_id, authorizedUser)
-        .then(event.target.value = '');
+      createCommentFunc(id, event.target.value, parent_id, authorizedUser);
+      event.target.value = '';
     }
   }
 
@@ -200,6 +208,7 @@ class PostFooter extends Component {
 
   render() {
     const {likes, id, comments, post, authorizedUser, paginationComment, counts, path} = this.props;
+    const {showComment} = this.state;
 
     const tooltipLike = (
       <Tooltip id="tooltipLike" arrowOffsetLeft={10}>
@@ -219,7 +228,7 @@ class PostFooter extends Component {
             <i className="post-action-icon"/>
             <span>Like</span>
           </div>
-          <div className="post-comment">
+          <div className="post-comment" onClick={() => this.openCommentBlock()}>
             <i className="post-action-icon"/>
             <span>Comment</span>
           </div>
@@ -269,8 +278,10 @@ class PostFooter extends Component {
             </OverlayTrigger>
           </div>
 
-          <div className="post-comment-field"
-               style={{display: (path === '/' && comments.length === 0) ? 'none' : 'block'}}>
+          <div
+            className="post-comment-field"
+            style={{display: (!showComment && (path === '/' && comments.length === 0)) ? 'none' : 'block'}}
+          >
             <div className="comments">
               {counts.comments > 4 &&
               <div

@@ -1,7 +1,11 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroller';
-import {like as likePostBook, viewMoreComments as viewMoreCommentsBook} from '../../../redux/modules/book';
+import {
+  like as likePostBook,
+  viewMoreComments as viewMoreCommentsBook,
+  createComment as createCommentBook
+} from '../../../redux/modules/book';
 import Sbox from './Sbox';
 import Post from '../Post/index';
 import Loader from '../../Common/Loader';
@@ -15,7 +19,8 @@ import './index.scss';
   loaded: state.book.loaded,
 }), {
   likePostBook,
-  viewMoreCommentsBook
+  viewMoreCommentsBook,
+  createCommentBook,
 })
 
 export default class BookStream extends Component {
@@ -25,6 +30,7 @@ export default class BookStream extends Component {
     this.like = this.like.bind(this);
     this.showMoreComments = this.showMoreComments.bind(this);
     this.reloadStreamBook = this.reloadStreamBook.bind(this);
+    this.createComment = this.createComment.bind(this);
   }
 
   load() {
@@ -39,6 +45,10 @@ export default class BookStream extends Component {
 
   like(id) {
     this.props.likePostBook(id);
+  }
+
+  createComment(entity_id, content, parent_id, user) {
+    this.props.createCommentBook(entity_id, content, parent_id, user);
   }
 
   showMoreComments(id, paginationComment) {
@@ -59,12 +69,12 @@ export default class BookStream extends Component {
 
     return (
       <div className="stream" style={{marginLeft: 0}}>
-        { isAuthenticated && authorizedUser.id === requestedUser.id &&
-          <Sbox
-            authorizedUser={this.props.authorizedUser}
-            createStory={this.props.createStory}
-            reloadStream={this.reloadStreamBook}
-          />
+        {isAuthenticated && authorizedUser.id === requestedUser.id &&
+        <Sbox
+          authorizedUser={this.props.authorizedUser}
+          createStory={this.props.createStory}
+          reloadStream={this.reloadStreamBook}
+        />
         }
 
         {loaded.loadedBookStories ?
@@ -82,6 +92,7 @@ export default class BookStream extends Component {
                 showMoreCommentsFunc={this.showMoreComments}
                 authorizedUser={this.props.authorizedUser}
                 requestedUser={this.props.requestedUser}
+                createCommentFunc={this.createComment}
               />
             ))}
           </InfiniteScroll>
