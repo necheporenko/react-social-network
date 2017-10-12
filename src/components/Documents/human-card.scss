@@ -9,7 +9,7 @@
   h1 {
     font-weight: 500;
     font-size: 14px;
-    margin: 15px 0;
+    margin: 15px 0 0;
   }
 
   h2 {
@@ -19,7 +19,6 @@
   }
 
   p {
-    margin: 5px 0 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -63,8 +62,9 @@
   }
 
   p:nth-child(3) {
+    cursor: text;
+    padding: 20px 0 0;
     font-size: 13px;
-    margin-bottom: 0;
     user-select: all;
   }
 
@@ -80,14 +80,15 @@
 
   p:nth-child(8) {
     cursor: pointer;
+    margin: 5px 0 10px;
   }
 
   h1 {
-    margin-bottom: 15px;
     cursor: pointer;
   }
 
   h2 {
+    cursor: text;
     margin-bottom: 0;
     font-size: 22px;
     font-weight: normal;

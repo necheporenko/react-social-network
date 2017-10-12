@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Link, browserHistory} from 'react-router';
 import ReactMarkdown from 'react-markdown';
+import '../../Documents/human-card.scss'; 
 
 function work(occupation, company) {
   if (occupation && company) {
