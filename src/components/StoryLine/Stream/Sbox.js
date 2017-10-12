@@ -269,7 +269,7 @@ class Sbox extends PureComponent {
 
   onSubmitStory() {
     // console.log('onSubmitStory', this.state.data, this.state.loud.storyline, this.state.loud_type, this.state.visibility_type);
-    this.props.createStory(
+    this.props.createStoryFunc(
       this.state.data,
       this.props.arrCheckbox,
       this.state.files
@@ -277,11 +277,12 @@ class Sbox extends PureComponent {
       // this.state.loud_type,
       // this.state.visibility_type
       // obj
-    )
-      .then(() => this.props.reloadStream());
+    );
+      // .then(() => this.props.reloadStream());
     this.setState({
       editorContent: '',        //  cleaning input
-      files: []
+      files: [],
+      sboxShadow: '0 1px 3px rgba(0, 0, 0, 0.15)'
     });
   }
 

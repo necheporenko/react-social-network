@@ -4,7 +4,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import {
   like as likePostBook,
   viewMoreComments as viewMoreCommentsBook,
-  createComment as createCommentBook
+  createComment as createCommentBook,
+  createStory as createStoryBook,
 } from '../../../redux/modules/book';
 import Sbox from './Sbox';
 import Post from '../Post/index';
@@ -21,6 +22,7 @@ import './index.scss';
   likePostBook,
   viewMoreCommentsBook,
   createCommentBook,
+  createStoryBook,
 })
 
 export default class BookStream extends Component {
@@ -31,6 +33,7 @@ export default class BookStream extends Component {
     this.showMoreComments = this.showMoreComments.bind(this);
     this.reloadStreamBook = this.reloadStreamBook.bind(this);
     this.createComment = this.createComment.bind(this);
+    this.createStory = this.createStory.bind(this);
   }
 
   load() {
@@ -49,6 +52,10 @@ export default class BookStream extends Component {
 
   createComment(entity_id, content, parent_id, user) {
     this.props.createCommentBook(entity_id, content, parent_id, user);
+  }
+
+  createStory(data, arrCheckbox, files) {
+    this.props.createStoryBook(data, arrCheckbox, files);
   }
 
   showMoreComments(id, paginationComment) {
@@ -72,7 +79,7 @@ export default class BookStream extends Component {
         {isAuthenticated && authorizedUser.id === requestedUser.id &&
         <Sbox
           authorizedUser={this.props.authorizedUser}
-          createStory={this.props.createStory}
+          createStoryFunc={this.createStory}
           reloadStream={this.reloadStreamBook}
         />
         }

@@ -281,7 +281,7 @@ export default class BookPage extends Component {
           {book_slug &&
           <div
             className={chooseScroll.infoblock}
-            style={{minHeight: '280px', maxHeight: '261px', width: '320px', marginBottom: 0}}>
+            style={{minHeight: '280px', maxHeight: '281px', width: '320px', marginBottom: 0}}>
             <div className="book-settings-edit">
               <EditBook
                 book_name={name}
@@ -304,13 +304,10 @@ export default class BookPage extends Component {
 
             <div className="book-counter">
               <ul>
-                <li><i className="infobook-icon-visibility"/> · <span
-                  style={{padding: '0 4px'}}>{counts.stories}</span><i className="stories-icon-sm"/>·
-                </li>
+                <li><i className="infobook-icon-visibility"/> · <span style={{padding: '0 4px'}}>{counts.followers}</span><i className="followers-icon-sm"/>·</li>
+                <li><span >{counts.stories}</span><i className="stories-icon-sm"/>·</li>
+                <li><span>{counts.images}</span><i className="photos-icon-sm"/>·</li>
                 <li><span>{counts.sub_books}</span><i className="subbooks-icon-sm"/>·</li>
-                <li><span>{counts.follows_book}</span><i className="followers-icon-sm"/>·</li>
-                <li><span>0</span><i className="photos-icon-sm"/></li>
-
 
                 {/*<div className="followers">*/}
                 {/*<Link to={`/${slug}`} className="user">*/}

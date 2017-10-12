@@ -5,6 +5,7 @@ import {
   like as likePostStoryline,
   viewMoreComments as viewMoreCommentsStoryline,
   createComment as createCommentStoryline,
+  create as createStoryStoryline,
 } from '../../../redux/modules/story';
 import Sbox from './Sbox';
 import Post from '../Post/index';
@@ -21,6 +22,7 @@ import './index.scss';
   likePostStoryline,
   viewMoreCommentsStoryline,
   createCommentStoryline,
+  createStoryStoryline,
 })
 
 class Stream extends Component {
@@ -32,6 +34,7 @@ class Stream extends Component {
     this.showMoreComments = this.showMoreComments.bind(this);
     this.reloadStreamStoryline = this.reloadStreamStoryline.bind(this);
     this.createComment = this.createComment.bind(this);
+    this.createStory = this.createStory.bind(this);
   }
 
   load() {
@@ -52,6 +55,10 @@ class Stream extends Component {
     this.props.createCommentStoryline(entity_id, content, parent_id, user, 'storyline');
   }
 
+  createStory(data, arrCheckbox, files) {
+    this.props.createStoryStoryline(data, arrCheckbox, files);
+  }
+
   showMoreComments(id, paginationComment) {
     this.props.viewMoreCommentsStoryline(id, paginationComment);
   }
@@ -65,7 +72,7 @@ class Stream extends Component {
         {isAuthenticated && authorizedUser.id === requestedUser.id &&
         <Sbox
           authorizedUser={this.props.authorizedUser}
-          createStory={this.props.createStory}
+          createStoryFunc={this.createStory}
           reloadStream={this.reloadStreamStoryline}
         />
         }

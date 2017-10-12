@@ -22,6 +22,9 @@ const VIEW_MORE_COMMENTS_FAIL = 'VIEW_MORE_COMMENTS_FAIL';
 const CREATE_NEW_COMMENT = 'CREATE_NEW_COMMENT';
 const CREATE_NEW_COMMENT_SUCCESS = 'CREATE_NEW_COMMENT_SUCCESS';
 const CREATE_NEW_COMMENT_FAIL = 'CREATE_NEW_COMMENT_FAIL';
+const CREATE_STORY = 'CREATE_STORY';
+const CREATE_STORY_SUCCESS = 'CREATE_STORY_SUCCESS';
+const CREATE_STORY_FAIL = 'CREATE_STORY_FAIL';
 
 
 const initialState = {
@@ -223,6 +226,25 @@ export default function channelReducer(state = initialState, action) {
       };
     }
 
+    case CREATE_STORY:
+      return {
+        ...state,
+        creating: true
+      };
+    case CREATE_STORY_SUCCESS:
+      return {
+        ...state,
+        creating: false,
+        created: true,
+        channelStories: [...action.result.data, ...state.channelStories]
+      };
+    case CREATE_STORY_FAIL:
+      return {
+        ...state,
+        creating: false,
+        created: false,
+      };
+
     default:
       return state;
   }
@@ -333,5 +355,21 @@ export function createComment(entity_id, content, parent_id, user) {
     parent_id,
     created_by: user.id,
     user,
+  };
+}
+
+export function createStory(data, books, files) {
+  const formData = new FormData();
+  formData.append('description', data);
+  formData.append('books', JSON.stringify(books));
+  Object.keys(files).forEach((key) => {
+    const file = files[key];
+    formData.append('file[]', file);
+  });
+  return {
+    types: [CREATE_STORY, CREATE_STORY_SUCCESS, CREATE_STORY_FAIL],
+    promise: (client) => client.post('/stories', {
+      data: formData
+    })
   };
 }

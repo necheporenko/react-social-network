@@ -128,6 +128,7 @@ export default function storyReducer(state = initialState, action) {
         ...state,
         creating: false,
         created: true,
+        storiesArr: [...action.result.data, ...state.storiesArr]
       };
     case CREATE_STORY_FAIL:
       return {
@@ -523,7 +524,6 @@ export function pinStory(pins, id) {
 }
 
 export function createComment(entity_id, content, parent_id, user, place) {
-  console.log('Place', place);
   return {
     types: [CREATE_NEW_COMMENT, CREATE_NEW_COMMENT_SUCCESS, CREATE_NEW_COMMENT_FAIL],
     promise: (client) => client.post('/comments', {

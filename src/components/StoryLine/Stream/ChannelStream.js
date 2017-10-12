@@ -4,7 +4,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import {
   like as likePostChannel,
   viewMoreComments as viewMoreCommentsChannel,
-  createComment as createCommentChannel
+  createComment as createCommentChannel,
+  createStory as createStoryChannel,
 } from '../../../redux/modules/channel';
 import Sbox from './Sbox';
 import Post from '../Post/index';
@@ -19,6 +20,7 @@ import './index.scss';
   likePostChannel,
   viewMoreCommentsChannel,
   createCommentChannel,
+  createStoryChannel,
 })
 
 export default class ChannelStream extends Component {
@@ -29,6 +31,7 @@ export default class ChannelStream extends Component {
     this.showMoreComments = this.showMoreComments.bind(this);
     this.reloadStreamChannel = this.reloadStreamChannel.bind(this);
     this.createComment = this.createComment.bind(this);
+    this.createStory = this.createStory.bind(this);
   }
 
   load() {
@@ -47,6 +50,10 @@ export default class ChannelStream extends Component {
 
   createComment(entity_id, content, parent_id, user) {
     this.props.createCommentChannel(entity_id, content, parent_id, user);
+  }
+
+  createStory(data, arrCheckbox, files) {
+    this.props.createStoryChannel(data, arrCheckbox, files);
   }
 
   showMoreComments(id, paginationComment) {
@@ -70,7 +77,7 @@ export default class ChannelStream extends Component {
       <div className="stream" style={{marginLeft: 0}}>
         <Sbox
           authorizedUser={this.props.authorizedUser}
-          createStory={this.props.createStory}
+          createStoryFunc={this.createStory}
           reloadStream={this.reloadStreamChannel}
         />
         {loaded
