@@ -73,7 +73,6 @@ export default class DocumentItem extends Component {
 
   render() {
     const {document, boxKey} = this.props;
-    console.log(this.state.showModal);
 
     return (
       <Link className="document-item" to={`/${document.slug}/documents/${boxKey}/${document.id}`}>

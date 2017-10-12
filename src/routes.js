@@ -128,7 +128,7 @@ export default (store) => {
       <Route path="/story/:id" component={Story}/>
 
       <Route path="/:userName/books/:bookName" component={BookPage}/>
-      <Route path="/:userName/documents/human-card/:humanCard" component={HumanCardPage}/>
+      <Route path="/:userName/documents/human-card(/:humanCard)" component={HumanCardPage}/>
       <Route path="/:userName/documents/document" component={NewDocument}/>
       <Route path="/:userName/documents/:box/:document" component={NewDocument}/>
 

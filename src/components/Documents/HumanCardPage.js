@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import HumanCard from './HumanCard';
+import DraftHumanCard from './DraftHumanCard';
 import {connect} from 'react-redux';
 import SubHeader from '../StoryLine/SubHeader';
 import {getUser} from '../../redux/modules/user';
+import {createDraftHumanCard, updateDraftHumanCard} from '../../redux/modules/document';
 import './human-card-page.scss';
 
 @connect((state) => ({
@@ -11,6 +12,8 @@ import './human-card-page.scss';
   path: state.routing.locationBeforeTransitions.pathname,
 }), {
   getUser,
+  createDraftHumanCard,
+  updateDraftHumanCard
 })
 
 export default class HumanCardPage extends Component {
@@ -141,7 +144,7 @@ export default class HumanCardPage extends Component {
           marginTop: showSmallNavigation ? 70 : 20
         }}>
           <div className="upper-block">
-            <HumanCard />
+            <DraftHumanCard />
             {this.linkedDigitalPropertyRender()}
             {this.validatorsRender()}
           </div>

@@ -33,6 +33,7 @@ const initialState = {
   documents: [],
   document: {},
   humanCard: {},
+  draft_human_card: {}
 };
 
 export default function documentReducer(state = initialState, action) {
