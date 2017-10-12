@@ -76,7 +76,7 @@ export default class HumanCardPage extends Component {
             </a>
           </div>
           <div className="human-page-breadcrumb">
-            <Link to={`/${slug}/documents`}>Document</Link>
+            <Link to={`/${slug}/documents`}>Documents</Link>
             <span className="chevron-right"/>
             <span className="scroll-to" onClick={scrollTo}>Human Card Page</span>
           </div>
