@@ -46,10 +46,8 @@ export default class ChangeBookCoverImage extends Component {
   };
 
   handleSave() {
-    const newImage = this.editor.getImage().toDataURL();
-    this.setState({
-      picture: newImage,
-    });
+    const newImage = this.editor.getImage().toDataURL('image/jpeg', 0.92);
+    this.setState({picture: newImage});
     this.props.uploadBookCoverBase64(newImage);
     this.props.uploadBookCover(newImage, '', this.props.bookPage.id, this.props.currentImage.name)
     // .then(() => this.props.getUser(this.props.bookCover.id))
