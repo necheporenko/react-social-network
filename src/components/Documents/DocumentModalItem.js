@@ -24,7 +24,7 @@ export default class DocumentModalItem extends Component {
                 name="name"
                 value={'Undefined'}
                 labelClassName={[{'col-sm-3': false}, 'channel-label']}
-                label="Enter new name:"
+                label="Please, enter a name for the document:"
                 elementWrapperClassName={[{'col-sm-9': false}, 'channel-element-wrapper']}
                 placeholder=""
                 type="text"
@@ -40,7 +40,7 @@ export default class DocumentModalItem extends Component {
             <button 
               className="btn-brand" 
               style={{marginLeft: '16px'}} 
-              onClick={saveChangesHandler}>OK</button>
+              onClick={saveChangesHandler}>Save Changes</button>
           </Modal.Footer>
         </Modal>
       </div>
