@@ -33,7 +33,7 @@ export default class Box extends Component {
 
   render() {
     const {box, fixedBlocks, authorizedUser} = this.props;
-    const {slug, first_name, last_name} = this.props.requestedUser;
+    const {slug} = this.props.requestedUser;
 
     return (
       <div className={fixedBlocks ? 'tokens contents contents-fixed' : 'tokens contents'}>
@@ -47,25 +47,26 @@ export default class Box extends Component {
             marginLeft: fixedBlocks ? 240 : null
         }}>
 
-          <div className="add-new-item">
-            {slug === this.props.authorizedUser.slug &&
+          {slug === authorizedUser.slug &&
+            <div className="add-new-item">
+              <div className="upload-document">
+                <span className="upload-document-icon"></span>
+              </div>
               <div className="add-new-document" onClick={this._newDocumentClick}>
                 <span
                   className="add-new-document-icon"
                   />
               </div>
-            }
-            {slug === this.props.authorizedUser.slug &&
               <div className="add-new-box">
                 <span
                   className="add-new-box-icon"
                   to={'#'}/>
               </div>
-            }
-          </div>
+            </div>
+          }
           <div className="common-lists tokens-lists">
             {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
-            {slug === this.props.authorizedUser.slug && box.documents && box.documents.map(document => (
+            {slug === authorizedUser.slug && box.documents && box.documents.map(document => (
               <DocumentItem 
                 key={document.id}
                 document={document}
