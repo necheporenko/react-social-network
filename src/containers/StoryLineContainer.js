@@ -83,7 +83,7 @@ export default class StoryLineContainer extends Component {
       .then(this.props.loadUserPeople(findSlug))
       .then(this.props.loadPeopleFollowing(findSlug))
       .then(this.props.loadPeopleFollowers(findSlug))
-      .then(() => (this.props.requestedUser.public_address && this.props.getHumanCard(this.props.requestedUser.public_address)));
+      // .then(() => (this.props.requestedUser.public_address && this.props.getHumanCard(this.props.requestedUser.public_address)));
   }
 
   clearState() {
@@ -108,7 +108,7 @@ export default class StoryLineContainer extends Component {
       following,
       followers,
       people,
-      humanCard
+      // humanCard
     } = this.props;
     return (
       <div>
@@ -129,7 +129,7 @@ export default class StoryLineContainer extends Component {
           followers={followers}
           people={people}
           fixedBlocks={fixedBlocks}
-          humanCard={humanCard}
+          // humanCard={humanCard}
         />
       </div>
     );

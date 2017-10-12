@@ -204,9 +204,19 @@ export default function signReducer(state = initialState, action) {
         requestedUserProfile: state.requestedUser.slug !== action.slug ? {} : state.requestedUserProfile,
       };
     case GET_USER_PROFILE_SUCCESS:
+      let human_cardMarkDown = null; 
+      if (action.result.data.human_card) {
+        const human_card = action.result.data.human_card;
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', human_card.url, false);
+        xhr.send();
+        human_cardMarkDown = Object.assign(human_card, {
+          markdown: xhr.responseText
+        });
+      }
       return {
         ...state,
-        requestedUserProfile: action.result.data,
+        requestedUserProfile: Object.assign(action.result.data, {human_card: human_cardMarkDown}),
       };
     case GET_USER_PROFILE_FAIL:
       return {

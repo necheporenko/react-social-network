@@ -13,24 +13,25 @@ import './index.scss';
 class InfoBloks extends Component {
 
   render() {
+    const {requestedUser, requestedUserProfile, loaded, following, followers, people, authorizedUser} = this.props;
 
     return (
       <div className="infobloks">
         <Cutaway
-          requestedUser={this.props.requestedUser}
-          requestedUserProfile={this.props.requestedUserProfile}
-          humanCard={this.props.humanCard}
+          authorizedUser={authorizedUser}
+          requestedUser={requestedUser}
+          requestedUserProfile={requestedUserProfile}
         />
         {/*<Tokens/>*/}
         <Photos
-          loaded={this.props.loaded}
-          requestedUser={this.props.requestedUser}
+          loaded={loaded}
+          requestedUser={requestedUser}
         />
         <Peoples
-          following={this.props.following}
-          followers={this.props.followers}
-          people={this.props.people}
-          requestedUser={this.props.requestedUser}
+          following={following}
+          followers={followers}
+          people={people}
+          requestedUser={requestedUser}
         />
       </div>
     );

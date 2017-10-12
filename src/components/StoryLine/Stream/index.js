@@ -59,7 +59,6 @@ class Stream extends Component {
   render() {
     const {storiesArr, authorizedUser, requestedUser, isAuthenticated, loaded, style, over} = this.props;
     const loader = <Loader marginTop="52px"/>;
-    console.log('RENDER STREAM');
 
     return (
       <div className="stream" style={style}>

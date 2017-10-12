@@ -33,7 +33,7 @@ const initialState = {
   documents: [],
   document: {},
   humanCard: {},
-  draft_human_card: {}
+  draftHumanCard: {}
 };
 
 export default function documentReducer(state = initialState, action) {
@@ -117,6 +117,7 @@ export default function documentReducer(state = initialState, action) {
         ...state,
         creating: false,
         created: true,
+        draftHumanCard: action.result.data
       };
     case CREATE_DRAFT_HUMAN_CARD_FAIL:
       return {
@@ -136,6 +137,7 @@ export default function documentReducer(state = initialState, action) {
         ...state,
         creating: false,
         created: true,
+        draftHumanCard: action.result.data
       };
     case UPDATE_DRAFT_HUMAN_CARD_FAIL:
       return {

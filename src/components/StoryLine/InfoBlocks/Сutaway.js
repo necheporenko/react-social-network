@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 import {Link, browserHistory} from 'react-router';
 import ReactMarkdown from 'react-markdown';
+import HumanCard from '../../Documents/HumanCard';
 import '../../Documents/human-card.scss'; 
 
 function work(occupation, company) {
@@ -50,7 +51,8 @@ function fnHumanCard(address, slug, e) {
   }
 }
 
-const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
+
+const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
   const {
     first_name,
     last_name,
@@ -68,12 +70,23 @@ const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
     twitter,
     linkedin,
     skype,
+    human_card,
+    draft_human_card
   } = requestedUserProfile;
-  const {markdown} = humanCard;
   const {slug} = requestedUser;
+  
+  const linkToHumanCard = () => {
+    if (human_card && human_card.public_address) {
+      return human_card.public_address;
+    }
+
+    return '';
+  };
+
+  console.log(requestedUserProfile);
 
   return (
-    requestedUserProfile.first_name ?
+    first_name ?
       <div className="infoblocks-cutaway">
         <div>
           <div className="title-infoblocks">
@@ -143,30 +156,30 @@ const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
             </div>
           </div>
 
-          {humanCard.id &&
-            <div className="infoblock-human-card ">
-              {/*<hr style={{margin: '0 15px 20px 15px'}} />*/}
-              <div
-                onMouseOut={onHoverOutHumanCard}
-                onMouseMove={onHoverHumanCard} 
-                className="human-card markdown-human-card" 
-                onClick={(e) => fnHumanCard(humanCard.public_address, slug, e)}>
-                {/*<Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>*/}
-                <ReactMarkdown source={humanCard.markdown}/>
-                {/*</Link>*/}
-              </div>
-              <div className="buttons-container">
-                <div className="validate-button"><button className="btn-sign btn-brand">Validate</button></div>
-                <div className="review-proofs">
-                  <Link
-                    onMouseMove={onHoverLinkHumanCard}
-                    onMouseOut={onHoverOutHumanCard} 
-                    to={`/${slug}/documents/human-card/${humanCard.public_address}`}>Review Proofs</Link>
+          
+          <div className="infoblock-human-card ">
+            {/*<hr style={{margin: '0 15px 20px 15px'}} />*/}
+            
+            <HumanCard
+              humanCard={human_card}
+              draftHumanCard={draft_human_card}
+              requestedUser={requestedUser}
+              authorizedUser={authorizedUser}
+            />
+            <div className="buttons-container">
+              {human_card &&
+                <div className="validate-button">
+                  <button className="btn-sign btn-brand">Validate</button>
                 </div>
+              }
+              <div className="review-proofs">
+                <Link
+                  onMouseMove={onHoverLinkHumanCard}
+                  onMouseOut={onHoverOutHumanCard}
+                  to={`/${slug}/documents/human-card/${linkToHumanCard()}`}>Review Proofs</Link>
               </div>
             </div>
-          }
-
+          </div>
         </div>
       </div>
       :
@@ -175,9 +188,20 @@ const Cutaway = ({requestedUserProfile, humanCard, requestedUser}) => {
 };
 
 Cutaway.propTypes = {
+  authorizedUser: PropTypes.object,
   requestedUserProfile: PropTypes.object,
-  requestedUser: PropTypes.object,
-  humanCard: PropTypes.object,
+  requestedUser: PropTypes.object
 };
 
 export default Cutaway;
+
+
+//<div
+//  onMouseOut={onHoverOutHumanCard}
+//   onMouseMove={onHoverHumanCard} 
+//   className="human-card markdown-human-card" 
+//   onClick={(e) => fnHumanCard(humanCard.public_address, slug, e)}>
+//   {/*<Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>*/}
+//   <ReactMarkdown source={humanCard.markdown}/>
+//   {/*</Link>*/}
+// </div>

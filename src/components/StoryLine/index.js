@@ -77,8 +77,7 @@ class StoryLine extends Component {
       createStory,
       loadStories,
       loadNextStories,
-      fixedBlocks,
-      humanCard
+      fixedBlocks
     } = this.props;
 
 
@@ -108,12 +107,12 @@ class StoryLine extends Component {
             }}
           >
             <InfoBloks
+              authorizedUser={authorizedUser}
               requestedUser={requestedUser}
               requestedUserProfile={requestedUserProfile}
               following={following}
               followers={followers}
               people={people}
-              humanCard={humanCard}
             />
           </div>
           <Stream

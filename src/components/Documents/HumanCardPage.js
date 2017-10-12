@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import DraftHumanCard from './DraftHumanCard';
+import HumanCard from './HumanCard';
 import {connect} from 'react-redux';
 import SubHeader from '../StoryLine/SubHeader';
 import {getUser} from '../../redux/modules/user';
-import {createDraftHumanCard, updateDraftHumanCard} from '../../redux/modules/document';
+import {getHumanCard} from '../../redux/modules/document';
 import './human-card-page.scss';
 
 @connect((state) => ({
+  authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
   path: state.routing.locationBeforeTransitions.pathname,
+  humanCard: state.document.humanCard,
+  draftHumanCard: state.document.draftHumanCard
 }), {
   getUser,
-  createDraftHumanCard,
-  updateDraftHumanCard
+  getHumanCard
 })
 
 export default class HumanCardPage extends Component {
@@ -29,11 +31,12 @@ export default class HumanCardPage extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    const {path, requestedUser} = this.props;
+    const {path, requestedUser, getUser, getHumanCard} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
 
     if (findSlug !== requestedUser.slug) {
-      this.props.getUser(findSlug);
+      const humanCardSlug = path.substring(path.indexOf('/human-card/') + 12);
+      getUser(findSlug).then(getHumanCard(humanCardSlug));
     }
   }
   
@@ -131,8 +134,9 @@ export default class HumanCardPage extends Component {
   }
 
   render() {
-    const {requestedUser} = this.props;
+    const {requestedUser, authorizedUser, humanCard, draftHumanCard} = this.props;
     const {showSmallNavigation} = this.state;
+    console.log(humanCard);
     
     return (
       <div>
@@ -144,7 +148,12 @@ export default class HumanCardPage extends Component {
           marginTop: showSmallNavigation ? 70 : 20
         }}>
           <div className="upper-block">
-            <DraftHumanCard />
+            <HumanCard
+              humanCard={humanCard}
+              draftHumanCard={draftHumanCard}
+              requestedUser={requestedUser}
+              authorizedUser={authorizedUser}
+            />
             {this.linkedDigitalPropertyRender()}
             {this.validatorsRender()}
           </div>

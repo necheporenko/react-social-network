@@ -9,10 +9,10 @@ import './index.scss';
 const web3 = new Web3(Web3.givenProvider);
 
 @connect((state) => ({
-  box: state.document.box,
+  draftHumanCard: state.user.requestedUserProfile.draft_human_card,
 }), {
   sendMessageForSign,
-  verifyHumanCard,
+  verifyHumanCard
 })
 
 export default class SignHumanCard extends Component {
@@ -37,15 +37,15 @@ export default class SignHumanCard extends Component {
   }
 
   sign(keystore, password) {
-    const {fullName, publicAddress, box, sendMessageForSign, verifyHumanCard} = this.props;
+    const {fullName, publicAddress, draftHumanCard, sendMessageForSign, verifyHumanCard} = this.props;
 
     const msg = signTemplate(fullName, publicAddress);
     const decrypt = web3.eth.accounts.decrypt(JSON.parse(keystore.toLowerCase()), password);
 
-    sendMessageForSign(box.draft_human_card.id, msg)
+    sendMessageForSign(draftHumanCard.id, msg)
       .then((response) => {
         const resultOfSigning = web3.eth.accounts.sign(response.data.message, decrypt.privateKey);
-        verifyHumanCard(box.draft_human_card.id, publicAddress, resultOfSigning.signature);
+        verifyHumanCard(draftHumanCard.id, publicAddress, resultOfSigning.signature);
       })
       .catch((error) => {
         console.log(error);
@@ -116,7 +116,6 @@ export default class SignHumanCard extends Component {
 SignHumanCard.propTypes = {
   sendMessageForSign: PropTypes.func,
   verifyHumanCard: PropTypes.func,
-  box: PropTypes.object,
   fullName: PropTypes.string,
   publicAddress: PropTypes.string,
 };
