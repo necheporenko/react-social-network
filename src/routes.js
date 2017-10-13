@@ -23,7 +23,7 @@ import TokensPrivate from 'components/Documents/TokensPrivate';
 import Wallet from 'components/Documents/Wallet';
 import Inbox from 'components/Documents/Inbox';
 import NewDocument from 'components/Documents/NewDocument';
-import HumanCardPage from 'components/Documents/HumanCardPage';
+import HumanCardPage from 'components/HumanCardPage';
 // import HumanCard from 'components/Documents/HumanCard';
 import MessagesContainer from 'containers/MessagesContainer';
 import Messages from 'components/Messages';

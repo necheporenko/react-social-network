@@ -119,6 +119,7 @@
 
   .title-infoblocks {
     position: relative;
+    padding: 0;
     margin-bottom: 30px;
   }
 
@@ -129,8 +130,8 @@
 
   .settings-edit {
     position: absolute;
-    right: 14px;
-    top: 14px;
+    right: 1px;
+    top: -3px;
     display: none;
 
     i {
@@ -253,6 +254,9 @@
   }
 
   .infoblock-human-card {
+    position: relative;
+    min-height: 170px;
+
     .human-card {
       width: 260px;
       box-shadow: none;
@@ -260,14 +264,13 @@
     }
 
     .buttons-container {
-      position: relative;
       font-size: 13px !important;
-      margin: 12px 0;
+      margin: 12px 0 0;
 
       .review-proofs {
         position: absolute;
         right: 0;
-        bottom: 21px;
+        top: 164px;
 
         a {
           color: #777;

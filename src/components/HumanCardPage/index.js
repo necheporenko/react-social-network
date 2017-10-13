@@ -28,7 +28,6 @@ export default class HumanCardPage extends Component {
     };
 
     this.handleScroll = this.handleScroll.bind(this);
-    this.humanCardRender = this.humanCardRender.bind(this);
   }
 
   componentDidMount() {
@@ -37,10 +36,12 @@ export default class HumanCardPage extends Component {
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
     const humanCardSlug = path.substring(path.indexOf('/human-card/') + 12);
 
-    if (humanCardSlug.indexOf('0x') === -1 && typeof +humanCardSlug === 'number') {
+    if (!isNaN(humanCardSlug)) {
       getUser(findSlug).then(getDraftHumanCard(humanCardSlug));
-    } else {
+    } else if (humanCardSlug.indexOf('0x') !== -1) {
       getUser(findSlug).then(getHumanCard(humanCardSlug));
+    } else {
+      getUser(findSlug);
     }
   }
   
@@ -137,25 +138,8 @@ export default class HumanCardPage extends Component {
     );
   }
 
-  humanCardRender() {
-    const {authorizedUser, humanCard, draftHumanCard, requestedUser} = this.props;
-
-    if (!humanCard && !draftHumanCard) {
-      return null;
-    }
-
-    return (
-      <HumanCard
-        humanCard={humanCard}
-        draftHumanCard={draftHumanCard}
-        requestedUser={requestedUser}
-        authorizedUser={authorizedUser}
-      />
-    )
-  }
-
   render() {
-    const {requestedUser} = this.props;
+    const {authorizedUser, humanCard, draftHumanCard, requestedUser} = this.props;
     const {showSmallNavigation} = this.state;
     
     return (
@@ -168,7 +152,12 @@ export default class HumanCardPage extends Component {
           marginTop: showSmallNavigation ? 70 : 20
         }}>
           <div className="upper-block">
-            {this.humanCardRender()}
+            <HumanCard
+              humanCard={humanCard}
+              draftHumanCard={draftHumanCard}
+              requestedUser={requestedUser}
+              authorizedUser={authorizedUser}
+            />
             {this.linkedDigitalPropertyRender()}
             {this.validatorsRender()}
           </div>

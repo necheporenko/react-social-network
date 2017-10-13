@@ -39,9 +39,21 @@ export default class DocumentsMenu extends Component {
   render() {
     const {isOpen} = this.state;
     const {boxes, path, fixedBlocks} = this.props;
-    const {slug, public_address} = this.props.requestedUser;
+    const {slug} = this.props.requestedUser;
     const findBoxes = path.indexOf('/documents/boxes');
     console.log(this.props);
+    
+    const linkToHumanCard = () => {
+      const humanCards = boxes[0] ? boxes[0].human_card : null;
+
+      if (humanCards && humanCards.draft_id) {
+        return humanCards.draft_id;
+      } else if (humanCards && humanCards.human_card_address) {
+        return humanCards.human_card_address;
+      }
+  
+      return null;
+    };
 
     return (
       <div
@@ -49,7 +61,7 @@ export default class DocumentsMenu extends Component {
         style={{
           position: fixedBlocks ? 'fixed' : null,
           top: fixedBlocks ? 118 : null
-      }}>
+        }}>
         <div className={this.props.sidebar}>
           <ul>
 
@@ -112,8 +124,24 @@ export default class DocumentsMenu extends Component {
             <hr/>
 
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/human-card/${public_address || ''}`} activeClassName="active">
-              <li className="documents-mnu-hc">Human Card Page</li>
+              <li className="documents-mnu-wallet">Human Card Page</li>
             </Link>
+            
+            {linkToHumanCard() 
+              ? <Link 
+                onlyActiveOnIndex={true}
+                to={`/${slug}/documents/human-card/${linkToHumanCard()}`}
+                activeClassName="active">
+                <li className="documents-mnu-hc">Human Card Page</li>
+              </Link>
+              : <Link 
+                onlyActiveOnIndex={true}
+                to={`/${slug}/documents/human-card`}
+                activeClassName="active">
+                <li className="documents-mnu-hc">Human Card Page</li>
+              </Link>
+            }
+
             <hr/>
 
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/wallet`} activeClassName="active">

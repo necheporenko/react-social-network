@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 import {Link, browserHistory} from 'react-router';
 import ReactMarkdown from 'react-markdown';
-import HumanCard from '../../Documents/HumanCard';
-import '../../Documents/human-card.scss'; 
+import HumanCard from '../../HumanCardPage/HumanCard';
+import '../../HumanCardPage/human-card.scss'; 
 
 function work(occupation, company) {
   if (occupation && company) {
@@ -14,43 +14,15 @@ function work(occupation, company) {
   }
 }
 
-const onHoverHumanCard = (e) => {
-  const div = document.querySelector('.markdown-human-card div');
-  if (div) {
-    const h2 = div.querySelector('h2');
-    const p3 = div.querySelector('p:nth-child(3)');
-    const el = document.querySelector('.infoblock-human-card .review-proofs a');
-    
-    if (e.target === h2 || e.target === p3) {
-      el.style.textDecoration = 'none';
-    } else {
-      el.style.textDecoration = 'underline';
-    }
-  }
-};
-
 const onHoverOutHumanCard = () => {
   const el = document.querySelector('.infoblock-human-card .review-proofs a');
   el.style.textDecoration = 'none';
-}
+};
 
 const onHoverLinkHumanCard = () => {
   const el = document.querySelector('.infoblock-human-card .review-proofs a');
   el.style.textDecoration = 'underline';
-}
-
-function fnHumanCard(address, slug, e) {
-  const div = document.querySelector('.markdown-human-card div');
-  if (div) {
-    const h2 = div.querySelector('h2');
-    const p3 = div.querySelector('p:nth-child(3)');
-
-    if (e.target !== h2 && e.target !== p3) {
-      browserHistory.push(`/${slug}/documents/human-card/${address}`);
-    }
-  }
-}
-
+};
 
 const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
   const {
@@ -82,15 +54,13 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
       return draft_human_card.id;
     }
 
-    return '';
+    return null;
   };
-
-  console.log(requestedUserProfile);
 
   return (
     first_name ?
       <div className="infoblocks-cutaway">
-        <div className="title-infoblocks-cutaway">
+        <div className="title-infoblocks">
           <span className="cutaway-icon"/>
           {/*{`${first_name} ${last_name}`}*/}
           Info
@@ -174,10 +144,16 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
               </div>
             }
             <div className="review-proofs">
-              <Link
-                onMouseMove={onHoverLinkHumanCard}
-                onMouseOut={onHoverOutHumanCard}
-                to={`/${slug}/documents/human-card/${linkToHumanCard()}`}>Review Proofs</Link>
+              {linkToHumanCard() 
+                ? <Link
+                  onMouseMove={onHoverLinkHumanCard}
+                  onMouseOut={onHoverOutHumanCard}
+                  to={`/${slug}/documents/human-card/${linkToHumanCard()}`}>Review Proofs</Link>
+                : <Link
+                  onMouseMove={onHoverLinkHumanCard}
+                  onMouseOut={onHoverOutHumanCard}
+                  to={`/${slug}/documents/human-card`}>Review Proofs</Link>
+              }
             </div>
           </div>
         </div>

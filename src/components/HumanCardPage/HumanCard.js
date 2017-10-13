@@ -15,10 +15,18 @@ export default class HumanCard extends Component {
   constructor(props) {
     super(props);
 
+    const {requestedUser, draftHumanCard} = this.props;
+
     this.state = {
-      fullName: props.draftHumanCard ? props.draftHumanCard.full_name : '',
+      fullName: '',
       publicAddress: props.draftHumanCard ? props.draftHumanCard.public_address : '',
     };
+
+    if (draftHumanCard) {
+      this.state['fullName'] = draftHumanCard.full_name;
+    } else if (requestedUser && requestedUser.first_name && requestedUser.last_name) {
+      this.state['fullname'] = `${requestedUser.first_name} ${requestedUser.last_name}`
+    }
     
     this.changeFullName = this.changeFullName.bind(this);
     this.changePublicAddress = this.changePublicAddress.bind(this);
@@ -26,7 +34,18 @@ export default class HumanCard extends Component {
     this.requestHumanCard = this.requestHumanCard.bind(this);
     this.copyAddress = this.copyAddress.bind(this);
     this.CopyToClipboard = this.CopyToClipboard.bind(this);
-    this.linkHC = this.linkHC.bind(this);
+    this.fnHumanCard = this.fnHumanCard.bind(this);
+    this.onHoverHumanCard = this.onHoverHumanCard.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.draftHumanCard && (nextProps.draftHumanCard.full_name !== this.state.fullName ||
+      nextProps.draftHumanCard.public_address !== this.state.public_address)) {
+      this.setState({
+        fullName: nextProps.draftHumanCard.full_name,
+        publicAddress: nextProps.draftHumanCard.public_address
+      });
+    }
   }
 
   copyAddress = () => {
@@ -83,11 +102,12 @@ export default class HumanCard extends Component {
 
   saveDraft() {
     const {createDraftHumanCard, updateDraftHumanCard, authorizedUser, draftHumanCard} = this.props;
-    draftHumanCard && draftHumanCard.id
-      ?
-      updateDraftHumanCard(this.inputFullName.value, authorizedUser.id, this.inputPublicAddress.value, draftHumanCard.id)
-      :
+    
+    if (draftHumanCard && draftHumanCard.id) {
+      updateDraftHumanCard(this.inputFullName.value, authorizedUser.id, this.inputPublicAddress.value, draftHumanCard.id);
+    } else {
       createDraftHumanCard(this.inputFullName.value, authorizedUser.id, this.inputPublicAddress.value);
+    }
   }
 
   requestHumanCard(url) {
@@ -109,19 +129,19 @@ export default class HumanCard extends Component {
       console.log('failed', ex);
     });
 
-    const div = document.querySelector('.markdown-human-card div');
-    if (div) {
-      function w(linkHC) {
-        const h1 = div.querySelector('h1');
-        const p5 = div.querySelector('p:nth-child(5)');
-        const p8 = div.querySelector('p:nth-child(8)');
+  // const div = document.querySelector('.markdown-human-card div');
+  // if (div) {
+  //   function w(linkHC) {
+  //     const h1 = div.querySelector('h1');
+  //     const p5 = div.querySelector('p:nth-child(5)');
+  //     const p8 = div.querySelector('p:nth-child(8)');
 
-        h1.addEventListener('click', linkHC);
-        p5.addEventListener('click', linkHC);
-        p8.addEventListener('click', linkHC);
-      }
-      setTimeout(() => w(this.linkHC), 1000);
-    }
+  //     h1.addEventListener('click', linkHC);
+  //     p5.addEventListener('click', linkHC);
+  //     p8.addEventListener('click', linkHC);
+  //   }
+  //   setTimeout(() => w(this.linkHC), 1000);
+  // }
 
   //     const XHR = ('onload' in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
   //     const xhr = new XHR();
@@ -151,27 +171,146 @@ export default class HumanCard extends Component {
     }
   }
 
-  linkHC() {
-    const {humanCard} = this.props;
+  // linkHC() {
+  //   const {humanCard} = this.props;
+  //   const {slug} = this.props.requestedUser;
+  //   browserHistory.push(`/${slug}/documents/human-card/${humanCard.public_address}`);
+  // }
+  
+  onHoverHumanCard(e) {
+    const el = document.querySelector('.infoblock-human-card .review-proofs a');
+    const human_card = document.querySelector('.human-card');
+
+    const borderNone = () => {
+      el.style.textDecoration = 'none';
+      human_card.style.border = '1px solid #dadada';
+    };
+
+    const borderSolid = () => {
+      el.style.textDecoration = 'underline';
+      human_card.style.border = '1px solid #777';
+    };
+    
+    if (el && this.props.humanCard) {
+      const h2 = human_card.querySelector('h2');
+      const p3 = human_card.querySelector('p:nth-child(3)');
+      
+      if (e.target === h2 || e.target === p3) {
+        borderNone();
+      } else {
+        borderSolid();
+      } 
+    } else if (el) {
+      const inputs = human_card.querySelectorAll('input');
+      const item1 = inputs[0];
+      const item2 = inputs[1];
+      const item1Style = getComputedStyle(item1);
+      console.log(item1Style)
+      const item2Style = getComputedStyle(item2);
+
+      if (item1 && item2 && (e.target === item1 || e.target === item2)) {
+        borderNone();
+        
+        if (e.target === item1 && item1Style.borderBottomColor === 'rgb(225, 225, 225)') {
+          item1.style.borderBottomColor = 'rgb(119, 119, 119)';
+        } else if (e.target === item2 && item2Style.borderBottomColor === 'rgb(225, 225, 225)') {
+          item2.style.borderBottomColor = 'rgb(119, 119, 119)';
+        }
+      } else {
+        borderSolid();
+
+        if (item1Style.borderBottomColor === 'rgb(119, 119, 119)') {
+          item1.style.borderBottomColor = 'rgb(225, 225, 225)';
+        } else if (item2Style.borderBottomColor === 'rgb(119, 119, 119)') {
+          item2.style.borderBottomColor = 'rgb(225, 225, 225)';
+        }
+      }
+    }
+  }
+  
+  onFocusInputs(e) {
+    const inputs = document.querySelectorAll('.human_card input');
+    const item1 = inputs[0];
+    const item2 = inputs[1];
+
+    if (e.target === item1) {
+      item1.style.borderBottomColor = 'rgb(77, 144, 254)';
+    } else if (e.target === item2) {
+      item2.style.borderBottomColor = 'rgb(77, 144, 254)';
+    }
+  }
+
+  onHoverOutHumanCard() {
+    const el = document.querySelector('.infoblock-human-card .review-proofs a');
+    const human_card = document.querySelector('.infoblock-human-card .human-card');
+
+    if (el) {
+      el.style.textDecoration = 'none';
+      human_card.style.border = '1px solid #dadada';
+    }
+  }
+
+  fnHumanCard(e) {
     const {slug} = this.props.requestedUser;
-    browserHistory.push(`/${slug}/documents/human-card/${humanCard.public_address}`);
+    const div = document.querySelector('.wrapper-human-card');
+    const el = document.querySelector('.infoblock-human-card .review-proofs a');
+
+    const getLink = () => {
+      const id = this.linkToHumanCard();
+      
+      if (id) {
+        browserHistory.push(`/${slug}/documents/human-card/${id}`);
+      } else {
+        browserHistory.push(`/${slug}/documents/human-card`);
+      }
+    };
+
+    if (div && el && this.props.humanCard) {
+      const h2 = div.querySelector('h2');
+      const p3 = div.querySelector('p:nth-child(3)');
+      
+      if (e.target !== h2 && e.target !== p3) {
+        getLink();
+      }
+    } else if (el) {
+      const inputs = div.querySelectorAll('input');
+
+      if (e.target !== inputs[0] && e.target !== inputs[1]) {
+        getLink();
+      }
+    }
+  }
+
+  linkToHumanCard() {
+    const {humanCard, draftHumanCard} = this.props;
+
+    if (humanCard && humanCard.public_address) {
+      return humanCard.public_address;
+    } else if (draftHumanCard && draftHumanCard.id) {
+      return draftHumanCard.id;
+    }
+
+    return null;
   }
 
   render() {
     const {humanCard, draftHumanCard, authorizedUser} = this.props;
     const {first_name, last_name, slug} = this.props.requestedUser;
-    const fullName = `${first_name} ${last_name}`;
-    console.log(this.props);
 
     return (
-      <div className="wrapper-human-card">
+      <div 
+        className="wrapper-human-card"
+        onMouseOut={this.onHoverOutHumanCard} 
+        onMouseMove={this.onHoverHumanCard}
+        onClick={this.fnHumanCard}
+      >
         <div className="human-card human-card-preview">
           {humanCard && humanCard.id
             ? <div className="markdown-human-card">
               {/*<Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">*/}
               {this.requestHumanCard(humanCard.url)}
               <ReactMarkdown source={humanCard.markdown}/>
-                {/*{this.CopyToClipboard()}*/}
+              {/*{this.CopyToClipboard()}*/}
               {/*</Link>*/}
             </div>
             : <div className="draft-human-card">
@@ -191,6 +330,7 @@ export default class HumanCard extends Component {
                     type="text" placeholder="Paste your public address here"
                     onChange={this.changePublicAddress}
                     value={this.state.publicAddress}
+                    onFocus={this.onFocusInputs}
                     ref={el => this.inputPublicAddress = el}
                     style={{fontSize: '13px'}}
                   />
@@ -205,14 +345,15 @@ export default class HumanCard extends Component {
                 {slug !== authorizedUser.slug
                   ? <input
                     type="text" placeholder="Paste your getAddress here"
-                    value={this.state.fullName || fullName || ''}
+                    value={this.state.fullName}
                     style={{fontSize: '22px'}}
                     readOnly
                   />
                   : <input
                     type="text" placeholder="Paste your getAddress here"
                     onChange={this.changeFullName}
-                    value={this.state.fullName || fullName || ''}
+                    value={this.state.fullName}
+                    onFocus={this.onFocusInputs}
                     ref={el => this.inputFullName = el}
                     style={{fontSize: '22px'}}
                   />
