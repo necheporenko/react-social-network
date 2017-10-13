@@ -4,6 +4,7 @@ import {browserHistory} from 'react-router';
 import {getBox} from '../../redux/modules/document';
 import DocumentsMenu from './DocumentsMenu';
 import DocumentItem from './DocumentItem';
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import './index.scss';
 
 @connect((state) => ({
@@ -32,6 +33,10 @@ export default class Box extends Component {
     browserHistory.push(`/${this.props.authorizedUser.slug}/documents/document`);
   }
 
+  tooltipRender(text) {
+    return <Tooltip id="tooltip">{text}</Tooltip>
+  }
+
   render() {
     const {box, fixedBlocks, authorizedUser, boxes} = this.props;
     const {slug} = this.props.requestedUser;
@@ -50,19 +55,25 @@ export default class Box extends Component {
 
           {slug === authorizedUser.slug &&
             <div className="add-new-item">
-              <div className="upload-document">
-                <span className="upload-document-icon"></span>
-              </div>
-              <div className="add-new-document" onClick={this._newDocumentClick}>
-                <span
-                  className="add-new-document-icon"
-                  />
-              </div>
-              <div className="add-new-box">
-                <span
-                  className="add-new-box-icon"
-                  to={'#'}/>
-              </div>
+              <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Upload document</Tooltip>}>
+                <div className="upload-document">
+                  <span className="upload-document-icon"></span>
+                </div>
+              </OverlayTrigger>
+              <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new document</Tooltip>}>
+                <div className="add-new-document" onClick={this._newDocumentClick}>
+                  <span
+                    className="add-new-document-icon"
+                    />
+                </div>
+              </OverlayTrigger>
+              <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new box</Tooltip>}>
+                <div className="add-new-box">
+                  <span
+                    className="add-new-box-icon"
+                    to={'#'}/>
+                </div>
+              </OverlayTrigger>
             </div>
           }
           <div className="common-lists tokens-lists">
