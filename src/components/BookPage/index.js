@@ -307,7 +307,7 @@ export default class BookPage extends Component {
                 <li><i className="infobook-icon-visibility"/> · <span style={{padding: '0 4px'}}>{counts.followers}</span><i className="followers-icon-sm"/>·</li>
                 <li><span >{counts.stories}</span><i className="stories-icon-sm"/>·</li>
                 <li><span>{counts.images}</span><i className="photos-icon-sm"/>·</li>
-                <li><span>{counts.sub_books}</span><i className="subbooks-icon-sm"/>·</li>
+                <li><span>{counts.sub_books}</span><i className="subbooks-icon-sm"/></li>
 
                 {/*<div className="followers">*/}
                 {/*<Link to={`/${slug}`} className="user">*/}

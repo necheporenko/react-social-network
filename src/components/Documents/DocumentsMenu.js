@@ -59,17 +59,17 @@ export default class DocumentsMenu extends Component {
             {/*<li className="documents-mnu-board">{box.name}</li>*/}
             {/*</Link>*/}
             {/*))}*/}
-            {boxes.length > 0 &&
-            <Link to={`/${slug}/documents/${boxes[0].board.key}`} activeClassName="active" className={path.slice(-9) === 'documents' && 'active'}>
-              <li className="documents-mnu-board">{boxes[0].board.name}</li>
-            </Link>
-            }
+            {/*{boxes.length > 0 &&*/}
+            {/*<Link to={`/${slug}/documents/${boxes[0].board.key}`} activeClassName="active" className={path.slice(-9) === 'documents' && 'active'}>*/}
+            {/*<li className="documents-mnu-board">{boxes[0].board.name}</li>*/}
+            {/*</Link>*/}
+            {/*}*/}
 
             {/*<hr/>*/}
             <div className="wrap-boxes" style={{backgroundColor: findBoxes > 0 && '#e1e1e1'}}>
               <div className={isOpen ? ' arrow-boxes' : 'arrow-boxes-close'} onClick={() => this.openBoxes()}><i/></div>
               <Link onlyActiveOnIndex={true} to={`/${slug}/documents/boxes`} activeClassName="active">
-                <li className="documents-mnu-boxes">Boxes</li>
+                <li className="documents-mnu-boxes">Desk</li>
               </Link>
               {/* <div className="create-new-item">
                 <a href="#">+ Create new box</a>
@@ -82,6 +82,11 @@ export default class DocumentsMenu extends Component {
                   <li className="documents-mnu-box">{box.name}</li>
                 </Link>
               ))}
+              {boxes.length > 0 &&
+              <Link onlyActiveOnIndex={true} to={`/${slug}/documents/${boxes[0].bin.key}`} activeClassName="active">
+                <li className="documents-mnu-box-bin">{boxes[0].bin.name}</li>
+              </Link>
+              }
             </div>
 
             {/*<Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">*/}
@@ -103,15 +108,11 @@ export default class DocumentsMenu extends Component {
             {/*</Link>*/}
             {/*))}*/}
 
-            {boxes.length > 0 &&
-            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/${boxes[0].bin.key}`} activeClassName="active">
-              <li className="documents-mnu-box-bin">{boxes[0].bin.name}</li>
-            </Link>
-            }
+
             <hr/>
 
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/human-card/${public_address || ''}`} activeClassName="active">
-              <li className="documents-mnu-wallet">Human Card Page</li>
+              <li className="documents-mnu-hc">Human Card Page</li>
             </Link>
             <hr/>
 

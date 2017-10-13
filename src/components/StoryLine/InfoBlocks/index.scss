@@ -275,7 +275,7 @@
       }
 
       .validate-button {
-        
+
         .btn-sign {
           font-size: 13px;
           font-weight: 500;
@@ -319,7 +319,8 @@
 .documents-mnu-box-private,
 .documents-mnu-box,
 .documents-mnu-box-bin,
-.documents-mnu-boxes {
+.documents-mnu-boxes,
+.documents-mnu-hc {
   padding-left: 12px;
 
   &:before {
@@ -353,8 +354,8 @@
 
 .documents-mnu-wallet {
   &:before {
-    background: url('../../../img/Icons/wallet.svg');
-    height: 14px;
+    background: url('../../../img/Icons/wallet2000.svg');
+    height: 15px;
     width: 16px;
     top: 3px;
     margin-right: 9px;
@@ -385,11 +386,21 @@
 
 .documents-mnu-boxes {
   &:before {
-    background: url('../../../img/Icons/boxes.svg');
-    height: 14px;
-    width: 15px;
+    background: url('../../../img/Icons/desk.svg');
+    height: 13px;
+    width: 16px;
     top: 3px;
     margin-right: 10px;
+  }
+}
+
+.documents-mnu-hc {
+  &:before {
+    background: url('../../../img/Icons/account-card-details.svg');
+    height: 12px;
+    width: 16px;
+    top: 3px;
+    margin-right: 9px;
   }
 }
 
