@@ -11,6 +11,7 @@ import './index.scss';
   requestedUser: state.user.requestedUser,
   path: state.routing.locationBeforeTransitions.pathname,
   box: state.document.box,
+  boxes: state.document.boxes,
 }), {
   getBox
 })
@@ -18,7 +19,7 @@ import './index.scss';
 export default class Box extends Component {
   constructor() {
     super();
-    
+
     this._newDocumentClick = this._newDocumentClick.bind(this);
   }
 
@@ -32,7 +33,7 @@ export default class Box extends Component {
   }
 
   render() {
-    const {box, fixedBlocks, authorizedUser} = this.props;
+    const {box, fixedBlocks, authorizedUser, boxes} = this.props;
     const {slug} = this.props.requestedUser;
 
     return (
@@ -66,8 +67,12 @@ export default class Box extends Component {
           }
           <div className="common-lists tokens-lists">
             {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
+            {boxes.length > 0 && boxes[0].children.map(box => (
+              <div style={{background: '#fff', padding: '5px'}}>{box.name}</div>
+            ))}
+
             {slug === authorizedUser.slug && box.documents && box.documents.map(document => (
-              <DocumentItem 
+              <DocumentItem
                 key={document.id}
                 document={document}
                 boxKey={box.key}

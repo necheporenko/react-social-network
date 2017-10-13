@@ -148,7 +148,7 @@ export default (store) => {
           <Route path="inbox" component={Inbox} onEnter={requireLogin}/>
           <Route path="wallet" component={Wallet}/>
           <Route path="private" component={TokensPrivate}/>
-          <Route path="boxes" component={Boxes}/>
+          <Route path="desk" component={Box}/>
           <Route path="/:userName/documents(/:box)" component={Box}/>
         </Route>
 

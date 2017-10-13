@@ -55,27 +55,27 @@ class PostFooter extends Component {
   }
 
   openCommentBlock() {
-    console.log('hello', this.state.showComment);
     this.setState({showComment: true});
-    console.log('bye', this.state.showComment);
   }
 
   loadLikeInfo(people_list) {
+    const {authorizedUser} = this.props;
     const friends = [];
     let result;
     const is_Friend = people_list.some(people => people.user.is_friend);
-    const is_Owner = people_list.some(people => people.user.is_owner);
-    const is_Not_Owner = people_list.every(people => !people.user.is_owner);
+    const is_Owner = people_list.some(people => people.user.id === authorizedUser.id);
+    const is_Not_Owner = people_list.every(people => people.user.id !== authorizedUser.id);
 
     if (is_Owner && !is_Friend) {
       if (people_list.length - 1 === 0) {
         people_list.map(people => {
-          if (people.user.is_owner) {
+          if (people.user.id === authorizedUser.id) {
             result = people.user.fullName;
           }
         });
       } else {
-        result = `You and ${people_list.length - 1} others`;
+        const arrPeople = people_list.length - 1;
+        result = `You and ${arrPeople} ${arrPeople === 1 ? 'other' : 'others'}`;
       }
     } else if (is_Friend) {
       people_list.map(people => {
@@ -91,12 +91,14 @@ class PostFooter extends Component {
         if (people_list.length - qtyFriend - 1 === 0) {
           result = `You and ${friends.slice(0, qtyFriend)}`;
         } else {
-          result = `You, ${friends.slice(0, qtyFriend)} and ${people_list.length - qtyFriend - 1} others`;
+          const arrPeople = people_list.length - qtyFriend - 1;
+          result = `You, ${friends.slice(0, qtyFriend)} and ${arrPeople} ${arrPeople === 1 ? 'other' : 'others'}`;
         }
       } else if (people_list.length - 1 === 0) {
         result = friends[0];
       } else {
-        result = `${friends.slice(0, qtyFriend)} and ${people_list.length - qtyFriend} others`;
+        const arrPeople = people_list.length - qtyFriend;
+        result = `${friends.slice(0, qtyFriend)} and ${arrPeople} ${arrPeople === 1 ? 'other' : 'others'}`;
       }
     } else if (is_Not_Owner && !is_Friend) {
       result = people_list.length;
@@ -145,7 +147,7 @@ class PostFooter extends Component {
         arrResult.push(comment);
 
         if (comment.children) {
-          right += 30;
+          right += 27;
           if (comment.children.length > 1) {
             comment.children.map(item => item.rightParent = right);
           }
@@ -156,13 +158,14 @@ class PostFooter extends Component {
 
     treeOfComments(comments);
     // console.log(obj)
-    return arrResult.map((comment) => (
-      <div className="comment" key={comment.id} style={{marginLeft: comment.right}}>
+    return arrResult.map((comment, index) => (
+      <div className={'comment' + (comment.right > 0 ? ' comment-reply' : '')} key={comment.id} style={{marginLeft: comment.right}}>
         <img
           src={comment.user.avatar32}
           style={{
-            width: comment.right > 0 ? '20px' : '27px',
-            height: comment.right > 0 ? '20px' : '27px',
+            width: comment.right > 0 ? '20px' : '32px',
+            minWidth: comment.right > 0 ? '20px' : '32px',
+            height: comment.right > 0 ? '20px' : '32px',
           }}
         />
         <div className="text-block" style={{width: `calc(100% - ${comment.right}px)`}}>

@@ -37,29 +37,19 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1046"
+     inkscape:window-height="1019"
      id="namedview5751"
      showgrid="false"
      inkscape:snap-grids="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:zoom="28.97111"
-     inkscape:cx="11.334484"
-     inkscape:cy="7.1451082"
-     inkscape:window-x="1920"
-     inkscape:window-y="0"
+     inkscape:zoom="47.417559"
+     inkscape:cx="6.6641153"
+     inkscape:cy="7.4763464"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg5749">
-    <sodipodi:guide
-       position="11.545732,5.486132"
-       orientation="0,1"
-       id="guide6962"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="10.396264,3.90173"
-       orientation="0,1"
-       id="guide6964"
-       inkscape:locked="false" />
     <sodipodi:guide
        position="2.1946532,1.8202609"
        orientation="1,0"
@@ -88,8 +78,23 @@
   </sodipodi:namedview>
   <path
      id="path5747"
-     d="M 1.3333333,0 C 0.6333333,9.9999999e-8 0,0.6333334 0,1.3333333 v 9.3333327 c 0,0.7 0.6333333,1.333333 1.3333333,1.333333 H 14.666667 c 0.7,0 1.333333,-0.633333 1.333333,-1.333333 V 1.3333333 C 16,0.6333333 15.366667,0 14.666667,0 Z m 0.8613199,3.3139965 9.4132118,-5e-7 v 1.615469 l -9.4132118,5e-7 z m 0,3.199871 11.8674818,-5e-7 v 1.584402 l -11.8674818,5e-7 z"
+     d="M 1.3333333,0 C 0.6333333,9.9999999e-8 0,0.6333334 0,1.3333333 v 9.3333327 c 0,0.7 0.6333333,1.333333 1.3333333,1.333333 H 14.666667 c 0.7,0 1.333333,-0.633333 1.333333,-1.333333 V 1.3333333 C 16,0.6333333 15.366667,0 14.666667,0 Z"
      inkscape:connector-curvature="0"
      style="fill:#787878;fill-opacity:1;stroke-width:0.66666669"
-     sodipodi:nodetypes="ssssssssscccccccccc" />
+     sodipodi:nodetypes="sssssssss" />
+  <rect
+     style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.37795275;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+     id="rect5161"
+     width="11.867482"
+     height="1.5844021"
+     x="2.1946533"
+     y="7.5168691"
+     ry="0" />
+  <rect
+     style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.37795275;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+     id="rect5163"
+     width="9.4132118"
+     height="1.615469"
+     x="2.1946533"
+     y="3.3139961" />
 </svg>

@@ -51,6 +51,7 @@ const initialState = {
   loaded: {
     loadedBookTree: false,
     loadedBookStories: false,
+    loadedBooks: false
   },
   pagination: 2,
   uploading: false,
@@ -336,14 +337,22 @@ export default function bookReducer(state = initialState, action) {
       };
     }
     case GET_BOOKS_SUCCESS: {
+      loaded = Object.assign({}, state.loaded, {
+        loadedBooks: true,
+      });
       return {
         ...state,
-        subBooksArr: action.result.data[0].children
+        subBooksArr: action.result.data,
+        loaded
       };
     }
     case GET_BOOKS_FAIL: {
+      loaded = Object.assign({}, state.loaded, {
+        loadedBooks: false,
+      });
       return {
         ...state,
+        loaded
       };
     }
 

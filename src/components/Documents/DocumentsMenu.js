@@ -38,11 +38,11 @@ export default class DocumentsMenu extends Component {
 
   render() {
     const {isOpen} = this.state;
-    const {boxes, path, fixedBlocks} = this.props;
-    const {slug} = this.props.requestedUser;
+    const {boxes, path, fixedBlocks, authorizedUser} = this.props;
+    const {slug, id} = this.props.requestedUser;
     const findBoxes = path.indexOf('/documents/boxes');
     console.log(this.props);
-    
+
     const linkToHumanCard = () => {
       const humanCards = boxes[0] ? boxes[0].human_card : null;
 
@@ -51,7 +51,7 @@ export default class DocumentsMenu extends Component {
       } else if (humanCards && humanCards.human_card_address) {
         return humanCards.human_card_address;
       }
-  
+
       return null;
     };
 
@@ -61,7 +61,8 @@ export default class DocumentsMenu extends Component {
         style={{
           position: fixedBlocks ? 'fixed' : null,
           top: fixedBlocks ? 118 : null
-        }}>
+        }}
+      >
         <div className={this.props.sidebar}>
           <ul>
 
@@ -122,15 +123,15 @@ export default class DocumentsMenu extends Component {
 
 
             <hr/>
-            
-            {linkToHumanCard() 
-              ? <Link 
+
+            {linkToHumanCard()
+              ? <Link
                 onlyActiveOnIndex={true}
                 to={`/${slug}/documents/human-card/${linkToHumanCard()}`}
                 activeClassName="active">
                 <li className="documents-mnu-hc">Human Card Page</li>
               </Link>
-              : <Link 
+              : <Link
                 onlyActiveOnIndex={true}
                 to={`/${slug}/documents/human-card`}
                 activeClassName="active">
@@ -140,10 +141,13 @@ export default class DocumentsMenu extends Component {
 
             <hr/>
 
+            {authorizedUser.id === id &&
             <Link onlyActiveOnIndex={true} to={`/${slug}/documents/wallet`} activeClassName="active">
               <li className="documents-mnu-wallet">Wallet</li>
+              <hr/>
             </Link>
-            <hr/>
+            }
+
           </ul>
 
 

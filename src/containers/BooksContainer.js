@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
 import {getUser} from '../redux/modules/user';
-import {load as loadBookTree, clearBookTree, getBooks} from '../redux/modules/book';
+import {load as loadBookTree, clearBookTree, getBooks, showSubBooksCurrentBook} from '../redux/modules/book';
 import Books from '../components/Books';
 
 @connect((state) => ({
@@ -15,7 +15,8 @@ import Books from '../components/Books';
   getUser,
   loadBookTree,
   clearBookTree,
-  getBooks
+  getBooks,
+  showSubBooksCurrentBook,
 })
 
 export default class BooksContainer extends Component {
@@ -33,7 +34,7 @@ export default class BooksContainer extends Component {
   }
 
   render() {
-    const {requestedUser, router, bookTreeArr, loaded, fixedBlocks, subBooksArr, getBooks} = this.props;
+    const {requestedUser, router, bookTreeArr, loaded, fixedBlocks, subBooksArr, getBooks, showSubBooksCurrentBook} = this.props;
 
     return (
       <div>
@@ -48,6 +49,7 @@ export default class BooksContainer extends Component {
           subBooksArr={subBooksArr}
           fixedBlocks={fixedBlocks}
           getBooks={getBooks}
+          showSubBooksCurrentBook={showSubBooksCurrentBook}
         />
       </div>
     );

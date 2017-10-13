@@ -7,11 +7,16 @@ import AddBook from '../Popup/AddBook';
 import Loader from '../Common/Loader';
 import './index.scss';
 
-const BookCard = ({book, history, requestedUser}) => {
+const BookCard = ({book, history, requestedUser, getBooks}) => {
   const {name, key, cover, children, counts} = book;
 
   const onBookClick = (e) => {
     e.preventDefault();
+  };
+
+  const showSubBooks = (e, slug, book_slug) => {
+    e.preventDefault();
+    getBooks(slug, book_slug);
   };
 
   return (
@@ -26,7 +31,7 @@ const BookCard = ({book, history, requestedUser}) => {
       />
 
       <div className="authorUser">
-        <img src={requestedUser.avatar32} alt=""/>
+        <img src={requestedUser.avatar48} alt=""/>
       </div>
 
       <div onClick={onBookClick} className="book-edit">
@@ -50,7 +55,8 @@ const BookCard = ({book, history, requestedUser}) => {
           <li><span>{counts ? counts.followers : 0}</span><i className="followers-icon-sm"/></li>
           <li>·<span>{counts ? counts.stories : 0}</span><i className="stories-icon-sm"/></li>
           <li>·<span>{counts ? counts.images : 0}</span><i className="photos-icon-sm"/></li>
-          <li>·<span>{counts ? counts.sub_books : 0}</span><i className="subbooks-icon-sm"/></li>
+          <li className="subbooks-btn" onClick={(e) => showSubBooks(e, requestedUser.slug, key)}>
+            ·<span>{counts ? counts.sub_books : 0}</span><i className="subbooks-icon-sm"/></li>
         </ul>
         {/*<hr />*/}
       </div>
@@ -89,7 +95,7 @@ const BookCard = ({book, history, requestedUser}) => {
 
 class Books extends Component {
   render() {
-    const {bookTreeArr, requestedUser, loaded, history, fixedBlocks, subBooksArr, getBooks} = this.props;
+    const {bookTreeArr, requestedUser, loaded, history, fixedBlocks, subBooksArr, getBooks, showSubBooksCurrentBook} = this.props;
     const loader = <Loader/>;
 
     return (
@@ -104,19 +110,18 @@ class Books extends Component {
           <div className="sidebar">
             <ul>
               {/*<Link*/}
-                {/*onlyActiveOnIndex={true}*/}
-                {/*to={`/${requestedUser.slug}/books`}*/}
-                {/*activeClassName="active"*/}
-                {/*onClick={() => getBooks(requestedUser.slug)}*/}
+              {/*onlyActiveOnIndex={true}*/}
+              {/*to={`/${requestedUser.slug}/books`}*/}
+              {/*activeClassName="active"*/}
+              {/*onClick={() => getBooks(requestedUser.slug)}*/}
               {/*>*/}
-                {/*<li>Primary Books</li>*/}
+              {/*<li>Primary Books</li>*/}
               {/*</Link>*/}
             </ul>
           </div>
           <BooksTreeContainer
             bookTreeArr={bookTreeArr}
             title="Primary Books"
-            isLink={false}
           />
           {/*<div className="title-new-book" style={{marginLeft: '26px'}}>+ Create new book*/}
           {/*<AddBook/>*/}
@@ -127,18 +132,22 @@ class Books extends Component {
           className="common-lists"
           style={{marginLeft: fixedBlocks ? 240 : null}}
         >
+          {loaded.loadedBooks && subBooksArr[0].children.length > 0 && subBooksArr[0].name !== 'root' &&
+          <div className="subbooks-title">{subBooksArr[0].name} > Subbooks</div>
+          }
           <InfiniteScroll
             hasMore={true}
             threshold={50}
             loader={loader}
           >
             <div className="wrapper">
-              {subBooksArr.length > 0 && subBooksArr.map(book => (
+              {loaded.loadedBooks && subBooksArr[0].children.length > 0 && subBooksArr[0].children.map(book => (
                 <BookCard
                   key={book.key}
                   book={book}
                   history={history}
                   requestedUser={requestedUser}
+                  getBooks={getBooks}
                 />
               ))}
             </div>

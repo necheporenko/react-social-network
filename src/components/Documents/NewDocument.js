@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Helmet from 'react-helmet';
 import {convertToRaw} from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import {Editor} from 'react-draft-wysiwyg';
@@ -61,6 +62,10 @@ export default class NewDocument extends Component {
   render() {
     return (
       <div className="docs">
+        <Helmet
+          title={`React Validbook - ${this.state.title}`}
+        />
+
         <div className="docs-input">
           {/*<div className="input-buffer" ref={el => this.inputBuffer = el}>{this.state.title}</div>*/}
           {/*<input*/}
