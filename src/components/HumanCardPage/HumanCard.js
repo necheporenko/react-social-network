@@ -25,7 +25,7 @@ export default class HumanCard extends Component {
     if (draftHumanCard) {
       this.state['fullName'] = draftHumanCard.full_name;
     } else if (requestedUser && requestedUser.first_name && requestedUser.last_name) {
-      this.state['fullname'] = `${requestedUser.first_name} ${requestedUser.last_name}`
+      this.state['fullName'] = `${requestedUser.first_name} ${requestedUser.last_name}`
     }
     
     this.changeFullName = this.changeFullName.bind(this);
@@ -372,8 +372,8 @@ export default class HumanCard extends Component {
           <div className="human-card-btn">
             <button className="btn-brand" onClick={this.saveDraft}>Save</button>
             <SignHumanCard
-              fullName={this.state.fullName || (draftHumanCard && draftHumanCard.full_name) || fullName}
-              publicAddress={this.state.publicAddress || (draftHumanCard && draftHumanCard.public_address) || ''}
+              fullName={this.state.fullName}
+              publicAddress={this.state.publicAddress}
             />
           </div>
         }
