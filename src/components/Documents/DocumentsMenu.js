@@ -122,10 +122,6 @@ export default class DocumentsMenu extends Component {
 
 
             <hr/>
-
-            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/human-card/${public_address || ''}`} activeClassName="active">
-              <li className="documents-mnu-wallet">Human Card Page</li>
-            </Link>
             
             {linkToHumanCard() 
               ? <Link 

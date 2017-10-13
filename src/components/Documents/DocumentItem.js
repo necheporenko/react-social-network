@@ -26,8 +26,7 @@ export default class DocumentItem extends Component {
     });
   }
 
-  showModal(e) {
-    e.preventDefault();
+  showModal() {
     this.setState({
       showModal: true
     });

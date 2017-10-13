@@ -1,12 +1,73 @@
+.document-item-modal-backdrop.in {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
 
-div.fade.in.modal {
+.document-item-modal-backdrop-backdrop.fade {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.document-item-modal-open .document-item-modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.document-item-modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+}
+
+.document-item-modal {
+  z-index: 1040 !important;
+}
+
+.document-item-modal.in .document-item-modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.document-item-modal.fade .document-item-modal-dialog {
+  -webkit-transform: translate(0, -25%);
+  -ms-transform: translate(0, -25%);
+  -o-transform: translate(0, -25%);
+  transform: translate(0, -25%);
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -moz-transition: -moz-transform 0.3s ease-out;
+  -o-transition: -o-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+}
+
+.document-item-modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   display: flex !important;
   justify-content: center;
   align-items: center;
 
-  .modal-dialog {
+  .document-item-modal-content {
     width: 390px;
     box-sizing: content-box;
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    background-clip: padding-box;
+    outline: 0;
   
     .modal-header {
       padding: 24px 24px 15px;
