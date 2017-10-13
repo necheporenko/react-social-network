@@ -167,10 +167,7 @@ class PostFooter extends Component {
         />
         <div className="text-block" style={{width: `calc(100% - ${comment.right}px)`}}>
           <p><Link>{`${comment.user.first_name} ${comment.user.last_name}`}</Link>{comment.content}</p>
-          <span
-            className="reply"
-            onClick={() => this.reply(comment.id)}>Reply{comment.right}
-          </span>
+          <span className="reply" onClick={() => this.reply(comment.id)}>Reply</span>
           <span> · </span>
           <span className="date">{comment.date}</span>
 

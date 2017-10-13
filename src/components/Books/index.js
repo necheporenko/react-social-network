@@ -103,14 +103,14 @@ class Books extends Component {
           }}>
           <div className="sidebar">
             <ul>
-              <Link
-                onlyActiveOnIndex={true}
-                to={`/${requestedUser.slug}/books`}
-                activeClassName="active"
-                onClick={() => getBooks(requestedUser.slug)}
-              >
-                <li>Primary Books</li>
-              </Link>
+              {/*<Link*/}
+                {/*onlyActiveOnIndex={true}*/}
+                {/*to={`/${requestedUser.slug}/books`}*/}
+                {/*activeClassName="active"*/}
+                {/*onClick={() => getBooks(requestedUser.slug)}*/}
+              {/*>*/}
+                {/*<li>Primary Books</li>*/}
+              {/*</Link>*/}
             </ul>
           </div>
           <BooksTreeContainer
