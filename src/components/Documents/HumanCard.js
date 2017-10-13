@@ -6,8 +6,7 @@ import {createDraftHumanCard, updateDraftHumanCard} from '../../redux/modules/do
 import SignHumanCard from '../Popup/SignHumanCard';
 import './human-card.scss';
 
-@connect(() => ({
-}), {
+@connect(null, {
   createDraftHumanCard,
   updateDraftHumanCard
 })
@@ -184,14 +183,14 @@ export default class HumanCard extends Component {
                 {slug !== authorizedUser.slug 
                   ? <input
                     type="text" placeholder="Paste your public address here"
-                    value={this.state.publicAddress || (draftHumanCard && draftHumanCard.id && draftHumanCard.public_address) || ''}
+                    value={this.state.publicAddress}
                     style={{fontSize: '13px'}}
                     readOnly
                   />
                   : <input
                     type="text" placeholder="Paste your public address here"
                     onChange={this.changePublicAddress}
-                    value={this.state.publicAddress || (draftHumanCard && draftHumanCard.id && draftHumanCard.public_address) || ''}
+                    value={this.state.publicAddress}
                     ref={el => this.inputPublicAddress = el}
                     style={{fontSize: '13px'}}
                   />
@@ -206,14 +205,14 @@ export default class HumanCard extends Component {
                 {slug !== authorizedUser.slug
                   ? <input
                     type="text" placeholder="Paste your getAddress here"
-                    value={this.state.fullName || (draftHumanCard && draftHumanCard.id && draftHumanCard.full_name) || fullName}
+                    value={this.state.fullName || fullName || ''}
                     style={{fontSize: '22px'}}
                     readOnly
                   />
                   : <input
                     type="text" placeholder="Paste your getAddress here"
                     onChange={this.changeFullName}
-                    value={this.state.fullName || (draftHumanCard && draftHumanCard.id && draftHumanCard.full_name) || fullName}
+                    value={this.state.fullName || fullName || ''}
                     ref={el => this.inputFullName = el}
                     style={{fontSize: '22px'}}
                   />

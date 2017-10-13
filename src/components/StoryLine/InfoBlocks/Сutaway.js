@@ -78,6 +78,8 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
   const linkToHumanCard = () => {
     if (human_card && human_card.public_address) {
       return human_card.public_address;
+    } else if (draft_human_card && draft_human_card.id) {
+      return draft_human_card.id;
     }
 
     return '';
@@ -88,96 +90,94 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
   return (
     first_name ?
       <div className="infoblocks-cutaway">
-        <div>
-          <div className="title-infoblocks">
-            <span className="cutaway-icon"/>
-            {/*{`${first_name} ${last_name}`}*/}
-            Info
-            <Link to="/settings" className="settings-edit"><i/></Link>
+        <div className="title-infoblocks-cutaway">
+          <span className="cutaway-icon"/>
+          {/*{`${first_name} ${last_name}`}*/}
+          Info
+          <Link to="/settings" className="settings-edit"><i/></Link>
+        </div>
+
+        <div className="wrapper">
+          {bio &&
+          <div className="bio">{bio}</div>
+          }
+
+          {/*{occupation &&*/}
+          {/*<div className="occupation">*/}
+          {/*<b>Occupation:</b>*/}
+          {/*<p>{occupation}</p>*/}
+          {/*</div>*/}
+          {/*}*/}
+
+          {(company || occupation) &&
+          <div className="company">
+            <i/>
+            <p>{work(occupation, company)}</p>
           </div>
+          }
 
-          <div className="wrapper">
-            {bio &&
-            <div className="bio">{bio}</div>
-            }
+          {/*<div className="country">*/}
+          {/*<b>Country:</b>*/}
+          {/*<p>United States</p>*/}
+          {/*</div>*/}
 
-            {/*{occupation &&*/}
-            {/*<div className="occupation">*/}
-            {/*<b>Occupation:</b>*/}
-            {/*<p>{occupation}</p>*/}
-            {/*</div>*/}
-            {/*}*/}
-
-            {(company || occupation) &&
-            <div className="company">
-              <i/>
-              <p>{work(occupation, company)}</p>
-            </div>
-            }
-
-            {/*<div className="country">*/}
-            {/*<b>Country:</b>*/}
-            {/*<p>United States</p>*/}
-            {/*</div>*/}
-
-            {location &&
-            <div className="location">
-              <i/>
-              <p>{`Lives in ${location}`}</p>
-            </div>
-            }
-
-            {birthYear !== 0 && birthYear &&
-            <div className="birthday">
-              <i/>
-              <p>January 18, {`${birthYear}`}</p>
-            </div>
-            }
-
-            {phone &&
-            <div className="phone">
-              <i/>
-              <p>{phone}</p>
-            </div>
-            }
-
-            {website &&
-            <div className="websites">
-              <i/>
-              <p><Link to={website}>{website}</Link></p>
-            </div>
-            }
-
-            <div className="social-network">
-              {facebook && <a href={facebook} className="facebook"/>}
-              {twitter && <a href={twitter} className="twitter"/>}
-              {linkedin && <a href={linkedin} className="linkedin"/>}
-              {skype && <a href={skype} className="skype"/>}
-            </div>
+          {location &&
+          <div className="location">
+            <i/>
+            <p>{`Lives in ${location}`}</p>
           </div>
+          }
 
+          {birthYear !== 0 && birthYear &&
+          <div className="birthday">
+            <i/>
+            <p>January 18, {`${birthYear}`}</p>
+          </div>
+          }
+
+          {phone &&
+          <div className="phone">
+            <i/>
+            <p>{phone}</p>
+          </div>
+          }
+
+          {website &&
+          <div className="websites">
+            <i/>
+            <p><Link to={website}>{website}</Link></p>
+          </div>
+          }
+
+          <div className="social-network">
+            {facebook && <a href={facebook} className="facebook"/>}
+            {twitter && <a href={twitter} className="twitter"/>}
+            {linkedin && <a href={linkedin} className="linkedin"/>}
+            {skype && <a href={skype} className="skype"/>}
+          </div>
+        </div>
+
+        
+        <div className="infoblock-human-card ">
+          {/*<hr style={{margin: '0 15px 20px 15px'}} />*/}
           
-          <div className="infoblock-human-card ">
-            {/*<hr style={{margin: '0 15px 20px 15px'}} />*/}
-            
-            <HumanCard
-              humanCard={human_card}
-              draftHumanCard={draft_human_card}
-              requestedUser={requestedUser}
-              authorizedUser={authorizedUser}
-            />
-            <div className="buttons-container">
-              {human_card &&
-                <div className="validate-button">
-                  <button className="btn-sign btn-brand">Validate</button>
-                </div>
-              }
-              <div className="review-proofs">
-                <Link
-                  onMouseMove={onHoverLinkHumanCard}
-                  onMouseOut={onHoverOutHumanCard}
-                  to={`/${slug}/documents/human-card/${linkToHumanCard()}`}>Review Proofs</Link>
+          <HumanCard
+            humanCard={human_card}
+            draftHumanCard={draft_human_card}
+            requestedUser={requestedUser}
+            authorizedUser={authorizedUser}
+          />
+          <div className="buttons-container">
+            {human_card &&
+              <div className="validate-button">
+                <button className="btn-sign btn-brand">Validate</button>
               </div>
+            }
+            <div className="review-proofs">
+              <Link
+                onMouseMove={onHoverLinkHumanCard}
+                onMouseOut={onHoverOutHumanCard}
+                to={`/${slug}/documents/human-card/${linkToHumanCard()}`}>Review Proofs</Link>
             </div>
           </div>
         </div>

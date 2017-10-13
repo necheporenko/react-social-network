@@ -4,7 +4,7 @@ import HumanCard from './HumanCard';
 import {connect} from 'react-redux';
 import SubHeader from '../StoryLine/SubHeader';
 import {getUser} from '../../redux/modules/user';
-import {getHumanCard} from '../../redux/modules/document';
+import {getHumanCard, getDraftHumanCard} from '../../redux/modules/document';
 import './human-card-page.scss';
 
 @connect((state) => ({
@@ -15,7 +15,8 @@ import './human-card-page.scss';
   draftHumanCard: state.document.draftHumanCard
 }), {
   getUser,
-  getHumanCard
+  getHumanCard,
+  getDraftHumanCard
 })
 
 export default class HumanCardPage extends Component {
@@ -27,15 +28,18 @@ export default class HumanCardPage extends Component {
     };
 
     this.handleScroll = this.handleScroll.bind(this);
+    this.humanCardRender = this.humanCardRender.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    const {path, requestedUser, getUser, getHumanCard} = this.props;
+    const {path, requestedUser, getUser, getHumanCard, getDraftHumanCard} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
+    const humanCardSlug = path.substring(path.indexOf('/human-card/') + 12);
 
-    if (findSlug !== requestedUser.slug) {
-      const humanCardSlug = path.substring(path.indexOf('/human-card/') + 12);
+    if (humanCardSlug.indexOf('0x') === -1 && typeof +humanCardSlug === 'number') {
+      getUser(findSlug).then(getDraftHumanCard(humanCardSlug));
+    } else {
       getUser(findSlug).then(getHumanCard(humanCardSlug));
     }
   }
@@ -133,10 +137,26 @@ export default class HumanCardPage extends Component {
     );
   }
 
+  humanCardRender() {
+    const {authorizedUser, humanCard, draftHumanCard, requestedUser} = this.props;
+
+    if (!humanCard && !draftHumanCard) {
+      return null;
+    }
+
+    return (
+      <HumanCard
+        humanCard={humanCard}
+        draftHumanCard={draftHumanCard}
+        requestedUser={requestedUser}
+        authorizedUser={authorizedUser}
+      />
+    )
+  }
+
   render() {
-    const {requestedUser, authorizedUser, humanCard, draftHumanCard} = this.props;
+    const {requestedUser} = this.props;
     const {showSmallNavigation} = this.state;
-    console.log(humanCard);
     
     return (
       <div>
@@ -148,12 +168,7 @@ export default class HumanCardPage extends Component {
           marginTop: showSmallNavigation ? 70 : 20
         }}>
           <div className="upper-block">
-            <HumanCard
-              humanCard={humanCard}
-              draftHumanCard={draftHumanCard}
-              requestedUser={requestedUser}
-              authorizedUser={authorizedUser}
-            />
+            {this.humanCardRender()}
             {this.linkedDigitalPropertyRender()}
             {this.validatorsRender()}
           </div>

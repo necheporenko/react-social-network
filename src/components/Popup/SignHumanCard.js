@@ -9,7 +9,8 @@ import './index.scss';
 const web3 = new Web3(Web3.givenProvider);
 
 @connect((state) => ({
-  draftHumanCard: state.user.requestedUserProfile.draft_human_card,
+  requestedUserProfile: state.user.requestedUserProfile,
+  humanPageDraftHumanCard: state.document.draftHumanCard
 }), {
   sendMessageForSign,
   verifyHumanCard
@@ -37,15 +38,23 @@ export default class SignHumanCard extends Component {
   }
 
   sign(keystore, password) {
-    const {fullName, publicAddress, draftHumanCard, sendMessageForSign, verifyHumanCard} = this.props;
+    const {fullName, publicAddress, humanPageDraftHumanCard, requestedUserProfile, sendMessageForSign, verifyHumanCard} = this.props;
+
+    let draftHumanCardId;
+
+    if (humanPageDraftHumanCard && humanPageDraftHumanCard.id) {
+      draftHumanCardId = humanPageDraftHumanCard.id;
+    } else if (requestedUserProfile.draft_human_card && requestedUserProfile.draft_human_card.id) {
+      draftHumanCardId = requestedUserProfile.draft_human_card.id;
+    }
 
     const msg = signTemplate(fullName, publicAddress);
     const decrypt = web3.eth.accounts.decrypt(JSON.parse(keystore.toLowerCase()), password);
 
-    sendMessageForSign(draftHumanCard.id, msg)
+    sendMessageForSign(draftHumanCardId, msg)
       .then((response) => {
         const resultOfSigning = web3.eth.accounts.sign(response.data.message, decrypt.privateKey);
-        verifyHumanCard(draftHumanCard.id, publicAddress, resultOfSigning.signature);
+        verifyHumanCard(draftHumanCardId, publicAddress, resultOfSigning.signature);
       })
       .catch((error) => {
         console.log(error);
