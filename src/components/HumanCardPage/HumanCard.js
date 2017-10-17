@@ -287,8 +287,15 @@ export default class HumanCard extends Component {
   }
 
   render() {
+    const reviewProof = document.querySelector('.infoblock-human-card .review-proofs a');
+    if (reviewProof) {
+      const human_card = document.querySelector('.human-card');
+      const p3 = human_card.querySelector('p:nth-child(3)');
+
+      p3.style.fontSize = '11px';
+    }
     const {humanCard, draftHumanCard, authorizedUser} = this.props;
-    const {first_name, last_name, slug} = this.props.requestedUser;
+    const {slug} = this.props.requestedUser;
 
     return (
       <div className="wrapper-human-card">
@@ -315,7 +322,7 @@ export default class HumanCard extends Component {
                   ? <input
                     type="text" placeholder="Paste your public address here"
                     value={this.state.publicAddress}
-                    style={{fontSize: '12px'}}
+                    style={{fontSize: reviewProof ? '11px' : '12px'}}
                     readOnly
                   />
                   : <input
@@ -323,7 +330,7 @@ export default class HumanCard extends Component {
                     onChange={this.changePublicAddress}
                     value={this.state.publicAddress}
                     ref={el => this.inputPublicAddress = el}
-                    style={{fontSize: '12px'}}
+                    style={{fontSize: reviewProof ? '11px' : '12px'}}
                     onFocus={this.onFocusInputs}
                   />
                 }
