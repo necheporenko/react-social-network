@@ -26,7 +26,7 @@ export default class Box extends Component {
 
   componentDidMount() {
     const {path} = this.props;
-    const boxSlug = path.indexOf('/documents/') === -1 ? 'board' : path.substring(path.indexOf('/documents/') + 11);
+    const boxSlug = path.indexOf('/documents/') === -1 ? 'desk' : path.substring(path.indexOf('/documents/') + 11);
     this.props.getBox(boxSlug);
   }
   _newDocumentClick() {
@@ -39,6 +39,7 @@ export default class Box extends Component {
 
   render() {
     const {box, fixedBlocks, authorizedUser, boxes} = this.props;
+    console.log(this.props);
     const {slug} = this.props.requestedUser;
 
     return (
@@ -78,7 +79,7 @@ export default class Box extends Component {
           }
           <div className="common-lists tokens-lists">
             {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
-            {boxes.length > 0 && boxes[0].children.map(box => (
+            {boxes.length > 0 && boxes[0].desk.children.map(box => (
               <div style={{background: '#fff', padding: '5px'}}>{box.name}</div>
             ))}
 

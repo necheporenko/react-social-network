@@ -6,6 +6,9 @@ import {createDraftHumanCard, updateDraftHumanCard} from '../../redux/modules/do
 import SignHumanCard from '../Popup/SignHumanCard';
 import './human-card.scss';
 
+const borderColorLight = 'rgb(225, 225, 225)';
+const borderColorDark = 'rgb(162, 162, 162)';
+
 @connect(null, {
   createDraftHumanCard,
   updateDraftHumanCard
@@ -176,58 +179,38 @@ export default class HumanCard extends Component {
   }
   
   onHoverHumanCard(e) {
-    const el = document.querySelector('.infoblock-human-card .review-proofs a');
     const human_card = document.querySelector('.human-card');
 
-    const linkUnderlineNone = () => {
-      el.style.textDecoration = 'none';
-    };
-
-    const linkUnderline = () => {
-      el.style.textDecoration = 'underline';
-    };
-    
-    if (el && this.props.humanCard) {
-      const h2 = human_card.querySelector('h2');
+    if (human_card && this.props.humanCard) {
       const p3 = human_card.querySelector('p:nth-child(3)');
-      
-      if (e.target === h2 || e.target === p3) {
-        linkUnderlineNone();
+      const h2 = human_card.querySelector('h2');
+      const hrs = human_card.querySelectorAll('hr');
+      const hr1 = hrs[0];
+      const hr2 = hrs[1];
+
+      if (e.target === h2) {
+        hr2.style.borderTopColor = borderColorDark;
+      } else if (e.target === p3) {
+        hr1.style.borderTopColor = borderColorDark;
       } else {
-        linkUnderline();
-      } 
-    } else if (el) {
+        hr1.style.borderTopColor = borderColorLight;
+        hr2.style.borderTopColor = borderColorLight;
+      }
+    } else {
       const inputs = human_card.querySelectorAll('input');
       const item1 = inputs[0];
       const item2 = inputs[1];
       const item1Style = getComputedStyle(item1);
       const item2Style = getComputedStyle(item2);
 
-      if (item1 && item2 && (e.target === item1 || e.target === item2)) {
-        linkUnderlineNone();
-        
-        if (e.target === item1 && item1Style.borderBottomColor === 'rgb(225, 225, 225)') {
-          item1.style.borderBottomColor = 'rgb(119, 119, 119)';
-        } else if (e.target === item2 && item2Style.borderBottomColor === 'rgb(225, 225, 225)') {
-          item2.style.borderBottomColor = 'rgb(119, 119, 119)';
-        }
+      if (item1 && item2 && (e.target === item1)) {
+        item1.style.borderBottomColor = borderColorDark;
+      } else if (item1 && item2 && e.target === item2) {
+        item2.style.borderBottomColor = borderColorDark;
       } else {
-        linkUnderline();
-
-        if (item1Style.borderBottomColor === 'rgb(119, 119, 119)') {
-          item1.style.borderBottomColor = 'rgb(225, 225, 225)';
-        } else if (item2Style.borderBottomColor === 'rgb(119, 119, 119)') {
-          item2.style.borderBottomColor = 'rgb(225, 225, 225)';
-        }
+        item1.style.borderBottomColor = borderColorLight;
+        item2.style.borderBottomColor = borderColorLight;
       }
-    }
-  }
-
-  onHoverOutHumanCard() {
-    const el = document.querySelector('.infoblock-human-card .review-proofs a');
-
-    if (el) {
-      el.style.textDecoration = 'none';
     }
   }
 
@@ -260,18 +243,6 @@ export default class HumanCard extends Component {
         getLink();
       }
     }
-  }   
-
-  onFocusInputs(e) { 
-    const inputs = document.querySelectorAll('.human_card input'); 
-    const item1 = inputs[0]; 
-    const item2 = inputs[1]; 
- 
-    if (e.target === item1) { 
-      item1.style.borderBottomColor = 'rgb(77, 144, 254)'; 
-    } else if (e.target === item2) { 
-      item2.style.borderBottomColor = 'rgb(77, 144, 254)'; 
-    } 
   }
 
   linkToHumanCard() {
@@ -331,7 +302,6 @@ export default class HumanCard extends Component {
                     value={this.state.publicAddress}
                     ref={el => this.inputPublicAddress = el}
                     style={{fontSize: reviewProof ? '11px' : '12px'}}
-                    onFocus={this.onFocusInputs}
                   />
                 }
                 
@@ -354,7 +324,6 @@ export default class HumanCard extends Component {
                     value={this.state.fullName}
                     ref={el => this.inputFullName = el}
                     style={{fontSize: '20px'}}
-                    onFocus={this.onFocusInputs}
                   />
                 }
                 {/*<div className="help-human-card"><i/></div>*/}

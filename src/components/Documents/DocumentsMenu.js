@@ -90,7 +90,7 @@ export default class DocumentsMenu extends Component {
             </div>
 
             <div className="boxes-mnu" style={{display: isOpen ? 'block' : 'none'}}>
-              {boxes.length > 0 && boxes[0].children.filter(box => ((box.key !== 'bin') && (box.key !== 'board'))).map(box => (
+              {boxes.length > 0 && boxes[0].desk.children.filter(box => ((box.key !== 'bin') && (box.key !== 'board'))).map(box => (
                 <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`} activeClassName="active">
                   <li className="documents-mnu-box">{box.name}</li>
                 </Link>
@@ -115,7 +115,7 @@ export default class DocumentsMenu extends Component {
 
             {/*<hr/>*/}
 
-            {/*{boxes.length > 0 && boxes[0].children.filter(box => box.key === 'bin').map(box => (*/}
+            {/*{boxes.length > 0 && boxes[0].desk.children.filter(box => box.key === 'bin').map(box => (*/}
             {/*<Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">*/}
             {/*<li className="documents-mnu-box-bin">{box.name}</li>*/}
             {/*</Link>*/}
