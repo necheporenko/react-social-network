@@ -51,16 +51,39 @@
       top: 34%;
       height: 18px;
 
-      .show-more-operations-icon {
-        padding: 0 5px 0 5px;
-        
-        &:hover {
-          path {
-            margin: 0 auto;
-            fill: #000;
+      .dropdown {
+        button {
+          border: none;
+  
+          &:hover {
+            border: none;
+
+            path {
+              margin: 0 auto;
+              fill: #000;
+            }
           }
-        } 
+        }
+
+        .dropdown-menu {
+          a:before {
+            content: '';
+            display: inline-block;
+            background: url(../img/Icons/document-item/open.svg);
+          }
+        }
       }
+
+      // .show-more-operations-icon {
+      //   padding: 0 5px 0 5px;
+        
+      //   &:hover {
+      //     path {
+      //       margin: 0 auto;
+      //       fill: #000;
+      //     }
+      //   } 
+      // }
     }
   }
   

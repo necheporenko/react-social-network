@@ -57,13 +57,13 @@ export default class HumanCard extends Component {
 
   copyAddress = () => {
     const div = document.querySelector('.markdown-human-card div');
-    const getAddress = div.getElementsByTagName('p');
-
+    const getAddress = div.querySelector('p:nth-child(3)');
     let range;
     let select;
+
     if (document.createRange) {
       range = document.createRange();
-      range.selectNodeContents(getAddress[0]);
+      range.selectNodeContents(getAddress);
       select = window.getSelection();
       select.removeAllRanges();
       select.addRange(range);
@@ -71,7 +71,7 @@ export default class HumanCard extends Component {
       select.removeAllRanges();
     } else {
       range = document.body.createTextRange();
-      range.moveToElementText(getAddress[0]);
+      range.moveToElementText(getAddress);
       range.select();
       document.execCommand('copy');
     }
@@ -79,13 +79,13 @@ export default class HumanCard extends Component {
 
   copyName = () => {
     const div = document.querySelector('.markdown-human-card div');
-    const getName = div.getElementsByTagName('h2');
-
+    const getName = div.querySelector('h2');
     let range;
     let select;
+
     if (document.createRange) {
       range = document.createRange();
-      range.selectNodeContents(getName[0]);
+      range.selectNodeContents(getName);
       select = window.getSelection();
       select.removeAllRanges();
       select.addRange(range);
@@ -93,7 +93,7 @@ export default class HumanCard extends Component {
       select.removeAllRanges();
     } else {
       range = document.body.createTextRange();
-      range.moveToElementText(getName[0]);
+      range.moveToElementText(getName);
       range.select();
       document.execCommand('copy');
     }
@@ -165,16 +165,16 @@ export default class HumanCard extends Component {
   }
 
   CopyToClipboard() {
-    const div = document.querySelector('.markdown-human-card div');
+    const div = document.querySelector('.human-card');
 
     if (div) {
-      function w(address, name) {
-        const getAddress = div.getElementsByTagName('p');
-        const getName = div.getElementsByTagName('h2');
-        getAddress[0].addEventListener('click', address);
-        getName[0].addEventListener('click', name);
-      }
-      setTimeout(() => w(this.copyAddress, this.copyName), 1000);
+      function w(address, name) { 
+        const getAddress = div.getElementsByTagName('p'); 
+        const getName = div.getElementsByTagName('h2'); 
+        getAddress[0].addEventListener('click', address); 
+        getName[0].addEventListener('click', name); 
+      } 
+      setTimeout(() => w(this.copyAddress, this.copyName), 1000); 
     }
   }
   
@@ -258,13 +258,6 @@ export default class HumanCard extends Component {
   }
 
   render() {
-    const reviewProof = document.querySelector('.infoblock-human-card .review-proofs a');
-    if (reviewProof) {
-      const human_card = document.querySelector('.human-card');
-      const p3 = human_card.querySelector('p:nth-child(3)');
-
-      p3.style.fontSize = '11px';
-    }
     const {humanCard, draftHumanCard, authorizedUser} = this.props;
     const {slug} = this.props.requestedUser;
 
@@ -280,7 +273,7 @@ export default class HumanCard extends Component {
               {/*<Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">*/}
               {this.requestHumanCard(humanCard.url)}
               <ReactMarkdown source={humanCard.markdown}/>
-              {/*{this.CopyToClipboard()}*/}
+              {this.CopyToClipboard()}
               {/*</Link>*/}
             </div>
             : <div className="draft-human-card">
@@ -293,7 +286,6 @@ export default class HumanCard extends Component {
                   ? <input
                     type="text" placeholder="Paste your public address here"
                     value={this.state.publicAddress}
-                    style={{fontSize: reviewProof ? '11px' : '12px'}}
                     readOnly
                   />
                   : <input
@@ -301,7 +293,6 @@ export default class HumanCard extends Component {
                     onChange={this.changePublicAddress}
                     value={this.state.publicAddress}
                     ref={el => this.inputPublicAddress = el}
-                    style={{fontSize: reviewProof ? '11px' : '12px'}}
                   />
                 }
                 
@@ -328,7 +319,7 @@ export default class HumanCard extends Component {
                 }
                 {/*<div className="help-human-card"><i/></div>*/}
               </p>
-              <p style={{color: '#d2d2d2', fontSize: '13px', magrinTop: 5, marginBottom: 10}}>
+              <p style={{color: '#d2d2d2', fontSize: '12px', magrinTop: 5, marginBottom: 10}}>
                 Digital signature and signing date will be here.
                 {/*<span>  your signature will be here</span>*/}
                 {/*<div className="help-human-card"><i/></div>*/}

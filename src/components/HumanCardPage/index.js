@@ -132,9 +132,7 @@ export default class HumanCardPage extends Component {
 
   validatorsGraphRender() {
     return (
-      <div className="validators-graph">
-        
-      </div>
+      <div className="validators-graph"/>
     );
   }
 

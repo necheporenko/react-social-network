@@ -39,6 +39,8 @@
     padding: 6px 0;
     padding-bottom: 0;
     outline: none;
+    user-select: all;
+    font-size: 12px;
 
     &:focus {
       border-bottom: 1px solid #4d90fe;
