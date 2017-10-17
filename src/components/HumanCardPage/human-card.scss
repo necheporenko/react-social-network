@@ -10,18 +10,23 @@
     font-weight: 500;
     font-size: 14px;
     margin: 15px 0 0;
+    cursor: pointer;
   }
 
   h2 {
-    font-weight: bold;
-    font-size: 16px;
-    margin: 20px 0 12px;
+    margin: 17px 0 12px;
+    cursor: text;
+    margin-bottom: 0;
+    font-size: 20px;
+    font-weight: normal;
+    user-select: all;
   }
 
   p {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 12px;
   }
 
   input {
@@ -48,23 +53,14 @@
   hr {
     border: 0;
     border-top: 1px solid #e7e7e7;
-    margin: 7px 0 0;
+    margin: 0;
   }
 }
 
 .markdown-human-card {
-  hr {
-    margin-top: 0;
-  }
-
-  p {
-    font-size: 13px;
-  }
-
   p:nth-child(3) {
     cursor: text;
-    padding: 20px 0 0;
-    font-size: 13px;
+    padding: 15px 0 4px;
     user-select: all;
   }
 
@@ -73,26 +69,13 @@
   }
 
   p:nth-child(5) {
-    font-size: 12px;
-    margin-top: 0;
+    margin-top: 5px;
     cursor: pointer;
   }
 
   p:nth-child(8) {
     cursor: pointer;
-    margin: 5px 0 10px;
-  }
-
-  h1 {
-    cursor: pointer;
-  }
-
-  h2 {
-    cursor: text;
-    margin-bottom: 0;
-    font-size: 22px;
-    font-weight: normal;
-    user-select: all;
+    margin: 1px 0 10px;
   }
 }
 

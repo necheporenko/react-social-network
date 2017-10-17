@@ -23,9 +23,9 @@ export default class HumanCard extends Component {
     };
 
     if (draftHumanCard) {
-      this.state['fullName'] = draftHumanCard.full_name;
+      this.state.fullName = draftHumanCard.full_name;
     } else if (requestedUser && requestedUser.first_name && requestedUser.last_name) {
-      this.state['fullName'] = `${requestedUser.first_name} ${requestedUser.last_name}`
+      this.state.fullName = `${requestedUser.first_name} ${requestedUser.last_name}`;
     }
     
     this.changeFullName = this.changeFullName.bind(this);
@@ -44,6 +44,10 @@ export default class HumanCard extends Component {
       this.setState({
         fullName: nextProps.draftHumanCard.full_name,
         publicAddress: nextProps.draftHumanCard.public_address
+      });
+    } else {
+      this.setState({
+        fullName: `${nextProps.requestedUser.first_name} ${nextProps.requestedUser.last_name}`
       });
     }
   }
@@ -170,25 +174,17 @@ export default class HumanCard extends Component {
       setTimeout(() => w(this.copyAddress, this.copyName), 1000);
     }
   }
-
-  // linkHC() {
-  //   const {humanCard} = this.props;
-  //   const {slug} = this.props.requestedUser;
-  //   browserHistory.push(`/${slug}/documents/human-card/${humanCard.public_address}`);
-  // }
   
   onHoverHumanCard(e) {
     const el = document.querySelector('.infoblock-human-card .review-proofs a');
     const human_card = document.querySelector('.human-card');
 
-    const borderNone = () => {
+    const linkUnderlineNone = () => {
       el.style.textDecoration = 'none';
-      human_card.style.border = '1px solid #dadada';
     };
 
-    const borderSolid = () => {
+    const linkUnderline = () => {
       el.style.textDecoration = 'underline';
-      human_card.style.border = '1px solid #777';
     };
     
     if (el && this.props.humanCard) {
@@ -196,20 +192,19 @@ export default class HumanCard extends Component {
       const p3 = human_card.querySelector('p:nth-child(3)');
       
       if (e.target === h2 || e.target === p3) {
-        borderNone();
+        linkUnderlineNone();
       } else {
-        borderSolid();
+        linkUnderline();
       } 
     } else if (el) {
       const inputs = human_card.querySelectorAll('input');
       const item1 = inputs[0];
       const item2 = inputs[1];
       const item1Style = getComputedStyle(item1);
-      console.log(item1Style)
       const item2Style = getComputedStyle(item2);
 
       if (item1 && item2 && (e.target === item1 || e.target === item2)) {
-        borderNone();
+        linkUnderlineNone();
         
         if (e.target === item1 && item1Style.borderBottomColor === 'rgb(225, 225, 225)') {
           item1.style.borderBottomColor = 'rgb(119, 119, 119)';
@@ -217,7 +212,7 @@ export default class HumanCard extends Component {
           item2.style.borderBottomColor = 'rgb(119, 119, 119)';
         }
       } else {
-        borderSolid();
+        linkUnderline();
 
         if (item1Style.borderBottomColor === 'rgb(119, 119, 119)') {
           item1.style.borderBottomColor = 'rgb(225, 225, 225)';
@@ -227,32 +222,18 @@ export default class HumanCard extends Component {
       }
     }
   }
-  
-  onFocusInputs(e) {
-    const inputs = document.querySelectorAll('.human_card input');
-    const item1 = inputs[0];
-    const item2 = inputs[1];
-
-    if (e.target === item1) {
-      item1.style.borderBottomColor = 'rgb(77, 144, 254)';
-    } else if (e.target === item2) {
-      item2.style.borderBottomColor = 'rgb(77, 144, 254)';
-    }
-  }
 
   onHoverOutHumanCard() {
     const el = document.querySelector('.infoblock-human-card .review-proofs a');
-    const human_card = document.querySelector('.infoblock-human-card .human-card');
 
     if (el) {
       el.style.textDecoration = 'none';
-      human_card.style.border = '1px solid #dadada';
     }
   }
 
   fnHumanCard(e) {
     const {slug} = this.props.requestedUser;
-    const div = document.querySelector('.wrapper-human-card');
+    const div = document.querySelector('.human-card');
     const el = document.querySelector('.infoblock-human-card .review-proofs a');
 
     const getLink = () => {
@@ -265,7 +246,7 @@ export default class HumanCard extends Component {
       }
     };
 
-    if (div && el && this.props.humanCard) {
+    if (el && this.props.humanCard) {
       const h2 = div.querySelector('h2');
       const p3 = div.querySelector('p:nth-child(3)');
       
@@ -279,6 +260,18 @@ export default class HumanCard extends Component {
         getLink();
       }
     }
+  }   
+
+  onFocusInputs(e) { 
+    const inputs = document.querySelectorAll('.human_card input'); 
+    const item1 = inputs[0]; 
+    const item2 = inputs[1]; 
+ 
+    if (e.target === item1) { 
+      item1.style.borderBottomColor = 'rgb(77, 144, 254)'; 
+    } else if (e.target === item2) { 
+      item2.style.borderBottomColor = 'rgb(77, 144, 254)'; 
+    } 
   }
 
   linkToHumanCard() {
@@ -298,13 +291,12 @@ export default class HumanCard extends Component {
     const {first_name, last_name, slug} = this.props.requestedUser;
 
     return (
-      <div 
-        className="wrapper-human-card"
-        onMouseOut={this.onHoverOutHumanCard} 
-        onMouseMove={this.onHoverHumanCard}
-        onClick={this.fnHumanCard}
-      >
-        <div className="human-card human-card-preview">
+      <div className="wrapper-human-card">
+        <div
+          onMouseOut={this.onHoverOutHumanCard} 
+          onMouseMove={this.onHoverHumanCard}
+          className="human-card human-card-preview"
+          onClick={this.fnHumanCard}>
           {humanCard && humanCard.id
             ? <div className="markdown-human-card">
               {/*<Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">*/}
@@ -317,22 +309,22 @@ export default class HumanCard extends Component {
               {/*<div className="help-human-card"><i/></div>*/}
               <h1 style={{marginBottom: 0}}>HUMAN CARD</h1>
               {/*<hr/>*/}
-              <p style={{marginTop: '5px', marginBottom: 0}}>
+              <p style={{marginTop: '5px', marginBottom: 0}}> 
                 {/*<strong>Public Address:</strong>*/}
                 {slug !== authorizedUser.slug 
                   ? <input
                     type="text" placeholder="Paste your public address here"
                     value={this.state.publicAddress}
-                    style={{fontSize: '13px'}}
+                    style={{fontSize: '12px'}}
                     readOnly
                   />
                   : <input
                     type="text" placeholder="Paste your public address here"
                     onChange={this.changePublicAddress}
                     value={this.state.publicAddress}
-                    onFocus={this.onFocusInputs}
                     ref={el => this.inputPublicAddress = el}
-                    style={{fontSize: '13px'}}
+                    style={{fontSize: '12px'}}
+                    onFocus={this.onFocusInputs}
                   />
                 }
                 
@@ -341,21 +333,21 @@ export default class HumanCard extends Component {
               <p style={{fontSize: '12px', marginTop: '5px', marginBottom: '10px'}}>
                 This public address has been established for:
               </p>
-              <p style={{marginTop: '10px'}}>
+              <p style={{marginTop: '10px'}}> 
                 {slug !== authorizedUser.slug
                   ? <input
-                    type="text" placeholder="Paste your getAddress here"
+                    type="text" placeholder="Type name by which people know you"
                     value={this.state.fullName}
-                    style={{fontSize: '22px'}}
+                    style={{fontSize: '20px'}}
                     readOnly
                   />
                   : <input
-                    type="text" placeholder="Paste your getAddress here"
+                    type="text" placeholder="Type name by which people know you"
                     onChange={this.changeFullName}
                     value={this.state.fullName}
-                    onFocus={this.onFocusInputs}
                     ref={el => this.inputFullName = el}
-                    style={{fontSize: '22px'}}
+                    style={{fontSize: '20px'}}
+                    onFocus={this.onFocusInputs}
                   />
                 }
                 {/*<div className="help-human-card"><i/></div>*/}

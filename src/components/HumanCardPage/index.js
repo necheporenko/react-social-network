@@ -36,7 +36,7 @@ export default class HumanCardPage extends Component {
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
     const humanCardSlug = path.substring(path.indexOf('/human-card/') + 12);
 
-    if (!isNaN(humanCardSlug)) {
+    if (!isNaN(humanCardSlug) && humanCardSlug.indexOf('0x') === -1) {
       getUser(findSlug).then(getDraftHumanCard(humanCardSlug));
     } else if (humanCardSlug.indexOf('0x') !== -1) {
       getUser(findSlug).then(getHumanCard(humanCardSlug));
