@@ -257,7 +257,7 @@ class UserButtons extends Component {
           >
             <li key={notification.id} style={{background: notification.is_seen ? '#fff' : '#E4F0F6'}}>
               <div>
-                <img src={notification.user.avatar} alt=""/>
+                <img style={{borderRadius: '50%'}} src={notification.user.avatar} alt=""/>
                 <h6
                   dangerouslySetInnerHTML={{__html: notification.text}}
                   style={{display: 'flex', width: '265px', fontWeight: 400}}

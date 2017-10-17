@@ -45,7 +45,7 @@
 }
 
 .tokens-lists {
-  margin-top: 20px;
+  //margin-top: 20px;
 }
 
 .wrap-boxes {
@@ -515,7 +515,8 @@
 
 .add-new-item {
   display: flex;
-  justify-content: flex-end;
+  //justify-content: flex-end;
+  padding-left: 10px;
 
   div {
     width: 36px;
@@ -553,6 +554,49 @@
     background-color: #CECECE;
   }
 }
+
+.wrapper-boxes {
+  margin-bottom: 20px;
+
+  span {
+    font-weight: 500;
+    color: #8f8f8f;
+  }
+
+  .wrapper-box-card {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .box-card {
+    width: 167px;
+    background: #fff;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    padding: 12px 15px;
+    display: block;
+    margin: 20px 20px 0 0;
+
+    li {
+      list-style: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-left: 0;
+    }
+  }
+}
+
+.wrapper-doc {
+  span {
+    font-weight: 500;
+    color: #8f8f8f;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+
 
 @media only screen and (max-width: 1200px) {
   .document > a {

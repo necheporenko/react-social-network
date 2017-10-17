@@ -96,7 +96,7 @@ class Header extends Component {
         {/* {this.state.isMob &&
           <div style={{width: '35px'}}></div>
         } */}
-        <div className="wrap-header" style={{width: path === '/' ? '1070px' : '1130px'}}>
+        <div className="wrap-header" style={{width: (path === '/' || ~path.indexOf('channel')) ? '1070px' : '1130px'}}>
           <div className="wrap-loadingBar" style={{opacity: this.props.loadingBar}}>
             <LoadingBar style={{
               backgroundColor: '#2887D2',

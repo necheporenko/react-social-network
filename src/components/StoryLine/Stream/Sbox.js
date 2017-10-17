@@ -375,7 +375,6 @@ class Sbox extends PureComponent {
               style={{
                 width: '32px',
                 height: '32px',
-                border: '1px solid #dddddd',
                 borderRadius: '50%'
               }}
             />

@@ -228,7 +228,7 @@ export default function documentReducer(state = initialState, action) {
 export function createDocument(box_slug, user_id, title, file) {
   return {
     types: [CREATE_DOCUMENT, CREATE_DOCUMENT_SUCCESS, CREATE_DOCUMENT_FAIL],
-    promise: (client) => client.post('/documents', {data: {box_slug, user_id, title, file, is_encrypted: 0}})
+    promise: (client) => client.post('/documents', {data: {box_slug, user_id, title, content: file, is_encrypted: 0, hash: ''}})
   };
 }
 

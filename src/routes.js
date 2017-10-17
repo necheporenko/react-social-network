@@ -149,7 +149,7 @@ export default (store) => {
           <Route path="wallet" component={Wallet}/>
           <Route path="private" component={TokensPrivate}/>
           <Route path="desk" component={Box}/>
-          <Route path="/:userName/documents(/:box)" component={Box}/>
+          <Route path="/:userName/documents(/:desk)" component={Box}/>
         </Route>
 
         <Route path="photos" component={PhotosContainer}>

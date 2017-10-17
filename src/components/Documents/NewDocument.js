@@ -13,6 +13,7 @@ import './index.scss';
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
+  box: state.document.box,
 }), {
   createDocument
 })
@@ -56,7 +57,7 @@ export default class NewDocument extends Component {
         </html>`
     ;
 
-    this.props.createDocument('board', this.props.authorizedUser.id, this.state.title, file);
+    this.props.createDocument(this.props.box.key, this.props.authorizedUser.id, this.state.title, file);
   }
 
   render() {

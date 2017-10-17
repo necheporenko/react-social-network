@@ -1,6 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
+import {browserHistory} from 'react-router';
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {getUser} from '../../redux/modules/user';
 import {load as loadBoxes} from '../../redux/modules/document';
 import BoxesTree from './BoxesTree';
@@ -22,10 +24,10 @@ export default class DocumentsMenu extends Component {
     this.state = {
       isOpen: false,
     };
+    this._newDocumentClick = this._newDocumentClick.bind(this);
   }
 
   componentDidMount() {
-    console.log('DocumentsMenu');
     const {path} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
     this.props.getUser(findSlug)
@@ -34,6 +36,14 @@ export default class DocumentsMenu extends Component {
 
   openBoxes() {
     this.setState({isOpen: !this.state.isOpen});
+  }
+
+  _newDocumentClick() {
+    browserHistory.push(`/${this.props.authorizedUser.slug}/documents/document`);
+  }
+
+  tooltipRender(text) {
+    return <Tooltip id="tooltip">{text}</Tooltip>;
   }
 
   render() {
@@ -81,7 +91,7 @@ export default class DocumentsMenu extends Component {
             {/*<hr/>*/}
             <div className="wrap-boxes" style={{backgroundColor: findBoxes > 0 && '#e1e1e1'}}>
               <div className={isOpen ? ' arrow-boxes' : 'arrow-boxes-close'} onClick={() => this.openBoxes()}><i/></div>
-              <Link onlyActiveOnIndex={true} to={`/${slug}/documents/boxes`} activeClassName="active">
+              <Link onlyActiveOnIndex={true} to={`/${slug}/documents/desk`} activeClassName="active">
                 <li className="documents-mnu-boxes">Desk</li>
               </Link>
               {/* <div className="create-new-item">
@@ -90,8 +100,9 @@ export default class DocumentsMenu extends Component {
             </div>
 
             <div className="boxes-mnu" style={{display: isOpen ? 'block' : 'none'}}>
-              {boxes.length > 0 && boxes[0].desk.children.filter(box => ((box.key !== 'bin') && (box.key !== 'board'))).map(box => (
-                <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`} activeClassName="active">
+              {/*<Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`} activeClassName="active">*/}
+              {boxes.length > 0 && boxes[0].desk.children.map(box => (
+                <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
                   <li className="documents-mnu-box">{box.name}</li>
                 </Link>
               ))}
@@ -115,7 +126,7 @@ export default class DocumentsMenu extends Component {
 
             {/*<hr/>*/}
 
-            {/*{boxes.length > 0 && boxes[0].desk.children.filter(box => box.key === 'bin').map(box => (*/}
+            {/*{boxes.length > 0 && boxes[0].children.filter(box => box.key === 'bin').map(box => (*/}
             {/*<Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">*/}
             {/*<li className="documents-mnu-box-bin">{box.name}</li>*/}
             {/*</Link>*/}
@@ -146,6 +157,30 @@ export default class DocumentsMenu extends Component {
               <li className="documents-mnu-wallet">Wallet</li>
               <hr/>
             </Link>
+            }
+
+            {slug === authorizedUser.slug &&
+            <div className="add-new-item">
+              <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Upload document</Tooltip>}>
+                <div className="upload-document">
+                  <span className="upload-document-icon"></span>
+                </div>
+              </OverlayTrigger>
+              <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new document</Tooltip>}>
+                <div className="add-new-document" onClick={this._newDocumentClick}>
+                  <span
+                    className="add-new-document-icon"
+                  />
+                </div>
+              </OverlayTrigger>
+              <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new box</Tooltip>}>
+                <div className="add-new-box">
+                  <span
+                    className="add-new-box-icon"
+                    to={'#'}/>
+                </div>
+              </OverlayTrigger>
+            </div>
             }
 
           </ul>

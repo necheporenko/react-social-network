@@ -20,7 +20,7 @@ const BookCard = ({book, history, requestedUser, getBooks}) => {
   };
 
   return (
-    <Link to={`${location}/${key}`} className="book">
+    <Link to={`${location}/${key}`} className={counts && counts.sub_books > 0 ? 'book book-with-subbooks' : 'book'}>
 
       <div
         className="coverBook"
