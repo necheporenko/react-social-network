@@ -12,7 +12,8 @@ import {
   next as nextBookStories,
   // getBookSlug,
   upload as uploadBookCover,
-  uploadBookCoverBase64
+  uploadBookCoverBase64,
+  getBooks
 } from '../../redux/modules/book';
 import {showPopUp} from '../../redux/modules/form';
 import BooksTreeContainer from '../../containers/BooksTreeContainer';
@@ -77,6 +78,7 @@ const coverColors = [
   activePopUp: state.forms.activePopUp,
   visible: state.forms.visible,
   currentImage: state.forms.currentImage,
+  subBooksArr: state.book.subBooksArr,
 }), {
   getUser,
   loadBookTree,
@@ -85,6 +87,7 @@ const coverColors = [
   showPopUp,
   uploadBookCoverBase64,
   uploadBookCover,
+  getBooks,
 })
 
 export default class BookPage extends Component {
@@ -97,6 +100,7 @@ export default class BookPage extends Component {
       file: '',
       dropdownUserCover: false,
       currentUserCoverColor: '',
+      showSubbooks: false,
     };
     this.handleScroll = this.handleScroll.bind(this);
     this.handleSaveSettings = this.handleSaveSettings.bind(this);
@@ -106,6 +110,7 @@ export default class BookPage extends Component {
     this.handleCoverChange = this.handleCoverChange.bind(this);
     this.zeroTop = this.zeroTop.bind(this);
     this.cleanInputCover = this.cleanInputCover.bind(this);
+    this.showSubBooks = this.showSubBooks.bind(this);
   }
 
   componentDidMount() {
@@ -118,7 +123,8 @@ export default class BookPage extends Component {
     // this.clearState();
     this.props.getUser(findSlug)
       .then(this.props.loadBookTree(findSlug))
-      .then(this.props.showBookStories(bookSlug));
+      .then(this.props.showBookStories(bookSlug))
+      .then(this.props.getBooks(findSlug, bookSlug));
     // }
     // this.setState({
     //   settings: this.props.bookSettings
@@ -134,7 +140,8 @@ export default class BookPage extends Component {
       if (bookSlug && (bookSlug !== bookPage.slug)) {
         this.props.getUser(findSlug)
           .then(this.props.loadBookTree(findSlug))
-          .then(this.props.showBookStories(bookSlug));
+          .then(this.props.showBookStories(bookSlug))
+          .then(this.props.getBooks(findSlug, bookSlug));
       }
     }
   }
@@ -212,6 +219,11 @@ export default class BookPage extends Component {
     });
   }
 
+  showSubBooks() {
+    this.setState({showSubbooks: !this.state.showSubbooks});
+    console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+  }
+
   render() {
     console.log(this.state);
     const {showSmallNavigation} = this.state;
@@ -241,6 +253,64 @@ export default class BookPage extends Component {
     const {name, description, settings, cover, counts} = this.props.bookPage;
     const book_slug = this.props.bookPage.slug;
     const {slug, first_name, last_name, avatar32} = this.props.requestedUser;
+    const {subBooksArr} = this.props;
+    const {showSubbooks} = this.state;
+
+    const BookCard = ({book, history, requestedUser, getBooks}) => {
+      const {name, key, cover, children, counts} = book;
+
+      const onBookClick = (e) => {
+        e.preventDefault();
+      };
+
+      const showSubBooks = (e, slug, book_slug) => {
+        e.preventDefault();
+        getBooks(slug, book_slug);
+      };
+
+      return (
+        <Link to={`${location}/${key}`} className={counts && counts.sub_books > 0 ? 'book book-with-subbooks' : 'book'}>
+          <div
+            className="coverBook"
+            style={{
+              backgroundColor: cover && cover.color ? `#${cover.color}` : '#fff',
+              backgroundImage: cover && cover.picture_small ? `url(${cover.picture_small})` : null
+            }}
+          />
+
+          <div className="authorUser">
+            <img src={requestedUser.avatar48} alt=""/>
+          </div>
+
+          {/*<div onClick={onBookClick} className="book-edit">*/}
+          {/*<EditBook*/}
+          {/*book_name={name}*/}
+          {/*book_slug={key}*/}
+          {/*/>*/}
+          {/*</div>*/}
+
+          <div className="title-infoblocks-book">
+            <div className="book-name">{name}</div>
+            <div className="book-author">{`${requestedUser.first_name} ${requestedUser.last_name}`}</div>
+          </div>
+
+          <div className="book-info">
+            <ul>
+              <li><span>{counts ? counts.followers : 0}</span><i className="followers-icon-sm"/></li>
+              <li>·<span>{counts ? counts.stories : 0}</span><i className="stories-icon-sm"/></li>
+              <li>·<span>{counts ? counts.images : 0}</span><i className="photos-icon-sm"/></li>
+              <li className="subbooks-btn" onClick={(e) => showSubBooks(e, requestedUser.slug, key)}>
+                ·<span>{counts ? counts.sub_books : 0}</span><i className="subbooks-icon-sm"/></li>
+            </ul>
+            {/*<hr />*/}
+          </div>
+          <div className="btn-following btn-following-book">
+            <div>Following Book</div>
+            <span/>
+          </div>
+        </Link>
+      );
+    };
 
     // const radioAccessSettings = [
     //   {
@@ -304,10 +374,16 @@ export default class BookPage extends Component {
 
             <div className="book-counter">
               <ul>
-                <li><i className="infobook-icon-visibility"/> · <span style={{padding: '0 4px'}}>{counts.followers}</span><i className="followers-icon-sm"/>·</li>
-                <li><span >{counts.stories}</span><i className="stories-icon-sm"/>·</li>
-                <li><span>{counts.images}</span><i className="photos-icon-sm"/>·</li>
-                <li><span>{counts.sub_books}</span><i className="subbooks-icon-sm"/></li>
+                <li style={{paddingLeft: 0}}><i className="infobook-icon-visibility"/> · <span>{counts.followers}</span><i
+                  className="followers-icon-sm"/></li>
+                <li>·<span>{counts.stories}</span><i className="stories-icon-sm"/></li>
+                <li>·<span>{counts.images}</span><i className="photos-icon-sm"/></li>
+                <li
+                  className={counts && counts.sub_books > 0 ? 'book-counter-subbooks book-counter-with-subbooks' : 'book-counter-subbooks'}
+                  onClick={() => this.showSubBooks()}
+                >
+                  ·<span>{counts.sub_books}</span><i className="subbooks-icon-sm"/>
+                </li>
 
                 {/*<div className="followers">*/}
                 {/*<Link to={`/${slug}`} className="user">*/}
@@ -495,7 +571,7 @@ export default class BookPage extends Component {
               <div className="infobloks">
                 <div className={chooseScroll.wrapperInfoBlock}>
                   <div className="infobloks-book infobloks-book-others">
-                    <div className="title-infoblocks">
+                    <div className="title-infoblocks" onClick={this.showSubBooks}>
                       <span className="subbooks-icon"/>
                       <a> Subbooks <span>· 0</span></a>
                     </div>
@@ -503,10 +579,9 @@ export default class BookPage extends Component {
                       <ul>
                         {/*<li style={{marginTop: 0}}>0 subbooks</li>*/}
                         <div>
-                          <p>Book 1</p>
-                          <p>Book 1</p>
-                          <p>Book 1</p>
-                          <p>Book 1</p>
+                          {subBooksArr[0].children.length > 0 && subBooksArr[0].children.map(book => (
+                            <p key={book.key}>{book.name}</p>
+                          ))}
                         </div>
                       </ul>
                       {/*<hr/>*/}
@@ -588,14 +663,30 @@ export default class BookPage extends Component {
               </div>
 
 
-              <BookStream
-                authorizedUser={this.props.authorizedUser}
-                requestedUser={this.props.requestedUser}
-                book_slug={this.props.bookPage.slug}
-                bookStories={this.props.bookStories}
-                nextBookStories={this.props.nextBookStories}
-                showBookStories={this.props.showBookStories}
-              />
+              {showSubbooks
+                ?
+                <div className="bookpage-subbooks-card">
+                  {subBooksArr[0].children.length > 0 && subBooksArr[0].children.map(book => (
+                    <BookCard
+                      key={book.key}
+                      book={book}
+                      history={history}
+                      requestedUser={this.props.requestedUser}
+                      getBooks={this.props.getBooks}
+                    />
+                  ))}
+                </div>
+                :
+                <BookStream
+                  authorizedUser={this.props.authorizedUser}
+                  requestedUser={this.props.requestedUser}
+                  book_slug={this.props.bookPage.slug}
+                  bookStories={this.props.bookStories}
+                  nextBookStories={this.props.nextBookStories}
+                  showBookStories={this.props.showBookStories}
+                />
+              }
+
               <BooksTreeContainer
                 bookTreeArr={this.props.bookTreeArr}
                 booksTreeTop={chooseScroll.booksTree}
