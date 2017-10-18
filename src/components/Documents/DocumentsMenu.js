@@ -25,6 +25,7 @@ export default class DocumentsMenu extends Component {
       isOpen: false,
     };
     this._newDocumentClick = this._newDocumentClick.bind(this);
+    this.deskNameRender = this.deskNameRender.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +45,14 @@ export default class DocumentsMenu extends Component {
 
   tooltipRender(text) {
     return <Tooltip id="tooltip">{text}</Tooltip>;
+  }
+
+  deskNameRender() {
+    const {authorizedUser, requestedUser} = this.props;
+
+    const desk_name = authorizedUser.id === requestedUser.id ? 'My Desk' : 'Desk';
+
+    return <span>{desk_name}</span>;
   }
 
   render() {
@@ -92,7 +101,7 @@ export default class DocumentsMenu extends Component {
             <div className="wrap-boxes" style={{backgroundColor: findBoxes > 0 && '#e1e1e1'}}>
               <div className={isOpen ? ' arrow-boxes' : 'arrow-boxes-close'} onClick={() => this.openBoxes()}><i/></div>
               <Link onlyActiveOnIndex={true} to={`/${slug}/documents/desk`} activeClassName="active">
-                <li className="documents-mnu-boxes">Desk</li>
+                <li className="documents-mnu-boxes">{this.deskNameRender()}</li>
               </Link>
               {/* <div className="create-new-item">
                 <a href="#">+ Create new box</a>
@@ -102,12 +111,12 @@ export default class DocumentsMenu extends Component {
             <div className="boxes-mnu" style={{display: isOpen ? 'block' : 'none'}}>
               {/*<Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`} activeClassName="active">*/}
               {boxes.length > 0 && boxes[0].desk.children.map(box => (
-                <Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">
+                <Link key={box.id} to={`/${slug}/documents/${box.key}`} activeClassName="active">
                   <li className="documents-mnu-box">{box.name}</li>
                 </Link>
               ))}
               {boxes.length > 0 &&
-              <Link onlyActiveOnIndex={true} to={`/${slug}/documents/${boxes[0].bin.key}`} activeClassName="active">
+              <Link to={`/${slug}/documents/${boxes[0].bin.key}`} activeClassName="active">
                 <li className="documents-mnu-box-bin">{boxes[0].bin.name}</li>
               </Link>
               }
@@ -153,7 +162,7 @@ export default class DocumentsMenu extends Component {
             <hr/>
 
             {authorizedUser.id === id &&
-            <Link onlyActiveOnIndex={true} to={`/${slug}/documents/wallet`} activeClassName="active">
+            <Link to={`/${slug}/documents/wallet`} activeClassName="active">
               <li className="documents-mnu-wallet">Wallet</li>
               <hr/>
             </Link>
