@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react';
+import DocumentsMenu from '../components/Documents/DocumentsMenu';
 import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
 import {getUser} from '../redux/modules/user';
-// import Navigation from '../components/Navigation';
-// import SubHeader from '../components/StoryLine/SubHeader';
+import '../components/Documents/index.scss';
 
 @connect((state) => ({
   requestedUser: state.user.requestedUser,
@@ -40,7 +40,15 @@ export default class TokensContainer extends Component {
         <Helmet
           title={`${requestedUser.first_name} ${requestedUser.last_name} - Documents`}
         />
-        {React.cloneElement(this.props.children, {fixedBlocks})}
+        <div className="tokens contents">
+          <DocumentsMenu
+            fixedBlocks={fixedBlocks}
+          />
+          <div style={{
+            marginLeft: fixedBlocks ? 240 : null}}>
+            {this.props.children}
+          </div>
+        </div>
       </div>
     );
   }

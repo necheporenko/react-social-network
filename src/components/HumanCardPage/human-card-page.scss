@@ -1,6 +1,5 @@
 .human-card-page {
-  width: 1130px;
-  margin: 0 auto;
+  width: 890px;
 
   .upper-block {
     display: flex;
@@ -22,11 +21,11 @@
   }
 
   .validators-graph {
-    width: 1130px;
-    min-height: 800px;
+    width: 100%;
+    min-height: 600px;
     background-color: #fff;
-    margin-top: 20px;
     border-radius: 3px;
+    margin-top: 20px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   }
 }

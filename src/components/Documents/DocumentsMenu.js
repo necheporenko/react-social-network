@@ -60,7 +60,6 @@ export default class DocumentsMenu extends Component {
     const {boxes, path, fixedBlocks, authorizedUser} = this.props;
     const {slug, id} = this.props.requestedUser;
     const findBoxes = path.indexOf('/documents/boxes');
-    console.log(this.props);
 
     const linkToHumanCard = () => {
       const humanCards = boxes[0] ? boxes[0].human_card : null;
@@ -79,101 +78,97 @@ export default class DocumentsMenu extends Component {
         className="sidebar documents-nav"
         style={{
           position: fixedBlocks ? 'fixed' : null,
-          top: fixedBlocks ? 118 : null
+          top: fixedBlocks ? 116 : null
         }}
       >
-        <div className={this.props.sidebar}>
-          <ul>
+        <ul>
+          {/*{boxes.length > 0 && boxes[0].children.filter(box => box.key === 'board').map(box => (*/}
+          {/*<Link key={box.id} onlyActiveOnIndex={false} to={`/${slug}/documents/${box.key}`} activeClassName="active"*/}
+          {/*className={path.slice(-9) === 'documents' && 'active'}>*/}
+          {/*<li className="documents-mnu-board">{box.name}</li>*/}
+          {/*</Link>*/}
+          {/*))}*/}
+          {/*{boxes.length > 0 &&*/}
+          {/*<Link to={`/${slug}/documents/${boxes[0].board.key}`} activeClassName="active" className={path.slice(-9) === 'documents' && 'active'}>*/}
+          {/*<li className="documents-mnu-board">{boxes[0].board.name}</li>*/}
+          {/*</Link>*/}
+          {/*}*/}
 
-            {/*{boxes.length > 0 && boxes[0].children.filter(box => box.key === 'board').map(box => (*/}
-            {/*<Link key={box.id} onlyActiveOnIndex={false} to={`/${slug}/documents/${box.key}`} activeClassName="active"*/}
-            {/*className={path.slice(-9) === 'documents' && 'active'}>*/}
-            {/*<li className="documents-mnu-board">{box.name}</li>*/}
-            {/*</Link>*/}
-            {/*))}*/}
-            {/*{boxes.length > 0 &&*/}
-            {/*<Link to={`/${slug}/documents/${boxes[0].board.key}`} activeClassName="active" className={path.slice(-9) === 'documents' && 'active'}>*/}
-            {/*<li className="documents-mnu-board">{boxes[0].board.name}</li>*/}
-            {/*</Link>*/}
-            {/*}*/}
+          {/*<hr/>*/}
+          <div className="wrap-boxes" style={{backgroundColor: findBoxes > 0 && '#e1e1e1'}}>
+            <div className={isOpen ? ' arrow-boxes' : 'arrow-boxes-close'} onClick={() => this.openBoxes()}><i/></div>
+            <Link isActive to={`/${slug}/documents/desk`} activeClassName="active">
+              <li className="documents-mnu-boxes">{this.deskNameRender()}</li>
+            </Link>
+            {/* <div className="create-new-item">
+              <a href="#">+ Create new box</a>
+            </div> */}
+          </div>
 
-            {/*<hr/>*/}
-            <div className="wrap-boxes" style={{backgroundColor: findBoxes > 0 && '#e1e1e1'}}>
-              <div className={isOpen ? ' arrow-boxes' : 'arrow-boxes-close'} onClick={() => this.openBoxes()}><i/></div>
-              <Link isActive to={`/${slug}/documents/desk`} activeClassName="active">
-                <li className="documents-mnu-boxes">{this.deskNameRender()}</li>
+          <div className="boxes-mnu" style={{display: isOpen ? 'block' : 'none'}}>
+            {/*<Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`} activeClassName="active">*/}
+            {boxes.length > 0 && boxes[0].desk.children.map(box => (
+              <Link key={box.id} to={`/${slug}/documents/${box.key}`} activeClassName="active">
+                <li className="documents-mnu-box">{box.name}</li>
               </Link>
-              {/* <div className="create-new-item">
-                <a href="#">+ Create new box</a>
-              </div> */}
-            </div>
-
-            <div className="boxes-mnu" style={{display: isOpen ? 'block' : 'none'}}>
-              {/*<Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.id}-${box.key}`} activeClassName="active">*/}
-              {boxes.length > 0 && boxes[0].desk.children.map(box => (
-                <Link key={box.id} to={`/${slug}/documents/${box.key}`} activeClassName="active">
-                  <li className="documents-mnu-box">{box.name}</li>
-                </Link>
-              ))}
-              {boxes.length > 0 &&
-              <Link to={`/${slug}/documents/${boxes[0].bin.key}`} activeClassName="active">
-                <li className="documents-mnu-box-bin">{boxes[0].bin.name}</li>
-              </Link>
-              }
-            </div>
-
-            {/*<Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">*/}
-            {/*<li className="documents-mnu-box-private">Signed Documents</li>*/}
-            {/*</Link>*/}
-
-            {/*<div className="doc-buttons">*/}
-            {/*<button>New Box</button>*/}
-            {/*<Link to={`/${slug}/documents/document`}>*/}
-            {/*<button>New document</button>*/}
-            {/*</Link>*/}
-            {/*</div>*/}
-
-            {/*<hr/>*/}
-
-            {/*{boxes.length > 0 && boxes[0].children.filter(box => box.key === 'bin').map(box => (*/}
-            {/*<Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">*/}
-            {/*<li className="documents-mnu-box-bin">{box.name}</li>*/}
-            {/*</Link>*/}
-            {/*))}*/}
-
-
-            <hr/>
-
-            {linkToHumanCard()
-              ? <Link
-                onlyActiveOnIndex={true}
-                to={`/${slug}/documents/human-card/${linkToHumanCard()}`}
-                activeClassName="active">
-                <li className="documents-mnu-hc">Human Card Page</li>
-              </Link>
-              : <Link
-                onlyActiveOnIndex={true}
-                to={`/${slug}/documents/human-card`}
-                activeClassName="active">
-                <li className="documents-mnu-hc">Human Card Page</li>
-              </Link>
-            }
-
-            <hr/>
-
-            {authorizedUser.id === id &&
-            <Link to={`/${slug}/documents/wallet`} activeClassName="active">
-              <li className="documents-mnu-wallet">Wallet</li>
-              <hr/>
+            ))}
+            {boxes.length > 0 &&
+            <Link to={`/${slug}/documents/${boxes[0].bin.key}`} activeClassName="active">
+              <li className="documents-mnu-box-bin">{boxes[0].bin.name}</li>
             </Link>
             }
-          </ul>
+          </div>
+
+          {/*<Link onlyActiveOnIndex={true} to={`/${slug}/documents/inbox`} activeClassName="active">*/}
+          {/*<li className="documents-mnu-box-private">Signed Documents</li>*/}
+          {/*</Link>*/}
+
+          {/*<div className="doc-buttons">*/}
+          {/*<button>New Box</button>*/}
+          {/*<Link to={`/${slug}/documents/document`}>*/}
+          {/*<button>New document</button>*/}
+          {/*</Link>*/}
+          {/*</div>*/}
+
+          {/*<hr/>*/}
+
+          {/*{boxes.length > 0 && boxes[0].children.filter(box => box.key === 'bin').map(box => (*/}
+          {/*<Link key={box.id} onlyActiveOnIndex={true} to={`/${slug}/documents/${box.key}`} activeClassName="active">*/}
+          {/*<li className="documents-mnu-box-bin">{box.name}</li>*/}
+          {/*</Link>*/}
+          {/*))}*/}
 
 
-          {/*<BoxesTree*/}
-          {/*boxes={this.props.boxes}*/}
-          {/*/>*/}
-        </div>
+          <hr/>
+
+          {linkToHumanCard()
+            ? <Link
+              onlyActiveOnIndex={true}
+              to={`/${slug}/documents/human-card/${linkToHumanCard()}`}
+              activeClassName="active">
+              <li className="documents-mnu-hc">Human Card Page</li>
+            </Link>
+            : <Link
+              onlyActiveOnIndex={true}
+              to={`/${slug}/documents/human-card`}
+              activeClassName="active">
+              <li className="documents-mnu-hc">Human Card Page</li>
+            </Link>
+          }
+
+          <hr/>
+
+          {authorizedUser.id === id &&
+          <Link to={`/${slug}/documents/wallet`} activeClassName="active">
+            <li className="documents-mnu-wallet">Wallet</li>
+          </Link>
+          }
+        </ul>
+
+
+        {/*<BoxesTree*/}
+        {/*boxes={this.props.boxes}*/}
+        {/*/>*/}
       </div>
     );
   }

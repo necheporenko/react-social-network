@@ -9,35 +9,29 @@ class TokensPublic extends Component {
   render() {
     const {fixedBlocks} = this.props;
     return (
-      <div className="tokens contents">
-        <DocumentsMenu
-          fixedBlocks={fixedBlocks}
-        />
+      <div
+        className="common-lists tokens-lists"
+        style={{marginLeft: fixedBlocks ? 240 : null}}
+      >
+        {/*<AddToken />*/}
+        <h1>Wallet</h1>
+        <br/>
 
-        <div
-          className="common-lists tokens-lists"
-          style={{marginLeft: fixedBlocks ? 240 : null}}
-        >
-          {/*<AddToken />*/}
-          <h1>Wallet</h1>
-          <br/>
-
-          {/*{doc.map((document, index) => (*/}
-          {/*<div key={index} className="token">*/}
-          {/*<a href="">*/}
-          {/*<div>*/}
-          {/*<i className="doc-icon"/>*/}
-          {/*<p>Document 1</p>*/}
-          {/*<div className="doc-sign">*/}
-          {/*<i/>*/}
-          {/*</div>*/}
-          {/*</div>*/}
-          {/*</a>*/}
-          {/*</div>*/}
-          {/*))}*/}
+        {/*{doc.map((document, index) => (*/}
+        {/*<div key={index} className="token">*/}
+        {/*<a href="">*/}
+        {/*<div>*/}
+        {/*<i className="doc-icon"/>*/}
+        {/*<p>Document 1</p>*/}
+        {/*<div className="doc-sign">*/}
+        {/*<i/>*/}
+        {/*</div>*/}
+        {/*</div>*/}
+        {/*</a>*/}
+        {/*</div>*/}
+        {/*))}*/}
 
 
-        </div>
       </div>
     );
   }

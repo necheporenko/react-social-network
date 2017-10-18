@@ -19,7 +19,6 @@ import PeopleSuggested from 'components/People/PeopleSuggested';
 import DocumentsContainer from 'containers/DocumentsContainer';
 import Box from 'components/Documents';
 import Boxes from 'components/Documents/Boxes';
-import TokensPrivate from 'components/Documents/TokensPrivate';
 import Wallet from 'components/Documents/Wallet';
 import Inbox from 'components/Documents/Inbox';
 import NewDocument from 'components/Documents/NewDocument';
@@ -128,9 +127,8 @@ export default (store) => {
       <Route path="/story/:id" component={Story}/>
 
       <Route path="/:userName/books/:bookName" component={BookPage}/>
-      <Route path="/:userName/documents/human-card(/:humanCard)" component={HumanCardPage}/>
       <Route path="/:userName/documents/document" component={NewDocument}/>
-      <Route path="/:userName/documents/:box/:document" component={NewDocument}/>
+      {/* <Route path="/:userName/documents/:box/:document" component={NewDocument}/> */}
 
       <Route path="/:userName" component={UserContainer}>
         <IndexRoute component={StoryLineContainer}/>
@@ -145,11 +143,10 @@ export default (store) => {
 
         <Redirect from="documents" to="/:userName/documents/desk"/>
         <Route path="documents" component={DocumentsContainer}>
-          <Route path="desk" component={Box}/>
           <Route path="inbox" component={Inbox} onEnter={requireLogin}/>
           <Route path="wallet" component={Wallet}/>
-          <Route path="private" component={TokensPrivate}/>
           <Route path="desk" component={Box}/>
+          <Route path="human-card(/:humanCard)" component={HumanCardPage}/>
           <Route path="/:userName/documents(/:desk)" component={Box}/>
         </Route>
 

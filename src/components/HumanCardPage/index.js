@@ -61,41 +61,6 @@ export default class HumanCardPage extends Component {
     }
   }
 
-  navigationRender() {
-    const {showSmallNavigation} = this.state;
-    const {slug, avatar32, first_name, last_name, id} = this.props.requestedUser;
-
-    if (!id) {
-      return null;
-    }
-
-    const scrollTo = () => {
-      window.scrollTo(0, 0);
-    };
-
-    return (
-      <div className="human-card-navigation-wrapper" style={{
-        position: showSmallNavigation ? 'fixed' : null,
-        top: showSmallNavigation ? 52 : null,
-        zIndex: showSmallNavigation ? 11 : null
-      }}>
-        <div className="human-card-navigation-container">
-          <div className="user-info" style={{visibility: showSmallNavigation ? 'visible' : 'hidden'}}>
-            <a href={`/${slug}`}>
-              <img src={avatar32} alt={`${first_name} ${last_name}`}/>
-              <span>{first_name} {last_name}</span>
-            </a>
-          </div>
-          <div className="human-page-breadcrumb">
-            <Link to={`/${slug}/documents`}>Documents</Link>
-            <span className="chevron-right"/>
-            <span className="scroll-to" onClick={scrollTo}>Human Card Page</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   linkedDigitalPropertyRender() {
     return (
       <div className="linked-property">
@@ -141,26 +106,18 @@ export default class HumanCardPage extends Component {
     const {showSmallNavigation} = this.state;
     
     return (
-      <div>
-        <SubHeader
-          requestedUser={requestedUser}
-        />
-        {this.navigationRender()}
-        <div className="human-card-page" style={{
-          marginTop: showSmallNavigation ? 70 : 20
-        }}>
-          <div className="upper-block">
-            <HumanCard
-              humanCard={humanCard}
-              draftHumanCard={draftHumanCard}
-              requestedUser={requestedUser}
-              authorizedUser={authorizedUser}
-            />
-            {this.linkedDigitalPropertyRender()}
-            {this.validatorsRender()}
-          </div>
-          {this.validatorsGraphRender()}
+      <div className="human-card-page">
+        <div className="upper-block">
+          <HumanCard
+            humanCard={humanCard}
+            draftHumanCard={draftHumanCard}
+            requestedUser={requestedUser}
+            authorizedUser={authorizedUser}
+          />
+          {this.linkedDigitalPropertyRender()}
+          {this.validatorsRender()}
         </div>
+        {this.validatorsGraphRender()}
       </div>
     );
   }
