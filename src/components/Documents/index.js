@@ -24,6 +24,7 @@ export default class Box extends Component {
 
     this._newDocumentClick = this._newDocumentClick.bind(this);
     this.addIconsRender = this.addIconsRender.bind(this);
+    this.boxesRender = this.boxesRender.bind(this);
   }
 
   componentDidMount() {
@@ -81,6 +82,23 @@ export default class Box extends Component {
     );
   }
 
+  boxesRender() {
+    const {box, authorizedUser, requestedUser} = this.props;
+    let availableBoxes = Object.assign({}, box);
+
+    if (requestedUser.slug !== authorizedUser.slug) {
+      availableBoxes = Object.assign(availableBoxes, {
+        children: box.children.filter(box => box.key !== 'backup-box-for-signed-documents')
+      });
+    }
+
+    return availableBoxes.children.map(box => (
+      <Link key={box.id} to={`/${requestedUser.slug}/documents/${box.key}`} className="box-card">
+        <li className="documents-mnu-box">{box.name}</li>
+      </Link>
+    ))
+  }
+
   render() {
     const {box, fixedBlocks, authorizedUser, boxes} = this.props;
     console.log(this.props);
@@ -99,11 +117,7 @@ export default class Box extends Component {
             </div>
           </div>
           <div className="wrapper-box-card">
-            {box.children.map(box => (
-              <Link key={box.id} to={`/${slug}/documents/${box.key}`} className="box-card">
-                <li className="documents-mnu-box">{box.name}</li>
-              </Link>
-            ))}
+            {this.boxesRender()}
           </div>
         </div>
         }
