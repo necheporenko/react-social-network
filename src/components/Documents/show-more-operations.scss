@@ -1,5 +1,5 @@
 .document-dropdown-menu {
-  width: 300px;
+  width: 315px;
   border: none;
   top: 28px;
   left: -116px;
@@ -11,15 +11,86 @@
   padding: 0;
   
   .document-dropdown-menu-container {
-    padding: 6px 0;
+    padding: 15px 0;
+
+    hr {
+      margin: 5px 0;
+    }
 
     div {
-      padding: 5px 0 5px 15px;
+      padding: 5px 26px;
       height: 20px;
+      display: flex;
+      align-items: center;
+
+      span {
+        margin: 0;
+        font-weight: normal;
+        color: #000;
+        display: inline-block;
+      }
+      
+      span[class] {
+        margin-right: 20px;
+      }
+
+      .open-icon {
+        background: url(../img/Icons/document-item/open.svg) no-repeat;
+        height: 18px;
+        width: 18px;
+      }
+
+      .share-icon {
+        background: url(../img/Icons/document-item/share.svg) no-repeat;
+        height: 13px;
+        width: 18px;
+      }
+
+      .move-to-icon {
+        background: url(../img/Icons/document-item/move-to.svg) no-repeat;
+        height: 14px;
+        width: 18px;
+      }
+
+      .make-copy-icon {
+        background: url(../img/Icons/document-item/copy.svg) no-repeat;
+        height: 18px;
+        width: 18px;
+      }
+
+      .rename-icon {
+        background: url(../img/Icons/document-item/rename.svg) no-repeat;
+        height: 18px;
+        width: 18px;
+      }
+
+      .download-icon {
+        background: url(../img/Icons/document-item/download.svg) no-repeat;
+        height: 18px;
+        width: 18px;
+      }
+
+      .verify-icon {
+        background: url(../img/Icons/document-item/verify.svg) no-repeat;
+        height: 18px;
+        width: 18px;
+      }
+
+      .sign-icon {
+        background: url(../img/Icons/document-item/sign.svg) no-repeat;
+        height: 18px;
+        width: 18px;
+      }
+
+      .delete-icon {
+        background: url(../img/Icons/document-item/delete.svg) no-repeat;
+        height: 18px;
+        width: 18px;
+      }
 
       &:hover {
         cursor: pointer;
-        background-color: #757575;
+        background-color: #dfdfdf;
       }
     }
   }
