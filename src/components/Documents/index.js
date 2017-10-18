@@ -23,6 +23,7 @@ export default class Box extends Component {
     super();
 
     this._newDocumentClick = this._newDocumentClick.bind(this);
+    this.addIconsRender = this.addIconsRender.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +48,37 @@ export default class Box extends Component {
 
   tooltipRender(text) {
     return <Tooltip id="tooltip">{text}</Tooltip>;
+  }
+
+  addIconsRender() {
+    const {requestedUser, authorizedUser} = this.props;
+
+    if (requestedUser.slug !== authorizedUser.slug) {
+      return null;
+    }
+    return (
+      <div className="add-new-item">
+        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Upload document</Tooltip>}>
+          <div className="upload-document">
+            <span className="upload-document-icon"></span>
+          </div>
+        </OverlayTrigger>
+        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new document</Tooltip>}>
+          <div className="add-new-document" onClick={this._newDocumentClick}>
+            <span
+              className="add-new-document-icon"
+            />
+          </div>
+        </OverlayTrigger>
+        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new box</Tooltip>}>
+          <div className="add-new-box">
+            <span
+              className="add-new-box-icon"
+              to={'#'}/>
+          </div>
+        </OverlayTrigger>
+      </div>
+    );
   }
 
   render() {
@@ -90,55 +122,58 @@ export default class Box extends Component {
           {/*</div>*/}
           {/*}*/}
           <div className="common-lists tokens-lists">
-            <div>
-              {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
-              {/*<div style={{background: '#fff', padding: '5px'}}>{box.name}</div>*/}
-              {box.id && box.children.length > 0 &&
-              <div className="wrapper-boxes">
-                <span>Boxes</span>
-                <div className="wrapper-box-card">
-                  {box.children.map(box => (
-                    <Link key={box.id} to={`/${slug}/documents/${box.key}`} className="box-card">
-                      <li className="documents-mnu-box">{box.name}</li>
-                    </Link>
-                  ))}
+            {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
+            {/*<div style={{background: '#fff', padding: '5px'}}>{box.name}</div>*/}
+            {box.id && box.children.length > 0 &&
+            <div className="wrapper-boxes">
+              <div className="boxes-header">
+                <h1>Boxes</h1>
+                <div className="add-new-items-container">
+                  {this.addIconsRender()}
                 </div>
               </div>
-              }
-
-              {slug === authorizedUser.slug && box.documents &&
-              <div className="wrapper-doc">
-                <span>Documents</span>
-                <div className="wrapper-doc-card">
-                  {box.documents.map(document => (
-                    <DocumentItem
-                      key={document.id}
-                      document={document}
-                      boxKey={box.key}
-                    />
-                  ))}
-                </div>
+              <div className="wrapper-box-card">
+                {box.children.map(box => (
+                  <Link key={box.id} to={`/${slug}/documents/${box.key}`} className="box-card">
+                    <li className="documents-mnu-box">{box.name}</li>
+                  </Link>
+                ))}
               </div>
-              }
-
-              {/*{doc.map((document, index) => (*/}
-              {/*<div key={index} className="document">*/}
-              {/*<a href="">*/}
-              {/*<div>*/}
-              {/*<i className="doc-icon"/>*/}
-              {/*/!*<div className="doc-sign">*!/*/}
-              {/*/!*<i/>*!/*/}
-              {/*/!*</div>*!/*/}
-              {/*<p>Document 1</p>*/}
-              {/*</div>*/}
-              {/*</a>*/}
-              {/*</div>*/}
-              {/*))}*/}
-
-              {/*<AddToken*/}
-              {/*authorizedUser={this.props.authorizedUser}*/}
-              {/*/>*/}
             </div>
+            }
+
+            {slug === authorizedUser.slug && box.documents &&
+            <div className="wrapper-doc">
+              <h1>Documents</h1>
+              <div className="wrapper-doc-card">
+                {box.documents.map(document => (
+                  <DocumentItem
+                    key={document.id}
+                    document={document}
+                    boxKey={box.key}
+                  />
+                ))}
+              </div>
+            </div>
+            }
+
+            {/*{doc.map((document, index) => (*/}
+            {/*<div key={index} className="document">*/}
+            {/*<a href="">*/}
+            {/*<div>*/}
+            {/*<i className="doc-icon"/>*/}
+            {/*/!*<div className="doc-sign">*!/*/}
+            {/*/!*<i/>*!/*/}
+            {/*/!*</div>*!/*/}
+            {/*<p>Document 1</p>*/}
+            {/*</div>*/}
+            {/*</a>*/}
+            {/*</div>*/}
+            {/*))}*/}
+
+            {/*<AddToken*/}
+            {/*authorizedUser={this.props.authorizedUser}*/}
+            {/*/>*/}
           </div>
         </div>
       </div>
