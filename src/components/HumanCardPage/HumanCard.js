@@ -36,9 +36,7 @@ export default class HumanCard extends Component {
     this.saveDraft = this.saveDraft.bind(this);
     this.requestHumanCard = this.requestHumanCard.bind(this);
     this.copyAddress = this.copyAddress.bind(this);
-    this.CopyToClipboard = this.CopyToClipboard.bind(this);
     this.fnHumanCard = this.fnHumanCard.bind(this);
-    this.onHoverHumanCard = this.onHoverHumanCard.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -163,57 +161,7 @@ export default class HumanCard extends Component {
   //     };
   //     xhr.send();
   }
-
-  CopyToClipboard() {
-    const div = document.querySelector('.human-card');
-
-    if (div) {
-      function w(address, name) { 
-        const getAddress = div.getElementsByTagName('p'); 
-        const getName = div.getElementsByTagName('h2'); 
-        getAddress[0].addEventListener('click', address); 
-        getName[0].addEventListener('click', name); 
-      } 
-      setTimeout(() => w(this.copyAddress, this.copyName), 1000); 
-    }
-  }
   
-  onHoverHumanCard(e) {
-    const human_card = document.querySelector('.human-card');
-
-    if (human_card && this.props.humanCard) {
-      const p3 = human_card.querySelector('p:nth-child(3)');
-      const h2 = human_card.querySelector('h2');
-      const hrs = human_card.querySelectorAll('hr');
-      const hr1 = hrs[0];
-      const hr2 = hrs[1];
-
-      if (e.target === h2) {
-        hr2.style.borderTopColor = borderColorDark;
-      } else if (e.target === p3) {
-        hr1.style.borderTopColor = borderColorDark;
-      } else {
-        hr1.style.borderTopColor = borderColorLight;
-        hr2.style.borderTopColor = borderColorLight;
-      }
-    } else {
-      const inputs = human_card.querySelectorAll('input');
-      const item1 = inputs[0];
-      const item2 = inputs[1];
-      const item1Style = getComputedStyle(item1);
-      const item2Style = getComputedStyle(item2);
-
-      if (item1 && item2 && (e.target === item1)) {
-        item1.style.borderBottomColor = borderColorDark;
-      } else if (item1 && item2 && e.target === item2) {
-        item2.style.borderBottomColor = borderColorDark;
-      } else {
-        item1.style.borderBottomColor = borderColorLight;
-        item2.style.borderBottomColor = borderColorLight;
-      }
-    }
-  }
-
   fnHumanCard(e) {
     const {slug} = this.props.requestedUser;
     const div = document.querySelector('.human-card');
@@ -264,8 +212,6 @@ export default class HumanCard extends Component {
     return (
       <div className="wrapper-human-card">
         <div
-          onMouseOut={this.onHoverOutHumanCard} 
-          onMouseMove={this.onHoverHumanCard}
           className="human-card human-card-preview"
           onClick={this.fnHumanCard}>
           {humanCard && humanCard.id
@@ -273,7 +219,6 @@ export default class HumanCard extends Component {
               {/*<Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">*/}
               {this.requestHumanCard(humanCard.url)}
               <ReactMarkdown source={humanCard.markdown}/>
-              {this.CopyToClipboard()}
               {/*</Link>*/}
             </div>
             : <div className="draft-human-card">
