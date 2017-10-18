@@ -1,5 +1,5 @@
 import React from 'react';
-import {IndexRoute, Route, IndexRedirect} from 'react-router';
+import {IndexRoute, Route, IndexRedirect, Redirect} from 'react-router';
 import {isLoaded as isAuthLoaded, load as loadAuth} from 'redux/modules/user';
 import App from 'containers/App/App';
 import IndexContainer from 'containers/IndexContainer';
@@ -143,8 +143,9 @@ export default (store) => {
           <Route path="suggested" component={PeopleSuggested} onEnter={requireLogin}/>
         </Route>
 
+        <Redirect from="documents" to="/:userName/documents/desk"/>
         <Route path="documents" component={DocumentsContainer}>
-          <IndexRoute component={Box}/>
+          <Route path="desk" component={Box}/>
           <Route path="inbox" component={Inbox} onEnter={requireLogin}/>
           <Route path="wallet" component={Wallet}/>
           <Route path="private" component={TokensPrivate}/>

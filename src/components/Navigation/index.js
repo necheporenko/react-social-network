@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
+import {Link, IndexLink} from 'react-router';
 import NavigationUserInfo from './NavigationUserInfo';
 import {followRequestedUser, unfollowRequestedUser} from '../../redux/modules/user';
 import './index.scss';
@@ -60,28 +60,28 @@ export default class Navigation extends Component {
             </Link>
             <Link
               to={`/${slug}/books`}
-              onlyActiveOnIndex={true}
+              isActive
               activeClassName="active"
             >
               Books
             </Link>
             <Link
               to={`/${slug}/people`}
-              onlyActiveOnIndex={true}
+              isActive
               activeClassName="active"
             >
               People
             </Link>
             <Link
               to={`/${slug}/photos`}
-              onlyActiveOnIndex={true}
+              isActive
               activeClassName="active"
             >
               Photos
             </Link>
             <Link
               to={`/${slug}/documents`}
-              onlyActiveOnIndex={true}
+              isActive
               activeClassName="active"
             >
               Documents

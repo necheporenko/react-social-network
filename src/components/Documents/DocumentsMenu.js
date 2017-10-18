@@ -100,7 +100,7 @@ export default class DocumentsMenu extends Component {
             {/*<hr/>*/}
             <div className="wrap-boxes" style={{backgroundColor: findBoxes > 0 && '#e1e1e1'}}>
               <div className={isOpen ? ' arrow-boxes' : 'arrow-boxes-close'} onClick={() => this.openBoxes()}><i/></div>
-              <Link onlyActiveOnIndex={true} to={`/${slug}/documents/desk`} activeClassName="active">
+              <Link isActive to={`/${slug}/documents/desk`} activeClassName="active">
                 <li className="documents-mnu-boxes">{this.deskNameRender()}</li>
               </Link>
               {/* <div className="create-new-item">
