@@ -45,7 +45,6 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
     human_card,
     draft_human_card
   } = requestedUserProfile;
-  const {slug} = requestedUser;
 
   const socialNetwork = () => {
     if (facebook || twitter || linkedin || skype) {
@@ -150,7 +149,7 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
             authorizedUser={authorizedUser}
           />
           <div className="buttons-container">
-            {human_card &&
+            {human_card && authorizedUser.id !== requestedUser.id &&
               <div className="validate-button">
                 <button className="btn-sign btn-brand">Validate</button>
               </div>
@@ -160,15 +159,16 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
                 ? <Link
                   onMouseMove={onHoverLinkHumanCard}
                   onMouseOut={onHoverOutHumanCard}
-                  to={`/${slug}/documents/human-card/${linkToHumanCard()}`}>Review Proofs</Link>
+                  to={`/${requestedUser.slug}/documents/human-card/${linkToHumanCard()}`}>Review Proofs</Link>
                 : <Link
                   onMouseMove={onHoverLinkHumanCard}
                   onMouseOut={onHoverOutHumanCard}
-                  to={`/${slug}/documents/human-card`}>Review Proofs</Link>
+                  to={`/${requestedUser.slug}/documents/human-card`}>Review Proofs</Link>
               }
             </div>
           </div>
         </div>
+        <div style={{height: 1}}/>
         <hr className="below-human-card"/>
       </div>
       :
