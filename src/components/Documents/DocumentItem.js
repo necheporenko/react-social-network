@@ -94,7 +94,6 @@ export default class DocumentItem extends Component {
   }
 
   render() {
-    console.log('render');
     const {document, boxKey} = this.props;
 
     return (
