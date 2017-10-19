@@ -91,7 +91,7 @@ const coverColors = [
   getBooks,
 })
 
-export default class BookPage extends Component {
+export default class SubBooks extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -702,7 +702,7 @@ export default class BookPage extends Component {
   }
 }
 
-BookPage.propTypes = {
+SubBooks.propTypes = {
   authorizedUser: PropTypes.object,
   requestedUser: PropTypes.object,
   bookTreeArr: PropTypes.array,

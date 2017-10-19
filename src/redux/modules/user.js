@@ -204,7 +204,7 @@ export default function signReducer(state = initialState, action) {
         requestedUserProfile: state.requestedUser.slug !== action.slug ? {} : state.requestedUserProfile,
       };
     case GET_USER_PROFILE_SUCCESS:
-      let human_cardMarkDown = null; 
+      let human_cardMarkDown = null;
       if (action.result.data.human_card) {
         const human_card = action.result.data.human_card;
         const xhr = new XMLHttpRequest();
@@ -467,7 +467,7 @@ export function uploadUserCoverBase64(userCoverBase64) {
   };
 }
 
-export function uploadAvatar(picture, name) {
+export function uploadAvatar(picture, name, original) {
   const formData = new FormData();
   formData.append('file', dataURItoBlob(picture), name);
   return {

@@ -44,6 +44,9 @@ const CLEAR_STORIES = 'CLEAR_STORIES';
 const UPLOAD_FILE = 'UPLOAD_FILE';
 const UPLOAD_FILE_SUCCESS = 'UPLOAD_FILE_SUCCESS';
 const UPLOAD_FILE_FAIL = 'UPLOAD_FILE_FAIL';
+const SHOW_COMMENT = 'SHOW_COMMENT';
+const SHOW_COMMENT_SUCCESS = 'SHOW_COMMENT_SUCCESS';
+const SHOW_COMMENT_FAIL = 'SHOW_COMMENT_FAIL';
 
 const initialState = {
   isAuthenticated: false,
@@ -70,7 +73,14 @@ export default function storyReducer(state = initialState, action) {
       });
 
       const dataStories = action.result.data;
-      dataStories.map(story => story.paginationComment = 2);
+      dataStories.map(story => {
+        story.paginationComment = 1;
+        story.comments.map(comment => {
+          if (comment.children.length === 1) {
+            comment.children[0].hidden = true;
+          }
+        });
+      });
 
       return {
         ...state,
@@ -321,11 +331,8 @@ export default function storyReducer(state = initialState, action) {
         if (story.id === action.entity_id) {
           return {
             ...story,
-            comments: [...action.result.data, ...story.comments],
-            paginationComment: story.paginationComment + 1,
-            counts: {
-              comments: story.counts.comments - 4
-            },
+            comments: story.paginationComment === 1 ? action.result.data : [...action.result.data, ...story.comments],
+            paginationComment: story.paginationComment + 1
           };
         }
         return {
@@ -391,6 +398,45 @@ export default function storyReducer(state = initialState, action) {
         storiesArr: [],
         loaded
       };
+
+    case SHOW_COMMENT: {
+      return {
+        ...state,
+      };
+    }
+    case SHOW_COMMENT_SUCCESS: {
+      const viewReplies = state.storiesArr.map(story => {
+        if (story.id === action.result.data.entity_id) {
+          const modifyComments = story.comments.map(comment => {
+            if (comment.id === action.result.data.parent_id) {
+              return {
+                ...comment,
+                children: action.result.data.parent.children,
+              };
+            }
+            return {
+              ...comment
+            };
+          });
+          return {
+            ...story,
+            comments: modifyComments
+          };
+        }
+        return {
+          ...story
+        };
+      });
+      return {
+        ...state,
+        storiesArr: viewReplies
+      };
+    }
+    case SHOW_COMMENT_FAIL: {
+      return {
+        ...state,
+      };
+    }
 
     default:
       return state;
@@ -567,3 +613,9 @@ export function deleteComment(id) {
   };
 }
 
+export function showReplies(id) {
+  return {
+    types: [SHOW_COMMENT, SHOW_COMMENT_SUCCESS, SHOW_COMMENT_FAIL],
+    promise: (client) => client.get(`/comments/${id}`)
+  };
+}

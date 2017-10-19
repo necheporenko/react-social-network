@@ -36,7 +36,7 @@ export default class ChangeCoverImage extends Component {
   }
 
   handleSave() {
-    const newImage = this.editor.getImage().toDataURL('image/jpeg', 0.92);
+    const newImage = this.editor.getImage().toDataURL('image/jpeg', 1.0);
     this.setState({picture: newImage});
     this.props.uploadUserCoverBase64(newImage);
     this.props.uploadUserCover(newImage, '', this.props.currentImage.name)

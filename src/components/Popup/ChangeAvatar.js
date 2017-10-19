@@ -42,7 +42,7 @@ export default class ChangeAvatar extends Component {
     const newImage = this.editor.getImage().toDataURL('image/jpeg', 1.0);
     this.setState({picture: newImage});
     this.props.uploadAvatarBase64(newImage);
-    this.props.uploadAvatar(newImage, this.props.currentImage.name)
+    this.props.uploadAvatar(newImage, this.props.currentImage.name, this.props.currentImage.url)
     .then(() => this.props.getUser(this.props.requestedUser.slug))
     .then(() => this.props.loadAuth())
     .then(() => this.props.loadStories(this.props.requestedUser.slug))

@@ -9,6 +9,7 @@ import {
 } from '../../../redux/modules/user';
 import ChangeCoverImage from '../../Popup/ChangeCoverImage';
 import ChangeAvatar from '../../Popup/ChangeAvatar';
+import ShowAvatar from '../../Popup/ShowAvatar';
 import './index.scss';
 
 const coverColors = [
@@ -185,6 +186,9 @@ export default class SubHeader extends Component {
                 background: avatar230 ? `url(${avatar230})` : '#fff'
               }}>
               {/*{avatar230 && <img src={avatar230}/>}*/}
+              <ShowAvatar
+                avatar={avatar230}
+              />
 
               {this.props.isAuthenticated && this.props.authorizedUser.id === this.props.requestedUser.id &&
               <div className="subHeader-add">

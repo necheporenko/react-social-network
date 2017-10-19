@@ -126,3 +126,14 @@
   }
 }
 /*=== Sign Human Card  End===*/
+
+.show-avatar-popup {
+  position: relative;
+  height: 100%;
+}
+
+.show-avatar-popup-modal {
+  .modal-dialog {
+    width: 100%;
+  }
+}

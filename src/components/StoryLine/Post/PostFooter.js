@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Textarea from 'react-textarea-autosize';
 import {ShareButtons} from 'react-share';
 import {Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton} from 'react-bootstrap';
-import {like as likePost, viewMoreComments} from '../../../redux/modules/story';
+import {like as likePost, viewMoreComments, showReplies} from '../../../redux/modules/story';
 import LogStory from '../../Popup/Log';
 
 const {FacebookShareButton, TwitterShareButton} = ShareButtons;
@@ -15,6 +15,7 @@ const {FacebookShareButton, TwitterShareButton} = ShareButtons;
 }), {
   likePost,
   viewMoreComments,
+  showReplies,
 })
 
 class PostFooter extends Component {
@@ -157,8 +158,23 @@ class PostFooter extends Component {
     }
 
     treeOfComments(comments);
-    // console.log(obj)
     return arrResult.map((comment, index) => (
+      comment.hidden
+        ?
+        <div className={'comment' + (comment.right > 0 ? ' comment-reply' : '')} key={comment.id} style={{marginLeft: comment.right}}>
+          <img
+            src={comment.user.avatar32}
+            style={{
+              width: comment.right > 0 ? '20px' : '32px',
+              minWidth: comment.right > 0 ? '20px' : '32px',
+              height: comment.right > 0 ? '20px' : '32px',
+            }}
+          />
+          <div onClick={() => this.props.showReplies(comment.id)} className="text-block" style={{width: `calc(100% - ${comment.right}px)`, marginTop: '2px'}}>
+            <p>{`${comment.user.first_name} ${comment.user.last_name} XXX Replies`}</p>
+          </div>
+        </div>
+        :
       <div className={'comment' + (comment.right > 0 ? ' comment-reply' : '')} key={comment.id} style={{marginLeft: comment.right}}>
         <img
           src={comment.user.avatar32}
@@ -204,10 +220,25 @@ class PostFooter extends Component {
         </ButtonToolbar>
       </div>
     ));
+    // return arrResult.map((comment, index) => (
+    //   <div className={'comment' + (comment.right > 0 ? ' comment-reply' : '')} key={comment.id} style={{marginLeft: comment.right}}>
+    //     <img
+    //       src={comment.user.avatar32}
+    //       style={{
+    //         width: comment.right > 0 ? '20px' : '32px',
+    //         minWidth: comment.right > 0 ? '20px' : '32px',
+    //         height: comment.right > 0 ? '20px' : '32px',
+    //       }}
+    //     />
+    //     <div className="text-block" style={{width: `calc(100% - ${comment.right}px)`}}>
+    //       <p><Link>{`${comment.user.first_name} ${comment.user.last_name}`}</Link>9999</p>
+    //     </div>
+    //   </div>
+    // ));
   }
 
   render() {
-    const {likes, id, comments, post, authorizedUser, paginationComment, counts, path} = this.props;
+    const {likes, id, comments, post, authorizedUser, paginationComment, counts, path, showReplies} = this.props;
     const {showComment} = this.state;
 
     const tooltipLike = (
@@ -283,13 +314,13 @@ class PostFooter extends Component {
             style={{display: (!showComment && (path === '/' && comments.length === 0)) ? 'none' : 'block'}}
           >
             <div className="comments">
-              {counts.comments > 4 &&
+              {(comments.length !== counts.comments && counts.comments > 3) &&
               <div
                 className="show-more-comments"
                 onClick={() => this.props.showMoreCommentsFunc(id, paginationComment)}
               >
-                <p>View previous comments</p>
-                <p style={{color: '#90949d'}}>{`4 of ${counts.comments}`}</p>
+                <p>{`View ${counts.comments - comments.length} more ${counts.comments - comments.length === 1 ? 'comment' : 'comments'}`}</p>
+                <p style={{color: '#90949d'}}>{`${comments.length} of ${counts.comments}`}</p>
               </div>
               }
               {this.replyComments(comments)}

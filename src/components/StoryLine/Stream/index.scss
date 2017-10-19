@@ -984,15 +984,27 @@
       //width: calc(100% - 13px);
 
       .show-more-comments {
-        color: #1E88E5;
+        //color: #1E88E5;
         font-size: 12px;
         padding-top: 8px;
         cursor: pointer;
         display: flex;
         justify-content: space-between;
 
-        &:hover {
-          text-decoration: underline;
+        p:first-child {
+          color: #1E88E5;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        p:last-child {
+          color: #90949d;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
