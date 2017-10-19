@@ -22,10 +22,12 @@ export default class HumanCard extends Component {
     super();
     
     this.saveDraft = this.saveDraft.bind(this);
-    this.fnHumanCard = this.fnHumanCard.bind(this);
+    this.toHumanCardPage = this.toHumanCardPage.bind(this);
     this.emptyDraftHumanCard = this.emptyDraftHumanCard.bind(this);
     this.humanCardRender = this.humanCardRender.bind(this);
     this.draftHumanCardRender = this.draftHumanCardRender.bind(this);
+    this.onHoverOutHumanCard = this.onHoverOutHumanCard.bind(this);
+    this.onHoverHumanCard = this.onHoverHumanCard.bind(this);
   }
 
   saveDraft() {
@@ -38,10 +40,10 @@ export default class HumanCard extends Component {
     }
   }
   
-  fnHumanCard(e) {
+  toHumanCardPage(e) {
+    console.log('hello');
     const {slug} = this.props.requestedUser;
     const div = document.querySelector('.human-card');
-    const el = document.querySelector('.infoblock-human-card .review-proofs a');
 
     const getLink = () => {
       const id = this.linkToHumanCard();
@@ -53,19 +55,61 @@ export default class HumanCard extends Component {
       }
     };
 
-    if (el && this.props.humanCard) {
+    if (this.props.humanCard) {
       const h2 = div.querySelector('h2');
       const p3 = div.querySelector('p:nth-child(3)');
       
       if (e.target !== h2 && e.target !== p3) {
         getLink();
       }
-    } else if (el) {
+    } else {
       const inputs = div.querySelectorAll('input');
 
       if (e.target !== inputs[0] && e.target !== inputs[1]) {
         getLink();
       }
+    }
+  }
+
+  onHoverHumanCard(e) {
+    const div = document.querySelector('.infoblocks-cutaway .human-card');
+    const h1 = div && div.querySelector('h1');
+ 
+    const linkUnderlineNone = () => {
+      h1.style.borderBottom = 'none';
+    };
+ 
+    const linkUnderline = () => {
+      h1.style.borderBottom = '1px solid #36364F';
+    };
+    
+    if (h1 && this.props.humanCard) {
+      const h2 = div.querySelector('h2');
+      const p3 = div.querySelector('p:nth-child(3)');
+      
+      if (e.target === h2 || e.target === p3) {
+        linkUnderlineNone();
+      } else {
+        linkUnderline();
+      } 
+    } else {
+      const inputs = div.querySelectorAll('input');
+      const item1 = inputs[0];
+      const item2 = inputs[1];
+ 
+      if (item1 && item2 && (e.target === item1 || e.target === item2)) {
+        linkUnderlineNone();
+      } else {
+        linkUnderline();
+      }
+    }
+  }
+
+  onHoverOutHumanCard() {
+    const h1 = document.querySelector('.infoblocks-cutaway .human-card h1');
+ 
+    if (h1) {
+      h1.style.borderBottom = 'none';
     }
   }
 
@@ -172,14 +216,15 @@ export default class HumanCard extends Component {
   }
 
   render() {
-    console.log('render');
     const {humanCard, authorizedUser, requestedUser, draftHumanCard, emptyDraftHumanCard} = this.props;
 
     return (
       <div className="human-card-container">
         <div
           className="human-card"
-          onClick={this.fnHumanCard}>
+          onMouseOut={this.onHoverOutHumanCard} 
+          onMouseMove={this.onHoverHumanCard}
+          onClick={this.toHumanCardPage}>
           {this.emptyDraftHumanCard()}
           {this.humanCardRender()}
           {this.draftHumanCardRender()}
@@ -188,7 +233,7 @@ export default class HumanCard extends Component {
           <div className="human-card-btn">
             <button className="btn-brand" onClick={this.saveDraft}>Save</button>
             <SignHumanCard
-              fullName={'' }
+              fullName={''}
               publicAddress={''}
             />
           </div>
