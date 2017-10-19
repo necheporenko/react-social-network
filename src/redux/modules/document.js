@@ -30,6 +30,7 @@ const GET_DRAFT_HUMAN_CARD = 'GET_DRAFT_HUMAN_CARD';
 const GET_DRAFT_HUMAN_CARD_SUCCESS = 'GET_DRAFT_HUMAN_CARD_SUCCESS';
 const GET_DRAFT_HUMAN_CARD_FAIL = 'GET_DRAFT_HUMAN_CARD_FAIL';
 const EMPTY_DRAFT_HUMAN_CARD = 'EMPTY_DRAFT_HUMAN_CARD';
+const CLEAR_BOX = 'CLEAR_BOX';
 
 
 const initialState = {
@@ -229,6 +230,12 @@ export default function documentReducer(state = initialState, action) {
         emptyDraftHumanCard: true
       };
 
+    case CLEAR_BOX:
+      return {
+        ...state,
+        box: {}
+      };
+
     default:
       return state;
   }
@@ -315,5 +322,11 @@ export const getDraftHumanCard = (id) => {
 export const emptyDraftHumanCard = () => {
   return {
     type: EMPTY_DRAFT_HUMAN_CARD
+  };
+};
+
+export const clearBox = () => {
+  return {
+    type: CLEAR_BOX
   };
 };

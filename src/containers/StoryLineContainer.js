@@ -10,7 +10,7 @@ import {
 } from '../redux/modules/story';
 import {load as loadBookTree, clearBookTree} from '../redux/modules/book';
 import {loadPeopleFollowers, loadPeopleFollowing, loadUserPeople, clearPeopleBlock} from '../redux/modules/follow';
-import {clearHumanCard, emptyDraftHumanCard} from '../redux/modules/document';
+import {clearHumanCard, emptyDraftHumanCard, clearBox} from '../redux/modules/document';
 import StoryLine from '../components/StoryLine';
 
 @connect((state) => ({
@@ -40,7 +40,8 @@ import StoryLine from '../components/StoryLine';
   loadUserPeople,
   clearPeopleBlock,
   clearHumanCard,
-  emptyDraftHumanCard
+  emptyDraftHumanCard,
+  clearBox
 })
 
 export default class StoryLineContainer extends Component {
@@ -95,6 +96,7 @@ export default class StoryLineContainer extends Component {
     this.props.clearStories();
     this.props.clearPeopleBlock();
     this.props.clearHumanCard();
+    this.props.clearBox();
   }
 
   render() {

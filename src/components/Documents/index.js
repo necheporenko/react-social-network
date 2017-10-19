@@ -5,15 +5,13 @@ import {browserHistory} from 'react-router';
 import {getBox} from '../../redux/modules/document';
 import DocumentsMenu from './DocumentsMenu';
 import DocumentItem from './DocumentItem';
-import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import './index.scss';
 
 @connect((state) => ({
   authorizedUser: state.user.authorizedUser,
   requestedUser: state.user.requestedUser,
   path: state.routing.locationBeforeTransitions.pathname,
-  box: state.document.box,
-  boxes: state.document.boxes,
+  box: state.document.box
 }), {
   getBox
 })
@@ -23,7 +21,6 @@ export default class Box extends Component {
     super();
 
     this._newDocumentClick = this._newDocumentClick.bind(this);
-    this.addIconsRender = this.addIconsRender.bind(this);
     this.boxesRender = this.boxesRender.bind(this);
   }
 
@@ -51,45 +48,13 @@ export default class Box extends Component {
     return <Tooltip id="tooltip">{text}</Tooltip>;
   }
 
-  addIconsRender() {
-    const {requestedUser, authorizedUser} = this.props;
-
-    if (requestedUser.slug !== authorizedUser.slug) {
-      return null;
-    }
-    
-    return (
-      <div className="add-new-item">
-        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Upload document</Tooltip>}>
-          <div className="upload-document">
-            <span className="upload-document-icon"></span>
-          </div>
-        </OverlayTrigger>
-        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new document</Tooltip>}>
-          <div className="add-new-document" onClick={this._newDocumentClick}>
-            <span
-              className="add-new-document-icon"
-            />
-          </div>
-        </OverlayTrigger>
-        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new box</Tooltip>}>
-          <div className="add-new-box">
-            <span
-              className="add-new-box-icon"
-              to={'#'}/>
-          </div>
-        </OverlayTrigger>
-      </div>
-    );
-  }
-
   boxesRender() {
     const {box, authorizedUser, requestedUser} = this.props;
     let availableBoxes = Object.assign({}, box);
 
     if (requestedUser.slug !== authorizedUser.slug) {
       availableBoxes = Object.assign(availableBoxes, {
-        children: box.children.filter(box => box.key !== 'backup-box-for-signed-documents')
+        children: box.children.filter(box => box.key !== 'backup-of-signed-documents')
       });
     }
 
@@ -101,7 +66,7 @@ export default class Box extends Component {
   }
 
   render() {
-    const {box, fixedBlocks, authorizedUser, boxes} = this.props;
+    const {box, fixedBlocks, authorizedUser} = this.props;
     console.log(this.props);
     const {slug} = this.props.requestedUser;
 
@@ -111,12 +76,7 @@ export default class Box extends Component {
         {/*<div style={{background: '#fff', padding: '5px'}}>{box.name}</div>*/}
         {box.children &&
         <div className="wrapper-boxes">
-          <div className="boxes-header">
-            <h1>Boxes</h1>
-            <div className="add-new-items-container">
-              {this.addIconsRender()}
-            </div>
-          </div>
+          <h1>Boxes</h1>
           <div className="wrapper-box-card">
             {this.boxesRender()}
           </div>

@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react';
+import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {browserHistory} from 'react-router';
-import {OverlayTrigger, Tooltip} from 'react-bootstrap';
 import {getUser} from '../../redux/modules/user';
 import {load as loadBoxes} from '../../redux/modules/document';
 import BoxesTree from './BoxesTree';
@@ -26,6 +26,7 @@ export default class DocumentsMenu extends Component {
     };
     this._newDocumentClick = this._newDocumentClick.bind(this);
     this.deskNameRender = this.deskNameRender.bind(this);
+    this.addIconsRender = this.addIconsRender.bind(this);
   }
 
   componentDidMount() {
@@ -53,6 +54,38 @@ export default class DocumentsMenu extends Component {
     const desk_name = authorizedUser.id === requestedUser.id ? 'My Desk' : 'Desk';
 
     return <span>{desk_name}</span>;
+  }
+  
+  addIconsRender() {
+    const {requestedUser, authorizedUser} = this.props;
+
+    if (requestedUser.slug !== authorizedUser.slug) {
+      return null;
+    }
+    
+    return (
+      <div className="add-new-item">
+        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Upload document</Tooltip>}>
+          <div className="upload-document">
+            <span className="upload-document-icon"></span>
+          </div>
+        </OverlayTrigger>
+        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new document</Tooltip>}>
+          <div className="add-new-document" onClick={this._newDocumentClick}>
+            <span
+              className="add-new-document-icon"
+            />
+          </div>
+        </OverlayTrigger>
+        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new box</Tooltip>}>
+          <div className="add-new-box">
+            <span
+              className="add-new-box-icon"
+              to={'#'}/>
+          </div>
+        </OverlayTrigger>
+      </div>
+    );
   }
 
   render() {
@@ -161,8 +194,12 @@ export default class DocumentsMenu extends Component {
           {authorizedUser.id === id &&
           <Link to={`/${slug}/documents/wallet`} activeClassName="active">
             <li className="documents-mnu-wallet">Wallet</li>
+            <hr/>
           </Link>
           }
+
+          {this.addIconsRender()}
+
         </ul>
 
 

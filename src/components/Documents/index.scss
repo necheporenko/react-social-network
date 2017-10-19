@@ -42,6 +42,47 @@
       padding: 0 15px;
     }
   }
+
+  .add-new-item {
+    display: flex;
+    margin-left: 10px;
+  
+    div {
+      width: 36px;
+      height: 36px;
+      border-radius: 3px;
+      cursor: pointer;
+      position: relative;
+      right: -9px;
+    }
+  
+    span {
+      display: block;
+      margin: 9px auto;
+    }
+  
+    .upload-document-icon {
+      background-image: url(../img/Icons/upload-document.svg);
+      width: 14px;
+      height: 18px;
+    }
+  
+    .add-new-document-icon {
+      background-image: url(../img/Icons/add-document2.svg);
+      width: 14px;
+      height: 18px;
+    }
+  
+    .add-new-box-icon {
+      background-image: url(../img/Icons/add-box.svg);
+      width: 18px;
+      height: 18px;
+    }
+  
+    div:hover {
+      background-color: #CECECE;
+    }
+  }
 }
 
 .tokens-lists {
@@ -517,62 +558,13 @@
   display: block !important;
   
   h1 {
-    color: #555555;
+    color: #8f8f8f;
     font-weight: 400;
     font-size: 14px;
   }
   
   .wrapper-boxes {
-    margin-bottom: 20px;
-
-    h1 {
-      line-height: 36px;
-    }
-
-    .boxes-header {
-      display: flex;
-      justify-content: space-between;
-      
-      .add-new-item {
-        display: flex;
-      
-        div {
-          width: 36px;
-          height: 36px;
-          border-radius: 3px;
-          cursor: pointer;
-          position: relative;
-          right: -9px;
-        }
-      
-        span {
-          display: block;
-          margin: 9px auto;
-        }
-      
-        .upload-document-icon {
-          background-image: url(../img/Icons/upload-document.svg);
-          width: 14px;
-          height: 18px;
-        }
-      
-        .add-new-document-icon {
-          background-image: url(../img/Icons/add-document2.svg);
-          width: 14px;
-          height: 18px;
-        }
-      
-        .add-new-box-icon {
-          background-image: url(../img/Icons/add-box.svg);
-          width: 18px;
-          height: 18px;
-        }
-      
-        div:hover {
-          background-color: #CECECE;
-        }
-      }
-    }
+    margin-bottom: 15px;
   
     .wrapper-box-card {
       display: flex;
