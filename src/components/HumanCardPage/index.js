@@ -4,7 +4,7 @@ import HumanCard from './HumanCard';
 import {connect} from 'react-redux';
 import SubHeader from '../StoryLine/SubHeader';
 import {getUser} from '../../redux/modules/user';
-import {getHumanCard, getDraftHumanCard} from '../../redux/modules/document';
+import {getHumanCard, getDraftHumanCard, emptyDraftHumanCard} from '../../redux/modules/document';
 import './human-card-page.scss';
 
 @connect((state) => ({
@@ -16,7 +16,8 @@ import './human-card-page.scss';
 }), {
   getUser,
   getHumanCard,
-  getDraftHumanCard
+  getDraftHumanCard,
+  emptyDraftHumanCard
 })
 
 export default class HumanCardPage extends Component {
@@ -32,7 +33,7 @@ export default class HumanCardPage extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    const {path, requestedUser, getUser, getHumanCard, getDraftHumanCard} = this.props;
+    const {path, requestedUser, getUser, getHumanCard, getDraftHumanCard, emptyDraftHumanCard} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
     const humanCardSlug = path.substring(path.indexOf('/human-card/') + 12);
 
@@ -41,7 +42,7 @@ export default class HumanCardPage extends Component {
     } else if (humanCardSlug.indexOf('0x') !== -1) {
       getUser(findSlug).then(getHumanCard(humanCardSlug));
     } else {
-      getUser(findSlug);
+      getUser(findSlug).then(emptyDraftHumanCard());
     }
   }
   

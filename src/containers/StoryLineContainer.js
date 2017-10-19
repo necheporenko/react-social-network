@@ -10,7 +10,7 @@ import {
 } from '../redux/modules/story';
 import {load as loadBookTree, clearBookTree} from '../redux/modules/book';
 import {loadPeopleFollowers, loadPeopleFollowing, loadUserPeople, clearPeopleBlock} from '../redux/modules/follow';
-import {getHumanCard, clearHumanCard} from '../redux/modules/document';
+import {clearHumanCard, emptyDraftHumanCard} from '../redux/modules/document';
 import StoryLine from '../components/StoryLine';
 
 @connect((state) => ({
@@ -39,8 +39,8 @@ import StoryLine from '../components/StoryLine';
   loadPeopleFollowing,
   loadUserPeople,
   clearPeopleBlock,
-  getHumanCard,
-  clearHumanCard
+  clearHumanCard,
+  emptyDraftHumanCard
 })
 
 export default class StoryLineContainer extends Component {
@@ -79,11 +79,15 @@ export default class StoryLineContainer extends Component {
     this.props.getUser(findSlug)
       .then(this.props.loadStories(findSlug))
       .then(this.props.loadBookTree(findSlug))
-      .then(this.props.getUserProfile(findSlug))
+      .then(this.props.getUserProfile(findSlug).then(res => {
+        if (!res.data.human_card && !res.data.draft_human_card) {
+          console.log(res.data.human_card, res.data.draft_human_card);
+          this.props.emptyDraftHumanCard();
+        } 
+      }))
       .then(this.props.loadUserPeople(findSlug))
       .then(this.props.loadPeopleFollowing(findSlug))
-      .then(this.props.loadPeopleFollowers(findSlug))
-      // .then(() => (this.props.requestedUser.public_address && this.props.getHumanCard(this.props.requestedUser.public_address)));
+      .then(this.props.loadPeopleFollowers(findSlug));
   }
 
   clearState() {

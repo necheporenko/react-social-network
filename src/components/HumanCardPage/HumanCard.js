@@ -4,12 +4,15 @@ import {connect} from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import {createDraftHumanCard, updateDraftHumanCard} from '../../redux/modules/document';
 import SignHumanCard from '../Popup/SignHumanCard';
+import Loader from '../Common/Loader';
 import './human-card.scss';
 
 const borderColorLight = 'rgb(225, 225, 225)';
 const borderColorDark = 'rgb(162, 162, 162)';
 
-@connect(null, {
+@connect((state) => ({
+  emptyDraftHumanCard: state.document.emptyDraftHumanCard
+}), {
   createDraftHumanCard,
   updateDraftHumanCard
 })
@@ -37,6 +40,9 @@ export default class HumanCard extends Component {
     this.requestHumanCard = this.requestHumanCard.bind(this);
     this.copyAddress = this.copyAddress.bind(this);
     this.fnHumanCard = this.fnHumanCard.bind(this);
+    this.emptyDraftHumanCard = this.emptyDraftHumanCard.bind(this);
+    this.humanCardRender = this.humanCardRender.bind(this);
+    this.draftHumanCard = this.draftHumanCard.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -205,74 +211,105 @@ export default class HumanCard extends Component {
     return null;
   }
 
+  emptyDraftHumanCard() {
+    const {draftHumanCard, humanCard, emptyDraftHumanCard} = this.props;
+
+    if (!emptyDraftHumanCard && !humanCard && !draftHumanCard) {
+      return <Loader />;
+    }
+  }
+
+  humanCardRender() {
+    const {humanCard} = this.props;
+
+    if (!humanCard) {
+      return null;
+    }
+
+    return (
+      <div className="markdown-human-card">
+        {/*<Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">*/}
+        {this.requestHumanCard(humanCard.url)}
+        <ReactMarkdown source={humanCard.markdown}/>
+        {/*</Link>*/}
+      </div>
+    );
+  }
+
+  draftHumanCard() {
+    const {draftHumanCard, authorizedUser, requestedUser, emptyDraftHumanCard} = this.props;
+
+    if (!draftHumanCard && !emptyDraftHumanCard) {
+      return null;
+    }
+
+    return (
+      <div className="draft-human-card">
+        {/*<div className="help-human-card"><i/></div>*/}
+        <h1 style={{marginBottom: 0}}>HUMAN CARD</h1>
+        {/*<hr/>*/}
+        <p style={{marginTop: '5px', marginBottom: 0}}> 
+          {/*<strong>Public Address:</strong>*/}
+          {requestedUser.slug !== authorizedUser.slug 
+            ? <input
+              type="text" placeholder="Paste your public address here"
+              value={this.state.publicAddress}
+              readOnly
+            />
+            : <input
+              type="text" placeholder="Paste your public address here"
+              onChange={this.changePublicAddress}
+              value={this.state.publicAddress}
+              ref={el => this.inputPublicAddress = el}
+            />
+          }
+          
+          {/*<div className="help-human-card"><i/></div>*/}
+        </p>
+        <p style={{fontSize: '12px', marginTop: '5px', marginBottom: '10px'}}>
+          This public address has been established for:
+        </p>
+        <p style={{marginTop: '10px'}}> 
+          {requestedUser.slug !== authorizedUser.slug
+            ? <input
+              type="text" placeholder="Type name by which people know you"
+              value={this.state.fullName}
+              style={{fontSize: '20px'}}
+              readOnly
+            />
+            : <input
+              type="text" placeholder="Type name by which people know you"
+              onChange={this.changeFullName}
+              value={this.state.fullName}
+              ref={el => this.inputFullName = el}
+              style={{fontSize: '20px'}}
+            />
+          }
+          {/*<div className="help-human-card"><i/></div>*/}
+        </p>
+        <p style={{color: '#d2d2d2', fontSize: '12px', magrinTop: 5, marginBottom: 10}}>
+          Digital signature and signing date will be here.
+          {/*<span>  your signature will be here</span>*/}
+          {/*<div className="help-human-card"><i/></div>*/}
+        </p>
+      </div>
+    );
+  }
+
   render() {
-    const {humanCard, draftHumanCard, authorizedUser} = this.props;
-    const {slug} = this.props.requestedUser;
+    console.log('render');
+    const {humanCard, authorizedUser, requestedUser, draftHumanCard, emptyDraftHumanCard} = this.props;
 
     return (
       <div className="wrapper-human-card">
         <div
           className="human-card human-card-preview"
           onClick={this.fnHumanCard}>
-          {humanCard && humanCard.id
-            ? <div className="markdown-human-card">
-              {/*<Link to={`/${slug}/documents/human-card/${box.human_card.public_address}`} className="markdown-human-card">*/}
-              {this.requestHumanCard(humanCard.url)}
-              <ReactMarkdown source={humanCard.markdown}/>
-              {/*</Link>*/}
-            </div>
-            : <div className="draft-human-card">
-              {/*<div className="help-human-card"><i/></div>*/}
-              <h1 style={{marginBottom: 0}}>HUMAN CARD</h1>
-              {/*<hr/>*/}
-              <p style={{marginTop: '5px', marginBottom: 0}}> 
-                {/*<strong>Public Address:</strong>*/}
-                {slug !== authorizedUser.slug 
-                  ? <input
-                    type="text" placeholder="Paste your public address here"
-                    value={this.state.publicAddress}
-                    readOnly
-                  />
-                  : <input
-                    type="text" placeholder="Paste your public address here"
-                    onChange={this.changePublicAddress}
-                    value={this.state.publicAddress}
-                    ref={el => this.inputPublicAddress = el}
-                  />
-                }
-                
-                {/*<div className="help-human-card"><i/></div>*/}
-              </p>
-              <p style={{fontSize: '12px', marginTop: '5px', marginBottom: '10px'}}>
-                This public address has been established for:
-              </p>
-              <p style={{marginTop: '10px'}}> 
-                {slug !== authorizedUser.slug
-                  ? <input
-                    type="text" placeholder="Type name by which people know you"
-                    value={this.state.fullName}
-                    style={{fontSize: '20px'}}
-                    readOnly
-                  />
-                  : <input
-                    type="text" placeholder="Type name by which people know you"
-                    onChange={this.changeFullName}
-                    value={this.state.fullName}
-                    ref={el => this.inputFullName = el}
-                    style={{fontSize: '20px'}}
-                  />
-                }
-                {/*<div className="help-human-card"><i/></div>*/}
-              </p>
-              <p style={{color: '#d2d2d2', fontSize: '12px', magrinTop: 5, marginBottom: 10}}>
-                Digital signature and signing date will be here.
-                {/*<span>  your signature will be here</span>*/}
-                {/*<div className="help-human-card"><i/></div>*/}
-              </p>
-            </div>
-          }
+          {this.emptyDraftHumanCard()}
+          {this.humanCardRender()}
+          {this.draftHumanCard()}
         </div>
-        {slug === authorizedUser.slug && (!humanCard || !humanCard.id) &&
+        {requestedUser.slug === authorizedUser.slug && (draftHumanCard || emptyDraftHumanCard) &&
           <div className="human-card-btn">
             <button className="btn-brand" onClick={this.saveDraft}>Save</button>
             <SignHumanCard

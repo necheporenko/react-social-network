@@ -29,6 +29,7 @@ const CLEAR_HUMAN_CARD = 'CLEAR_HUMAN_CARD';
 const GET_DRAFT_HUMAN_CARD = 'GET_DRAFT_HUMAN_CARD';
 const GET_DRAFT_HUMAN_CARD_SUCCESS = 'GET_DRAFT_HUMAN_CARD_SUCCESS';
 const GET_DRAFT_HUMAN_CARD_FAIL = 'GET_DRAFT_HUMAN_CARD_FAIL';
+const EMPTY_DRAFT_HUMAN_CARD = 'EMPTY_DRAFT_HUMAN_CARD';
 
 
 const initialState = {
@@ -37,7 +38,8 @@ const initialState = {
   documents: [],
   document: {},
   humanCard: null,
-  draftHumanCard: null
+  draftHumanCard: null,
+  emptyDraftHumanCard: null
 };
 
 export default function documentReducer(state = initialState, action) {
@@ -205,7 +207,9 @@ export default function documentReducer(state = initialState, action) {
     case CLEAR_HUMAN_CARD:
       return {
         ...state,
-        humanCard: null
+        humanCard: null,
+        draftHumanCard: null,
+        emptyDraftHumanCard: null
       };
 
     // case GET_DRAFT_HUMAN_CARD:
@@ -217,6 +221,12 @@ export default function documentReducer(state = initialState, action) {
       return {
         ...state,
         draftHumanCard: action.result.data
+      };
+
+    case EMPTY_DRAFT_HUMAN_CARD:
+      return {
+        ...state,
+        emptyDraftHumanCard: true
       };
 
     default:
@@ -296,9 +306,14 @@ export function clearHumanCard() {
 }
 
 export const getDraftHumanCard = (id) => {
-  console.log(id);
   return {
     types: [GET_DRAFT_HUMAN_CARD, GET_DRAFT_HUMAN_CARD_SUCCESS, GET_DRAFT_HUMAN_CARD_FAIL],
     promise: (client) => client.get(`/draft-human-card/${+id}`)
+  };
+};
+
+export const emptyDraftHumanCard = () => {
+  return {
+    type: EMPTY_DRAFT_HUMAN_CARD
   };
 };
