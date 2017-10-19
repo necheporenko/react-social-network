@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Gravit.io -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   style="isolation:isolate"
+   viewBox="0 0 14 14"
+   width="14"
+   height="14"
+   version="1.1"
+   id="svg879"
+   sodipodi:docname="inbox_signed_docs.svg"
+   inkscape:version="0.92.2 (unknown)">
+  <metadata
+     id="metadata883">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     id="namedview881"
+     showgrid="false"
+     inkscape:zoom="8.9763278"
+     inkscape:cx="6.9923614"
+     inkscape:cy="5.3282561"
+     inkscape:window-x="1366"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg879" />
+  <defs
+     id="defs872">
+    <clipPath
+       id="_clipPath_cb3SWE2ogJ34BWMN4daMgbrGoBIux13B">
+      <rect
+         width="18"
+         height="18"
+         id="rect869"
+         x="0"
+         y="0" />
+    </clipPath>
+  </defs>
+  <g
+     clip-path="url(#_clipPath_cb3SWE2ogJ34BWMN4daMgbrGoBIux13B)"
+     id="g877"
+     style="fill:#787878;fill-opacity:1"
+     transform="scale(0.77777778)">
+    <path
+       d="M 5.542,10.409 V 11 h 6.886 v -0.591 z m 6.886,-5.837 c 0.152,-0.152 0.152,-0.405 0,-0.548 l -0.91,-0.91 c -0.144,-0.152 -0.396,-0.152 -0.548,0 l -0.715,0.711 1.458,1.458 M 5.542,8.542 V 10 H 7 L 11.301,5.696 9.842,4.237 Z M 16,12 h -4 c 0,1.657 -1.343,3 -3,3 C 7.343,15 6,13.657 6,12 H 2 V 2 H 15.809 16 M 16,0 H 2 C 0.89,0 0,0.9 0,2 v 14 c 0,1.105 0.895,2 2,2 h 14 c 1.105,0 2,-0.895 2,-2 V 2 C 18,0.895 17.105,0 16,0 Z"
+       id="path874"
+       inkscape:connector-curvature="0"
+       style="fill:#787878;fill-opacity:1;fill-rule:evenodd" />
+    <g
+       style="isolation:isolate;fill:#787878;fill-opacity:1"
+       id="Layer 0" />
+  </g>
+</svg>
