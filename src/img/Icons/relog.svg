@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Gravit.io -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   style="isolation:isolate"
+   viewBox="0 0 13 11.266666"
+   width="13"
+   height="11.266666"
+   version="1.1"
+   id="svg4592"
+   sodipodi:docname="Relog.svg"
+   inkscape:version="0.92.2 (unknown)">
+  <metadata
+     id="metadata4596">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     id="namedview4594"
+     showgrid="false"
+     inkscape:zoom="30.466667"
+     inkscape:cx="6.3477933"
+     inkscape:cy="7.0880376"
+     inkscape:window-x="1366"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4592" />
+  <defs
+     id="defs4573">
+    <clipPath
+       id="_clipPath_XZO5jhma1i3d7hUwwthN8dLYuadfl4wW">
+      <rect
+         width="15"
+         height="15"
+         id="rect4570"
+         x="0"
+         y="0" />
+    </clipPath>
+  </defs>
+  <g
+     clip-path="url(#_clipPath_XZO5jhma1i3d7hUwwthN8dLYuadfl4wW)"
+     id="g4590"
+     transform="scale(0.86666667,0.75111111)">
+    <g
+       id="g4580">
+      <g
+         id="g4578">
+        <g
+           id="Group">
+          <path
+             d="M 4,11 H 7 L 15,3 12,0 4,8 Z m 1.5,-2.5 6,-6 1,1 -6,6 h -1 z M 11,13 H 2 V 9.925 4 H 4 V 6 L 7,3 4,0 V 2 H 0 V 15 H 13 V 7 l -2,2 z"
+             id="path4575"
+             inkscape:connector-curvature="0"
+             style="fill:#acb3bd" />
+        </g>
+      </g>
+    </g>
+    <g
+       transform="translate(0,25.656)"
+       id="g4584">
+      <text
+         transform="translate(0,5.344)"
+         style="font-style:normal;font-weight:700;font-size:5px;font-family:'Open Sans';fill:#000000;stroke:none"
+         id="text4582">Created by Tahsin Tahil</text>
+    </g>
+    <g
+       transform="translate(0,30.656)"
+       id="g4588">
+      <text
+         transform="translate(0,5.344)"
+         style="font-style:normal;font-weight:700;font-size:5px;font-family:'Open Sans';fill:#000000;stroke:none"
+         id="text4586">from the Noun Project</text>
+    </g>
+  </g>
+</svg>
