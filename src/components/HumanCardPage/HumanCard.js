@@ -238,6 +238,8 @@ export default class HumanCard extends Component {
 
   draftHumanCard() {
     const {draftHumanCard, authorizedUser, requestedUser, emptyDraftHumanCard} = this.props;
+    const {first_name} = requestedUser;
+    const {publicAddress, fullName} = this.state;
 
     if (!draftHumanCard && !emptyDraftHumanCard) {
       return null;
@@ -252,14 +254,16 @@ export default class HumanCard extends Component {
           {/*<strong>Public Address:</strong>*/}
           {requestedUser.slug !== authorizedUser.slug 
             ? <input
-              type="text" placeholder="Paste your public address here"
-              value={this.state.publicAddress}
+              type="text"
+              placeholder={`${first_name}'s public address will be here`}
+              value={publicAddress}
               readOnly
             />
             : <input
-              type="text" placeholder="Paste your public address here"
+              type="text"
+              placeholder={`${first_name}'s public address will be here`}
               onChange={this.changePublicAddress}
-              value={this.state.publicAddress}
+              value={publicAddress}
               ref={el => this.inputPublicAddress = el}
             />
           }
@@ -273,14 +277,14 @@ export default class HumanCard extends Component {
           {requestedUser.slug !== authorizedUser.slug
             ? <input
               type="text" placeholder="Type name by which people know you"
-              value={this.state.fullName}
+              value={fullName}
               style={{fontSize: '20px'}}
               readOnly
             />
             : <input
               type="text" placeholder="Type name by which people know you"
               onChange={this.changeFullName}
-              value={this.state.fullName}
+              value={fullName}
               ref={el => this.inputFullName = el}
               style={{fontSize: '20px'}}
             />
