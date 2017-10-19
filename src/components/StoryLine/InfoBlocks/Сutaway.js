@@ -148,27 +148,7 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
             requestedUser={requestedUser}
             authorizedUser={authorizedUser}
           />
-          <div className="buttons-container">
-            {human_card && authorizedUser.id !== requestedUser.id &&
-              <div className="validate-button">
-                <button className="btn-sign btn-brand">Validate</button>
-              </div>
-            }
-            <div className="review-proofs">
-              {linkToHumanCard() 
-                ? <Link
-                  onMouseMove={onHoverLinkHumanCard}
-                  onMouseOut={onHoverOutHumanCard}
-                  to={`/${requestedUser.slug}/documents/human-card/${linkToHumanCard()}`}>Review Proofs</Link>
-                : <Link
-                  onMouseMove={onHoverLinkHumanCard}
-                  onMouseOut={onHoverOutHumanCard}
-                  to={`/${requestedUser.slug}/documents/human-card`}>Review Proofs</Link>
-              }
-            </div>
-          </div>
         </div>
-        <div style={{height: 1}}/>
         <hr className="below-human-card"/>
       </div>
       :
@@ -184,13 +164,22 @@ Cutaway.propTypes = {
 
 export default Cutaway;
 
-
-//<div
-//  onMouseOut={onHoverOutHumanCard}
-//   onMouseMove={onHoverHumanCard} 
-//   className="human-card markdown-human-card" 
-//   onClick={(e) => fnHumanCard(humanCard.public_address, slug, e)}>
-//   {/*<Link to={`/${slug}/documents/human-card/${humanCard.public_address}`}>*/}
-//   <ReactMarkdown source={humanCard.markdown}/>
-//   {/*</Link>*/}
+// <div className="buttons-container">
+// {human_card && authorizedUser.id !== requestedUser.id &&
+//   <div className="validate-button">
+//     <button className="btn-sign btn-brand">Validate</button>
+//   </div>
+// }
+// <div className="review-proofs">
+//   {linkToHumanCard() 
+//     ? <Link
+//       onMouseMove={onHoverLinkHumanCard}
+//       onMouseOut={onHoverOutHumanCard}
+//       to={`/${requestedUser.slug}/documents/human-card/${linkToHumanCard()}`}>Review Proofs</Link>
+//     : <Link
+//       onMouseMove={onHoverLinkHumanCard}
+//       onMouseOut={onHoverOutHumanCard}
+//       to={`/${requestedUser.slug}/documents/human-card`}>Review Proofs</Link>
+//   }
+// </div>
 // </div>
