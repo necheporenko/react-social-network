@@ -9,9 +9,9 @@ function work(occupation, company) {
     return `${occupation} at ${company}`;
   } else if (!occupation && company) {
     return `Works at ${company}`;
-  } else {
-    return occupation;
   }
+  
+  return occupation;
 }
 
 const onHoverOutHumanCard = () => {
@@ -46,6 +46,20 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
     draft_human_card
   } = requestedUserProfile;
   const {slug} = requestedUser;
+
+  const socialNetwork = () => {
+    if (facebook || twitter || linkedin || skype) {
+      return (
+        <div className="social-network-container">
+          <span className="social-network-icon"/>
+          {facebook && <a href={facebook} className="facebook"/>}
+          {twitter && <a href={twitter} className="twitter"/>}
+          {linkedin && <a href={linkedin} className="linkedin"/>}
+          {skype && <a href={skype} className="skype"/>}
+        </div>
+      );
+    }
+  };
   
   const linkToHumanCard = () => {
     if (human_card && human_card.public_address) {
@@ -69,7 +83,10 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
 
         <div className="wrapper">
           {bio &&
-          <div className="bio">{bio}</div>
+          <div className="bio">
+            {bio}
+            <hr />
+          </div>
           }
 
           {/*{occupation &&*/}
@@ -119,18 +136,13 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
           </div>
           }
 
-          <div className="social-network">
-            {facebook && <a href={facebook} className="facebook"/>}
-            {twitter && <a href={twitter} className="twitter"/>}
-            {linkedin && <a href={linkedin} className="linkedin"/>}
-            {skype && <a href={skype} className="skype"/>}
-          </div>
+          {socialNetwork()}
         </div>
 
-        
+        <hr className="above-human-card"/>
+
         <div className="infoblock-human-card ">
           {/*<hr style={{margin: '0 15px 20px 15px'}} />*/}
-          
           <HumanCard
             humanCard={human_card}
             draftHumanCard={draft_human_card}
@@ -157,6 +169,7 @@ const Cutaway = ({requestedUserProfile, requestedUser, authorizedUser}) => {
             </div>
           </div>
         </div>
+        <hr className="below-human-card"/>
       </div>
       :
       null

@@ -57,6 +57,7 @@ export default class Box extends Component {
     if (requestedUser.slug !== authorizedUser.slug) {
       return null;
     }
+    
     return (
       <div className="add-new-item">
         <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Upload document</Tooltip>}>
@@ -96,7 +97,7 @@ export default class Box extends Component {
       <Link key={box.id} to={`/${requestedUser.slug}/documents/${box.key}`} className="box-card">
         <li className="documents-mnu-box">{box.name}</li>
       </Link>
-    ))
+    ));
   }
 
   render() {
@@ -108,7 +109,7 @@ export default class Box extends Component {
       <div className="common-lists tokens-lists">
         {/*<button onClick={() => this.httpGet()}>CLICK</button>*/}
         {/*<div style={{background: '#fff', padding: '5px'}}>{box.name}</div>*/}
-        {box.id && box.children.length > 0 &&
+        {box.children &&
         <div className="wrapper-boxes">
           <div className="boxes-header">
             <h1>Boxes</h1>

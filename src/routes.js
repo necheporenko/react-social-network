@@ -18,7 +18,7 @@ import PeopleFollowers from 'components/People/PeopleFollowers';
 import PeopleSuggested from 'components/People/PeopleSuggested';
 import DocumentsContainer from 'containers/DocumentsContainer';
 import Box from 'components/Documents';
-import Boxes from 'components/Documents/Boxes';
+// import Boxes from 'components/Documents/Boxes';
 import Wallet from 'components/Documents/Wallet';
 import Inbox from 'components/Documents/Inbox';
 import NewDocument from 'components/Documents/NewDocument';

@@ -120,12 +120,13 @@
   .title-infoblocks {
     position: relative;
     padding: 0;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
   }
 
   .wrapper {
     //overflow: hidden;
     font-size: 13px;
+    margin-bottom: 15px;
   }
 
   .settings-edit {
@@ -144,7 +145,12 @@
   }
 
   .bio {
+    text-align: center;
     margin-bottom: 15px;
+
+    hr {
+      margin: 5px 0;
+    }
   }
 
   .occupation,
@@ -200,13 +206,24 @@
     background: url('../../../img/Icons/website.svg');
   }
 
-  .social-network {
-    margin-top: 10px;
+  .social-network-container {
+    height: 16px;
+    padding: 4px 0 0;
+
+    .social-network-icon {
+      vertical-align: middle;
+      margin-right: 8px;
+      display: inline-block;
+      background: url(../../img/Icons/websites.svg) no-repeat;
+      width: 16px;
+      height: 16px;
+    }
 
     .facebook,
     .twitter,
     .linkedin,
     .skype {
+      vertical-align: middle;
       background: $sprite;
       display: inline-block;
       margin-right: 5px;
@@ -253,6 +270,11 @@
     }
   }
 
+  .above-human-card {
+    margin: 0;
+    margin-bottom: 15px;
+  }
+
   .infoblock-human-card {
     position: relative;
     min-height: 170px;
@@ -261,13 +283,14 @@
       width: 260px;
       box-shadow: none;
       cursor: pointer;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
 
       p:nth-child(3), input:nth-child(1) {
         font-size: 11px;
       }
 
-      &:hover {
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
+      h1:hover {
+        border-bottom: 1px solid #36364F
       }
     }
 
@@ -293,6 +316,10 @@
         }
       }
     }
+  }
+
+  .below-human-card {
+    margin: 6px 0 0;
   }
 }
 
