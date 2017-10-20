@@ -181,7 +181,6 @@
 
       a {
         cursor: pointer;
-        color: $gray;
       }
     }
   }
@@ -226,26 +225,27 @@
       vertical-align: middle;
       background: $sprite;
       display: inline-block;
-      margin-right: 5px;
+      margin-right: 8px;
+      margin-top: -2px;
     }
 
     .facebook {
-      background-position: -137px -218px;
+      background-position: -137px -220px;
       height: 18px;
       width: 10px;
 
       &:hover {
-        background-position: -149px -218px;
+        background-position: -149px -220px;
       }
     }
 
     .twitter {
-      background-position: -131px -239px;
-      height: 13px;
+      background-position: -131px -238px;
+      height: 14px;
       width: 17px;
 
       &:hover {
-        background-position: -147px -239px;
+        background-position: -147px -238px;
       }
     }
 
@@ -260,12 +260,12 @@
     }
 
     .skype {
-      background-position: -127px -271px;
-      height: 13px;
+      background-position: -127px -270px;
+      height: 14px;
       width: 14px;
 
       &:hover {
-        background-position: -142px -271px;
+        background-position: -142px -270px;
       }
     }
   }
