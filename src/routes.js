@@ -128,7 +128,6 @@ export default (store) => {
 
       <Route path="/:userName/books/:bookName" component={BookPage}/>
       <Route path="/:userName/documents/document" component={NewDocument}/>
-      {/* <Route path="/:userName/documents/:box/:document" component={NewDocument}/> */}
 
       <Route path="/:userName" component={UserContainer}>
         <IndexRoute component={StoryLineContainer}/>
@@ -157,6 +156,8 @@ export default (store) => {
           <Route path="profile" component={PhotosProfile}/>
         </Route>
       </Route>
+
+      <Route path="/:userName/documents/:box/:document" component={NewDocument}/>
 
       {/* Catch all route */}
       <Route path="*" component={NotFoundPage} status={404}/>

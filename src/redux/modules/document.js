@@ -31,13 +31,21 @@ const GET_DRAFT_HUMAN_CARD_SUCCESS = 'GET_DRAFT_HUMAN_CARD_SUCCESS';
 const GET_DRAFT_HUMAN_CARD_FAIL = 'GET_DRAFT_HUMAN_CARD_FAIL';
 const EMPTY_DRAFT_HUMAN_CARD = 'EMPTY_DRAFT_HUMAN_CARD';
 const CLEAR_BOX = 'CLEAR_BOX';
-
+const DELETE_DOCUMENT = 'DELETE_DOCUMENT';
+const DELETE_DOCUMENT_SUCCESS = 'DELETE_DOCUMENT_SUCCESS';
+const DELETE_DOCUMENT_FAIL = 'DELETE_DOCUMENT_FAIL';
+const RENAME_DOCUMENT = 'RENAME_DOCUMENT';
+const RENAME_DOCUMENT_SUCCESS = 'RENAME_DOCUMENT_SUCCESS';
+const RENAME_DOCUMENT_FAIL = 'RENAME_DOCUMENT_FAIL';
+const MOVE_DOCUMENT_TO = 'MOVE_DOCUMENT_TO';
+const MOVE_DOCUMENT_TO_SUCCESS = 'MOVE_DOCUMENT_TO_SUCCESS';
+const MOVE_DOCUMENT_TO_FAIL = 'MOVE_DOCUMENT_TO_FAIL';
 
 const initialState = {
   boxes: [],
-  box: {},
-  documents: [],
-  document: {},
+  box: {
+    documents: []
+  },
   humanCard: null,
   draftHumanCard: null,
   emptyDraftHumanCard: null
@@ -236,6 +244,28 @@ export default function documentReducer(state = initialState, action) {
         box: {}
       };
 
+    case DELETE_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        box: Object.assign({}, state.box, {
+          documents: state.box.documents.filter(document => document.id !== action.document_id)
+        })
+      };
+
+    case RENAME_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        box: Object.assign({}, state.box, {
+          documents: state.box.documents.map(document => {
+            if (document.id === action.document_id) {
+              return action.result.data;
+            }
+
+            return document;
+          })
+        })
+      };
+
     default:
       return state;
   }
@@ -328,5 +358,29 @@ export const emptyDraftHumanCard = () => {
 export const clearBox = () => {
   return {
     type: CLEAR_BOX
+  };
+};
+
+export const deleteDocument = (document_id) => {
+  return {
+    types: [DELETE_DOCUMENT, DELETE_DOCUMENT_SUCCESS, DELETE_DOCUMENT_FAIL],
+    promise: (client) => client.del(`/documents/${document_id}`),
+    document_id
+  };
+};
+
+export const updateDocument = (document_id, title) => {
+  return {
+    types: [RENAME_DOCUMENT, RENAME_DOCUMENT_SUCCESS, RENAME_DOCUMENT_FAIL],
+    promise: (client) => client.patch(`/documents/${document_id}`, {data: {title}}),
+    document_id
+  };
+};
+
+export const moveDocumnetToBox = (document_id, box_slug) => {
+  return {
+    types: [MOVE_DOCUMENT_TO, MOVE_DOCUMENT_TO_SUCCESS, MOVE_DOCUMENT_TO_FAIL],
+    promise: (client) => client.patch(`/documents/${document_id}`, {data: {box_slug}}),
+    document_id
   };
 };

@@ -1,8 +1,15 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import DocumentModalItem from './DocumentModalItem';
+import {connect} from 'react-redux';
+import RenameDocumentModal from './RenameDocumentModal';
 import DocumentShowMoreOperations from './DocumentShowMoreOperations';
+import {deleteDocument, updateDocument} from '../../redux/modules/document';
 import './document-item.scss';
+
+@connect(null, {
+  deleteDocument,
+  updateDocument
+})
 
 export default class DocumentItem extends Component {
   constructor() {
@@ -14,10 +21,11 @@ export default class DocumentItem extends Component {
     };
 
     this.showOperations = this.showOperations.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.saveChanges = this.saveChanges.bind(this);
-    this.showModal = this.showModal.bind(this);
+    this.closeRenameDocumentModal = this.closeRenameDocumentModal.bind(this);
+    this.showRenameDocumentModal = this.showRenameDocumentModal.bind(this);
     this._closeShowMoreOperations = this._closeShowMoreOperations.bind(this);
+    this.deleteDocument = this.deleteDocument.bind(this);
+    this.renameDocument = this.renameDocument.bind(this);
   }
 
   componentDidMount() {
@@ -49,19 +57,25 @@ export default class DocumentItem extends Component {
     });
   }
 
-  showModal() {
+  showRenameDocumentModal(e) {
+    e.preventDefault();
+
     this.setState({
       showModal: true
     });
   }
 
-  closeModal() {
+  closeRenameDocumentModal() {
     this.setState({
       showModal: false
     });
   }
-
-  saveChanges() {
+  
+  renameDocument(title) {
+    const {updateDocument, document} = this.props;
+    
+    updateDocument(document.id, title);
+    
     this.setState({
       showModal: false
     });
@@ -73,22 +87,33 @@ export default class DocumentItem extends Component {
     }
 
     return (
-      <DocumentModalItem
+      <RenameDocumentModal
+        title={this.props.document.title}
         showModal={this.state.showModal}
-        closeModalHandler={this.closeModal}
-        saveChangesHandler={this.saveChanges}
+        renameDocumentHandler={this.renameDocument}
+        closeModalHandler={this.closeRenameDocumentModal}
       />
     );
   }
 
+  deleteDocument(e) {
+    e.preventDefault();
+    const {deleteDocument, document} = this.props;
+
+    deleteDocument(document.id);
+  }
+
   showMoreOperationsRender() {
+    const {deleteDocument} = this.props;
+
     if (!this.state.showOperations) {
       return null;
     }
 
     return (
       <DocumentShowMoreOperations
-        showModalHandler={this.showModal}
+        showModalHandler={this.showRenameDocumentModal}
+        deleteDocumentHandler={this.deleteDocument}
       />
     );
   }
@@ -97,7 +122,7 @@ export default class DocumentItem extends Component {
     const {document, boxKey} = this.props;
 
     return (
-      <Link className="document-item" to={`/${'jimbo.fry'}/documents/${boxKey}/${document.id}`}>
+      <Link className="document-item" to={`/${document.slug}/documents/${boxKey}/${document.id}`}>
         <div className="document-item-thumbnail">
         </div>
         <div className="document-item-metadata-container">

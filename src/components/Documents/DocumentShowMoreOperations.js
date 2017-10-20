@@ -3,7 +3,7 @@ import './show-more-operations.scss';
 
 class DocumentShowMoreOperations extends Component {
   render() {
-    const {showModalHandler} = this.props;
+    const {showModalHandler, deleteDocumentHandler} = this.props;
 
     return (
       <div className="document-dropdown-menu">
@@ -19,7 +19,7 @@ class DocumentShowMoreOperations extends Component {
           <div><span className="verify-icon"/><span>Verify Signatures</span></div>
           <div><span className="sign-icon"/><span>Sign</span></div>
           <hr />
-          <div><span className="delete-icon"/><span>Delete</span></div>
+          <div onClick={deleteDocumentHandler}><span className="delete-icon"/><span>Delete</span></div>
         </div>
       </div>
     );

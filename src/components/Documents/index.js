@@ -67,7 +67,6 @@ export default class Box extends Component {
 
   render() {
     const {box, fixedBlocks, authorizedUser} = this.props;
-    console.log(this.props);
     const {slug} = this.props.requestedUser;
 
     return (
