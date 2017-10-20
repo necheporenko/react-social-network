@@ -72,16 +72,16 @@ export default class DocumentsMenu extends Component {
               to={'#'}/>
           </div>
         </OverlayTrigger>
-        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Upload document</Tooltip>}>
-          <div className="upload-document">
-            <span className="upload-document-icon"></span>
-          </div>
-        </OverlayTrigger>
         <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new document</Tooltip>}>
           <div className="add-new-document" onClick={this._newDocumentClick}>
             <span
               className="add-new-document-icon"
             />
+          </div>
+        </OverlayTrigger>
+        <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Upload document</Tooltip>}>
+          <div className="upload-document">
+            <span className="upload-document-icon"></span>
           </div>
         </OverlayTrigger>
       </div>
