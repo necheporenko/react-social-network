@@ -4,8 +4,9 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {browserHistory} from 'react-router';
 import {getUser} from '../../redux/modules/user';
-import {load as loadBoxes} from '../../redux/modules/document';
+import {load as loadBoxes, createBox} from '../../redux/modules/document';
 import BoxesTree from './BoxesTree';
+import CreateBoxModal from './CreateBoxModal';
 import './index.scss';
 
 @connect((state) => ({
@@ -15,7 +16,8 @@ import './index.scss';
   path: state.routing.locationBeforeTransitions.pathname,
 }), {
   getUser,
-  loadBoxes
+  loadBoxes,
+  createBox
 })
 
 export default class DocumentsMenu extends Component {
@@ -23,10 +25,14 @@ export default class DocumentsMenu extends Component {
     super(props);
     this.state = {
       isOpen: false,
+      showModal: false
     };
     this._newDocumentClick = this._newDocumentClick.bind(this);
     this.deskNameRender = this.deskNameRender.bind(this);
     this.addIconsRender = this.addIconsRender.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.createBox = this.createBox.bind(this);
   }
 
   componentDidMount() {
@@ -66,7 +72,7 @@ export default class DocumentsMenu extends Component {
     return (
       <div className="add-new-item">
         <OverlayTrigger placement="bottom" overlay={<Tooltip id="tooltip">Create new box</Tooltip>}>
-          <div className="add-new-box">
+          <div className="add-new-box" onClick={this.showModal}>
             <span
               className="add-new-box-icon"
               to={'#'}/>
@@ -85,6 +91,42 @@ export default class DocumentsMenu extends Component {
           </div>
         </OverlayTrigger>
       </div>
+    );
+  }
+
+  showModal(e) {
+    e.preventDefault();
+
+    this.setState({
+      showModal: true
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      showModal: false
+    });
+  }
+
+  createBox(name) {
+    this.props.createBox(name, this.props.boxes[0].desk.id);
+    
+    this.setState({
+      showModal: false
+    });
+  }
+
+  createBoxModalRender() {
+    if (!this.state.showModal) {
+      return null;
+    }
+    
+    return (
+      <CreateBoxModal
+        showModal={this.state.showModal}
+        createBoxHander={this.createBox}
+        closeModalHandler={this.closeModal}
+      />
     );
   }
 
@@ -206,6 +248,7 @@ export default class DocumentsMenu extends Component {
         {/*<BoxesTree*/}
         {/*boxes={this.props.boxes}*/}
         {/*/>*/}
+        {this.createBoxModalRender()}
       </div>
     );
   }

@@ -93,6 +93,9 @@ export default function documentReducer(state = initialState, action) {
         ...state,
         creating: false,
         created: true,
+        box: Object.assign({}, state.box, {
+          children: state.box.children.concat(action.result.data)
+        })
       };
     case CREATE_BOX_FAIL:
       return {
@@ -279,10 +282,11 @@ export function createDocument(box_slug, user_id, title, file) {
   };
 }
 
-export function createBox(name, parent_slug) {
+export function createBox(name, parent_id) {
+  console.log(arguments);
   return {
-    types: [CREATE_DOCUMENT, CREATE_DOCUMENT_SUCCESS, CREATE_DOCUMENT_FAIL],
-    promise: (client) => client.post('/boxes', {data: {name, parent_slug}})
+    types: [CREATE_BOX, CREATE_BOX_SUCCESS, CREATE_BOX_FAIL],
+    promise: (client) => client.post('/boxes', {data: {name, parent_id, description: ''}})
   };
 }
 
