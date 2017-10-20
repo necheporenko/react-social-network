@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Textarea from 'react-textarea-autosize';
 import {ShareButtons} from 'react-share';
 import {Modal, Tooltip, OverlayTrigger, ButtonToolbar, DropdownButton} from 'react-bootstrap';
-import {like as likePost, viewMoreComments, showReplies} from '../../../redux/modules/story';
+import {like as likePost, viewMoreComments} from '../../../redux/modules/story';
 import LogStory from '../../Popup/Log';
 
 const {FacebookShareButton, TwitterShareButton} = ShareButtons;
@@ -15,7 +15,6 @@ const {FacebookShareButton, TwitterShareButton} = ShareButtons;
 }), {
   likePost,
   viewMoreComments,
-  showReplies,
 })
 
 class PostFooter extends Component {
@@ -162,6 +161,7 @@ class PostFooter extends Component {
       comment.hidden
         ?
         <div className={'comment' + (comment.right > 0 ? ' comment-reply' : '')} key={comment.id} style={{marginLeft: comment.right}}>
+          <i className="replied-arrow"/>
           <img
             src={comment.user.avatar32}
             style={{
@@ -170,8 +170,8 @@ class PostFooter extends Component {
               height: comment.right > 0 ? '20px' : '32px',
             }}
           />
-          <div onClick={() => this.props.showReplies(comment.id)} className="text-block" style={{width: `calc(100% - ${comment.right}px)`, marginTop: '2px'}}>
-            <p>{`${comment.user.first_name} ${comment.user.last_name} XXX Replies`}</p>
+          <div onClick={() => this.props.showReplyFunc(comment.id)} className="text-block collapsed-reply" style={{width: `calc(100% - ${comment.right}px)`, marginTop: '2px'}}>
+            <p>{`${comment.user.first_name} ${comment.user.last_name} replied · ${comment.counts.reply} ${comment.counts.reply === 1 ? 'Reply' : 'Replies'} `}</p>
           </div>
         </div>
         :

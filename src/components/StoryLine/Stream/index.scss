@@ -1048,6 +1048,24 @@
         position: relative;
       }
 
+      .replied-arrow {
+        display: inline-block;
+        background: url('../../../img/Icons/replied-arrow.svg');
+        width: 12px;
+        height: 9px;
+        margin: 6px 5px 0 2px;
+      }
+
+      .collapsed-reply {
+        //color: #1E88E5;
+        cursor: pointer;
+
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
       p {
         font-size: 13px;
         width: 420px;

@@ -6,6 +6,7 @@ import {
   viewMoreComments as viewMoreCommentsChannel,
   createComment as createCommentChannel,
   createStory as createStoryChannel,
+  showReplies as showRepliesChannel,
 } from '../../../redux/modules/channel';
 import Sbox from './Sbox';
 import Post from '../Post/index';
@@ -21,6 +22,7 @@ import './index.scss';
   viewMoreCommentsChannel,
   createCommentChannel,
   createStoryChannel,
+  showRepliesChannel,
 })
 
 export default class ChannelStream extends Component {
@@ -32,6 +34,7 @@ export default class ChannelStream extends Component {
     this.reloadStreamChannel = this.reloadStreamChannel.bind(this);
     this.createComment = this.createComment.bind(this);
     this.createStory = this.createStory.bind(this);
+    this.showReply = this.showReply.bind(this);
   }
 
   load() {
@@ -58,6 +61,10 @@ export default class ChannelStream extends Component {
 
   showMoreComments(id, paginationComment) {
     this.props.viewMoreCommentsChannel(id, paginationComment);
+  }
+
+  showReply(id) {
+    this.props.showRepliesChannel(id);
   }
 
   render() {
@@ -96,6 +103,7 @@ export default class ChannelStream extends Component {
                 authorizedUser={this.props.authorizedUser}
                 requestedUser={this.props.requestedUser}
                 createCommentFunc={this.createComment}
+                showReplyFunc={this.showReply}
               />
             ))}
           </InfiniteScroll>

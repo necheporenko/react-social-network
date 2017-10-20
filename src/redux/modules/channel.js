@@ -25,6 +25,9 @@ const CREATE_NEW_COMMENT_FAIL = 'CREATE_NEW_COMMENT_FAIL';
 const CREATE_STORY = 'CREATE_STORY';
 const CREATE_STORY_SUCCESS = 'CREATE_STORY_SUCCESS';
 const CREATE_STORY_FAIL = 'CREATE_STORY_FAIL';
+const SHOW_COMMENT = 'SHOW_COMMENT';
+const SHOW_COMMENT_SUCCESS = 'SHOW_COMMENT_SUCCESS';
+const SHOW_COMMENT_FAIL = 'SHOW_COMMENT_FAIL';
 
 
 const initialState = {
@@ -80,7 +83,14 @@ export default function channelReducer(state = initialState, action) {
       };
     case LOAD_CHANNEL_SUCCESS:
       const dataStories = action.result.data.stories;
-      dataStories.map(story => story.paginationComment = 2);
+      dataStories.map(story => {
+        story.paginationComment = 1;
+        story.comments.map(comment => {
+          if (comment.children.length === 1) {
+            comment.children[0].hidden = true;
+          }
+        });
+      });
 
       return {
         ...state,
@@ -110,6 +120,7 @@ export default function channelReducer(state = initialState, action) {
         loading: true
       };
     case LOAD_NEXT_CHANNEL_STORIES_SUCCESS:
+
       return {
         ...state,
         loading: false,
@@ -183,11 +194,8 @@ export default function channelReducer(state = initialState, action) {
         if (story.id === action.entity_id) {
           return {
             ...story,
-            comments: [...action.result.data, ...story.comments],
+            comments: story.paginationComment === 1 ? action.result.data : [...action.result.data, ...story.comments],
             paginationComment: story.paginationComment + 1,
-            counts: {
-              comments: story.counts.comments - 4
-            },
           };
         }
         return {
@@ -244,6 +252,45 @@ export default function channelReducer(state = initialState, action) {
         creating: false,
         created: false,
       };
+
+    case SHOW_COMMENT: {
+      return {
+        ...state,
+      };
+    }
+    case SHOW_COMMENT_SUCCESS: {
+      const viewReplies = state.channelStories.map(story => {
+        if (story.id === action.result.data.entity_id) {
+          const modifyComments = story.comments.map(comment => {
+            if (comment.id === action.result.data.parent_id) {
+              return {
+                ...comment,
+                children: action.result.data.parent.children,
+              };
+            }
+            return {
+              ...comment
+            };
+          });
+          return {
+            ...story,
+            comments: modifyComments
+          };
+        }
+        return {
+          ...story
+        };
+      });
+      return {
+        ...state,
+        channelStories: viewReplies
+      };
+    }
+    case SHOW_COMMENT_FAIL: {
+      return {
+        ...state,
+      };
+    }
 
     default:
       return state;
@@ -371,5 +418,12 @@ export function createStory(data, books, files) {
     promise: (client) => client.post('/stories', {
       data: formData
     })
+  };
+}
+
+export function showReplies(id) {
+  return {
+    types: [SHOW_COMMENT, SHOW_COMMENT_SUCCESS, SHOW_COMMENT_FAIL],
+    promise: (client) => client.get(`/comments/${id}`)
   };
 }

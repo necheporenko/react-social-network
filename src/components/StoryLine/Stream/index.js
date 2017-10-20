@@ -6,6 +6,7 @@ import {
   viewMoreComments as viewMoreCommentsStoryline,
   createComment as createCommentStoryline,
   create as createStoryStoryline,
+  showReplies as showRepliesStoryline,
 } from '../../../redux/modules/story';
 import Sbox from './Sbox';
 import Post from '../Post/index';
@@ -23,6 +24,7 @@ import './index.scss';
   viewMoreCommentsStoryline,
   createCommentStoryline,
   createStoryStoryline,
+  showRepliesStoryline
 })
 
 class Stream extends Component {
@@ -35,6 +37,7 @@ class Stream extends Component {
     this.reloadStreamStoryline = this.reloadStreamStoryline.bind(this);
     this.createComment = this.createComment.bind(this);
     this.createStory = this.createStory.bind(this);
+    this.showReply = this.showReply.bind(this);
   }
 
   load() {
@@ -61,6 +64,10 @@ class Stream extends Component {
 
   showMoreComments(id, paginationComment) {
     this.props.viewMoreCommentsStoryline(id, paginationComment);
+  }
+
+  showReply(id) {
+    this.props.showRepliesStoryline(id);
   }
 
   render() {
@@ -93,6 +100,7 @@ class Stream extends Component {
                 authorizedUser={this.props.authorizedUser}
                 requestedUser={this.props.requestedUser}
                 createCommentFunc={this.createComment}
+                showReplyFunc={this.showReply}
               />
             ))}
           </InfiniteScroll>

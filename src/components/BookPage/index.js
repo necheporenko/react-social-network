@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Link} from 'react-router';
+import {Link, browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
 // import {Form, RadioGroup} from 'formsy-react-components';
@@ -119,7 +119,14 @@ export default class BookPage extends Component {
     // console.log('<---- componentDidMount start');
     const {path, requestedUser} = this.props;
     const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-    const bookSlug = path.substring(path.indexOf('/books/') + 7);
+    let bookSlug;
+    if (~path.indexOf('/subbooks')) {
+      bookSlug = path.substring(path.indexOf('/books/') + 7, path.indexOf('/subbooks'));
+      this.setState({showSubbooks: true});
+    } else {
+      bookSlug = path.substring(path.indexOf('/books/') + 7);
+      this.setState({showSubbooks: false});
+    }
     // if (findSlug !== requestedUser.slug) {
     // this.clearState();
     this.props.getUser(findSlug)
@@ -137,7 +144,14 @@ export default class BookPage extends Component {
     const {path, requestedUser, bookPage} = this.props;
     if (prevProps.path !== path) {
       const findSlug = path.substring(1, ((path.substring(1).indexOf('/') + 1) || path.lenght));
-      const bookSlug = path.substring(path.indexOf('/books/') + 7);
+      let bookSlug;
+      if (~path.indexOf('/subbooks')) {
+        bookSlug = path.substring(path.indexOf('/books/') + 7, path.indexOf('/subbooks'));
+        this.setState({showSubbooks: true});
+      } else {
+        bookSlug = path.substring(path.indexOf('/books/') + 7);
+        this.setState({showSubbooks: false});
+      }
       if (bookSlug && (bookSlug !== bookPage.slug)) {
         this.props.getUser(findSlug)
           .then(this.props.loadBookTree(findSlug))
@@ -221,8 +235,7 @@ export default class BookPage extends Component {
   }
 
   showSubBooks() {
-    this.setState({showSubbooks: !this.state.showSubbooks});
-    console.log('hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
+    browserHistory.push(`/${this.props.requestedUser.slug}/books/${this.props.bookPage.slug}/subbooks`);
   }
 
   render() {
@@ -576,14 +589,12 @@ export default class BookPage extends Component {
                       <span className="subbooks-icon"/>
                       <a> Subbooks <span>· 0</span></a>
                     </div>
-                    <div className="book-counter">
+                    <div className="list-subbooks">
                       <ul>
                         {/*<li style={{marginTop: 0}}>0 subbooks</li>*/}
-                        <div>
-                          {loaded.loadedBooks && subBooksArr[0].children.length > 0 && subBooksArr[0].children.map(book => (
-                            <p key={book.key}>{book.name}</p>
-                          ))}
-                        </div>
+                        {loaded.loadedBooks && subBooksArr[0].children.length > 0 && subBooksArr[0].children.map(book => (
+                          <li key={book.key}><Link to={`/${slug}/books/${book.key}`}><i/>{book.name}</Link></li>
+                        ))}
                       </ul>
                       {/*<hr/>*/}
                     </div>
@@ -678,21 +689,24 @@ export default class BookPage extends Component {
                   ))}
                 </div>
                 :
-                <BookStream
-                  authorizedUser={this.props.authorizedUser}
-                  requestedUser={this.props.requestedUser}
-                  book_slug={this.props.bookPage.slug}
-                  bookStories={this.props.bookStories}
-                  nextBookStories={this.props.nextBookStories}
-                  showBookStories={this.props.showBookStories}
-                />
+                <div style={{display: 'flex'}}>
+                  <BookStream
+                    authorizedUser={this.props.authorizedUser}
+                    requestedUser={this.props.requestedUser}
+                    book_slug={this.props.bookPage.slug}
+                    bookStories={this.props.bookStories}
+                    nextBookStories={this.props.nextBookStories}
+                    showBookStories={this.props.showBookStories}
+                  />
+                  <BooksTreeContainer
+                    bookTreeArr={this.props.bookTreeArr}
+                    booksTreeTop={chooseScroll.booksTree}
+                    title="ALL BOOKS"
+                  />
+                </div>
               }
 
-              <BooksTreeContainer
-                bookTreeArr={this.props.bookTreeArr}
-                booksTreeTop={chooseScroll.booksTree}
-                title="ALL BOOKS"
-              />
+
             </div>
 
           </div>

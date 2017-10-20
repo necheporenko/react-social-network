@@ -101,7 +101,7 @@ export default class SubBooks extends Component {
       file: '',
       dropdownUserCover: false,
       currentUserCoverColor: '',
-      showSubbooks: false,
+      showSubbooks: true,
     };
     this.handleScroll = this.handleScroll.bind(this);
     this.handleSaveSettings = this.handleSaveSettings.bind(this);
@@ -576,14 +576,12 @@ export default class SubBooks extends Component {
                       <span className="subbooks-icon"/>
                       <a> Subbooks <span>· 0</span></a>
                     </div>
-                    <div className="book-counter">
+                    <div className="list-subbooks">
                       <ul>
                         {/*<li style={{marginTop: 0}}>0 subbooks</li>*/}
-                        <div>
-                          {loaded.loadedBooks && subBooksArr[0].children.length > 0 && subBooksArr[0].children.map(book => (
-                            <p key={book.key}>{book.name}</p>
-                          ))}
-                        </div>
+                        {loaded.loadedBooks && subBooksArr[0].children.length > 0 && subBooksArr[0].children.map(book => (
+                          <li key={book.key}><Link to={`/${slug}/books/${book.key}`}><i/>{book.name}</Link></li>
+                        ))}
                       </ul>
                       {/*<hr/>*/}
                     </div>

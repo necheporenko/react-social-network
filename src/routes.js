@@ -53,6 +53,7 @@ import SearchTokens from 'components/Search/SearchTokens';
 import SearchStories from 'components/Search/SearchStories';
 import EngagementContainer from 'components/Registration/Engagement';
 import BookPage from 'components/BookPage';
+import SubBooks from 'components/BookPage/SubBooks';
 import Story from 'containers/StoryDetailsContainer';
 import NotFoundPage from 'components/NotFoundPage/NotFoundPage';
 
@@ -127,6 +128,7 @@ export default (store) => {
       <Route path="/story/:id" component={Story}/>
 
       <Route path="/:userName/books/:bookName" component={BookPage}/>
+      <Route path="/:userName/books/:bookName/subbooks" component={BookPage}/>
       <Route path="/:userName/documents/document" component={NewDocument}/>
 
       <Route path="/:userName" component={UserContainer}>

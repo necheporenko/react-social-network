@@ -133,7 +133,9 @@
 }
 
 .show-avatar-popup-modal {
+  display: flex !important;
   .modal-dialog {
-    width: 100%;
+    margin: auto;
+    width: 262px;
   }
 }

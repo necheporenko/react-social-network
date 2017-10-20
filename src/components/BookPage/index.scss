@@ -251,6 +251,40 @@
 .infobloks-book-others {
   padding-top: 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+
+  .list-subbooks {
+    color: #555;
+
+    li {
+      font-size: 14px;
+      padding: 6px 3px 6px 0;
+
+      //&:hover {
+      //  background-color: #c3c3c3;
+      //}
+    }
+
+    i {
+      display: inline-block;
+      background: $sprite;
+      background-position: -86px -515px;
+      height: 15px;
+      width: 16px;
+      top: 3px;
+      margin-right: 5px;
+      left: 0;
+      position: relative;
+    }
+
+    a {
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
 }
 
 .navigation-bookpage-fixed {
@@ -677,14 +711,13 @@
 }
 
 .bookpage-subbooks-card {
-  width: 550px;
+  width: 690px;
   padding: 0 20px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
 
   .book {
-    margin: 0 0 45px 0;
+    margin: 0 20px 20px 0;
   }
 }
 
