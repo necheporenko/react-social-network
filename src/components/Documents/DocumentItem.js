@@ -97,7 +97,7 @@ export default class DocumentItem extends Component {
     const {document, boxKey} = this.props;
 
     return (
-      <Link className="document-item" to={`/${document.slug}/documents/${boxKey}/${document.id}`}>
+      <Link className="document-item" to={`/${'jimbo.fry'}/documents/${boxKey}/${document.id}`}>
         <div className="document-item-thumbnail">
         </div>
         <div className="document-item-metadata-container">
